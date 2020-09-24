@@ -4,10 +4,12 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from DrugDataLoader import utils, BaseDataset
-from DrugDataLoader.HTS_utils import *
-from DrugDataLoader.ADMET_utils import *
-from DrugDataLoader.QM_utils import *
+from .. import BaseDataset
+from ..utils import *
+from .HTS_utils import *
+from .ADME_utils import *
+from .QM_utils import *
+from .Toxicity_utils import *
 
 class DataLoader(BaseDataset.DataLoader):
 	def __init__(self, name, path = './data', target = None, print_stats = True):

@@ -4,7 +4,7 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from DrugDataLoader import utils
+from .utils import *
 
 class DataLoader:
 	def __init__(self, name, path = './data', print_stats = True):

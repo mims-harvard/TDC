@@ -4,9 +4,10 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from DrugDataLoader import utils, Interaction
+from .. import utils
+from . import InteractionDataset
 
-class DataLoader(Interaction.DataLoader):
+class DTI(InteractionDataset.DataLoader):
 	def __init__(self, name, path = './data', target = None, print_stats = True):
 		super().__init__(name, path, target, print_stats)
 		self.entity1_name = 'Drug'

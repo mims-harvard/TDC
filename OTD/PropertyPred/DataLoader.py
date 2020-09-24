@@ -4,10 +4,21 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from DrugDataLoader import utils, DrugProperty
-from DrugDataLoader.QM_utils import *
+from . import PropertyDataset
 
-class DataLoader(DrugProperty.DataLoader):
+class ADME(PropertyDataset.DataLoader):
+	def __init__(self, name, path = './data', target = None, print_stats = True):
+		super().__init__(name, path, target)
+
+class Toxicity(PropertyDataset.DataLoader):
+	def __init__(self, name, path = './data', target = None, print_stats = True):
+		super().__init__(name, path, target)
+
+class HTS(PropertyDataset.DataLoader):
+	def __init__(self, name, path = './data', target = None, print_stats = True):
+		super().__init__(name, path, target)
+
+class QM(PropertyDataset.DataLoader):
 	def __init__(self, name, path = './data', target = None, print_stats = True):
 		try:
 			entity1, y, entity1_idx = eval(name + '_process(name, path, target)')
@@ -27,14 +38,6 @@ class DataLoader(DrugProperty.DataLoader):
 		print('Done!', flush = True, file = sys.stderr)
 
 	def get_data(self, format = 'dict'):
-		'''
-		Arguments:
-			df: return pandas DataFrame; if not true, return np.arrays			
-		returns:
-			self.drugs: drug smiles strings np.array
-			self.targets: target Amino Acid Sequence np.array
-			self.y: inter   action score np.array
-		'''
 		if format == 'df':
 			utils.print_sys('the features are 2D distance map, thus is not suitable for pandas, switch to dictionary automatically...')
 			format = 'dict'
@@ -49,12 +52,6 @@ class DataLoader(DrugProperty.DataLoader):
 			raise AttributeError("Please use the correct format input")
 
 	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
-		'''
-		Arguments:
-			method: splitting schemes: random, cold_drug, scaffold split
-			seed: 'benchmark' seed set to 1234, or int values
-			frac: train/val/test split
-		'''
 		if seed == 'benchmark':
 			seed = 1234
 

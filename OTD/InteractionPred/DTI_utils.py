@@ -5,7 +5,7 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from DrugDataLoader import utils
+from .. import utils
 
 def DAVIS_process(name, path, target = None):
 	

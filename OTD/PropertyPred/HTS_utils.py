@@ -5,7 +5,7 @@ import warnings
 warnings.filterwarnings("ignore")
 from tqdm import tqdm
 
-from DrugDataLoader import utils
+from .. import utils
 
 
 def cid2smiles(cid, cid_dict):

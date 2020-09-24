@@ -4,8 +4,8 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from DrugDataLoader import utils, BaseDataset
-from DrugDataLoader.DTI_utils import *
+from .. import utils, BaseDataset
+from .DTI_utils import *
 
 class DataLoader(BaseDataset.DataLoader):
 	def __init__(self, name, path = './data', target = None, print_stats = True):

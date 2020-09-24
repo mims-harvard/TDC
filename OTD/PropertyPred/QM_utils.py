@@ -4,7 +4,7 @@ import os, sys, json, wget, subprocess
 import warnings
 warnings.filterwarnings("ignore")
 
-from DrugDataLoader import utils
+from .. import utils
 
 utils.install("scipy")
 from scipy import io
