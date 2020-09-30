@@ -7,24 +7,8 @@ warnings.filterwarnings("ignore")
 from .utils import *
 
 class DataLoader:
-	def __init__(self, name, path = './data', print_stats = True):
-		"""
-		Arguments:
-			name: dataset name
-			path: save path 
-			print_stats: print statistics if true
-		"""
-		try:
-			entity1, y, entity1_idx = eval(name + '_process(name, path)')
-
-			self.entity1 = entity1
-			self.y = y
-			self.entity1_idx = entity1_idx
-			self.name = name
-		except:
-			raise AttributeError("Please use the correct and available dataset name!")
-
-		self.entity1_name = 'Entity1'
+	def __init__(self):
+		pass
 
 	def get_data(self, format = 'df'):
 		'''

@@ -1,12 +1,12 @@
 <p align="center"><img src="fig/logo_horizontal.png" alt="logo" width="500px" /></p>
 
 <h3 align="center">
-<p> An Open, Extensive and User-friendly Drug Discovery & Development Dataset Loader
+<p> Therapeutics Data Commons: A Benchmark for Medicinal Machine Learning
 </h3>
 
 ---
 
-This repository hosts DrugDataLoader, an open, user-friendly and extensive dataset loader for drug discovery and development. So far, it includes more than 100+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to patient recruitment, safety survellience and etc) in most of the drug development stages (from discovery and development to clinical trials and post-market monitoring). 
+This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive dataset benchmark for medicinal machine learning tasks. So far, it includes more than 100+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to patient recruitment, safety survellience and etc) in most of the drug development stages (from discovery and development to clinical trials and post-market monitoring). 
 
 ## Features
 
@@ -43,7 +43,7 @@ data.get_data(format = 'DeepPurpose')
 ## Installation
 
 ```bash
-pip install DrugDataLoader
+pip install tdc
 ```
 
 ## Cite
@@ -53,11 +53,11 @@ arxiv placeholder
 ```
 
 ## Core Data Overview
-We have X task formulations and each is associated with many datasets. For example, ADMET is a task formulation and it has its own many datasets. To call a dataset Y from task formulation X, simply calling ```X.DataLoader(name = Y)```.
+We have X task formulations and each is associated with many datasets. For example, ADMET is a task formulation and it has its own many datasets. To call a dataset Y from task formulation X, simply calling ```X(name = Y)```.
 
-### Molecular Property Prediction
+### Property Prediction
 
-* <b>Absorption, Distribution, Metabolism, Excretion and Toxicity</b>```ADMET```
+* <b>Absorption, Distribution, Metabolism, Excretion and Toxicity</b>```ADME```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -114,16 +114,19 @@ We have X task formulations and each is associated with many datasets. For examp
 	 ------------  | ------------------------ | ----------- | ----------- | -----------
 	 Half_life_eDrug3D <br> `ADMET.DataLoader(name = 'Half_life_eDrug3D')`</br> | The duration of action of a drug is known as its half life. This is the period of time required for the concentration or amount of drug in the body to be reduced by one-half. Processed from eDrug3D dataset.| [Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. ](https://pubmed.ncbi.nlm.nih.gov/22539672/)
 	 Clearance_eDrug3D <br>`ADMET.DataLoader(name = 'Clearance_eDrug3D')` </br>| Drug clearance is concerned with the rate at which the active drug is removed from the body. Clearance is defined as the rate of drug elimination divided by the plasma concentration of the drug. Processed from eDrug3D dataset.| [Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. ](https://pubmed.ncbi.nlm.nih.gov/22539672/)
+  	 
+	</details>
 
-
-	 * <h3>Toxicity</h3>
+* <b>Toxicity</b>```Toxicity```
+	<details>
+  	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
   	 Dataset Name  | Description| Reference 
 	 ------------  | ------------------------ | -----------
 	 Tox21 <br> `ADMET.DataLoader(name = 'Tox21', target = 'NR-AR')`, Choose target from [here](https://github.com/kexinhuang12345/DrugDataLoader/blob/ba2035a61897270d49af8a52d2ce51ed1571c6ee/DrugDataLoader/target_list.py#L1) </br>| 2014 Tox21 Data Challenge contains qualitative toxicity measurements for 8k compounds on 12 different targets, including nuclear receptors and stress response pathways. From MoleculeNet. | [Tox21 Challenge.](https://www.frontiersin.org/research-topics/2954/tox21-challenge-to-build-predictive-models-of-nuclear-receptor-and-stress-response-pathways-as-media)
 	 ToxCast <br> `ADMET.DataLoader(name = 'ToxCast', target = 'ACEA_T47D_80hr_Negative')`, Choose target from [here](https://github.com/kexinhuang12345/DrugDataLoader/blob/ba2035a61897270d49af8a52d2ce51ed1571c6ee/DrugDataLoader/target_list.py#L3) </br> | ToxCast includes qualitative results of over 600 experiments on 8k compounds. From MoleculeNet. |[Richard, Ann M., et al. "ToxCast chemical landscape: paving the road to 21st century toxicology." Chemical research in toxicology 29.8 (2016): 1225-1251.](https://pubmed.ncbi.nlm.nih.gov/27367298/)
 	 ClinTox <br> `ADMET.DataLoader(name = 'ClinTox')` </br>| The ClinTox dataset compares drugs that have failed clinical trials for toxicity reasons. From MoleculeNet. | [Gayvert, Kaitlyn M., Neel S. Madhukar, and Olivier Elemento. "A data-driven approach to predicting successes and failures of clinical trials." Cell chemical biology 23.10 (2016): 1294-1301.](https://pubmed.ncbi.nlm.nih.gov/27642066/)
-	</details>
+ 	</details>
 
 * <b>High Throughput Screening BioAssays</b>```HTS```
 	<details>
@@ -151,7 +154,7 @@ We have X task formulations and each is associated with many datasets. For examp
 	QM9 <br> `QM.DataLoader(name = 'QM9, target = 'X')` Choose target from [here](https://github.com/kexinhuang12345/DrugDataLoader/blob/master/DrugDataLoader/target_list.py#L298) </br> | Geometric,  energetic, electronic and thermodynamic properties of DFT-modelled small molecules. From MoleculeNet.|  [R. Ramakrishnan, P. O. Dral, M. Rupp, O. A. von Lilienfeld, Quantum chemistry structures and properties of 134 kilo molecules, Scientific Data 1, 140022, 2014.](http://www.nature.com/articles/sdata201422) | Regression | 22,000 drugs 
 	</details>
 
-### Molecular Interaction Prediction (Interaction Network Link Prediction)
+### Interaction Prediction
 
 * <b>Drug-Target Interaction Prediction Dataset</b>```DTI```
 	<details>
@@ -172,9 +175,9 @@ We have X task formulations and each is associated with many datasets. For examp
 	 ------------ | ------------------------ | -----------
 	</details>
 
-### Molecular Generation & Optimization 
+### Generation
 
- * <b>Paired Molecule Generation</b>```PairedMol```
+* <b>Paired Molecule Generation</b>```PairedMol```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -186,8 +189,6 @@ We have X task formulations and each is associated with many datasets. For examp
 	 JNK3 ||||
 	 GSK-3beta ||||
 	</details>	
-
-### Molecular Synthesis
 
 * <b>Retrosynthesis</b>```RETRO```
 	<details>
@@ -221,7 +222,7 @@ We have X task formulations and each is associated with many datasets. For examp
 
 To retrieve the dataset split, you could simple type
 ```python 
-data = X.DataLoader(name = Y)
+data = X(name = Y)
 data.get_split(seed = 'benchmark')
 # {'train': df_train, 'val': df_val, ''test': df_test}
 ```
@@ -229,53 +230,9 @@ You can specify the splitting method, random seed, and split fractions in the fu
 
 For fair comparison, in default, a benchmark seed is used. You can also explicitly set `seed = 'benchmark'`. We also provide a leaderboard [here](LEADERBOARD.md). Currently, you can submit your scores to kexinhuang@hsph.harvard.edu or directly make a pull request in the leaderboard markdown file.
 
-
-## Supplementary Data
-
-In addition to the core prediction tasks, we also provide many additional useful datasets pointers.
-
-### Drug Library
-
-* <b>Drugs/Chemicals/Ligands Library</b>```DRUG```
-	<details>
-  	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-  	Dataset Name  | Description| Reference 
-	 ------------ | ------------------------ | -----------
-	</details>
-
-* <b>Drug Repurposing Library</b>```REPURPOSE```
-	<details>
-  	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-  	Dataset Name  | Description| Reference | Type | Stats (#drugs)
-	 ------------  | ------------------------ | ----------- | ----------- | -----------
-	 Broad Repurposing Hub ||||
-	 Antiviral ||||
-	</details>
-
-### Protein Library
-
-* <b>Protein Amino Acid Sequence Datasets</b>```PROTEIN1D```
-	<details>
-  	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-  	Dataset Name  | Description| Reference 
-	 ------------ | ------------------------ | -----------
-	</details>
-
-* <b>3D Protein Structure Datasets</b>```PROTEIN3D```
-	<details>
-  	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-  	Dataset Name  | Description| Reference 
-	 ------------ | ------------------------ | -----------
-	</details>
-
-
 ## Examples: How to Make Predictions
 
-DrugDataLoader is designed to rapidly conduct experiments. The data output can be directly used for powerful prediction packages. Here, we show how to use DeepPurpose for more advanced drugs/proteins encoders such as MPNN, Transformers and etc.
+TDC is designed to rapidly conduct experiments. The data output can be directly used for powerful prediction packages. Here, we show how to use DeepPurpose for more advanced drugs/proteins encoders such as MPNN, Transformers and etc.
 
 ### Using DeepPurpose
 <details>
@@ -288,7 +245,7 @@ DrugDataLoader is designed to rapidly conduct experiments. The data output can b
 
 ## Contribute
 
-DrugDataLoader is designed to be a community-driven effort. We know DrugDataLoader only covers tip of iceberg of the data out there. You can easily upload your data by simply writing a function that takes the expected input and output. See step-by-step instruction in the [CONTRIBUTE](CONTRIBUTE.md) page.
+TDC is designed to be a community-driven effort. We know DrugDataLoader only covers tip of iceberg of the data out there. You can easily upload your data by simply writing a function that takes the expected input and output. See step-by-step instruction in the [CONTRIBUTE](CONTRIBUTE.md) page.
 
 ## Contact
 
@@ -296,5 +253,5 @@ Send emails to kexinhuang@hsph.harvard.edu or open an issue.
 
 ## Disclaimer
 
-DrugDataLoader is an open-source effort. Many datasets are aggregated from various public website sources. If it infringes the copyright of the dataset author, please let us know and we will take it down ASAP.
+TDC is an open-source effort. Many datasets are aggregated from various public website sources. If it infringes the copyright of the dataset author, please let us know and we will take it down ASAP.
 

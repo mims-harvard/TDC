@@ -4,11 +4,11 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .. import BaseDataset, utils
+from .. import base_dataset, utils
 from .MolGenPaired_utils import * 
 from .Reaction_utils import * 
 
-class MolGenPaired(BaseDataset.DataLoader):
+class MolGenPaired(base_dataset.DataLoader):
 	'''
 		DataLoader for paired molecules 
 		it contains 
@@ -67,7 +67,7 @@ class MolGenPaired(BaseDataset.DataLoader):
 	def print_stats(self):
 		print(self.name +  ' has ' + str(len(self.X_lst)) + ' molecule pairs.', flush = True, file = sys.stderr)
 
-class Reaction(BaseDataset.DataLoader):
+class Reaction(base_dataset.DataLoader):
 	'''
 		DataLoader for paired molecules 
 		it contains 

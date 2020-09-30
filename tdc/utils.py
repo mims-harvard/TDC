@@ -43,6 +43,69 @@ URLs = {
 	'CathepsinS': 'https://drugdesigndata.org/php/file-download.php?type=extended&id=234'
 }
 
+
+def dataset_load(name, path, target = None, file_format = 'csv'):
+	"""load dataset from server for property prediction
+	
+	Parameters
+	----------
+	name : TYPE
+	    Description
+	path : TYPE
+	    Description
+	target : None, optional
+	    Description
+	file_format : str, optional
+	    Description
+	
+	Returns
+	-------
+	TYPE
+	    Description
+	"""
+	if target is None:
+		target = 'Y'		
+
+	server_path = 'https://otdharvard.s3.amazonaws.com'
+	dataset_path = server_path + '/' + name + '.' + file_format
+	S3_download(dataset_path, path)
+	df = pd.read_csv(os.path.join(path, name + '.' + file_format))
+	df = df[df[target].notnull()].reset_index(drop = True)
+	df = df.iloc[df['X'].drop_duplicates().index.values].reset_index(drop = True)
+
+	return df['X'], df[target], df['ID']
+
+def interaction_dataset_load(name, path, target = None, file_format = 'csv'):
+	"""load dataset from server for interaction prediction
+	
+	Parameters
+	----------
+	name : TYPE
+	    Description
+	path : TYPE
+	    Description
+	target : None, optional
+	    Description
+	file_format : str, optional
+	    Description
+	
+	Returns
+	-------
+	TYPE
+	    Description
+	"""
+	if target is None:
+		target = 'Y'
+
+	server_path = 'https://otdharvard.s3.amazonaws.com'
+	dataset_path = server_path + '/' + name + '.' + file_format
+	S3_download(dataset_path, path)
+	df = pd.read_csv(os.path.join(path, name + '.' + file_format))
+	df = df[df[target].notnull()].reset_index(drop = True)
+	df = df.iloc[df[['X1', 'X2']].drop_duplicates().index.values].reset_index(drop = True)
+
+	return df['X1'], df['X2'], df[target], df['ID1'], df['ID2']
+
 def return_URLs():
 	return URLs
 
@@ -291,3 +354,11 @@ def save_dict(path, obj):
 def load_dict(path):
 	with open(path, 'rb') as f:
 		return pickle.load(f)
+
+dataset_names = []
+toxicity_dataset_names = ['ToxCast', 'Tox21', 'ClinTox']
+adme_dataset_names = ['Lipophilicity_AstraZeneca', 'Solubility_AqSolDB', 'HydrationFreeEnergy_FreeSolv', 'Caco2_Wang', 'HIA_Hou', 'Pgp_Broccatelli', 'F20_eDrug3D', 'F30_eDrug3D', 'Bioavailability_Ma', 'VD_eDrug3D', 'CYP2C19_Veith', 'CYP2D6_Veith', 'CYP3A4_Veith', 'CYP1A2_Veith', 'CYP2C9_Veith', 'HalfLife_eDrug3D', 'Clearance_eDrug3D', 'BBB_Adenot', 'BBB_MolNet', 'PPBR_Ma', 'PPBR_eDrug3D']
+hts_dataset_names = ['PCBA', 'MUV', 'HIV', 'BACE', 'SARS_CoV_3CLPro']
+dti_dataset_names = ['DAVIS', 'KIBA', 'BindingDB_Kd', 'BindingDB_IC50', 'BindingDB_Ki', 'BindingDB_EC50']
+ppi_dataset_names = []
+ddi_dataset_names = []

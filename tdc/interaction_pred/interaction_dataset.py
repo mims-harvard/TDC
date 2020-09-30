@@ -4,32 +4,23 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .. import utils, BaseDataset
-from .DTI_utils import *
+from .. import base_dataset
+from ..utils import *
 
-class DataLoader(BaseDataset.DataLoader):
-	def __init__(self, name, path = './data', target = None, print_stats = True):
-		"""
-		Arguments:
-			name: dataset name
-			path: save path 
-			binary: binarize the label given the threshold
-			threshold: threshold values
-			convert_to_log: for continuous values such as Kd and etc
-			print_stats: print statistics if true
-		"""
-		try:
-			entity1, entity2, raw_y, entity1_idx, entity2_idx = eval(name + '_process(name, path, target)')
-			self.name = name
-			self.entity1 = entity1
-			self.entity2 = entity2
-			self.raw_y = raw_y
-			self.y = raw_y
-			self.entity1_idx = entity1_idx
-			self.entity2_idx = entity2_idx
-
-		except:
-			raise AttributeError("Please use the correct and available dataset name!")
+class DataLoader(base_dataset.DataLoader):
+	def __init__(self, name, path = './data', target = None, print_stats = True, dataset_names = dataset_names):
+		if name in dataset_names: 
+			entity1, entity2, raw_y, entity1_idx, entity2_idx = interaction_dataset_load(name, path, target, 'csv')
+		else:
+			raise AttributeError("Dataset does not exist. Please use the correct and available dataset!")
+		
+		self.name = name
+		self.entity1 = entity1
+		self.entity2 = entity2
+		self.raw_y = raw_y
+		self.y = raw_y
+		self.entity1_idx = entity1_idx
+		self.entity2_idx = entity2_idx
 
 		self.entity1_name = 'Entity1'
 		self.entity2_name = 'Entity2'
@@ -70,11 +61,11 @@ class DataLoader(BaseDataset.DataLoader):
 		df = self.get_data(df = True)
 
 		if method == 'random':
-			return utils.create_fold(df, seed, frac)
+			return create_fold(df, seed, frac)
 		elif method == 'cold_' + self.entity1_name.lower():
-			return utils.create_fold_setting_cold(df, seed, frac, self.entity1_name)
+			return create_fold_setting_cold(df, seed, frac, self.entity1_name)
 		elif method == 'cold_' + self.entity2_name.lower():
-			return utils.create_fold_setting_cold(df, seed, frac, self.entity2_name)
+			return create_fold_setting_cold(df, seed, frac, self.entity2_name)
 
 	def to_graph(self, threshold = None, format = 'edge_list', split = True, frac = [0.7, 0.1, 0.2], seed = 'benchmark'):
 		'''
@@ -92,7 +83,7 @@ class DataLoader(BaseDataset.DataLoader):
 		if len(np.unique(self.raw_y)) > 2:
 			print("The dataset label consists of affinity scores. Binarization using threshold " + str(threshold) + " is conducted to construct the positive edges in the network. Adjust the threshold by to_graph(threshold = X)", flush = True, file = sys.stderr)
 
-		df['label_binary'] = utils.label_transform(self.raw_y, True, threshold, False, verbose  = False)
+		df['label_binary'] = label_transform(self.raw_y, True, threshold, False, verbose  = False)
 		df_pos = df[df.label_binary == 1]
 		df_neg = df[df.label_binary == 0]
 
@@ -109,7 +100,7 @@ class DataLoader(BaseDataset.DataLoader):
 			try:
 				import dgl
 			except:
-				utils.install("dgl")
+				install("dgl")
 				import dgl
 			unique_entities = np.unique(pos_edges.T.flatten()).tolist()
 			index = list(range(len(unique_entities)))
@@ -142,7 +133,7 @@ class DataLoader(BaseDataset.DataLoader):
 			return_dict['df'] = df
 		
 		if split:
-			return_dict['split'] = utils.create_fold(df, seed, frac)
+			return_dict['split'] = create_fold(df, seed, frac)
 
 		return return_dict
 

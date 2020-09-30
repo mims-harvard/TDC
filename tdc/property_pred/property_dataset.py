@@ -4,25 +4,20 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .. import BaseDataset
+from .. import base_dataset
 from ..utils import *
-from .HTS_utils import *
-from .ADME_utils import *
-from .QM_utils import *
-from .Toxicity_utils import *
 
-class DataLoader(BaseDataset.DataLoader):
-	def __init__(self, name, path = './data', target = None, print_stats = True):
-		try:
-			entity1, y, entity1_idx = eval(name + '_process(name, path, target)')
-
-			self.entity1 = entity1
-			self.y = y
-			self.entity1_idx = entity1_idx
-			self.name = name
-		except:
-			raise AttributeError("Please use the correct and available dataset name!")
-
+class DataLoader(base_dataset.DataLoader):
+	def __init__(self, name, path = './data', target = None, print_stats = True, dataset_names = dataset_names):
+		if name in dataset_names: 
+			entity1, y, entity1_idx = dataset_load(name, path, target, 'csv')
+		else:
+			raise AttributeError("Dataset does not exist. Please use the correct and available dataset!")
+		
+		self.entity1 = entity1
+		self.y = y
+		self.entity1_idx = entity1_idx
+		self.name = name
 		self.entity1_name = 'Drug'
 
 		if print_stats:
@@ -63,11 +58,11 @@ class DataLoader(BaseDataset.DataLoader):
 		df = self.get_data(format = 'df')
 
 		if method == 'random':
-			return utils.create_fold(df, seed, frac)
+			return create_fold(df, seed, frac)
 		elif method == 'cold_' + self.entity1_name.lower():
-			return utils.create_fold_setting_cold(df, seed, frac, self.entity1_name)
+			return create_fold_setting_cold(df, seed, frac, self.entity1_name)
 		elif method == 'scaffold':
-			return utils.create_scaffold_split(df, seed, frac, self.entity1_name)
+			return create_scaffold_split(df, seed, frac, self.entity1_name)
 		else:
 			raise AttributeError("Please specify the correct splitting method")
 
