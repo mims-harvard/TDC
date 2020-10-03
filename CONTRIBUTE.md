@@ -1,41 +1,21 @@
 # Thanks for contributing! 
 
-It is very easy to add your dataset to Drug Data Loader! Here are the steps:
+It is very easy to add your dataset to our repository! Here are the steps:
 
-1. Select from the following dataset types: DTI, DrugProp, ProtFunc, Drugs, Proteins, Targets and go to the correct X_utils.py file in the DrugDataLoader folder.
-
-2. Suppose the dataset we are creating is called DAVIS. Write a function in the end of the X_utils.py file with the function name DAVIS_process and this function should have the arguments and returns corresponding to the task types; e.g. for DTI task, we expect arguments ```name, path, binary, convert_to_log, threshold``` and returns ```drugs, targets, y``` where they are all np.array. You can follow the examples in each file or follow the documentation in the end of this file. 
-
-
-The default values should be addressed explicitly
-The print function should have ```print('XXX', flush = True, file = sys.stderr)```
-
-
-### Note:
-
-Add a URL in the URLs dictionary in the utils.py; The URL should point to a S3 / Google Drive folder.zip file where the zip folder name is set to be the dataset name e.g. DAVIS.zip. 
+1. Write up your data processing scripts and the output should be the expected format (described in the end of this file) of each task formulation. 
+2. Name the dataset file as the `dataset name.csv`. Send us your processed data to upload to the data storing server. 
+3. Wite description of the dataset in the corresponding section in the README file. 
+4. Add the dataset name to the dataset name list in the end of `utils.py`.
 
 
 
-3. Write a script in the __init__ function in the DataLoader class
+## Expected Format
 
-Add an elif clause that returns the correct output (self.Xs), e.g.
+Property Prediction: a csv file with three columns: 'ID': the ids of the data (e.g. DrugBank ID), X': the standard data format (e.g. SMILES), 'Y': the label values (e.g. IC50). In the case of multiple values available, you can specify the column name as the specific label description (e.g. 'NR-AR'), this way, the user can call "X(name = 'Your new dataset', target = 'NR-AR')" to retrieve the data with the wanted label information.
 
-For DTI.py, add dataset name 'XXX' 
+Interaction Prediction: a csv file with four columns: 'ID1', 'ID2': the IDs of each entity pairs; 'X1', 'X2': the standard data input format for entity 1, 2 (e.g. SMILES); if the label is available, then put it in 'Y' column or if you have multiple labels, then specify the label name as the column name. 
 
-```python
-
-
-```
-
-Here are the expected outputs for each dataset type:
-
-DTI: self.drugs: np.array, self.targets: np.array, self.y: np.array
-
-Add to the README
-
-function arguments default values
-
-Unit Test
-
-Run get_data get_split
+Generation:
+	Reaction:
+	MolGenPaired:
+	MolGenDist:

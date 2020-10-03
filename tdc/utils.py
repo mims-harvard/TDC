@@ -94,13 +94,18 @@ def interaction_dataset_load(name, path, target = None, file_format = 'csv'):
 	TYPE
 	    Description
 	"""
-	if target is None:
-		target = 'Y'
 
 	server_path = 'https://otdharvard.s3.amazonaws.com'
 	dataset_path = server_path + '/' + name + '.' + file_format
 	S3_download(dataset_path, path)
 	df = pd.read_csv(os.path.join(path, name + '.' + file_format))
+
+	if target is None:
+		target = 'Y'
+		if target not in df.columns.values:
+			# for binary interaction data, the labels are all 1. negative samples can be sampled from utils.NegSample function
+			df[target] = 1
+
 	df = df[df[target].notnull()].reset_index(drop = True)
 	df = df.iloc[df[['X1', 'X2']].drop_duplicates().index.values].reset_index(drop = True)
 
@@ -339,6 +344,42 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
     response = urlopen(apiurl, postdata)
     return response
 
+def NegSample(df):
+    """Negative Sampling for Binary Interaction Dataset
+    
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Data File
+    """
+    raise ValueError
+
+
+def GetProteinSequence(ProteinID):
+	"""Get protein sequence from Uniprot ID
+	
+	Parameters
+	----------
+	ProteinID : str
+	    Uniprot ID
+	
+	Returns
+	-------
+	str
+	    Amino acid sequence of input uniprot ID
+	"""
+	import urllib
+	import string
+	import urllib.request as ur
+
+	ID = str(ProteinID)
+	localfile = ur.urlopen('http://www.uniprot.org/uniprot/' + ID + '.fasta')
+	temp = localfile.readlines()
+	res = ''
+	for i in range(1, len(temp)):
+		res = res + temp[i].strip().decode("utf-8")
+	return res
+
 def cid2smiles(cid):
 	try:
 		smiles = _parse_prop({'label': 'SMILES', 'name': 'Canonical'}, json.loads(request(cid).read().decode())['PC_Compounds'][0]['props'])
@@ -360,5 +401,5 @@ toxicity_dataset_names = ['ToxCast', 'Tox21', 'ClinTox']
 adme_dataset_names = ['Lipophilicity_AstraZeneca', 'Solubility_AqSolDB', 'HydrationFreeEnergy_FreeSolv', 'Caco2_Wang', 'HIA_Hou', 'Pgp_Broccatelli', 'F20_eDrug3D', 'F30_eDrug3D', 'Bioavailability_Ma', 'VD_eDrug3D', 'CYP2C19_Veith', 'CYP2D6_Veith', 'CYP3A4_Veith', 'CYP1A2_Veith', 'CYP2C9_Veith', 'HalfLife_eDrug3D', 'Clearance_eDrug3D', 'BBB_Adenot', 'BBB_MolNet', 'PPBR_Ma', 'PPBR_eDrug3D']
 hts_dataset_names = ['PCBA', 'MUV', 'HIV', 'BACE', 'SARS_CoV_3CLPro']
 dti_dataset_names = ['DAVIS', 'KIBA', 'BindingDB_Kd', 'BindingDB_IC50', 'BindingDB_Ki', 'BindingDB_EC50']
-ppi_dataset_names = []
+ppi_dataset_names = ['HuRI']
 ddi_dataset_names = []

@@ -175,6 +175,15 @@ We have X task formulations and each is associated with many datasets. For examp
 	 ------------ | ------------------------ | -----------
 	</details>
 
+* <b>Protein-Protein Interaction Prediction Dataset</b>```PPI```
+	<details>
+  	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	 Dataset Name  | Description| Reference | Type | Stats (pairs/#proteins)
+	 ------------  | ------------------------ | ----------- | ----------- | -----------
+	 HuRI <br> `PPI(name = 'HuRI)` </br> | All pairwise combinations of human protein-coding genes are systematically being interrogated to identify which are involved in binary protein-protein interactions. In our most recent effort 17,500 proteins have been tested and a first human reference interactome (HuRI) map has been generated. From the Center for Cancer Systems Biology at Dana-Farber Cancer Institute. | [Luck, K., Kim, D., Lambourne, L. et al. A reference map of the human binary protein interactome. Nature 580, 402–408 (2020). ](https://doi.org/10.1038/s41586-020-2188-x) | Binary/Network | 51,813/8,248
+	</details>
+
 ### Generation
 
 * <b>Paired Molecule Generation</b>```MolGenPaired```
