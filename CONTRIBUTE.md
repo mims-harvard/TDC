@@ -19,3 +19,5 @@ Generation:
 	Reaction:
 	MolGenPaired:
 	MolGenDist:
+
+If it is a multi-class problem, the label should be integer and then you can create a separate column under name `Map` that specifies the meaning of each label. Then, you can use the `get_label_meaning` function to retrieve the meaning of each label. 
