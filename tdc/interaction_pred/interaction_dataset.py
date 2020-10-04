@@ -21,7 +21,10 @@ class DataLoader(base_dataset.DataLoader):
 		self.y = raw_y
 		self.entity1_idx = entity1_idx
 		self.entity2_idx = entity2_idx
-
+		self.path = path
+		self.file_format = 'csv'
+		self.target = target
+		
 		self.entity1_name = 'Entity1'
 		self.entity2_name = 'Entity2'
 

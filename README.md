@@ -162,17 +162,19 @@ We have X task formulations and each is associated with many datasets. For examp
 
 	 Dataset Name  | Description| Reference | Type | Stats (pairs/#drugs/#targets)
 	 ------------  | ------------------------ | ----------- | ----------- | -----------
-	 BindingDB <br> `DTI.DataLoader(name = 'BindingDB, target = 'X')` Choose target from Kd, IC50, EC50, or Ki </br> | BindingDB is a public, web-accessible database of measured binding affinities, focusing chiefly on the interactions of protein considered to be drug-targets with small, drug-like molecules. | [BindingDB: a web-accessible database of experimentally determined protein–ligand binding affinities](https://academic.oup.com/nar/article-abstract/35/suppl_1/D198/1119109) | Regression (log)/Binary | 66,444/10,665/1,413 for Kd, 1,073,803/549,205/5,078 for IC50, 151,413/91,773/1,240 for EC50, 41,0478/174,662/3,070 for Ki
-	 DAVIS  <br> `DTI.DataLoader(name = 'DAVIS')` </br> | The interaction of 72 kinase inhibitors with 442 kinases covering >80% of the human catalytic protein kinome. | [Davis, M., Hunt, J., Herrgard, S. et al. Comprehensive analysis of kinase inhibitor selectivity. Nat Biotechnol 29, 1046–1051 (2011).](https://www.nature.com/articles/nbt.1990) | Regression (log)/Binary | 30,056/68/379
-	 KIBA  <br> `DTI.DataLoader(name = 'KIBA')`  </br>| An integrated drug-target bioactivity matrix across 52,498 chemical compounds and 467 kinase targets, including a total of 246,088 KIBA scores, has been made freely available. | [Tang J, Szwajda A, Shakyawar S, et al. Making sense of large-scale kinase inhibitor bioactivity data sets: a comparative and integrative analysis. J Chem Inf Model. 2014;54(3):735-743.](https://pubmed.ncbi.nlm.nih.gov/24521231/) | Regression | 118,254/2,068/229
+	 BindingDB <br> `DTI(name = 'BindingDB_X')` Choose X from Kd, IC50, EC50, or Ki </br> | BindingDB is a public, web-accessible database of measured binding affinities, focusing chiefly on the interactions of protein considered to be drug-targets with small, drug-like molecules. | [BindingDB: a web-accessible database of experimentally determined protein–ligand binding affinities](https://academic.oup.com/nar/article-abstract/35/suppl_1/D198/1119109) | Regression (log)/Binary | 66,444/10,665/1,413 for Kd, 1,073,803/549,205/5,078 for IC50, 151,413/91,773/1,240 for EC50, 41,0478/174,662/3,070 for Ki
+	 DAVIS  <br> `DTI(name = 'DAVIS')` </br> | The interaction of 72 kinase inhibitors with 442 kinases covering >80% of the human catalytic protein kinome. | [Davis, M., Hunt, J., Herrgard, S. et al. Comprehensive analysis of kinase inhibitor selectivity. Nat Biotechnol 29, 1046–1051 (2011).](https://www.nature.com/articles/nbt.1990) | Regression (log)/Binary | 30,056/68/379
+	 KIBA  <br> `DTI(name = 'KIBA')`  </br>| An integrated drug-target bioactivity matrix across 52,498 chemical compounds and 467 kinase targets, including a total of 246,088 KIBA scores, has been made freely available. | [Tang J, Szwajda A, Shakyawar S, et al. Making sense of large-scale kinase inhibitor bioactivity data sets: a comparative and integrative analysis. J Chem Inf Model. 2014;54(3):735-743.](https://pubmed.ncbi.nlm.nih.gov/24521231/) | Regression | 118,254/2,068/229
 	</details>
 
 * <b>Drug-Drug Interaction Prediction Dataset</b>```DDI```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
-  	Dataset Name  | Description| Reference 
-	 ------------ | ------------------------ | -----------
+  	 Dataset Name  | Description| Reference  | Type | Stats (pairs/#drugs)
+	 ------------ | ------------------------ | ----------- | ----------- | -----------
+	 DrugBank | DrugBank drug-drug interaction dataset is manually sourced from FDA/Health Canada drug labels as well as primary literature. It has 86 interaction types. Drug SMILES is provided. | [Wishart DS, et al. (2017) DrugBank 5.0: A major update to the DrugBank database for 2018. Nucleic Acids Res 46:D1074–D1082.](https://academic.oup.com/nar/article/46/D1/D1074/4602867) | Multi-Class/Network | 191,519/1,706
+	 TWOSIDES | Polypharmacy side-effects are associated with drug pairs (or higher-order drug combinations) and cannot be attributed to either individual drug in the pair (in a drug combination). | [Tatonetti, Nicholas P., et al. Data-driven prediction of drug effects and interactions. Science Translational Medicine. 2012.](https://stm.sciencemag.org/content/4/125/125ra31.short) | Multi-Label/Network | 4,649,441/645
 	</details>
 
 * <b>Protein-Protein Interaction Prediction Dataset</b>```PPI```

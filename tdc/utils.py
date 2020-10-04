@@ -71,7 +71,7 @@ def dataset_load(name, path, target = None, file_format = 'csv'):
 	S3_download(dataset_path, path)
 	df = pd.read_csv(os.path.join(path, name + '.' + file_format))
 	df = df[df[target].notnull()].reset_index(drop = True)
-	df = df.iloc[df['X'].drop_duplicates().index.values].reset_index(drop = True)
+	#df = df.iloc[df['X'].drop_duplicates().index.values].reset_index(drop = True)
 
 	return df['X'], df[target], df['ID']
 
@@ -107,9 +107,26 @@ def interaction_dataset_load(name, path, target = None, file_format = 'csv'):
 			df[target] = 1
 
 	df = df[df[target].notnull()].reset_index(drop = True)
-	df = df.iloc[df[['X1', 'X2']].drop_duplicates().index.values].reset_index(drop = True)
+	#df = df.iloc[df[['X1', 'X2']].drop_duplicates().index.values].reset_index(drop = True)
 
 	return df['X1'], df['X2'], df[target], df['ID1'], df['ID2']
+
+def get_label_map(name, path, target = None, file_format = 'csv', output_format = 'dict'):
+	if target is None:
+		target = 'Y'		
+
+	server_path = 'https://otdharvard.s3.amazonaws.com'
+	dataset_path = server_path + '/' + name + '.' + file_format
+	df = pd.read_csv(os.path.join(path, name + '.' + file_format))
+
+	if output_format == 'dict':
+		return dict(zip(df[target].values, df['Map'].values))
+	elif output_format == 'df':
+		return df
+	elif output_format == 'array':
+		return df['Map'].values
+	else:
+		raise ValueError("Please use the correct output format, select from dict, df, array.")
 
 def return_URLs():
 	return URLs
@@ -402,4 +419,4 @@ adme_dataset_names = ['Lipophilicity_AstraZeneca', 'Solubility_AqSolDB', 'Hydrat
 hts_dataset_names = ['PCBA', 'MUV', 'HIV', 'BACE', 'SARS_CoV_3CLPro']
 dti_dataset_names = ['DAVIS', 'KIBA', 'BindingDB_Kd', 'BindingDB_IC50', 'BindingDB_Ki', 'BindingDB_EC50']
 ppi_dataset_names = ['HuRI']
-ddi_dataset_names = []
+ddi_dataset_names = ['DrugBank', 'TWOSIDES']

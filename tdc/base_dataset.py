@@ -4,7 +4,7 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .utils import *
+from . import utils
 
 class DataLoader:
 	def __init__(self):
@@ -102,7 +102,10 @@ class DataLoader:
 	def convert_from_log(self):
 		print('Convert Back To Original space...', flush = True, file = sys.stderr)
 		self.y = utils.convert_back_log(self.y)
-		return self
+		return self		
+
+	def get_label_meaning(self, output_format = 'dict'):
+		return utils.get_label_map(self.name, self.path, self.target, file_format = self.file_format, output_format = output_format)
 
 	def balanced(self, oversample = False, seed = 'benchmark'):
 		if seed == 'benchmark':

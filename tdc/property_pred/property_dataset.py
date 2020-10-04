@@ -19,7 +19,10 @@ class DataLoader(base_dataset.DataLoader):
 		self.entity1_idx = entity1_idx
 		self.name = name
 		self.entity1_name = 'Drug'
-
+		self.path = path
+		self.file_format = 'csv'
+		self.target = target
+		
 		if print_stats:
 			self.print_stats()
 
