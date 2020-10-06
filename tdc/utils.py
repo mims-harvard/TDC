@@ -416,7 +416,7 @@ def load_dict(path):
 dataset_names = []
 toxicity_dataset_names = ['ToxCast', 'Tox21', 'ClinTox']
 adme_dataset_names = ['Lipophilicity_AstraZeneca', 'Solubility_AqSolDB', 'HydrationFreeEnergy_FreeSolv', 'Caco2_Wang', 'HIA_Hou', 'Pgp_Broccatelli', 'F20_eDrug3D', 'F30_eDrug3D', 'Bioavailability_Ma', 'VD_eDrug3D', 'CYP2C19_Veith', 'CYP2D6_Veith', 'CYP3A4_Veith', 'CYP1A2_Veith', 'CYP2C9_Veith', 'HalfLife_eDrug3D', 'Clearance_eDrug3D', 'BBB_Adenot', 'BBB_MolNet', 'PPBR_Ma', 'PPBR_eDrug3D']
-hts_dataset_names = ['PCBA', 'MUV', 'HIV', 'BACE', 'SARS_CoV_3CLPro']
+hts_dataset_names = ['HIV', 'SARSCoV2_3CLPro_Diamond', 'SARSCoV2_Vitro_Touret']
 dti_dataset_names = ['DAVIS', 'KIBA', 'BindingDB_Kd', 'BindingDB_IC50', 'BindingDB_Ki', 'BindingDB_EC50']
 ppi_dataset_names = ['HuRI']
 ddi_dataset_names = ['DrugBank', 'TWOSIDES']
