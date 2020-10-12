@@ -138,6 +138,9 @@ def download(name, path):
 		wget.download(name, path)
 
 def S3_download(name, path):
+	if not os.path.exists(path):
+		os.mkdir(path)
+		
 	if name[:4] == 'http':
 		if os.path.exists(os.path.join(path,name.split('/')[-1])):
 			print('Dataset already downloaded in the local system...', flush = True, file = sys.stderr)

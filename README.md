@@ -1,12 +1,12 @@
 <p align="center"><img src="fig/logo_horizontal.png" alt="logo" width="500px" /></p>
 
 <h3 align="center">
-<p> Therapeutics Data Commons: A Benchmark for Medicinal Machine Learning
+<p> Therapeutics Data Commons: Datasets for Medicinal Machine Learning
 </h3>
 
 ---
 
-This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive dataset benchmark for medicinal machine learning tasks. So far, it includes more than 100+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to patient recruitment, safety survellience and etc) in most of the drug development stages (from discovery and development to clinical trials and post-market monitoring). 
+This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive dataset hub for medicinal machine learning tasks. So far, it includes more than 100+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to patient recruitment, safety survellience and etc) in most of the drug development stages (from discovery and development to clinical trials and post-market monitoring). 
 
 ## Features
 
@@ -225,7 +225,7 @@ We have X task formulations and each is associated with many datasets. For examp
 	</details>	
 
 
-## Data Split and Benchmarking
+## Data Split
 
 To retrieve the dataset split, you could simply type
 ```python 
@@ -235,7 +235,9 @@ data.get_split(seed = 'benchmark')
 ```
 You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'cold_drug', seed = 1, frac = [0.7, 0.1, 0.2])`. For drug property prediction, a scaffold split function is also provided. Simply set `method = 'scaffold'`. 
 
-For fair comparison, in default, a benchmark seed is used. You can also explicitly set `seed = 'benchmark'`. We also provide a leaderboard [here](LEADERBOARD.md). Currently, you can submit your scores to kexinhuang@hsph.harvard.edu or directly make a pull request in the leaderboard markdown file.
+## Benchmark and Leaderboard
+
+We are actively working on a more systematic way to benchmark and leaderboard methods. We would release this feature in the next version. In the meantime, if you have expertise or interest in helping build this feature, please send emails to kexinhuang@hsph.harvard.edu.
 
 ## Examples: How to Make Predictions
 
