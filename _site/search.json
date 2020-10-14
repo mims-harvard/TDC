@@ -5,21 +5,21 @@
     
     {
       "title": "Welcome",
-      "url": "/tdc/docs/home/"
+      "url": "/docs/home/"
     },
   
     
     
     {
       "title": "Themes",
-      "url": "/tdc/docs/themes/"
+      "url": "/docs/themes/"
     },
   
     
     
     {
       "title": "Customization",
-      "url": "/tdc/docs/customization/"
+      "url": "/docs/customization/"
     },
   
 
@@ -28,21 +28,21 @@
     
     {
       "title": "Markdown Cheatsheet",
-      "url": "/tdc/docs/cheatsheet/"
+      "url": "/docs/cheatsheet/"
     },
   
     
     
     {
       "title": "Font Awesome Icon List",
-      "url": "/tdc/docs/font-awesome/"
+      "url": "/docs/font-awesome/"
     },
   
     
     
     {
       "title": "Bootstrap Features",
-      "url": "/tdc/docs/bootstrap/"
+      "url": "/docs/bootstrap/"
     },
   
 
@@ -50,12 +50,12 @@
   
   {
   "title": "Jekyll Doc Theme is published!",
-  "url": "/tdc/blog/2017/05/03/jekyll-doc-theme/"
+  "url": "/blog/2017/05/03/jekyll-doc-theme/"
   },
   
   {
   "title": "Welcome to Jekyll!",
-  "url": "/tdc/blog/2017/02/01/welcome-to-jekyll/"
+  "url": "/blog/2017/02/01/welcome-to-jekyll/"
   }
   
 ]
