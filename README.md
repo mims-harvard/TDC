@@ -1,7 +1,7 @@
-<p align="center"><img src="fig/logo_horizontal.png" alt="logo" width="500px" /></p>
+<p align="center"><img src="fig/logo.png" alt="logo" width="200px" /></p>
 
 <h3 align="center">
-<p> Therapeutics Data Commons: Datasets for Medicinal Machine Learning
+<p> Datasets for Medicinal Machine Learning
 </h3>
 
 ---
@@ -18,14 +18,16 @@ This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly an
 
 ## Example
 
+```
+GIF placeholder
 ![](fig/example.gif)
-
+```
 <details>
 <summary>CLICK HERE FOR THE CODE!</summary>
 
 ```python
-from DrugDataLoader import ADMET
-data = ADMET.DataLoader(name = 'LogD74')
+from tdc.property_pred import ADME
+data = ADME(name = 'LogD74')
 # scaffold split using benchmark seed
 split = data.get_split(method = 'scaffold', seed = 'benchmark')
 # visualize label distribution

@@ -8,11 +8,8 @@ from .. import base_dataset
 from ..utils import *
 
 class DataLoader(base_dataset.DataLoader):
-	def __init__(self, name, path = './data', target = None, print_stats = True, dataset_names = dataset_names):
-		if name in dataset_names: 
-			entity1, y, entity1_idx = dataset_load(name, path, target, 'csv')
-		else:
-			raise AttributeError("Dataset does not exist. Please use the correct and available dataset!")
+	def __init__(self, name, path, target, print_stats, dataset_names):
+		entity1, y, entity1_idx = property_dataset_load(name, path, target)
 		
 		self.entity1 = entity1
 		self.y = y
@@ -70,4 +67,4 @@ class DataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please specify the correct splitting method")
 
 	def print_stats(self):
-		print('There are ' + str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's', flush = True, file = sys.stderr)
+		print('There are ' + str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.', flush = True, file = sys.stderr)

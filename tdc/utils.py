@@ -7,7 +7,10 @@ import json
 import warnings
 import subprocess
 import pickle
+from fuzzywuzzy import fuzz
 warnings.filterwarnings("ignore")
+
+from .metadata import name2type, name2id, dataset_list
 
 try:
     from urllib.error import HTTPError
@@ -17,107 +20,62 @@ except ImportError:
     from urllib import urlencode
     from urllib2 import quote, urlopen, HTTPError
 
-URLs = {
-	'DAVIS': 'https://drive.google.com/uc?export=download&id=14h-0YyHN8lxuc0KV3whsaSaA-4KSmiVN',
-	'KIBA': 'https://drive.google.com/uc?export=download&id=1fb3ZI-3_865OuRMWNMzLPnbLm9CktM44',
-	'Lipo_AZ': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/lipophilicity.zip',
-	'FreeSolv': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/FreeSolv.zip',
-	'ESOL': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/ESOL.zip',
-	'BBBP': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/bbbp.zip',
-	'Tox21': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/tox21.zip',
-	'ToxCast': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/toxcast.zip',
-	'ClinTox': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/clintox.zip',
-	'AqSolDB': 'https://dataverse.harvard.edu/api/access/datafile/3407241?format=original&gbrecs=true',
-	'PCBA': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/pcba.zip',
-	'MUV': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/muv.zip',
-	'HIV': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/hiv.zip',
-	'PDBind': 'http://deepchem.io.s3-website-us-west-1.amazonaws.com/datasets/pdbbind_v2015.tar.gz',
-	'BACE': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/bace.zip',
-	'BindingDB_Kd': 'https://drugdataloader.s3.amazonaws.com/BindingDB_Kd.csv.zip',
-	'BindingDB_Ki': 'https://drugdataloader.s3.amazonaws.com/BindingDB_Ki.csv.zip',
-	'BindingDB_IC50': 'https://drugdataloader.s3.amazonaws.com/BindingDB_IC50.csv.zip',
-	'BindingDB_EC50': 'https://drugdataloader.s3.amazonaws.com/BindingDB_EC50.csv.zip',
-	'QM7': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/qm7b.zip',
-	'QM8': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/qm8.zip',
-	'QM9': 'https://s3-us-west-1.amazonaws.com/deepchem.io/datasets/molnet_publish/qm9.zip',
-	'CathepsinS': 'https://drugdesigndata.org/php/file-download.php?type=extended&id=234'
-}
+def fuzzy_search(name):
+	name = name.lower()
+	if name in dataset_list:
+		return name
+	else: 
+		return get_closet_match(dataset_list, name)[0]
 
+def download_wrapper(name, path):
+	name = fuzzy_search(name)
+	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
+	dataset_path = server_path + str(name2id[name])
 
-def dataset_load(name, path, target = None, file_format = 'csv'):
-	"""load dataset from server for property prediction
-	
-	Parameters
-	----------
-	name : TYPE
-	    Description
-	path : TYPE
-	    Description
-	target : None, optional
-	    Description
-	file_format : str, optional
-	    Description
-	
-	Returns
-	-------
-	TYPE
-	    Description
-	"""
+	if not os.path.exists(path):
+		os.mkdir(path)
+
+	if os.path.exists(os.path.join(path, name + '.' + name2type[name])):
+		print_sys('Dataset already downloaded in the local system...')
+	else:
+		dataverse_download(dataset_path, path)
+	return name
+
+def pd_load(name, path):
+	if name2type[name] == 'tab':
+		df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]), sep = '\t')
+	elif name2type[name] == 'csv':
+		df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]))
+	else:
+		raise ValueError("The file type must be one of tab/csv.")
+	return df
+
+def property_dataset_load(name, path, target = None):
 	if target is None:
 		target = 'Y'		
-
-	server_path = 'https://otdharvard.s3.amazonaws.com'
-	dataset_path = server_path + '/' + name + '.' + file_format
-	S3_download(dataset_path, path)
-	df = pd.read_csv(os.path.join(path, name + '.' + file_format))
+	name = download_wrapper(name, path)
+	df = pd_load(name, path)
 	df = df[df[target].notnull()].reset_index(drop = True)
-	#df = df.iloc[df['X'].drop_duplicates().index.values].reset_index(drop = True)
 
 	return df['X'], df[target], df['ID']
 
-def interaction_dataset_load(name, path, target = None, file_format = 'csv'):
-	"""load dataset from server for interaction prediction
-	
-	Parameters
-	----------
-	name : TYPE
-	    Description
-	path : TYPE
-	    Description
-	target : None, optional
-	    Description
-	file_format : str, optional
-	    Description
-	
-	Returns
-	-------
-	TYPE
-	    Description
-	"""
-
-	server_path = 'https://otdharvard.s3.amazonaws.com'
-	dataset_path = server_path + '/' + name + '.' + file_format
-	S3_download(dataset_path, path)
-	df = pd.read_csv(os.path.join(path, name + '.' + file_format))
-
+def interaction_dataset_load(name, path, target = None):
+	name = download_wrapper(name, path)
+	df = pd_load(name, path)
 	if target is None:
 		target = 'Y'
-		if target not in df.columns.values:
-			# for binary interaction data, the labels are all 1. negative samples can be sampled from utils.NegSample function
-			df[target] = 1
+	if target not in df.columns.values:
+		# for binary interaction data, the labels are all 1. negative samples can be sampled from utils.NegSample function
+		df[target] = 1
 
 	df = df[df[target].notnull()].reset_index(drop = True)
-	#df = df.iloc[df[['X1', 'X2']].drop_duplicates().index.values].reset_index(drop = True)
 
 	return df['X1'], df['X2'], df[target], df['ID1'], df['ID2']
 
 def get_label_map(name, path, target = None, file_format = 'csv', output_format = 'dict'):
 	if target is None:
 		target = 'Y'		
-
-	server_path = 'https://otdharvard.s3.amazonaws.com'
-	dataset_path = server_path + '/' + name + '.' + file_format
-	df = pd.read_csv(os.path.join(path, name + '.' + file_format))
+	df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]))
 
 	if output_format == 'dict':
 		return dict(zip(df[target].values, df['Map'].values))
@@ -128,50 +86,9 @@ def get_label_map(name, path, target = None, file_format = 'csv', output_format 
 	else:
 		raise ValueError("Please use the correct output format, select from dict, df, array.")
 
-def return_URLs():
-	return URLs
-
-def download(name, path):
-	if os.path.exists(os.path.join(path,name)):
-		print('Dataset already downloaded in the local system...', flush = True, file = sys.stderr)
-	else:
-		wget.download(name, path)
-
-def S3_download(name, path):
-	if not os.path.exists(path):
-		os.mkdir(path)
-		
-	if name[:4] == 'http':
-		if os.path.exists(os.path.join(path,name.split('/')[-1])):
-			print('Dataset already downloaded in the local system...', flush = True, file = sys.stderr)
-		else:
-			wget.download(name, path)
-	else:
-		if os.path.exists(os.path.join(path,name + '.csv')):
-			print('Dataset already downloaded in the local system...', flush = True, file = sys.stderr)
-		else:
-			wget.download('https://drugdataloader.s3.amazonaws.com/' + name + '.csv', path)
-
-def download_unzip(name, path, file_name):
-	"""
-	Arguments:
-		name: dataset name
-		path: save path 
-
-	"""
-	if not os.path.exists(path):
-		os.mkdir(path)
-
-	if os.path.exists(os.path.join(path, file_name)):
-		print('Dataset already downloaded in the local system...', flush = True, file = sys.stderr)
-	else:
-		print('Download zip file...', flush = True, file = sys.stderr)
-		url = URLs[name]
-		saved_path = wget.download(url, path)
-
-		print('Extract zip file...', flush = True, file = sys.stderr)
-		with ZipFile(saved_path, 'r') as zip: 
-		    zip.extractall(path = path) 
+def dataverse_download(dataset_path, path):
+	print_sys("Downloading...")
+	wget.download(dataset_path, path)
 
 def convert_y_unit(y, from_, to_):
 	"""
@@ -259,9 +176,7 @@ def create_fold_setting_cold(df, fold_seed, frac, entity):
 
 	train_val = df[~df[entity].isin(gene_drop)]
 
-	gene_drop_val = train_val[entity].drop_duplicates().sample(frac = val_frac/(1-test_frac), 
-																		  replace = False, 
-																		  random_state = fold_seed).values
+	gene_drop_val = train_val[entity].drop_duplicates().sample(frac = val_frac/(1-test_frac), replace = False, random_state = fold_seed).values
 	val = train_val[train_val[entity].isin(gene_drop_val)]
 	train = train_val[~train_val[entity].isin(gene_drop_val)]
 
@@ -408,6 +323,43 @@ def cid2smiles(cid):
 		smiles = 'NULL'
 	return smiles
 
+def get_closet_match(predefined_tokens, test_token, threshold=0.8):
+    """Get the closest match by Levenshtein Distance.
+
+    Parameters
+    ----------
+    predefined_tokens : list of string
+        Predefined string tokens.
+        
+    test_token : string 
+        User input that needs matching to existing tokens.
+        
+    threshold : float in (0, 1), optional (default=0.8)
+        The lowest match score to raise errors.
+
+    Returns
+    -------
+
+    """
+    prob_list = []
+
+    for token in predefined_tokens:
+        # print(token)
+        prob_list.append(
+            fuzz.ratio(str(token).lower(), str(test_token).lower()))
+
+    assert (len(prob_list) == len(predefined_tokens))
+
+    prob_max = np.nanmax(prob_list)
+    token_max = predefined_tokens[np.nanargmax(prob_list)]
+
+    # match similarity is low
+    if prob_max / 100 < threshold:
+        raise ValueError(test_token,
+                         "does not match to existing datasets. "
+                         "Please double check.")
+    return token_max, prob_max / 100
+
 def save_dict(path, obj):
 	with open(path, 'wb') as f:
 		pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
@@ -415,11 +367,3 @@ def save_dict(path, obj):
 def load_dict(path):
 	with open(path, 'rb') as f:
 		return pickle.load(f)
-
-dataset_names = []
-toxicity_dataset_names = ['ToxCast', 'Tox21', 'ClinTox']
-adme_dataset_names = ['Lipophilicity_AstraZeneca', 'Solubility_AqSolDB', 'HydrationFreeEnergy_FreeSolv', 'Caco2_Wang', 'HIA_Hou', 'Pgp_Broccatelli', 'F20_eDrug3D', 'F30_eDrug3D', 'Bioavailability_Ma', 'VD_eDrug3D', 'CYP2C19_Veith', 'CYP2D6_Veith', 'CYP3A4_Veith', 'CYP1A2_Veith', 'CYP2C9_Veith', 'HalfLife_eDrug3D', 'Clearance_eDrug3D', 'BBB_Adenot', 'BBB_MolNet', 'PPBR_Ma', 'PPBR_eDrug3D']
-hts_dataset_names = ['HIV', 'SARSCoV2_3CLPro_Diamond', 'SARSCoV2_Vitro_Touret']
-dti_dataset_names = ['DAVIS', 'KIBA', 'BindingDB_Kd', 'BindingDB_IC50', 'BindingDB_Ki', 'BindingDB_EC50']
-ppi_dataset_names = ['HuRI']
-ddi_dataset_names = ['DrugBank', 'TWOSIDES']

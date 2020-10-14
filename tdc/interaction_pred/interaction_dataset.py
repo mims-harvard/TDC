@@ -8,11 +8,8 @@ from .. import base_dataset
 from ..utils import *
 
 class DataLoader(base_dataset.DataLoader):
-	def __init__(self, name, path = './data', target = None, print_stats = True, dataset_names = dataset_names):
-		if name in dataset_names: 
-			entity1, entity2, raw_y, entity1_idx, entity2_idx = interaction_dataset_load(name, path, target, 'csv')
-		else:
-			raise AttributeError("Dataset does not exist. Please use the correct and available dataset!")
+	def __init__(self, name, path, target, print_stats, dataset_names):
+		entity1, entity2, raw_y, entity1_idx, entity2_idx = interaction_dataset_load(name, path, target)
 		
 		self.name = name
 		self.entity1 = entity1
@@ -47,9 +44,9 @@ class DataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please use the correct format input")
 
 	def print_stats(self):
-		print('There are ' + str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's', flush = True, file = sys.stderr)
-		print('There are ' + str(len(np.unique(self.entity2))) + ' unique ' + self.entity2_name.lower() + 's', flush = True, file = sys.stderr)
-		print('There are ' + str(len(self.y)) + ' ' + self.entity1_name.lower() + '-' + self.entity2_name.lower() + ' pairs', flush = True, file = sys.stderr)
+		print('There are ' + str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.', flush = True, file = sys.stderr)
+		print('There are ' + str(len(np.unique(self.entity2))) + ' unique ' + self.entity2_name.lower() + 's.', flush = True, file = sys.stderr)
+		print('There are ' + str(len(self.y)) + ' ' + self.entity1_name.lower() + '-' + self.entity2_name.lower() + ' pairs.', flush = True, file = sys.stderr)
 
 	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
 		'''
