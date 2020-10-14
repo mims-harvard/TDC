@@ -1,8 +1,9 @@
 # Site settings
-title: Therapeutic Data Commons
-email: tdc@hms.harvard.edu
+title: Jekyll Doc Theme
+email: your-email@domain.com
 description: >
-  Datasets for Medicinal Machine Learning
+  Jekyll Template for Project Websites
+  providing documentation and blog post pages.
 lang: en-US
 
 baseurl: "" # the subpath of your site, e.g. /blog/
