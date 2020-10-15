@@ -292,3 +292,7 @@ MUV_targets = ['MUV-466', 'MUV-548', 'MUV-600', 'MUV-644', 'MUV-652', 'MUV-689',
        'MUV-832', 'MUV-846', 'MUV-852', 'MUV-858', 'MUV-859']
 
 QM7_targets = ["E_PBE0", "E_max_EINDO", "I_max_ZINDO", "HOMO_ZINDO", "LUMO_ZINDO", "E_1st_ZINDO", "IP_ZINDO", "EA_ZINDO", "HOMO_PBE0", "LUMO_PBE0", "HOMO_GW", "LUMO_GW", "alpha_PBE0", "alpha_SCS"]
+
+dataset2target_lists = {'qm7': QM7_targets,
+                            'toxcast': ToxCast_targets,
+                            'tox21': Tox21_targets}

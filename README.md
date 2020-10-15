@@ -1,5 +1,4 @@
 <p align="center"><img src="fig/logo.png" alt="logo" width="200px" /></p>
----
 
 This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive dataset hub for medicinal machine learning tasks. So far, it includes more than 100+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to patient recruitment, safety survellience and etc) in most of the drug development stages (from discovery and development to clinical trials and post-market monitoring). 
 

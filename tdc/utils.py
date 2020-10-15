@@ -11,6 +11,7 @@ from fuzzywuzzy import fuzz
 warnings.filterwarnings("ignore")
 
 from .metadata import name2type, name2id, dataset_list
+from .target_list import dataset2target_lists
 
 try:
     from urllib.error import HTTPError
@@ -38,6 +39,7 @@ def download_wrapper(name, path):
 	if os.path.exists(os.path.join(path, name + '.' + name2type[name])):
 		print_sys('Dataset already downloaded in the local system...')
 	else:
+		print_sys("Downloading " + name + " ...")
 		dataverse_download(dataset_path, path)
 	return name
 
@@ -87,7 +89,6 @@ def get_label_map(name, path, target = None, file_format = 'csv', output_format 
 		raise ValueError("Please use the correct output format, select from dict, df, array.")
 
 def dataverse_download(dataset_path, path):
-	print_sys("Downloading...")
 	wget.download(dataset_path, path)
 
 def convert_y_unit(y, from_, to_):
@@ -367,3 +368,6 @@ def save_dict(path, obj):
 def load_dict(path):
 	with open(path, 'rb') as f:
 		return pickle.load(f)
+
+def target_list(name):
+	return dataset2target_lists[name]

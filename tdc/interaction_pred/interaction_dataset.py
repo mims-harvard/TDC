@@ -9,6 +9,11 @@ from ..utils import *
 
 class DataLoader(base_dataset.DataLoader):
 	def __init__(self, name, path, target, print_stats, dataset_names):
+		if name.lower() in dataset2target_lists.keys():
+			print_sys("Tip: Use tdc.utils.target_list('" + name.lower() + "') to retrieve all available label targets.")
+			if target is None:
+				raise ValueError("Please select a target.")
+
 		entity1, entity2, raw_y, entity1_idx, entity2_idx = interaction_dataset_load(name, path, target)
 		
 		self.name = name
