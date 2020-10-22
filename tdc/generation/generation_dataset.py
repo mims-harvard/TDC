@@ -9,7 +9,7 @@ from ..utils import *
 
 
 class DataLoader(base_dataset.DataLoader):
-	def __init__(self, name, path, target, print_stats, dataset_names):
+	def __init__(self, name, path, print_stats, dataset_names):
 		'''
 		Arguments:
 			name: fuzzy name of the generation dataset. e.g., uspto50k, qed, drd, ... 
@@ -19,7 +19,13 @@ class DataLoader(base_dataset.DataLoader):
 		returns:
 			None
 		'''
-		pass 
+		input_smiles, output_smiles = generation_dataset_load(name, path, dataset_names)
+		self.name = name 
+		self.path = path 
+		self.print_stats = print_stats 
+		self.dataset_names = dataset_names 
+		self.input_smiles = input_smiles 
+		self.output_smiles = output_smiles 
 
 	# def __init__(self, name, path, print_stats, dataset_names):
 	# 	if name.lower() in retrosyn_dataset_names.keys():  
