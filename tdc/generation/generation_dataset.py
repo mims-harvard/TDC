@@ -44,4 +44,23 @@ class DataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please use the correct format input")
 
 
+	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
+		'''
+		Arguments:
+			method: splitting schemes: random, cold_drug, cold_target
+			seed: 'benchmark' seed set to 1234, or int values
+			frac: train/val/test split
+		'''
+		if seed == 'benchmark':
+			seed = 1234
+
+		df = self.get_data(format = 'df')
+
+		if method == 'random':
+			return create_fold(df, seed, frac)
+		else:
+			raise AttributeError("Please use the correct split method")
+
+
+
 
