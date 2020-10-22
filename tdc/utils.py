@@ -10,7 +10,7 @@ import pickle
 from fuzzywuzzy import fuzz
 warnings.filterwarnings("ignore")
 
-from .metadata import name2type, name2id, dataset_list, retrosyn_dataset_names 
+from .metadata import name2type, name2id, dataset_list, retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names 
 from .target_list import dataset2target_lists
 
 try:
