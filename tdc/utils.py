@@ -80,6 +80,11 @@ def interaction_dataset_load(name, path, target, dataset_names):
 
 	return df['X1'], df['X2'], df[target], df['ID1'], df['ID2']
 
+def generation_dataset_load(name, path, dataset_names):
+	name = download_wrapper(name, path, dataset_names)
+	df = pd_load(name, path)
+	return df['input'], df['target'] 
+
 def get_label_map(name, path, target = None, file_format = 'csv', output_format = 'dict'):
 	if target is None:
 		target = 'Y'		
