@@ -63,7 +63,7 @@ class DataLoader(base_dataset.DataLoader):
 		if seed == 'benchmark':
 			seed = 1234
 
-		df = self.get_data(df = True)
+		df = self.get_data(format = 'df')
 
 		if method == 'random':
 			return create_fold(df, seed, frac)
