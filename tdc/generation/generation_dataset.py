@@ -35,4 +35,13 @@ class DataLoader(base_dataset.DataLoader):
 		print("There are " + str(len(self.input_smiles)) + ' paired samples', flush = True, file = sys.stderr)
 
 
+	def get_data(self, format = 'df'):
+		if format == 'df':
+			return pd.DataFrame({'input': self.input_smiles, 'output':self.output_smiles})
+		elif format == 'dict':
+			return {'input': self.input_smiles, 'output':self.output_smiles} 
+		else:
+			raise AttributeError("Please use the correct format input")
+
+
 
