@@ -9,5 +9,5 @@ setup(name='DrugDataLoader',
       license='MIT',
       packages=['DrugDataLoader'],
       zip_safe=False,
-      install_requires=['numpy','pandas','wget','tqdm'])
+      install_requires=['numpy','pandas','wget','tqdm','fuzzywuzzy'])
 
