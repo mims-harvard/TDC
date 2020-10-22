@@ -25,6 +25,8 @@ class HTS(property_dataset.DataLoader):
 
 		super().__init__(name, path, target, print_stats, dataset_names = dataset_names["HTS"])
 
+### Not ready for reviews ###
+
 class QM(property_dataset.DataLoader):
 	
 	def __init__(self, name, path = './data', target = None, print_stats = True):

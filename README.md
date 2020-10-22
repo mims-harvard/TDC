@@ -270,5 +270,5 @@ Send emails to kexinhuang@hsph.harvard.edu or open an issue.
 
 ## Disclaimer
 
-TDC is an open-source effort. Many datasets are aggregated from various public website sources. If it infringes the copyright of the dataset author, please let us know and we will take it down ASAP.
+TDC is an open-source effort. Many datasets are aggregated from various public website sources. We use the Attribution-NonCommercial-ShareAlike 4.0 International license to suffice many datasets requirement. If it still infringes the copyright of the dataset author, please let us know and we will take it down ASAP.
 

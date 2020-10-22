@@ -14,7 +14,7 @@ class DataLoader(base_dataset.DataLoader):
 			if target is None:
 				raise ValueError("Please select a target.")
 
-		entity1, y, entity1_idx = property_dataset_load(name, path, target)
+		entity1, y, entity1_idx = property_dataset_load(name, path, target, dataset_names)
 		
 		self.entity1 = entity1
 		self.y = y

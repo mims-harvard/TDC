@@ -10,8 +10,7 @@ import pickle
 from fuzzywuzzy import fuzz
 warnings.filterwarnings("ignore")
 
-from .metadata import name2type, name2id, dataset_list
-from .metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets 
+from .metadata import name2type, name2id, dataset_list, dataset_names
 from .target_list import dataset2target_lists
 
 try:
@@ -22,15 +21,19 @@ except ImportError:
     from urllib import urlencode
     from urllib2 import quote, urlopen, HTTPError
 
-def fuzzy_search(name):
+def fuzzy_search(name, dataset_names):
 	name = name.lower()
 	if name in dataset_list:
-		return name
+		s =  name
 	else: 
-		return get_closet_match(dataset_list, name)[0]
+		s =  get_closet_match(dataset_list, name)[0]
+	if s in dataset_names:
+		return s
+	else:
+		raise ValueError(s + " does not belong to this task, please refer to the correct task name!")
 
-def download_wrapper(name, path):
-	name = fuzzy_search(name)
+def download_wrapper(name, path, dataset_names):
+	name = fuzzy_search(name, dataset_names)
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
 	dataset_path = server_path + str(name2id[name])
 
@@ -53,17 +56,17 @@ def pd_load(name, path):
 		raise ValueError("The file type must be one of tab/csv.")
 	return df
 
-def property_dataset_load(name, path, target = None):
+def property_dataset_load(name, path, target, dataset_names):
 	if target is None:
 		target = 'Y'		
-	name = download_wrapper(name, path)
+	name = download_wrapper(name, path, dataset_names)
 	df = pd_load(name, path)
 	df = df[df[target].notnull()].reset_index(drop = True)
 
 	return df['X'], df[target], df['ID']
 
-def interaction_dataset_load(name, path, target = None):
-	name = download_wrapper(name, path)
+def interaction_dataset_load(name, path, target, dataset_names):
+	name = download_wrapper(name, path, dataset_names)
 	df = pd_load(name, path)
 	if target is None:
 		target = 'Y'
@@ -372,3 +375,6 @@ def load_dict(path):
 
 def target_list(name):
 	return dataset2target_lists[name]
+
+def retrieve_dataset_names(name):
+	return dataset_names[name]
