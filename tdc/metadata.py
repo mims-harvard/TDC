@@ -51,6 +51,8 @@ forwardsyn_dataset_names = ['uspto50k']
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
+generation_datasets = retrosyn_dataset_names + forwardsyn_dataset_names + molgenpaired_dataset_names 
+
 dataset_names = {"Toxicity": toxicity_dataset_names, 
 				"ADME": adme_dataset_names, 
 				"HTS": hts_dataset_names, 
