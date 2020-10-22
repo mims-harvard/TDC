@@ -180,7 +180,7 @@ We have X task formulations and each is associated with many datasets. For examp
 
 
 * <b>Peptide-MHC Binding Prediction Dataset</b>```PeptideMHC```
-<details>
+	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
 	 Dataset Name  | Description| Reference | Type | Stats (pairs/#peptides/#ofMHCs)
