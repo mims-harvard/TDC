@@ -178,6 +178,18 @@ We have X task formulations and each is associated with many datasets. For examp
 	 HuRI <br> `PPI(name = 'HuRI)` </br> | All pairwise combinations of human protein-coding genes are systematically being interrogated to identify which are involved in binary protein-protein interactions. In our most recent effort 17,500 proteins have been tested and a first human reference interactome (HuRI) map has been generated. From the Center for Cancer Systems Biology at Dana-Farber Cancer Institute. Note that the feature is peptide sequence, if a protein gene is associated with multiple peptides, we separate them by '\*'.| [Luck, K., Kim, D., Lambourne, L. et al. A reference map of the human binary protein interactome. Nature 580, 402–408 (2020). ](https://doi.org/10.1038/s41586-020-2188-x) | Binary/Network | 51,813/8,248
 	</details>
 
+
+* <b>Peptide-MHC Binding Prediction Dataset</b>```PeptideMHC```
+<details>
+  	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	 Dataset Name  | Description| Reference | Type | Stats (pairs/#peptides/#ofMHCs)
+	 ------------  | ------------------------ | ----------- | ----------- | -----------
+	 MHC1_NetMHCpan <br> `PeptideMHC(name = 'MHC1_NetMHCpan')` </br> | Binding of peptides to MHC class I molecules (MHC-I) is essential for antigen presentation to cytotoxic T-cells. An organized datasets for MHC class I collected from IEDB and IMGT/HLA database. | [Nielsen, Morten, and Massimo Andreatta. "NetMHCpan-3.0; improved prediction of binding to MHC class I molecules integrating information from multiple receptor and peptide length datasets." Genome medicine 8.1 (2016): 1-9.](https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-016-0288-x) | Regression | 185,985/43,018/150
+	 MHC2_NetMHCIIpan <br> `PeptideMHC(name = 'MHC2_NetMHCIIpan')` </br> | Major histocompatibility complex class II (MHC‐II) molecules are found on the surface of antigen‐presenting cells where they present peptides derived from extracellular proteins to T helper cells. Useful to identify T‐cell epitopes. An organized datasets for MHC class II collected from IEDB database. | [Jensen, Kamilla Kjaergaard, et al. "Improved methods for predicting peptide binding affinity to MHC class II molecules." Immunology 154.3 (2018): 394-406.](https://onlinelibrary.wiley.com/doi/full/10.1111/imm.12889) | Regression | 134,281/17,003/75
+	</details>
+
+
 ### Generation
 
 * <b>Paired Molecule Generation</b>```MolGenPaired```

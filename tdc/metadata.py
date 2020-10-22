@@ -40,6 +40,8 @@ dti_dataset_names = ['davis',
 
 ppi_dataset_names = ['huri']
 
+peptidemhc_dataset_names = ['mhc2_netmhciipan', 'mhc1_netmhcpan']
+
 ddi_dataset_names = ['drugbank', 'twosides']
 
 # generation
@@ -57,7 +59,8 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"DDI": ddi_dataset_names,
 				"RetroSyn": retrosyn_dataset_names,
 				"ForwardSyn": forwardsyn_dataset_names, 
-				"MolGenPaired": molgenpaired_dataset_names}
+				"MolGenPaired": molgenpaired_dataset_names,
+				"PeptideMHC": peptidemhc_dataset_names}
 
 dataset_list = []
 for i in dataset_names.keys():
@@ -97,7 +100,10 @@ name2type = {'toxcast': 'tab',
  'bindingdb_ki': 'csv',
  'huri': 'tab',
  'drugbank': 'tab',
- 'twosides': 'csv'}
+ 'twosides': 'csv',
+ 'mhc1_netmhcpan': 'tab',
+ 'mhc2_netmhciipan': 'tab'
+ }
 
 name2id = {'bbb_adenot': 4139555,
  'bbb_molnet': 4139557,
@@ -133,4 +139,6 @@ name2id = {'bbb_adenot': 4139555,
  'tox21': 4141990,
  'toxcast': 4142185,
  'twosides': 4139574,
- 'vd_edrug3d': 4139578}
+ 'vd_edrug3d': 4139578,
+ 'mhc1_netmhcpan': 4150046,
+ 'mhc2_netmhciipan': 4150047}
