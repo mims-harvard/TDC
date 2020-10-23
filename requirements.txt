@@ -1,0 +1,5 @@
+fuzzywuzzy
+numpy
+pandas
+tqdm
+wget
