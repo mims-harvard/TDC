@@ -30,6 +30,9 @@ class DataLoader(base_dataset.DataLoader):
 		self.entity1_name = 'Entity1'
 		self.entity2_name = 'Entity2'
 
+		if print_stats:
+			self.print_stats()
+
 	def get_data(self, format = 'df'):
 		'''
 		Arguments:
