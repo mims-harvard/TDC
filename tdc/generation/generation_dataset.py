@@ -26,12 +26,14 @@ class DataLoader(base_dataset.DataLoader):
 		self.dataset_names = dataset_names 
 		self.input_smiles = input_smiles 
 		self.output_smiles = output_smiles 
+		if print_stats: 
+			self.print_stats() 
 
 	# def __init__(self, name, path, print_stats, dataset_names):
 	# 	if name.lower() in retrosyn_dataset_names.keys():  
 	# 		print_sys("Tip: Use tdc.utils.target_list('" + name.lower() + "') to retrieve all available label targets.")
 
-	def print_info(self):
+	def print_stats(self):
 		print("There are " + str(len(self.input_smiles)) + ' paired samples', flush = True, file = sys.stderr)
 
 
