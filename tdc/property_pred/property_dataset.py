@@ -12,7 +12,7 @@ class DataLoader(base_dataset.DataLoader):
 		if name.lower() in dataset2target_lists.keys():
 			print_sys("Tip: Use tdc.utils.target_list('" + name.lower() + "') to retrieve all available label targets.")
 			if target is None:
-				raise ValueError("Please select a target.")
+				raise ValueError("Please select a target. You can use tdc.utils.target_list('" + name.lower() + "') to retrieve all available label targets.")
 
 		entity1, y, entity1_idx = property_dataset_load(name, path, target, dataset_names)
 		
