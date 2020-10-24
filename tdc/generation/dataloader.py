@@ -9,6 +9,22 @@ from . import generation_dataset
 from ..metadata import dataset_names
 
 
+class Evaluator(generation_dataset.Evaluator):
+	def __init__(self, name, dataset_names):
+		super().__init__(name, dataset_names)
+
+	def assign_evaluator(self):
+		'''
+			self.name -> self.evaluator_func
+
+			assert self.name in ['logp', 'drd', ...]
+		'''
+		pass 
+
+
+# class ForwardSyn(generation_dataset.DataLoader):
+# 	def __init__(self, name, path = './data', print_stats = True):
+
 
 class MolGenPaired(generation_dataset.DataLoader):
 	'''
@@ -69,6 +85,9 @@ class MolGenPaired(generation_dataset.DataLoader):
 	def print_stats(self):
 		print(self.name +  ' has ' + str(len(self.X_lst)) + ' molecule pairs.', flush = True, file = sys.stderr)
 
+
+
+
 class Reaction(generation_dataset.DataLoader):
 	'''
 		DataLoader for paired molecules 
@@ -96,7 +115,7 @@ class Reaction(generation_dataset.DataLoader):
 	def get_data(self, format = 'df'):
 		'''
 			format: 
-
+				
 		'''
 
 		if format == 'df':
