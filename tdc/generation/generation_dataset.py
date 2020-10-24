@@ -65,4 +65,19 @@ class DataLoader(base_dataset.DataLoader):
 
 
 
+class Evaluator:
+
+	def __init__(self, name, dataset_names):
+		self.name = fuzzy_search(name, dataset_names)
+		#### plogp, drd, .... 
+		self.evaluator_func = lambda x:1 
+
+	def __call__(self, smiles):
+		return self.evaluator_func(smiles)
+
+
+
+
+
+
 
