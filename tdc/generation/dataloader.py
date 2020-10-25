@@ -32,6 +32,17 @@ class Evaluator(generation_dataset.Evaluator):
 			return 
 
 
+class ForwardSyn(generation_dataset.PairedDataLoader):
+
+	def __init__(self, name, path = './data', print_stats = True, input_name = 'reactants', output_name = 'product'): 
+		super().__init__(name, path, print_stats, input_name, output_name)
+
+class Retro_Syn(generation_dataset.PairedDataLoader):
+
+	def __init__(self, name, path = './data', print_stats = True, input_name = 'product', output_name = 'reactants'): 
+		super().__init__(name, path, print_stats, input_name, output_name)
+
+
 # class ForwardSyn(generation_dataset.DataLoader):
 # 	def __init__(self, name, path = './data', print_stats = True):
 

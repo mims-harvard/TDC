@@ -8,20 +8,26 @@ from .. import base_dataset
 from ..utils import *
 
 
+class DataLoader(base_dataset.DataLoader):
+	pass 
+
 class PairedDataLoader(base_dataset.DataLoader):
-	def __init__(self, name, path, print_stats, dataset_names):
+	def __init__(self, name, path, print_stats, input_name, output_name):
 		'''
 		Arguments:
 			name: fuzzy name of the generation dataset. e.g., uspto50k, qed, drd, ... 
 			path: directory path that stores the dataset, e.g., ./data
 			print_stats: bool, whether print the stats.  
-			dataset_names: exact names of dataset  e.g., ['uspto50k', 'qed', 'drd2', 'logp']
 		returns:
 			None
 		'''
-		input_smiles_lst, output_smiles_lst = generation_dataset_load(name, path, dataset_names)
+		from ..utils import paired_dataset_names 
+		self.input_smiles_lst, self.output_smiles_lst = generation_paired_dataset_load(name, path, 
+																					   paired_dataset_names, input_name, 
+																					   output_name)  ### including fuzzy-search 
 		self.name = name 
 		self.path = path 
+		self.dataset_names = paired_dataset_names
 		if print_stats: 
 			self.print_stats() 
 
@@ -85,9 +91,12 @@ class Evaluator:
 # 	print(logp_evaluate([1,2,3]))
 
 
+if __name__ == "__main__":
+	paired_dataloader = PairedDataLoader(name = 'uspto50k', path = './data', 
+										 print_stats = True, input_name = 'reactants', 
+										 output_name = 'product')
 
-
-
+	input_data, output_data = paired_dataloader.get_data()
 
 
 

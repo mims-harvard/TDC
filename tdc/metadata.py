@@ -44,14 +44,21 @@ peptidemhc_dataset_names = ['mhc2_netmhciipan', 'mhc1_netmhcpan']
 
 ddi_dataset_names = ['drugbank', 'twosides']
 
+####################################
 # generation
 retrosyn_dataset_names = ['uspto50k']
 
 forwardsyn_dataset_names = ['uspto50k']
 
+paired_dataset_names = ['uspto50k']
+
+property_names = ['drd2', 'qed', 'logp', 'sa']
+
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
 generation_datasets = retrosyn_dataset_names + forwardsyn_dataset_names + molgenpaired_dataset_names 
+# generation
+####################################
 
 dataset_names = {"Toxicity": toxicity_dataset_names, 
 				"ADME": adme_dataset_names, 
@@ -64,7 +71,6 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"MolGenPaired": molgenpaired_dataset_names,
 				"PeptideMHC": peptidemhc_dataset_names}
 
-property_names = ['drd2', 'qed', 'logp', 'sa']
 
 dataset_list = []
 for i in dataset_names.keys():
@@ -106,7 +112,8 @@ name2type = {'toxcast': 'tab',
  'drugbank': 'tab',
  'twosides': 'csv',
  'mhc1_netmhcpan': 'tab',
- 'mhc2_netmhciipan': 'tab'
+ 'mhc2_netmhciipan': 'tab',
+ 'uspto50k': 'csv'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -145,4 +152,8 @@ name2id = {'bbb_adenot': 4139555,
  'twosides': 4139574,
  'vd_edrug3d': 4139578,
  'mhc1_netmhcpan': 4150046,
- 'mhc2_netmhciipan': 4150047}
+ 'mhc2_netmhciipan': 4150047,
+ 'uspto50k': 'xxxxx'
+ }
+
+ 
