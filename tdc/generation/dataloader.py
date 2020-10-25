@@ -19,7 +19,8 @@ class Evaluator(generation_dataset.Evaluator):
 
 			assert self.name in ['logp', 'drd', ...]
 		'''
-		pass 
+		if self.name == 'logp': 
+			pass 
 
 
 # class ForwardSyn(generation_dataset.DataLoader):
