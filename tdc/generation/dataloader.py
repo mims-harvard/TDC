@@ -7,20 +7,25 @@ warnings.filterwarnings("ignore")
 from ..utils import *
 from . import generation_dataset
 from ..metadata import dataset_names
-
+from ..chem_utils import qed, penalized_logp, similarity
 
 class Evaluator(generation_dataset.Evaluator):
 	def __init__(self, name):
 		super().__init__(name)
+		self.assign_evaluator() 
+
 
 	def assign_evaluator(self):
 		'''
 			self.name -> self.evaluator_func
-
 			assert self.name in ['logp', 'drd', ...]
 		'''
-		if self.name == 'logp': 
-			pass 
+		if self.name == 'logp':
+			self.evaluator_func = penalized_logp 
+		elif self.name == 'qed':
+			self.evaluator_func = qed  
+		else:
+			return 
 
 
 # class ForwardSyn(generation_dataset.DataLoader):
@@ -184,7 +189,6 @@ class Reaction(generation_dataset.DataLoader):
 
 	def print_stats(self):
 		print(self.name +  ' has ' + str(len(self.reactant_lst)) + ' reactions.', flush = True, file = sys.stderr)
-
 
 
 

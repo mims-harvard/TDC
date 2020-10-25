@@ -64,6 +64,8 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"MolGenPaired": molgenpaired_dataset_names,
 				"PeptideMHC": peptidemhc_dataset_names}
 
+property_names = ['drd2', 'qed', 'logp']
+
 dataset_list = []
 for i in dataset_names.keys():
     dataset_list = dataset_list + [i.lower() for i in dataset_names[i]]

@@ -27,13 +27,19 @@ from collections import defaultdict
 
 import os.path as op
 
+def previous_directory(current_directory):
+  return op.sep.join(current_directory.split('/')[:-1])
+
+
+
 _fscores = None
 def readFragmentScores(name='fpscores'):
     import gzip
     global _fscores
     # generate the full path filename:
-    if name == "fpscores":
-        name = op.join(op.dirname(__file__), name)
+    # if name == "fpscores":
+    #     name = op.join(previous_directory(op.dirname(__file__)), name)
+    name = "tdc/fpscores"
     _fscores = cPickle.load(gzip.open('%s.pkl.gz'%name))
     outDict = {}
     for i in _fscores:

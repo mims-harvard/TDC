@@ -5,9 +5,10 @@ try:
 	from rdkit.Chem import Descriptors
 	import rdkit.Chem.QED as QED
 except:
-	raise ValueError('install RDKit')	
+	raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")	
 
-import sascorer
+# import sascorer
+from .sascorer import * 
 import networkx as nx 
 
 
@@ -49,7 +50,8 @@ def penalized_logp(s):
 	cycle_std = 0.2860212110245455
 
 	log_p = Descriptors.MolLogP(mol)
-	SA = -sascorer.calculateScore(mol)
+	# SA = -sascorer.calculateScore(mol)
+	SA = -calculateScore(mol)
 
 	# cycle score
 	cycle_list = nx.cycle_basis(nx.Graph(Chem.rdmolops.GetAdjacencyMatrix(mol)))

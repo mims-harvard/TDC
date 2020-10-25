@@ -88,3 +88,11 @@ if __name__ == "__main__":
 	print(logp_evaluate([1,2,3]))
 
 
+
+
+
+
+
+
+
+

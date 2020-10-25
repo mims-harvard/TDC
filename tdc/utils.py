@@ -10,7 +10,7 @@ import pickle
 from fuzzywuzzy import fuzz
 warnings.filterwarnings("ignore")
 
-from .metadata import name2type, name2id, dataset_list, dataset_names
+from .metadata import name2type, name2id, dataset_list, dataset_names, property_names
 from .metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
 
 from .target_list import dataset2target_lists
@@ -79,6 +79,9 @@ def interaction_dataset_load(name, path, target, dataset_names):
 	df = df[df[target].notnull()].reset_index(drop = True)
 
 	return df['X1'], df['X2'], df[target], df['ID1'], df['ID2']
+
+
+
 
 def generation_dataset_load(name, path, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
