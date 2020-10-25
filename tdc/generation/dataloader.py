@@ -7,7 +7,7 @@ warnings.filterwarnings("ignore")
 from ..utils import *
 from . import generation_dataset
 from ..metadata import dataset_names
-from ..chem_utils import qed, penalized_logp, similarity, drd2 
+from ..chem_utils import qed, penalized_logp, similarity, drd2, SA  
 
 class Evaluator(generation_dataset.Evaluator):
 	def __init__(self, name):
@@ -26,6 +26,8 @@ class Evaluator(generation_dataset.Evaluator):
 			self.evaluator_func = qed  
 		elif self.name == 'drd2':
 			self.evaluator_func = drd2 
+		elif self.name == 'sa':
+			self.evaluator_func = SA 
 		else:
 			return 
 

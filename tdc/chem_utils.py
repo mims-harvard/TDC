@@ -11,8 +11,9 @@ except:
 from .sascorer import * 
 import networkx as nx 
 from .drd2_scorer import get_score as drd2 
-
 ## from https://github.com/wengong-jin/iclr19-graph2graph/blob/master/props/properties.py 
+## from https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 
+
 
 def similarity(a, b):
 	if a is None or b is None: 
@@ -71,6 +72,14 @@ def penalized_logp(s):
 	return normalized_log_p + normalized_SA + normalized_cycle
 
 
+def SA(s):
+	if s is None:
+		return 100 
+	mol = Chem.MolFromSmiles(s)
+	if mol is None:
+		return 100 
+	SAscore = calculateScore(mol)
+	return SAscore 	
 
 
 
@@ -84,7 +93,7 @@ if __name__ == "__main__":
 	print(qed(smiles))
 	print(penalized_logp(smiles))
 	print(drd2(smiles))
-
+	print(SA(smiles))
 #  conda install -c rdkit rdkit
 
 

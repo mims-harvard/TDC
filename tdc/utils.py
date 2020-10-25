@@ -25,10 +25,10 @@ except ImportError:
 
 def fuzzy_search(name, dataset_names):
 	name = name.lower()
-	if name in dataset_list:
+	if name in dataset_names:
 		s =  name
 	else: 
-		s =  get_closet_match(dataset_list, name)[0]
+		s =  get_closet_match(dataset_names, name)[0]
 	if s in dataset_names:
 		return s
 	else:
