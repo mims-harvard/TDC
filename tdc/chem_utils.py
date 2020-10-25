@@ -1,8 +1,12 @@
-import rdkit
-from rdkit import Chem, DataStructs
-from rdkit.Chem import AllChem
-from rdkit.Chem import Descriptors
-import rdkit.Chem.QED as QED
+try: 
+	import rdkit
+	from rdkit import Chem, DataStructs
+	from rdkit.Chem import AllChem
+	from rdkit.Chem import Descriptors
+	import rdkit.Chem.QED as QED
+except:
+	raise ValueError('install RDKit')	
+
 import sascorer
 import networkx as nx 
 
