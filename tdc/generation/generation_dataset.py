@@ -73,7 +73,10 @@ class Evaluator:
 		self.evaluator_func = lambda x:1 
 
 	def __call__(self, smiles):
-		return self.evaluator_func(smiles)
+		if type(smiles)==list:
+			return list(map(self.evaluator_func, smiles))
+		else: ### type(smiles)==str:
+			return self.evaluator_func(smiles)
 
 
 
