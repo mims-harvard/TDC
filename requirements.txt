@@ -4,3 +4,4 @@ pandas
 tqdm
 wget
 networkx
+scikit-learn
