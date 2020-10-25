@@ -10,8 +10,8 @@ from ..metadata import dataset_names
 
 
 class Evaluator(generation_dataset.Evaluator):
-	def __init__(self, name, dataset_names):
-		super().__init__(name, dataset_names)
+	def __init__(self, name):
+		super().__init__(name)
 
 	def assign_evaluator(self):
 		'''

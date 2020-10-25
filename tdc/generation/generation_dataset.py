@@ -67,8 +67,9 @@ class DataLoader(base_dataset.DataLoader):
 
 class Evaluator:
 
-	def __init__(self, name, dataset_names):
-		self.name = fuzzy_search(name, dataset_names)
+	def __init__(self, name):
+		from ..utils import property_names ### e.g., ['drd2', 'qed', 'logp']
+		self.name = fuzzy_search(name, property_names)
 		#### plogp, drd, .... 
 		self.evaluator_func = lambda x:1 
 
@@ -81,6 +82,9 @@ class Evaluator:
 
 
 
-
+if __name__ == "__main__":
+	logp_evaluate = Evaluator(name = "plogp")
+	print(logp_evaluate(''))
+	print(logp_evaluate([1,2,3]))
 
 
