@@ -10,7 +10,7 @@ except:
 # import sascorer
 from .sascorer import * 
 import networkx as nx 
-
+from .drd2_scorer import get_score as drd2 
 
 ## from https://github.com/wengong-jin/iclr19-graph2graph/blob/master/props/properties.py 
 
@@ -83,7 +83,7 @@ if __name__ == "__main__":
 	print(similarity(smiles, smiles))
 	print(qed(smiles))
 	print(penalized_logp(smiles))
-
+	print(drd2(smiles))
 
 #  conda install -c rdkit rdkit
 

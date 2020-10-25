@@ -4,4 +4,4 @@ pandas
 tqdm
 wget
 networkx
-scikit-learn
+scikit-learn==0.21.3
