@@ -8,6 +8,20 @@ import networkx as nx
 
 
 ## from https://github.com/wengong-jin/iclr19-graph2graph/blob/master/props/properties.py 
+
+def similarity(a, b):
+	if a is None or b is None: 
+		return 0.0
+	amol = Chem.MolFromSmiles(a)
+	bmol = Chem.MolFromSmiles(b)
+	if amol is None or bmol is None:
+		return 0.0
+	fp1 = AllChem.GetMorganFingerprintAsBitVect(amol, 2, nBits=2048, useChirality=False)
+	fp2 = AllChem.GetMorganFingerprintAsBitVect(bmol, 2, nBits=2048, useChirality=False)
+	return DataStructs.TanimotoSimilarity(fp1, fp2) 
+
+
+
 def qed(s):
 	if s is None: 
 		return 0.0
@@ -60,6 +74,7 @@ def penalized_logp(s):
 
 if __name__ == "__main__":
 	smiles = '[H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C'
+	print(similarity(smiles, smiles))
 	print(qed(smiles))
 	print(penalized_logp(smiles))
 
