@@ -8,7 +8,7 @@ from .. import base_dataset
 from ..utils import *
 
 
-class DataLoader(base_dataset.DataLoader):
+class PairedDataLoader(base_dataset.DataLoader):
 	def __init__(self, name, path, print_stats, dataset_names):
 		'''
 		Arguments:
@@ -19,13 +19,9 @@ class DataLoader(base_dataset.DataLoader):
 		returns:
 			None
 		'''
-		input_smiles, output_smiles = generation_dataset_load(name, path, dataset_names)
+		input_smiles_lst, output_smiles_lst = generation_dataset_load(name, path, dataset_names)
 		self.name = name 
 		self.path = path 
-		self.print_stats = print_stats 
-		self.dataset_names = dataset_names 
-		self.input_smiles = input_smiles 
-		self.output_smiles = output_smiles 
 		if print_stats: 
 			self.print_stats() 
 
@@ -34,14 +30,14 @@ class DataLoader(base_dataset.DataLoader):
 	# 		print_sys("Tip: Use tdc.utils.target_list('" + name.lower() + "') to retrieve all available label targets.")
 
 	def print_stats(self):
-		print("There are " + str(len(self.input_smiles)) + ' paired samples', flush = True, file = sys.stderr)
+		print("There are " + str(len(self.input_smiles_lst)) + ' paired samples', flush = True, file = sys.stderr)
 
 
 	def get_data(self, format = 'df'):
 		if format == 'df':
-			return pd.DataFrame({'input': self.input_smiles, 'output':self.output_smiles})
+			return pd.DataFrame({'input': self.input_smiles_lst, 'output':self.output_smiles_lst})
 		elif format == 'dict':
-			return {'input': self.input_smiles, 'output':self.output_smiles} 
+			return {'input': self.input_smiles_lst, 'output':self.output_smiles_lst} 
 		else:
 			raise AttributeError("Please use the correct format input")
 
@@ -81,11 +77,12 @@ class Evaluator:
 
 
 
+## test for Evaluator
 
-if __name__ == "__main__":
-	logp_evaluate = Evaluator(name = "plogp")
-	print(logp_evaluate(''))
-	print(logp_evaluate([1,2,3]))
+# if __name__ == "__main__":
+# 	logp_evaluate = Evaluator(name = "plogp")
+# 	print(logp_evaluate(''))
+# 	print(logp_evaluate([1,2,3]))
 
 
 
