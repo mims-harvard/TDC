@@ -10,7 +10,8 @@ import pickle
 from fuzzywuzzy import fuzz
 warnings.filterwarnings("ignore")
 
-from .metadata import name2type, name2id, dataset_list, dataset_names, property_names, paired_dataset_names
+from .metadata import name2type, name2id, dataset_list, dataset_names
+from .metadata import property_names, paired_dataset_names, single_molecule_dataset_names
 from .metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
 
 from .target_list import dataset2target_lists
@@ -86,6 +87,11 @@ def generation_paired_dataset_load(name, path, dataset_names, input_name, output
 	df = pd_load(name, path)
 	return df[input_name], df[output_name]
 
+
+def distribution_dataset_load(name, path, dataset_names, column_name):
+	name = download_wrapper(name, path, dataset_names)
+	df = pd_load(name, path)
+	return df[column_name]
 
 def generation_dataset_load(name, path, dataset_names):
 	name = download_wrapper(name, path, dataset_names)

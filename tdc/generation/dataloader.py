@@ -43,6 +43,12 @@ class Retro_Syn(generation_dataset.PairedDataLoader):
 		super().__init__(name, path, print_stats, input_name, output_name)
 
 
+class Distribution_Dataloader(generation_dataset.DataLoader):
+
+	def __init__(self, name, path = './data', print_stats = True, column_name = 'smiles'): 
+		super().__init__(name, path, print_stats, column_name)
+
+
 # class ForwardSyn(generation_dataset.DataLoader):
 # 	def __init__(self, name, path = './data', print_stats = True):
 

@@ -9,7 +9,44 @@ from ..utils import *
 
 
 class DataLoader(base_dataset.DataLoader):
-	pass 
+	def __init__(self, name, path, print_stats, column_name):
+		from ..utils import single_molecule_dataset_names 
+		self.smiles_lst = distribution_dataset_load(name, path, single_molecule_dataset_names, column_name = column_name)  
+		### including fuzzy-search 
+		self.name = name 
+		self.path = path 
+		self.dataset_names = single_molecule_dataset_names
+		if print_stats: 
+			self.print_stats() 
+
+	def print_stats(self):
+		print("There are " + str(len(self.smiles_lst)) + ' molecules ', flush = True, file = sys.stderr)
+
+	def get_data(self, format = 'df'):
+		if format == 'df':
+			return pd.DataFrame({'smiles': self.smiles_lst})
+		elif format == 'dict':
+			return {'smiles': self.smiles_lst} 
+		else:
+			raise AttributeError("Please use the correct format input")
+
+	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
+		'''
+		Arguments:
+			method: splitting schemes: random, cold_drug, cold_target
+			seed: 'benchmark' seed set to 1234, or int values
+			frac: train/val/test split
+		'''
+		if seed == 'benchmark':
+			seed = 1234
+
+		df = self.get_data(format = 'df')
+
+		if method == 'random':
+			return create_fold(df, seed, frac)
+		else:
+			raise AttributeError("Please use the correct split method")
+
 
 class PairedDataLoader(base_dataset.DataLoader):
 	def __init__(self, name, path, print_stats, input_name, output_name):
@@ -30,10 +67,6 @@ class PairedDataLoader(base_dataset.DataLoader):
 		self.dataset_names = paired_dataset_names
 		if print_stats: 
 			self.print_stats() 
-
-	# def __init__(self, name, path, print_stats, dataset_names):
-	# 	if name.lower() in retrosyn_dataset_names.keys():  
-	# 		print_sys("Tip: Use tdc.utils.target_list('" + name.lower() + "') to retrieve all available label targets.")
 
 	def print_stats(self):
 		print("There are " + str(len(self.input_smiles_lst)) + ' paired samples', flush = True, file = sys.stderr)

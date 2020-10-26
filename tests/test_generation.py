@@ -1,4 +1,4 @@
-from tdc.generation import MolGenPaired, Evaluator, ForwardSyn, Retro_Syn
+from tdc.generation import MolGenPaired, Evaluator, ForwardSyn, Retro_Syn, Distribution_Dataloader
 
 # ### test property evaluator 
 
@@ -11,18 +11,22 @@ from tdc.generation import MolGenPaired, Evaluator, ForwardSyn, Retro_Syn
 # print(evaluator([s1,s2]))
 
 
-# ### test PairedDataLoader 
-paired_dataloader = ForwardSyn(name = 'uspto50k')
+# # ### test PairedDataLoader 
+# paired_dataloader = ForwardSyn(name = 'uspto50k')
 
-pd1 = paired_dataloader.get_data()
-# exit()
-
-
-paired_dataloader2 = Retro_Syn(name = 'uspto50k')
-pd2 = paired_dataloader2.get_data()
-
-print(pd1)
+# pd1 = paired_dataloader.get_data()
+# split_pd = paired_dataloader.get_split()
 
 
-print(pd2)
+# paired_dataloader2 = Retro_Syn(name = 'uspto50k')
+# pd2 = paired_dataloader2.get_data()
+
+# print(pd1)
+
+# print(pd2)
+
+
+### test distribution's dataloader 
+zinc_loader = Distribution_Dataloader(name = 'zinc')
+print(zinc_loader.get_data())
 

@@ -50,6 +50,8 @@ retrosyn_dataset_names = ['uspto50k']
 
 forwardsyn_dataset_names = ['uspto50k']
 
+single_molecule_dataset_names = ['zinc', 'moses']
+
 paired_dataset_names = ['uspto50k']
 
 property_names = ['drd2', 'qed', 'logp', 'sa']
@@ -113,7 +115,9 @@ name2type = {'toxcast': 'tab',
  'twosides': 'csv',
  'mhc1_netmhcpan': 'tab',
  'mhc2_netmhciipan': 'tab',
- 'uspto50k': 'csv'
+ 'uspto50k': 'csv',
+ 'zinc': 'csv', 
+ 'moses': 'csv',
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -153,7 +157,8 @@ name2id = {'bbb_adenot': 4139555,
  'vd_edrug3d': 4139578,
  'mhc1_netmhcpan': 4150046,
  'mhc2_netmhciipan': 4150047,
- 'uspto50k': 'xxxxx'
+ 'uspto50k': 'xxxxx',
+ 'zinc': 'xxxxx',
+ 'moses': 'xxxxx',
  }
 
- 
