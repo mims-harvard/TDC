@@ -1,0 +1,38 @@
+- title: Image Gallery Title
+  images:
+    - link: https://via.placeholder.com/400x225
+      large_link: https://via.placeholder.com/1200x675
+      alt: The alt text for the image
+      description: The image description
+      ratio: is-16by9
+    - link: https://via.placeholder.com/400x300
+      large_link: https://via.placeholder.com/1200x900
+      alt: The alt text for the image
+      description: The image description
+      ratio: is-4by3
+    - link: https://via.placeholder.com/400x300
+      large_link: https://via.placeholder.com/1200x900
+      alt: The alt text for the image
+      description: |-
+        ### A title
+
+        The *image* **description** can be longer and written in markdown too.
+
+        If you want to describe your image in more detail.
+
+        * Item 1
+        * Item 2
+      ratio: is-4by3
+
+- title: Second Image Gallery Title
+  images:
+    - link: https://via.placeholder.com/800x450
+      alt: The alt text for the image
+      description: The image description
+    - link: https://via.placeholder.com/800x450
+      alt: The alt text for the image
+      description: The image description
+    - link: https://via.placeholder.com/800x450
+      alt: The alt text for the image
+      description: |-
+        The *image* **description**

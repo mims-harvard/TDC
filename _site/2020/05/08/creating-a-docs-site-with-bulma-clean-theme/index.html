@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Creating a docs site with Bulma Clean Theme - Therapeutic Data Commons</title>
+    <link rel="stylesheet" href="/TDC/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/TDC/favicon.png" 
+    />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-social@1/bin/bulma-social.min.css">
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Creating a docs site with Bulma Clean Theme | Therapeutic Data Commons</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Creating a docs site with Bulma Clean Theme" />
+<meta name="author" content="C.S. Rhymes" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="How to create a docs site for your project with Bulma Clean Theme" />
+<meta property="og:description" content="How to create a docs site for your project with Bulma Clean Theme" />
+<link rel="canonical" href="https://www.csrhymes.com/2020/05/08/creating-a-docs-site-with-bulma-clean-theme.html" />
+<meta property="og:url" content="https://www.csrhymes.com/2020/05/08/creating-a-docs-site-with-bulma-clean-theme.html" />
+<meta property="og:site_name" content="Therapeutic Data Commons" />
+<meta property="og:image" content="https://www.csrhymes.com/img/example-docs-page.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-08T02:00:07-07:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://www.csrhymes.com/img/example-docs-page.jpg" />
+<meta property="twitter:title" content="Creating a docs site with Bulma Clean Theme" />
+<script type="application/ld+json">
+{"url":"https://www.csrhymes.com/2020/05/08/creating-a-docs-site-with-bulma-clean-theme.html","image":"https://www.csrhymes.com/img/example-docs-page.jpg","headline":"Creating a docs site with Bulma Clean Theme","dateModified":"2020-05-08T02:00:07-07:00","datePublished":"2020-05-08T02:00:07-07:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.csrhymes.com/2020/05/08/creating-a-docs-site-with-bulma-clean-theme.html"},"author":{"@type":"Person","name":"C.S. Rhymes"},"description":"How to create a docs site for your project with Bulma Clean Theme","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="/TDC/" class="navbar-item">
+                Therapeutic Data Commons
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-start">
+                <a href="/TDC/" class="navbar-item ">Home</a>
+                
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/" class="navbar-link ">Pages</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/page-1/" class="navbar-item ">Page With Sidebar</a>
+                            
+                            <a href="/TDC/page-2/" class="navbar-item ">Page No Sidebar</a>
+                            
+                            <a href="/TDC/page-3/" class="navbar-item ">Page With Menubar</a>
+                            
+                            <a href="/TDC/page-4/" class="navbar-item ">Page With Tabs</a>
+                            
+                            <a href="/TDC/page-5/" class="navbar-item ">Page Without Footer</a>
+                            
+                            <a href="/TDC/page-without-hero/" class="navbar-item ">Page Without Hero</a>
+                            
+                            <a href="/TDC/page-with-contents/" class="navbar-item ">Page With Contents</a>
+                            
+                            <a href="/TDC/page-with-video/" class="navbar-item ">Page With Video</a>
+                            
+                            <a href="/TDC/page-with-image-modal/" class="navbar-item ">Page With Image Modal</a>
+                            
+                            <a href="/TDC/landing/" class="navbar-item ">Landing Page With Callouts</a>
+                            
+                            <a href="/TDC/sponsors/" class="navbar-item ">Sponsors Page</a>
+                            
+                            <a href="/TDC/gallery/" class="navbar-item ">Image Gallery</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/TDC/products/" class="navbar-item ">Products</a>
+                    
+                
+                    
+                    <a href="/TDC/showcase/" class="navbar-item ">Showcase</a>
+                    
+                
+                    
+                    <a href="/TDC/blog/" class="navbar-item ">Blog</a>
+                    
+                
+                
+            </div>
+
+            <div class="navbar-end">
+                
+                <a class="navbar-item" href="https://github.com/sponsors/kexinhuang12345">
+                    <span class="icon gh-sponsor"><i class="fas fa-heart"></i></span>
+                    <span>Sponsor</span>
+                </a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+        <section class="hero  is-large  is-bold is-primary"  style="background: url('https://www.csrhymes.com/img/example-docs-page.jpg') no-repeat center center; background-size: cover;" >
+    <div class="hero-body  hero-darken ">
+        <div class="container">
+            <h1 class="title is-2">Creating a docs site with Bulma Clean Theme</h1>
+            <p class="subtitle is-3"></p>
+            
+        </div>
+    </div>
+</section>
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-8">
+                    
+                    
+                    
+                    
+                    <div class="content">
+
+    <p>Published: May 8, 2020 by C.S. Rhymes</p>
+
+    <p>I created Bulma Clean Theme as a theme for my own website and decided to open source it so others could use it as well. One of the key things I wanted to do was to create a theme that worked with GitHub Pages, which also means that you can also use it as a docs site for your project.</p>
+
+<h2 id="github-pages-configuration">GitHub Pages Configuration</h2>
+
+<p>GitHub pages allows you to create a website for your project with free hosting. Go to your repo on GitHub, then click Settings, then scroll down to the GitHub Pages section. You have the option to create a site from the root of your master branch of from the /docs directory in your master branch. For this example, we are going to use the /docs directory.</p>
+
+<p>Don’t change this setting just yet as if you don’t have a docs directory there will be nothing there to publish.</p>
+
+<h2 id="creating-the-docs-directory">Creating the docs directory</h2>
+
+<p>Clone your git repo to a local directory, let’s say <code class="language-plaintext highlighter-rouge">~/code/my-project</code> for this example. The below assumes you don’t yet have a docs directory and you have <a href="https://jekyllrb.com/docs/installation/">jekyll installed</a>. If you do already have a docs directory you will have to rename it to something else.</p>
+
+<p>Create a new jekyll installation in the docs directory, ensuring you replace your username and project name in the below example.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/username/my-project.git ~/code/my-project
+<span class="nb">cd</span> ~/code/my-project
+jekyll new docs
+</code></pre></div></div>
+
+<p>You should now have a base install of Jekyll in your freshly created docs directory.</p>
+
+<h2 id="configuring-the-theme">Configuring the theme</h2>
+
+<ol>
+  <li>Replace everything in the Gemfile with the following
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source 'https://rubygems.org'
+gem "bulma-clean-theme",  '0.7.2'
+gem 'github-pages', group: :jekyll_plugins
+</code></pre></div>    </div>
+  </li>
+  <li>Open the <code class="language-plaintext highlighter-rouge">_config.yml</code> and comment out or delete the line <code class="language-plaintext highlighter-rouge">theme: minima</code> and replace it with <code class="language-plaintext highlighter-rouge">remote_theme: chrisrhymes/bulma-clean-theme</code>, then add <code class="language-plaintext highlighter-rouge">github-pages</code> to the list of plugins. Update the baseurl to your GitHub repo name, in this example we are using <code class="language-plaintext highlighter-rouge">my-project</code> as the repo name
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#theme: minima</span>
+<span class="na">remote_theme</span><span class="pi">:</span> <span class="s">chrisrhymes/bulma-clean-theme</span>
+<span class="na">baseurl</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/my-project"</span>
+<span class="na">plugins</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="s">github-pages</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Open the <code class="language-plaintext highlighter-rouge">index.md</code> file and update the front matter so the layout is page and then add a title
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">layout</span><span class="pi">:</span> <span class="s">page</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">Docs for My Project</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Run <code class="language-plaintext highlighter-rouge">bundle install</code> and then <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code></p>
+  </li>
+  <li>Visit <code class="language-plaintext highlighter-rouge">http://localhost:4000/my-project/</code> to view your new docs page.</li>
+</ol>
+
+<h2 id="menu">Menu</h2>
+
+<p>To create a menu on the left on your docs page you need to create a new yaml file in _data directory, such as <code class="language-plaintext highlighter-rouge">menu.yaml</code> and then use the below format, where the label will be the menu title and the items are the menu items. Each menu item can have a list of sub menu items if needed.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s">Example Menu</span>
+  <span class="na">items</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Menu item</span>
+      <span class="na">link</span><span class="pi">:</span> <span class="s">/link/</span>
+      <span class="na">items</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Sub menu item</span> 
+          <span class="na">link</span><span class="pi">:</span> <span class="s">/sub-menu-item/</span>
+</code></pre></div></div>
+
+<h2 id="table-of-contents">Table of contents</h2>
+
+<p>If you would like auto generated table of contents for your docs page then add <code class="language-plaintext highlighter-rouge">toc: true</code> to the page’s front matter. The table of contents works for markdown pages and loops through the heading 2s and heading 3s in the markdown and then auto generates the contents.</p>
+
+<h2 id="github-sponsors">GitHub Sponsors</h2>
+
+<p>If you want to link to your GitHub sponsors profile then add <code class="language-plaintext highlighter-rouge">gh_sponsor</code> with your username to the <code class="language-plaintext highlighter-rouge">_config.yml</code> file.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gh_sponsor: chrisrhymes
+</code></pre></div></div>
+
+<h2 id="making-the-docs-page-live">Making the docs page live</h2>
+
+<p>Once you have finished creating your docs page you can commit your changes and push everything up to GitHub. Go back to the GitHub settings page and scroll back down to the GitHub Pages section. Now we can update the setting to use the Master branch /docs folder and then GitHub will build your new docs page.</p>
+
+<h2 id="want-to-see-an-example">Want to see an example?</h2>
+
+<p>I recently updated one of my own packages to use Bulma Clean Theme to power the docs page. Check out the docs for <a href="https://www.csrhymes.com/bulma-block-list">Bulma Block List</a> as an example.</p>
+
+</div>
+
+<div class="tags">
+    
+    <span class="tag is-primary">bulma-clean-theme</span>
+    
+    <span class="tag is-primary">jekyll</span>
+    
+    <span class="tag is-primary">docs</span>
+    
+</div>
+
+
+<p><strong>Share</strong></p>
+<div class="buttons ">
+    <a class="button is-medium is-facebook"
+       onclick="window.open('https://www.facebook.com/share.php?u=http://localhost:4000/TDC/2020/05/08/creating-a-docs-site-with-bulma-clean-theme/');">
+        <span class="icon"><i class="fab fa-facebook fa-lg"></i></span>
+    </a>
+    <a class="button is-medium is-twitter"
+       onclick="window.open('https://twitter.com/intent/tweet?text=http://localhost:4000/TDC/2020/05/08/creating-a-docs-site-with-bulma-clean-theme/');">
+        <span class="icon"><i class="fab fa-twitter fa-lg"></i></span>
+    </a>
+    <a class="button is-medium is-linkedin"
+       onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/TDC/2020/05/08/creating-a-docs-site-with-bulma-clean-theme/&title=Creating+a+docs+site+with+Bulma+Clean+Theme&summary=&source=');">
+        <span class="icon"><i class="fab fa-linkedin fa-lg"></i></span>
+    </a>
+    <a class="button is-medium is-reddit"
+       onclick="window.open('https://reddit.com/submit?url=http://localhost:4000/TDC/2020/05/08/creating-a-docs-site-with-bulma-clean-theme/');">
+        <span class="icon"><i class="fab fa-reddit fa-lg"></i></span>
+    </a>
+</div>
+
+
+
+  
+
+
+                </div>
+                
+                <div class="column is-4-desktop is-12-tablet">
+                    <p class="title is-4">Latest Posts</p>
+
+<div class="columns is-multiline">
+    
+    <div class="column is-12">
+        <div class="card">
+    
+    <div class="card-image">
+        <img src="https://www.csrhymes.com/img/example-docs-page.jpg" alt="Creating a docs site with Bulma Clean Theme">
+    </div>
+    
+    <div class="card-content">
+        <div class="content">
+            
+            <a class="title is-4" href="/TDC/2020/05/08/creating-a-docs-site-with-bulma-clean-theme/">Creating a docs site with Bulma Clean Theme</a>
+            
+            <p><p>I created Bulma Clean Theme as a theme for my own website and decided to open source it so others could use it as well. One of the key things I wanted to do was to create a theme that worked with GitHub Pages, which also means that you can also use it as a docs site for your project.</p>
+
+</p>
+        </div>
+        <div class="has-text-centered">
+            <a href="/TDC/2020/05/08/creating-a-docs-site-with-bulma-clean-theme/" class="button is-primary">Read more</a>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <p class="card-footer-item">Published: May 8, 2020</p>
+    </footer>
+</div>
+    </div>
+    
+    <div class="column is-12">
+        <div class="card">
+    
+    <div class="card-image">
+        <img src="https://www.csrhymes.com/img/landing-page.jpg" alt="Introducing some new layouts to Bulma Clean Theme">
+    </div>
+    
+    <div class="card-content">
+        <div class="content">
+            
+            <a class="title is-4" href="/TDC/2019/07/23/introducing-some-new-layouts-to-bulma-clean-theme/">Introducing some new layouts to Bulma Clean Theme</a>
+            
+            <p><p>I’ve been meaning to write about some of the new features I have been rolling out to my Jekyll theme, <a href="https://www.csrhymes.com/bulma-clean-theme/">Bulma Clean Theme</a>, for a while but I have only just managed to push the update for the landing page layout last weekend. This article provides some of the thinking behind the updates, as well as a brief introduction to how to get started.</p>
+
+</p>
+        </div>
+        <div class="has-text-centered">
+            <a href="/TDC/2019/07/23/introducing-some-new-layouts-to-bulma-clean-theme/" class="button is-primary">Read more</a>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <p class="card-footer-item">Published: Jul 23, 2019</p>
+    </footer>
+</div>
+    </div>
+    
+    <div class="column is-12">
+        <div class="card">
+    
+    <div class="card-image">
+        <img src="https://www.csrhymes.com/img/bulma-clean-theme.jpg" alt="Getting started with Bulma Clean Theme for Jekyll">
+    </div>
+    
+    <div class="card-content">
+        <div class="content">
+            
+            <a class="title is-4" href="/TDC/development/2019/02/09/getting-started-with-bulma-clean-theme/">Getting started with Bulma Clean Theme for Jekyll</a>
+            
+            <p><p>I have made a <a href="https://rubygems.org/gems/bulma-clean-theme">theme for Jekyll</a> which is based on the Bulma frontend framework. It might look familiar, because I am also using it for this site. If you like the look of this theme then I thought I would write a little blog post about how to use it for your own site and how you can use it with GitHub Pages.</p>
+
+</p>
+        </div>
+        <div class="has-text-centered">
+            <a href="/TDC/development/2019/02/09/getting-started-with-bulma-clean-theme/" class="button is-primary">Read more</a>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <p class="card-footer-item">Published: Feb 9, 2019</p>
+    </footer>
+</div>
+    </div>
+    
+</div>
+
+
+
+
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        
+        <div class="columns is-multiline">
+            
+            <div class="column has-text-centered">
+                <div>
+                    <a href="/TDC/" class="link">Home</a>
+                </div>
+            </div>
+            
+            <div class="column has-text-centered">
+                <div>
+                    <a href="/TDC/blog/" class="link">Blog</a>
+                </div>
+            </div>
+            
+            <div class="column has-text-centered">
+                <div>
+                    <a href="/TDC/products/" class="link">Products</a>
+                </div>
+            </div>
+            
+            <div class="column has-text-centered">
+                <div>
+                    <a href="/TDC/privacy-policy/" class="link">Privacy Policy</a>
+                </div>
+            </div>
+            
+        </div>
+        
+
+        <div class="content is-small has-text-centered">
+            <p class="">Theme built by <a href="https://www.csrhymes.com">C.S. Rhymes</a></p>
+        </div>
+    </div>
+</footer>
+
+    
+    <script src="/TDC/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+

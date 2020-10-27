@@ -1,0 +1,46 @@
+
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="{{ site.baseurl }}/" class="navbar-item">
+                {{ site.title }}
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-start">
+                <a href="{{ site.baseurl }}/" class="navbar-item {% if page.url == "/" %}is-active{% endif %}">Home</a>
+                {% if site.data.navigation %}
+                {% for item in site.data.navigation %}
+                    {% if item.dropdown %}
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="{{ item.link | relative_url }}" class="navbar-link {% if item.link == page.url %}is-active{% endif %}">{{ item.name }}</a>
+                        <div class="navbar-dropdown">
+                            {% for subitem in item.dropdown %}
+                            <a href="{{ subitem.link | relative_url }}" class="navbar-item {% if subitem.link == page.url %}is-active{% endif %}">{{ subitem.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="{{ item.link | relative_url }}" class="navbar-item {% if item.link == page.url %}is-active{% endif %}">{{ item.name }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="navbar-end">
+                {% if site.gh_sponsor %}
+                <a class="navbar-item" href="https://github.com/sponsors/{{ site.gh_sponsor }}">
+                    <span class="icon gh-sponsor"><i class="fas fa-heart"></i></span>
+                    <span>Sponsor</span>
+                </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</nav>

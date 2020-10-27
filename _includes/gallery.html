@@ -1,0 +1,25 @@
+{% if page.gallery %}
+    {% assign galleries=site.data.[page.gallery] %}
+    {% for gallery in galleries %}
+    <div class="columns is-multiline">
+        <div class="column is-12">
+            <p class="title is-3 has-text-centered">{{ gallery.title }}</p>
+        </div>
+        {% for image in gallery.images %}
+        <div class="column is-4-desktop is-6-tablet">
+            <div class="card">
+                <div class="card-image">
+                    {% include image-modal.html ratio=image.ratio link=image.link alt=image.alt large_link=image.large_link %}
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        {{ image.description | markdownify }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+{% endif %}

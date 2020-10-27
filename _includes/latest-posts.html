@@ -1,0 +1,12 @@
+<p class="title is-4">Latest Posts</p>
+
+<div class="columns is-multiline">
+    {% for post in site.posts limit:3 %}
+    <div class="column is-12">
+        {% include post-card.html %}
+    </div>
+    {% endfor %}
+</div>
+
+
+

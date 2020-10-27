@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+$block-list-separator: 0.25rem !default;
+$block-list-highlight-width: 5px !default;
+
+.content {
+    ul.block-list {
+      list-style: none;
+      margin-left: 0;
+    }
+  }
+
+.block-list {
+    list-style: none;
+
+    li {
+        padding: ($gap / 2);
+        background: $light;
+        margin-bottom: $block-list-separator;
+    }
+
+    li.is-left,
+    &.is-left > li {
+        text-align: left;
+    }
+
+
+    li.is-centered,
+    &.is-centered > li {
+        text-align: center;
+    }
+
+    li.is-right,
+    &.is-right > li {
+        text-align: right;
+    }
+
+    li.is-small,
+    &.is-small > li {
+        font-size: $small-font-size;
+        padding: ($gap / 3);
+    }
+
+    li.is-normal,
+    &.is-normal > li {
+        font-size: $body-font-size;
+    }
+
+    li.is-large,
+    &.is-large > li {
+        font-size: $size-large;
+    }
+
+    li.has-radius,
+    &.has-radius > li {
+        border-radius: $radius;
+    }
+
+    li.is-highlighted,
+    &.is-highlighted > li {
+        border-left: $block-list-highlight-width $dark solid;
+    }
+
+    @each $name, $pair in $colors {
+
+        $color: nth($pair, 1);
+        $color-invert: nth($pair, 2);
+
+        li.is-#{$name},
+        &.is-#{$name} > li {
+            background: $color;
+            color: $color-invert;
+        }
+
+        &.is-#{$name} {
+            li.is-outlined,
+            &.is-outlined > li {
+                background: transparent;
+                color: $color;
+                border: 1px solid $color;
+            }
+
+            li.is-highlighted,
+            &.is-highlighted > li {
+                background: transparent;
+                color: $color;
+                border: 1px solid $color;
+                border-left: $block-list-highlight-width $color solid;
+            }
+        }
+    }
+}

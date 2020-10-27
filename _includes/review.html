@@ -1,0 +1,27 @@
+<article class="media">
+    <figure class="media-left">
+    {% if review.avatar %}
+        <p class="image is-48x48">
+            <img src="https://bulma.io/images/placeholders/128x128.png">
+        </p>
+    {% else %}
+        <div class="icon is-large">
+            <i class="fas fa-user fa-2x"></i>
+        </div>
+    {% endif %}
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong>{{ review.name }}</strong> <small>{{ review.date }}</small>
+          <br>
+          {{ review.title }}
+          <br>
+          {{ review.description }}
+        </p>
+      </div>
+      {% if review.rating %}
+        {% include rating.html rating=review.rating align="has-text-left" %}
+      {% endif %}
+    </div>
+  </article>

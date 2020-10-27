@@ -1,57 +1,77 @@
-# Site settings
+# Site Settings
 title: Therapeutic Data Commons
+tagline: TDC
 email: tdc@hms.harvard.edu
 description: >
   Datasets for Medicinal Machine Learning
-lang: en-US
+baseurl: "/TDC"
+url: " https://zitniklab.hms.harvard.edu/TDC"
+permalink: pretty
+#favicon: /path/to/favicon.png
+gh_sponsor: kexinhuang12345
+#hide_share_buttons: true
 
-baseurl: "/TDC" # the subpath of your site, e.g. /blog/
-url: https://zitniklab.hms.harvard.edu/TDC # the base hostname & protocol for your site
-git_address: https://github.com/mims-harvard/TDC
-git_edit_address: https://github.com/aksakalli/jekyll-doc-theme/blob/gh-pages
+paginate: 5
+paginate_path: "/blog/page:num"
 
-# theme options from https://bootswatch.com/3/
-# comment out this to use default Bootstrap
-bootwatch: paper # cerulean cosmo custom cyborg darkly flatly journal lumen readable sandstone simplex slate solar spacelab superhero united yeti
+# Disqus Comments
+disqus:
+  # Leave shortname blank to disable comments site-wide.
+  # Disable comments for any post by adding `comments: false` to that post's YAML Front Matter.
+  # shortname: my_disqus_shortname
+  shortname: csrhymes
 
-# Build settings
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-seo-tag
+  - kramdown-parser-gfm
+
+exclude: 
+  - Gemfile
+  - clean-theme.gemspec
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+livereload: true
+
+sass:
+  style: compressed
+  source_dir: _sass
+
+#google_analytics: UA-code-here
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      show_sidebar: true
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      author: "C.S. Rhymes"
+      layout: post
+      image: https://via.placeholder.com/1200x800
+      show_sidebar: true
+
 markdown: kramdown
 highlighter: rouge
-# Plugins (previously gems:)
-plugins:
-  - jekyll-feed
-  - jekyll-redirect-from
-  - jekyll-seo-tag
-  - jekyll-sitemap
 
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - .idea/
-  - .gitignore
-  - README.md
-timezone: Europe/Berlin
-defaults:
-- scope:
-    path: _posts
-    type: posts
-  values:
-    layout: post
-    sectionid: blog
-
-- scope:
-    path: _docs
-    type: docs
-  values:
-    layout: docs
-    sectionid: docs
-    seo:
-      type: "WebPage"
+footer_menu: example_footer_menu
 
 collections:
-  docs:
-    permalink: /:collection/:path/
+  products: 
     output: true
-  posts:
-    permalink: /blog/:year/:month/:day/:title/
-    output: true
+    layout: product
+    image: https://via.placeholder.com/800x600
+    show_sidebar: false

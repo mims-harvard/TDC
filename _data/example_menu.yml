@@ -1,0 +1,33 @@
+- label: Example Menu
+  items:
+    - name: Home
+      link: /
+    - name: Pages
+      link: /#
+      items:
+        - name: Page With Sidebar 
+          link: /page-1/
+        - name: Page Without Sidebar
+          link: /page-2/
+        - name: Page With Menubar
+          link: /page-3/
+        - name: Page With Tabs
+          link: /page-4/
+        - name: Page Without Footer
+          link: /page-5/
+        - name: Page Without Hero
+          link: /page-without-hero/
+        - name: Page With Contents
+          link: /page-with-contents/
+        - name: Page With Video
+          link: /page-with-video/
+        - name: Page With Image Modal
+          link: /page-with-image-modal/
+        - name: Landing Page With Callouts
+          link: /landing/
+        - name: Sponsors Page
+          link: /sponsors/
+        - name: Image Gallery
+          link: /gallery/
+    - name: Blog
+      link: /blog/

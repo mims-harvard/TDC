@@ -1,0 +1,64 @@
+{% if page.showcase %}
+    {% assign showcase = site.data.[page.showcase] %}
+
+    <div class="content">
+        <p>{{ showcase.intro | markdownify }}</p>
+    </div>
+
+    {% for item in showcase.items %}
+        <section class="showcase">
+            <figure class="image {% if item.image_ratio %} {{ item.image_ratio }} {% else %} is-16by9 {% endif %}">
+                <img src="{{ item.image | relative_url }}" />
+            </figure>
+            <div class="showcase-content">
+                <div class="columns is-centered">
+                    <div class="column is-8-desktop is-12-tablet">
+                        <p class="title">{{ item.title }}</p>
+                        <p class="subtitle">{{ item.subtitle }}</p>
+
+                        {% if item.github %}
+                        <div class="buttons is-centered">
+                            <a href="https://github.com/{{ item.github }}/stargazers" class="button is-white is-small">
+                                <img alt="GitHub stars" src="https://img.shields.io/github/stars/{{ item.github }}?style=social">
+                            </a>
+                            <a href="https://github.com/{{ showcase.github }}/network/members" class="button is-white is-small">
+                                <img alt="GitHub forks" src="https://img.shields.io/github/forks/{{ item.github }}?style=social">
+                            </a>
+                            <a href="https://github.com/{{ item.github }}/watchers" class="button is-white is-small">
+                                <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/{{ item.github }}?style=social">
+                            </a>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="content">
+                            <p>{{ item.description | markdownify }}</p>
+                        </div>
+
+                        {% if item.features %}
+                        <ul class="block-list {{ item.features_styles }}">
+                            {% for feature in item.features %}
+                            <li>{{ feature }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        
+
+                        {% if item.tags %}
+                        {% assign tags = item.tags | split: "," %}
+                        <div class="tags is-centered">
+                            {% for tag in tags %}
+                            <div class="tag is-dark">{{ tag }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <a href="{{ item.link }}" class="button is-primary">
+                            {{ item.link_text }}
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    {% endfor %}
+{% endif %}

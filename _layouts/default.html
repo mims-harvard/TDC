@@ -1,20 +1,47 @@
+{% if page.menubar and page.show_sidebar %} 
+    {% assign content_width = 'is-4' %} 
+{% elsif page.menubar or page.show_sidebar %} 
+    {% assign content_width = 'is-8' %} 
+{% else %} 
+    {% assign content_width = 'is-12' %} 
+{% endif %}
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
-
-{% include head.html %}
-
-<body>
-
-    {% include topnav.html %}
-
-    <div class="page-content">
-        <div class="wrapper">
-            {{ content }}
+<html>
+  {% include head.html %}
+  <body>
+    {% include header.html %}
+    {% unless page.hide_hero %}
+        {% include hero.html %}
+    {% endunless %}
+    {% include callouts.html %}
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                {% if page.menubar %}
+                <div class="column is-4-desktop is-4-tablet">
+                    {% include menubar.html %}
+                </div>
+                {% endif %}
+                <div class="column {{ content_width }}">
+                    {% include tabs.html %}
+                    {% include showcase.html %}
+                    {% include sponsors.html %}
+                    {% include gallery.html %}
+                    {{ content }}
+                </div>
+                {% if site.posts and page.show_sidebar %}
+                <div class="column is-4-desktop is-12-tablet">
+                    {% include latest-posts.html %}
+                </div>
+                {% endif %}
+            </div>
         </div>
-    </div>
-
-    {% include footer.html %}
-    {% include js_files.html %}
-</body>
-
+    </section>
+    {% unless page.hide_footer %}
+        {% include footer.html %}
+    {% endunless %}
+    <script src="{{ site.baseurl }}/assets/js/app.js" type="text/javascript"></script>
+    {%- include footer-scripts.html -%}
+  </body>
 </html>
+

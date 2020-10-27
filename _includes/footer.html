@@ -1,10 +1,20 @@
 <footer class="footer">
     <div class="container">
+        
+        {% if site.footer_menu %}
+        <div class="columns is-multiline">
+            {% for item in site.data[site.footer_menu] %}
+            <div class="column has-text-centered">
+                <div>
+                    <a href="{{ item.link | relative_url }}" class="link">{{ item.name }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
 
-        <p class="text-center">
-            {{ site.title }} {{ site.time | date: '%Y' }} |
-            Powered by <a href="https://github.com/aksakalli/jekyll-doc-theme">Jekyll Doc Theme</a>
-        </p>
-        <!-- <p class="text-muted">Place sticky footer content here.</p> -->
+        <div class="content is-small has-text-centered">
+            <p class="">Theme built by <a href="https://www.csrhymes.com">C.S. Rhymes</a></p>
+        </div>
     </div>
 </footer>

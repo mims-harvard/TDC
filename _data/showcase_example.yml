@@ -1,0 +1,37 @@
+intro: |-
+  This is an example showcase page to show you how you can use it to easily showcase your work.
+items:
+  - title: C.S. Rhymes Website
+    subtitle: csrhymes.com
+    description: |-
+      The C.S. Rhymes website is built using Bulma Clean Theme.
+
+      This website utilises the built in blog and products layouts that come included with the theme.
+    image: /img/csrhymes-com.jpg
+    image_ratio: is-16by9
+    link: https://www.csrhymes.com
+    link_text: View the CS Rhymes Website
+    tags: Bulma,CSS,Jekyll
+    github: chrisrhymes/chrisrhymes.github.io
+  - title: Bulma Clean Theme
+    subtitle: A clean and simple theme built with Bulma
+    description: |-
+      A clean and simple Jekyll theme built with the Bulma framework, available as a Ruby Gem. You may recognise it, it's what powers this website!
+
+      There is a wide variety of different page layout options available, along with the essential blog and post pages.
+    features:
+      - Responsive
+      - Page With Sidebar
+      - Page With Menubar
+      - Page With Tabs
+      - Page Contents
+      - Landing Page With Callouts
+      - Blog and Posts
+      - Showcases
+    features_styles: is-centered is-outlined
+    image: /img/bulma-clean-theme-4by3.jpg
+    image_ratio: is-4by3
+    link: https://github.com/chrisrhymes/bulma-clean-theme
+    link_text: View Theme
+    tags: Jekyll,Bulma,CSS
+    github: chrisrhymes/bulma-clean-theme

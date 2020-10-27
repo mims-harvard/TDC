@@ -1,0 +1,15 @@
+title: Bulma Block List
+description: >- # this means to ignore newlines until "baseurl:"
+  Bulma Block List is a simple scss package extending Bulma with block style list elements
+baseurl: "/bulma-block-list"
+url: "https://www.csrhymes.com"
+gh_sponsor: chrisrhymes
+favicon: /favicon.ico
+google_analytics: UA-49024852-2
+remote_theme: chrisrhymes/bulma-clean-theme
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - github-pages

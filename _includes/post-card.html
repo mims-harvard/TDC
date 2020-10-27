@@ -1,0 +1,25 @@
+<div class="card">
+    {% if post.image %}
+    <div class="card-image">
+        <img src="{{ post.image }}" alt="{{ post.title }}">
+    </div>
+    {% else %}
+    <header class="card-header">
+        <a class="card-header-title" href="{{ site.baseurl }}{{ post.url }}">{{ post.title}}</a>
+    </header>
+    {% endif %}
+    <div class="card-content">
+        <div class="content">
+            {% if post.image %}
+            <a class="title is-4" href="{{ site.baseurl }}{{ post.url }}">{{ post.title}}</a>
+            {% endif %}
+            <p>{{ post.excerpt }}</p>
+        </div>
+        <div class="has-text-centered">
+            <a href="{{ site.baseurl }}{{ post.url }}" class="button is-primary">Read more</a>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <p class="card-footer-item">Published: {{ post.date | date: "%b %-d, %Y" }}</p>
+    </footer>
+</div>
