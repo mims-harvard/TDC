@@ -1,0 +1,58 @@
+# 0.6.3
+* Update Bulma to 0.8
+* Use bulma-block-list in showcase
+
+# 0.6.2
+* Added support for disqus to posts - pull request #28 from Funeoz
+
+# 0.6.1
+* Added GitHub stars, forks and watchers to showcase
+
+# 0.6
+* Added showcase page layout
+
+# 0.5.8
+* Added table of contents to pages
+* Ability to override default favicon path
+
+# 0.5.7
+* Add option to hide hero - pull request #15 from risa2000
+* Add ability to override the height of callouts - pull request #14 from agardnerIT
+
+# 0.5.6
+* Explicitly reference shortcut icon - pull request #13 from johannesegger
+
+# 0.5.5
+* Fix bug with navbar dropdown in IE and Edge
+* Fix bug with layout where <code> elements were too wide
+
+# 0.5.4
+* Added landing page feature
+
+# 0.5.3
+* Remove extra </a> - pull request #8 from SumitBando
+
+# 0.5.2
+* Add head and footer script partials
+* Updated Bulma to 0.7.5
+
+# 0.5.1
+* Fix headings not showing in post
+
+# 0.5
+* Add product page layouts
+
+# 0.4.1
+* Added footer links
+
+# 0.4
+* Added tabs, syntax highlighting and updated Bulma
+
+# 0.3
+* Added menubar
+
+# 0.2
+* Added hero background image, blog page images and Google Analytics
+
+# 0.1
+* Initial release
