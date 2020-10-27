@@ -1,79 +1,58 @@
-# Site Settings
-title: Therapeutic Data Commons
-tagline: TDC
-email: tdc@hms.harvard.edu
+# Site settings
+title: Jekyll Doc Theme
+email: your-email@domain.com
 description: >
-  Datasets for Medicinal Machine Learning
-baseurl: "/TDC"
-url: " https://zitniklab.hms.harvard.edu/TDC"
-permalink: pretty
-#favicon: /path/to/favicon.png
-gh_sponsor: kexinhuang12345
-#hide_share_buttons: true
-remote_theme: chrisrhymes/bulma-clean-theme
+  Jekyll Template for Project Websites
+  providing documentation and blog post pages.
+lang: en-US
 
-paginate: 5
-paginate_path: "/blog/page:num"
+baseurl: "/TDC" # the subpath of your site, e.g. /blog/
+url: https://aksakalli.github.io/jekyll-doc-theme # the base hostname & protocol for your site
+git_address: https://github.com/aksakalli/jekyll-doc-theme
+git_edit_address: https://github.com/aksakalli/jekyll-doc-theme/blob/gh-pages
 
-# Disqus Comments
-disqus:
-  # Leave shortname blank to disable comments site-wide.
-  # Disable comments for any post by adding `comments: false` to that post's YAML Front Matter.
-  # shortname: my_disqus_shortname
-  shortname: csrhymes
+# theme options from https://bootswatch.com/3/
+# comment out this to use default Bootstrap
+bootwatch: paper # cerulean cosmo custom cyborg darkly flatly journal lumen readable sandstone simplex slate solar spacelab superhero united yeti
 
-
-plugins:
-  - jekyll-sitemap
-  - jekyll-paginate
-  - jekyll-feed
-  - jekyll-seo-tag
-  - kramdown-parser-gfm
-  - github-pages
-
-exclude: 
-  - Gemfile
-  - clean-theme.gemspec
-  - Gemfile.lock
-  - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-
-livereload: true
-
-sass:
-  style: compressed
-  source_dir: _sass
-
-#google_analytics: UA-code-here
-
-defaults:
-  -
-    scope:
-      path: ""
-      type: "pages"
-    values:
-      show_sidebar: true
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      author: "C.S. Rhymes"
-      layout: post
-      image: https://via.placeholder.com/1200x800
-      show_sidebar: true
-
+# Build settings
 markdown: kramdown
 highlighter: rouge
+# Plugins (previously gems:)
+plugins:
+  - jekyll-feed
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
-footer_menu: example_footer_menu
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - .idea/
+  - .gitignore
+  - README.md
+timezone: Europe/Berlin
+defaults:
+- scope:
+    path: _posts
+    type: posts
+  values:
+    layout: post
+    sectionid: blog
+
+- scope:
+    path: _docs
+    type: docs
+  values:
+    layout: docs
+    sectionid: docs
+    seo:
+      type: "WebPage"
 
 collections:
-  products: 
+  docs:
+    permalink: /:collection/:path/
     output: true
-    layout: product
-    image: https://via.placeholder.com/800x600
-    show_sidebar: false
+  posts:
+    permalink: /blog/:year/:month/:day/:title/
+    output: true
