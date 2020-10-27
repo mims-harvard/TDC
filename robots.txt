@@ -1,1 +1,1 @@
-Sitemap: http://localhost:4000/bulma-clean-theme/sitemap.xml
+Sitemap: http://localhost:4000/TDC/sitemap.xml
