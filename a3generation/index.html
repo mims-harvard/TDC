@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page With Contents - TDC</title>
+    <title>Page without sidebar - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page With Contents | TDC</title>
+<title>Page without sidebar | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Page With Contents" />
+<meta property="og:title" content="Page without sidebar" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
-<link rel="canonical" href="http://localhost:4000/page-with-contents/" />
-<meta property="og:url" content="http://localhost:4000/page-with-contents/" />
+<link rel="canonical" href="http://localhost:4000/a3generation/" />
+<meta property="og:url" content="http://localhost:4000/a3generation/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/page-with-contents/","headline":"Page With Contents","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/a3generation/","headline":"Page without sidebar","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -58,7 +58,7 @@
                             
                             <a href="/a2multi_pred/" class="navbar-item ">Multi-Instances Prediction</a>
                             
-                            <a href="/a3generation/" class="navbar-item ">Generation</a>
+                            <a href="/a3generation/" class="navbar-item is-active">Generation</a>
                             
                         </div>
                     </div>
@@ -79,16 +79,6 @@
 </nav>
 
     
-        <section class="hero  is-medium  is-bold is-primary" >
-    <div class="hero-body">
-        <div class="container">
-            <p class="title is-2">Page With Contents</p>
-            <p class="subtitle is-3">Example page with contents</p>
-            
-        </div>
-    </div>
-</section>
-    
     
 
 
@@ -96,83 +86,20 @@
         <div class="container">
             <div class="columns">
                 
-                <div class="column is-4-desktop is-4-tablet">
-                    
-
-<aside class="menu">
-
-    <p class="menu-label"></p>
-    <ul class="menu-list">
-        
-        <li>
-            <a href="/#" class="">Datasets</a>
-            
-            <ul>
-                
-                <li><a href="/a0overview/" class="">Overview</a></li>
-                
-                <li><a href="/a1single_pred/" class="">Single-Instance Prediction</a></li>
-                
-                <li><a href="/a2multi_pred/" class="">Multi-Instances Prediction</a></li>
-                
-                <li><a href="/a3generation/" class="">Generation</a></li>
-                
-            </ul>
-            
-        </li>
-            
-    </ul>
-
-</aside>
-                </div>
-                
-                <div class="column is-8">
+                <div class="column is-12">
                     
                     
                     
                     
-    
-    
-
-<div class="contents">
-    <div class="menu">
-        <p class="menu-label">Contents</p>
-        <ul class="menu-list">
-  <li><a href="#introduction">Introduction</a></li>
-  <li><a href="#set-up">Set Up</a>
-    <ul>
-      <li><a href="#contents-title">Contents Title</a></li>
-      <li><a href="#example-front-matter">Example Front Matter</a></li>
-    </ul>
-  </li>
-</ul>
-    </div>
-</div>
-
-
-
-
 <div class="content">
-    <h2 id="introduction">Introduction</h2>
+    <p>This is another sample page showing how a page can look without a sidebar.</p>
 
-<p>This is an example page with contents that are generated from the page content.</p>
+<p>To hide the sidebar, set the show_sidebar to false in the page’s frontmatter</p>
 
-<p>The page contents are generated automatically using <a href="https://github.com/allejo/jekyll-toc">Jekyll TOC</a>.</p>
-
-<h2 id="set-up">Set Up</h2>
-
-<p>To add contents to your page add <code class="highlighter-rouge">toc: true</code> to the page’s front matter.</p>
-
-<h3 id="contents-title">Contents Title</h3>
-
-<p>To overwrite the default title for the contents, set <code class="highlighter-rouge">toc_title: My Custom Title</code> in the page’s front matter.</p>
-
-<h3 id="example-front-matter">Example Front Matter</h3>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">layout</span><span class="pi">:</span> <span class="s">page</span>
-<span class="na">title</span><span class="pi">:</span> <span class="s">Page With Contents</span>
-<span class="na">toc</span><span class="pi">:</span> <span class="no">true</span>
-<span class="na">toc_title</span><span class="pi">:</span> <span class="s">Custom Title</span>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">title</span><span class="pi">:</span> <span class="s">Page without sidebar</span>
+<span class="na">subtitle</span><span class="pi">:</span> <span class="s">Demo page without the sidebar</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">page</span>
+<span class="na">show_sidebar</span><span class="pi">:</span> <span class="no">false</span>
 </code></pre></div></div>
 
 </div>
