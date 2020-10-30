@@ -27,7 +27,7 @@
 
   <body>
     
-<nav class="navbar is-primary has-shadow" >
+<nav class="navbar is-primary" >
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-brand" href="/TDC/">
@@ -54,11 +54,30 @@
                             
                             <a href="/TDC/overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/single_pred/" class="navbar-item ">Single-Instance Prediction</a>
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-Instance Prediction</a>
                             
-                            <a href="/TDC/multi_pred/" class="navbar-item ">Multi-Instances Prediction</a>
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-Instances Prediction</a>
                             
-                            <a href="/TDC/generation/" class="navbar-item ">Generation</a>
+                            <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/fct_overview/" class="navbar-link ">Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/TDC/data_process/" class="navbar-item ">Data Processing Functions</a>
+                            
+                            <a href="/TDC/data_viz/" class="navbar-item ">Data Visualization Functions</a>
+                            
+                            <a href="/TDC/data_split/" class="navbar-item ">Data Split Functions</a>
+                            
+                            <a href="/TDC/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
                         </div>
                     </div>
@@ -90,15 +109,7 @@
                     
                     
 <div class="content">
-    <p>This is another sample page showing how a page can look without a sidebar.</p>
-
-<p>To hide the sidebar, set the show_sidebar to false in the page’s frontmatter</p>
-
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">title</span><span class="pi">:</span> <span class="s">Page without sidebar</span>
-<span class="na">subtitle</span><span class="pi">:</span> <span class="s">Demo page without the sidebar</span>
-<span class="na">layout</span><span class="pi">:</span> <span class="s">page</span>
-<span class="na">show_sidebar</span><span class="pi">:</span> <span class="no">false</span>
-</code></pre></div></div>
+    
 
 </div>
                 </div>
@@ -110,13 +121,13 @@
         <footer class="footer">
     <div class="container">
         
-        <div class="columns is-multiline">
-            <div class="column has-text-centered">
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left">
                 <a class="navbar-brand" href="/TDC/">
                     <span><img src="/TDC/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 35px; max-width: 250px;"></span>
                 </a>
             </div>
-            <div class="column has-text-right is-offset-8">
+            <div class="column is-4 has-text-right">
                 <a href="https://github.com/mims-harvard/TDC">
                     <span class="icon">
                       <i class="fas fab fa-github fa-2x"></i>
