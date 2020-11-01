@@ -146,9 +146,19 @@ We have X task formulations and each is associated with many datasets. For examp
 	QM9 <br> `QM(name = 'QM9, target = 'X')` Choose target from [here](https://github.com/kexinhuang12345/DrugDataLoader/blob/master/DrugDataLoader/target_list.py#L298) </br> | Geometric,  energetic, electronic and thermodynamic properties of DFT-modelled small molecules. From MoleculeNet.|  [R. Ramakrishnan, P. O. Dral, M. Rupp, O. A. von Lilienfeld, Quantum chemistry structures and properties of 134 kilo molecules, Scientific Data 1, 140022, 2014.](http://www.nature.com/articles/sdata201422) | Regression | 22,000 drugs 
 	</details>
 
+* <b>Epitope Prediction</b>```Epitope```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	Bepipred_IEDB <br> `Epitope(name = 'Bepipred_IEDB)` </br> | | []() | Token Classification | X antigens
+	Bepipred_PDB <br> `Epitope(name = 'Bepipred_PDB)` </br> | | []() | Token Classification | X antigens
+	</details>
+
 ### Interaction Prediction
 
-* <b>Drug-Target Interaction Prediction Dataset</b>```DTI```
+* <b>Drug-Target Interaction Prediction</b>```DTI```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -159,7 +169,7 @@ We have X task formulations and each is associated with many datasets. For examp
 	 KIBA  <br> `DTI(name = 'KIBA')`  </br>| An integrated drug-target bioactivity matrix across 52,498 chemical compounds and 467 kinase targets, including a total of 246,088 KIBA scores, has been made freely available. | [Tang J, Szwajda A, Shakyawar S, et al. Making sense of large-scale kinase inhibitor bioactivity data sets: a comparative and integrative analysis. J Chem Inf Model. 2014;54(3):735-743.](https://pubmed.ncbi.nlm.nih.gov/24521231/) | Regression | 118,254/2,068/229
 	</details>
 
-* <b>Drug-Drug Interaction Prediction Dataset</b>```DDI```
+* <b>Drug-Drug Interaction Prediction</b>```DDI```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -169,7 +179,7 @@ We have X task formulations and each is associated with many datasets. For examp
 	 TWOSIDES | Polypharmacy side-effects are associated with drug pairs (or higher-order drug combinations) and cannot be attributed to either individual drug in the pair (in a drug combination). | [Tatonetti, Nicholas P., et al. Data-driven prediction of drug effects and interactions. Science Translational Medicine. 2012.](https://stm.sciencemag.org/content/4/125/125ra31.short) | Multi-Label/Network | 4,649,441/645
 	</details>
 
-* <b>Protein-Protein Interaction Prediction Dataset</b>```PPI```
+* <b>Protein-Protein Interaction Prediction</b>```PPI```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -178,8 +188,17 @@ We have X task formulations and each is associated with many datasets. For examp
 	 HuRI <br> `PPI(name = 'HuRI)` </br> | All pairwise combinations of human protein-coding genes are systematically being interrogated to identify which are involved in binary protein-protein interactions. In our most recent effort 17,500 proteins have been tested and a first human reference interactome (HuRI) map has been generated. From the Center for Cancer Systems Biology at Dana-Farber Cancer Institute. Note that the feature is peptide sequence, if a protein gene is associated with multiple peptides, we separate them by '\*'.| [Luck, K., Kim, D., Lambourne, L. et al. A reference map of the human binary protein interactome. Nature 580, 402–408 (2020). ](https://doi.org/10.1038/s41586-020-2188-x) | Binary/Network | 51,813/8,248
 	</details>
 
+* <b>Drug Response Prediction (Cell lines-Monotherapy Affinity)</b>```DrugResponse```
+	<details>
+  	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
-* <b>Peptide-MHC Binding Prediction Dataset</b>```PeptideMHC```
+	 Dataset Name  | Description| Reference | Type | Stats (#pairs/#cell lines/#drugs)
+	 ------------  | ------------------------ | ----------- | ----------- | -----------
+	 GDSC1 <br> `DrugResponse(name = 'GDSC1)` </br> | Genomics in Drug Sensitivity in Cancer (GDSC) is a resource for therapeutic biomarker discovery in cancer cells. It contains wet lab IC50 for 100s of drugs in 1000 cancer cell lines. In this dataset, we use RMD normalized gene expression for cancer lines and SMILES for drugs. Y is the log normalized IC50. This is the version 1 of GDSC. | [Yang, Wanjuan, et al. "Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells." Nucleic acids research 41.D1 (2012): D955-D961.](https://academic.oup.com/nar/article-abstract/41/D1/D955/1059448) | Regression | 177,310/958/208
+	 GDSC2 <br> `DrugResponse(name = 'GDSC2)` </br> | Genomics in Drug Sensitivity in Cancer (GDSC) is a resource for therapeutic biomarker discovery in cancer cells. It contains wet lab IC50 for 100s of drugs in 1000 cancer cell lines. In this dataset, we use RMD normalized gene expression for cancer lines and SMILES for drugs. Y is the log normalized IC50. This is the version 2 of GDSC, which uses improved experimental procedures. | [Yang, Wanjuan, et al. "Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells." Nucleic acids research 41.D1 (2012): D955-D961.](https://academic.oup.com/nar/article-abstract/41/D1/D955/1059448) | Regression | 92,703/805/137
+	</details>
+
+* <b>Peptide-MHC Binding Prediction</b>```PeptideMHC```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
