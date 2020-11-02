@@ -31,6 +31,22 @@ class Evaluator(generation_dataset.Evaluator):
 		else:
 			return 
 
+class DistributionEvaluator(generation_dataset.Evaluator):
+	def __init__(self, name, molecule_base = None):
+		super().__init__(name)
+		self.molecule_base = self.molecule_base
+
+	def assign_evaluator(self):
+		if self.name == 'novelty':
+			pass 
+		elif self.name == 'diversity':
+			pass 
+		elif self.name == 'validity':
+			pass 
+		elif self.name == 'unique':
+			pass 
+
+
 
 class ForwardSyn(generation_dataset.PairedDataLoader):
 
