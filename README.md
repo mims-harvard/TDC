@@ -249,6 +249,7 @@ We have X task formulations and each is associated with many datasets. To call a
 
 	Dataset Name  | Description| Reference | Type | Stats
 	------------  | ------------------------ | ----------- | ----------- | -----------
+	ProteinAntigen_SAbDab <br> `AntibodyAff(name = 'ProteinAntigen_SAbDab')` </br> | Antibody-antigen affinity dataset. Processed from SAbDab dataset, only uses protein/peptide antigens for sequence compatbility. The features are amino acid sequence.| [Dunbar, James, et al. "SAbDab: the structural antibody database." Nucleic acids research 42.D1 (2014): D1140-D1146.](https://academic.oup.com/nar/article-abstract/42/D1/D1140/1044118) | Regression | 493
 	</details>
 
 * <b>Catalyst Prediction</b>```Catalyst```
