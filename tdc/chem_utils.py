@@ -83,7 +83,17 @@ def SA(s):
 
 
 
+def single_molecule_validity(smiles):
+	if smiles.strip() == '':
+		return False 
+	mol = Chem.MolFromSmiles(smiles)
+	if mol is None or mol.GetNumAtoms() == 0:
+		return False 
+	return True
 
+def validity_ratio(list_of_smiles):
+	valid_list_smiles = list(filter(single_molecule_validity, list_of_smiles))
+	return 1.0*len(valid_list_smiles)/len(list_of_smiles)
 
 
 
@@ -94,7 +104,9 @@ if __name__ == "__main__":
 	print(penalized_logp(smiles))
 	print(drd2(smiles))
 	print(SA(smiles))
-#  conda install -c rdkit rdkit
+	list_of_smiles = ['CCC', 'fewjio',]
+	print(validity_ratio(list_of_smiles))
+	#  conda install -c rdkit rdkit
 
 
 
