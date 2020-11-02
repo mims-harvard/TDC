@@ -1,27 +1,22 @@
-<p align="center"><img src="fig/logo.png" alt="logo" width="200px" /></p>
+<p align="center"><img src="fig/logo.png" alt="logo" width="600px" /></p>
 
-This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive dataset hub for medicinal machine learning tasks. So far, it includes more than 100+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to patient recruitment, safety survellience and etc) in most of the drug development stages (from discovery and development to clinical trials and post-market monitoring). 
+This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive dataset hub for medicinal machine learning tasks. So far, it includes more than 50+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to manufacturing, safety survellience and etc) in most of the therapeutics development stages. 
+
+[Project Website](tdc.hms.harvard.edu)
 
 ## Features
 
-- Extensive: covers 100+ datasets for 20+ tasks in most of the drug development stages.
-- Ready-to-use: the output can directly feed into prediction library such as scikit-learn and DeepPurpose. 
-- User-friendly: very easy to load the dataset (3 lines of codes) and supports various useful functions such as conversion to DGL/PyG graph for interaction data, cold/scaffold split, label distribution visualization, binarize, log-conversion and so much more! 
-- Benchmark: provides a benchmark mode for fair comparison. We also provide a leaderboard!
-- Easy-to-contribute: provides a very simple way to contribute a new dataset (just write a loading function, see [CONTRIBUTE](CONTRIBUTE.md) page)!
+- From Bench to Bedside: covers 50+ datasets for 20+ tasks in most of the therapeutics development stages.
+- Ready-to-use: the dataset is processed into machine learning ready format. The output can directly feed into prediction library such as scikit-learn and DeepPurpose. 
+- User-friendly: 3 lines of codes to access the dataset and hassle-free installations.
+- Helper functions: TDC supports various useful functions such as molecule generation oracles, conversion to DGL/PyG graph for interaction data, cold/scaffold split, label distribution visualization, and so much more! 
+- Benchmark: provides a benchmark mode for fair comparison. A leaderboard will be released!
+- Community-driven effort: the programming framework is designed to easily add more datasets and tasks.
 
 ## Example
-
-```
-GIF placeholder
-![](fig/example.gif)
-```
-<details>
-<summary>CLICK HERE FOR THE CODE!</summary>
-
 ```python
-from tdc.property_pred import ADME
-data = ADME(name = 'LogD74')
+from tdc.single_pred import ADME
+data = ADME(name = 'HIA_Hou')
 # scaffold split using benchmark seed
 split = data.get_split(method = 'scaffold', seed = 'benchmark')
 # visualize label distribution
@@ -31,46 +26,23 @@ data.binarize()
 # convert to log
 data.conver_to_log()
 # get data in the various formats
-data.get_data(format = 'DeepPurpose')
+data.get_data(format = 'df')
 ```
-</details>
-
 
 ## Installation
 
 ```bash
-pip install tdc
+pip install PyTDC
 ```
 
-## Cite
+## TDC Dataset Overview
+We have X task formulations and each is associated with many datasets. To call a dataset Y from task formulation X, simply calling ```X(name = Y)```.
 
-```
-arxiv placeholder
-```
-
-## Core Data Overview
-We have X task formulations and each is associated with many datasets. For example, ADMET is a task formulation and it has its own many datasets. To call a dataset Y from task formulation X, simply calling ```X(name = Y)```.
-
-### Property Prediction
+### Single-instance Prediction
 
 * <b>Absorption, Distribution, Metabolism, and Excretion</b>```ADME```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-  	* <h3>Lipophilicity</h3>
-
-  	 Dataset Name  | Description| Reference | Type | Stats
-	 ------------  | ------------------------ | ----------- | ----------- | -----------
-	 AstraZeneca <br> `ADME(name = 'Lipophilicity_AstraZeneca')`</br>  | Lipophilicity is a dataset curated from ChEMBL database containing experimental results on octanol/water distribution coefficient (logD at pH=7.4). From MoleculeNet.| [AstraZeneca. Experimental in vitro Dmpk and physicochemical data on a set of publicly disclosed compounds (2016) ](https://doi.org/10.6019/chembl3301361) | Regression | 4,200 Drugs
-	 LogD74 <br> `ADME(name = 'Lipophilicity_Wang')` </br>| A high-quality hand-curated lipophilicity dataset that includes the chemical structure of 1,130 organic compounds and their n-octanol/buffer solution distribution coefficients at pH 7.4 (logD7.4). | [Wang, J-B., D-S. Cao, M-F. Zhu, Y-H. Yun, N. Xiao, Y-Z. Liang (2015). In silico evaluation of logD7.4 and comparison with other prediction methods. Journal of Chemometrics, 29(7), 389-398.](https://onlinelibrary.wiley.com/doi/full/10.1002/cem.2718) | Regression | 1,094 Drugs
-	
-	* <h3>Solubility</h3>
-
-  	 Dataset Name  | Description| Reference | Type | Stats
-	 ------------  | ------------------------ | ----------- | ----------- | -----------
-	 AqSolDB <br> `ADME(name = 'Solubility_AqSolDB') ` </br>| AqSolDB: A curated reference set of aqueous solubility, created by the Autonomous Energy Materials Discovery [AMD] research group, consists of aqueous solubility values of 9,982 unique compounds curated from 9 different publicly available aqueous solubility datasets. | [Sorkun, M.C., Khetan, A. & Er, S. AqSolDB, a curated reference set of aqueous solubility and 2D descriptors for a diverse set of compounds. Sci Data 6, 143 (2019).](https://doi.org/10.1038/s41597-019-0151-1) | Regression | 9,982 Drugs
-	 ESOL <br> `ADME(name = 'Solubility_ESOL')` </br>| ESOL (delaney) is a standard regression dataset containing structures and water solubility data for 1128 compounds. From MoleculeNet. | [Delaney, John S. "ESOL: estimating aqueous solubility directly from molecular structure." Journal of chemical information and computer sciences 44.3 (2004): 1000-1005.](https://pubs.acs.org/doi/abs/10.1021/ci034243x) | Regression | 1,128 Drugs
-	 FreeSolv <br> `ADME(name = 'HydrationFreeEnergy_FreeSolv')` </br>| The Free Solvation Database, FreeSolv(SAMPL), provides experimental and calculated hydration free energy of small molecules in water. The calculated values are derived from alchemical free energy calculations using molecular dynamics simulations. From MoleculeNet.| [Mobley, David L., and J. Peter Guthrie. "FreeSolv: a database of experimental and calculated hydration free energies, with input files." Journal of computer-aided molecular design 28.7 (2014): 711-720.](https://pubmed.ncbi.nlm.nih.gov/24928188/) | Regression | 642 Drugs
 
 	* <h3>Absorption</h3>
 
@@ -87,7 +59,7 @@ We have X task formulations and each is associated with many datasets. For examp
 
   	 Dataset Name  | Description| Reference | Type | Stats
 	 ------------  | ------------------------ | ----------- | ----------- | -----------
-	 BBB <br> `ADME(name = 'BBB_Adenot')`</br> | The blood–brain barrier (BBB) is a highly selective semipermeable border of endothelial cells that prevents solutes in the circulating blood from non-selectively crossing into the extracellular fluid of the central nervous system where neurons reside. | [Adenot M, Lahana R. Blood-brain barrier permeation models: discriminating between potential CNS and non-CNS drugs including P-glycoprotein substrates. J Chem Inf Comput Sci. 2004;44(1):239-248.](https://pubmed.ncbi.nlm.nih.gov/14741033/)
+	 BBB_Adenot <br> `ADME(name = 'BBB_Adenot')`</br> | The blood–brain barrier (BBB) is a highly selective semipermeable border of endothelial cells that prevents solutes in the circulating blood from non-selectively crossing into the extracellular fluid of the central nervous system where neurons reside. | [Adenot M, Lahana R. Blood-brain barrier permeation models: discriminating between potential CNS and non-CNS drugs including P-glycoprotein substrates. J Chem Inf Comput Sci. 2004;44(1):239-248.](https://pubmed.ncbi.nlm.nih.gov/14741033/)
 	 BBB_MolNet <br>`ADME(name = 'BBB_MolNet')` </br>| The blood-brain barrier penetration (BBB) dataset is extracted from a study on the modeling and prediction of the barrier permeability. As a membrane separating circulating blood and brain extracellular fluid, the blood-brain barrier blocks most drugs, hormones and neurotransmitters. Thus penetration of the barrier forms a long-standing issue in development of drugs targeting central nervous system. This dataset includes binary labels for over 2000 compounds on their permeability properties. From MoleculeNet. | [Martins, Ines Filipa, et al. "A Bayesian approach to in silico blood-brain barrier penetration modeling." Journal of chemical information and modeling 52.6 (2012): 1686-1697.](https://pubmed.ncbi.nlm.nih.gov/22612593/)
 	 PPBR <br> `ADME(name = 'PPBR_Ma')` </br>| The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins. Medications attach to proteins within the blood. A drug's efficiency may be affected by the degree to which it binds. The less bound a drug is, the more efficiently it can traverse cell membranes or diffuse. | [Ma, Chang-Ying, et al. "Prediction models of human plasma protein binding rate and oral bioavailability derived by using GA–CG–SVM method." Journal of pharmaceutical and biomedical analysis 47.4-5 (2008): 677-682.](https://doi.org/10.1016/j.jpba.2008.03.023)
 	 PPBR_eDrug3D <br> `ADME(name = 'PPBR_eDrug3D')` </br>| The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins. Medications attach to proteins within the blood. A drug's efficiency may be affected by the degree to which it binds. The less bound a drug is, the more efficiently it can traverse cell membranes or diffuse. Processed from eDrug3D dataset.| [Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541.](https://pubmed.ncbi.nlm.nih.gov/22539672/)
@@ -111,9 +83,23 @@ We have X task formulations and each is associated with many datasets. For examp
 	 Half_life_eDrug3D <br> `ADME(name = 'HalfLife_eDrug3D')`</br> | The duration of action of a drug is known as its half life. This is the period of time required for the concentration or amount of drug in the body to be reduced by one-half. Processed from eDrug3D dataset.| [Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. ](https://pubmed.ncbi.nlm.nih.gov/22539672/)
 	 Clearance_eDrug3D <br>`ADME(name = 'Clearance_eDrug3D')` </br>| Drug clearance is concerned with the rate at which the active drug is removed from the body. Clearance is defined as the rate of drug elimination divided by the plasma concentration of the drug. Processed from eDrug3D dataset.| [Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. ](https://pubmed.ncbi.nlm.nih.gov/22539672/)
   	 
+  	 * <h3>Lipophilicity</h3>
+
+  	 Dataset Name  | Description| Reference | Type | Stats
+	 ------------  | ------------------------ | ----------- | ----------- | -----------
+	 AstraZeneca <br> `ADME(name = 'Lipophilicity_AstraZeneca')`</br>  | Lipophilicity is a dataset curated from ChEMBL database containing experimental results on octanol/water distribution coefficient (logD at pH=7.4). From MoleculeNet.| [AstraZeneca. Experimental in vitro Dmpk and physicochemical data on a set of publicly disclosed compounds (2016) ](https://doi.org/10.6019/chembl3301361) | Regression | 4,200 Drugs
+	 LogD74 <br> `ADME(name = 'Lipophilicity_Wang')` </br>| A high-quality hand-curated lipophilicity dataset that includes the chemical structure of 1,130 organic compounds and their n-octanol/buffer solution distribution coefficients at pH 7.4 (logD7.4). | [Wang, J-B., D-S. Cao, M-F. Zhu, Y-H. Yun, N. Xiao, Y-Z. Liang (2015). In silico evaluation of logD7.4 and comparison with other prediction methods. Journal of Chemometrics, 29(7), 389-398.](https://onlinelibrary.wiley.com/doi/full/10.1002/cem.2718) | Regression | 1,094 Drugs
+	
+	* <h3>Solubility</h3>
+
+  	 Dataset Name  | Description| Reference | Type | Stats
+	 ------------  | ------------------------ | ----------- | ----------- | -----------
+	 AqSolDB <br> `ADME(name = 'Solubility_AqSolDB') ` </br>| AqSolDB: A curated reference set of aqueous solubility, created by the Autonomous Energy Materials Discovery [AMD] research group, consists of aqueous solubility values of 9,982 unique compounds curated from 9 different publicly available aqueous solubility datasets. | [Sorkun, M.C., Khetan, A. & Er, S. AqSolDB, a curated reference set of aqueous solubility and 2D descriptors for a diverse set of compounds. Sci Data 6, 143 (2019).](https://doi.org/10.1038/s41597-019-0151-1) | Regression | 9,982 Drugs
+	 ESOL <br> `ADME(name = 'Solubility_ESOL')` </br>| ESOL (delaney) is a standard regression dataset containing structures and water solubility data for 1128 compounds. From MoleculeNet. | [Delaney, John S. "ESOL: estimating aqueous solubility directly from molecular structure." Journal of chemical information and computer sciences 44.3 (2004): 1000-1005.](https://pubs.acs.org/doi/abs/10.1021/ci034243x) | Regression | 1,128 Drugs
+	 FreeSolv <br> `ADME(name = 'HydrationFreeEnergy_FreeSolv')` </br>| The Free Solvation Database, FreeSolv(SAMPL), provides experimental and calculated hydration free energy of small molecules in water. The calculated values are derived from alchemical free energy calculations using molecular dynamics simulations. From MoleculeNet.| [Mobley, David L., and J. Peter Guthrie. "FreeSolv: a database of experimental and calculated hydration free energies, with input files." Journal of computer-aided molecular design 28.7 (2014): 711-720.](https://pubmed.ncbi.nlm.nih.gov/24928188/) | Regression | 642 Drugs
 	</details>
 
-* <b>Toxicity</b>```Toxicity```
+* <b>Toxicity</b>```Tox```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -124,7 +110,7 @@ We have X task formulations and each is associated with many datasets. For examp
 	 ClinTox <br> `Toxicity(name = 'ClinTox')` </br>| The ClinTox dataset compares drugs that have failed clinical trials for toxicity reasons. From MoleculeNet. | [Gayvert, Kaitlyn M., Neel S. Madhukar, and Olivier Elemento. "A data-driven approach to predicting successes and failures of clinical trials." Cell chemical biology 23.10 (2016): 1294-1301.](https://pubmed.ncbi.nlm.nih.gov/27642066/)
  	</details>
 
-* <b>High Throughput Screening BioAssays</b>```HTS```
+* <b>High Throughput Screening</b>```HTS```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -146,6 +132,14 @@ We have X task formulations and each is associated with many datasets. For examp
 	QM9 <br> `QM(name = 'QM9, target = 'X')` Choose target from [here](https://github.com/kexinhuang12345/DrugDataLoader/blob/master/DrugDataLoader/target_list.py#L298) </br> | Geometric,  energetic, electronic and thermodynamic properties of DFT-modelled small molecules. From MoleculeNet.|  [R. Ramakrishnan, P. O. Dral, M. Rupp, O. A. von Lilienfeld, Quantum chemistry structures and properties of 134 kilo molecules, Scientific Data 1, 140022, 2014.](http://www.nature.com/articles/sdata201422) | Regression | 22,000 drugs 
 	</details>
 
+* <b>Paratope Prediction</b>```Paratope```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	</details>
+
 * <b>Epitope Prediction</b>```Epitope```
 	<details>
 	<summary>CLICK HERE FOR THE DATASETS!</summary>
@@ -156,9 +150,26 @@ We have X task formulations and each is associated with many datasets. For examp
 	Bepipred_PDB <br> `Epitope(name = 'Bepipred_PDB)` </br> | | []() | Token Classification | X antigens
 	</details>
 
-### Interaction Prediction
+* <b>Developability</b>```Develop```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
-* <b>Drug-Target Interaction Prediction</b>```DTI```
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	CDR_TAP <br> `Develop(name = 'CDR_TAP)` </br> | | []() | Regression | X antibodies
+	</details>
+
+* <b>Reaction Yields</b>```Yields```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	</details>
+
+### Multi-instance Prediction
+
+* <b>Drug-Target Interaction</b>```DTI```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -169,7 +180,7 @@ We have X task formulations and each is associated with many datasets. For examp
 	 KIBA  <br> `DTI(name = 'KIBA')`  </br>| An integrated drug-target bioactivity matrix across 52,498 chemical compounds and 467 kinase targets, including a total of 246,088 KIBA scores, has been made freely available. | [Tang J, Szwajda A, Shakyawar S, et al. Making sense of large-scale kinase inhibitor bioactivity data sets: a comparative and integrative analysis. J Chem Inf Model. 2014;54(3):735-743.](https://pubmed.ncbi.nlm.nih.gov/24521231/) | Regression | 118,254/2,068/229
 	</details>
 
-* <b>Drug-Drug Interaction Prediction</b>```DDI```
+* <b>Drug-Drug Interaction</b>```DDI```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -179,7 +190,7 @@ We have X task formulations and each is associated with many datasets. For examp
 	 TWOSIDES | Polypharmacy side-effects are associated with drug pairs (or higher-order drug combinations) and cannot be attributed to either individual drug in the pair (in a drug combination). | [Tatonetti, Nicholas P., et al. Data-driven prediction of drug effects and interactions. Science Translational Medicine. 2012.](https://stm.sciencemag.org/content/4/125/125ra31.short) | Multi-Label/Network | 4,649,441/645
 	</details>
 
-* <b>Protein-Protein Interaction Prediction</b>```PPI```
+* <b>Protein-Protein Interaction</b>```PPI```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -188,7 +199,23 @@ We have X task formulations and each is associated with many datasets. For examp
 	 HuRI <br> `PPI(name = 'HuRI)` </br> | All pairwise combinations of human protein-coding genes are systematically being interrogated to identify which are involved in binary protein-protein interactions. In our most recent effort 17,500 proteins have been tested and a first human reference interactome (HuRI) map has been generated. From the Center for Cancer Systems Biology at Dana-Farber Cancer Institute. Note that the feature is peptide sequence, if a protein gene is associated with multiple peptides, we separate them by '\*'.| [Luck, K., Kim, D., Lambourne, L. et al. A reference map of the human binary protein interactome. Nature 580, 402–408 (2020). ](https://doi.org/10.1038/s41586-020-2188-x) | Binary/Network | 51,813/8,248
 	</details>
 
-* <b>Drug Response Prediction (Cell lines-Monotherapy Affinity)</b>```DrugResponse```
+* <b>Gene-Disease Interaction</b>```GDI```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	</details>
+
+* <b>MicroRNA-Target Interaction</b>```MTI```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	</details>
+
+* <b>Drug Response Prediction</b>(Cell lines-Monotherapy Affinity)```DrugResponse```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -196,6 +223,14 @@ We have X task formulations and each is associated with many datasets. For examp
 	 ------------  | ------------------------ | ----------- | ----------- | -----------
 	 GDSC1 <br> `DrugResponse(name = 'GDSC1)` </br> | Genomics in Drug Sensitivity in Cancer (GDSC) is a resource for therapeutic biomarker discovery in cancer cells. It contains wet lab IC50 for 100s of drugs in 1000 cancer cell lines. In this dataset, we use RMD normalized gene expression for cancer lines and SMILES for drugs. Y is the log normalized IC50. This is the version 1 of GDSC. | [Yang, Wanjuan, et al. "Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells." Nucleic acids research 41.D1 (2012): D955-D961.](https://academic.oup.com/nar/article-abstract/41/D1/D955/1059448) | Regression | 177,310/958/208
 	 GDSC2 <br> `DrugResponse(name = 'GDSC2)` </br> | Genomics in Drug Sensitivity in Cancer (GDSC) is a resource for therapeutic biomarker discovery in cancer cells. It contains wet lab IC50 for 100s of drugs in 1000 cancer cell lines. In this dataset, we use RMD normalized gene expression for cancer lines and SMILES for drugs. Y is the log normalized IC50. This is the version 2 of GDSC, which uses improved experimental procedures. | [Yang, Wanjuan, et al. "Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells." Nucleic acids research 41.D1 (2012): D955-D961.](https://academic.oup.com/nar/article-abstract/41/D1/D955/1059448) | Regression | 92,703/805/137
+	</details>
+
+* <b>Drug Synergy Prediction</b>(Cell lines-Combotherapy Affinity)```DrugSyn```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
 	</details>
 
 * <b>Peptide-MHC Binding Prediction</b>```PeptideMHC```
@@ -208,10 +243,41 @@ We have X task formulations and each is associated with many datasets. For examp
 	 MHC2_NetMHCIIpan <br> `PeptideMHC(name = 'MHC2_NetMHCIIpan')` </br> | Major histocompatibility complex class II (MHC‐II) molecules are found on the surface of antigen‐presenting cells where they present peptides derived from extracellular proteins to T helper cells. Useful to identify T‐cell epitopes. An organized datasets for MHC class II collected from IEDB database. | [Jensen, Kamilla Kjaergaard, et al. "Improved methods for predicting peptide binding affinity to MHC class II molecules." Immunology 154.3 (2018): 394-406.](https://onlinelibrary.wiley.com/doi/full/10.1111/imm.12889) | Regression | 134,281/17,003/75
 	</details>
 
+* <b>Antibody-Antigen Affinity Prediction</b>```AntibodyAff```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	</details>
+
+* <b>Catalyst Prediction</b>```Catalyst```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	</details>
 
 ### Generation
 
-* <b>Paired Molecule Generation</b>```MolGenPaired```
+* <b>Distribution Molecule Generation</b>```DistMolGen```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	</details>
+
+* <b>Goal-oriented Molecule Generation</b>```GoalMolGen```
+	<details>
+	<summary>CLICK HERE FOR THE DATASETS!</summary>
+
+	Dataset Name  | Description| Reference | Type | Stats
+	------------  | ------------------------ | ----------- | ----------- | -----------
+	</details>
+
+* <b>Paired Molecule Generation</b>```PairMolGen```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -224,7 +290,7 @@ We have X task formulations and each is associated with many datasets. For examp
 	 GSK-3beta ||||
 	</details>	
 
-* <b>Retrosynthesis</b>```RETRO```
+* <b>Retrosynthesis</b>```RetroSyn```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -233,16 +299,7 @@ We have X task formulations and each is associated with many datasets. For examp
 	 USPTO-50K | | | |
 	</details>	
 
-* <b>Forwardsynthesis</b>```FORWARD```
-	<details>
-  	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-	 Dataset Name  | Description| Reference | Type | Stats (#drugs)
-	 ------------  | ------------------------ | ----------- | ----------- | -----------
-	 USPTO-50K | | | |
-	</details>	
-
-* <b>Reaction Prediction</b>```REACT```
+* <b>Reaction Forward Prediction</b>```Reaction```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
 
@@ -264,24 +321,11 @@ You can specify the splitting method, random seed, and split fractions in the fu
 
 ## Benchmark and Leaderboard
 
-We are actively working on a more systematic way to benchmark and leaderboard methods. We would release this feature in the next version. In the meantime, if you have expertise or interest in helping build this feature, please send emails to kexinhuang@hsph.harvard.edu.
-
-## Examples: How to Make Predictions
-
-TDC is designed to rapidly conduct experiments. The data output can be directly used for powerful prediction packages. Here, we show how to use DeepPurpose for more advanced drugs/proteins encoders such as MPNN, Transformers and etc.
-
-### Using DeepPurpose
-<details>
-<summary>CLICK HERE FOR THE CODE!</summary>
-
-```python
-
-```
-</details>
+We are actively working on the benchmark and leaderboard methods. We would release this feature in the next major release. In the meantime, if you have expertise or interest in helping build this feature, please send emails to kexinhuang@hsph.harvard.edu.
 
 ## Contribute
 
-TDC is designed to be a community-driven effort. We know DrugDataLoader only covers tip of iceberg of the data out there. You can easily upload your data by simply writing a function that takes the expected input and output. See step-by-step instruction in the [CONTRIBUTE](CONTRIBUTE.md) page.
+TDC is designed to be a community-driven effort. If you have new dataset or task that wants to be included in TDC, please reachout to kexinhuang@hsph.harvard.edu. 
 
 ## Contact
 
