@@ -71,13 +71,13 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/data_process/" class="navbar-item ">Data Processing</a>
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
-                            <a href="/TDC/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
                             
-                            <a href="/TDC/data_split/" class="navbar-item ">Data Split</a>
+                            <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
                             
-                            <a href="/TDC/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
                         </div>
                     </div>
@@ -108,21 +108,153 @@
                     
                     
                     
-    
-    
+<div class="content">
+    <h1 id="tdc-dataset-overview">TDC Dataset Overview</h1>
 
-<div class="contents">
-    <div class="menu">
-        <p class="menu-label">Contents</p>
-        
+<div class="container">
+        <div class="columns is-vcentered">
+            <div class="column is-7">
+                  <p class="is-size-4">TDC is a data hub for machine learning for therapeutics research. </p>
+                  <ul class="is-size-5">
+                     <li><strong>From Bench to Bedside</strong>: TDC strives to cover most machine learning tasks in the therapeutics pipelines, from wet-lab target identification, drug discovery, all the way to clinical trials design.</li>
+                     <li><strong>Keep Abreast with the Forefront</strong>: TDC is updated regularly to reflect the most recent innovation. It currently extends above small-molecule drugs and cover important tasks in biologics development. </li>   
+                     <li><strong>Machine Learning Ready</strong>: TDC provides input features for various biomedical entities in the dataset. These features are carefully selected based on their usage in current published machine learning models.  </li>
+                  </ul>
+            </div>
+            <div class="column is-5 has-text-centered">
+                <img src="/TDC/img/data_overview.png" alt="TDC logo" class="img-responsive" />
+            </div>
+        </div>
     </div>
+
+<div class="column is-12">
+    <hr />
 </div>
 
+<div class="container">
+       <div class="columns is-vcentered">
+           <div class="column is-12 is-size-4 has-text-centered">
+               <div class="box has-background-info has-text-white">
+                   TDC is a community-driven effort. <a href="mailto:kexinhuang@hsph.harvard.edu"> <strong> Contact us </strong> </a> if you want to contribute a new dataset or task!
+               </div>
+           </div>
+       </div>
+</div>
 
+<div class="column is-12">
+    <hr />
+</div>
 
+<h1 id="dataset-categorization">Dataset Categorization</h1>
 
-<div class="content">
-    
+<p class="is-size-5"> To give a hoslitic view of the therapeutics landscape TDC covers, we categorizes each therapeutic task in four therapeutics pipelines (target discovery, activity, efficacy &amp; safety, and manufacturing) across two therapeutics areas (small molecule drugs and biologics). Each cell contains relevant tasks and you can click the tag to enter the task page. </p>
+
+<div class="notification is-primary has-text-centered is-size-4">
+Single-Instance Prediction</div>
+
+<table class="table is-hoverable">
+   <thead>
+      <tr>
+         <th>Areas / Pipelines</th>
+         <th>Target Discovery</th>
+         <th>Activity</th>
+         <th>Efficacy and Safety</th>
+         <th>Manufacturing</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <th>Small Molecule</th>
+         <td></td>
+         <td><a href="/TDC/single_pred_tasks/hts"> <code>HTS</code></a> <a href="/TDC/single_pred_tasks/qm"><code>QM</code></a></td>
+         <td> <a href="/TDC/single_pred_tasks/adme"><code>ADME</code></a> <a href="/TDC/single_pred_tasks/tox"><code>Tox</code></a></td>
+         <td> <a href="/TDC/single_pred_tasks/yields"><code>Yields</code></a></td>
+      </tr>
+      <tr>
+         <th>Biologics</th>
+         <td></td>
+         <td><a href="/TDC/single_pred_tasks/paratope"><code>Paratope</code></a> <a href="/TDC/single_pred_tasks/epitope"><code>Epitope</code></a></td>
+         <td> <a href="/TDC/single_pred_tasks/develop"><code>Develop</code></a> </td>
+         <td></td>
+      </tr>
+   </tbody>
+</table>
+
+<div class="notification is-primary has-text-centered is-size-4">
+Multi-Instance Prediction</div>
+
+<table class="table is-hoverable">
+   <thead>
+      <tr>
+         <th>Areas / Pipelines</th>
+         <th>Target Discovery</th>
+         <th>Activity</th>
+         <th>Efficacy and Safety</th>
+         <th>Manufacturing</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <th>Small Molecule</th>
+         <td><a href="/TDC/multi_pred_tasks/dti"> <code>DTI</code></a> <a href="/TDC/multi_pred_tasks/gdi"> <code>GDI</code></a> <a href="/TDC/multi_pred_tasks/mti"> <code>MTI</code></a> </td>
+         <td><a href="/TDC/multi_pred_tasks/dti"> <code>DTI</code></a> <a href="/TDC/multi_pred_tasks/PPI"><code>PPI</code></a> <a href="/TDC/multi_pred_tasks/drugres"> <code>DrugRes</code></a> <a href="/TDC/multi_pred_tasks/drugsyn"> <code>DrugSyn</code></a> </td>
+         <td> <a href="/TDC/multi_pred_tasks/ddi"><code>DDI</code></a></td>
+         <td>  <a href="/TDC/multi_pred_tasks/catalyst"> <code>Catalyst</code></a> </td>
+      </tr>
+      <tr>
+         <th>Biologics</th>
+         <td></td>
+         <td><a href="/TDC/multi_pred_tasks/ppi"> <code>PPI</code></a> <a href="/TDC/multi_pred_tasks/peptidemhc"> <code>PeptideMHC</code></a> <a href="/TDC/multi_pred_tasks/antibodyaff"> <code>AntibodyAff</code></a></td>
+         <td></td>
+         <td></td>
+      </tr>
+   </tbody>
+</table>
+
+<div class="notification is-primary has-text-centered is-size-4">
+Generation</div>
+
+<table class="table is-hoverable">
+   <thead>
+      <tr>
+         <th>Areas / Pipelines</th>
+         <th>Target Discovery</th>
+         <th>Activity</th>
+         <th>Efficacy and Safety</th>
+         <th>Manufacturing</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <th>Small Molecule</th>
+         <td> </td>
+         <td> <a href="/TDC/generation_tasks/distmolgen"> <code>DistMolGen</code></a> <a href="/TDC/generation_tasks/goalmolgen"> <code>GoalMolGen</code></a> <a href="/TDC/generation_tasks/pairmolgen"> <code>PairMolGen</code></a>  </td>
+         <td> <a href="/TDC/generation_tasks/distmolgen"> <code>DistMolGen</code></a> <a href="/TDC/generation_tasks/goalmolgen"> <code>GoalMolGen</code></a> <a href="/TDC/generation_tasks/pairmolgen"> <code>PairMolGen</code></a></td>
+         <td> <a href="/TDC/generation_tasks/retrosyn"> <code>RetroSyn</code></a> <a href="/TDC/generation_tasks/reaction"> <code>Reaction</code></a></td>
+      </tr>
+      <tr>
+         <th>Biologics</th>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+   </tbody>
+</table>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<p class="is-size-3 has-text-centered"> <strong> Start Exploring TDC Datasets: </strong> </p>
+
+<div class="container">
+        <div class="columns is-vcentered is-size-5">
+            <div class="column is-4 has-text-centered"> <a href="/TDC/single_pred_tasks/overview" class="box has-background-info has-text-white">Single-Instance Prediction</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/TDC/multi_pred_tasks/overview" class="box has-background-info has-text-white">Multi-Instance Prediction</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/TDC/generation_tasks/overview" class="box has-background-info has-text-white">Generation</a></div>
+        </div>
+</div>
 
 </div>
                 </div>

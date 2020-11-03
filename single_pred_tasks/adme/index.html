@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page with menubar - TDC</title>
+    <title>ADME - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page with menubar | TDC</title>
+<title>ADME | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Page with menubar" />
+<meta property="og:title" content="ADME" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/single_pred_tasks/adme/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/single_pred_tasks/adme/","headline":"Page with menubar","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/single_pred_tasks/adme/","headline":"ADME","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -71,13 +71,13 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/data_process/" class="navbar-item ">Data Processing</a>
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
-                            <a href="/TDC/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
                             
-                            <a href="/TDC/data_split/" class="navbar-item ">Data Split</a>
+                            <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
                             
-                            <a href="/TDC/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
                         </div>
                     </div>
@@ -112,40 +112,40 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/#" class=""><strong>Single-Instance Prediction</strong></a>
+            <a href="/TDC/single_pred_tasks/overview/" class=""><strong>Single-Instance Prediction</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/TDC/single_pred_tasks/overview/" class="">Task Overview</a></li>
+                <li><a href="/TDC/single_pred_tasks/adme/" class="is-active"><code>ADME</code> Pharmaco-kinetics</a></li>
                 
                 
                 
-                <li><a href="/TDC/single_pred_tasks/adme/" class="is-active"><ins>ADME</ins>: Pharmaco-kinetics</a></li>
+                <li><a href="/TDC/single_pred_tasks/tox/" class=""><code>Tox</code> Toxicity</a></li>
                 
                 
                 
-                <li><a href="/TDC/single_pred_tasks/tox/" class=""><ins>Tox</ins>: Toxicity</a></li>
+                <li><a href="/TDC/single_pred_tasks/hts/" class=""><code>HTS</code> High-Throughput Screening</a></li>
                 
                 
                 
-                <li><a href="/TDC/single_pred_tasks/hts/" class=""><ins>HTS</ins>: High-Throughput Screening</a></li>
+                <li><a href="/TDC/single_pred_tasks/qm/" class=""><code>QM</code> Quantum Mechanics</a></li>
                 
                 
                 
-                <li><a href="/TDC/single_pred_tasks/qm/" class=""><ins>QM</ins>: Quantum Mechanics</a></li>
+                <li><a href="/TDC/single_pred_tasks/yields/" class=""><code>Yields</code> Reaction Yields Prediction</a></li>
                 
                 
                 
-                <li><a href="/TDC/single_pred_tasks/reactyields/" class=""><ins>ReactYields</ins>: Reaction Yields Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/paratope/" class=""><code>Paratope</code> Paratope Prediction</a></li>
                 
                 
                 
-                <li><a href="/TDC/single_pred_tasks/paratope/" class=""><ins>Paratope</ins>: Paratope Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/epitope/" class=""><code>Epitope</code> Epitope Prediction</a></li>
                 
                 
                 
-                <li><a href="/TDC/single_pred_tasks/epitope/" class=""><ins>Epitope</ins>: Epitope Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/develop/" class=""><code>Develop</code> Developability Prediction</a></li>
                 
                 
             </ul>
@@ -158,7 +158,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/#" class=""><strong>Other Datasets Types</strong></a>
+            <a href="/TDC/overview/" class=""><strong>Other Datasets Types</strong></a>
             
             <ul>
                 
@@ -184,8 +184,82 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Datasets Index</p>
+        <ul class="menu-list">
+  <li><a href="#absorption">Absorption</a>
+    <ul>
+      <li><a href="#caco-2">Caco-2</a></li>
+      <li><a href="#hia">HIA</a></li>
+    </ul>
+  </li>
+  <li><a href="#distribution">Distribution</a></li>
+  <li><a href="#metabolism">Metabolism</a></li>
+  <li><a href="#execretion">Execretion</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h2 id="absorption">Absorption</h2>
+
+<p class="is-size-4"> Absorption measures how a drug travels from the site of administration to site of action.  </p>
+<hr />
+
+<h3 id="caco-2">Caco-2</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The Caco-2 cell effective permeability (Peff) is an in vitro approximation of the rate at which the drug passes through intestinal tissue. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Given a drug SMILES string, predict the Caco-2 cell effective permeability. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 910 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> Random split in default. Recommend scaffold split. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/27018227/">[1] Ning-Ning Wang et al, ADME Properties Evaluation in Drug Discovery: Prediction of Caco-2 Cell Permeability Using a Combination of NSGA-II and Boosting, Journal of Chemical Information and Modeling 2016 56 (4), 763-773</a></p>
+
+<hr />
+
+<h3 id="hia">HIA</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong>  </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>  </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong>  </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> 
+<span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">''</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="">[1]</a></p>
+
+<hr />
+
+<h2 id="distribution">Distribution</h2>
+
+<h2 id="metabolism">Metabolism</h2>
+
+<h2 id="execretion">Execretion</h2>
 
 </div>
                 </div>

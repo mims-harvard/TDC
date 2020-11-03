@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page without sidebar - TDC</title>
+    <title>Quick-Start Guide - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page without sidebar | TDC</title>
+<title>Quick-Start Guide | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Page without sidebar" />
+<meta property="og:title" content="Quick-Start Guide" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/start/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/start/","headline":"Page without sidebar","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/start/","headline":"Quick-Start Guide","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -71,13 +71,13 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/data_process/" class="navbar-item ">Data Processing</a>
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
-                            <a href="/TDC/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
                             
-                            <a href="/TDC/data_split/" class="navbar-item ">Data Split</a>
+                            <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
                             
-                            <a href="/TDC/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
                         </div>
                     </div>
@@ -109,7 +109,97 @@
                     
                     
 <div class="content">
-    
+    <h1 id="quick-start-guide">Quick-Start Guide</h1>
+
+<h2 id="installations">Installations</h2>
+
+<p class="is-size-5"> To install TDC, simply open terminal and type: </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>PyTDC
+</code></pre></div></div>
+
+<p class="is-size-5"> The core data loaders are designed to be lightweight, thus has minimum package dependency. For more advanced use cases in the data helpder functions, TDC will print out the installation instructions for specific packages. </p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h2 id="data-loader-usage">Data Loader Usage</h2>
+
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-8">
+              <p class="is-size-5">TDC provides a simple API with three lines of codes to load and split any dataset. As TDC covers a wide range of therapeutics tasks with varying data structures, we organize into several layers of hierarchies. First, we divide into three distinctive dataset types: </p>
+              <ul>
+			    <li><strong>Single-instance prediction </strong> <code>single_pred</code>: Prediction of some properties given one biomedical entity (e.g. drug toxicity classification). </li>
+			    <li><strong>Multi-instance prediction </strong><code>multi_pred</code>: Prediction of some relations among multiple biomedical entities (e.g. drug-target interactions).</li>
+			    <li><strong>Generation</strong> <code>generation</code>: Generation of new biomedical entity (e.g. retrosynthesis)</li>
+			  </ul>
+			  <p class="is-size-5">The second layer is tasks. Each dataset type has many therapeutic tasks that match the type. We create a data loader class for every task. The last layer is the dataset, where each task consists of many of them. As the data structure of most datasets in a task is the same, the dataset is used as a function input to the task data loader class. </p>
+        </div>
+        <div class="column is-3 has-text-centered">
+            <img src="/TDC/img/hierarchy.png" alt="TDC hi" class="img-responsive" />
+        </div>
+    </div>
+</div>
+
+<div class="columns is-vcentered">
+	<div class="column is-8">
+	<p class="is-size-5"> Supposed a dataset X is from task Y with type Z, then to obtain the dataset class and splits, simply type: </p>
+</div>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.Z</span> <span class="kn">import</span> <span class="n">Y</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Y</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'X'</span><span class="p">)</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h2 id="data-loader-example">Data Loader Example</h2>
+
+<div class="column is-8 is-offset-2">
+    <img src="/TDC/img/tdc_API_relation.png" alt="TDC api" class="img-responsive" />
+</div>
+
+<p class="is-size-5"> To obtain the DrugBank Drug-Drug Interaction (DDI) dataset from the DDI task in the multi-instance prediction data type: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DDI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DDI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugBank'</span><span class="p">)</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</code></pre></div></div>
+<p class="is-size-5"> The splits would in default output a dictionary where keys are train, val, test and values are the pandas DataFrame with the Drug IDs, SMILES strings and the label. For detailed output documentation, please check out the dataset documentation. </p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h2 id="helper-function">Helper Function</h2>
+
+<p class="is-size-5"> TDC includes numerous dataset helper functions. They can be used either directly on the data loader object, or as a separate utility functions. Currently, it has four major categories. </p>
+<ul>
+    <li><strong>Data Processing </strong>: Common processing functions such as label unit conversion, binarization, database queries, multi-instance to graph and etc. </li>
+    <li><strong>Data Visualization </strong>: Visualization of the dataset such as label distribution plot, statistics computation and etc. </li>
+    <li><strong>Data Split</strong>: Various splits functions to reflect realistic scenarios such as scaffold split, cold drug/protein split and etc. </li>
+    <li><strong>Molecule Generation Oracles</strong>: Property Oracles for molecule generation tasks. </li>
+  </ul>
+
+<p>Checkout the functions documentation for detail usage.</p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<p class="is-size-3 has-text-centered"> Start Exploring TDC: </p>
+
+<div class="container">
+        <div class="columns is-vcentered is-size-5">
+            <div class="column is-3 is-offset-3 has-text-centered"> <a href="/TDC/overview" class="box has-background-info has-text-white">Dataset Overview</a></div>
+            <div class="column is-3 has-text-centered"> <a href="/TDC/fct_overview" class="box has-background-info has-text-white">Function Overview</a></div>
+        </div>
+</div>
 
 </div>
                 </div>

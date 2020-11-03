@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page with menubar - TDC</title>
+    <title>Function Overview - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page with menubar | TDC</title>
+<title>Function Overview | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Page with menubar" />
+<meta property="og:title" content="Function Overview" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/fct_overview/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/fct_overview/","headline":"Page with menubar","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/fct_overview/","headline":"Function Overview","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -71,13 +71,13 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item is-active">Overview</a>
                             
-                            <a href="/TDC/data_process/" class="navbar-item ">Data Processing</a>
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
-                            <a href="/TDC/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
                             
-                            <a href="/TDC/data_split/" class="navbar-item ">Data Split</a>
+                            <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
                             
-                            <a href="/TDC/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
                         </div>
                     </div>
@@ -103,55 +103,59 @@
         <div class="container">
             <div class="columns">
                 
-                <div class="column is-4-desktop is-4-tablet">
-                    
-
-<aside class="menu">
-
-    <p class="menu-label"></p>
-    <ul class="menu-list">
-        
-        <li>
-            <a href="/TDC/#" class=""><strong>Functions</strong></a>
-            
-            <ul>
-                
-                
-                <li><a href="/TDC/fct_overview/" class="is-active">Overview</a></li>
-                
-                
-                
-                <li><a href="/TDC/data_process/" class="">Data Processing</a></li>
-                
-                
-                
-                <li><a href="/TDC/data_viz/" class="">Data Visualization</a></li>
-                
-                
-                
-                <li><a href="/TDC/data_split/" class="">Data Split</a></li>
-                
-                
-                
-                <li><a href="/TDC/oracles/" class="">Molecule Generation Oracles</a></li>
-                
-                
-            </ul>
-            
-        </li>
-            
-    </ul>
-
-</aside>
-                </div>
-                
-                <div class="column is-8">
+                <div class="column is-12">
                     
                     
                     
                     
 <div class="content">
-    
+    <h1 id="tdc-function-overview">TDC Function Overview</h1>
+
+<div class="container">
+        <div class="columns is-vcentered">
+            <div class="column is-7">
+                  <p class="is-size-4">TDC provides data helper functions to facilitate machine learning for therapeutics research. </p>
+                  <ul class="is-size-5">
+				    <li><strong>Data Processing </strong>: Common processing functions such as label unit conversion, binarization, database queries, multi-instance to graph and etc. </li>
+				    <li><strong>Data Visualization </strong>: Visualization of the dataset such as label distribution plot, statistics computation and etc. </li>
+				    <li><strong>Data Split</strong>: Various splits functions to reflect realistic scenarios such as scaffold split, cold drug/protein split and etc. </li>
+				    <li><strong>Molecule Generation Oracles</strong>: Property Oracles for molecule generation tasks. </li>
+                  </ul>
+            </div>
+            <div class="column is-5 has-text-centered">
+                <img src="/TDC/img/tdc_fct_overview.png" alt="TDC logo" class="img-responsive" />
+            </div>
+        </div>
+    </div>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<div class="container">
+       <div class="columns is-vcentered">
+           <div class="column is-12 is-size-4 has-text-centered">
+               <div class="box has-background-info has-text-white">
+                   TDC is a community-driven effort. <a href="mailto:kexinhuang@hsph.harvard.edu"> <strong> Contact us </strong> </a> if you want to contribute a new data function!
+               </div>
+           </div>
+       </div>
+</div>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<p class="is-size-3 has-text-centered"> <strong> Start Exploring TDC Functions: </strong> </p>
+
+<div class="container">
+        <div class="columns is-vcentered is-size-5">
+            <div class="column is-3 has-text-centered"> <a href="/TDC/functions/data_process" class="box has-background-info has-text-white">Data Process</a></div>
+            <div class="column is-3 has-text-centered"> <a href="/TDC/functions/data_viz" class="box has-background-info has-text-white">Data Visualization</a></div>
+            <div class="column is-3 has-text-centered"> <a href="/TDC/functions/data_split" class="box has-background-info has-text-white">Data Split</a></div>
+            <div class="column is-3 has-text-centered"> <a href="/TDC/functions/oracles" class="box has-background-info has-text-white">Molecule Oracles</a></div>
+        </div>
+</div>
 
 </div>
                 </div>
