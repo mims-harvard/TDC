@@ -116,8 +116,8 @@ We have X task formulations and each is associated with many datasets. To call a
 
 	 Dataset Name  | Description| Reference | Type | Stats
 	 ------------  | ------------------------ | ----------- | ----------- | -----------
-	 SARS-CoV2 in vitro <br>`HTS(name = 'SARSCoV2_Vitro_Touret')`</br> | In-vitro screend the PRESTWICK CHEMICAL LIBRARY composed of 1,520 approved drugs in an infected cell-based assay.| [Touret, F., Gilles, M., Barral, K. et al. In vitro screening of a FDA approved chemical library reveals potential inhibitors of SARS-CoV-2 replication. Sci Rep 10, 13093 (2020).](https://doi.org/10.1038/s41598-020-70143-6) | Binary | 
-	 SARS-CoV2 3CLPro <br>`HTS(name = 'SARSCoV2_3CLPro_Diamond')`</br> | A large XChem crystallographic fragment screen against SARS-CoV-2 main protease at high resolution. | [Diamond Light Source](https://www.diamond.ac.uk/covid-19/for-scientists/Main-protease-structure-and-XChem.html) | Binary | 
+	 SARS-CoV2 in vitro <br>`HTS(name = 'SARSCoV2_Vitro_Touret')`</br> | In-vitro screend the PRESTWICK CHEMICAL LIBRARY composed of 1,520 approved drugs in an infected cell-based assay. From MIT AiCures. | [Touret, F., Gilles, M., Barral, K. et al. In vitro screening of a FDA approved chemical library reveals potential inhibitors of SARS-CoV-2 replication. Sci Rep 10, 13093 (2020).](https://doi.org/10.1038/s41598-020-70143-6) | Binary | 
+	 SARS-CoV2 3CLPro <br>`HTS(name = 'SARSCoV2_3CLPro_Diamond')`</br> | A large XChem crystallographic fragment screen against SARS-CoV-2 main protease at high resolution. From MIT AiCures. | [Diamond Light Source](https://www.diamond.ac.uk/covid-19/for-scientists/Main-protease-structure-and-XChem.html) | Binary | 
 	 HIV <br>`HTS(name = 'HIV')`</br> | The HIV dataset was introduced by the Drug Therapeutics Program (DTP) AIDS Antiviral Screen, which tested the ability to inhibit HIV replication for over 40,000 compounds. From MoleculeNet. | [AIDS Antiviral Screen Data. https://wiki.nci.nih.gov/display/NCIDTPdata/AIDS+Antiviral+Screen+Data](placeholder) | Binary | 41,127 Drugs
 	</details>
 
@@ -249,7 +249,7 @@ We have X task formulations and each is associated with many datasets. To call a
 
 	Dataset Name  | Description| Reference | Type | Stats
 	------------  | ------------------------ | ----------- | ----------- | -----------
-	ProteinAntigen_SAbDab <br> `AntibodyAff(name = 'ProteinAntigen_SAbDab')` </br> | Antibody-antigen affinity dataset. Processed from SAbDab dataset, only uses protein/peptide antigens for sequence compatbility. The features are amino acid sequence.| [Dunbar, James, et al. "SAbDab: the structural antibody database." Nucleic acids research 42.D1 (2014): D1140-D1146.](https://academic.oup.com/nar/article-abstract/42/D1/D1140/1044118) | Regression | 493
+	SAbDab <br> `AntibodyAff(name = 'ProteinAntigen_SAbDab')` </br> | Antibody-antigen affinity measures the efficacy of the antibody to the antigen. Processed from SAbDab dataset, where we only use protein/peptide antigens for sequence compatbility. The features are amino acid sequence.| [Dunbar, James, et al. "SAbDab: the structural antibody database." Nucleic acids research 42.D1 (2014): D1140-D1146.](https://academic.oup.com/nar/article-abstract/42/D1/D1140/1044118) | Regression | 493
 	</details>
 
 * <b>Catalyst Prediction</b>```Catalyst```
