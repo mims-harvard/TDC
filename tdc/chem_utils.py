@@ -119,7 +119,20 @@ def novelty(new_smiles, smiles_database):
 	novel_ratio = sum([1 for i in new_smiles if i in smiles_database else 0])*1.0 / len(new_smiles)
 	return novel_ratio
 
-
+def diversity(list_of_smiles):
+	"""
+		The diversity of a set of molecules is defined as the average pairwise
+		Tanimoto distance between the Morgan fingerprints ---- GCPN
+	"""
+	list_of_unique_smiles = unique_lst_of_smiles(list_of_smiles)
+	list_of_mol = [Chem.MolFromSmiles(smiles) for smiles in list_of_unique_smiles]
+	list_of_fp = [AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=2048, useChirality=False) for mol in list_of_mol]
+	avg_lst = []
+	for idx, fp in enumerate(list_of_fp):
+		for fp2 in list_of_fp[idx+1:]:
+			sim = DataStructs.TanimotoSimilarity(fp, fp2) 			
+			avg_lst.append(sim)
+	return np.mean(avg_lst)
 
 if __name__ == "__main__":
 	smiles = '[H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C'
