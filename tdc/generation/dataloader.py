@@ -8,7 +8,8 @@ from ..utils import *
 from . import generation_dataset
 from ..metadata import dataset_names
 from ..chem_utils import qed, penalized_logp, similarity, drd2, SA  
-from ..chem_utils import validity_ratio
+from ..chem_utils import validity_ratio, unique_rate 
+
 class Evaluator(generation_dataset.Evaluator):
 	def __init__(self, name):
 		super().__init__(name)
@@ -44,7 +45,7 @@ class DistributionEvaluator(generation_dataset.Evaluator):
 		elif self.name == 'validity':
 			pass 
 		elif self.name == 'unique':
-			pass 
+			self.evaluator_func = unique_rate 
 
 
 

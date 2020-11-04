@@ -96,6 +96,22 @@ def validity_ratio(list_of_smiles):
 	return 1.0*len(valid_list_smiles)/len(list_of_smiles)
 
 
+def canonicalize(smiles):
+	mol = Chem.MolFromSmiles(smiles)
+	if mol is not None:
+		return Chem.MolToSmiles(mol, isomericSmiles=True)
+	else:
+		return None
+
+def unique_lst_of_smiles(list_of_smiles):
+	canonical_smiles_lst = list(map(canonicalize, list_of_smiles))
+	canonical_smiles_lst = list(filter(lambda x:x is not None, canonical_smiles_lst))
+	canonical_smiles_lst = list(set(canonical_smiles_lst))
+	return canonical_smiles_lst
+
+def unique_rate(list_of_smiles):
+	canonical_smiles_lst = unique_lst_of_smiles(list_of_smiles)
+	return 1.0*len(canonical_smiles_lst)/len(list_of_smiles)
 
 if __name__ == "__main__":
 	smiles = '[H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C'
@@ -104,8 +120,9 @@ if __name__ == "__main__":
 	print(penalized_logp(smiles))
 	print(drd2(smiles))
 	print(SA(smiles))
-	list_of_smiles = ['CCC', 'fewjio',]
+	list_of_smiles = ['CCC', 'fewjio', smiles, smiles]
 	print(validity_ratio(list_of_smiles))
+	print(unique_rate(list_of_smiles))
 	#  conda install -c rdkit rdkit
 
 
