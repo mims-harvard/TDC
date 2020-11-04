@@ -113,6 +113,14 @@ def unique_rate(list_of_smiles):
 	canonical_smiles_lst = unique_lst_of_smiles(list_of_smiles)
 	return 1.0*len(canonical_smiles_lst)/len(list_of_smiles)
 
+def novelty(new_smiles, smiles_database):
+	new_smiles = unique_lst_of_smiles(new_smiles)
+	smiles_database = unique_lst_of_smiles(smiles_database)
+	novel_ratio = sum([1 for i in new_smiles if i in smiles_database else 0])*1.0 / len(new_smiles)
+	return novel_ratio
+
+
+
 if __name__ == "__main__":
 	smiles = '[H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C'
 	print(similarity(smiles, smiles))
