@@ -35,6 +35,11 @@ data.get_data(format = 'df')
 pip install PyTDC
 ```
 
+```bash
+python setup.py install 
+### developer installation
+```
+
 ## TDC Dataset Overview
 We have X task formulations and each is associated with many datasets. To call a dataset Y from task formulation X, simply calling ```X(name = Y)```.
 

@@ -86,8 +86,7 @@ class MolGenPaired(generation_dataset.DataLoader):
 		# try:
 		if True:
 			name = name.strip().lower()
-			assert name in ['drd2', 'qed', 'logp']
-			X_lst, Y_lst = eval('molpair_process(name, path)')
+			X_lst, Y_lst = eval('molpair_process(name, path, dataset_names["MolGenPaired"])')
 			self.X_lst = X_lst 
 			self.Y_lst = Y_lst 
 			self.name = name

@@ -68,7 +68,8 @@ def property_dataset_load(name, path, target, dataset_names):
 
 	return df['X'], df[target], df['ID']
 
-def molpair_process(name, path):
+def molpair_process(name, path, dataset_names):
+	name = download_wrapper(name, path, dataset_names)
 	df = pd_load(name, path)
 	return df['input'], df['target']
 
