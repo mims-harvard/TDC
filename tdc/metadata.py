@@ -70,7 +70,7 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"DDI": ddi_dataset_names,
 				"RetroSyn": retrosyn_dataset_names,
 				"Reaction": forwardsyn_dataset_names, 
-				"MolGenPaired": molgenpaired_dataset_names,
+				"PairMolGen": molgenpaired_dataset_names,
 				"PeptideMHC": peptidemhc_dataset_names}
 
 

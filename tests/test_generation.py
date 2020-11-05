@@ -1,4 +1,4 @@
-from tdc.generation import MolGenPaired, Oracle, Reaction, Retro_Syn, Distribution_Dataloader
+from tdc.generation import PairMolGen, Oracle, Reaction, RetroSyn, Distribution_Dataloader
 
 # ### test property evaluator 
 
@@ -18,7 +18,7 @@ from tdc.generation import MolGenPaired, Oracle, Reaction, Retro_Syn, Distributi
 # split_pd = paired_dataloader.get_split()
 
 
-# paired_dataloader2 = Retro_Syn(name = 'uspto50k')
+# paired_dataloader2 = RetroSyn(name = 'uspto50k')
 # pd2 = paired_dataloader2.get_data()
 
 # print(pd1)

@@ -1,4 +1,4 @@
-from tdc.generation import MolGenPaired
-data = MolGenPaired(name = 'plogp')
-# data = MolGenPaired(name = 'drd')
-# data = MolGenPaired(name = 'qed')
+from tdc.generation import PairMolGen
+data = PairMolGen(name = 'plogp')
+# data = PairMolGen(name = 'drd')
+# data = PairMolGen(name = 'qed')

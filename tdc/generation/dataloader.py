@@ -54,7 +54,7 @@ class Reaction(generation_dataset.PairedDataLoader):
 	def __init__(self, name, path = './data', print_stats = True, input_name = 'reactants', output_name = 'product'): 
 		super().__init__(name, path, print_stats, input_name, output_name)
 
-class Retro_Syn(generation_dataset.PairedDataLoader):
+class RetroSyn(generation_dataset.PairedDataLoader):
 
 	def __init__(self, name, path = './data', print_stats = True, input_name = 'product', output_name = 'reactants'): 
 		super().__init__(name, path, print_stats, input_name, output_name)
@@ -70,7 +70,7 @@ class Distribution_Dataloader(generation_dataset.DataLoader):
 # 	def __init__(self, name, path = './data', print_stats = True):
 
 
-class MolGenPaired(generation_dataset.DataLoader):
+class PairMolGen(generation_dataset.DataLoader):
 	'''
 		DataLoader for paired molecules 
 		it contains 
@@ -86,7 +86,7 @@ class MolGenPaired(generation_dataset.DataLoader):
 		# try:
 		if True:
 			name = name.strip().lower()
-			X_lst, Y_lst = eval('molpair_process(name, path, dataset_names["MolGenPaired"])')
+			X_lst, Y_lst = eval('molpair_process(name, path, dataset_names["PairMolGen"])')
 			self.X_lst = X_lst 
 			self.Y_lst = Y_lst 
 			self.name = name
