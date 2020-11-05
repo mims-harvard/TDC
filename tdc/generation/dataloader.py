@@ -83,17 +83,18 @@ class MolGenPaired(generation_dataset.DataLoader):
 	def __init__(self, name, path = './data', print_stats = True):
 		if not os.path.exists(path):
 			os.makedirs(path)
-		try:
+		# try:
+		if True:
 			name = name.strip().lower()
 			assert name in ['drd2', 'qed', 'logp']
-			X_lst, Y_lst = eval(name + '_process(name, path)')
+			X_lst, Y_lst = eval('molpair_process(name, path)')
 			self.X_lst = X_lst 
 			self.Y_lst = Y_lst 
 			self.name = name
 			if print_stats: 
 				self.print_stats()
-		except:
-			raise AttributeError("Please use the correct and available dataset name!")
+		# except:
+		# 	raise AttributeError("Please use the correct and available dataset name!")
 
 	def get_data(self, format = 'df'):
 		'''

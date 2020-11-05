@@ -116,7 +116,7 @@ def unique_rate(list_of_smiles):
 def novelty(new_smiles, smiles_database):
 	new_smiles = unique_lst_of_smiles(new_smiles)
 	smiles_database = unique_lst_of_smiles(smiles_database)
-	novel_ratio = sum([1 for i in new_smiles if i in smiles_database else 0])*1.0 / len(new_smiles)
+	novel_ratio = sum([1 if i in smiles_database else 0 for i in new_smiles])*1.0 / len(new_smiles)
 	return novel_ratio
 
 def diversity(list_of_smiles):
