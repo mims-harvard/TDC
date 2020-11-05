@@ -90,6 +90,8 @@ class MolGenPaired(generation_dataset.DataLoader):
 			self.X_lst = X_lst 
 			self.Y_lst = Y_lst 
 			self.name = name
+			if print_stats: 
+				self.print_stats()
 		except:
 			raise AttributeError("Please use the correct and available dataset name!")
 

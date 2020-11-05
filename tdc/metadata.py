@@ -118,6 +118,9 @@ name2type = {'toxcast': 'tab',
  'uspto50k': 'csv',
  'zinc': 'csv', 
  'moses': 'csv',
+ 'qed': 'csv', 
+ 'drd2': 'csv', 
+ 'logp': 'csv',
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -160,5 +163,8 @@ name2id = {'bbb_adenot': 4139555,
  'uspto50k': 'xxxxx',
  'zinc': 'xxxxx',
  'moses': 'xxxxx',
+ 'qed': 'xxxx', 
+ 'drd2': 'xxxx', 
+ 'logp': 'xxxx', 
  }
 
