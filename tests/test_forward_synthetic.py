@@ -1,7 +1,7 @@
-from tdc.generation import ForwardSyn, Retro_Syn
+from tdc.generation import Reaction, Retro_Syn
 
 
-paired_dataloader = ForwardSyn(name = 'uspto50k')
+paired_dataloader = Reaction(name = 'uspto50k')
 
 pd1 = paired_dataloader.get_data()
 split_pd = paired_dataloader.get_split()

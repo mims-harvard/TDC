@@ -1,4 +1,4 @@
-from tdc.generation import MolGenPaired, Evaluator, ForwardSyn, Retro_Syn, Distribution_Dataloader
+from tdc.generation import MolGenPaired, Evaluator, Reaction, Retro_Syn, Distribution_Dataloader
 
 # ### test property evaluator 
 
@@ -12,7 +12,7 @@ from tdc.generation import MolGenPaired, Evaluator, ForwardSyn, Retro_Syn, Distr
 
 
 # # ### test PairedDataLoader 
-# paired_dataloader = ForwardSyn(name = 'uspto50k')
+# paired_dataloader = Reaction(name = 'uspto50k')
 
 # pd1 = paired_dataloader.get_data()
 # split_pd = paired_dataloader.get_split()
