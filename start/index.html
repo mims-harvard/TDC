@@ -66,7 +66,7 @@
                 
                     
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a href="/TDC/fct_overview/" class="navbar-link ">Functions</a>
+                        <a href="/TDC/fct_overview/" class="navbar-link ">Data Functions</a>
                         <div class="navbar-dropdown">
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
@@ -111,41 +111,41 @@
 <div class="content">
     <h1 id="quick-start-guide">Quick-Start Guide</h1>
 
-<h2 id="installations">Installations</h2>
+<h2 id="installation">Installation</h2>
 
 <p class="is-size-5"> To install TDC, simply open terminal and type: </p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>PyTDC
 </code></pre></div></div>
 
-<p class="is-size-5"> The core data loaders are designed to be lightweight, thus has minimum package dependency. For more advanced use cases in the data helpder functions, TDC will print out the installation instructions for specific packages. </p>
+<p class="is-size-5"> The core data loaders are designed to be lightweight, thus has minimum package dependency. </p>
 
 <div class="column is-12">
     <hr />
 </div>
 
-<h2 id="data-loader-usage">Data Loader Usage</h2>
+<h2 id="tdc-central-dogma--data-loader-usage">TDC “Central Dogma” &amp; Data Loader Usage</h2>
 
 <div class="container">
     <div class="columns is-vcentered">
         <div class="column is-8">
-              <p class="is-size-5">TDC provides a simple API with three lines of codes to load and split any dataset. As TDC covers a wide range of therapeutics tasks with varying data structures, we organize into several layers of hierarchies. First, we divide into three distinctive dataset types: </p>
+              <p class="is-size-5">TDC provides a simple API with three lines of codes to load and split any dataset. As TDC covers a wide range of therapeutics tasks with varying data structures, we organize into several layers of hierarchies. First, we divide into three distinctive machine learning <i>problems</i>: </p>
               <ul>
-			    <li><strong>Single-instance prediction </strong> <code>single_pred</code>: Prediction of some properties given one biomedical entity (e.g. drug toxicity classification). </li>
-			    <li><strong>Multi-instance prediction </strong><code>multi_pred</code>: Prediction of some relations among multiple biomedical entities (e.g. drug-target interactions).</li>
-			    <li><strong>Generation</strong> <code>generation</code>: Generation of new biomedical entity (e.g. retrosynthesis)</li>
+			    <li><strong>Single-instance prediction </strong> <code>single_pred</code>: Prediction of property given individual biomedical entity. </li>
+			    <li><strong>Multi-instance prediction </strong><code>multi_pred</code>: Prediction of property given multiple biomedical entities. </li>
+			    <li><strong>Generation</strong> <code>generation</code>: Generation of new biomedical entity. </li>
 			  </ul>
-			  <p class="is-size-5">The second layer is tasks. Each dataset type has many therapeutic tasks that match the type. We create a data loader class for every task. The last layer is the dataset, where each task consists of many of them. As the data structure of most datasets in a task is the same, the dataset is used as a function input to the task data loader class. </p>
+			  <p class="is-size-5">The second layer is <i>task</i>. Each therapeutic <i>task</i> falls into one of the machine learning <i>problem</i>. We create a data loader class for every <i>task</i> that inherits from the base <i>problem</i> data loader. The last layer is <i>dataset</i>, where each <i>task</i> consists of many of them. As the data structure of most <i>datasets</i> in a <i>task</i> is the same, the <i>dataset</i> is used as a function input to the <i>task</i> data loader. </p>
         </div>
         <div class="column is-3 has-text-centered">
-            <img src="/TDC/img/hierarchy.png" alt="TDC hi" class="img-responsive" />
+            <img src="/TDC/img/tdc_hierarchy.png" alt="TDC hi" class="img-responsive" />
         </div>
     </div>
 </div>
 
 <div class="columns is-vcentered">
 	<div class="column is-8">
-	<p class="is-size-5"> Supposed a dataset X is from task Y with type Z, then to obtain the dataset class and splits, simply type: </p>
+	<p class="is-size-5"> Supposed a <i>dataset</i> X is from <i>task</i> Y with <i>problem</i> Z, then to obtain the data and splits, simply type: </p>
 </div>
 </div>
 
@@ -161,38 +161,38 @@
 <h2 id="data-loader-example">Data Loader Example</h2>
 
 <div class="column is-8 is-offset-2">
-    <img src="/TDC/img/tdc_API_relation.png" alt="TDC api" class="img-responsive" />
+    <img src="/TDC/img/tdc_API_relation2.png" alt="TDC api" class="img-responsive" />
 </div>
 
-<p class="is-size-5"> To obtain the DrugBank Drug-Drug Interaction (DDI) dataset from the DDI task in the multi-instance prediction data type: </p>
+<p class="is-size-5"> To obtain the Caco2 dataset from ADME therapeutic task in the single-instance prediction problem: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DDI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DDI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugBank'</span><span class="p">)</span>
 <span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 </code></pre></div></div>
-<p class="is-size-5"> The splits would in default output a dictionary where keys are train, val, test and values are the pandas DataFrame with the Drug IDs, SMILES strings and the label. For detailed output documentation, please check out the dataset documentation. </p>
+<p class="is-size-5"> The splits would in default output a dictionary where keys are train, val, test and values are the pandas DataFrame with the Drug IDs, SMILES strings and the label. For detailed outputs, see the dataset documentation. </p>
 
 <div class="column is-12">
     <hr />
 </div>
 
-<h2 id="helper-function">Helper Function</h2>
+<h2 id="data-function">Data Function</h2>
 
-<p class="is-size-5"> TDC includes numerous dataset helper functions. They can be used either directly on the data loader object, or as a separate utility functions. Currently, it has four major categories. </p>
+<p class="is-size-5"> TDC includes numerous data functions. They can be used either directly on the data loader object, or as a separate utility functions. Currently, it has four major categories. </p>
 <ul>
     <li><strong>Data Processing </strong>: Common processing functions such as label unit conversion, binarization, database queries, multi-instance to graph and etc. </li>
     <li><strong>Data Visualization </strong>: Visualization of the dataset such as label distribution plot, statistics computation and etc. </li>
     <li><strong>Data Split</strong>: Various splits functions to reflect realistic scenarios such as scaffold split, cold drug/protein split and etc. </li>
-    <li><strong>Molecule Generation Oracles</strong>: Property Oracles for molecule generation tasks. </li>
+    <li><strong>Molecule Generation Oracles</strong>: Property oracles for molecule generation tasks. </li>
   </ul>
 
-<p>Checkout the functions documentation for detail usage.</p>
+<p>See the functions documentation for detail usage for each function.</p>
 
 <div class="column is-12">
     <hr />
 </div>
 
-<p class="is-size-3 has-text-centered"> Start Exploring TDC: </p>
+<p class="is-size-3 has-text-centered"> <strong>Start Exploring TDC</strong> </p>
 
 <div class="container">
         <div class="columns is-vcentered is-size-5">

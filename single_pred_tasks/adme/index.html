@@ -66,7 +66,7 @@
                 
                     
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a href="/TDC/fct_overview/" class="navbar-link ">Functions</a>
+                        <a href="/TDC/fct_overview/" class="navbar-link ">Data Functions</a>
                         <div class="navbar-dropdown">
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
@@ -112,7 +112,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/single_pred_tasks/overview/" class=""><strong>Single-Instance Prediction</strong></a>
+            <a href="/TDC/single_pred_tasks/overview/" class=""><strong>Single-Instance Prediction Problem</strong></a>
             
             <ul>
                 
@@ -193,13 +193,41 @@
         <ul class="menu-list">
   <li><a href="#absorption">Absorption</a>
     <ul>
-      <li><a href="#caco-2">Caco-2</a></li>
-      <li><a href="#hia">HIA</a></li>
+      <li><a href="#caco-2-cell-effective-permeability-wang-et-al">Caco-2 (Cell Effective Permeability), Wang et al.</a></li>
+      <li><a href="#hia-human-intestinal-absorption-hou-et-al">HIA (Human Intestinal Absorption), Hou et al.</a></li>
+      <li><a href="#pgp-p-glycoprotein-inhibition-broccatelli-et-al">Pgp (P-glycoprotein) Inhibition, Broccatelli et al.</a></li>
+      <li><a href="#bioavailability-ma-et-al">Bioavailability, Ma et al.</a></li>
+      <li><a href="#bioavailability-f20f30-edrug3d">Bioavailability F20/F30, eDrug3D</a></li>
+      <li><a href="#lipophilicity-astrazeneca">Lipophilicity, AstraZeneca</a></li>
+      <li><a href="#solubility-aqsoldb">Solubility, AqSolDB</a></li>
+      <li><a href="#solubility-esol">Solubility, ESOL</a></li>
+      <li><a href="#hydration-free-energy-freesolv">Hydration Free Energy, FreeSolv</a></li>
     </ul>
   </li>
-  <li><a href="#distribution">Distribution</a></li>
-  <li><a href="#metabolism">Metabolism</a></li>
-  <li><a href="#execretion">Execretion</a></li>
+  <li><a href="#distribution">Distribution</a>
+    <ul>
+      <li><a href="#bbb-blood-brain-barrier-adenot-et-al">BBB (Blood-Brain Barrier), Adenot et al.</a></li>
+      <li><a href="#bbb-blood-brain-barrier-martins-et-al">BBB (Blood-Brain Barrier), Martins et al.</a></li>
+      <li><a href="#ppbr-plasma-protein-binding-rate-ma-et-al">PPBR (Plasma Protein Binding Rate), Ma et al.</a></li>
+      <li><a href="#ppbr-plasma-protein-binding-rate-edrug3d">PPBR (Plasma Protein Binding Rate), eDrug3D</a></li>
+      <li><a href="#vd-volumn-of-distribution-edrug3d">VD (Volumn of Distribution), eDrug3D</a></li>
+    </ul>
+  </li>
+  <li><a href="#metabolism">Metabolism</a>
+    <ul>
+      <li><a href="#cyp-p450-2c19-inhibition-veith-et-al">CYP P450 2C19 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp-p450-2d6-inhibition-veith-et-al">CYP P450 2D6 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp-p450-3a4-inhibition-veith-et-al">CYP P450 3A4 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp-p450-1a2-inhibition-veith-et-al">CYP P450 1A2 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp-p450-2c9-inhibition-veith-et-al">CYP P450 2C9 Inhibition, Veith et al.</a></li>
+    </ul>
+  </li>
+  <li><a href="#execretion">Execretion</a>
+    <ul>
+      <li><a href="#half-life-edrug3d">Half Life, eDrug3D</a></li>
+      <li><a href="#clearance-edrug3d">Clearance, eDrug3D</a></li>
+    </ul>
+  </li>
 </ul>
     </div>
 </div>
@@ -213,15 +241,15 @@
 <p class="is-size-4"> Absorption measures how a drug travels from the site of administration to site of action.  </p>
 <hr />
 
-<h3 id="caco-2">Caco-2</h3>
+<h3 id="caco-2-cell-effective-permeability-wang-et-al">Caco-2 (Cell Effective Permeability), Wang et al.</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> The Caco-2 cell effective permeability (Peff) is an in vitro approximation of the rate at which the drug passes through intestinal tissue. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> Given a drug SMILES string, predict the Caco-2 cell effective permeability. </p>
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the Caco-2 cell effective permeability. </p>
 
 <p class="is-size-6">  <strong> Dataset Statistics: </strong> 910 drugs. </p>
 
-<p class="is-size-6">  <strong> Dataset Split: </strong> Random split in default. Recommend scaffold split. </p>
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
@@ -230,36 +258,459 @@
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/27018227/">[1] Ning-Ning Wang et al, ADME Properties Evaluation in Drug Discovery: Prediction of Caco-2 Cell Permeability Using a Combination of NSGA-II and Boosting, Journal of Chemical Information and Modeling 2016 56 (4), 763-773</a></p>
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/27018227/">[1] Wang, NN et al, ADME Properties Evaluation in Drug Discovery: Prediction of Caco-2 Cell Permeability Using a Combination of NSGA-II and Boosting, Journal of Chemical Information and Modeling 2016 56 (4), 763-773</a></p>
 
 <hr />
 
-<h3 id="hia">HIA</h3>
+<h3 id="hia-human-intestinal-absorption-hou-et-al">HIA (Human Intestinal Absorption), Hou et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong>  </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong>  The human intestinal absorption (HIA) means the process of orally administered drugs are absorbed from the gastrointestinal system into the bloodstream of the human body. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong>  </p>
+<p class="is-size-6">  <strong> Task Description: </strong> Binary classification. Given a drug SMILES string, predict the activity of HIA. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong>  </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 578 drugs. </p>
 
-<p class="is-size-6">  <strong> Dataset Split: </strong>  </p>
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> 
-<span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">''</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HIA_Hou'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="">[1]</a></p>
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/17238266/">[1] Hou T et al. ADME evaluation in drug discovery. 7. Prediction of oral absorption by correlation and classification. J Chem Inf Model. 2007;47(1):208-218. </a></p>
+
+<hr />
+
+<h3 id="pgp-p-glycoprotein-inhibition-broccatelli-et-al">Pgp (P-glycoprotein) Inhibition, Broccatelli et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> P-glycoprotein (Pgp or ABCB1) is an ABC transporter protein involved in intestinal absorption, drug metabolism, and brain penetration, and its inhibition can seriously alter a drug's bioavailability and safety. In addition, inhibitors of Pgp can be used to overcome multidrug resistance. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>  Binary classification. Given a drug SMILES string, predict the activity of Pgp inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,267 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Pgp_Broccatelli'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/jm101421d">[1] Broccatelli et al., A Novel Approach for Predicting P-Glycoprotein (ABCB1) Inhibition Using Molecular Interaction Fields. Journal of Medicinal Chemistry, 2011 54 (6), 1740-1751 </a></p>
+
+<hr />
+
+<h3 id="bioavailability-ma-et-al">Bioavailability, Ma et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Oral bioavailability is defined as “the rate and extent to which the active ingredient or active moiety is absorbed from a drug product and becomes available at the site of action”. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of bioavailability. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 640 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Bioavailability_Ma'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.1016/j.jpba.2008.03.023">[1] Ma, Chang-Ying, et al. “Prediction models of human plasma protein binding rate and oral bioavailability derived by using GA–CG–SVM method.” Journal of pharmaceutical and biomedical analysis 47.4-5 (2008): 677-682. </a></p>
+
+<hr />
+
+<h3 id="bioavailability-f20f30-edrug3d">Bioavailability F20/F30, eDrug3D</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Oral bioavailability is defined as “the rate and extent to which the active ingredient or active moiety is absorbed from a drug product and becomes available at the site of action”.  </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of bioavailability. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 403 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<p class="is-size-6"> TDC includes two thresholds, 20%/30% to construct binary tasks. </p>
+
+<p>For 20%, use:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'F20_eDrug3D'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Similarly, for 30%, use</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'F30_eDrug3D'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
+
+<hr />
+
+<h3 id="lipophilicity-astrazeneca">Lipophilicity, AstraZeneca</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Lipophilicity is a dataset curated from ChEMBL database containing experimental results on octanol/water distribution coefficient (logD at pH=7.4). From MoleculeNet. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of lipophilicity. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 4,200 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Lipophilicity_AstraZeneca'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.6019/chembl3301361">[1] AstraZeneca. Experimental in vitro Dmpk and physicochemical data on a set of publicly disclosed compounds (2016) </a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<hr />
+
+<h3 id="solubility-aqsoldb">Solubility, AqSolDB</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> AqSolDB: A curated reference set of aqueous solubility, created by the Autonomous Energy Materials Discovery [AMD] research group, consists of aqueous solubility values of 9,982 unique compounds curated from 9 different publicly available aqueous solubility datasets. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of solubility. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 9,982 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Solubility_AqSolDB'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.1038/s41597-019-0151-1">[1] Sorkun, M.C., Khetan, A. &amp; Er, S. AqSolDB, a curated reference set of aqueous solubility and 2D descriptors for a diverse set of compounds. Sci Data 6, 143 (2019). </a></p>
+
+<hr />
+
+<h3 id="solubility-esol">Solubility, ESOL</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: ESOL (delaney) is a standard regression dataset containing structures and water solubility data for 1128 compounds. From MoleculeNet. </strong>  </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the activity of solubility.   </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong>  1,128 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Solubility_ESOL'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci034243x">[1] Delaney, John S. “ESOL: estimating aqueous solubility directly from molecular structure.” Journal of chemical information and computer sciences 44.3 (2004): 1000-1005.</a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<hr />
+
+<h3 id="hydration-free-energy-freesolv">Hydration Free Energy, FreeSolv</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The Free Solvation Database, FreeSolv(SAMPL), provides experimental and calculated hydration free energy of small molecules in water. The calculated values are derived from alchemical free energy calculations using molecular dynamics simulations. From MoleculeNet. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the activity of hydration free energy.   </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 642 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HydrationFreeEnergy_FreeSolv'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/24928188/">[1] Mobley, David L., and J. Peter Guthrie. “FreeSolv: a database of experimental and calculated hydration free energies, with input files.” Journal of computer-aided molecular design 28.7 (2014): 711-720.</a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
 
 <hr />
 
 <h2 id="distribution">Distribution</h2>
 
+<p class="is-size-4">Drug distribution refers to the movement of a drug to and from the blood and various tissues of the body and the relative proportions of drug in the tissues.</p>
+
+<h3 id="bbb-blood-brain-barrier-adenot-et-al">BBB (Blood-Brain Barrier), Adenot et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The blood–brain barrier (BBB) is a highly selective semipermeable border of endothelial cells that prevents solutes in the circulating blood from non-selectively crossing into the extracellular fluid of the central nervous system where neurons reside.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of BBB. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,581 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'BBB_Adenot'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/14741033/">[1] Adenot M, Lahana R. Blood-brain barrier permeation models: discriminating between potential CNS and non-CNS drugs including P-glycoprotein substrates. J Chem Inf Comput Sci. 2004;44(1):239-248. </a></p>
+
+<hr />
+
+<h3 id="bbb-blood-brain-barrier-martins-et-al">BBB (Blood-Brain Barrier), Martins et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The blood-brain barrier penetration (BBB) dataset is extracted from a study on the modeling and prediction of the barrier permeability. As a membrane separating circulating blood and brain extracellular fluid, the blood-brain barrier blocks most drugs, hormones and neurotransmitters. Thus penetration of the barrier forms a long-standing issue in development of drugs targeting central nervous system. This dataset includes binary labels for over 2000 compounds on their permeability properties. From MoleculeNet.</p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of BBB. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 2,050 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'BBB_Martins'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/22612593/">[1] Martins, Ines Filipa, et al. “A Bayesian approach to in silico blood-brain barrier penetration modeling.” Journal of chemical information and modeling 52.6 (2012): 1686-1697. </a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<hr />
+
+<h3 id="ppbr-plasma-protein-binding-rate-ma-et-al">PPBR (Plasma Protein Binding Rate), Ma et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins. Medications attach to proteins within the blood. A drug's efficiency may be affected by the degree to which it binds. The less bound a drug is, the more efficiently it can traverse cell membranes or diffuse. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary Classification. Given a drug SMILES string, predict the activity of PPBR. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 765 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PPBR_Ma'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.1016/j.jpba.2008.03.023">[1] Ma, Chang-Ying, et al. “Prediction models of human plasma protein binding rate and oral bioavailability derived by using GA–CG–SVM method.” Journal of pharmaceutical and biomedical analysis 47.4-5 (2008): 677-682 </a></p>
+
+<hr />
+
+<h3 id="ppbr-plasma-protein-binding-rate-edrug3d">PPBR (Plasma Protein Binding Rate), eDrug3D</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins. Medications attach to proteins within the blood. A drug's efficiency may be affected by the degree to which it binds. The less bound a drug is, the more efficiently it can traverse cell membranes or diffuse. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of PPBR. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 828 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PPBR_eDrug3D'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
+
+<hr />
+
+<h3 id="vd-volumn-of-distribution-edrug3d">VD (Volumn of Distribution), eDrug3D</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The volume of distribution is the theoretical volume that would be necessary to contain the total amount of an administered drug at the same concentration that it is observed in the blood plasma. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the volume of distributon. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 749 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'VD_eDrug3D'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
+
+<hr />
+
 <h2 id="metabolism">Metabolism</h2>
+<p class="is-size-4">Drug metabolism is the metabolic breakdown of drugs by living organisms, usually through specialized enzymatic systems. </p>
+
+<h3 id="cyp-p450-2c19-inhibition-veith-et-al">CYP P450 2C19 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, the CYP P450 2C19 gene provide instructions for making an enzyme that is found primarily in liver cells in a cell structure called the endoplasmic reticulum, which is involved in protein processing and transport.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP2C19 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 12,665 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2C19_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<hr />
+
+<h3 id="cyp-p450-2d6-inhibition-veith-et-al">CYP P450 2D6 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, CYP2D6 is primarily expressed in the liver. It is also highly expressed in areas of the central nervous system, including the substantia nigra.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP2D6 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 13,130 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2D6_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<hr />
+
+<h3 id="cyp-p450-3a4-inhibition-veith-et-al">CYP P450 3A4 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, CYP3A4 is an important enzyme in the body, mainly found in the liver and in the intestine. It oxidizes small foreign organic molecules (xenobiotics), such as toxins or drugs, so that they can be removed from the body.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP3A4 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 12,328 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP3A4_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<hr />
+
+<h3 id="cyp-p450-1a2-inhibition-veith-et-al">CYP P450 1A2 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, CYP1A2 localizes to the endoplasmic reticulum and its expression is induced by some polycyclic aromatic hydrocarbons (PAHs), some of which are found in cigarette smoke. It is able to metabolize some PAHs to carcinogenic intermediates. Other xenobiotic substrates for this enzyme include caffeine, aflatoxin B1, and acetaminophen.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP1A2 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 12,579 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP1A2_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<hr />
+
+<h3 id="cyp-p450-2c9-inhibition-veith-et-al">CYP P450 2C9 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, the CYP P450 2C9 plays a major role in the oxidation of both xenobiotic and endogenous compounds.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP2C9 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 12,092 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2C9_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<hr />
 
 <h2 id="execretion">Execretion</h2>
+<p class="is-size-4">Drug excretion is the removal of drugs from the body, either as a metabolite or unchanged drug. There are many different routes of excretion, including urine, bile, sweat, saliva, tears, milk, and stool. </p>
+
+<h3 id="half-life-edrug3d">Half Life, eDrug3D</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The duration of action of a drug is known as its half life. This is the period of time required for the concentration or amount of drug in the body to be reduced by one-half. Processed from eDrug3D dataset. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the half life duration. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 942 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HalfLife_eDrug3D'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
+
+<hr />
+
+<h3 id="clearance-edrug3d">Clearance, eDrug3D</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Drug clearance is concerned with the rate at which the active drug is removed from the body. Clearance is defined as the rate of drug elimination divided by the plasma concentration of the drug. Processed from eDrug3D dataset. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the clearance rate. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 731 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> <span class="tag is-info is-light">Cold Drug Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Clearance_eDrug3D'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
+
+<hr />
+
 
 </div>
                 </div>
