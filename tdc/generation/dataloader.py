@@ -10,7 +10,7 @@ from ..metadata import dataset_names
 from ..chem_utils import qed, penalized_logp, similarity, drd2, SA  
 from ..chem_utils import validity_ratio, unique_rate 
 
-class Evaluator(generation_dataset.Evaluator):
+class Oracle(generation_dataset.Evaluator):
 	def __init__(self, name):
 		super().__init__(name)
 		self.assign_evaluator() 
@@ -32,7 +32,7 @@ class Evaluator(generation_dataset.Evaluator):
 		else:
 			return 
 
-class DistributionEvaluator(generation_dataset.Evaluator):
+class Evaluator(generation_dataset.Evaluator):
 	def __init__(self, name, molecule_base = None):
 		super().__init__(name)
 		self.molecule_base = self.molecule_base
@@ -43,7 +43,7 @@ class DistributionEvaluator(generation_dataset.Evaluator):
 		elif self.name == 'diversity':
 			pass 
 		elif self.name == 'validity':
-			pass 
+			self.evaluator_func = validity_ratio 
 		elif self.name == 'unique':
 			self.evaluator_func = unique_rate 
 
