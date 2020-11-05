@@ -124,7 +124,7 @@ name2type = {'toxcast': 'tab',
  }
 
 name2id = {'bbb_adenot': 4139555,
- 'bbb_molnet': 4165564,
+ 'bbb_martins': 4165564,
  'bindingdb_ic50': 4139570,
  'bindingdb_kd': 4139577,
  'bindingdb_ki': 4139569,
