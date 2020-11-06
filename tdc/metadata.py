@@ -60,6 +60,13 @@ single_molecule_dataset_names = ['zinc', 'moses']
 paired_dataset_names = ['uspto50k']
 
 property_names = ['drd2', 'qed', 'logp', 'sa']
+guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
+				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
+				   'C11H24_isomer', 'C9H10N2O2PF2Cl_isomor', \
+				   'median_molecule_1', 'median_molecule_2', \
+				   'Osimertinib_MPO', 'Fexofenadine_MPO', 'Ranolazine_MPO', 'Perindopril_MPO', \
+				   'Amlodipine_MPO', 'Sitagliptin_MPO', 'Zaleplon_MPO', \
+				   'Valsartan_SMARTS', 'deco_hop', 'scaffold_hop']
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
