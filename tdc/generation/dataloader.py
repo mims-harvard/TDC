@@ -6,6 +6,7 @@ warnings.filterwarnings("ignore")
 
 from ..utils import *
 from . import generation_dataset
+from . import score_modifier 
 from ..metadata import dataset_names
 from ..chem_utils import qed, penalized_logp, similarity, drd2, SA  
 from ..chem_utils import validity_ratio, unique_rate 
