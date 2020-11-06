@@ -10,11 +10,11 @@ except:
 # import sascorer
 from .score_modifier import *
 from .sascorer import * 
+from .drd2_scorer import get_score as drd2 
 try:
 	import networkx as nx 
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
-from .drd2_scorer import get_score as drd2 
 ## from https://github.com/wengong-jin/iclr19-graph2graph/blob/master/props/properties.py 
 ## from https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 
 
@@ -169,24 +169,24 @@ def celecoxib_rediscovery(test_smiles):
 	# celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
 	# 'ECFP4'
 	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-	similarity = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
-	return similarity
+	similarity_value = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
+	return similarity_value
 
 Troglitazone_smiles='Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O'
 Troglitazone_fp = smiles_2_fingerprint_ECFP4(Troglitazone_smiles)
 def Troglitazone_rediscovery(test_smiles):
 	### ECFP4
 	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-	similarity = DataStructs.TanimotoSimilarity(Troglitazone_fp, test_fp)
-	return similarity	
+	similarity_value = DataStructs.TanimotoSimilarity(Troglitazone_fp, test_fp)
+	return similarity_value	
 
 Thiothixene_smiles='CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1'	
 Thiothixene_fp = smiles_2_fingerprint_ECFP4(Thiothixene_smiles)
 def Thiothixene_rediscovery(test_smiles):
 	### ECFP4
 	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-	similarity = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
-	return similarity
+	similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
+	return similarity_value
 
 
 
@@ -195,9 +195,9 @@ Aripiprazole_fp = smiles_2_fingerprint_FCFP4(Aripiprazole_smiles)
 def Aripiprazole_similarity(test_smiles):
 	threshold = 0.75
 	test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
-	similarity = DataStructs.TanimotoSimilarity(Aripiprazole_fp, test_fp)
+	similarity_value = DataStructs.TanimotoSimilarity(Aripiprazole_fp, test_fp)
 	modifier = ClippedScoreModifier(upper_x=threshold)
-	modified_similarity = modifier(similarity)
+	modified_similarity = modifier(similarity_value)
 	return modified_similarity 
 
 Albuterol_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1'
@@ -205,9 +205,9 @@ Albuterol_fp = smiles_2_fingerprint_FCFP4(Albuterol_smiles)
 def Albuterol_similarity(test_smiles):
 	threshold = 0.75
 	test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
-	similarity = DataStructs.TanimotoSimilarity(Albuterol_fp, test_fp)
+	similarity_value = DataStructs.TanimotoSimilarity(Albuterol_fp, test_fp)
 	modifier = ClippedScoreModifier(upper_x=threshold)
-	modified_similarity = modifier(similarity)
+	modified_similarity = modifier(similarity_value)
 	return modified_similarity 
 
 
@@ -217,9 +217,9 @@ Mestranol_fp = smiles_2_fingerprint_AP(Mestranol_smiles)
 def Mestranol_similarity(test_smiles):
 	threshold = 0.75 
 	test_fp = smiles_2_fingerprint_AP(test_smiles)
-	test_fp = smiles_2_fingerprint_AP(Mestranol_fp, test_fp)
+	similarity_value = DataStructs.TanimotoSimilarity(Mestranol_fp, test_fp)
 	modifier = ClippedScoreModifier(upper_x=threshold)
-	modified_similarity = modifier(similarity)
+	modified_similarity = modifier(similarity_value)
 	return modified_similarity 
 
 
@@ -268,7 +268,7 @@ if __name__ == "__main__":
 	print(unique_rate(list_of_smiles))
 	#  conda install -c rdkit rdkit
 
-
+	print(Mestranol_similarity(smiles))
 
 
 
