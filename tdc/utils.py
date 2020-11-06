@@ -44,7 +44,7 @@ def download_wrapper(name, path, dataset_names):
 		os.mkdir(path)
 
 	if os.path.exists(os.path.join(path, name + '.' + name2type[name])):
-		print_sys('Dataset already downloaded in the local system...')
+		print_sys('Found local copy...')
 	else:
 		print_sys("Downloading...")
 		dataverse_download(dataset_path, path, name)

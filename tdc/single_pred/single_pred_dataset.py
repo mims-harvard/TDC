@@ -25,8 +25,6 @@ class DataLoader(base_dataset.DataLoader):
 		self.file_format = 'csv'
 		self.label_name = label_name
 
-		print('Done!', flush = True, file = sys.stderr)
-
 	def get_data(self, format = 'df'):
 		'''
 		Arguments:

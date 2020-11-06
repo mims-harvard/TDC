@@ -52,18 +52,18 @@ class Evaluator(generation_dataset.Evaluator):
 
 class Reaction(generation_dataset.PairedDataLoader):
 
-	def __init__(self, name, path = './data', print_stats = True, input_name = 'reactants', output_name = 'product'): 
+	def __init__(self, name, path = './data', print_stats = False, input_name = 'reactants', output_name = 'product'): 
 		super().__init__(name, path, print_stats, input_name, output_name)
 
 class RetroSyn(generation_dataset.PairedDataLoader):
 
-	def __init__(self, name, path = './data', print_stats = True, input_name = 'product', output_name = 'reactants'): 
+	def __init__(self, name, path = './data', print_stats = False, input_name = 'product', output_name = 'reactants'): 
 		super().__init__(name, path, print_stats, input_name, output_name)
 
 
 class Distribution_Dataloader(generation_dataset.DataLoader):
 
-	def __init__(self, name, path = './data', print_stats = True, column_name = 'smiles'): 
+	def __init__(self, name, path = './data', print_stats = False, column_name = 'smiles'): 
 		super().__init__(name, path, print_stats, column_name)
 
 
@@ -81,7 +81,7 @@ class PairMolGen(generation_dataset.DataLoader):
 			e.g., QED score, DRD score
 		
 	'''
-	def __init__(self, name, path = './data', print_stats = True):
+	def __init__(self, name, path = './data', print_stats = False):
 		if not os.path.exists(path):
 			os.makedirs(path)
 		# try:
