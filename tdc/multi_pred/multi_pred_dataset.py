@@ -8,13 +8,13 @@ from .. import base_dataset
 from ..utils import *
 
 class DataLoader(base_dataset.DataLoader):
-	def __init__(self, name, path, target, print_stats, dataset_names):
+	def __init__(self, name, path, label_name, print_stats, dataset_names):
 		if name.lower() in dataset2target_lists.keys():
-			print_sys("Tip: Use tdc.utils.target_list('" + name.lower() + "') to retrieve all available label targets.")
-			if target is None:
-				raise ValueError("Please select a target.")
+			print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
+			if label_name is None:
+				raise ValueError("Please select a label name. You can use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
 
-		entity1, entity2, raw_y, entity1_idx, entity2_idx = interaction_dataset_load(name, path, target, dataset_names)
+		entity1, entity2, raw_y, entity1_idx, entity2_idx = interaction_dataset_load(name, path, label_name, dataset_names)
 		
 		self.name = name
 		self.entity1 = entity1
@@ -25,13 +25,10 @@ class DataLoader(base_dataset.DataLoader):
 		self.entity2_idx = entity2_idx
 		self.path = path
 		self.file_format = 'csv'
-		self.target = target
+		self.label_name = label_name
 		
 		self.entity1_name = 'Entity1'
 		self.entity2_name = 'Entity2'
-
-		if print_stats:
-			self.print_stats()
 
 	def get_data(self, format = 'df'):
 		'''

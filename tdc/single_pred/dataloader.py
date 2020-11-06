@@ -11,13 +11,13 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-from . import property_dataset
+from . import single_pred_dataset
 from ..utils import print_sys
 from ..utils import train_val_test_split
 from ..metadata import dataset_names
 
 
-class ADME(property_dataset.DataLoader):
+class ADME(single_pred_dataset.DataLoader):
     """Docstring to be finished.
 
     Parameters
@@ -28,19 +28,20 @@ class ADME(property_dataset.DataLoader):
     path : str, optional (default="data")
         Description of the variable.
 
-    target : str, optional (default=None)
+    label_name : str, optional (default=None)
         Description of the variable.
 
     print_stats : bool, optional (default=True)
         Description of the variable.
     """
 
-    def __init__(self, name, path='./data', target=None, print_stats=True):
-        super().__init__(name, path, target, print_stats,
+    def __init__(self, name, path='./data', label_name=None, print_stats=True):
+        super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["ADME"])
+        if print_stats:
+            self.print_stats()
 
-
-class Toxicity(property_dataset.DataLoader):
+class Tox(single_pred_dataset.DataLoader):
     """Docstring to be finished.
 
     Parameters
@@ -51,19 +52,20 @@ class Toxicity(property_dataset.DataLoader):
     path : str, optional (default="data")
         Description of the variable.
 
-    target : str, optional (default=None)
+    label_name : str, optional (default=None)
         Description of the variable.
 
     print_stats : bool, optional (default=True)
         Description of the variable.
     """
 
-    def __init__(self, name, path='./data', target=None, print_stats=True):
-        super().__init__(name, path, target, print_stats,
+    def __init__(self, name, path='./data', label_name=None, print_stats=True):
+        super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["Toxicity"])
+        if print_stats:
+            self.print_stats()
 
-
-class HTS(property_dataset.DataLoader):
+class Epitope(single_pred_dataset.DataLoader):
     """Docstring to be finished.
 
     Parameters
@@ -74,21 +76,47 @@ class HTS(property_dataset.DataLoader):
     path : str, optional (default="data")
         Description of the variable.
 
-    target : str, optional (default=None)
+    label_name : str, optional (default=None)
         Description of the variable.
 
     print_stats : bool, optional (default=True)
         Description of the variable.
     """
 
-    def __init__(self, name, path='./data', target=None, print_stats=True):
-        super().__init__(name, path, target, print_stats,
-                         dataset_names=dataset_names["HTS"])
+    def __init__(self, name, path='./data', label_name=None, print_stats=True):
+        super().__init__(name, path, label_name, print_stats,
+                         dataset_names=dataset_names["Epitope"])
+        self.entity1_name = 'Antigen'
+        if print_stats:
+            self.print_stats()
 
+class HTS(single_pred_dataset.DataLoader):
+    """Docstring to be finished.
+
+    Parameters
+    ----------
+    name : str
+        Description of the variable.
+
+    path : str, optional (default="data")
+        Description of the variable.
+
+    label_name : str, optional (default=None)
+        Description of the variable.
+
+    print_stats : bool, optional (default=True)
+        Description of the variable.
+    """
+
+    def __init__(self, name, path='./data', label_name=None, print_stats=True):
+        super().__init__(name, path, label_name, print_stats,
+                         dataset_names=dataset_names["HTS"])
+        if print_stats:
+            self.print_stats()
 
 ### Not ready for reviews ###
 
-class QM(property_dataset.DataLoader):
+class QM(single_pred_dataset.DataLoader):
     """Docstring to be finished.
 
     Parameters
@@ -99,17 +127,17 @@ class QM(property_dataset.DataLoader):
     path : str, optional (default="data")
         Description of the variable.
 
-    target : str, optional (default=None)
+    label_name : str, optional (default=None)
         Description of the variable.
 
     print_stats : bool, optional (default=True)
         Description of the variable.
     """
 
-    def __init__(self, name, path='./data', target=None, print_stats=True):
+    def __init__(self, name, path='./data', label_name=None, print_stats=True):
         try:
             entity1, y, entity1_idx = eval(
-                name + '_process(name, path, target)')
+                name + '_process(name, path, label_name)')
 
             self.entity1 = entity1
             self.y = y

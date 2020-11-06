@@ -8,13 +8,13 @@ from .. import base_dataset
 from ..utils import *
 
 class DataLoader(base_dataset.DataLoader):
-	def __init__(self, name, path, target, print_stats, dataset_names):
+	def __init__(self, name, path, label_name, print_stats, dataset_names):
 		if name.lower() in dataset2target_lists.keys():
-			print_sys("Tip: Use tdc.utils.target_list('" + name.lower() + "') to retrieve all available label targets.")
-			if target is None:
-				raise ValueError("Please select a target. You can use tdc.utils.target_list('" + name.lower() + "') to retrieve all available label targets.")
+			print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
+			if label_name is None:
+				raise ValueError("Please select a label name. You can use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
 
-		entity1, y, entity1_idx = property_dataset_load(name, path, target, dataset_names)
+		entity1, y, entity1_idx = property_dataset_load(name, path, label_name, dataset_names)
 		
 		self.entity1 = entity1
 		self.y = y
@@ -23,10 +23,7 @@ class DataLoader(base_dataset.DataLoader):
 		self.entity1_name = 'Drug'
 		self.path = path
 		self.file_format = 'csv'
-		self.target = target
-		
-		if print_stats:
-			self.print_stats()
+		self.label_name = label_name
 
 		print('Done!', flush = True, file = sys.stderr)
 

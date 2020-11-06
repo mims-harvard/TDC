@@ -1,20 +1,20 @@
-import wget
+import requests
 from zipfile import ZipFile 
 import os, sys
 import numpy as np
 import pandas as pd
 import json
 import warnings
+warnings.filterwarnings("ignore")
 import subprocess
 import pickle
 from fuzzywuzzy import fuzz
-warnings.filterwarnings("ignore")
-
+from tqdm import tqdm
 from .metadata import name2type, name2id, dataset_list, dataset_names
 from .metadata import property_names, paired_dataset_names, single_molecule_dataset_names
 from .metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
 
-from .target_list import dataset2target_lists
+from .label_name_list import dataset2target_lists
 
 try:
     from urllib.error import HTTPError
@@ -47,7 +47,7 @@ def download_wrapper(name, path, dataset_names):
 		print_sys('Dataset already downloaded in the local system...')
 	else:
 		print_sys("Downloading " + name + " ...")
-		dataverse_download(dataset_path, path)
+		dataverse_download(dataset_path, path, name)
 	return name
 
 def pd_load(name, path):
@@ -55,9 +55,11 @@ def pd_load(name, path):
 		df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]), sep = '\t')
 	elif name2type[name] == 'csv':
 		df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]))
+	elif name2type[name] == 'pkl':
+		df = pd.read_pickle(os.path.join(path, name + '.' + name2type[name]))
 	else:
-		raise ValueError("The file type must be one of tab/csv.")
-	return df
+		raise ValueError("The file type must be one of tab/csv/pickle.")
+	return df	
 
 def property_dataset_load(name, path, target, dataset_names):
 	if target is None:
@@ -72,7 +74,6 @@ def molpair_process(name, path, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
 	df = pd_load(name, path)
 	return df['input'], df['target']
-
 
 def interaction_dataset_load(name, path, target, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
@@ -118,8 +119,17 @@ def get_label_map(name, path, target = None, file_format = 'csv', output_format 
 	else:
 		raise ValueError("Please use the correct output format, select from dict, df, array.")
 
-def dataverse_download(dataset_path, path):
-	wget.download(dataset_path, path)
+def dataverse_download(url, path, name):
+	save_path = os.path.join(path, name + '.' + name2type[name])
+	response = requests.get(url, stream=True)
+	total_size_in_bytes= int(response.headers.get('content-length', 0))
+	block_size = 1024
+	progress_bar = tqdm(total=total_size_in_bytes, unit='iB', unit_scale=True)
+	with open(save_path, 'wb') as file:
+		for data in response.iter_content(block_size):
+			progress_bar.update(len(data))
+			file.write(data)
+	progress_bar.close()
 
 def convert_y_unit(y, from_, to_):
 	"""
@@ -399,7 +409,7 @@ def load_dict(path):
 	with open(path, 'rb') as f:
 		return pickle.load(f)
 
-def target_list(name):
+def retrieve_label_name_list(name):
 	return dataset2target_lists[name]
 
 def retrieve_dataset_names(name):

@@ -1,6 +1,6 @@
 # datasets for each task
 
-# property prediction
+# single_pred prediction
 toxicity_dataset_names = ['toxcast', 'tox21', 'clintox']
 
 adme_dataset_names = ['lipophilicity_astrazeneca',
@@ -31,7 +31,10 @@ hts_dataset_names = ['hiv',
 
 qm_dataset_names = ['qm7', 'qm8', 'qm9']
 
-# interaction prediction
+epitope_dataset_names = ['iedb_jespersen', 'pdb_jespersen']
+
+####################################
+# multi_pred prediction
 dti_dataset_names = ['davis',
  'kiba',
  'bindingdb_kd',
@@ -43,6 +46,8 @@ ppi_dataset_names = ['huri']
 peptidemhc_dataset_names = ['mhc2_netmhciipan', 'mhc1_netmhcpan']
 
 ddi_dataset_names = ['drugbank', 'twosides']
+
+drugres_dataset_names = ['gdsc1', 'gdsc2']
 
 ####################################
 # generation
@@ -71,7 +76,8 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"RetroSyn": retrosyn_dataset_names,
 				"Reaction": forwardsyn_dataset_names, 
 				"PairMolGen": molgenpaired_dataset_names,
-				"PeptideMHC": peptidemhc_dataset_names}
+				"PeptideMHC": peptidemhc_dataset_names,
+				"Epitope": epitope_dataset_names}
 
 
 dataset_list = []
@@ -121,6 +127,10 @@ name2type = {'toxcast': 'tab',
  'qed': 'csv', 
  'drd2': 'csv', 
  'logp': 'csv',
+ 'gdsc1': 'pkl',
+ 'gdsc2': 'pkl',
+ 'iedb_jespersen': 'pkl',
+ 'pdb_jespersen': 'pkl'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -166,5 +176,9 @@ name2id = {'bbb_adenot': 4139555,
  'qed': 'xxxx', 
  'drd2': 'xxxx', 
  'logp': 'xxxx', 
+ 'gdsc1': 4165726,
+ 'gdsc2': 4165727,
+ 'iedb_jespersen': 4165725, 
+ 'pdb_jespersen': 4165724
  }
 
