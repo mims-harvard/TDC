@@ -35,11 +35,12 @@ class ADME(single_pred_dataset.DataLoader):
         Description of the variable.
     """
 
-    def __init__(self, name, path='./data', label_name=None, print_stats=True):
+    def __init__(self, name, path='./data', label_name=None, print_stats=False):
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["ADME"])
         if print_stats:
             self.print_stats()
+        print('Done!', flush = True, file = sys.stderr)
 
 class Tox(single_pred_dataset.DataLoader):
     """Docstring to be finished.
@@ -59,11 +60,12 @@ class Tox(single_pred_dataset.DataLoader):
         Description of the variable.
     """
 
-    def __init__(self, name, path='./data', label_name=None, print_stats=True):
+    def __init__(self, name, path='./data', label_name=None, print_stats=False):
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["Toxicity"])
         if print_stats:
             self.print_stats()
+        print('Done!', flush = True, file = sys.stderr)
 
 class Epitope(single_pred_dataset.DataLoader):
     """Docstring to be finished.
@@ -83,12 +85,13 @@ class Epitope(single_pred_dataset.DataLoader):
         Description of the variable.
     """
 
-    def __init__(self, name, path='./data', label_name=None, print_stats=True):
+    def __init__(self, name, path='./data', label_name=None, print_stats=False):
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["Epitope"])
         self.entity1_name = 'Antigen'
         if print_stats:
             self.print_stats()
+        print('Done!', flush = True, file = sys.stderr)
 
 class HTS(single_pred_dataset.DataLoader):
     """Docstring to be finished.
@@ -108,11 +111,12 @@ class HTS(single_pred_dataset.DataLoader):
         Description of the variable.
     """
 
-    def __init__(self, name, path='./data', label_name=None, print_stats=True):
+    def __init__(self, name, path='./data', label_name=None, print_stats=False):
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["HTS"])
         if print_stats:
             self.print_stats()
+        print('Done!', flush = True, file = sys.stderr)
 
 ### Not ready for reviews ###
 
@@ -134,7 +138,7 @@ class QM(single_pred_dataset.DataLoader):
         Description of the variable.
     """
 
-    def __init__(self, name, path='./data', label_name=None, print_stats=True):
+    def __init__(self, name, path='./data', label_name=None, print_stats=False):
         try:
             entity1, y, entity1_idx = eval(
                 name + '_process(name, path, label_name)')
