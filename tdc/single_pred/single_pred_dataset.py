@@ -69,4 +69,6 @@ class DataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please specify the correct splitting method")
 
 	def print_stats(self):
-		print('There are ' + str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.', flush = True, file = sys.stderr)
+		print_sys('--- Dataset Statistics ---')
+		print(str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.', flush = True, file = sys.stderr)
+		print_sys('--------------------------')

@@ -49,10 +49,12 @@ class DataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please use the correct format input")
 
 	def print_stats(self):
-		print('There are ' + str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.', flush = True, file = sys.stderr)
-		print('There are ' + str(len(np.unique(self.entity2))) + ' unique ' + self.entity2_name.lower() + 's.', flush = True, file = sys.stderr)
-		print('There are ' + str(len(self.y)) + ' ' + self.entity1_name.lower() + '-' + self.entity2_name.lower() + ' pairs.', flush = True, file = sys.stderr)
-
+		print_sys('--- Dataset Statistics ---')
+		print(str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.', flush = True, file = sys.stderr)
+		print(str(len(np.unique(self.entity2))) + ' unique ' + self.entity2_name.lower() + 's.', flush = True, file = sys.stderr)
+		print(str(len(self.y)) + ' ' + self.entity1_name.lower() + '-' + self.entity2_name.lower() + ' pairs.', flush = True, file = sys.stderr)
+		print_sys('--------------------------')
+		
 	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
 		'''
 		Arguments:
@@ -80,15 +82,17 @@ class DataLoader(base_dataset.DataLoader):
 		if seed == 'benchmark':
 			seed = 1234
 
-		df = self.get_data(df = True)
-
-		if threshold is None:
-			raise AttributeError("Please specify the threshold to binarize the data by 'to_graph(threshold = N)'!")
+		df = self.get_data(format = 'df')
 
 		if len(np.unique(self.raw_y)) > 2:
 			print("The dataset label consists of affinity scores. Binarization using threshold " + str(threshold) + " is conducted to construct the positive edges in the network. Adjust the threshold by to_graph(threshold = X)", flush = True, file = sys.stderr)
+			if threshold is None:
+				raise AttributeError("Please specify the threshold to binarize the data by 'to_graph(threshold = N)'!")
+			df['label_binary'] = label_transform(self.raw_y, True, threshold, False, verbose  = False)
+		else:
+			# already binary
+			df['label_binary'] = df['Y']
 
-		df['label_binary'] = label_transform(self.raw_y, True, threshold, False, verbose  = False)
 		df_pos = df[df.label_binary == 1]
 		df_neg = df[df.label_binary == 0]
 

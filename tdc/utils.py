@@ -46,7 +46,7 @@ def download_wrapper(name, path, dataset_names):
 	if os.path.exists(os.path.join(path, name + '.' + name2type[name])):
 		print_sys('Dataset already downloaded in the local system...')
 	else:
-		print_sys("Downloading " + name + " ...")
+		print_sys("Downloading...")
 		dataverse_download(dataset_path, path, name)
 	return name
 
@@ -65,6 +65,7 @@ def property_dataset_load(name, path, target, dataset_names):
 	if target is None:
 		target = 'Y'		
 	name = download_wrapper(name, path, dataset_names)
+	print_sys('Loading...')
 	df = pd_load(name, path)
 	df = df[df[target].notnull()].reset_index(drop = True)
 
@@ -72,11 +73,13 @@ def property_dataset_load(name, path, target, dataset_names):
 
 def molpair_process(name, path, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
+	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df['input'], df['target']
 
 def interaction_dataset_load(name, path, target, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
+	print_sys('Loading...')
 	df = pd_load(name, path)
 	if target is None:
 		target = 'Y'
@@ -105,10 +108,11 @@ def generation_dataset_load(name, path, dataset_names):
 	df = pd_load(name, path)
 	return df['input'], df['target'] 
 
-def get_label_map(name, path, target = None, file_format = 'csv', output_format = 'dict'):
+def get_label_map(name, path, target = None, file_format = 'csv', output_format = 'dict', task = 'DDI'):
+	name = fuzzy_search(name, dataset_names[task])
 	if target is None:
 		target = 'Y'		
-	df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]))
+	df = pd_load(name, path)
 
 	if output_format == 'dict':
 		return dict(zip(df[target].values, df['Map'].values))
@@ -328,7 +332,7 @@ def NegSample(df):
     df : pandas.DataFrame
         Data File
     """
-    raise ValueError
+    raise NotImplementedError
 
 
 def GetProteinSequence(ProteinID):

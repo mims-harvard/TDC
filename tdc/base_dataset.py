@@ -88,7 +88,7 @@ class DataLoader:
 		if (len(np.unique(self.y)) == 2):
 			print("The data is already binarized!", flush = True, file = sys.stderr)
 		else:
-			print("Binariztion using threshold " + str(threshold) + ", default, we assume the smaller values are 1 and larger on is 0, you can change the order by 'binarize(order = 'ascending')'", flush = True, file = sys.stderr)
+			print("Binariztion using threshold " + str(threshold) + ", default, we assume the smaller values are 1 and larger ones is 0, you can change the order by 'binarize(order = 'ascending')'", flush = True, file = sys.stderr)
 			if np.unique(self.y).reshape(-1,).shape[0] < 2:
 				raise AttributeError("Adjust your threshold, there is only one class.")
 			self.y = utils.binarize(self.y, threshold, order)
