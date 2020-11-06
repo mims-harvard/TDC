@@ -8,6 +8,7 @@ except:
 	raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")	
 
 # import sascorer
+from .score_modifier import *
 from .sascorer import * 
 try:
 	import networkx as nx 
@@ -152,6 +153,16 @@ def smiles_2_fingerprint_ECFP4(smiles):
 	fp = AllChem.GetMorganFingerprint(molecule, 2)
 	return fp 
 
+def smiles_2_fingerprint_FCFP4(smiles):
+	molecule = smiles_to_rdkit_mol(smiles)
+	fp = AllChem.GetMorganFingerprint(mol, 2, useFeatures=True)
+	return fp 
+
+def smiles_2_fingerprint_AP(smiles):
+	molecule = smiles_to_rdkit_mol(smiles)
+	fp = AllChem.GetAtomPairFingerprint(mol, maxLength=10)
+	return fp 
+
 celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
 celecoxib_fp = smiles_2_fingerprint_ECFP4(celecoxib_smiles)
 def celecoxib_rediscovery(test_smiles):
@@ -176,6 +187,72 @@ def Thiothixene_rediscovery(test_smiles):
 	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
 	similarity = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
 	return similarity
+
+
+
+Aripiprazole_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl'
+Aripiprazole_fp = smiles_2_fingerprint_FCFP4(Aripiprazole_smiles)
+def Aripiprazole_similarity(test_smiles):
+	threshold = 0.75
+	test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
+	similarity = DataStructs.TanimotoSimilarity(Aripiprazole_fp, test_fp)
+	modifier = ClippedScoreModifier(upper_x=threshold)
+	modified_similarity = modifier(similarity)
+	return modified_similarity 
+
+Albuterol_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1'
+Albuterol_fp = smiles_2_fingerprint_FCFP4(Albuterol_smiles)
+def Albuterol_similarity(test_smiles):
+	threshold = 0.75
+	test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
+	similarity = DataStructs.TanimotoSimilarity(Albuterol_fp, test_fp)
+	modifier = ClippedScoreModifier(upper_x=threshold)
+	modified_similarity = modifier(similarity)
+	return modified_similarity 
+
+
+
+Mestranol_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1'
+Mestranol_fp = smiles_2_fingerprint_F
+def Mestranol_similarity(test_smiles):
+	threshold = 0.75 
+	test_fp = smiles_2_fingerprint_AP(test_smiles)
+	test_fp = smiles_2_fingerprint_AP(Mestranol_fp, test_fp)
+	modifier = ClippedScoreModifier(upper_x=threshold)
+	modified_similarity = modifier(similarity)
+	return modified_similarity 
+
+
+'''
+    def get_AP(self, mol: Mol):
+        return AllChem.GetAtomPairFingerprint(mol, maxLength=10)
+
+    def get_PHCO(self, mol: Mol):
+        return Generate.Gen2DFingerprint(mol, Gobbi_Pharm2D.factory)
+
+    def get_BPF(self, mol: Mol):
+        return GetBPFingerprint(mol)
+
+    def get_BTF(self, mol: Mol):
+        return GetBTFingerprint(mol)
+
+    def get_PATH(self, mol: Mol):
+        return AllChem.RDKFingerprint(mol)
+
+    def get_ECFP4(self, mol: Mol):
+        return AllChem.GetMorganFingerprint(mol, 2)
+
+    def get_ECFP6(self, mol: Mol):
+        return AllChem.GetMorganFingerprint(mol, 3)
+
+    def get_FCFP4(self, mol: Mol):
+        return AllChem.GetMorganFingerprint(mol, 2, useFeatures=True)
+
+    def get_FCFP6(self, mol: Mol):
+        return AllChem.GetMorganFingerprint(mol, 3, useFeatures=True)
+
+'''
+
 
 
 
