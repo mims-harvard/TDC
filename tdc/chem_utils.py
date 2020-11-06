@@ -155,12 +155,12 @@ def smiles_2_fingerprint_ECFP4(smiles):
 
 def smiles_2_fingerprint_FCFP4(smiles):
 	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetMorganFingerprint(mol, 2, useFeatures=True)
+	fp = AllChem.GetMorganFingerprint(molecule, 2, useFeatures=True)
 	return fp 
 
 def smiles_2_fingerprint_AP(smiles):
 	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetAtomPairFingerprint(mol, maxLength=10)
+	fp = AllChem.GetAtomPairFingerprint(molecule, maxLength=10)
 	return fp 
 
 celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
@@ -213,7 +213,7 @@ def Albuterol_similarity(test_smiles):
 
 
 Mestranol_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1'
-Mestranol_fp = smiles_2_fingerprint_F
+Mestranol_fp = smiles_2_fingerprint_AP(Mestranol_smiles)
 def Mestranol_similarity(test_smiles):
 	threshold = 0.75 
 	test_fp = smiles_2_fingerprint_AP(test_smiles)
