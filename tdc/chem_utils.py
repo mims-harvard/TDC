@@ -6,11 +6,21 @@ try:
 	import rdkit.Chem.QED as QED
 except:
 	raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")	
-
+try:
+	from scipy.stats.mstats import gmean
+except:
+	raise ImportError("Please install rdkit by 'pip install scipy'! ") 
 # import sascorer
-from .score_modifier import *
-from .sascorer import * 
-from .drd2_scorer import get_score as drd2 
+try:
+	from .score_modifier import *
+	from .sascorer import * 
+	from .drd2_scorer import get_score as drd2 
+except:
+	from score_modifier import *
+	from sascorer import * 
+	from drd2_scorer import get_score as drd2 
+
+
 try:
 	import networkx as nx 
 except:
@@ -163,6 +173,11 @@ def smiles_2_fingerprint_AP(smiles):
 	fp = AllChem.GetAtomPairFingerprint(molecule, maxLength=10)
 	return fp 
 
+def smiles_2_fingerprint_ECFP6(smiles):
+	molecule = smiles_to_rdkit_mol(smiles)
+	fp = AllChem.GetMorganFingerprint(molecule, 3)
+	return fp 
+
 celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
 celecoxib_fp = smiles_2_fingerprint_ECFP4(celecoxib_smiles)
 def celecoxib_rediscovery(test_smiles):
@@ -222,6 +237,30 @@ def Mestranol_similarity(test_smiles):
 	modified_similarity = modifier(similarity_value)
 	return modified_similarity 
 
+camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
+menthol_smiles = 'CC(C)C1CCC(C)CC1O'
+camphor_fp = smiles_2_fingerprint_ECFP4(camphor_smiles)
+menthol_fp = smiles_2_fingerprint_ECFP4(menthol_smiles)
+def median1(test_smiles):
+	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+	similarity_v1 = DataStructs.TanimotoSimilarity(camphor_fp, test_fp)
+	similarity_v2 = DataStructs.TanimotoSimilarity(menthol_fp, test_fp)
+	similarity_gmean = gmean([similarity_v1, similarity_v2])
+	return similarity_gmean
+
+
+tadalafil_smiles = 'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'
+sildenafil_smiles = 'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
+tadalafil_fp = smiles_2_fingerprint_ECFP6(tadalafil_smiles)
+sildenafil_fp = smiles_2_fingerprint_ECFP6(sildenafil_smiles)
+def median2(test_smiles):
+	# median mol between tadalafil and sildenafil, ECFP6 
+	test_fp = smiles_2_fingerprint_ECFP6(test_smiles)
+	similarity_v1 = DataStructs.TanimotoSimilarity(tadalafil_fp, test_fp)
+	similarity_v2 = DataStructs.TanimotoSimilarity(sildenafil_fp, test_fp)
+	similarity_gmean = gmean([similarity_v1, similarity_v2])
+	return similarity_gmean 
+
 
 '''
     def get_AP(self, mol: Mol):
@@ -267,9 +306,9 @@ if __name__ == "__main__":
 	print(validity_ratio(list_of_smiles))
 	print(unique_rate(list_of_smiles))
 	#  conda install -c rdkit rdkit
-
 	print(Mestranol_similarity(smiles))
-
+	print(median1(smiles))
+	print(median2(smiles))
 
 
 
