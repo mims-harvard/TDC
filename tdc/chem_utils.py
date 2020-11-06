@@ -137,6 +137,48 @@ def diversity(list_of_smiles):
 			avg_lst.append(sim)
 	return np.mean(avg_lst)
 
+def smiles_to_rdkit_mol(smiles):
+	mol = Chem.MolFromSmiles(smiles)
+	#  Sanitization check (detects invalid valence)
+	if mol is not None:
+		try:
+			Chem.SanitizeMol(mol)
+		except ValueError:
+			return None
+	return mol
+
+def smiles_2_fingerprint_ECFP4(smiles):
+	molecule = smiles_to_rdkit_mol(smiles)
+	fp = AllChem.GetMorganFingerprint(molecule, 2)
+	return fp 
+
+celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
+celecoxib_fp = smiles_2_fingerprint_ECFP4(celecoxib_smiles)
+def celecoxib_rediscovery(test_smiles):
+	# celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
+	# 'ECFP4'
+	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+	similarity = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
+	return similarity
+
+Troglitazone_smiles='Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O'
+Troglitazone_fp = smiles_2_fingerprint_ECFP4(Troglitazone_smiles)
+def Troglitazone_rediscovery(test_smiles):
+	### ECFP4
+	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+	similarity = DataStructs.TanimotoSimilarity(Troglitazone_fp, test_fp)
+	return similarity	
+
+Thiothixene_smiles='CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1'	
+Thiothixene_fp = smiles_2_fingerprint_ECFP4(Thiothixene_smiles)
+def Thiothixene_rediscovery(test_smiles):
+	### ECFP4
+	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+	similarity = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
+	return similarity
+
+
+
 if __name__ == "__main__":
 	smiles = '[H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C'
 	print(similarity(smiles, smiles))
