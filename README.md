@@ -45,28 +45,6 @@ We have X task formulations and each is associated with many datasets. To call a
 
 ### Single-instance Prediction
 
-* <b>Toxicity</b>```Tox```
-	<details>
-  	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-  	 Dataset Name  | Description| Reference 
-	 ------------  | ------------------------ | -----------
-	 Tox21 <br> `Toxicity(name = 'Tox21', target = 'NR-AR')`, Choose target from [here](https://github.com/kexinhuang12345/DrugDataLoader/blob/ba2035a61897270d49af8a52d2ce51ed1571c6ee/DrugDataLoader/target_list.py#L1) </br>| 2014 Tox21 Data Challenge contains qualitative toxicity measurements for 8k compounds on 12 different targets, including nuclear receptors and stress response pathways. From MoleculeNet. | [Tox21 Challenge.](https://www.frontiersin.org/research-topics/2954/tox21-challenge-to-build-predictive-models-of-nuclear-receptor-and-stress-response-pathways-as-media)
-	 ToxCast <br> `Toxicity(name = 'ToxCast', target = 'ACEA_T47D_80hr_Negative')`, Choose target from [here](https://github.com/kexinhuang12345/DrugDataLoader/blob/ba2035a61897270d49af8a52d2ce51ed1571c6ee/DrugDataLoader/target_list.py#L3) </br> | ToxCast includes qualitative results of over 600 experiments on 8k compounds. From MoleculeNet. |[Richard, Ann M., et al. "ToxCast chemical landscape: paving the road to 21st century toxicology." Chemical research in toxicology 29.8 (2016): 1225-1251.](https://pubmed.ncbi.nlm.nih.gov/27367298/)
-	 ClinTox <br> `Toxicity(name = 'ClinTox')` </br>| The ClinTox dataset compares drugs that have failed clinical trials for toxicity reasons. From MoleculeNet. | [Gayvert, Kaitlyn M., Neel S. Madhukar, and Olivier Elemento. "A data-driven approach to predicting successes and failures of clinical trials." Cell chemical biology 23.10 (2016): 1294-1301.](https://pubmed.ncbi.nlm.nih.gov/27642066/)
- 	</details>
-
-* <b>High Throughput Screening</b>```HTS```
-	<details>
-  	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-	 Dataset Name  | Description| Reference | Type | Stats
-	 ------------  | ------------------------ | ----------- | ----------- | -----------
-	 SARS-CoV2 in vitro <br>`HTS(name = 'SARSCoV2_Vitro_Touret')`</br> | In-vitro screend the PRESTWICK CHEMICAL LIBRARY composed of 1,520 approved drugs in an infected cell-based assay. From MIT AiCures. | [Touret, F., Gilles, M., Barral, K. et al. In vitro screening of a FDA approved chemical library reveals potential inhibitors of SARS-CoV-2 replication. Sci Rep 10, 13093 (2020).](https://doi.org/10.1038/s41598-020-70143-6) | Binary | 
-	 SARS-CoV2 3CLPro <br>`HTS(name = 'SARSCoV2_3CLPro_Diamond')`</br> | A large XChem crystallographic fragment screen against SARS-CoV-2 main protease at high resolution. From MIT AiCures. | [Diamond Light Source](https://www.diamond.ac.uk/covid-19/for-scientists/Main-protease-structure-and-XChem.html) | Binary | 
-	 HIV <br>`HTS(name = 'HIV')`</br> | The HIV dataset was introduced by the Drug Therapeutics Program (DTP) AIDS Antiviral Screen, which tested the ability to inhibit HIV replication for over 40,000 compounds. From MoleculeNet. | [AIDS Antiviral Screen Data. https://wiki.nci.nih.gov/display/NCIDTPdata/AIDS+Antiviral+Screen+Data](placeholder) | Binary | 41,127 Drugs
-	</details>
-
 * <b>Quantum Mechanics</b>```QM```
 	<details>
   	<summary>CLICK HERE FOR THE DATASETS!</summary>
@@ -78,63 +56,9 @@ We have X task formulations and each is associated with many datasets. To call a
 	QM9 <br> `QM(name = 'QM9, target = 'X')` Choose target from [here](https://github.com/kexinhuang12345/DrugDataLoader/blob/master/DrugDataLoader/target_list.py#L298) </br> | Geometric,  energetic, electronic and thermodynamic properties of DFT-modelled small molecules. From MoleculeNet.|  [R. Ramakrishnan, P. O. Dral, M. Rupp, O. A. von Lilienfeld, Quantum chemistry structures and properties of 134 kilo molecules, Scientific Data 1, 140022, 2014.](http://www.nature.com/articles/sdata201422) | Regression | 22,000 drugs 
 	</details>
 
-* <b>Paratope Prediction</b>```Paratope```
-	<details>
-	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-	Dataset Name  | Description| Reference | Type | Stats
-	------------  | ------------------------ | ----------- | ----------- | -----------
-	</details>
-
-* <b>Epitope Prediction</b>```Epitope```
-	<details>
-	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-	Dataset Name  | Description| Reference | Type | Stats
-	------------  | ------------------------ | ----------- | ----------- | -----------
-	Bepipred_IEDB <br> `Epitope(name = 'Bepipred_IEDB)` </br> | | []() | Token Classification | X antigens
-	Bepipred_PDB <br> `Epitope(name = 'Bepipred_PDB)` </br> | | []() | Token Classification | X antigens
-	</details>
-
-* <b>Developability</b>```Develop```
-	<details>
-	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-	Dataset Name  | Description| Reference | Type | Stats
-	------------  | ------------------------ | ----------- | ----------- | -----------
-	CDR_TAP <br> `Develop(name = 'CDR_TAP)` </br> | | []() | Regression | X antibodies
-	</details>
-
-* <b>Reaction Yields</b>```Yields```
-	<details>
-	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-	Dataset Name  | Description| Reference | Type | Stats
-	------------  | ------------------------ | ----------- | ----------- | -----------
-	</details>
 
 ### Multi-instance Prediction
 
-* <b>Drug-Target Interaction</b>```DTI```
-	<details>
-  	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-	 Dataset Name  | Description| Reference | Type | Stats (pairs/#drugs/#targets)
-	 ------------  | ------------------------ | ----------- | ----------- | -----------
-	 BindingDB <br> `DTI(name = 'BindingDB_X')` Choose X from Kd, IC50, EC50, or Ki </br> | BindingDB is a public, web-accessible database of measured binding affinities, focusing chiefly on the interactions of protein considered to be drug-targets with small, drug-like molecules. | [BindingDB: a web-accessible database of experimentally determined protein–ligand binding affinities](https://academic.oup.com/nar/article-abstract/35/suppl_1/D198/1119109) | Regression (log)/Binary | 66,444/10,665/1,413 for Kd, 1,073,803/549,205/5,078 for IC50, 151,413/91,773/1,240 for EC50, 41,0478/174,662/3,070 for Ki
-	 DAVIS  <br> `DTI(name = 'DAVIS')` </br> | The interaction of 72 kinase inhibitors with 442 kinases covering >80% of the human catalytic protein kinome. | [Davis, M., Hunt, J., Herrgard, S. et al. Comprehensive analysis of kinase inhibitor selectivity. Nat Biotechnol 29, 1046–1051 (2011).](https://www.nature.com/articles/nbt.1990) | Regression (log)/Binary | 30,056/68/379
-	 KIBA  <br> `DTI(name = 'KIBA')`  </br>| An integrated drug-target bioactivity matrix across 52,498 chemical compounds and 467 kinase targets, including a total of 246,088 KIBA scores, has been made freely available. | [Tang J, Szwajda A, Shakyawar S, et al. Making sense of large-scale kinase inhibitor bioactivity data sets: a comparative and integrative analysis. J Chem Inf Model. 2014;54(3):735-743.](https://pubmed.ncbi.nlm.nih.gov/24521231/) | Regression | 118,254/2,068/229
-	</details>
-
-* <b>Drug-Drug Interaction</b>```DDI```
-	<details>
-  	<summary>CLICK HERE FOR THE DATASETS!</summary>
-
-  	 Dataset Name  | Description| Reference  | Type | Stats (pairs/#drugs)
-	 ------------ | ------------------------ | ----------- | ----------- | -----------
-	 DrugBank | DrugBank drug-drug interaction dataset is manually sourced from FDA/Health Canada drug labels as well as primary literature. It has 86 interaction types. Drug SMILES is provided. | [Wishart DS, et al. (2017) DrugBank 5.0: A major update to the DrugBank database for 2018. Nucleic Acids Res 46:D1074–D1082.](https://academic.oup.com/nar/article/46/D1/D1074/4602867) | Multi-Class/Network | 191,519/1,706
-	 TWOSIDES | Polypharmacy side-effects are associated with drug pairs (or higher-order drug combinations) and cannot be attributed to either individual drug in the pair (in a drug combination). | [Tatonetti, Nicholas P., et al. Data-driven prediction of drug effects and interactions. Science Translational Medicine. 2012.](https://stm.sciencemag.org/content/4/125/125ra31.short) | Multi-Label/Network | 4,649,441/645
-	</details>
 
 * <b>Protein-Protein Interaction</b>```PPI```
 	<details>

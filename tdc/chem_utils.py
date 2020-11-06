@@ -9,7 +9,10 @@ except:
 
 # import sascorer
 from .sascorer import * 
-import networkx as nx 
+try:
+	import networkx as nx 
+except:
+	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 from .drd2_scorer import get_score as drd2 
 ## from https://github.com/wengong-jin/iclr19-graph2graph/blob/master/props/properties.py 
 ## from https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 

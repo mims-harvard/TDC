@@ -2,6 +2,4 @@ fuzzywuzzy
 numpy
 pandas
 tqdm
-wget
-networkx
 scikit-learn==0.21.3
