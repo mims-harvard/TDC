@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page with menubar - TDC</title>
+    <title>Peptide-MHC Binding - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page with menubar | TDC</title>
+<title>Peptide-MHC Binding | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Page with menubar" />
+<meta property="og:title" content="Peptide-MHC Binding" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/multi_pred_tasks/peptidemhc/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/multi_pred_tasks/peptidemhc/","headline":"Page with menubar","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/multi_pred_tasks/peptidemhc/","headline":"Peptide-MHC Binding","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -54,9 +54,9 @@
                             
                             <a href="/TDC/overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-Instance Prediction</a>
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
                             
-                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-Instance Prediction</a>
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
@@ -71,11 +71,11 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
-                            
-                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
                             
                             <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
+                            
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -112,7 +112,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/multi_pred_tasks/overview/" class=""><strong>Multi-Instance Prediction Problem</strong></a>
+            <a href="/TDC/multi_pred_tasks/overview/" class=""><strong>Multi-instance Prediction Problem</strong></a>
             
             <ul>
                 
@@ -166,16 +166,16 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/overview/" class=""><strong>Other Datasets Types</strong></a>
+            <a href="/TDC/overview/" class=""><strong>Others</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-Instance Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-instance Prediction Problem</a></li>
                 
                 
                 
-                <li><a href="/TDC/generation_tasks/overview/" class="">Generation</a></li>
+                <li><a href="/TDC/generation_tasks/overview/" class="">Generation Problem</a></li>
                 
                 
             </ul>
@@ -192,8 +192,67 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#mhc-class-i-iedb-imgt-nielsen-et-al">MHC Class I, IEDB-IMGT, Nielsen et al.</a></li>
+  <li><a href="#mhc-class-ii-iedb-jensen-et-al">MHC Class II, IEDB, Jensen et al.</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h3 id="mhc-class-i-iedb-imgt-nielsen-et-al">MHC Class I, IEDB-IMGT, Nielsen et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Binding of peptides to MHC class I molecules (MHC-I) is essential for antigen presentation to cytotoxic T-cells. An organized datasets by NetMHCpan for MHC class I collected from IEDB and IMGT/HLA database. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the amino acid sequence of peptide and the pseudo amino acid sequence of MHC, predict the binding affinity. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 185,985 pairs, 43,018 peptides and 150 MHC class 1s </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">PeptideMHC</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">PeptideMHC</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MHC1_IEDB-IMGT_Nielsen'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-016-0288-x">[1] Nielsen, Morten, and Massimo Andreatta. “NetMHCpan-3.0; improved prediction of binding to MHC class I molecules integrating information from multiple receptor and peptide length datasets.” Genome medicine 8.1 (2016): 1-9. </a></p>
+
+<p><a href="https://www.sciencedirect.com/science/article/pii/S240547121930153X">[2] Zeng, Haoyang, and David K. Gifford. “Quantification of uncertainty in peptide-MHC binding prediction improves high-affinity peptide Selection for therapeutic design.” Cell systems 9.2 (2019): 159-166.</a></p>
+<hr />
+
+<h3 id="mhc-class-ii-iedb-jensen-et-al">MHC Class II, IEDB, Jensen et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Major histocompatibility complex class II (MHC‐II) molecules are found on the surface of antigen‐presenting cells where they present peptides derived from extracellular proteins to T helper cells. Useful to identify T‐cell epitopes. An organized datasets by NetMHCIIpan for MHC class II collected from IEDB database. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the amino acid sequence of peptide and the pseudo amino acid sequence of MHC, predict the binding affinity. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 134,281 pairs, 17,003 peptides and 75 MHC class 2s </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">PeptideMHC</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">PeptideMHC</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MHC2_IEDB_Jensen'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/imm.12889">[1] Jensen, Kamilla Kjaergaard, et al. “Improved methods for predicting peptide binding affinity to MHC class II molecules.” Immunology 154.3 (2018): 394-406.</a></p>
+
+<p><a href="https://www.sciencedirect.com/science/article/pii/S240547121930153X">[2] Zeng, Haoyang, and David K. Gifford. “Quantification of uncertainty in peptide-MHC binding prediction improves high-affinity peptide Selection for therapeutic design.” Cell systems 9.2 (2019): 159-166.</a></p>
+<hr />
+
 
 </div>
                 </div>

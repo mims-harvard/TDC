@@ -54,9 +54,9 @@
                             
                             <a href="/TDC/overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-Instance Prediction</a>
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
                             
-                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-Instance Prediction</a>
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
@@ -71,11 +71,11 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
-                            
-                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
                             
                             <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
+                            
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -112,7 +112,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/multi_pred_tasks/overview/" class=""><strong>Multi-Instance Prediction Problem</strong></a>
+            <a href="/TDC/multi_pred_tasks/overview/" class=""><strong>Multi-instance Prediction Problem</strong></a>
             
             <ul>
                 
@@ -166,16 +166,16 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/overview/" class=""><strong>Other Datasets Types</strong></a>
+            <a href="/TDC/overview/" class=""><strong>Others</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-Instance Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-instance Prediction Problem</a></li>
                 
                 
                 
-                <li><a href="/TDC/generation_tasks/overview/" class="">Generation</a></li>
+                <li><a href="/TDC/generation_tasks/overview/" class="">Generation Problem</a></li>
                 
                 
             </ul>
@@ -192,8 +192,65 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#gdsc1">GDSC1</a></li>
+  <li><a href="#gdsc2">GDSC2</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h3 id="gdsc1">GDSC1</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Genomics in Drug Sensitivity in Cancer (GDSC) is a resource for therapeutic biomarker discovery in cancer cells. It contains wet lab IC50 for 100s of drugs in 1000 cancer cell lines. In this dataset, we use RMD normalized gene expression for cancer lines and SMILES for drugs. Y is the log normalized IC50. This is the version 1 of GDSC. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the gene expression of cell lines and the SMILES of drug, predict the drug sensitivity level. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 177,310 pairs, 958 cancer cells and 208 drugs </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DrugRes</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DrugRes</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'GDSC1'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://academic.oup.com/nar/article-abstract/41/D1/D955/1059448">[1] Yang, Wanjuan, et al. “Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells.” Nucleic acids research 41.D1 (2012): D955-D961. </a></p>
+
+<hr />
+
+<h3 id="gdsc2">GDSC2</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Genomics in Drug Sensitivity in Cancer (GDSC) is a resource for therapeutic biomarker discovery in cancer cells. It contains wet lab IC50 for 100s of drugs in 1000 cancer cell lines. In this dataset, we use RMD normalized gene expression for cancer lines and SMILES for drugs. Y is the log normalized IC50. This is the version 2 of GDSC, which uses improved experimental procedures. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the gene expression of cell lines and the SMILES of drug, predict the drug sensitivity level. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 92,703 pairs, 805 cancer cells and 137 drugs </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DrugRes</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DrugRes</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'GDSC2'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://academic.oup.com/nar/article-abstract/41/D1/D955/1059448">[1] Yang, Wanjuan, et al. “Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells.” Nucleic acids research 41.D1 (2012): D955-D961. </a></p>
+
+<hr />
+
 
 </div>
                 </div>

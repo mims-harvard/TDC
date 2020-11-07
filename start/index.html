@@ -54,9 +54,9 @@
                             
                             <a href="/TDC/overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-Instance Prediction</a>
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
                             
-                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-Instance Prediction</a>
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
@@ -71,11 +71,11 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
-                            
-                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
                             
                             <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
+                            
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -166,8 +166,8 @@
 
 <p class="is-size-5"> To obtain the Caco2 dataset from ADME therapeutic task in the single-instance prediction problem: </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DDI</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">DDI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugBank'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
 <span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 </code></pre></div></div>
 <p class="is-size-5"> The splits would in default output a dictionary where keys are train, val, test and values are the pandas DataFrame with the Drug IDs, SMILES strings and the label. For detailed outputs, see the dataset documentation. </p>
@@ -180,9 +180,9 @@
 
 <p class="is-size-5"> TDC includes numerous data functions. They can be used either directly on the data loader object, or as a separate utility functions. Currently, it has four major categories. </p>
 <ul>
-    <li><strong>Data Processing </strong>: Common processing functions such as label unit conversion, binarization, database queries, multi-instance to graph and etc. </li>
-    <li><strong>Data Visualization </strong>: Visualization of the dataset such as label distribution plot, statistics computation and etc. </li>
+    <li><strong>Data Evaluation </strong>: Evaluators of various machine learning problems for TDC. </li>
     <li><strong>Data Split</strong>: Various splits functions to reflect realistic scenarios such as scaffold split, cold drug/protein split and etc. </li>
+    <li><strong>Data Processing </strong>: Common processing functions such as label unit conversion, binarization, visualization, database queries, multi-instance to graph and etc. </li>
     <li><strong>Molecule Generation Oracles</strong>: Property oracles for molecule generation tasks. </li>
   </ul>
 
@@ -196,8 +196,8 @@
 
 <div class="container">
         <div class="columns is-vcentered is-size-5">
-            <div class="column is-3 is-offset-3 has-text-centered"> <a href="/TDC/overview" class="box has-background-info has-text-white">Dataset Overview</a></div>
-            <div class="column is-3 has-text-centered"> <a href="/TDC/fct_overview" class="box has-background-info has-text-white">Function Overview</a></div>
+            <div class="column is-4 is-offset-2 has-text-centered"> <a href="/TDC/overview" class="box has-background-info has-text-white">Dataset Overview</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/TDC/fct_overview" class="box has-background-info has-text-white">Data Function Overview</a></div>
         </div>
 </div>
 

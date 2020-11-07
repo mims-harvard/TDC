@@ -54,9 +54,9 @@
                             
                             <a href="/TDC/overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-Instance Prediction</a>
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
                             
-                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-Instance Prediction</a>
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
@@ -71,11 +71,11 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
-                            
-                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
                             
                             <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
+                            
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -112,7 +112,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/single_pred_tasks/overview/" class=""><strong>Single-Instance Prediction Problem</strong></a>
+            <a href="/TDC/single_pred_tasks/overview/" class=""><strong>Single-instance Prediction Problem</strong></a>
             
             <ul>
                 
@@ -158,16 +158,16 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/overview/" class=""><strong>Other Datasets Types</strong></a>
+            <a href="/TDC/overview/" class=""><strong>Others</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/overview/" class="">Multi-Instances Prediction</a></li>
+                <li><a href="/TDC/multi_pred_tasks/overview/" class="">Multi-instance Prediction Problem</a></li>
                 
                 
                 
-                <li><a href="/TDC/generation_tasks/overview/" class="">Generation</a></li>
+                <li><a href="/TDC/generation_tasks/overview/" class="">Generation Problem</a></li>
                 
                 
             </ul>
@@ -184,8 +184,103 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#tox21">Tox21</a></li>
+  <li><a href="#toxcast">ToxCast</a></li>
+  <li><a href="#clintox">ClinTox</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h3 id="tox21">Tox21</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> 2014 Tox21 Data Challenge contains qualitative toxicity measurements for 8k compounds on 12 different targets, including nuclear receptors and stress response pathways. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the toxicity in a specific assay. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> Depends on various assays ~6,000 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<p class="is-size-6">  <strong> Note: </strong> Tox21 contains multiple assays data. To retrieve the specific labels for that assay, specify the label name in the <code>label_name</code> variable to the data loader. You can find all available label names by calling: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">retrieve_label_name_list</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'tox21'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> Then, go to the standard TDC data loader procedure with the label name specified. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Tox21'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.frontiersin.org/research-topics/2954/tox21-challenge-to-build-predictive-models-of-nuclear-receptor-and-stress-response-pathways-as-media">[1] Tox21 Challenge.</a></p>
+
+<hr />
+
+<h3 id="toxcast">ToxCast</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> ToxCast includes qualitative results of over 600 experiments on 8k compounds. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the toxicity in a specific assay. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> Depends on various assays from couple hundres to thousands of drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<p class="is-size-6">  <strong> Note: </strong> ToxCast contains multiple assays data. To retrieve the specific labels for that assay, specify the label name in the <code>label_name</code> variable to the data loader. You can find all available label names by calling: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">retrieve_label_name_list</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'toxcast'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> Then, go to the standard TDC data loader procedure with the label name specified. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ToxCast'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/27367298/">[1] Richard, Ann M., et al. “ToxCast chemical landscape: paving the road to 21st century toxicology.” Chemical research in toxicology 29.8 (2016): 1225-1251.</a></p>
+
+<hr />
+
+<h3 id="clintox">ClinTox</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The ClinTox dataset compares drugs that have failed clinical trials for toxicity reasons. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the clinical toxicity. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,484 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ClinTox'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/27642066/">[1] Gayvert, Kaitlyn M., Neel S. Madhukar, and Olivier Elemento. “A data-driven approach to predicting successes and failures of clinical trials.” Cell chemical biology 23.10 (2016): 1294-1301.</a></p>
+
+<hr />
+
 
 </div>
                 </div>

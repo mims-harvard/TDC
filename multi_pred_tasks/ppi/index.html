@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page with menubar - TDC</title>
+    <title>Protein-protein Interaction - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page with menubar | TDC</title>
+<title>Protein-protein Interaction | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Page with menubar" />
+<meta property="og:title" content="Protein-protein Interaction" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/multi_pred_tasks/ppi/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/multi_pred_tasks/ppi/","headline":"Page with menubar","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/multi_pred_tasks/ppi/","headline":"Protein-protein Interaction","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -54,9 +54,9 @@
                             
                             <a href="/TDC/overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-Instance Prediction</a>
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
                             
-                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-Instance Prediction</a>
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
@@ -71,11 +71,11 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
-                            
-                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
                             
                             <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
+                            
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -112,7 +112,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/multi_pred_tasks/overview/" class=""><strong>Multi-Instance Prediction Problem</strong></a>
+            <a href="/TDC/multi_pred_tasks/overview/" class=""><strong>Multi-instance Prediction Problem</strong></a>
             
             <ul>
                 
@@ -166,16 +166,16 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/overview/" class=""><strong>Other Datasets Types</strong></a>
+            <a href="/TDC/overview/" class=""><strong>Others</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-Instance Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-instance Prediction Problem</a></li>
                 
                 
                 
-                <li><a href="/TDC/generation_tasks/overview/" class="">Generation</a></li>
+                <li><a href="/TDC/generation_tasks/overview/" class="">Generation Problem</a></li>
                 
                 
             </ul>
@@ -192,8 +192,48 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#huri">HuRI</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h3 id="huri">HuRI</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> All pairwise combinations of human protein-coding genes are systematically being interrogated to identify which are involved in binary protein-protein interactions. In our most recent effort 17,500 proteins have been tested and a first human reference interactome (HuRI) map has been generated. From the Center for Cancer Systems Biology at Dana-Farber Cancer Institute. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary Classification. Given the target amino acid sequence pairs, predict if they interact or not. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 51,813 positive PPI pairs, 8,248 proteins </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Drug Split</span> <span class="tag is-info is-light">Cold Protein Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">PPI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">PPI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HuRI'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> <strong>Note:</strong> (1) For genes that associate with multiple protein sequences, we separate by * symbol. (2) The dataset contains only positive pairs. All of the unobserved pairs are real negative PPIs, tested experimentally. To get the negative samples, you can call: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.1038/s41586-020-2188-x">[1] Luck, K., Kim, D., Lambourne, L. et al. A reference map of the human binary protein interactome. Nature 580, 402–408 (2020).</a></p>
+
+<hr />
+
 
 </div>
                 </div>

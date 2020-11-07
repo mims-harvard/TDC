@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page with menubar - TDC</title>
+    <title>Multi-instance Prediction - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page with menubar | TDC</title>
+<title>Multi-instance Prediction | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Page with menubar" />
+<meta property="og:title" content="Multi-instance Prediction" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/multi_pred_tasks/overview/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/multi_pred_tasks/overview/","headline":"Page with menubar","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/multi_pred_tasks/overview/","headline":"Multi-instance Prediction","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -54,9 +54,9 @@
                             
                             <a href="/TDC/overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-Instance Prediction</a>
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
                             
-                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-Instance Prediction</a>
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
@@ -71,11 +71,11 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
-                            
-                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
                             
                             <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
+                            
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -112,7 +112,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/multi_pred_tasks/overview/" class="is-active"><strong>Multi-Instance Prediction Problem</strong></a>
+            <a href="/TDC/multi_pred_tasks/overview/" class="is-active"><strong>Multi-instance Prediction Problem</strong></a>
             
             <ul>
                 
@@ -166,16 +166,16 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/overview/" class=""><strong>Other Datasets Types</strong></a>
+            <a href="/TDC/overview/" class=""><strong>Others</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-Instance Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-instance Prediction Problem</a></li>
                 
                 
                 
-                <li><a href="/TDC/generation_tasks/overview/" class="">Generation</a></li>
+                <li><a href="/TDC/generation_tasks/overview/" class="">Generation Problem</a></li>
                 
                 
             </ul>
@@ -193,7 +193,58 @@
                     
                     
 <div class="content">
-    
+    <h2 id="multi-instance-prediction-datasets-menu">Multi-instance Prediction Datasets Menu</h2>
+
+<table class="table is-hoverable">
+   <thead>
+      <tr>
+      	 <th>Task</th>
+      	 <th>Dataset</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+      	<th><a href="/TDC/multi_pred_tasks/dti"><code>DTI</code></a></th>
+      	<td> BindingDB, DAVIS, KIBA </td>
+      </tr>
+      <tr>
+      	<th><a href="/TDC/multi_pred_tasks/ddi"><code>DDI</code></a></th>
+      	<td>Multi-typed DrugBank, TWOSIDES </td>
+      </tr>
+      <tr>
+      	<th><a href="/TDC/multi_pred_tasks/ppi"> <code>PPI</code></a></th>
+      	<td>HuRI</td>
+      </tr>
+      <tr>
+      	<th><a href="/TDC/multi_pred_tasks/gdi"><code>GDI</code></a></th>
+      	<td>DisGeNET</td>
+      </tr>
+ 	  <tr>
+ 	  	<th><a href="/TDC/multi_pred_tasks/drugres"><code>DrugRes</code></a></th>
+ 	  	<td>GDSC1, GDSC2</td>
+ 	  </tr>        
+	  <tr>
+	  	<th><a href="/TDC/multi_pred_tasks/drugsyn"><code>DrugSyn</code></a></th>
+	  	<td>NCI-A</td>
+	  </tr>         
+      <tr>
+      	<th><a href="/TDC/multi_pred_tasks/peptidemhc"><code>PeptideMHC</code></a></th>
+      	<td>MHC1_IEDB-IMGT_Nielsen, MHC2_IEDB_Jensen</td>
+      </tr>
+      <tr>
+      	<th><a href="/TDC/multi_pred_tasks/antibodyaff"><code>AntibodyAff</code></a></th>
+      	<td>Protein_SAbDab</td>
+      </tr>
+      <tr>
+      	<th><a href="/TDC/multi_pred_tasks/mti"><code>MTI</code></a></th>
+      	<td>x</td>
+      </tr>
+      <tr>
+      	<th><a href="/TDC/multi_pred_tasks/catalyst"><code>Catalyst</code></a></th>
+      	<td>USPTO-50K</td>
+      </tr>
+   </tbody>
+</table>
 
 </div>
                 </div>

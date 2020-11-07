@@ -54,9 +54,9 @@
                             
                             <a href="/TDC/overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-Instance Prediction</a>
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
                             
-                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-Instance Prediction</a>
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
@@ -71,11 +71,11 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
-                            
-                            <a href="/TDC/functions/data_viz/" class="navbar-item ">Data Visualization</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
                             
                             <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
+                            
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -112,7 +112,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/single_pred_tasks/overview/" class=""><strong>Single-Instance Prediction Problem</strong></a>
+            <a href="/TDC/single_pred_tasks/overview/" class=""><strong>Single-instance Prediction Problem</strong></a>
             
             <ul>
                 
@@ -158,16 +158,16 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/overview/" class=""><strong>Other Datasets Types</strong></a>
+            <a href="/TDC/overview/" class=""><strong>Others</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/overview/" class="">Multi-Instances Prediction</a></li>
+                <li><a href="/TDC/multi_pred_tasks/overview/" class="">Multi-instance Prediction Problem</a></li>
                 
                 
                 
-                <li><a href="/TDC/generation_tasks/overview/" class="">Generation</a></li>
+                <li><a href="/TDC/generation_tasks/overview/" class="">Generation Problem</a></li>
                 
                 
             </ul>
@@ -184,8 +184,125 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#qm7b">QM7b</a></li>
+  <li><a href="#qm8">QM8</a></li>
+  <li><a href="#qm9">QM9</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h3 id="qm7b">QM7b</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> QM7 is a subset of GDB-13 (a database of nearly 1 billion stable and synthetically accessible organic molecules) composed of all molecules of up to 23 atoms (including 7 heavy atoms C, N, O, and S), where 14 properties (e.g. polarizability, HOMO and LUMO eigenvalues, excitation energies) have to be predicted at different levels of theory (ZINDO, SCS, PBE0, GW). </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug 3D coulomb matrix, predict the drug property. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 7,211 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<p class="is-size-6">  <strong> Note: </strong> QM7b contains multiple properties. To retrieve the specific labels for that property, specify the property name in the <code>label_name</code> variable to the data loader. You can find all available label names by calling: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">retrieve_label_name_list</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'QM7b'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> Then, go to the standard TDC data loader procedure with the label name specified. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">QM</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">QM</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'QM7b'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ja902302h">[1] Blum, Lorenz C., and Jean-Louis Reymond. “970 million druglike small molecules for virtual screening in the chemical universe database GDB-13.” Journal of the American Chemical Society 131.25 (2009): 8732-8733.</a></p>
+
+<p><a href="https://iopscience.iop.org/article/10.1088/1367-2630/15/9/095003/meta">[2] Montavon, Grégoire, et al. “Machine learning of molecular electronic properties in chemical compound space.” New Journal of Physics 15.9 (2013): 095003.</a></p>
+
+<hr />
+
+<h3 id="qm8">QM8</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Electronic spectra and excited state energy of small molecules calculated by multiple quantum mechanic methods. Consisting of low-lying singlet-singlet vertical electronic spectra of over 20 000 synthetically feasible small organic molecules with up to eight CONF atom. From MoleculeNet and loaded from DeepChem. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug 3D coulomb matrix, predict the drug property. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 21,786 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<p class="is-size-6">  <strong> Note: </strong> QM8 contains multiple properties. To retrieve the specific labels for that property, specify the property name in the <code>label_name</code> variable to the data loader. You can find all available label names by calling: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">retrieve_label_name_list</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'QM8'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> Then, go to the standard TDC data loader procedure with the label name specified. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">QM</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">QM</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'QM8'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci300415d">[1] Ruddigkeit, Lars, et al. “Enumeration of 166 billion organic small molecules in the chemical universe database GDB-17.” Journal of chemical information and modeling 52.11 (2012): 2864-2875.</a></p>
+
+<p><a href="https://aip.scitation.org/doi/abs/10.1063/1.4928757?casa_token=mVBximpm4AMAAAAA:iG5mbej2eVDthAfXQFx7LIcQ4-b3I9W_5NsUxE_3LjDRHgGzgqJe-LfCmBiPy1W-ZhjO3oB0RXyW">[2] Ramakrishnan, Raghunathan, et al. “Electronic spectra from TDDFT and machine learning in chemical space.” The Journal of chemical physics 143.8 (2015): 084111.</a></p>
+
+<p><a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=6OiRDwAAQBAJ&amp;oi=fnd&amp;pg=PT19&amp;dq=deep+learning+for+life+science+Bharath+Ramsundar&amp;ots=SwHP1HB_qK&amp;sig=iox0o4HN7pBkWC-Bw0X1qDNfwwQ">[3] Ramsundar, Bharath, et al. Deep learning for the life sciences: applying deep learning to genomics, microscopy, drug discovery, and more. “ O’Reilly Media, Inc.”, 2019.</a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[4] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<hr />
+
+<h3 id="qm9">QM9</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> computed geometric, energetic, electronic, and thermodynamic properties for 134k stable small organic molecules made up of CHONF. These molecules correspond to the subset of all 133,885 species with up to nine heavy atoms (CONF) out of the GDB-17 chemical universe of 166 billion organic molecules. We report geometries minimal in energy, corresponding harmonic frequencies, dipole moments, polarizabilities, along with energies, enthalpies, and free energies of atomization. All properties were calculated at the B3LYP/6-31G(2df,p) level of quantum chemistry. From MoleculeNet and loaded from DeepChem. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug 3D coulomb matrix, predict the drug property. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 133,885 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<p class="is-size-6">  <strong> Note: </strong> QM8 contains multiple properties. To retrieve the specific labels for that property, specify the property name in the <code>label_name</code> variable to the data loader. You can find all available label names by calling: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">retrieve_label_name_list</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'QM9'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> Then, go to the standard TDC data loader procedure with the label name specified. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">QM</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">QM</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'QM9'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci300415d">[1] Ruddigkeit, Lars, et al. “Enumeration of 166 billion organic small molecules in the chemical universe database GDB-17.” Journal of chemical information and modeling 52.11 (2012): 2864-2875.</a></p>
+
+<p><a href="https://aip.scitation.org/doi/abs/10.1063/1.4928757?casa_token=mVBximpm4AMAAAAA:iG5mbej2eVDthAfXQFx7LIcQ4-b3I9W_5NsUxE_3LjDRHgGzgqJe-LfCmBiPy1W-ZhjO3oB0RXyW">[2] Ramakrishnan, Raghunathan, et al. “Electronic spectra from TDDFT and machine learning in chemical space.” The Journal of chemical physics 143.8 (2015): 084111.</a></p>
+
+<p><a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=6OiRDwAAQBAJ&amp;oi=fnd&amp;pg=PT19&amp;dq=deep+learning+for+life+science+Bharath+Ramsundar&amp;ots=SwHP1HB_qK&amp;sig=iox0o4HN7pBkWC-Bw0X1qDNfwwQ">[3] Ramsundar, Bharath, et al. Deep learning for the life sciences: applying deep learning to genomics, microscopy, drug discovery, and more. “ O’Reilly Media, Inc.”, 2019.</a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[4] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<hr />
+
 
 </div>
                 </div>
