@@ -11,43 +11,6 @@ from ..metadata import dataset_names
 from ..chem_utils import qed, penalized_logp, similarity, drd2, SA  
 from ..chem_utils import validity_ratio, unique_rate 
 
-class Oracle(generation_dataset.Evaluator):
-	def __init__(self, name):
-		super().__init__(name)
-		self.assign_evaluator() 
-
-
-	def assign_evaluator(self):
-		'''
-			self.name -> self.evaluator_func
-			assert self.name in ['logp', 'drd', ...]
-		'''
-		if self.name == 'logp':
-			self.evaluator_func = penalized_logp 
-		elif self.name == 'qed':
-			self.evaluator_func = qed  
-		elif self.name == 'drd2':
-			self.evaluator_func = drd2 
-		elif self.name == 'sa':
-			self.evaluator_func = SA 
-		else:
-			return 
-
-class Evaluator(generation_dataset.Evaluator):
-	def __init__(self, name, molecule_base = None):
-		super().__init__(name)
-		self.molecule_base = self.molecule_base
-
-	def assign_evaluator(self):
-		if self.name == 'novelty':
-			self.evaluator_func = validity_ratio  
-		elif self.name == 'diversity':
-			pass 
-		elif self.name == 'validity':
-			self.evaluator_func = validity_ratio 
-		elif self.name == 'unique':
-			self.evaluator_func = unique_rate 
-
 
 
 class Reaction(generation_dataset.PairedDataLoader):

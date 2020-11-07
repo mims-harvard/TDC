@@ -99,31 +99,6 @@ class PairedDataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please use the correct split method")
 
 
-
-class Evaluator:
-
-	def __init__(self, name):
-		from ..utils import property_names ### e.g., ['drd2', 'qed', 'logp']
-		self.name = fuzzy_search(name, property_names)
-		#### plogp, drd, .... 
-		self.evaluator_func = lambda x:1 
-
-	def __call__(self, smiles):
-		if type(smiles)==list:
-			return list(map(self.evaluator_func, smiles))
-		else: ### type(smiles)==str:
-			return self.evaluator_func(smiles)
-
-
-
-## test for Evaluator
-
-# if __name__ == "__main__":
-# 	logp_evaluate = Evaluator(name = "plogp")
-# 	print(logp_evaluate(''))
-# 	print(logp_evaluate([1,2,3]))
-
-
 if __name__ == "__main__":
 	paired_dataloader = PairedDataLoader(name = 'uspto50k', path = './data', 
 										 print_stats = True, input_name = 'reactants', 
