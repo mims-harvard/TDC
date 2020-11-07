@@ -10,18 +10,32 @@ utils.install("scipy")
 from scipy import io
 
 def QM7_process(name, path, target = None):
-	if target is None:
-		raise AttributeError("Please specify the target label in the target_list.QM7_targets!")
+	from scipy import io
+	import os
+	import numpy as np
 
-	utils.download_unzip(name, path, 'qm7b.mat')
-	df = io.loadmat(os.path.join(path,'qm7b.mat'))
+	inx = io.loadmat(os.path.join('/Users/kexinhuang/Downloads/qm7b','qm7b.mat'))
 
 	targets = ["E_PBE0", "E_max_EINDO", "I_max_ZINDO", "HOMO_ZINDO", "LUMO_ZINDO", "E_1st_ZINDO", "IP_ZINDO", "EA_ZINDO", "HOMO_PBE0", "LUMO_PBE0", "HOMO_GW", "LUMO_GW", "alpha_PBE0", "alpha_SCS"]
-	targets_index = list(range(len(targets)))
-	targets2index = dict(zip(targets, targets_index))	
-	y = df['T'].T[targets2index[target]]
-	
-	drugs = df['X']
-	drugs_idx = np.array(['Drug ' + str(i) for i in list(range(drugs.shape[0]))])
+	import pandas as pd
+	df = pd.DataFrame()
+	df['X'] = pd.Series([i for i in inx['X']])
+	df = pd.concat([df, pd.DataFrame(inx['T'], columns = targets)], axis = 1)
+	df['ID'] = ['Drug ' + str(i+1) for i in range(len(df))]
+	df.to_pickle('/Users/kexinhuang/Desktop/qm7b.pkl')
 
-	return drugs, y, drugs_idx
+def QM8_9():
+	import deepchem as dc
+	d = dc.molnet.load_qm9()
+	import numpy as np
+	X = np.concatenate([d[1][0].X, d[1][1].X, d[1][2].X])
+	Y = np.concatenate([d[1][0].y, d[1][1].y, d[1][2].y])
+
+	targets = d[0]
+
+	import pandas as pd
+	df = pd.DataFrame()
+	df['X'] = pd.Series([i for i in X])
+	df = pd.concat([df, pd.DataFrame(Y, columns = targets)], axis = 1)
+	df['ID'] = ['Drug ' + str(i+1) for i in range(len(df))]
+	df.to_pickle('/Users/kexinhuang/Desktop/qm9.pkl')

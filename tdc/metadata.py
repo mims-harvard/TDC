@@ -29,10 +29,11 @@ hts_dataset_names = ['hiv',
 'sarscov2_3clpro_diamond', 
 'sarscov2_vitro_touret']
 
-qm_dataset_names = ['qm7', 'qm8', 'qm9']
+qm_dataset_names = ['qm7b', 'qm8', 'qm9']
 
 epitope_dataset_names = ['iedb_jespersen', 'pdb_jespersen']
 
+develop_dataset_names = ['tap']
 ####################################
 # multi_pred prediction
 dti_dataset_names = ['davis',
@@ -43,7 +44,7 @@ dti_dataset_names = ['davis',
 
 ppi_dataset_names = ['huri']
 
-peptidemhc_dataset_names = ['mhc2_netmhciipan', 'mhc1_netmhcpan']
+peptidemhc_dataset_names = ['mhc2_iedb_jensen', 'mhc1_iedb-imgt_nielsen']
 
 ddi_dataset_names = ['drugbank', 'twosides']
 
@@ -84,7 +85,10 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"Reaction": forwardsyn_dataset_names, 
 				"PairMolGen": molgenpaired_dataset_names,
 				"PeptideMHC": peptidemhc_dataset_names,
-				"Epitope": epitope_dataset_names}
+				"Epitope": epitope_dataset_names,
+				"Develop": develop_dataset_names,
+				"DrugRes": drugres_dataset_names,
+				"QM": qm_dataset_names}
 
 
 dataset_list = []
@@ -126,8 +130,8 @@ name2type = {'toxcast': 'tab',
  'huri': 'tab',
  'drugbank': 'tab',
  'twosides': 'csv',
- 'mhc1_netmhcpan': 'tab',
- 'mhc2_netmhciipan': 'tab',
+ 'mhc1_iedb-imgt_nielsen': 'tab',
+ 'mhc2_iedb_jensen': 'tab',
  'uspto50k': 'csv',
  'zinc': 'csv', 
  'moses': 'csv',
@@ -137,7 +141,11 @@ name2type = {'toxcast': 'tab',
  'gdsc1': 'pkl',
  'gdsc2': 'pkl',
  'iedb_jespersen': 'pkl',
- 'pdb_jespersen': 'pkl'
+ 'pdb_jespersen': 'pkl',
+ 'qm7b': 'pkl',
+ 'qm8': 'pkl',
+ 'qm9': 'pkl',
+ 'tap': 'tab'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -175,8 +183,8 @@ name2id = {'bbb_adenot': 4139555,
  'toxcast': 4142185,
  'twosides': 4139574,
  'vd_edrug3d': 4139578,
- 'mhc1_netmhcpan': 4150046,
- 'mhc2_netmhciipan': 4150047,
+ 'mhc1_iedb-imgt_nielsen': 4167073,
+ 'mhc2_iedb_jensen': 4167074,
  'uspto50k': 'xxxxx',
  'zinc': 'xxxxx',
  'moses': 'xxxxx',
@@ -186,6 +194,10 @@ name2id = {'bbb_adenot': 4139555,
  'gdsc1': 4165726,
  'gdsc2': 4165727,
  'iedb_jespersen': 4165725, 
- 'pdb_jespersen': 4165724
+ 'pdb_jespersen': 4165724,
+ 'qm7b': 4167096,
+ 'qm8': 4167110,
+ 'qm9': 4167112,
+ 'tap': 4167113
  }
 

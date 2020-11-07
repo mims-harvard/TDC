@@ -10,7 +10,7 @@ from ..utils import *
 class DataLoader(base_dataset.DataLoader):
 	def __init__(self, name, path, label_name, print_stats, dataset_names):
 		if name.lower() in dataset2target_lists.keys():
-			print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
+			#print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
 			if label_name is None:
 				raise ValueError("Please select a label name. You can use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
 
@@ -54,7 +54,7 @@ class DataLoader(base_dataset.DataLoader):
 		print(str(len(np.unique(self.entity2))) + ' unique ' + self.entity2_name.lower() + 's.', flush = True, file = sys.stderr)
 		print(str(len(self.y)) + ' ' + self.entity1_name.lower() + '-' + self.entity2_name.lower() + ' pairs.', flush = True, file = sys.stderr)
 		print_sys('--------------------------')
-		
+
 	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
 		'''
 		Arguments:
@@ -73,6 +73,16 @@ class DataLoader(base_dataset.DataLoader):
 			return create_fold_setting_cold(df, seed, frac, self.entity1_name)
 		elif method == 'cold_' + self.entity2_name.lower():
 			return create_fold_setting_cold(df, seed, frac, self.entity2_name)
+
+	def neg_sample(self, frac = 1):
+		df = NegSample(df = self.get_data(format = 'df'), column_names = [self.entity1_name + '_ID', self.entity1_name, self.entity2_name + '_ID', self.entity2_name], frac = frac)
+		self.entity1_idx = df[self.entity1_name + '_ID']
+		self.entity2_idx = df[self.entity2_name + '_ID']
+		self.entity1 = df[self.entity1_name]
+		self.entity2 = df[self.entity2_name]
+		self.y = df['Y']
+		self.raw_y = self.y
+		return self
 
 	def to_graph(self, threshold = None, format = 'edge_list', split = True, frac = [0.7, 0.1, 0.2], seed = 'benchmark'):
 		'''

@@ -324,15 +324,42 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
     response = urlopen(apiurl, postdata)
     return response
 
-def NegSample(df):
+def NegSample(df, column_names, frac):
     """Negative Sampling for Binary Interaction Dataset
-    
+
     Parameters
     ----------
     df : pandas.DataFrame
         Data File
+    column_names: list
+        column names in the order of [id1, x1, id2, x2]
     """
-    raise NotImplementedError
+    x = int(len(df) * frac)
+    id1, x1, id2, x2 = column_names
+
+    df_unique = np.unique(df[[id1, id2]].values.reshape(-1))
+    pos = df[[id1, id2]].values
+    pos_set = set([frozenset([i[0], i[1]]) for i in pos])
+    np.random.seed(1234)
+    samples = np.random.choice(df_unique, size=(x, 2), replace=True)
+    neg_set = set([frozenset([i[0], i[1]]) for i in samples if i[0] != i[1]]) - pos_set
+
+    while len(neg_set) < x:
+        sample = np.random.choice(df_unique, 2, replace=False)
+        sample = frozenset([sample[0], sample[1]])
+        if sample not in pos_set:
+            neg_set.add(sample)
+    neg_list = [list(i) for i in neg_set]
+
+    id2seq = dict(df[[id1, x1]].values)
+    id2seq.update(df[[id2, x2]].values)
+
+    neg_list_val = []
+    for i in neg_list:
+        neg_list_val.append([i[0], id2seq[i[0]], i[1], id2seq[i[1]], 0])
+
+    df = df.append(pd.DataFrame(neg_list_val).rename(columns = {0: id1, 1: x1, 2: id2, 3: x2, 4: 'Y'})).reset_index(drop = True)
+    return df
 
 
 def GetProteinSequence(ProteinID):
@@ -414,6 +441,7 @@ def load_dict(path):
 		return pickle.load(f)
 
 def retrieve_label_name_list(name):
+	name = fuzzy_search(name, dataset_list)
 	return dataset2target_lists[name]
 
 def retrieve_dataset_names(name):

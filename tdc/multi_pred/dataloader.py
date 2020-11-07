@@ -63,3 +63,14 @@ class PeptideMHC(multi_pred_dataset.DataLoader):
 			self.print_stats()
 
 		print('Done!', flush = True, file = sys.stderr)
+
+class DrugRes(multi_pred_dataset.DataLoader):
+	def __init__(self, name, path = './data', label_name = None, print_stats = False):
+		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["DrugRes"])
+		self.entity1_name = 'Drug'
+		self.entity2_name = 'Cell Line'
+		
+		if print_stats:
+			self.print_stats()
+
+		print('Done!', flush = True, file = sys.stderr)

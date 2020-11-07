@@ -10,7 +10,7 @@ from ..utils import *
 class DataLoader(base_dataset.DataLoader):
 	def __init__(self, name, path, label_name, print_stats, dataset_names):
 		if name.lower() in dataset2target_lists.keys():
-			print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
+			#print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
 			if label_name is None:
 				raise ValueError("Please select a label name. You can use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
 
