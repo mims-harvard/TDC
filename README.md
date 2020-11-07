@@ -2,57 +2,68 @@
 
 This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive dataset hub for medicinal machine learning tasks. So far, it includes more than 50+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to manufacturing, safety survellience and etc) in most of the therapeutics development stages. 
 
-[Project Website](tdc.hms.harvard.edu)
+[Project Website](https://zitniklab.hms.harvard.edu/TDC/)
+
+<p align="center"><img src="fig/tdc_overview.png" alt="overview" width="600px" /></p>
 
 ## Features
 
-- From Bench to Bedside: covers 50+ datasets for 20+ tasks in most of the therapeutics development stages.
-- Ready-to-use: the dataset is processed into machine learning ready format. The output can directly feed into prediction library such as scikit-learn and DeepPurpose. 
-- User-friendly: 3 lines of codes to access the dataset and hassle-free installations.
-- Helper functions: TDC supports various useful functions such as molecule generation oracles, conversion to DGL/PyG graph for interaction data, cold/scaffold split, label distribution visualization, and so much more! 
-- Benchmark: provides a benchmark mode for fair comparison. A leaderboard will be released!
-- Community-driven effort: the programming framework is designed to easily add more datasets and tasks.
-
-## Example
-```python
-from tdc.single_pred import ADME
-data = ADME(name = 'HIA_Hou')
-# scaffold split using benchmark seed
-split = data.get_split(method = 'scaffold', seed = 'benchmark')
-# visualize label distribution
-data.label_distribution()
-# binarize 
-data.binarize()
-# convert to log
-data.conver_to_log()
-# get data in the various formats
-data.get_data(format = 'df')
-```
+- *From Bench to Bedside*: covers 50+ datasets for 20+ tasks in numerous therapeutics development stages across small molecules and biologics.
+- *User-friendly*: 3 lines of codes to access any dataset and hassle-free installation.
+- *Ready-to-use*: the dataset is processed into machine learning ready format. 
+- *Data functions*: TDC supports various useful functions such as data evaluators, realistic data split functions, data processing helpers, and molecule generation oracles! 
+- *Benchmark*: provides a benchmark for fair model comparison. A leaderboard will be released soon!
+- *Community-driven effort*: TDC is a community-driven effort. Contact us if you want to contribute a new dataset or task!
 
 ## Installation
 
+To install TDC, simply open terminal and type:
 ```bash
 pip install PyTDC
 ```
+ The core data loaders are designed to be lightweight, thus has minimum package dependency:
 
 ```bash
-python setup.py install 
-### developer installation
+numpy
+pandas
+tqdm
+scikit-learn
+fuzzywuzzy
 ```
 
-## TDC Dataset Overview
-We have X task formulations and each is associated with many datasets. To call a dataset Y from task formulation X, simply calling ```X(name = Y)```.
+## TDC Data Loader
 
-### Single-instance Prediction
+Supposed a dataset X is from task Y with problem Z, then to obtain the data and splits, simply type:
 
-* <b>Antibody-Antigen Affinity Prediction</b>```AntibodyAff```
-	<details>
-	<summary>CLICK HERE FOR THE DATASETS!</summary>
+```python
+from tdc.Z import Y
+data = Y(name = 'X')
+splits = data.split()
+```
+For example, to obtain the HIA dataset from ADME therapeutic task in the single-instance prediction problem:
 
-	Dataset Name  | Description| Reference | Type | Stats
-	------------  | ------------------------ | ----------- | ----------- | -----------
-	SAbDab <br> `AntibodyAff(name = 'ProteinAntigen_SAbDab')` </br> | Antibody-antigen affinity measures the efficacy of the antibody to the antigen. Processed from SAbDab dataset, where we only use protein/peptide antigens for sequence compatbility. The features are amino acid sequence.| [Dunbar, James, et al. "SAbDab: the structural antibody database." Nucleic acids research 42.D1 (2014): D1140-D1146.](https://academic.oup.com/nar/article-abstract/42/D1/D1140/1044118) | Regression | 493
-	</details>
+```python
+from tdc.single_pred import ADME
+data = ADME(name = 'HIA_Hou')
+# split into train/val/test using benchmark seed and split methods
+split = data.get_split(method = 'scaffold', seed = 'benchmark')
+# get the entire data in the various formats
+data.get_data(format = 'df')
+```
+Explore all therapeutic tasks and datasets in the [website](https://zitniklab.hms.harvard.edu/TDC/overview/)!
+
+## TDC Data Functions
+
+
+## Data Split
+
+To retrieve the dataset split, you could simply type
+```python 
+data = X(name = Y)
+data.get_split(seed = 'benchmark')
+# {'train': df_train, 'val': df_val, ''test': df_test}
+```
+You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'cold_drug', seed = 1, frac = [0.7, 0.1, 0.2])`. For other splitting methods (e.g. scaffold split), check out the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) on the website.
 
 ## Cite Us
 
@@ -68,15 +79,6 @@ If you found our work useful, please consider cite us:
 ```
 Paper will also be released soon.
 
-## Data Split
-
-To retrieve the dataset split, you could simply type
-```python 
-data = X(name = Y)
-data.get_split(seed = 'benchmark')
-# {'train': df_train, 'val': df_val, ''test': df_test}
-```
-You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'cold_drug', seed = 1, frac = [0.7, 0.1, 0.2])`. For drug property prediction, a scaffold split function is also provided. Simply set `method = 'scaffold'`. 
 
 ## Benchmark and Leaderboard
 
