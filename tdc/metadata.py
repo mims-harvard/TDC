@@ -60,7 +60,8 @@ single_molecule_dataset_names = ['zinc', 'moses']
 
 paired_dataset_names = ['uspto50k']
 
-property_names = ['drd2', 'qed', 'logp', 'sa']
+property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3', 'jnk3',]
+evaluator_name = ['novelty', 'diversity', 'unique', ]
 guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
 				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
 				   'C11H24_isomer', 'C9H10N2O2PF2Cl_isomor', \
