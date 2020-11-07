@@ -1,10 +1,8 @@
 <p align="center"><img src="fig/logo.png" alt="logo" width="600px" /></p>
 
-This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive dataset hub for medicinal machine learning tasks. So far, it includes more than 50+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to manufacturing, safety survellience and etc) in most of the therapeutics development stages. 
+This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive machine learning dataset hub for therapeutics. So far, it includes more than 50+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to manufacturing, safety survellience and etc) in many therapeutics development stages across small molecules and biologics. 
 
 [Project Website](https://zitniklab.hms.harvard.edu/TDC/)
-
-<p align="center"><img src="fig/tdc_overview.png" alt="overview" width="600px" /></p>
 
 ## Features
 
@@ -14,6 +12,8 @@ This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly an
 - *Data functions*: TDC supports various useful functions such as data evaluators, realistic data split functions, data processing helpers, and molecule generation oracles! 
 - *Benchmark*: provides a benchmark for fair model comparison. A leaderboard will be released soon!
 - *Community-driven effort*: TDC is a community-driven effort. Contact us if you want to contribute a new dataset or task!
+
+<p align="center"><img src="fig/tdc_overview.png" alt="overview" width="600px" /></p>
 
 ## Installation
 
@@ -33,7 +33,17 @@ fuzzywuzzy
 
 ## TDC Data Loader
 
-Supposed a dataset X is from task Y with problem Z, then to obtain the data and splits, simply type:
+TDC covers a wide range of therapeutics tasks with varying data structures. Thus, we organize it into three layers of hierarchies. First, we divide into three distinctive machine learning **problems**:
+
+* Single-instance prediction `single_pred`: Prediction of property given individual biomedical entity.
+* Multi-instance prediction `multi_pred`: Prediction of property given multiple biomedical entities. 
+* Generation `generation`: Generation of new biomedical entity.
+
+The second layer is **task**. Each therapeutic task falls into one of the machine learning problem. We create a data loader class for every *task* that inherits from the base problem data loader. 
+
+The last layer is **dataset**, where each task consists of many of them. As the data structure of most datasets in a task is the same, the dataset is used as a function input to the task data loader.
+
+Supposed a dataset X is from therapeutic task Y with machine learning problem Z, then to obtain the data and splits, simply type:
 
 ```python
 from tdc.Z import Y
