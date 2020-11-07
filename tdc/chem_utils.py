@@ -242,6 +242,7 @@ menthol_smiles = 'CC(C)C1CCC(C)CC1O'
 camphor_fp = smiles_2_fingerprint_ECFP4(camphor_smiles)
 menthol_fp = smiles_2_fingerprint_ECFP4(menthol_smiles)
 def median1(test_smiles):
+	# median mol between camphor and menthol, ECFP4 
 	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
 	similarity_v1 = DataStructs.TanimotoSimilarity(camphor_fp, test_fp)
 	similarity_v2 = DataStructs.TanimotoSimilarity(menthol_fp, test_fp)
@@ -260,6 +261,36 @@ def median2(test_smiles):
 	similarity_v2 = DataStructs.TanimotoSimilarity(sildenafil_fp, test_fp)
 	similarity_gmean = gmean([similarity_v1, similarity_v2])
 	return similarity_gmean 
+
+
+osimertinib_smiles = 'COc1cc(N(C)CCN(C)C)c(NC(=O)C=C)cc1Nc2nccc(n2)c3cn(C)c4ccccc34'
+osimertinib_fp_fcfc4 = smiles_2_fingerprint_FCFP4(osimertinib_smiles)
+osimertinib_fp_ecfc6 = smiles_2_fingerprint_ECFP6(osimertinib_smiles)
+
+def osimertinib_mpo(test_smiles):
+
+	sim_v1_modifier = ClippedScoreModifier(upper_x=0.8)
+	sim_v2_modifier = MinGaussianModifier(mu=0.85, sigma=0.1)
+	tpsa_modifier = MaxGaussianModifier(mu=100, sigma=10) 
+	logp_modifier = MinGaussianModifier(mu=1, sigma=1) 
+
+	molecule = smiles_to_rdkit_mol(test_smiles)
+	fp_fcfc4 = smiles_2_fingerprint_FCFP4(test_smiles)
+	fp_ecfc6 = smiles_2_fingerprint_ECFP6(test_smiles)
+	tpsa_score = tpsa_modifier(Descriptors.TPSA(molecule))
+	logp_score = logp_modifier(Descriptors.MolLogP(molecule))
+	similarity_v1 = sim_v1_modifier(DataStructs.TanimotoSimilarity(osimertinib_fp_fcfc4, fp_fcfc4))
+	similarity_v2 = sim_v2_modifier(DataStructs.TanimotoSimilarity(osimertinib_fp_ecfc6, fp_ecfc6))
+
+	osimertinib_gmean = gmean([tpsa_score, logp_score, similarity_v1, similarity_v2])
+	return osimertinib_gmean 
+
+# def Fexofenadine_mpo(test_smiles):
+
+# def Ranolazine_mpo(test_smiles):
+
+# def Perindopril_mpo(test_smiles):
+
 
 
 '''
@@ -309,6 +340,6 @@ if __name__ == "__main__":
 	print(Mestranol_similarity(smiles))
 	print(median1(smiles))
 	print(median2(smiles))
-
+	print(osimertinib_mpo(smiles))
 
 
