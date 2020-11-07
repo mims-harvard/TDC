@@ -33,7 +33,7 @@ qm_dataset_names = ['qm7b', 'qm8', 'qm9']
 
 epitope_dataset_names = ['iedb_jespersen', 'pdb_jespersen']
 
-develop_dataset_names = ['tap']
+develop_dataset_names = ['tap', 'sabdab_chen']
 ####################################
 # multi_pred prediction
 dti_dataset_names = ['davis',
@@ -145,7 +145,8 @@ name2type = {'toxcast': 'tab',
  'qm7b': 'pkl',
  'qm8': 'pkl',
  'qm9': 'pkl',
- 'tap': 'tab'
+ 'tap': 'tab',
+ 'sabdab_chen': 'tab'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -198,6 +199,7 @@ name2id = {'bbb_adenot': 4139555,
  'qm7b': 4167096,
  'qm8': 4167110,
  'qm9': 4167112,
- 'tap': 4167113
+ 'tap': 4167113,
+ 'sabdab_chen': 4167164
  }
 
