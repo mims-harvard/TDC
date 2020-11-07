@@ -1,3 +1,5 @@
+import pickle 
+import numpy as np 
 try: 
 	import rdkit
 	from rdkit import Chem, DataStructs
@@ -95,6 +97,37 @@ def SA(s):
 	SAscore = calculateScore(mol)
 	return SAscore 	
 
+'''
+for gsk3 and jnk3, 
+some code are borrowed from 
+https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 
+
+'''
+gsk3_model_path = 'tdc/gsk3.pkl'
+with open(gsk3_model_path, 'rb') as f:
+	gsk3_model = pickle.load(f)
+
+def gsk3(smiles):
+	molecule = smiles_to_rdkit_mol(smiles)
+	fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
+	features = np.zeros((1,))
+	DataStructs.ConvertToNumpyArray(fp, features)
+	fp = features.reshape(1, -1) 
+	gsk3_score = gsk3_model.predict_proba(fp)[0,1]
+	return gsk3_score 
+
+jnk3_model_path = 'tdc/jnk3.pkl'
+with open(jnk3_model_path, 'rb') as f:
+	jnk3_model = pickle.load(f)
+
+def jnk3(smiles):
+	molecule = smiles_to_rdkit_mol(smiles)
+	fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
+	features = np.zeros((1,))
+	DataStructs.ConvertToNumpyArray(fp, features)
+	fp = features.reshape(1, -1) 
+	jnk3_score = jnk3_model.predict_proba(fp)[0,1]
+	return jnk3_score 	
 
 
 def single_molecule_validity(smiles):
@@ -328,18 +361,21 @@ def osimertinib_mpo(test_smiles):
 
 if __name__ == "__main__":
 	smiles = '[H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C'
-	print(similarity(smiles, smiles))
-	print(qed(smiles))
-	print(penalized_logp(smiles))
-	print(drd2(smiles))
-	print(SA(smiles))
-	list_of_smiles = ['CCC', 'fewjio', smiles, smiles]
-	print(validity_ratio(list_of_smiles))
-	print(unique_rate(list_of_smiles))
-	#  conda install -c rdkit rdkit
-	print(Mestranol_similarity(smiles))
-	print(median1(smiles))
-	print(median2(smiles))
-	print(osimertinib_mpo(smiles))
-
-
+	smiles = 'CCC'
+	smiles = '[NH3+][C@H](Cc1ccc(F)cc1)[C@H](O)C(=O)[O-]'
+	smiles = 'c1ccc(-c2cnc(SC3CCCC3)n2Cc2ccco2)cc1'
+	# print(similarity(smiles, smiles))
+	# print(qed(smiles))
+	# print(penalized_logp(smiles))
+	# print(drd2(smiles))
+	# print(SA(smiles))
+	# list_of_smiles = ['CCC', 'fewjio', smiles, smiles]
+	# print(validity_ratio(list_of_smiles))
+	# print(unique_rate(list_of_smiles))
+	# #  conda install -c rdkit rdkit
+	# print(Mestranol_similarity(smiles))
+	# print(median1(smiles))
+	# print(median2(smiles))
+	# print(osimertinib_mpo(smiles))
+	print(gsk3(smiles))
+	print(jnk3(smiles))
