@@ -341,7 +341,8 @@ def NegSample(df, column_names, frac):
     """
     x = int(len(df) * frac)
     id1, x1, id2, x2 = column_names
-
+    df[id1] = df[id1].apply(lambda x: str(x))
+    df[id2] = df[id2].apply(lambda x: str(x))
     df_unique = np.unique(df[[id1, id2]].values.reshape(-1))
     pos = df[[id1, id2]].values
     pos_set = set([frozenset([i[0], i[1]]) for i in pos])

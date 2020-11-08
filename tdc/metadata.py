@@ -48,6 +48,8 @@ peptidemhc_dataset_names = ['mhc2_iedb_jensen', 'mhc1_iedb-imgt_nielsen']
 
 ddi_dataset_names = ['drugbank', 'twosides']
 
+mti_dataset_names = ['mirtarbase']
+
 drugres_dataset_names = ['gdsc1', 'gdsc2']
 
 drugsyn_dataset_names = ['oncopolypharmacology']
@@ -95,7 +97,8 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"DrugRes": drugres_dataset_names,
 				"QM": qm_dataset_names,
 				"AntibodyAff": antibodyaff_dataset_names,
-				"DrugSyn": drugsyn_dataset_names}
+				"DrugSyn": drugsyn_dataset_names,
+				"MTI": mti_dataset_names}
 
 
 dataset_list = []
@@ -155,7 +158,8 @@ name2type = {'toxcast': 'tab',
  'tap': 'tab',
  'sabdab_chen': 'tab',
  'protein_sabdab': 'csv',
- 'oncopolypharmacology': 'pkl'
+ 'oncopolypharmacology': 'pkl',
+ 'mirtarbase': 'csv'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -211,6 +215,7 @@ name2id = {'bbb_adenot': 4139555,
  'tap': 4167113,
  'sabdab_chen': 4167164,
  'protein_sabdab': 4167357,
- 'oncopolypharmacology': 4167358
+ 'oncopolypharmacology': 4167358,
+ 'mirtarbase': 4167359
  }
 

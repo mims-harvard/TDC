@@ -64,6 +64,18 @@ class PeptideMHC(bi_pred_dataset.DataLoader):
 
 		print('Done!', flush = True, file = sys.stderr)
 
+class MTI(bi_pred_dataset.DataLoader):
+	def __init__(self, name, path = './data', label_name = None, print_stats = False):
+		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["MTI"])
+		self.entity1_name = 'miRNA'
+		self.entity2_name = 'Target'
+		
+		if print_stats:
+			self.print_stats()
+
+		print('Done!', flush = True, file = sys.stderr)
+
+
 class AntibodyAff(bi_pred_dataset.DataLoader):
 	def __init__(self, name, path = './data', label_name = None, print_stats = False):
 		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["AntibodyAff"])
