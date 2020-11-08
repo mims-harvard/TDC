@@ -15,7 +15,7 @@ clf_model = None
 def load_model():
     global clf_model
     # name = op.join(op.dirname(__file__), 'clf_py36.pkl')
-    name = 'tdc/drd2.pkl'
+    name = 'oracle/drd2.pkl'
     with open(name, "rb") as f:
         clf_model = pickle.load(f)
 

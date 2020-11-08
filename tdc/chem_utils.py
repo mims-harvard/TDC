@@ -103,7 +103,7 @@ some code are borrowed from
 https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 
 
 '''
-gsk3_model_path = 'tdc/gsk3.pkl'
+gsk3_model_path = 'oracle/gsk3.pkl'
 with open(gsk3_model_path, 'rb') as f:
 	gsk3_model = pickle.load(f)
 
@@ -116,7 +116,7 @@ def gsk3(smiles):
 	gsk3_score = gsk3_model.predict_proba(fp)[0,1]
 	return gsk3_score 
 
-jnk3_model_path = 'tdc/jnk3.pkl'
+jnk3_model_path = 'oracle/jnk3.pkl'
 with open(jnk3_model_path, 'rb') as f:
 	jnk3_model = pickle.load(f)
 

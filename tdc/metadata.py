@@ -219,3 +219,10 @@ name2id = {'bbb_adenot': 4139555,
  'mirtarbase': 4167359
  }
 
+
+
+oracle2id = {'drd2': 'xxxxx',
+			 'gsk3': 'xxxx',
+			 'jnk3': 'xxxx',
+}
+
