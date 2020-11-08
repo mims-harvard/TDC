@@ -50,6 +50,10 @@ ddi_dataset_names = ['drugbank', 'twosides']
 
 drugres_dataset_names = ['gdsc1', 'gdsc2']
 
+drugsyn_dataset_names = ['oncopolypharmacology']
+
+antibodyaff_dataset_names = ['protein_sabdab']
+
 ####################################
 # generation
 retrosyn_dataset_names = ['uspto50k']
@@ -89,7 +93,9 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"Epitope": epitope_dataset_names,
 				"Develop": develop_dataset_names,
 				"DrugRes": drugres_dataset_names,
-				"QM": qm_dataset_names}
+				"QM": qm_dataset_names,
+				"AntibodyAff": antibodyaff_dataset_names,
+				"DrugSyn": drugsyn_dataset_names}
 
 
 dataset_list = []
@@ -147,7 +153,9 @@ name2type = {'toxcast': 'tab',
  'qm8': 'pkl',
  'qm9': 'pkl',
  'tap': 'tab',
- 'sabdab_chen': 'tab'
+ 'sabdab_chen': 'tab',
+ 'protein_sabdab': 'csv',
+ 'oncopolypharmacology': 'pkl'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -201,6 +209,8 @@ name2id = {'bbb_adenot': 4139555,
  'qm8': 4167110,
  'qm9': 4167112,
  'tap': 4167113,
- 'sabdab_chen': 4167164
+ 'sabdab_chen': 4167164,
+ 'protein_sabdab': 4167357,
+ 'oncopolypharmacology': 4167358
  }
 

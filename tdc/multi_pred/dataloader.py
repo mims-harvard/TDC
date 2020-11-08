@@ -5,10 +5,10 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from ..utils import *
-from . import multi_pred_dataset
+from . import bi_pred_dataset, multi_pred_dataset
 from ..metadata import dataset_names
 
-class DTI(multi_pred_dataset.DataLoader):
+class DTI(bi_pred_dataset.DataLoader):
 	def __init__(self, name, path = './data', label_name = None, print_stats = False):
 		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["DTI"])
 		self.entity1_name = 'Drug'
@@ -19,7 +19,7 @@ class DTI(multi_pred_dataset.DataLoader):
 
 		print('Done!', flush = True, file = sys.stderr)
 
-class DDI(multi_pred_dataset.DataLoader):
+class DDI(bi_pred_dataset.DataLoader):
 	def __init__(self, name, path = './data', label_name = None, print_stats = False):
 		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["DDI"])
 		self.entity1_name = 'Drug1'
@@ -36,7 +36,7 @@ class DDI(multi_pred_dataset.DataLoader):
 		print('There are ' + str(len(self.y)) + ' drug-drug pairs.', flush = True, file = sys.stderr)
 		print_sys('--------------------------')
 
-class PPI(multi_pred_dataset.DataLoader):
+class PPI(bi_pred_dataset.DataLoader):
 	def __init__(self, name, path = './data', label_name = None, print_stats = False):
 		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["PPI"])
 		self.entity1_name = 'Protein1'
@@ -53,7 +53,7 @@ class PPI(multi_pred_dataset.DataLoader):
 		print('There are ' + str(len(self.y)) + ' protein-protein pairs.', flush = True, file = sys.stderr)
 		print_sys('--------------------------')
 
-class PeptideMHC(multi_pred_dataset.DataLoader):
+class PeptideMHC(bi_pred_dataset.DataLoader):
 	def __init__(self, name, path = './data', label_name = None, print_stats = False):
 		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["PeptideMHC"])
 		self.entity1_name = 'Peptide'
@@ -64,12 +64,32 @@ class PeptideMHC(multi_pred_dataset.DataLoader):
 
 		print('Done!', flush = True, file = sys.stderr)
 
-class DrugRes(multi_pred_dataset.DataLoader):
+class AntibodyAff(bi_pred_dataset.DataLoader):
+	def __init__(self, name, path = './data', label_name = None, print_stats = False):
+		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["AntibodyAff"])
+		self.entity1_name = 'Antibody'
+		self.entity2_name = 'Antigen'
+		
+		if print_stats:
+			self.print_stats()
+
+		print('Done!', flush = True, file = sys.stderr)
+
+class DrugRes(bi_pred_dataset.DataLoader):
 	def __init__(self, name, path = './data', label_name = None, print_stats = False):
 		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["DrugRes"])
 		self.entity1_name = 'Drug'
 		self.entity2_name = 'Cell Line'
 		
+		if print_stats:
+			self.print_stats()
+
+		print('Done!', flush = True, file = sys.stderr)
+
+class DrugSyn(multi_pred_dataset.DataLoader):
+	def __init__(self, name, path = './data', print_stats = False):
+		super().__init__(name, path, print_stats, dataset_names = dataset_names["DrugSyn"])
+
 		if print_stats:
 			self.print_stats()
 

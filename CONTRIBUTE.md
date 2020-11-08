@@ -18,7 +18,7 @@ Multi-instance Prediction:
 
 1. for two entities pair interaction, provide a file with four columns: 'ID1', 'ID2': the IDs of each entity pairs; 'X1', 'X2': the standard data input format for entity 1, 2 (e.g. SMILES); if the label is available, then put it in 'Y' column or if you have multiple labels, then specify the label name as the column name. 
 
-2. for more entities interaction, provide a file with three columns: 'ID', the ID of a data point, 'X': a dictionary where each entry is an entity's ID and input representation, (e.g. a row in X has {'Drug_X1': XX, 'Drug_X2': XX, 'Cell_Line_X': XX}) 'Y': the label.
+2. for more entities interaction, provide a regular files containing the following columns: for every entity, provides 'Entity_ID' and 'Entity' columns (e.g. 'Drug_ID' is the drugs IDs and 'Drug' is the SMILES string). If there are multiple ones for the same entity type, we suggest to use 'Entity1_ID', 'Entity1' to index it. 
 
 Generation:
 

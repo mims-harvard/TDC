@@ -91,6 +91,11 @@ def interaction_dataset_load(name, path, target, dataset_names):
 
 	return df['X1'], df['X2'], df[target], df['ID1'], df['ID2']
 
+def multi_dataset_load(name, path, dataset_names):
+	name = download_wrapper(name, path, dataset_names)
+	print_sys('Loading...')
+	df = pd_load(name, path)
+	return df
 
 def generation_paired_dataset_load(name, path, dataset_names, input_name, output_name):
 	name = download_wrapper(name, path, dataset_names)
