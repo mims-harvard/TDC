@@ -93,6 +93,32 @@ class Epitope(single_pred_dataset.DataLoader):
             self.print_stats()
         print('Done!', flush = True, file = sys.stderr)
 
+class Paratope(single_pred_dataset.DataLoader):
+    """Docstring to be finished.
+
+    Parameters
+    ----------
+    name : str
+        Description of the variable.
+
+    path : str, optional (default="data")
+        Description of the variable.
+
+    label_name : str, optional (default=None)
+        Description of the variable.
+
+    print_stats : bool, optional (default=True)
+        Description of the variable.
+    """
+
+    def __init__(self, name, path='./data', label_name=None, print_stats=False):
+        super().__init__(name, path, label_name, print_stats,
+                         dataset_names=dataset_names["Paratope"])
+        self.entity1_name = 'Antibody'
+        if print_stats:
+            self.print_stats()
+        print('Done!', flush = True, file = sys.stderr)
+
 class HTS(single_pred_dataset.DataLoader):
     """Docstring to be finished.
 

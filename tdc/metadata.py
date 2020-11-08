@@ -33,6 +33,8 @@ qm_dataset_names = ['qm7b', 'qm8', 'qm9']
 
 epitope_dataset_names = ['iedb_jespersen', 'pdb_jespersen']
 
+paratope_dataset_names = ['sabdab_liberis']
+
 develop_dataset_names = ['tap', 'sabdab_chen']
 ####################################
 # multi_pred prediction
@@ -49,6 +51,8 @@ peptidemhc_dataset_names = ['mhc2_iedb_jensen', 'mhc1_iedb-imgt_nielsen']
 ddi_dataset_names = ['drugbank', 'twosides']
 
 mti_dataset_names = ['mirtarbase']
+
+gda_dataset_names = ['disgenet']
 
 drugres_dataset_names = ['gdsc1', 'gdsc2']
 
@@ -98,8 +102,9 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"QM": qm_dataset_names,
 				"AntibodyAff": antibodyaff_dataset_names,
 				"DrugSyn": drugsyn_dataset_names,
-				"MTI": mti_dataset_names}
-
+				"MTI": mti_dataset_names,
+				"GDA": gda_dataset_names,
+				"Paratope": paratope_dataset_names}
 
 dataset_list = []
 for i in dataset_names.keys():
@@ -159,7 +164,9 @@ name2type = {'toxcast': 'tab',
  'sabdab_chen': 'tab',
  'protein_sabdab': 'csv',
  'oncopolypharmacology': 'pkl',
- 'mirtarbase': 'csv'
+ 'mirtarbase': 'csv',
+ 'disgenet': 'csv',
+ 'sabdab_liberis': 'pkl'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -216,7 +223,9 @@ name2id = {'bbb_adenot': 4139555,
  'sabdab_chen': 4167164,
  'protein_sabdab': 4167357,
  'oncopolypharmacology': 4167358,
- 'mirtarbase': 4167359
+ 'mirtarbase': 4167359,
+ 'disgenet': 4168282,
+ 'sabdab_liberis': 4168425
  }
 
 
