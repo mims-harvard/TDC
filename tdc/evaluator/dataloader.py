@@ -37,9 +37,9 @@ class Evaluator:
 
 class Oracle(Evaluator):
 	def __init__(self, name):
-		from ..utils import property_names ### e.g., ['drd2', 'qed', 'logp']
-		self.oracle_name = property_names
-		self.name = fuzzy_search(name, property_names)
+		from ..utils import oracle_names ### e.g., ['drd2', 'qed', 'logp']
+		self.oracle_name = oracle_names
+		self.name = oracle_load(name)
 		#### plogp, drd, .... 
 		self.evaluator_func = lambda x:1 
 		self.assign_evaluator() 

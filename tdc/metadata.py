@@ -56,6 +56,10 @@ drugsyn_dataset_names = ['oncopolypharmacology']
 
 antibodyaff_dataset_names = ['protein_sabdab']
 
+
+download_oracle_names = ['drd2', 'gsk3', 'jnk3']
+trivial_oracle_names = ['qed', 'logp']
+oracle_names = download_oracle_names + trivial_oracle_names 
 ####################################
 # generation
 retrosyn_dataset_names = ['uspto50k']
@@ -161,6 +165,12 @@ name2type = {'toxcast': 'tab',
  'oncopolypharmacology': 'pkl',
  'mirtarbase': 'csv'
  }
+
+#### drd2 is in both name2type and oracle2type, so create a oracle2type
+oracle2type = {'drd2': 'pkl', 
+			   'jnk3': 'pkl', 
+			   'gsk3': 'pkl'
+			   }
 
 name2id = {'bbb_adenot': 4139555,
  'bbb_martins': 4165564,

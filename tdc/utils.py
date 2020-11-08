@@ -13,6 +13,7 @@ from tqdm import tqdm
 from .metadata import name2type, name2id, dataset_list, dataset_names
 from .metadata import property_names, paired_dataset_names, single_molecule_dataset_names
 from .metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
+from .metadata import oracle2id, download_oracle_names, trivial_oracle_names, oracle_names, oracle2type 
 
 from .label_name_list import dataset2target_lists
 
@@ -49,6 +50,26 @@ def download_wrapper(name, path, dataset_names):
 		print_sys("Downloading...")
 		dataverse_download(dataset_path, path, name)
 	return name
+
+def oracle_download_wrapper(name, path, oracle_names):
+	name = fuzzy_search(name, oracle_names)
+	if name in trivial_oracle_names:
+		return name 
+
+
+	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
+	dataset_path = server_path + str(oracle2id[name])
+
+	if not os.path.exists(path):
+		os.mkdir(path)
+
+	if os.path.exists(os.path.join(path, name + '.' + oracle2type[name])):
+		print_sys('Found local copy...')
+	else:
+		print_sys("Downloading...")
+		dataverse_download(dataset_path, path, name) ## to-do to-check
+	return name
+
 
 def pd_load(name, path):
 	if name2type[name] == 'tab':
@@ -112,6 +133,11 @@ def generation_dataset_load(name, path, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
 	df = pd_load(name, path)
 	return df['input'], df['target'] 
+
+def oracle_load(name, path = './oracle', oracle_names = oracle_names):
+	name = oracle_download_wrapper(name, path, oracle_names)
+	return name 
+
 
 def get_label_map(name, path, target = None, file_format = 'csv', output_format = 'dict', task = 'DDI'):
 	name = fuzzy_search(name, dataset_names[task])
