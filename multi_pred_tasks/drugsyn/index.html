@@ -129,7 +129,7 @@
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/gdi/" class=""><code>GDI</code> Gene-Disease Interaction</a></li>
+                <li><a href="/TDC/multi_pred_tasks/gdi/" class=""><code>GDA</code> Gene-Disease Association</a></li>
                 
                 
                 
@@ -149,7 +149,7 @@
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/mti/" class=""><code>MTI</code> miRNA-Target Intaction</a></li>
+                <li><a href="/TDC/multi_pred_tasks/mti/" class=""><code>MTI</code> microRNA-Target Intaction</a></li>
                 
                 
                 
@@ -192,8 +192,45 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#oncopolypharmacology">OncoPolyPharmacology</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h3 id="oncopolypharmacology">OncoPolyPharmacology</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> A large-scale oncology screen produced by Merck &amp; Co. where each sample consists of two compounds and a cell line. The dataset covers 583 distinct combinations, each tested against 39 human cancer cell lines derived from 7 different tissue types. Pairwise combinations were constructed from 38 diverse anticancer drugs (14 experimental and 24 approved). The synergy score is calculated by Loewe Additivity values using the batch processing mode of Combenefit. The genomic features are from ArrayExpress database (accession number: E-MTAB-3610) and  was quantile normalized and summarized with Factor Analysis for Robust Microarray Summarization (FARMS). The processed data is provided by DeepSynergy. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the gene expression of cell lines and two SMILES strings of the drug combos, predict the drug synergy level. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 23,052 drug combo-cell line points, among 39 cancer cell lines and 37 drugs </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Cell Line Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DrugSyn</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DrugSyn</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'OncoPolyPharmacology'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://mct.aacrjournals.org/content/15/6/1155.short">[1] O’Neil, Jennifer, et al. “An unbiased oncology compound screen to identify novel combination strategies.” Molecular cancer therapeutics 15.6 (2016): 1155-1162. </a></p>
+
+<p><a href="https://academic.oup.com/bioinformatics/article-abstract/34/9/1538/4747884">[1] Preuer, Kristina, et al. “DeepSynergy: predicting anti-cancer drug synergy with Deep Learning.” Bioinformatics 34.9 (2018): 1538-1546.
+</a></p>
+<hr />
+
 
 </div>
                 </div>
