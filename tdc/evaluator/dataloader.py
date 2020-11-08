@@ -7,6 +7,8 @@ warnings.filterwarnings("ignore")
 from ..utils import * 
 from ..chem_utils import penalized_logp, qed, drd2, SA, gsk3, jnk3  
 from ..chem_utils import novelty, diversity, unique_rate, validity_ratio
+from ..chem_utils import celecoxib_rediscovery, troglitazone_rediscovery, thiothixene_rediscovery
+from ..chem_utils import aripiprazole_similarity, albuterol_similarity, mestranol_similarity, median1, median2
 from ..metadata import evaluator_name
 
 
@@ -62,8 +64,36 @@ class Oracle(Evaluator):
 			self.evaluator_func = gsk3 
 		elif self.name == 'jnk3':
 			self.evaluator_func = jnk3 
+		elif self.name == 'celecoxib_rediscovery':
+			self.evaluator_func = celecoxib_rediscovery
+		elif self.name == 'troglitazone_rediscovery':
+			self.evaluator_func = troglitazone_rediscovery
+		elif self.name == 'thiothixene_rediscovery':
+			self.evaluator_func = thiothixene_rediscovery
+		elif self.name == 'aripiprazole_similarity':
+			self.evaluator_func = aripiprazole_similarity
+		elif self.name == 'albuterol_similarity':
+			self.evaluator_func = albuterol_similarity
+		elif self.name == 'mestranol_similarity':
+			self.evaluator_func = mestranol_similarity
+		elif self.name == 'median1':
+			self.evaluator_func = median1
+		elif self.name == 'median2':
+			self.evaluator_func = median2
 		else:
 			return 
 
+
+'''
+guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
+				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
+				   'C11H24_isomer', 'C9H10N2O2PF2Cl_isomor', \
+				   'median_molecule_1', 'median_molecule_2', \
+				   'Osimertinib_MPO', 'Fexofenadine_MPO', 'Ranolazine_MPO', 'Perindopril_MPO', \
+				   'Amlodipine_MPO', 'Sitagliptin_MPO', 'Zaleplon_MPO', \
+				   'Valsartan_SMARTS', 'deco_hop', 'scaffold_hop']
+
+
+'''
 
 

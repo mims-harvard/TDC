@@ -57,9 +57,7 @@ drugsyn_dataset_names = ['oncopolypharmacology']
 antibodyaff_dataset_names = ['protein_sabdab']
 
 
-download_oracle_names = ['drd2', 'gsk3', 'jnk3']
-trivial_oracle_names = ['qed', 'logp']
-oracle_names = download_oracle_names + trivial_oracle_names 
+
 ####################################
 # generation
 retrosyn_dataset_names = ['uspto50k']
@@ -79,6 +77,11 @@ guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothi
 				   'Osimertinib_MPO', 'Fexofenadine_MPO', 'Ranolazine_MPO', 'Perindopril_MPO', \
 				   'Amlodipine_MPO', 'Sitagliptin_MPO', 'Zaleplon_MPO', \
 				   'Valsartan_SMARTS', 'deco_hop', 'scaffold_hop']
+
+
+download_oracle_names = ['drd2', 'gsk3', 'jnk3']
+trivial_oracle_names = ['qed', 'logp'] + guacamol_oracle
+oracle_names = download_oracle_names + trivial_oracle_names 
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
