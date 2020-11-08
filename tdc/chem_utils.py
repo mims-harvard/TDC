@@ -222,7 +222,7 @@ def celecoxib_rediscovery(test_smiles):
 
 Troglitazone_smiles='Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O'
 Troglitazone_fp = smiles_2_fingerprint_ECFP4(Troglitazone_smiles)
-def Troglitazone_rediscovery(test_smiles):
+def troglitazone_rediscovery(test_smiles):
 	### ECFP4
 	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
 	similarity_value = DataStructs.TanimotoSimilarity(Troglitazone_fp, test_fp)
@@ -230,7 +230,7 @@ def Troglitazone_rediscovery(test_smiles):
 
 Thiothixene_smiles='CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1'	
 Thiothixene_fp = smiles_2_fingerprint_ECFP4(Thiothixene_smiles)
-def Thiothixene_rediscovery(test_smiles):
+def thiothixene_rediscovery(test_smiles):
 	### ECFP4
 	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
 	similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
@@ -240,7 +240,7 @@ def Thiothixene_rediscovery(test_smiles):
 
 Aripiprazole_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl'
 Aripiprazole_fp = smiles_2_fingerprint_FCFP4(Aripiprazole_smiles)
-def Aripiprazole_similarity(test_smiles):
+def aripiprazole_similarity(test_smiles):
 	threshold = 0.75
 	test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
 	similarity_value = DataStructs.TanimotoSimilarity(Aripiprazole_fp, test_fp)
@@ -250,7 +250,7 @@ def Aripiprazole_similarity(test_smiles):
 
 Albuterol_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1'
 Albuterol_fp = smiles_2_fingerprint_FCFP4(Albuterol_smiles)
-def Albuterol_similarity(test_smiles):
+def albuterol_similarity(test_smiles):
 	threshold = 0.75
 	test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
 	similarity_value = DataStructs.TanimotoSimilarity(Albuterol_fp, test_fp)
@@ -262,7 +262,7 @@ def Albuterol_similarity(test_smiles):
 
 Mestranol_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1'
 Mestranol_fp = smiles_2_fingerprint_AP(Mestranol_smiles)
-def Mestranol_similarity(test_smiles):
+def mestranol_similarity(test_smiles):
 	threshold = 0.75 
 	test_fp = smiles_2_fingerprint_AP(test_smiles)
 	similarity_value = DataStructs.TanimotoSimilarity(Mestranol_fp, test_fp)

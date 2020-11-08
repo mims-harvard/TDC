@@ -60,6 +60,8 @@ drugsyn_dataset_names = ['oncopolypharmacology']
 
 antibodyaff_dataset_names = ['protein_sabdab']
 
+
+
 ####################################
 # generation
 retrosyn_dataset_names = ['uspto50k']
@@ -79,6 +81,11 @@ guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothi
 				   'Osimertinib_MPO', 'Fexofenadine_MPO', 'Ranolazine_MPO', 'Perindopril_MPO', \
 				   'Amlodipine_MPO', 'Sitagliptin_MPO', 'Zaleplon_MPO', \
 				   'Valsartan_SMARTS', 'deco_hop', 'scaffold_hop']
+
+
+download_oracle_names = ['drd2', 'gsk3', 'jnk3']
+trivial_oracle_names = ['qed', 'logp'] + guacamol_oracle
+oracle_names = download_oracle_names + trivial_oracle_names 
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
@@ -168,6 +175,12 @@ name2type = {'toxcast': 'tab',
  'disgenet': 'csv',
  'sabdab_liberis': 'pkl'
  }
+
+#### drd2 is in both name2type and oracle2type, so create a oracle2type
+oracle2type = {'drd2': 'pkl', 
+			   'jnk3': 'pkl', 
+			   'gsk3': 'pkl'
+			   }
 
 name2id = {'bbb_adenot': 4139555,
  'bbb_martins': 4165564,
