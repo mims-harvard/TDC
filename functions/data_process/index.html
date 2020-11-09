@@ -73,9 +73,9 @@
                             
                             <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
                             
-                            <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
-                            
                             <a href="/TDC/functions/data_process/" class="navbar-item is-active">Data Processing</a>
+                            
+                            <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
                             
                             <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -125,11 +125,11 @@
                 
                 
                 
-                <li><a href="/TDC/functions/data_split/" class="">Data Split</a></li>
-                
-                
-                
                 <li><a href="/TDC/functions/data_process/" class="is-active">Data Processing</a></li>
+                
+                
+                
+                <li><a href="/TDC/functions/data_split/" class="">Data Split</a></li>
                 
                 
                 
@@ -157,10 +157,13 @@
     <div class="menu">
         <p class="menu-label">Functions Index</p>
         <ul class="menu-list">
+  <li><a href="#label-distribution-visualization">Label Distribution Visualization</a></li>
   <li><a href="#label-binarization">Label Binarization</a></li>
   <li><a href="#label-units-conversion">Label Units Conversion</a></li>
-  <li><a href="#label-distribution-visualization">Label Distribution Visualization</a></li>
-  <li><a href="#graph-transformation">Graph Transformation</a></li>
+  <li><a href="#label-meaning">Label Meaning</a></li>
+  <li><a href="#basic-statistics">Basic Statistics</a></li>
+  <li><a href="#data-balancing">Data Balancing</a></li>
+  <li><a href="#graph-transformation-for-pair-data">Graph Transformation for Pair Data</a></li>
   <li><a href="#negative-samples-for-pair-data">Negative Samples for Pair Data</a></li>
 </ul>
     </div>
@@ -170,30 +173,125 @@
 
 
 <div class="content">
-    <h3 id="label-binarization">Label Binarization</h3>
+    <h3 id="label-distribution-visualization">Label Distribution Visualization</h3>
 
-<p class="is-size-6">  <strong> Function Description: </strong> For labels with real value, it binarizes the label given a threshold X.  </p>
+<p class="is-size-6">  <strong> Function Description: </strong> This function visualizes the label distribution and prints the basic statistics such as mean and median. </p>
 
-<p class="is-size-6">  <strong> Parameters: </strong>  </p>
+<p class="is-size-6"> For example, to visualize the Caco-2 label distribution: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">label_distribution</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="label-binarization">Label Binarization</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> For labels with real value, it binarizes the label given a threshold. It takes in the following two inputs: </p>
+
 <ul>
-	<li><strong>threshold</strong>: real value to </li>
-	<li><strong>order</strong>:</li>
+	<li><code>threshold</code>: a real value where below/above it is set to be 0/1 depending on the order. This is a required parameter. </li>
+	<li><code>order</code>: choose from 'descending' (the larger is 0) or 'ascending' (the smaller is 0). Default is 'descending'. </li>
 </ul>
 
-<p class="is-size-6">  <strong> Examples: </strong>  </p>
+<p class="is-size-6"> For example, we show how to binarize the DAVIS dataset in the DTI task. Since the binding affinity is the lower the better, we want to set values that are below 30 to be 1 and others 0: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">binarize</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">binarize</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
 </code></pre></div></div>
+
+<p class="is-size-6"> <strong>Note</strong>: you can use <code>data.label_distribution()</code> to visualize the label distribution and decide on the threshold. </p>
 
 <h3 id="label-units-conversion">Label Units Conversion</h3>
 
-<h3 id="label-distribution-visualization">Label Distribution Visualization</h3>
+<p class="is-size-6">  <strong> Function Description: </strong> This function converts the labels to different units. Currently, it only supports to transform between nM and p (log scale) for binding affinity.  </p>
 
-<h3 id="graph-transformation">Graph Transformation</h3>
+<p class="is-size-6"> For example, to convert from nM to p: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">convert_to_log</span><span class="p">()</span>
+<span class="c1"># convert back: data.convert_from_log()
+</span></code></pre></div></div>
+
+<h3 id="label-meaning">Label Meaning</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> This function converts the labels to different units. Currently, it only supports to transform between nM and p (log scale) for binding affinity.  </p>
+
+<p class="is-size-6"> For example, to convert from nM to p: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">convert_to_log</span><span class="p">()</span>
+<span class="c1"># convert back: data.convert_from_log()
+</span></code></pre></div></div>
+
+<h3 id="basic-statistics">Basic Statistics</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> This function prints the basic statistics of the dataset, such as number of data points. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">GDA</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">GDA</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DisGeNET'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="data-balancing">Data Balancing</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> For binary classification, many therapeutics datasets are highly imbalanced. This function either oversamples the minority class or subsample the majority class to create a balanced dataset. It takes in the following two inputs: </p>
+
+<ul>
+	<li><code>oversample</code>: this is set to be either true (oversample) or false (subsample). In default, it is set to be false. </li>
+	<li><code>seed</code>: the random seed for oversample/subsample. The default is 'benchmark' seed. </li>
+</ul>
+
+<p class="is-size-6"> For example, SARS-CoV2 3CL Protease screening data is highly imbalanced, we want to oversample the positive class: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">HTS</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'SARSCoV2_3CLPro_Diamond'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">balanced</span><span class="p">(</span><span class="n">oversample</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="graph-transformation-for-pair-data">Graph Transformation for Pair Data</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Many bi-entities prediction task can be formulated as a graph link prediction task. This function constructs the graph from the paired data. </p>
+
+<ul>
+	<li><code>threshold</code>: a real value where below/above it is set to be 0/1 depending on the order. Default is None. </li>
+	<li><code>format</code>: choose from 'edge_list', 'dgl' (return a DGL graph object), or 'pyg' (return a Pytorch Geometric object). Default is 'edge_list'. </li>
+	<li><code>split</code>: choose from True or False. If set to true, also return the random train/val/test edge split as in the data frame format. </li>
+	<li><code>frac</code>: if split is True, this specifies the fraction of train/val/test splits. Default is [0.7, 0.1, 0.2]. </li>
+	<li><code>seed</code>: the random seed for splitting. The default is the benchmark seed. </li>
+	<li><code>order</code>: choose from 'descending' (the larger is 0) or 'ascending' (the smaller is 0). Default is 'descending'. </li>
+</ul>
+
+<p class="is-size-6"> For example, to construct a graph for DTI DAVIS dataset with threshold 30, split set to true, fraction 70%/10%/20%, benchmark seed, and descending order: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'edge_list'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="c1"># output: {'edge_list': array of shape (X, 2), 'neg_edges': array of shape (X, 2), 'split': {'train': df, 'valid': df, 'test': df}}
+</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'dgl'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="c1"># output: {'dgl_graph': the DGL graph object, 'index_to_entities': a dict map from ID in the data to node ID in the DGL object, 'split': {'train': df, 'valid': df, 'test': df}}
+</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'pyg'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="c1"># output: {'pyg_graph': the PyG graph object, 'index_to_entities': a dict map from ID in the data to node ID in the PyG object, 'split': {'train': df, 'valid': df, 'test': df}}
+</span></code></pre></div></div>
 
 <h3 id="negative-samples-for-pair-data">Negative Samples for Pair Data</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> For some interaction datasets, there are only positive samples provided. In order to do binary classification, we have to construct negative samples. One popular way is to consider the unobserved as negative samples. This is usually the case for biomedical data as a hit has way smaller chance than being negative. For some dataset with pairwise experimental assay (e.g. HuRI), sample from the unobserved pair are also true negatives. To do that, it takes in the following input: </p>
+
+<ul>
+	<li><code>frac</code>: the percentage of negative samples compared to existing positive ones. In default, it is set to be 1, i.e. balanced. </li>
+</ul>
+
+<p class="is-size-6"> For example, HuRI dataset from PPI only consists of positive data points. We can obtain a new dataset with negative samples by: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">PPI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">PPI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HuRI'</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
 
 </div>
                 </div>

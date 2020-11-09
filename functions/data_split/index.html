@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page with menubar - TDC</title>
+    <title>Data Split - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page with menubar | TDC</title>
+<title>Data Split | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Page with menubar" />
+<meta property="og:title" content="Data Split" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/functions/data_split/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/functions/data_split/","headline":"Page with menubar","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/functions/data_split/","headline":"Data Split","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -73,9 +73,9 @@
                             
                             <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
                             
-                            <a href="/TDC/functions/data_split/" class="navbar-item is-active">Data Split</a>
-                            
                             <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/TDC/functions/data_split/" class="navbar-item is-active">Data Split</a>
                             
                             <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -125,11 +125,11 @@
                 
                 
                 
-                <li><a href="/TDC/functions/data_split/" class="is-active">Data Split</a></li>
-                
-                
-                
                 <li><a href="/TDC/functions/data_process/" class="">Data Processing</a></li>
+                
+                
+                
+                <li><a href="/TDC/functions/data_split/" class="is-active">Data Split</a></li>
                 
                 
                 
@@ -150,8 +150,78 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Function Index</p>
+        <ul class="menu-list">
+  <li><a href="#data-split-overview">Data Split Overview</a>
+    <ul>
+      <li><a href="#random-split">Random Split</a></li>
+      <li><a href="#scaffold-split">Scaffold Split</a></li>
+      <li><a href="#cold-split">Cold Split</a></li>
+    </ul>
+  </li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h2 id="data-split-overview">Data Split Overview</h2>
+
+<p class="is-size-6"> The data spliting function splits data into training, validation and test set for machine learning practitioners to train, tune and evaluate their models. This function is called directly on the data loader class. It mainly takes in the following three inputs: </p>
+
+<ul>
+	<li><code>method</code> the spliting scheme. TDC provides various spliting schemes to reflect realistic evaluations (details in section below). Default is random split. </li>
+	<li><code>seed</code> the random seed. TDC has a benchmark seed for fair comparison, which is set in default. </li>
+	<li><code>frac</code> the fraction of train/validation/test set, in default, it is set to be [0.7, 0.1, 0.2].</li>
+</ul>
+<p class="is-size-6"> 
+As the default TDC data format is Pandas DataFrame, it will return a dictionary with key 'train', 'valid', and 'test' and value of each set's data frame. 
+</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.X</span> <span class="kn">import</span> <span class="n">Y</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Y</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="n">Z</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'random'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="c1"># split: {'train': train dataframe, 'valid': valid dataframe, 'test': test dataframe}
+</span></code></pre></div></div>
+
+<p class="is-size-6"> 
+Below describes the various split schemes:
+</p>
+
+<h3 id="random-split">Random Split</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The default for any split function. Randomly split the data into train, validation, and test set. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'random'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="scaffold-split">Scaffold Split</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> Scaffold split is based on the scaffold of the molecules so that train/val/test set is more structurally different. It is more challenging than random split. </p>
+
+<p class="is-size-6">  <strong> Note: </strong> Scaffold split only applies to single-instance drugs-related tasks (ADME, Tox, HTS). Scaffold split also requires RDKit installed. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'scaffold'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="cold-split">Cold Split</h3>
+<p class="is-size-6">  <strong> Description: </strong> Cold split is for multi-instance prediction problems such as DTI, GDA, DrugRes, MTI, where they present two entity types. It first splits on one entity type into train/valid/test and then move all pairs associated with that entity in each set as the final splits. To use that, set <code>column_name</code>&gt; to be the entity that you want to split on. For example, to do cold drug split on DTI task: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'cold_split'</span><span class="p">,</span> <span class="n">column_name</span> <span class="o">=</span> <span class="s">'Drug'</span><span class="p">)</span>
+</code></pre></div></div>
 
 </div>
                 </div>
