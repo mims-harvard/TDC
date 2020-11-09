@@ -55,7 +55,7 @@ class DataLoader(base_dataset.DataLoader):
 		print(str(len(self.y)) + ' ' + self.entity1_name.lower() + '-' + self.entity2_name.lower() + ' pairs.', flush = True, file = sys.stderr)
 		print_sys('--------------------------')
 
-	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
+	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2], column_name = None):
 		'''
 		Arguments:
 			method: splitting schemes: random, cold_drug, cold_target
@@ -73,7 +73,12 @@ class DataLoader(base_dataset.DataLoader):
 			return create_fold_setting_cold(df, seed, frac, self.entity1_name)
 		elif method == 'cold_' + self.entity2_name.lower():
 			return create_fold_setting_cold(df, seed, frac, self.entity2_name)
-
+		elif (column_name is not None) and (column_name in df.columns.values): 
+			if method == 'cold_split':		
+				return create_fold_setting_cold(df, seed, frac, column_name)
+		else:
+			raise AttributeError("Please select from random_split, or cold_split, if cold split. please specify the column name!")
+			
 	def neg_sample(self, frac = 1):
 		df = NegSample(df = self.get_data(format = 'df'), column_names = [self.entity1_name + '_ID', self.entity1_name, self.entity2_name + '_ID', self.entity2_name], frac = frac)
 		self.entity1_idx = df[self.entity1_name + '_ID']
