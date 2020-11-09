@@ -94,6 +94,9 @@ class DataLoader:
 			self.y = utils.binarize(self.y, threshold, order)
 		return self
 
+	def __len__(self):
+		return len(self.get_data(format = 'df'))
+
 	def convert_to_log(self):
 		print('To log space...', flush = True, file = sys.stderr)
 		self.y = utils.convert_to_log(self.y)

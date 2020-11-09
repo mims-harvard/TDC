@@ -188,7 +188,7 @@ def convert_y_unit(y, from_, to_):
 
 	return y
 
-def label_transform(y, binary, threshold, convert_to_log, verbose = True):
+def label_transform(y, binary, threshold, convert_to_log, verbose = True, order = 'descending'):
 	"""
 	Arguments:
 		y: a list of labels
@@ -202,8 +202,13 @@ def label_transform(y, binary, threshold, convert_to_log, verbose = True):
 
 	if (len(np.unique(y)) > 2) and binary:
 		if verbose:
-			print("Binariztion using threshold' + str(threshold) + ', you use specify your threhsold values by DataLoader(threshold = X)", flush = True, file = sys.stderr)
-		y = np.array([1 if i else 0 for i in np.array(y) < threshold])
+			print("Binariztion using threshold' + str(threshold) + ', you use specify your threhsold values by threshold = X)", flush = True, file = sys.stderr)
+		if order == 'descending':
+			y = np.array([1 if i else 0 for i in np.array(y) < threshold])
+		elif order == 'ascending':
+			y = np.array([1 if i else 0 for i in np.array(y) > threshold])
+		else:
+			raise ValueError("Please select order from 'descending or ascending!")
 	else:
 		if (len(np.unique(y)) > 2) and convert_to_log:
 			if verbose:

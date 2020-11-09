@@ -89,7 +89,7 @@ class DataLoader(base_dataset.DataLoader):
 		self.raw_y = self.y
 		return self
 
-	def to_graph(self, threshold = None, format = 'edge_list', split = True, frac = [0.7, 0.1, 0.2], seed = 'benchmark'):
+	def to_graph(self, threshold = None, format = 'edge_list', split = True, frac = [0.7, 0.1, 0.2], seed = 'benchmark', order = 'descending'):
 		'''
 		Arguments:
 			format: edge_list / dgl / pyg df object			
@@ -103,7 +103,7 @@ class DataLoader(base_dataset.DataLoader):
 			print("The dataset label consists of affinity scores. Binarization using threshold " + str(threshold) + " is conducted to construct the positive edges in the network. Adjust the threshold by to_graph(threshold = X)", flush = True, file = sys.stderr)
 			if threshold is None:
 				raise AttributeError("Please specify the threshold to binarize the data by 'to_graph(threshold = N)'!")
-			df['label_binary'] = label_transform(self.raw_y, True, threshold, False, verbose  = False)
+			df['label_binary'] = label_transform(self.raw_y, True, threshold, False, verbose  = False, order = order)
 		else:
 			# already binary
 			df['label_binary'] = df['Y']
