@@ -10,8 +10,10 @@ from ..chem_utils import novelty, diversity, unique_rate, validity_ratio
 from ..chem_utils import celecoxib_rediscovery, troglitazone_rediscovery, thiothixene_rediscovery
 from ..chem_utils import aripiprazole_similarity, albuterol_similarity, mestranol_similarity, median1, median2
 from ..metadata import evaluator_name
-
-
+try:
+	from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score
+except:
+	ImportError("Please install sklearn by 'conda install -c anaconda scikit-learn' or 'pip install scikit-learn '! ")
 
 class Evaluator:
 	def __init__(self, name, molecule_base = None):
@@ -31,17 +33,17 @@ class Evaluator:
 		
 
 		elif self.name == 'roc-auc':
-			pass 
+			self.evaluator_func = roc_auc_score 
 		elif self.name == 'f1':
-			pass 
+			self.evaluator_func = f1_score 
 		elif self.name == 'pr-auc':
-			pass 
+			self.evaluator_func = average_precision_score 
 		elif self.name == 'precision':
-			pass 
+			self.evaluator_func = precision_score
 		elif self.name == 'recall':
-			pass 
+			self.evaluator_func = recall_score
 		elif self.name == 'accuracy':
-			pass
+			self.evaluator_func = accuracy_score 
 
 
 	def __call__(self, first_argu, groundtruth = None):
@@ -53,7 +55,10 @@ class Evaluator:
 				return self.evaluator_func(smiles)
 		else:
 			prediction = first_argu
-			return evaluator_func(prediction, groundtruth)
+
+			## todo: binarize/discretization 
+
+			return self.evaluator_func(groundtruth, prediction)
 
 
 class Oracle(Evaluator):
