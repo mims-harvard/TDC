@@ -18,7 +18,7 @@ prediction = [0.9, 0.7, 0.3, 0.6, 0.4, 0.4, 0.6]
 names = ['prauc', 'f1', 'rocauc', 'precision', 'recall', 'accuracy']
 for name in names:
 	evaluator = Evaluator(name = name)
-	print(name + ":", evaluator(prediction, groundtruth))
+	print(name + ":", str(evaluator(prediction, groundtruth))[:5])
 
 
 

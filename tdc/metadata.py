@@ -177,7 +177,11 @@ name2type = {'toxcast': 'tab',
  'oncopolypharmacology': 'pkl',
  'mirtarbase': 'csv',
  'disgenet': 'csv',
- 'sabdab_liberis': 'pkl'
+ 'sabdab_liberis': 'pkl',
+ 'uspto50k_yields': 'csv',
+ 'uspto_yields': 'csv', 
+ 'uspto_catalyst': 'csv',
+ 'uspto50k_catalyst': 'csv', 
  }
 
 #### drd2 is in both name2type and oracle2type, so create a oracle2type
@@ -242,7 +246,11 @@ name2id = {'bbb_adenot': 4139555,
  'oncopolypharmacology': 4167358,
  'mirtarbase': 4167359,
  'disgenet': 4168282,
- 'sabdab_liberis': 4168425
+ 'sabdab_liberis': 4168425,
+ 'uspto50k_yields': 'xxxx',
+ 'uspto_yields': 'xxxx', 
+ 'uspto_catalyst': 'xxxx',
+ 'uspto50k_catalyst': 'xxxx',  
  }
 
 
