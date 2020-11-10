@@ -118,7 +118,10 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"DrugSyn": drugsyn_dataset_names,
 				"MTI": mti_dataset_names,
 				"GDA": gda_dataset_names,
-				"Paratope": paratope_dataset_names}
+				"Paratope": paratope_dataset_names, 
+				"Yields": yield_dataset_names, 
+				"Catalyst": catalyst_dataset_names, 
+				}
 
 dataset_list = []
 for i in dataset_names.keys():
