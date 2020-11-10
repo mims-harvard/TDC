@@ -28,13 +28,32 @@ class Evaluator:
 			self.evaluator_func = validity_ratio 
 		elif self.name == 'unique':
 			self.evaluator_func = unique_rate 
+		
 
-	def __call__(self, smiles):
-		if type(smiles)==list:
-			return list(map(self.evaluator_func, smiles))
-		else: ### type(smiles)==str:
-			return self.evaluator_func(smiles)
+		elif self.name == 'roc-auc':
+			pass 
+		elif self.name == 'f1':
+			pass 
+		elif self.name == 'pr-auc':
+			pass 
+		elif self.name == 'precision':
+			pass 
+		elif self.name == 'recall':
+			pass 
+		elif self.name == 'accuracy':
+			pass
 
+
+	def __call__(self, first_argu, groundtruth = None):
+		if groundtruth is None:
+			smiles = first_argu
+			if type(smiles)==list:
+				return list(map(self.evaluator_func, smiles))
+			else: ### type(smiles)==str:
+				return self.evaluator_func(smiles)
+		else:
+			prediction = first_argu
+			return evaluator_func(prediction, groundtruth)
 
 
 class Oracle(Evaluator):
