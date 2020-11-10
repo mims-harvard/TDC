@@ -55,11 +55,16 @@ class Evaluator:
 				return self.evaluator_func(smiles)
 		else:
 			prediction = first_argu
-
-			## todo: binarize/discretization 
-
+			if self.name in ['f1', 'pr-auc', 'precision', 'recall', 'accuracy']:
+				binarize = lambda x:1 if x>0.5 else 0
+				prediction = list(map(binarize, prediction))
 			return self.evaluator_func(groundtruth, prediction)
 
+			'''
+				f1_score(label_all, predict_all)  ## binary
+				average_precision_score(label_all, predict_all)  ## binary 
+
+			'''
 
 class Oracle(Evaluator):
 	def __init__(self, name):
