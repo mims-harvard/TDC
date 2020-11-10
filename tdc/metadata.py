@@ -60,6 +60,9 @@ drugsyn_dataset_names = ['oncopolypharmacology']
 
 antibodyaff_dataset_names = ['protein_sabdab']
 
+yield_dataset_names = ['uspto50k_yields', 'uspto_yields']
+
+catalyst_dataset_names = ['uspto50k_catalyst', 'uspto_catalyst']
 
 
 ####################################
