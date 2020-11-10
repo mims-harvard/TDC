@@ -10,3 +10,17 @@ smiles_lst = ['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
 
 print(evaluator(smiles_lst))
 
+
+groundtruth = [1,1,1,1,0,0,0]
+prediction = [0.9, 0.7, 0.3, 0.6, 0.4, 0.4, 0.6]
+
+
+names = ['prauc', 'f1', 'rocauc', 'precision', 'recall', 'accuracy']
+for name in names:
+	evaluator = Evaluator(name = name)
+	print(name + ":", evaluator(prediction, groundtruth))
+
+
+
+
+
