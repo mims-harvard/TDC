@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reaction - TDC</title>
+    <title>Molecule Generation - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Reaction | TDC</title>
+<title>Molecule Generation | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Reaction" />
+<meta property="og:title" content="Molecule Generation" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
-<link rel="canonical" href="http://localhost:4000/TDC/generation_tasks/reaction/" />
-<meta property="og:url" content="http://localhost:4000/TDC/generation_tasks/reaction/" />
+<link rel="canonical" href="http://localhost:4000/TDC/generation_tasks/molgen/" />
+<meta property="og:url" content="http://localhost:4000/TDC/generation_tasks/molgen/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/generation_tasks/reaction/","headline":"Reaction","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/generation_tasks/molgen/","headline":"Molecule Generation","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -117,7 +117,7 @@
             <ul>
                 
                 
-                <li><a href="/TDC/generation_tasks/molgen/" class=""><code>MolGen</code> Molecule Generation</a></li>
+                <li><a href="/TDC/generation_tasks/molgen/" class="is-active"><code>MolGen</code> Molecule Generation</a></li>
                 
                 
                 
@@ -129,7 +129,7 @@
                 
                 
                 
-                <li><a href="/TDC/generation_tasks/reaction/" class="is-active"><code>Reaction</code> Reaction Agent Prediction</a></li>
+                <li><a href="/TDC/generation_tasks/reaction/" class=""><code>Reaction</code> Reaction Agent Prediction</a></li>
                 
                 
             </ul>
@@ -175,8 +175,9 @@
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
-  <li><a href="#uspto-50k">USPTO-50K</a></li>
-  <li><a href="#uspto">USPTO</a></li>
+  <li><a href="#moses">MOSES</a></li>
+  <li><a href="#zinc">ZINC</a></li>
+  <li><a href="#chembl">ChEMBL</a></li>
 </ul>
     </div>
 </div>
@@ -185,50 +186,83 @@
 
 
 <div class="content">
-    <h3 id="uspto-50k">USPTO-50K</h3>
+    <h3 id="moses">MOSES</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> USPTO (United States Patent and Trademark Office)  50K consists of 50K extracted atom-mapped reactions with 10 reaction types. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Molecular Sets (MOSES) is a benchmark platform for distribution learning based molecule generation. Within this benchmark, MOSES provides a cleaned dataset of molecules that are ideal of optimization. It is processed from the ZINC Clean Leads dataset. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> Given reactant set X, predict the reaction product Y. </p>
+<p class="is-size-6">  <strong> Task Description: </strong> For both distribution learning-based and goal-oriented molecule generation. That is to generate new molecules that has desirable properties measured by some oracles. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> XXX. </p>
+<p class="is-size-6">  <strong> Note: </strong> Please visit the <a href="/TDC/functions/oracles"> this page </a> for various distribution learning and goal-oriented learning oracles calculations. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,936,963 molecules. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">Reaction</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">Reaction</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'USPTO-50K'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">MolGen</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">MolGen</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MOSES'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://aspace.repository.cam.ac.uk/handle/1810/244727">[1] Lowe, Daniel Mark. Extraction of chemical structures and reactions from the literature. Diss. University of Cambridge, 2012. </a></p>
+<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
 
-<p><a href="http://papers.nips.cc/paper/6854-predicting-organic-reaction-outcomes-with-weisfeiler-lehman-network"> [2] Jin, Wengong, et al. “Predicting organic reaction outcomes with weisfeiler-lehman network.” NeurIPS. 2017.
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.5b00559"> [2] Sterling, Teague, and John J. Irwin. “ZINC 15–ligand discovery for everyone.” Journal of chemical information and modeling 55.11 (2015): 2324-2337.
 </a></p>
 
-<h3 id="uspto">USPTO</h3>
+<hr />
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The full USPTO (United States Patent and Trademark Office) retrosynthesis dataset. </p>
+<h3 id="zinc">ZINC</h3>
 
-<p class="is-size-6">  <strong> Task Description: </strong> Given reactant set X, predict the reaction product Y. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> ZINC is a free database of commercially-available compounds for virtual screening. It contains over 230 million purchasable compounds in ready-to-dock, 3D formats. TDC uses a 250,000 sampled version from the original Mol-VAE paper. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> XXX. </p>
+<p class="is-size-6">  <strong> Task Description: </strong> For both distribution learning-based and goal-oriented molecule generation. That is to generate new molecules that has desirable properties measured by some oracles. </p>
+
+<p class="is-size-6">  <strong> Note: </strong> Please visit the <a href="/TDC/functions/oracles"> this page </a> for various distribution learning and goal-oriented learning oracles calculations. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 250,000 molecules. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">Reaction</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">Reaction</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'USPTO'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">MolGen</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">MolGen</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ZINC'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://figshare.com/articles/Chemical_reactions_from_US_patents_1976-Sep2016_/5104873"> [1]  Daniel Lowe. Chemical reactions from US patents (1976-Sep2016).
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.5b00559"> [1] Sterling, Teague, and John J. Irwin. “ZINC 15–ligand discovery for everyone.” Journal of chemical information and modeling 55.11 (2015): 2324-2337.
 </a></p>
 
-<p><a href="http://papers.nips.cc/paper/6854-predicting-organic-reaction-outcomes-with-weisfeiler-lehman-network"> [2] Jin, Wengong, et al. “Predicting organic reaction outcomes with weisfeiler-lehman network.” NeurIPS. 2017.
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acscentsci.7b00572">[2] Gómez-Bombarelli, Rafael, et al. “Automatic chemical design using a data-driven continuous representation of molecules.” ACS central science 4.2 (2018): 268-276.
+ </a></p>
+
+<hr />
+
+<h3 id="chembl">ChEMBL</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> ChEMBL is a manually curated database of bioactive molecules with drug-like properties. It brings together chemical, bioactivity and genomic data to aid the translation of genomic information into effective new drugs. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> For both distribution learning-based and goal-oriented molecule generation. That is to generate new molecules that has desirable properties measured by some oracles. </p>
+
+<p class="is-size-6">  <strong> Note: </strong> Please visit the <a href="/TDC/functions/oracles"> this page </a> for various distribution learning and goal-oriented learning oracles calculations. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,961,462 molecules. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">MolGen</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">MolGen</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ChEMBL'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://academic.oup.com/nar/article-abstract/47/D1/D930/5162468"> [1] Mendez, David, et al. “ChEMBL: towards direct deposition of bioassay data.” Nucleic acids research 47.D1 (2019): D930-D940.
 </a></p>
+
+<p><a href="https://academic.oup.com/nar/article-abstract/43/W1/W612/2467881">[2] Davies, Mark, et al. “ChEMBL web services: streamlining access to drug discovery data and utilities.” Nucleic acids research 43.W1 (2015): W612-W620.
+ </a></p>
 
 <hr />
 

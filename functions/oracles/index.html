@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page with menubar - TDC</title>
+    <title>Oracles - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Page with menubar | TDC</title>
+<title>Oracles | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Page with menubar" />
+<meta property="og:title" content="Oracles" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/functions/oracles/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/functions/oracles/","headline":"Page with menubar","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/functions/oracles/","headline":"Oracles","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -150,8 +150,130 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Function Index</p>
+        <ul class="menu-list">
+  <li><a href="#goal-oriented-oracles">Goal-oriented Oracles</a>
+    <ul>
+      <li><a href="#glycogen-synthase-kinase-3-beta-gsk3β">Glycogen Synthase Kinase 3 Beta (GSK3β)</a></li>
+      <li><a href="#c-jun-n-terminal-kinases-3-jnk3">c-Jun N-terminal Kinases-3 (JNK3)</a></li>
+      <li><a href="#dopamine-receptor-d2-drd2">Dopamine Receptor D2 (DRD2)</a></li>
+      <li><a href="#synthetic-accessibility-sa">Synthetic Accessibility (SA)</a></li>
+      <li><a href="#quantitative-estimate-of-drug-likeness-qed">Quantitative Estimate of Drug-likeness (QED)</a></li>
+      <li><a href="#octanol-water-partition-coefficient-logp">Octanol-water Partition Coefficient (LogP)</a></li>
+      <li><a href="#celecoxib-rediscovery">Celecoxib Rediscovery</a></li>
+      <li><a href="#troglitazone-rediscovery">Troglitazone Rediscovery</a></li>
+      <li><a href="#thiothixene-rediscovery">Thiothixene Rediscovery</a></li>
+      <li><a href="#aripiprazole-similarity">Aripiprazole Similarity</a></li>
+      <li><a href="#albuterol-similarity">Albuterol Similarity</a></li>
+      <li><a href="#mestranol-similarity">Mestranol Similarity</a></li>
+      <li><a href="#median-1">Median 1</a></li>
+      <li><a href="#median-2">Median 2</a></li>
+    </ul>
+  </li>
+  <li><a href="#distribution-learning-oracles">Distribution Learning Oracles</a>
+    <ul>
+      <li><a href="#diversity">Diversity</a></li>
+      <li><a href="#novelty">Novelty</a></li>
+      <li><a href="#validity">Validity</a></li>
+      <li><a href="#uniqueness">Uniqueness</a></li>
+    </ul>
+  </li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h2 id="goal-oriented-oracles">Goal-oriented Oracles</h2>
+
+<h3 id="glycogen-synthase-kinase-3-beta-gsk3β">Glycogen Synthase Kinase 3 Beta (GSK3β)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong>Glycogen synthase kinase 3 beta, also known as GSK3β, is an enzyme that in humans is encoded by the GSK3β gene. Abnormal regulation and expression of GSK3β is associated with an increased susceptibility towards bipolar disorder. The oracle is a random forest classifer using ECFP6 fingerprints using ExCAPE-DB dataset. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ffrom</span> <span class="n">tdc</span> <span class="kn">import</span> <span class="nn">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'GSK3B'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.02, 0.0, 0.1]
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># 0.03
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://link.springer.com/article/10.1186/s13321-018-0287-6">[1] Li, Yibo, Liangren Zhang, and Zhenming Liu. “Multi-objective de novo drug design with conditional graph generative model.” Journal of cheminformatics 10.1 (2018): 33.
+</a></p>
+
+<p><a href="http://people.csail.mit.edu/tommi/papers/JBJ_ICML2020b.pdf">[2] Jin, Wengong, Regina Barzilay, and Tommi Jaakkola. “Multi-objective molecule generation using interpretable substructures.” ICLR. 2020. </a></p>
+
+<p><a href="https://link.springer.com/article/10.1186/s13321-017-0203-5"> [3] Sun, Jiangming, et al. “ExCAPE-DB: an integrated large scale dataset facilitating Big Data analysis in chemogenomics.” Journal of cheminformatics 9.1 (2017): 17.
+</a></p>
+<hr />
+
+<h3 id="c-jun-n-terminal-kinases-3-jnk3">c-Jun N-terminal Kinases-3 (JNK3)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong>c-Jun N-terminal Kinases-3 (JNK3) belongs to the mitogen-activated protein kinase family, and are responsive to stress stimuli, such as cytokines, ultraviolet irradiation, heat shock, and osmotic shock. The oracle is a random forest classifer using ECFP6 fingerprints using ExCAPE-DB dataset. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ffrom</span> <span class="n">tdc</span> <span class="kn">import</span> <span class="nn">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'JNK3'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.02, 0.0, 0.1]
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># 0.03
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://link.springer.com/article/10.1186/s13321-018-0287-6">[1] Li, Yibo, Liangren Zhang, and Zhenming Liu. “Multi-objective de novo drug design with conditional graph generative model.” Journal of cheminformatics 10.1 (2018): 33.
+</a></p>
+
+<p><a href="http://people.csail.mit.edu/tommi/papers/JBJ_ICML2020b.pdf">[2] Jin, Wengong, Regina Barzilay, and Tommi Jaakkola. “Multi-objective molecule generation using interpretable substructures.” ICLR. 2020. </a></p>
+
+<p><a href="https://link.springer.com/article/10.1186/s13321-017-0203-5"> [3] Sun, Jiangming, et al. “ExCAPE-DB: an integrated large scale dataset facilitating Big Data analysis in chemogenomics.” Journal of cheminformatics 9.1 (2017): 17.
+</a></p>
+<hr />
+
+<h3 id="dopamine-receptor-d2-drd2">Dopamine Receptor D2 (DRD2)</h3>
+
+<h3 id="synthetic-accessibility-sa">Synthetic Accessibility (SA)</h3>
+
+<h3 id="quantitative-estimate-of-drug-likeness-qed">Quantitative Estimate of Drug-likeness (QED)</h3>
+
+<h3 id="octanol-water-partition-coefficient-logp">Octanol-water Partition Coefficient (LogP)</h3>
+
+<h3 id="celecoxib-rediscovery">Celecoxib Rediscovery</h3>
+
+<h3 id="troglitazone-rediscovery">Troglitazone Rediscovery</h3>
+
+<h3 id="thiothixene-rediscovery">Thiothixene Rediscovery</h3>
+
+<h3 id="aripiprazole-similarity">Aripiprazole Similarity</h3>
+
+<h3 id="albuterol-similarity">Albuterol Similarity</h3>
+
+<h3 id="mestranol-similarity">Mestranol Similarity</h3>
+
+<h3 id="median-1">Median 1</h3>
+
+<h3 id="median-2">Median 2</h3>
+
+<h2 id="distribution-learning-oracles">Distribution Learning Oracles</h2>
+
+<h3 id="diversity">Diversity</h3>
+
+<h3 id="novelty">Novelty</h3>
+
+<h3 id="validity">Validity</h3>
+
+<h3 id="uniqueness">Uniqueness</h3>
 
 </div>
                 </div>
