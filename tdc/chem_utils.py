@@ -256,6 +256,7 @@ class ThresholdedLinearModifier(ScoreModifier):
 
 
 
+# check the license for the code from readFragmentScores to CalculateScore here: https://github.com/EricTing/SAscore/blob/89d7689a85efed3cc918fb8ba6fe5cedf60b4a5a/src/sascorer.py#L134
 _fscores = None
 def readFragmentScores(name='fpscores'):
     import gzip

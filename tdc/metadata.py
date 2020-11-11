@@ -250,16 +250,18 @@ name2id = {'bbb_adenot': 4139555,
  'uspto50k_yields': 'xxxx',
  'uspto_yields': 'xxxx', 
  'uspto_catalyst': 'xxxx',
- 'uspto50k_catalyst': 'xxxx',  
+ 'uspto50k_catalyst': 'xxxx'
  }
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 
-			   'gsk3b': 'pkl'
+			   'gsk3b': 'pkl',
+			   'fpscores': 'pkl'
 			   }
 
 oracle2id = {'drd2': 4170294,
 			 'gsk3b': 4170295,
 			 'jnk3': 4170293,
+			 'fpscores': 4170416
 }
 
