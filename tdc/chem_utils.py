@@ -6,6 +6,7 @@ try:
 	from rdkit.Chem import AllChem
 	from rdkit.Chem import Descriptors
 	import rdkit.Chem.QED as QED
+	
 except:
 	raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")	
 try:
@@ -27,9 +28,11 @@ try:
 	import networkx as nx 
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
+
+from .utils import oracle_load
+
 ## from https://github.com/wengong-jin/iclr19-graph2graph/blob/master/props/properties.py 
 ## from https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 
-
 
 def similarity(a, b):
 	if a is None or b is None: 
@@ -41,8 +44,6 @@ def similarity(a, b):
 	fp1 = AllChem.GetMorganFingerprintAsBitVect(amol, 2, nBits=2048, useChirality=False)
 	fp2 = AllChem.GetMorganFingerprintAsBitVect(bmol, 2, nBits=2048, useChirality=False)
 	return DataStructs.TanimotoSimilarity(fp1, fp2) 
-
-
 
 def qed(s):
 	if s is None: 
@@ -103,32 +104,37 @@ some code are borrowed from
 https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 
 
 '''
-gsk3_model_path = 'oracle/gsk3.pkl'
-with open(gsk3_model_path, 'rb') as f:
-	gsk3_model = pickle.load(f)
 
-def gsk3(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
-	features = np.zeros((1,))
-	DataStructs.ConvertToNumpyArray(fp, features)
-	fp = features.reshape(1, -1) 
-	gsk3_score = gsk3_model.predict_proba(fp)[0,1]
-	return gsk3_score 
+class gsk3b:
+	def __init__(self):
+		gsk3_model_path = 'oracle/gsk3b.pkl'
+		with open(gsk3_model_path, 'rb') as f:
+			self.gsk3_model = pickle.load(f)
 
-jnk3_model_path = 'oracle/jnk3.pkl'
-with open(jnk3_model_path, 'rb') as f:
-	jnk3_model = pickle.load(f)
+	def __call__(self, smiles):
+		molecule = smiles_to_rdkit_mol(smiles)
+		fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
+		features = np.zeros((1,))
+		DataStructs.ConvertToNumpyArray(fp, features)
+		fp = features.reshape(1, -1) 
+		gsk3_score = self.gsk3_model.predict_proba(fp)[0,1]
+		return gsk3_score 
 
-def jnk3(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
-	features = np.zeros((1,))
-	DataStructs.ConvertToNumpyArray(fp, features)
-	fp = features.reshape(1, -1) 
-	jnk3_score = jnk3_model.predict_proba(fp)[0,1]
-	return jnk3_score 	
 
+class jnk3:
+	def __init__(self):
+		jnk3_model_path = 'oracle/jnk3.pkl'
+		with open(jnk3_model_path, 'rb') as f:
+			self.jnk3_model = pickle.load(f)
+
+	def __call__(self, smiles):
+		molecule = smiles_to_rdkit_mol(smiles)
+		fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
+		features = np.zeros((1,))
+		DataStructs.ConvertToNumpyArray(fp, features)
+		fp = features.reshape(1, -1) 
+		jnk3_score = self.jnk3_model.predict_proba(fp)[0,1]
+		return jnk3_score 	
 
 def single_molecule_validity(smiles):
 	if smiles.strip() == '':

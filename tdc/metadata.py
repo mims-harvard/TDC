@@ -77,7 +77,7 @@ paired_dataset_names = ['uspto50k']
 
 property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3', 'jnk3',]
 
-molecule_evaluator_name = ['novelty', 'diversity', 'unique', ]
+molecule_evaluator_name = ['novelty', 'diversity', 'unique', 'validity']
 accuracy_evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy']
 evaluator_name = molecule_evaluator_name + accuracy_evaluator_name 
 
@@ -87,11 +87,11 @@ guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothi
 				   'median_molecule_1', 'median_molecule_2', \
 				   'Osimertinib_MPO', 'Fexofenadine_MPO', 'Ranolazine_MPO', 'Perindopril_MPO', \
 				   'Amlodipine_MPO', 'Sitagliptin_MPO', 'Zaleplon_MPO', \
-				   'Valsartan_SMARTS', 'deco_hop', 'scaffold_hop']
+				   'Valsartan_SMARTS', 'deco_hop', 'scaffold_hop', 'median1', 'median2']
 
 
-download_oracle_names = ['drd2', 'gsk3', 'jnk3']
-trivial_oracle_names = ['qed', 'logp'] + guacamol_oracle
+download_oracle_names = ['drd2', 'gsk3b', 'jnk3']
+trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 oracle_names = download_oracle_names + trivial_oracle_names 
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
@@ -190,12 +190,6 @@ name2type = {'toxcast': 'tab',
  'uspto50k_catalyst': 'csv', 
  }
 
-#### drd2 is in both name2type and oracle2type, so create a oracle2type
-oracle2type = {'drd2': 'pkl', 
-			   'jnk3': 'pkl', 
-			   'gsk3': 'pkl'
-			   }
-
 name2id = {'bbb_adenot': 4139555,
  'bbb_martins': 4165564,
  'bindingdb_ic50': 4139570,
@@ -259,10 +253,13 @@ name2id = {'bbb_adenot': 4139555,
  'uspto50k_catalyst': 'xxxx',  
  }
 
+oracle2type = {'drd2': 'pkl', 
+			   'jnk3': 'pkl', 
+			   'gsk3b': 'pkl'
+			   }
 
-
-oracle2id = {'drd2': 'xxxxx',
-			 'gsk3': 'xxxx',
-			 'jnk3': 'xxxx',
+oracle2id = {'drd2': 4170294,
+			 'gsk3b': 4170295,
+			 'jnk3': 4170293,
 }
 

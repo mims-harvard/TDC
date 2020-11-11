@@ -48,14 +48,13 @@ def download_wrapper(name, path, dataset_names):
 		print_sys('Found local copy...')
 	else:
 		print_sys("Downloading...")
-		dataverse_download(dataset_path, path, name)
+		dataverse_download(dataset_path, path, name, name2type)
 	return name
 
 def oracle_download_wrapper(name, path, oracle_names):
 	name = fuzzy_search(name, oracle_names)
 	if name in trivial_oracle_names:
 		return name 
-
 
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
 	dataset_path = server_path + str(oracle2id[name])
@@ -67,7 +66,7 @@ def oracle_download_wrapper(name, path, oracle_names):
 		print_sys('Found local copy...')
 	else:
 		print_sys("Downloading...")
-		dataverse_download(dataset_path, path, name) ## to-do to-check
+		dataverse_download(dataset_path, path, name, oracle2type) ## to-do to-check
 	return name
 
 
@@ -138,7 +137,6 @@ def oracle_load(name, path = './oracle', oracle_names = oracle_names):
 	name = oracle_download_wrapper(name, path, oracle_names)
 	return name 
 
-
 def get_label_map(name, path, target = None, file_format = 'csv', output_format = 'dict', task = 'DDI'):
 	name = fuzzy_search(name, dataset_names[task])
 	if target is None:
@@ -154,8 +152,8 @@ def get_label_map(name, path, target = None, file_format = 'csv', output_format 
 	else:
 		raise ValueError("Please use the correct output format, select from dict, df, array.")
 
-def dataverse_download(url, path, name):
-	save_path = os.path.join(path, name + '.' + name2type[name])
+def dataverse_download(url, path, name, types):
+	save_path = os.path.join(path, name + '.' + types[name])
 	response = requests.get(url, stream=True)
 	total_size_in_bytes= int(response.headers.get('content-length', 0))
 	block_size = 1024
