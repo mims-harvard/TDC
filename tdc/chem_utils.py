@@ -1,12 +1,22 @@
 import pickle 
 import numpy as np 
+import re
+import os.path as op
+try:
+	from sklearn import svm
+	# from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score
+except:
+	ImportError("Please install sklearn by 'conda install -c anaconda scikit-learn' or 'pip install scikit-learn '! ")
+
 try: 
 	import rdkit
 	from rdkit import Chem, DataStructs
 	from rdkit.Chem import AllChem
 	from rdkit.Chem import Descriptors
 	import rdkit.Chem.QED as QED
-	
+	from rdkit import rdBase
+	rdBase.DisableLog('rdApp.error')
+
 except:
 	raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")	
 try:
@@ -17,11 +27,11 @@ except:
 try:
 	from .score_modifier import *
 	from .sascorer import * 
-	from .drd2_scorer import get_score as drd2 
+	# from .drd2_scorer import get_score as drd2 
 except:
 	from score_modifier import *
 	from sascorer import * 
-	from drd2_scorer import get_score as drd2 
+	# from drd2_scorer import get_score as drd2 
 
 
 try:
@@ -30,6 +40,47 @@ except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
 from .utils import oracle_load
+
+
+
+
+
+"""Scores based on an ECFP classifier for activity."""
+
+# clf_model = None
+def load_drd2_model():
+    # global clf_model
+    # name = op.join(op.dirname(__file__), 'clf_py36.pkl')
+    name = 'oracle/drd2.pkl'
+    with open(name, "rb") as f:
+        clf_model = pickle.load(f)
+    return clf_model
+
+def fingerprints_from_mol(mol):
+    fp = AllChem.GetMorganFingerprint(mol, 3, useCounts=True, useFeatures=True)
+    size = 2048
+    nfp = np.zeros((1, size), np.int32)
+    for idx,v in fp.GetNonzeroElements().items():
+        nidx = idx%size
+        nfp[0, nidx] += int(v)
+    return nfp
+
+
+def drd2(smile):
+    # if clf_model is None:
+    clf_model = load_drd2_model()
+
+    mol = Chem.MolFromSmiles(smile)
+    if mol:
+        fp = fingerprints_from_mol(mol)
+        score = clf_model.predict_proba(fp)[:, 1]
+        return float(score)
+    return 0.0
+
+
+
+
+
 
 ## from https://github.com/wengong-jin/iclr19-graph2graph/blob/master/props/properties.py 
 ## from https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 

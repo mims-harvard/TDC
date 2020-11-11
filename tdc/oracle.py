@@ -4,7 +4,7 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from. evaluator import Evaluator
+# from. evaluator import Evaluator
 from .utils import * 
 from .metadata import download_oracle_names, oracle_names
 from .chem_utils import penalized_logp, qed, drd2, SA, gsk3b, jnk3  
