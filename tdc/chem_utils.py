@@ -29,15 +29,11 @@ try:
 	from scipy.stats.mstats import gmean
 except:
 	raise ImportError("Please install rdkit by 'pip install scipy'! ") 
-# import sascorer
+
 try:
 	from .score_modifier import *
-	# from .sascorer import * 
-	# from .drd2_scorer import get_score as drd2 
 except:
 	from score_modifier import *
-	# from sascorer import * 
-	# from drd2_scorer import get_score as drd2 
 
 
 try:
