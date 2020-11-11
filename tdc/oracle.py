@@ -7,6 +7,7 @@ warnings.filterwarnings("ignore")
 # from. evaluator import Evaluator
 from .utils import * 
 from .metadata import download_oracle_names, oracle_names
+from .chem_utils import novelty, diversity, unique_rate, validity_ratio
 from .chem_utils import penalized_logp, qed, drd2, SA, gsk3b, jnk3  
 from .chem_utils import celecoxib_rediscovery, troglitazone_rediscovery, thiothixene_rediscovery
 from .chem_utils import aripiprazole_similarity, albuterol_similarity, mestranol_similarity, median1, median2
@@ -19,8 +20,7 @@ class Oracle:
 			self.name = oracle_load(name)
 		else:
 			self.name = name
-		#### plogp, drd, .... 
-		self.evaluator_func = lambda x:1 
+		self.evaluator_func = None
 		self.assign_evaluator() 
 
 	def assign_evaluator(self):
@@ -28,7 +28,15 @@ class Oracle:
 			self.name -> self.evaluator_func
 			assert self.name in ['logp', 'drd', ...]
 		'''
-		if self.name == 'logp':
+		if self.name == 'novelty':
+			self.evaluator_func = novelty  
+		elif self.name == 'diversity':
+			self.evaluator_func = diversity 
+		elif self.name == 'validity':
+			self.evaluator_func = validity_ratio 
+		elif self.name == 'uniqueness':
+			self.evaluator_func = unique_rate 
+		elif self.name == 'logp':
 			self.evaluator_func = penalized_logp 
 		elif self.name == 'qed':
 			self.evaluator_func = qed  
@@ -61,12 +69,15 @@ class Oracle:
 		else:
 			return 
 
-	def __call__(self, smiles):
-		if type(smiles)==list:
-			return list(map(self.evaluator_func, smiles))
-		else: ### type(smiles)==str:
-			return self.evaluator_func(smiles)
-
+	def __call__(self, smiles, temp = None):
+		if temp is None:
+			if type(smiles)==list:
+				return list(map(self.evaluator_func, smiles))
+			else: ### type(smiles)==str:
+				return self.evaluator_func(smiles)
+		else:
+			# novelty
+			return self.evaluator_func(smiles, temp)
 
 '''
 guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \

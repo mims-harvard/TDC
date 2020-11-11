@@ -77,9 +77,8 @@ paired_dataset_names = ['uspto50k']
 
 property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3', 'jnk3',]
 
-molecule_evaluator_name = ['novelty', 'diversity', 'unique', 'validity']
 accuracy_evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy']
-evaluator_name = molecule_evaluator_name + accuracy_evaluator_name 
+evaluator_name = accuracy_evaluator_name 
 
 guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
 				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
@@ -89,10 +88,10 @@ guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothi
 				   'Amlodipine_MPO', 'Sitagliptin_MPO', 'Zaleplon_MPO', \
 				   'Valsartan_SMARTS', 'deco_hop', 'scaffold_hop', 'median1', 'median2']
 
-
-download_oracle_names = ['drd2', 'gsk3b', 'jnk3']
+molecule_evaluator_name = ['novelty', 'diversity', 'uniqueness', 'validity']
+download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
-oracle_names = download_oracle_names + trivial_oracle_names 
+oracle_names = download_oracle_names + trivial_oracle_names + molecule_evaluator_name
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 

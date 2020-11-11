@@ -77,14 +77,14 @@ You can specify the splitting method, random seed, and split fractions in the fu
 
 ## Cite Us
 
-If you found our work useful, please consider cite us:
+If you found our work useful, please cite us:
 ```
 @misc{tdc,
-  author       = {Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Zitnik, Marinka},
-  title        = {Therapeutics Data Commons: Machine Learning Datasets for Therapeutics},
-  howpublished = {\url{http://tdc.hms.harvard.edu}},
-  month        = nov,
-  year         = 2020
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Zitnik, Marinka},
+  title={Therapeutics Data Commons: Machine Learning Datasets for Therapeutics},
+  howpublished={\url{http://tdc.hms.harvard.edu}},
+  month=nov,
+  year=2020
 }
 ```
 Paper will also be released soon.

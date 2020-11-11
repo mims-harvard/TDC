@@ -264,8 +264,9 @@ def readFragmentScores(name='fpscores'):
     # generate the full path filename:
     # if name == "fpscores":
     #     name = op.join(previous_directory(op.dirname(__file__)), name)
-    name = "tdc/fpscores"
-    _fscores = cPickle.load(gzip.open('%s.pkl.gz'%name))
+    name = oracle_load('fpscores')
+    with open('oracle/fpscores.pkl', "rb") as f:
+      _fscores = pickle.load(f)
     outDict = {}
     for i in _fscores:
         for j in range(1,len(i)):
@@ -511,7 +512,7 @@ def novelty(new_smiles, smiles_database):
 	new_smiles = unique_lst_of_smiles(new_smiles)
 	smiles_database = unique_lst_of_smiles(smiles_database)
 	novel_ratio = sum([1 if i in smiles_database else 0 for i in new_smiles])*1.0 / len(new_smiles)
-	return novel_ratio
+	return 1 - novel_ratio
 
 def diversity(list_of_smiles):
 	"""
