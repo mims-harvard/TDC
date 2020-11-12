@@ -60,25 +60,24 @@ drugsyn_dataset_names = ['oncopolypharmacology']
 
 antibodyaff_dataset_names = ['protein_sabdab']
 
-yield_dataset_names = ['uspto50k_yields', 'uspto_yields']
+yield_dataset_names = ['uspto_yields', 'buchwald-hartwig', 'suzuki–miyaura']
 
-catalyst_dataset_names = ['uspto50k_catalyst', 'uspto_catalyst']
+catalyst_dataset_names = ['uspto_catalyst']
 
 
 ####################################
 # generation
-retrosyn_dataset_names = ['uspto50k']
+retrosyn_dataset_names = ['uspto50k', 'uspto']
 
-forwardsyn_dataset_names = ['uspto50k']
+forwardsyn_dataset_names = ['uspto']
 
-single_molecule_dataset_names = ['zinc', 'moses']
+single_molecule_dataset_names = ['zinc', 'moses', 'chembl']
 
 paired_dataset_names = ['uspto50k']
 
 property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3', 'jnk3',]
 
-accuracy_evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy']
-evaluator_name = accuracy_evaluator_name 
+evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy', 'mse', 'mae', 'r2', 'micro-f1', 'macro-f1', 'kappa', 'avg-roc-auc']
 
 guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
 				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
@@ -108,6 +107,7 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"RetroSyn": retrosyn_dataset_names,
 				"Reaction": forwardsyn_dataset_names, 
 				"PairMolGen": molgenpaired_dataset_names,
+				"MolGen": single_molecule_dataset_names,
 				"PeptideMHC": peptidemhc_dataset_names,
 				"Epitope": epitope_dataset_names,
 				"Develop": develop_dataset_names,
@@ -164,11 +164,12 @@ name2type = {'toxcast': 'tab',
  'mhc1_iedb-imgt_nielsen': 'tab',
  'mhc2_iedb_jensen': 'tab',
  'uspto50k': 'csv',
- 'zinc': 'csv', 
- 'moses': 'csv',
- 'qed': 'csv', 
- 'drd2': 'csv', 
- 'logp': 'csv',
+ 'zinc': 'tab', 
+ 'moses': 'tab',
+ 'chembl': 'tab',
+ 'qed': 'tab', 
+ 'drd2': 'tab', 
+ 'logp': 'tab',
  'gdsc1': 'pkl',
  'gdsc2': 'pkl',
  'iedb_jespersen': 'pkl',
@@ -183,10 +184,11 @@ name2type = {'toxcast': 'tab',
  'mirtarbase': 'csv',
  'disgenet': 'csv',
  'sabdab_liberis': 'pkl',
- 'uspto50k_yields': 'csv',
- 'uspto_yields': 'csv', 
+ 'uspto_yields': 'pkl', 
  'uspto_catalyst': 'csv',
- 'uspto50k_catalyst': 'csv', 
+ 'buchwald-hartwig': 'tab',
+ 'suzuki–miyaura': 'csv',
+ 'uspto_reaction': 'csv'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -226,12 +228,12 @@ name2id = {'bbb_adenot': 4139555,
  'vd_edrug3d': 4139578,
  'mhc1_iedb-imgt_nielsen': 4167073,
  'mhc2_iedb_jensen': 4167074,
- 'uspto50k': 'xxxxx',
- 'zinc': 'xxxxx',
- 'moses': 'xxxxx',
- 'qed': 'xxxx', 
- 'drd2': 'xxxx', 
- 'logp': 'xxxx', 
+ 'zinc': 4170963,
+ 'moses': 4170962,
+ 'chembl': 4170965,
+ 'qed': 4170959, 
+ 'drd2': 4170957, 
+ 'logp': 4170961, 
  'gdsc1': 4165726,
  'gdsc2': 4165727,
  'iedb_jespersen': 4165725, 
@@ -246,10 +248,12 @@ name2id = {'bbb_adenot': 4139555,
  'mirtarbase': 4167359,
  'disgenet': 4168282,
  'sabdab_liberis': 4168425,
- 'uspto50k_yields': 'xxxx',
+ 'uspto50k': 'xxxxx',
+ 'buchwald-hartwig': 'xxxx',
  'uspto_yields': 'xxxx', 
- 'uspto_catalyst': 'xxxx',
- 'uspto50k_catalyst': 'xxxx'
+ 'suzuki–miyaura': 'xxxx',
+ 'uspto_catalyst': 4170960,
+ 'uspto_reaction': 4170964
  }
 
 oracle2type = {'drd2': 'pkl', 

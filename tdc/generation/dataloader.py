@@ -6,12 +6,7 @@ warnings.filterwarnings("ignore")
 
 from ..utils import *
 from . import generation_dataset
-# from . import score_modifier 
 from ..metadata import dataset_names
-from ..chem_utils import qed, penalized_logp, similarity, drd2, SA  
-from ..chem_utils import validity_ratio, unique_rate 
-
-
 
 class Reaction(generation_dataset.PairedDataLoader):
 
@@ -24,14 +19,10 @@ class RetroSyn(generation_dataset.PairedDataLoader):
 		super().__init__(name, path, print_stats, input_name, output_name)
 
 
-class Distribution_Dataloader(generation_dataset.DataLoader):
+class MolGen(generation_dataset.DataLoader):
 
 	def __init__(self, name, path = './data', print_stats = False, column_name = 'smiles'): 
 		super().__init__(name, path, print_stats, column_name)
-
-
-# class Reaction(generation_dataset.DataLoader):
-# 	def __init__(self, name, path = './data', print_stats = True):
 
 
 class PairMolGen(generation_dataset.DataLoader):

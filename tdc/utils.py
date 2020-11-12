@@ -137,7 +137,7 @@ def oracle_load(name, path = './oracle', oracle_names = oracle_names):
 	name = oracle_download_wrapper(name, path, oracle_names)
 	return name 
 
-def get_label_map(name, path, target = None, file_format = 'csv', output_format = 'dict', task = 'DDI'):
+def get_label_map(name, path = './data', target = None, file_format = 'csv', output_format = 'dict', task = 'DDI'):
 	name = fuzzy_search(name, dataset_names[task])
 	if target is None:
 		target = 'Y'		
@@ -397,7 +397,7 @@ def NegSample(df, column_names, frac):
     return df
 
 
-def GetProteinSequence(ProteinID):
+def uniprot2seq(ProteinID):
 	"""Get protein sequence from Uniprot ID
 	
 	Parameters

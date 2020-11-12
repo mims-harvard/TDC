@@ -64,16 +64,44 @@ Explore all therapeutic tasks and datasets in the [website](https://zitniklab.hm
 
 ## TDC Data Functions
 
+#### Data Split
 
-## Data Split
-
-To retrieve the dataset split, you could simply type
+To retrieve the training/validation/test dataset split, you could simply type
 ```python 
 data = X(name = Y)
 data.get_split(seed = 'benchmark')
 # {'train': df_train, 'val': df_val, ''test': df_test}
 ```
 You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'cold_drug', seed = 1, frac = [0.7, 0.1, 0.2])`. For other splitting methods (e.g. scaffold split), check out the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) on the website.
+
+#### Data Evaluation
+
+We provide various evaluation metrics for the tasks in TDC, which are described in [data evaluation page](https://zitniklab.hms.harvard.edu/TDC/functions/data_evaluation/) on the website. For example, to use metric ROC-AUC, you could simply type
+
+```python
+from tdc import Evaluator
+evaluator = Evaluator(name = 'ROC-AUC')
+score = evaluator(y_true, y_pred)
+```
+
+#### Data Processing 
+
+We provide numerous data processing helper functions such as label transformation, data balancing, pair data to PyG/DGL graphs, negative sampling, database querying and so on. For individual function usage, please checkout the [data processing page](https://zitniklab.hms.harvard.edu/TDC/functions/data_process/) on the website.
+
+#### Molecule Generation Oracles
+
+For molecule generation tasks, we provide 10+ oracles for both goal-oriented and distribution learning. For detailed usage of each oracle, please checkout the [oracle page](https://zitniklab.hms.harvard.edu/TDC/functions/oracles/) on the website. For example, we want to retrieve the GSK3Beta oracle:
+
+```python
+from tdc import Oracle
+oracle = Oracle(name = 'GSK3B')
+smiles_lst = ['CC(C)(C)....' 'C[C@@H]1....','CCNC(=O)....', 'C[C@@H]1....']
+oracle(smiles_lst)
+# [0.03, 0.02, 0.0, 0.1]
+oracle('CC(C)(C)....')
+# 0.03
+```
+Note that the graph-to-graph paired molecule generation is provided as separate [datasets](https://zitniklab.hms.harvard.edu/TDC/generation_tasks/pairmolgen/). 
 
 ## Cite Us
 
@@ -87,7 +115,7 @@ If you found our work useful, please cite us:
   year=2020
 }
 ```
-Paper will also be released soon.
+Paper is in progress and will come out soon.
 
 
 ## Benchmark and Leaderboard

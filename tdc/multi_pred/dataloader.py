@@ -121,25 +121,9 @@ class DrugSyn(multi_pred_dataset.DataLoader):
 class Catalyst(bi_pred_dataset.DataLoader):
 	def __init__(self, name, path = './data', label_name = None, print_stats = False):
 		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["Catalyst"])
-
+		self.entity1_name = 'Reactant'
+		self.entity2_name = 'Product'
 		if print_stats:
 			self.print_stats()
 
 		print('Done!', flush = True, file = sys.stderr)
-
-
-class Yields(multi_pred_dataset.DataLoader):
-	def __init__(self, name, path = './data', label_name = None, print_stats = False):
-		super().__init__(name, path, label_name, print_stats, dataset_names = dataset_names["Yields"])
-
-		if print_stats:
-			self.print_stats()
-
-		print('Done!', flush = True, file = sys.stderr)
-
-
-
-
-
-
-
