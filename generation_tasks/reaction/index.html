@@ -175,7 +175,6 @@
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
-  <li><a href="#uspto-50k">USPTO-50K</a></li>
   <li><a href="#uspto">USPTO</a></li>
 </ul>
     </div>
@@ -185,29 +184,7 @@
 
 
 <div class="content">
-    <h3 id="uspto-50k">USPTO-50K</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> USPTO (United States Patent and Trademark Office)  50K consists of 50K extracted atom-mapped reactions with 10 reaction types. </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong> Given reactant set X, predict the reaction product Y. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> XXX. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">Reaction</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">Reaction</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'USPTO-50K'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://aspace.repository.cam.ac.uk/handle/1810/244727">[1] Lowe, Daniel Mark. Extraction of chemical structures and reactions from the literature. Diss. University of Cambridge, 2012. </a></p>
-
-<p><a href="http://papers.nips.cc/paper/6854-predicting-organic-reaction-outcomes-with-weisfeiler-lehman-network"> [2] Jin, Wengong, et al. “Predicting organic reaction outcomes with weisfeiler-lehman network.” NeurIPS. 2017.
-</a></p>
-
-<h3 id="uspto">USPTO</h3>
+    <h3 id="uspto">USPTO</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> The full USPTO (United States Patent and Trademark Office) retrosynthesis dataset. </p>
 

@@ -171,6 +171,7 @@
       <li><a href="#accuracy">Accuracy</a></li>
       <li><a href="#precision">Precision</a></li>
       <li><a href="#recall">Recall</a></li>
+      <li><a href="#f1">F1</a></li>
     </ul>
   </li>
   <li><a href="#multi-class-classification">Multi-class Classification</a>
@@ -256,9 +257,9 @@
 <p class="is-size-6">  <strong> Description: </strong> The accuracy calculates the fraction of correct prediction at a threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the accuracy score. The default of threshold value is 0.5. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
-<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Accuracy'</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Accuracy'</span><span class="p">)</span>
 <span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
-</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
 
@@ -267,9 +268,9 @@
 <p class="is-size-6">  <strong> Description: </strong> The precision calculates the fraction of correctly predicted positive instance out of the total predicted positive values at a threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the precision score. The default of threshold value is 0.5. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
-<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Precision'</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Precision'</span><span class="p">)</span>
 <span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
-</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
 
@@ -278,9 +279,20 @@
 <p class="is-size-6">  <strong> Description: </strong> The recall calculates the fraction of correctly predicted positive instance out of all the positive instances at a threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the recall score. The default of threshold value is 0.5. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
-<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Recall'</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Recall'</span><span class="p">)</span>
 <span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
-</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="f1">F1</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The F1 is the harmonic mean of recall and precision. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the recall score. The default of threshold value is 0.5. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'F1'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
 

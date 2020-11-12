@@ -184,8 +184,94 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#buchwald-hartwig">Buchwald-Hartwig</a></li>
+  <li><a href="#suzuki-miyaura">Suzuki-Miyaura</a></li>
+  <li><a href="#uspto">USPTO</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h3 id="buchwald-hartwig">Buchwald-Hartwig</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Ahneman et al. performed high-throughput experiments on Pd-catalysed Buchwald–Hartwig C-N cross coupling reactions, measuring the yields for each reaction. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Given reactant and product set X, predict the yields Y. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> XXX. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Yields</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Yields</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Buchwald-Hartwig'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.sciencedirect.com/science/article/pii/S2451929420300851">[1] Sandfort et al. “A structure-based platform for predicting chemical reactivity.” Chem (2020). </a></p>
+
+<p><a href="https://science.sciencemag.org/content/360/6385/186.abstract?casa_token=Y1YYm8zLW4YAAAAA:U2B1Mqw-wjgZuqf2jd5eDUSmOCHm9dKMIqrMR5aGs4Js6eCwXV4gGPvA95wgqF-Gf6UjomO9FaAFeJQ"> [2] Ahneman et al. “Predicting reaction performance in C–N cross-coupling using machine learning.” Science 360.6385 (2018): 186-190.
+</a></p>
+
+<p><a href="https://chemrxiv.org/ndownloader/files/25011413"> [3] Schwaller, Philippe, et al. “Prediction of Chemical Reaction Yields using Deep Learning.” (2020). ChemRxiv.</a></p>
+
+<hr />
+
+<h3 id="suzuki-miyaura">Suzuki-Miyaura</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Perera et al. used HTE technologies to the class of the Suzuki–Miyaura reactions.They considered 15 pairs of electrophiles and nucleophiles, each leading to a di↵erentproduct. For each pair, they varied the ligands (12 in total), bases (8), and solvents (4),resulting in a total of 5760 measured yields.  </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Given reactant and product set X, predict the yields Y. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> XXX. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Yields</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Yields</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Buchwald-Hartwig'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://science.sciencemag.org/content/359/6374/429.abstract?casa_token=RVN6bW-2udQAAAAA:zHk1ov1vqVdbyuMZ6l6z5KCmjYK9E4aPJDZ29Aa6lNa2T3be-mye3nMgx1VnF7-XVEnjKYzReR20Z3A">[1] Perera et al. “A platform for automated nanomole-scale reaction screening and micromole-scale synthesis in flow.” Science 359.6374 (2018): 429-434.</a></p>
+
+<p><a href="https://chemrxiv.org/ndownloader/files/25011413"> [3] Schwaller, Philippe, et al. “Prediction of Chemical Reaction Yields using Deep Learning.” (2020). ChemRxiv.</a></p>
+
+<hr />
+
+<h3 id="uspto">USPTO</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> TDC parses the yields outcome from the full USPTO (United States Patent and Trademark Office) dataset. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Given reactant and product set X, predict the yields Y. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> XXX. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Yields</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Yields</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'USPTO_Yields'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://aspace.repository.cam.ac.uk/handle/1810/244727">[1] Lowe, Daniel Mark. Extraction of chemical structures and reactions from the literature. Diss. University of Cambridge, 2012. </a></p>
+
+<hr />
+
 
 </div>
                 </div>

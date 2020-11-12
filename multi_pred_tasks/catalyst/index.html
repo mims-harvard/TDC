@@ -149,7 +149,7 @@
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/mti/" class=""><code>MTI</code> miRNA-Target Intaction</a></li>
+                <li><a href="/TDC/multi_pred_tasks/mti/" class=""><code>MTI</code> miRNA-Target Interaction</a></li>
                 
                 
                 
@@ -192,8 +192,51 @@
                     
                     
                     
-<div class="content">
     
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#uspto">USPTO</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h3 id="uspto">USPTO</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> USPTO (United States Patent and Trademark Office)  50K consists of 50K extracted atom-mapped reactions with 10 reaction types. TDC selects the most common catalysts that have occurences higher than 100 times. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Given reactant and product set X, predict the catalyst Y from a set of most common catalysts. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,018,370 reactions. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">Catalyst</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Catalyst</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'USPTO_Catalyst'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> Note: </strong> To know what type of catalyst the label index corresponds to, use:  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">get_label_map</span>
+<span class="n">get_label_map</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'USPTO_Catalyst'</span><span class="p">,</span> <span class="n">task</span> <span class="o">=</span> <span class="s">'Catalyst'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://aspace.repository.cam.ac.uk/handle/1810/244727">[1] Lowe, Daniel Mark. Extraction of chemical structures and reactions from the literature. Diss. University of Cambridge, 2012. </a></p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acscentsci.8b00357">[2] Gao, Hanyu, et al. “Using machine learning to predict suitable conditions for organic reactions.” ACS central science 4.11 (2018): 1465-1476. </a></p>
+
+<hr />
+
 
 </div>
                 </div>

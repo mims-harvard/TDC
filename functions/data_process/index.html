@@ -165,6 +165,8 @@
   <li><a href="#data-balancing">Data Balancing</a></li>
   <li><a href="#graph-transformation-for-pair-data">Graph Transformation for Pair Data</a></li>
   <li><a href="#negative-samples-for-pair-data">Negative Samples for Pair Data</a></li>
+  <li><a href="#from-pubchem-cid-to-smiles">From PubChem CID to SMILES</a></li>
+  <li><a href="#from-uniprot-id-to-amino-acid-sequence">From Uniprot ID to Amino Acid Sequence</a></li>
 </ul>
     </div>
 </div>
@@ -292,6 +294,36 @@
 <span class="n">data</span> <span class="o">=</span> <span class="n">PPI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HuRI'</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
+
+<h3 id="from-pubchem-cid-to-smiles">From PubChem CID to SMILES</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Retrieve SMILES string from the PubChem CID. To do that, it takes in the following input: </p>
+
+<ul>
+	<li><code>cid</code>: the PubChem CID. </li>
+</ul>
+
+<p class="is-size-6">  <strong> Note: </strong> For large batch of queries, please use the <a href="https://pubchem.ncbi.nlm.nih.gov/idexchange/idexchange.cgi">PubChem ID exchange service</a>. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">cid2smiles</span>
+<span class="n">smiles</span> <span class="o">=</span> <span class="n">cid2smiles</span><span class="p">(</span><span class="mi">2248631</span><span class="p">)</span>
+<span class="c1"># 'CCOC1=CC(=C(C=C1C=CC(=O)O)Br)OCC'
+</span></code></pre></div></div>
+
+<h3 id="from-uniprot-id-to-amino-acid-sequence">From Uniprot ID to Amino Acid Sequence</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Retrieve amino acid sequence from the Uniprot ID. To do that, it takes in the following input: </p>
+
+<ul>
+	<li><code>id</code>: the Uniprot ID. </li>
+</ul>
+
+<p class="is-size-6">  <strong> Note: </strong> For large batch of queries, please use the <a href="https://www.uniprot.org/uploadlists/">Uniprot ID mapping service</a>. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">uniprot2seq</span>
+<span class="n">seq</span> <span class="o">=</span> <span class="n">uniprot2seq</span><span class="p">(</span><span class="s">'P49122'</span><span class="p">)</span>
+<span class="c1"># 'MKTLLLTLVVVTIVCLDLGYTLKCHNTQLPFIYNTCPEGKNLCFKATLKFPLKFPVKRGCAATCPRSSSLVKVVCCKTDKCN'
+</span></code></pre></div></div>
 
 </div>
                 </div>

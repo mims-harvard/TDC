@@ -165,19 +165,20 @@
       <li><a href="#synthetic-accessibility-sa">Synthetic Accessibility (SA)</a></li>
       <li><a href="#quantitative-estimate-of-drug-likeness-qed">Quantitative Estimate of Drug-likeness (QED)</a></li>
       <li><a href="#octanol-water-partition-coefficient-logp">Octanol-water Partition Coefficient (LogP)</a></li>
-      <li><a href="#celecoxib-rediscovery">Celecoxib Rediscovery</a></li>
-      <li><a href="#troglitazone-rediscovery">Troglitazone Rediscovery</a></li>
-      <li><a href="#thiothixene-rediscovery">Thiothixene Rediscovery</a></li>
-      <li><a href="#aripiprazole-similarity">Aripiprazole Similarity</a></li>
-      <li><a href="#albuterol-similarity">Albuterol Similarity</a></li>
-      <li><a href="#mestranol-similarity">Mestranol Similarity</a></li>
-      <li><a href="#median-1">Median 1</a></li>
-      <li><a href="#median-2">Median 2</a></li>
+      <li><a href="#rediscovery">Rediscovery</a></li>
+      <li><a href="#similaritydissimilarity">Similarity/Dissimilarity</a></li>
+      <li><a href="#median-molecules">Median Molecules</a></li>
+      <li><a href="#isomers">Isomers</a></li>
+      <li><a href="#multi-property-objective-mpo">Multi-Property Objective (MPO)</a></li>
+      <li><a href="#valsartan-smarts">Valsartan SMARTS</a></li>
+      <li><a href="#hop">Hop</a></li>
     </ul>
   </li>
   <li><a href="#distribution-learning-oracles">Distribution Learning Oracles</a>
     <ul>
       <li><a href="#diversity">Diversity</a></li>
+      <li><a href="#kl-divergence">KL divergence</a></li>
+      <li><a href="#frechet-chemnet-distance-fcd">Frechet ChemNet Distance (FCD)</a></li>
       <li><a href="#novelty">Novelty</a></li>
       <li><a href="#validity">Validity</a></li>
       <li><a href="#uniqueness">Uniqueness</a></li>
@@ -192,12 +193,13 @@
 
 <div class="content">
     <h2 id="goal-oriented-oracles">Goal-oriented Oracles</h2>
+<hr />
 
 <h3 id="glycogen-synthase-kinase-3-beta-gsk3β">Glycogen Synthase Kinase 3 Beta (GSK3β)</h3>
 
 <p class="is-size-6">  <strong> Description: </strong>Glycogen synthase kinase 3 beta, also known as GSK3β, is an enzyme that in humans is encoded by the GSK3β gene. Abnormal regulation and expression of GSK3β is associated with an increased susceptibility towards bipolar disorder. The oracle is a random forest classifer using ECFP6 fingerprints using ExCAPE-DB dataset. </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ffrom</span> <span class="n">tdc</span> <span class="kn">import</span> <span class="nn">Oracle</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'GSK3B'</span><span class="p">)</span>
 <span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
 <span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
@@ -221,7 +223,7 @@
 
 <p class="is-size-6">  <strong> Description: </strong>c-Jun N-terminal Kinases-3 (JNK3) belongs to the mitogen-activated protein kinase family, and are responsive to stress stimuli, such as cytokines, ultraviolet irradiation, heat shock, and osmotic shock. The oracle is a random forest classifer using ECFP6 fingerprints using ExCAPE-DB dataset. </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ffrom</span> <span class="n">tdc</span> <span class="kn">import</span> <span class="nn">Oracle</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'JNK3'</span><span class="p">)</span>
 <span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
 <span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
@@ -243,37 +245,332 @@
 
 <h3 id="dopamine-receptor-d2-drd2">Dopamine Receptor D2 (DRD2)</h3>
 
+<p class="is-size-6">  <strong> Description: </strong>DRD2 stands for dopamine type 2 receptor. The oracle is constructed by Olivercrona et al., using a support vector machine classifier with a Gaussian kernel with ECFP6 fingerprint on ExCAPE-DB dataset. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DRD2'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.02, 0.0, 0.1]
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># 0.03
+</span></code></pre></div></div>
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://openreview.net/forum?id=rJeeKTNKDB">[1] Jin, Wengong, et al. “Learning multimodal graph-to-graph translation for molecular optimization.” ICLR (2019).
+</a></p>
+
+<p><a href="https://link.springer.com/article/10.1186/s13321-017-0235-x"> [2] Olivecrona, Marcus, et al. “Molecular de-novo design through deep reinforcement learning.” Journal of cheminformatics 9.1 (2017): 48.
+</a></p>
+
+<p><a href="https://link.springer.com/article/10.1186/s13321-017-0203-5"> [3] Sun, Jiangming, et al. “ExCAPE-DB: an integrated large scale dataset facilitating Big Data analysis in chemogenomics.” Journal of cheminformatics 9.1 (2017): 17.
+</a></p>
+<hr />
+
 <h3 id="synthetic-accessibility-sa">Synthetic Accessibility (SA)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> Synthetic Accessibility Score stands for how hard or how easy it is to synthesize a given molecule,  based on a combination of the molecule’s fragments contributions. The oracle is caluated via RDKit, using a set of chemical rules defined by Ertl et al. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'SA'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.02, 0.0, 0.1]
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># 0.03
+</span></code></pre></div></div>
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
+
+<p><a href="https://link.springer.com/article/10.1186/1758-2946-1-8"> [2] Ertl, Peter, and Ansgar Schuffenhauer. “Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions.” Journal of cheminformatics 1.1 (2009): 8.
+</a></p>
+<hr />
 
 <h3 id="quantitative-estimate-of-drug-likeness-qed">Quantitative Estimate of Drug-likeness (QED)</h3>
 
+<p class="is-size-6">  <strong> Description: </strong>QED stands for Quantitative Estimate of Drug-likeness. The oracle is caluated via RDKit, using a set of chemical rules about drug-likeliness defined by Bickerton et al. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'QED'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.02, 0.0, 0.1]
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># 0.03
+</span></code></pre></div></div>
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://openreview.net/forum?id=rJeeKTNKDB">[1] Jin, Wengong, et al. “Learning multimodal graph-to-graph translation for molecular optimization.” ICLR (2019).
+</a></p>
+
+<p><a href="https://idp.nature.com/authorize/casa?redirect_uri=https://www.nature.com/nchem/journal/v4/n2/full/nchem.1243.html&amp;casa_token=nRlnIU95a34AAAAA:UKkVVcB_V3z8ZeuWuwSbumNW4YIK-5_Yt49UYOCpSOzB-hETkOxdhLaGzYN2s4_GBDv3laavmqWlGAl5aA"> [2] Bickerton, G. Richard, et al. “Quantifying the chemical beauty of drugs.” Nature chemistry 4.2 (2012): 90-98.
+</a></p>
+
+<p><a href="https://link.springer.com/article/10.1186/s13321-017-0203-5"> [3] Sun, Jiangming, et al. “ExCAPE-DB: an integrated large scale dataset facilitating Big Data analysis in chemogenomics.” Journal of cheminformatics 9.1 (2017): 17.
+</a></p>
+<hr />
+
 <h3 id="octanol-water-partition-coefficient-logp">Octanol-water Partition Coefficient (LogP)</h3>
 
-<h3 id="celecoxib-rediscovery">Celecoxib Rediscovery</h3>
+<p class="is-size-6">  <strong> Description: </strong>The penalized logP score measures the solubility and synthetic accessibility of a compound. The oracle is caluated via RDKit. </p>
 
-<h3 id="troglitazone-rediscovery">Troglitazone Rediscovery</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'LogP'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.02, 0.0, 0.1]
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># 0.03
+</span></code></pre></div></div>
+<p class="is-size-6">  <strong> References: </strong>  </p>
 
-<h3 id="thiothixene-rediscovery">Thiothixene Rediscovery</h3>
+<p><a href="https://openreview.net/forum?id=rJeeKTNKDB">[1] Jin, Wengong, et al. “Learning multimodal graph-to-graph translation for molecular optimization.” ICLR (2019).
+</a></p>
 
-<h3 id="aripiprazole-similarity">Aripiprazole Similarity</h3>
+<p><a href="http://proceedings.mlr.press/v70/kusner17a.html"> [2] Kusner, Matt J., Brooks Paige, and José Miguel Hernández-Lobato. “Grammar variational autoencoder.” ICML 2017.
+</a></p>
 
-<h3 id="albuterol-similarity">Albuterol Similarity</h3>
+<hr />
 
-<h3 id="mestranol-similarity">Mestranol Similarity</h3>
+<h3 id="rediscovery">Rediscovery</h3>
 
-<h3 id="median-1">Median 1</h3>
+<p class="is-size-6">  <strong> Description: </strong> This oracle aims to rediscover the target molecule Celecoxib, Troglitazone, and Thiothixene. Specifically, it aims for the generated molecule to have high tanimoto similarity with Celecoxib. From Guacamol Benchmark.</p>
 
-<h3 id="median-2">Median 2</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Rediscovery'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># {'Celecoxib': [0.03, 0.32, 0.01, 0.1], 'Troglitazone': [0.33, 0.12, 0.0, 0.12], 'Thiothixene': [0.032, 0.021, 0.02, 0.1]}
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># {'Celecoxib': 0.03, 'Troglitazone': 0.01, 'Thiothixene': 0.6}
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
+<h3 id="similaritydissimilarity">Similarity/Dissimilarity</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> This oracle aims to generate molecules similar/dissimilar to Aripiprazole/Albuterol/Mestranol. Note that these molecules should be removed from the training set. From Guacamol Benchmark.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Similarity'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># {'Aripiprazole': [0.03, 0.32, 0.01, 0.1], 'Albuterol': [0.33, 0.12, 0.0, 0.12], 'Mestranol': [0.032, 0.021, 0.02, 0.1]}
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># {'Aripiprazole': 0.03, 'Albuterol': 0.01, 'Mestranol': 0.6}
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
+<h3 id="median-molecules">Median Molecules</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> This oracle aims to generate molecules that simultaneously maximize similarities with several molecules. From Guacamol Benchmark.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Median'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># {'Median 1': [0.03, 0.32, 0.01, 0.1], 'Median 2': [0.33, 0.12, 0.0, 0.12]}
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># {'Median 1': 0.03, 'Median 2': 0.01}
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
+<h3 id="isomers">Isomers</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> This oracle aims to generate molecules that correspond to a target molecular formula (e.g., C7H8N2O2). It assess theb flexibility of the model to generate molecules following a simple pattern (which is a priori unknown). From Guacamol Benchmark. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Isomers'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># {'C11H24': [0.03, 0.32, 0.01, 0.1], 'C9H10N2O2PF2Cl': [0.33, 0.12, 0.0, 0.12]}
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># {'C11H24': 0.03, 'C9H10N2O2PF2Cl': 0.01}
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
+<h3 id="multi-property-objective-mpo">Multi-Property Objective (MPO)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> This oracle measures multiple physiochemical properpties of known drug. So each drug corresponds to multiple-property objectives. It contains seven drugs (Osimertinib, Fexofenadine, Ranolazine, Perindopril, Amlodipine, Sitagliptin, Zaleplon) where each has various objectives. From Guacamol Benchmark.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MPO'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># {'Osimertinib': [0.03, 0.32, 0.01, 0.1], 'Fexofenadine': [0.33, 0.12, 0.0, 0.12], 'Ranolazine': [0.03, 0.32, 0.01, 0.1], 'Perindopril': [0.33, 0.12, 0.0, 0.12], 'Amlodipine': [0.03, 0.32, 0.01, 0.1], 'Sitagliptin': [0.33, 0.12, 0.0, 0.12], 'Zaleplon': [0.03, 0.32, 0.01, 0.1]}
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># {'Osimertinib': 0.03, 'Fexofenadine': 0.33, 'Ranolazine': 0.03, 'Perindopril': 0.33, 'Amlodipine': 0.03, 'Sitagliptin': 0.33, 'Zaleplon': 0.32}
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
+<h3 id="valsartan-smarts">Valsartan SMARTS</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The valsartan SMARTS benchmark targets molecules containing a SMARTS pattern related to valsartan while being characterized by physicochemical properties corresponding to the sitagliptin molecule. From Guacamol Benchmark. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Valsartan'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># 0.03
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
+<h3 id="hop">Hop</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The Scaffold Hop and Decorator Hop benchmarks aim to maximize the similarity to a SMILES string, while keeping or excluding specific SMARTS patterns, mimicking the tasks of changing the scaffold of a compound while keeping specific substituents and keeping a scaffold fixed while changing the substitution pattern. From Guacamol Benchmark. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Hop'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># {'Scaffold Hop': [0.03, 0.32, 0.01, 0.1], 'Decorator Hop': [0.33, 0.12, 0.0, 0.12]}
+</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
+<span class="c1"># {'Scaffold Hop': 0.03, 'Decorator Hop': 0.01}
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
 
 <h2 id="distribution-learning-oracles">Distribution Learning Oracles</h2>
 
 <h3 id="diversity">Diversity</h3>
 
+<p class="is-size-6">  <strong> Description: </strong>The diversity of a set of molecules is defined as the average pairwise Tanimoto distance between the Morgan fingerprints.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Diversity'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># 0.2
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://arxiv.org/abs/1708.08227"> Benhenda, Mostapha. “ChemGAN challenge for drug discovery: can AI reproduce natural chemical diversity?.” arXiv preprint arXiv:1708.08227 (2017).</a></p>
+
+<hr />
+
+<h3 id="kl-divergence">KL divergence</h3>
+
+<p class="is-size-6">  <strong> Description: </strong>  KL divergence between the probability distributions of a variety of physicochemical descriptors for the training set and a set of generated molecules. Models able to capture the distributions of molecules in the training set will lead to small KL divergence values. To increase diversity, we want high KL.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'KL'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># 0.2
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
+<h3 id="frechet-chemnet-distance-fcd">Frechet ChemNet Distance (FCD)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> FCD first takes the means and covariances of the activations of the penultimate layer of ChemNet are calculated for the reference set and for the set of generated molecules. The FCD is then calculated as the Frechet distance for both pairs of values. Similar molecule distributions are characterized by low FCD values.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'FCD'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># 0.2
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
 <h3 id="novelty">Novelty</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> Novelty is the fraction of the generated molecules that are not present in the training set.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Novelty'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">train_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'NC(=O)c3....'</span> <span class="s">'CCCc2ccc....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'NC(=O)c1c....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">,</span> <span class="n">train_set</span><span class="p">)</span>
+<span class="c1"># 0.2
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
+
+<hr />
 
 <h3 id="validity">Validity</h3>
 
+<p class="is-size-6">  <strong> Description: </strong> Validity is calculated using RDKit’s molecular structure parser that checks atoms’ valency and consistency of bonds in aromatic rings.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Validity'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># 0.2
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
+
+<hr />
+
 <h3 id="uniqueness">Uniqueness</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> Uniqueness measures how often a model is able to generate duplicated molecules. If that is the case, the uniqueness is low and vice versa. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Uniqueness'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># 0.2
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
+
+<hr />
+
 
 </div>
                 </div>
