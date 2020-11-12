@@ -4,7 +4,9 @@ oracle = Oracle(name = 'qed')
 oracle = Oracle(name = 'jnk')
 oracle = Oracle(name = 'gsk3')
 oracle = Oracle(name = 'drd2')
-
+oracle = Oracle(name = 'sa')
+oracle = Oracle(name = 'Fexofenadine_MPO')
+oracle = Oracle(name = 'Osimertinib_MPO')
 
 smiles_lst = ['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
 			  'C[C@@H]1CCc2c(sc(NC(=O)c3ccco3)c2C(N)=O)C1', \
