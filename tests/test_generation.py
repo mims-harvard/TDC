@@ -1,4 +1,4 @@
-from tdc.generation import PairMolGen, Oracle, Reaction, RetroSyn, Distribution_Dataloader
+from tdc.generation import PairMolGen, Reaction, RetroSyn, Distribution_Dataloader
 
 # ### test property evaluator 
 
