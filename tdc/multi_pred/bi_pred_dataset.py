@@ -1,164 +1,281 @@
-import pandas as pd
-import numpy as np
-import os, sys, json 
 import warnings
+
 warnings.filterwarnings("ignore")
 
 from .. import base_dataset
 from ..utils import *
 
+
 class DataLoader(base_dataset.DataLoader):
-	def __init__(self, name, path, label_name, print_stats, dataset_names):
-		if name.lower() in dataset2target_lists.keys():
-			#print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
-			if label_name is None:
-				raise ValueError("Please select a label name. You can use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
+    """Add a Class description here.
 
-		entity1, entity2, raw_y, entity1_idx, entity2_idx = interaction_dataset_load(name, path, label_name, dataset_names)
-		
-		self.name = name
-		self.entity1 = entity1
-		self.entity2 = entity2
-		self.raw_y = raw_y
-		self.y = raw_y
-		self.entity1_idx = entity1_idx
-		self.entity2_idx = entity2_idx
-		self.path = path
-		self.file_format = 'csv'
-		self.label_name = label_name
-		
-		self.entity1_name = 'Entity1'
-		self.entity2_name = 'Entity2'
+    Parameters
+    ----------
+    name :
+        Add a variable description here.
 
-	def get_data(self, format = 'df'):
-		'''
-		Arguments:
-			df: return pandas DataFrame; if not true, return np.arrays			
-		returns:
-			self.drugs: drug smiles strings np.array
-			self.targets: target Amino Acid Sequence np.array
-			self.y: inter   action score np.array
-		'''
-		if format == 'df':
-			return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx, self.entity1_name: self.entity1, self.entity2_name + '_ID': self.entity2_idx, self.entity2_name: self.entity2, 'Y': self.y})
-		elif format == 'DeepPurpose':
-			return self.entity1, self.entity2, self.y
-		elif format == 'dict':			
-			return {self.entity1_name + '_ID': self.entity1_idx, self.entity1_name: self.entity1, self.entity2_name + '_ID': self.entity2_idx, self.entity2_name: self.entity2, 'Y': self.y}
-		else:
-			raise AttributeError("Please use the correct format input")
+    path :
+        Add a variable description here.
 
-	def print_stats(self):
-		print_sys('--- Dataset Statistics ---')
-		print(str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.', flush = True, file = sys.stderr)
-		print(str(len(np.unique(self.entity2))) + ' unique ' + self.entity2_name.lower() + 's.', flush = True, file = sys.stderr)
-		print(str(len(self.y)) + ' ' + self.entity1_name.lower() + '-' + self.entity2_name.lower() + ' pairs.', flush = True, file = sys.stderr)
-		print_sys('--------------------------')
+    label_name :
+        Add a variable description here.
 
-	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2], column_name = None):
-		'''
-		Arguments:
-			method: splitting schemes: random, cold_drug, cold_target
-			seed: 'benchmark' seed set to 1234, or int values
-			frac: train/val/test split
-		'''
-		if seed == 'benchmark':
-			seed = 1234
+    print_stats :
+        Add a variable description here.
 
-		df = self.get_data(format = 'df')
+    dataset_names :
+        Add a variable description here.
+    """
 
-		if method == 'random':
-			return create_fold(df, seed, frac)
-		elif method == 'cold_' + self.entity1_name.lower():
-			return create_fold_setting_cold(df, seed, frac, self.entity1_name)
-		elif method == 'cold_' + self.entity2_name.lower():
-			return create_fold_setting_cold(df, seed, frac, self.entity2_name)
-		elif (column_name is not None) and (column_name in df.columns.values): 
-			if method == 'cold_split':		
-				return create_fold_setting_cold(df, seed, frac, column_name)
-		else:
-			raise AttributeError("Please select from random_split, or cold_split, if cold split. please specify the column name!")
-			
-	def neg_sample(self, frac = 1):
-		df = NegSample(df = self.get_data(format = 'df'), column_names = [self.entity1_name + '_ID', self.entity1_name, self.entity2_name + '_ID', self.entity2_name], frac = frac)
-		self.entity1_idx = df[self.entity1_name + '_ID']
-		self.entity2_idx = df[self.entity2_name + '_ID']
-		self.entity1 = df[self.entity1_name]
-		self.entity2 = df[self.entity2_name]
-		self.y = df['Y']
-		self.raw_y = self.y
-		return self
+    def __init__(self, name, path, label_name, print_stats, dataset_names):
+        if name.lower() in dataset2target_lists.keys():
+            # print_sys("Tip: Use tdc.utils.retrieve_label_name_list(
+            # '" + name.lower() + "') to retrieve all available label names.")
+            if label_name is None:
+                raise ValueError(
+                    "Please select a label name. "
+                    "You can use tdc.utils.retrieve_label_name_list('" +
+                    name.lower() + "') to retrieve all available label names.")
 
-	def to_graph(self, threshold = None, format = 'edge_list', split = True, frac = [0.7, 0.1, 0.2], seed = 'benchmark', order = 'descending'):
-		'''
-		Arguments:
-			format: edge_list / dgl / pyg df object			
-		'''
-		if seed == 'benchmark':
-			seed = 1234
+        entity1, entity2, raw_y, entity1_idx, entity2_idx = \
+            interaction_dataset_load(name, path, label_name, dataset_names)
 
-		df = self.get_data(format = 'df')
+        self.name = name
+        self.entity1 = entity1
+        self.entity2 = entity2
+        self.raw_y = raw_y
+        self.y = raw_y
+        self.entity1_idx = entity1_idx
+        self.entity2_idx = entity2_idx
+        self.path = path
+        self.file_format = 'csv'
+        self.label_name = label_name
+        self.print_stats = print_stats
 
-		if len(np.unique(self.raw_y)) > 2:
-			print("The dataset label consists of affinity scores. Binarization using threshold " + str(threshold) + " is conducted to construct the positive edges in the network. Adjust the threshold by to_graph(threshold = X)", flush = True, file = sys.stderr)
-			if threshold is None:
-				raise AttributeError("Please specify the threshold to binarize the data by 'to_graph(threshold = N)'!")
-			df['label_binary'] = label_transform(self.raw_y, True, threshold, False, verbose  = False, order = order)
-		else:
-			# already binary
-			df['label_binary'] = df['Y']
+        self.entity1_name = 'Entity1'
+        self.entity2_name = 'Entity2'
 
-		df_pos = df[df.label_binary == 1]
-		df_neg = df[df.label_binary == 0]
+    def get_data(self, format='df'):
+        """Add a method description here.
 
-		return_dict = {}
+        Parameters
+        ----------
+        format : str, optional (default="df")
+            If True, return Pandas DF; return numpy array otherwise.
 
-		pos_edges = df_pos[[self.entity1_name + '_ID', self.entity2_name + '_ID']].values
-		neg_edges = df_neg[[self.entity1_name + '_ID', self.entity2_name + '_ID']].values
-		edges = df[[self.entity1_name + '_ID', self.entity2_name + '_ID']].values
+        Returns
+        -------
+        drugs : numpy array
+            Drug smiles strings.
 
-		if format == 'edge_list':
-			return_dict['edge_list'] = pos_edges
-			return_dict['neg_edges'] = neg_edges
-		elif format == 'dgl':
-			try:
-				import dgl
-			except:
-				install("dgl")
-				import dgl
-			unique_entities = np.unique(pos_edges.T.flatten()).tolist()
-			index = list(range(len(unique_entities)))
-			dict_ = dict(zip(unique_entities, index))
-			edge_list1 = np.array([dict_[i] for i in pos_edges.T[0]])
-			edge_list2 = np.array([dict_[i] for i in pos_edges.T[1]])
-			return_dict['dgl_graph'] = dgl.DGLGraph((edge_list1, edge_list2))
-			return_dict['index_to_entities'] = dict_
-			
-		elif format == 'pyg':
-			try:
-				import torch
-				from torch_geometric.data import Data
-			except:
-				raise ImportError("Please see https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html to install pytorch geometric!")
-			
-			unique_entities = np.unique(pos_edges.T.flatten()).tolist()
-			index = list(range(len(unique_entities)))
-			dict_ = dict(zip(unique_entities, index))
-			edge_list1 = np.array([dict_[i] for i in pos_edges.T[0]])
-			edge_list2 = np.array([dict_[i] for i in pos_edges.T[1]])
+        targets : numpy array
+            Target Amino Acid Sequence.
 
-			edge_index = torch.tensor([edge_list1, edge_list2], dtype=torch.long)
-			x = torch.tensor(np.array(index), dtype=torch.float)
-			data = Data(x=x, edge_index=edge_index)
-			return_dict['pyg_graph'] = data
-			return_dict['index_to_entities'] = dict_
-			
-		elif format == 'df':
-			return_dict['df'] = df
-		
-		if split:
-			return_dict['split'] = create_fold(df, seed, frac)
+        y : numpy array
+            Interaction score.
+        """
+        if format == 'df':
+            return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx,
+                                 self.entity1_name: self.entity1,
+                                 self.entity2_name + '_ID': self.entity2_idx,
+                                 self.entity2_name: self.entity2, 'Y': self.y})
+        elif format == 'DeepPurpose':
+            return self.entity1, self.entity2, self.y
+        elif format == 'dict':
+            return {self.entity1_name + '_ID': self.entity1_idx,
+                    self.entity1_name: self.entity1,
+                    self.entity2_name + '_ID': self.entity2_idx,
+                    self.entity2_name: self.entity2, 'Y': self.y}
+        else:
+            raise AttributeError("Please use the correct format input")
 
-		return return_dict
+    def print_stats(self):
+        """Add a method description here.
+        """
+        print_sys('--- Dataset Statistics ---')
+        print(str(len(np.unique(
+            self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.',
+              flush=True, file=sys.stderr)
+        print(str(len(np.unique(
+            self.entity2))) + ' unique ' + self.entity2_name.lower() + 's.',
+              flush=True, file=sys.stderr)
+        print(str(len(self.y)) + ' ' + self.entity1_name.lower() +
+              '-' + self.entity2_name.lower() + ' pairs.',
+              flush=True, file=sys.stderr)
+        print_sys('--------------------------')
 
+    def get_split(self, method='random', seed='benchmark',
+                  frac=[0.7, 0.1, 0.2], column_name=None):
+        """Add a method description here.
 
+        Parameters
+        ----------
+        method : splitting schemes
+            Splitting schemes: {"random", "cold_drug", "cold_target"}
+
+        seed : int
+            Add a variable description here.
+
+        frac : list, optional (default=[0.7, 0.1, 0.2])
+            Train/val/test split fractions.
+
+        column_name : str, optional (default=None)
+            Add a variable description here.
+
+        Returns
+        -------
+
+        """
+
+        if seed == 'benchmark':
+            seed = 1234
+
+        df = self.get_data(format='df')
+
+        if method == 'random':
+            return create_fold(df, seed, frac)
+        elif method == 'cold_' + self.entity1_name.lower():
+            return create_fold_setting_cold(df, seed, frac, self.entity1_name)
+        elif method == 'cold_' + self.entity2_name.lower():
+            return create_fold_setting_cold(df, seed, frac, self.entity2_name)
+        elif (column_name is not None) and (column_name in df.columns.values):
+            if method == 'cold_split':
+                return create_fold_setting_cold(df, seed, frac, column_name)
+        else:
+            raise AttributeError("Please select from random_split, "
+                                 "or cold_split. If cold split, "
+                                 "please specify the column name!")
+
+    def neg_sample(self, frac=1):
+        """Add a method description here.
+
+        Parameters
+        ----------
+        frac : int or float, optional (default=1)
+            Add a variable description here.
+        """
+        df = NegSample(df=self.get_data(format='df'),
+                       column_names=[self.entity1_name + '_ID',
+                                     self.entity1_name,
+                                     self.entity2_name + '_ID',
+                                     self.entity2_name], frac=frac)
+        self.entity1_idx = df[self.entity1_name + '_ID']
+        self.entity2_idx = df[self.entity2_name + '_ID']
+        self.entity1 = df[self.entity1_name]
+        self.entity2 = df[self.entity2_name]
+        self.y = df['Y']
+        self.raw_y = self.y
+        return self
+
+    def to_graph(self, threshold=None, format='edge_list', split=True,
+                 frac=[0.7, 0.1, 0.2], seed='benchmark', order='descending'):
+        """Add a method description here.
+
+        Parameters
+        ----------
+        threshold :
+            Add a variable description here.
+
+        format :
+            Add a variable description here.
+
+        split :
+            Add a variable description here.
+
+        frac : list, optional (default=frac=[0.7, 0.1, 0.2])
+            Train/val/test split fractions.
+
+        seed : int
+            Add a variable description here.
+
+        order :
+            Add a variable description here.
+
+        Returns
+        -------
+
+        """
+        '''
+        Arguments:
+            format: edge_list / dgl / pyg df object
+        '''
+        if seed == 'benchmark':
+            seed = 1234
+
+        df = self.get_data(format='df')
+
+        if len(np.unique(self.raw_y)) > 2:
+            print("The dataset label consists of affinity scores. "
+                  "Binarization using threshold " +
+                  str(threshold) +
+                  " is conducted to construct the positive edges in the network. "
+                  "Adjust the threshold by to_graph(threshold = X)",
+                  flush=True, file=sys.stderr)
+            if threshold is None:
+                raise AttributeError(
+                    "Please specify the threshold to binarize the data by "
+                    "'to_graph(threshold = N)'!")
+            df['label_binary'] = label_transform(self.raw_y, True, threshold,
+                                                 False, verbose=False,
+                                                 order=order)
+        else:
+            # already binary
+            df['label_binary'] = df['Y']
+
+        df_pos = df[df.label_binary == 1]
+        df_neg = df[df.label_binary == 0]
+
+        return_dict = {}
+
+        pos_edges = df_pos[
+            [self.entity1_name + '_ID', self.entity2_name + '_ID']].values
+        neg_edges = df_neg[
+            [self.entity1_name + '_ID', self.entity2_name + '_ID']].values
+        edges = df[
+            [self.entity1_name + '_ID', self.entity2_name + '_ID']].values
+
+        if format == 'edge_list':
+            return_dict['edge_list'] = pos_edges
+            return_dict['neg_edges'] = neg_edges
+        elif format == 'dgl':
+            try:
+                import dgl
+            except:
+                install("dgl")
+                import dgl
+            unique_entities = np.unique(pos_edges.T.flatten()).tolist()
+            index = list(range(len(unique_entities)))
+            dict_ = dict(zip(unique_entities, index))
+            edge_list1 = np.array([dict_[i] for i in pos_edges.T[0]])
+            edge_list2 = np.array([dict_[i] for i in pos_edges.T[1]])
+            return_dict['dgl_graph'] = dgl.DGLGraph((edge_list1, edge_list2))
+            return_dict['index_to_entities'] = dict_
+
+        elif format == 'pyg':
+            try:
+                import torch
+                from torch_geometric.data import Data
+            except:
+                raise ImportError(
+                    "Please see https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html to install pytorch geometric!")
+
+            unique_entities = np.unique(pos_edges.T.flatten()).tolist()
+            index = list(range(len(unique_entities)))
+            dict_ = dict(zip(unique_entities, index))
+            edge_list1 = np.array([dict_[i] for i in pos_edges.T[0]])
+            edge_list2 = np.array([dict_[i] for i in pos_edges.T[1]])
+
+            edge_index = torch.tensor([edge_list1, edge_list2],
+                                      dtype=torch.long)
+            x = torch.tensor(np.array(index), dtype=torch.float)
+            data = Data(x=x, edge_index=edge_index)
+            return_dict['pyg_graph'] = data
+            return_dict['index_to_entities'] = dict_
+
+        elif format == 'df':
+            return_dict['df'] = df
+
+        if split:
+            return_dict['split'] = create_fold(df, seed, frac)
+
+        return return_dict
