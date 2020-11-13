@@ -71,7 +71,7 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
                             
                             <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
@@ -215,7 +215,7 @@
 <p class="is-size-6">  <strong> Note: </strong> Tox21 contains multiple assays data. To retrieve the specific labels for that assay, specify the label name in the <code>label_name</code> variable to the data loader. You can find all available label names by calling: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">retrieve_label_name_list</span>
-<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'tox21'</span><span class="p">)</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'Tox21'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p class="is-size-6"> Then, go to the standard TDC data loader procedure with the label name specified. </p>
@@ -244,7 +244,7 @@
 <p class="is-size-6">  <strong> Note: </strong> ToxCast contains multiple assays data. To retrieve the specific labels for that assay, specify the label name in the <code>label_name</code> variable to the data loader. You can find all available label names by calling: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">retrieve_label_name_list</span>
-<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'toxcast'</span><span class="p">)</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'Toxcast'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p class="is-size-6"> Then, go to the standard TDC data loader procedure with the label name specified. </p>
@@ -262,7 +262,7 @@
 
 <h3 id="clintox">ClinTox</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The ClinTox dataset compares drugs that have failed clinical trials for toxicity reasons. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> The ClinTox dataset includes drugs that have failed clinical trials for toxicity reasons and also drugs that are associated with successful trials. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the clinical toxicity. </p>
 

@@ -71,7 +71,7 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Data Evaluation</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
                             
                             <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
@@ -121,7 +121,7 @@
                 
                 
                 
-                <li><a href="/TDC/functions/data_evaluation/" class="">Data Evaluation</a></li>
+                <li><a href="/TDC/functions/data_evaluation/" class="">Model Evaluation</a></li>
                 
                 
                 
@@ -161,7 +161,7 @@
     <ul>
       <li><a href="#random-split">Random Split</a></li>
       <li><a href="#scaffold-split">Scaffold Split</a></li>
-      <li><a href="#cold-split">Cold Split</a></li>
+      <li><a href="#cold-start-split">Cold-Start Split</a></li>
     </ul>
   </li>
 </ul>
@@ -215,7 +215,7 @@ Below describes the various split schemes:
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'scaffold'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h3 id="cold-split">Cold Split</h3>
+<h3 id="cold-start-split">Cold-Start Split</h3>
 <p class="is-size-6">  <strong> Description: </strong> Cold split is for multi-instance prediction problems such as DTI, GDA, DrugRes, MTI, where they present two entity types. It first splits on one entity type into train/valid/test and then move all pairs associated with that entity in each set as the final splits. To use that, set <code>column_name</code>&gt; to be the entity that you want to split on. For example, to do cold drug split on DTI task: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>

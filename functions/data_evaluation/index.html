@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Data Evaluation - TDC</title>
+    <title>Model Evaluation - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Data Evaluation | TDC</title>
+<title>Model Evaluation | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Data Evaluation" />
+<meta property="og:title" content="Model Evaluation" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/functions/data_evaluation/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/functions/data_evaluation/","headline":"Data Evaluation","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/functions/data_evaluation/","headline":"Model Evaluation","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <!-- head scripts --></head>
 
@@ -71,7 +71,7 @@
                             
                             <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
                             
-                            <a href="/TDC/functions/data_evaluation/" class="navbar-item is-active">Data Evaluation</a>
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item is-active">Model Evaluation</a>
                             
                             <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
@@ -121,7 +121,7 @@
                 
                 
                 
-                <li><a href="/TDC/functions/data_evaluation/" class="is-active">Data Evaluation</a></li>
+                <li><a href="/TDC/functions/data_evaluation/" class="is-active">Model Evaluation</a></li>
                 
                 
                 
@@ -157,31 +157,31 @@
     <div class="menu">
         <p class="menu-label">Function Index</p>
         <ul class="menu-list">
-  <li><a href="#regression">Regression</a>
+  <li><a href="#regression-metric">Regression Metric</a>
     <ul>
-      <li><a href="#mean-squared-errormse">Mean Squared Error(MSE)</a></li>
-      <li><a href="#mean-absolute-errormae">Mean Absolute Error(MAE)</a></li>
+      <li><a href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
+      <li><a href="#mean-absolute-error-mae">Mean Absolute Error (MAE)</a></li>
       <li><a href="#coefficient-of-determination-r">Coefficient of Determination (R²)</a></li>
     </ul>
   </li>
-  <li><a href="#binary-classification">Binary Classification</a>
+  <li><a href="#binary-classification-metric">Binary Classification Metric</a>
     <ul>
       <li><a href="#area-under-the-receiver-operating-characteristic-curve-roc-auc">Area Under the Receiver Operating Characteristic Curve (ROC-AUC)</a></li>
       <li><a href="#area-under-the-precision-recall-curve-pr-auc">Area Under the Precision-Recall Curve (PR-AUC)</a></li>
-      <li><a href="#accuracy">Accuracy</a></li>
+      <li><a href="#accuracy-metric">Accuracy Metric</a></li>
       <li><a href="#precision">Precision</a></li>
       <li><a href="#recall">Recall</a></li>
-      <li><a href="#f1">F1</a></li>
+      <li><a href="#f1-score">F1 Score</a></li>
     </ul>
   </li>
-  <li><a href="#multi-class-classification">Multi-class Classification</a>
+  <li><a href="#multi-class-classification-metric">Multi-class Classification Metric</a>
     <ul>
       <li><a href="#micro-f1-micro-precision-micro-recall-accuracy">Micro-F1, Micro-Precision, Micro-Recall, Accuracy</a></li>
       <li><a href="#macro-f1">Macro-F1</a></li>
-      <li><a href="#cohens-kappa">Cohen’s Kappa</a></li>
+      <li><a href="#cohens-kappa-kappa">Cohen’s Kappa (Kappa)</a></li>
     </ul>
   </li>
-  <li><a href="#token-level-classification">Token-level Classification</a>
+  <li><a href="#token-level-classification-metric">Token-level Classification Metric</a>
     <ul>
       <li><a href="#average-roc-auc">Average ROC-AUC</a></li>
     </ul>
@@ -194,9 +194,9 @@
 
 
 <div class="content">
-    <h2 id="regression">Regression</h2>
+    <h2 id="regression-metric">Regression Metric</h2>
 
-<h3 id="mean-squared-errormse">Mean Squared Error(MSE)</h3>
+<h3 id="mean-squared-error-mse">Mean Squared Error (MSE)</h3>
 
 <p class="is-size-6">  <strong> Description: </strong> The mean square error measures the averages of the squares of the errors between the true value and the predicted value. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the MSE value.</p>
 
@@ -207,7 +207,7 @@
 <span class="c1"># score: 0.1
 </span></code></pre></div></div>
 
-<h3 id="mean-absolute-errormae">Mean Absolute Error(MAE)</h3>
+<h3 id="mean-absolute-error-mae">Mean Absolute Error (MAE)</h3>
 <p class="is-size-6">  <strong> Description: </strong> The mean absolute error measures the averages of the absolute value of the errors between the true value and the predicted value. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the MAE value.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
@@ -228,7 +228,7 @@
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
 
-<h2 id="binary-classification">Binary Classification</h2>
+<h2 id="binary-classification-metric">Binary Classification Metric</h2>
 
 <h3 id="area-under-the-receiver-operating-characteristic-curve-roc-auc">Area Under the Receiver Operating Characteristic Curve (ROC-AUC)</h3>
 
@@ -252,7 +252,7 @@
 <span class="c1"># score: 0.88
 </span></code></pre></div></div>
 
-<h3 id="accuracy">Accuracy</h3>
+<h3 id="accuracy-metric">Accuracy Metric</h3>
 
 <p class="is-size-6">  <strong> Description: </strong> The accuracy calculates the fraction of correct prediction at a threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the accuracy score. The default of threshold value is 0.5. </p>
 
@@ -285,7 +285,7 @@
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
 
-<h3 id="f1">F1</h3>
+<h3 id="f1-score">F1 Score</h3>
 
 <p class="is-size-6">  <strong> Description: </strong> The F1 is the harmonic mean of recall and precision. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the recall score. The default of threshold value is 0.5. </p>
 
@@ -296,7 +296,7 @@
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
 
-<h2 id="multi-class-classification">Multi-class Classification</h2>
+<h2 id="multi-class-classification-metric">Multi-class Classification Metric</h2>
 
 <h3 id="micro-f1-micro-precision-micro-recall-accuracy">Micro-F1, Micro-Precision, Micro-Recall, Accuracy</h3>
 <p class="is-size-6">  <strong> Description: </strong> The micro-F1 in multi-class prediction is the same as micro-precision, micro-recall and accuracy. It calculates the fraction of correct prediction. It takes in a list/array of true integer label index <code>y_true</code> and a list/array of predicted integer label index <code>y_pred</code>, and outputs the score. </p>
@@ -318,7 +318,7 @@
 <span class="c1"># score: 0.5
 </span></code></pre></div></div>
 
-<h3 id="cohens-kappa">Cohen’s Kappa</h3>
+<h3 id="cohens-kappa-kappa">Cohen’s Kappa (Kappa)</h3>
 
 <p class="is-size-6">  <strong> Description: </strong> The Kappa score calculates the level of agreement between the prediction and the true labels. It takes in a list/array of true integer label index <code>y_true</code> and a list/array of predicted integer label index <code>y_pred</code>, and outputs the Kappa score. </p>
 
@@ -329,7 +329,7 @@
 <span class="c1"># score: 0.5
 </span></code></pre></div></div>
 
-<h2 id="token-level-classification">Token-level Classification</h2>
+<h2 id="token-level-classification-metric">Token-level Classification Metric</h2>
 
 <h3 id="average-roc-auc">Average ROC-AUC</h3>
 
