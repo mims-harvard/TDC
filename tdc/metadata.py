@@ -69,13 +69,13 @@ catalyst_dataset_names = ['uspto_catalyst']
 # generation
 retrosyn_dataset_names = ['uspto50k', 'uspto']
 
-forwardsyn_dataset_names = ['uspto', 'uspto50k']
+forwardsyn_dataset_names = ['uspto']
 
 single_molecule_dataset_names = ['zinc', 'moses', 'chembl']
 
 paired_dataset_names = ['uspto50k', 'uspto']
 
-property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3', 'jnk3',]
+property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
 evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy', 'mse', 'mae', 'r2', 'micro-f1', 'macro-f1', 'kappa', 'avg-roc-auc']
 
@@ -164,7 +164,7 @@ name2type = {'toxcast': 'tab',
  'mhc1_iedb-imgt_nielsen': 'tab',
  'mhc2_iedb_jensen': 'tab',
  'uspto': 'csv',
- 'uspto50k': 'csv',
+ 'uspto50k': 'tab',
  'zinc': 'tab', 
  'moses': 'tab',
  'chembl': 'tab',
@@ -188,7 +188,6 @@ name2type = {'toxcast': 'tab',
  'uspto_yields': 'pkl', 
  'uspto_catalyst': 'csv',
  'buchwald-hartwig': 'pkl',
- # 'uspto_reaction': 'csv'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -248,8 +247,7 @@ name2id = {'bbb_adenot': 4139555,
  'mirtarbase': 4167359,
  'disgenet': 4168282,
  'sabdab_liberis': 4168425,
- # 'uspto':'xxxx',
- 'uspto50k': 'xxxxx',
+ 'uspto50k': 4171823,
  'buchwald-hartwig': 4171576,
  'uspto_yields': 4171575, 
  'uspto_catalyst': 4171574,
@@ -330,6 +328,5 @@ versioning = {
  'uspto',
  'buchwald-hartwig',
  'uspto_yields',
- 'uspto_catalyst',
- 'uspto_reaction']
+ 'uspto_catalyst']
 }
