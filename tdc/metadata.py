@@ -253,7 +253,7 @@ name2id = {'bbb_adenot': 4139555,
  'buchwald-hartwig': 4171576,
  'uspto_yields': 4171575, 
  'uspto_catalyst': 4171574,
- 'uspto': 4170964
+ 'uspto': 4171642,
  }
 
 oracle2type = {'drd2': 'pkl', 

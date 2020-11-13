@@ -729,7 +729,7 @@ if __name__ == "__main__":
 	# print(similarity(smiles, smiles))
 	# print(qed(smiles))
 	# print(penalized_logp(smiles))
-	# print(drd2(smiles))
+	print(drd2(smiles))
 	# print(SA(smiles))
 	# list_of_smiles = ['CCC', 'fewjio', smiles, smiles]
 	# print(validity_ratio(list_of_smiles))
@@ -739,9 +739,9 @@ if __name__ == "__main__":
 	# print(median1(smiles))
 	# print(median2(smiles))
 	# print(osimertinib_mpo(smiles))
-	# print(gsk3(smiles))
-	# print(jnk3(smiles))
-	print(Fexofenadine_mpo(smiles))
+	print(gsk3(smiles))
+	print(jnk3(smiles))
+	# print(Fexofenadine_mpo(smiles))
 
 
 
