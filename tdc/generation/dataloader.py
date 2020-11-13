@@ -49,7 +49,7 @@ class PairMolGen(generation_dataset.DataLoader):
 				self.print_stats()
 		# except:
 		# 	raise AttributeError("Please use the correct and available dataset name!")
-
+		print_sys('Done!')
 	def get_data(self, format = 'df'):
 		'''
 			format: 
@@ -77,7 +77,7 @@ class PairMolGen(generation_dataset.DataLoader):
 		df = self.get_data(format = 'df')
 		
 		if method == 'random':
-			return utils.create_fold(df, seed, frac)
+			return create_fold(df, seed, frac)
 		else:
 			raise AttributeError("Please specify the correct splitting method")
 
