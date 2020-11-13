@@ -23,7 +23,7 @@ with open(path.join(this_directory, 'requirements.txt'),
           encoding='utf-8') as f:
     requirements = f.read().splitlines()
 
-setup(name='TDC',
+setup(name='PyTDC',
       version=__version__,
       description='Therapeutics Data Commons',
       long_description=readme(),
