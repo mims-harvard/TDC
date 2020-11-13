@@ -342,6 +342,7 @@ def calculateScore(m):
 def load_drd2_model():
     # global clf_model
     # name = op.join(op.dirname(__file__), 'clf_py36.pkl')
+    print("==== load drd2 oracle =====")
     name = 'oracle/drd2.pkl'
     with open(name, "rb") as f:
         clf_model = pickle.load(f)
@@ -358,13 +359,15 @@ def fingerprints_from_mol(mol):
 
 
 def drd2(smile):
-    # if clf_model is None:
-    clf_model = load_drd2_model()
+
+    if 'drd2_model' not in globals().keys():
+        global drd2_model
+        drd2_model = load_drd2_model() 
 
     mol = Chem.MolFromSmiles(smile)
     if mol:
         fp = fingerprints_from_mol(mol)
-        score = clf_model.predict_proba(fp)[:, 1]
+        score = drd2_model.predict_proba(fp)[:, 1]
         return float(score)
     return 0.0
 
@@ -447,20 +450,40 @@ https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py
 
 '''
 
-class gsk3b:
-	def __init__(self):
-		gsk3_model_path = 'oracle/gsk3b.pkl'
-		with open(gsk3_model_path, 'rb') as f:
-			self.gsk3_model = pickle.load(f)
+# class gsk3b:
+# 	def __init__(self):
+# 		gsk3_model_path = 'oracle/gsk3b.pkl'
+# 		with open(gsk3_model_path, 'rb') as f:
+# 			self.gsk3_model = pickle.load(f)
 
-	def __call__(self, smiles):
-		molecule = smiles_to_rdkit_mol(smiles)
-		fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
-		features = np.zeros((1,))
-		DataStructs.ConvertToNumpyArray(fp, features)
-		fp = features.reshape(1, -1) 
-		gsk3_score = self.gsk3_model.predict_proba(fp)[0,1]
-		return gsk3_score 
+# 	def __call__(self, smiles):
+# 		molecule = smiles_to_rdkit_mol(smiles)
+# 		fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
+# 		features = np.zeros((1,))
+# 		DataStructs.ConvertToNumpyArray(fp, features)
+# 		fp = features.reshape(1, -1) 
+# 		gsk3_score = self.gsk3_model.predict_proba(fp)[0,1]
+# 		return gsk3_score 
+
+def load_gsk3b_model():
+    gsk3_model_path = 'oracle/gsk3b.pkl'
+    print('==== load gsk3b oracle =====')
+    with open(gsk3_model_path, 'rb') as f:
+        gsk3_model = pickle.load(f)
+    return gsk3_model 
+
+def gsk3b(smiles):
+    if 'gsk3_model' not in globals().keys():
+        global gsk3_model 
+        gsk3_model = load_gsk3b_model()
+
+    molecule = smiles_to_rdkit_mol(smiles)
+    fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
+    features = np.zeros((1,))
+    DataStructs.ConvertToNumpyArray(fp, features)
+    fp = features.reshape(1, -1) 
+    gsk3_score = gsk3_model.predict_proba(fp)[0,1]
+    return gsk3_score 
 
 
 class jnk3:

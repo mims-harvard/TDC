@@ -75,7 +75,7 @@ single_molecule_dataset_names = ['zinc', 'moses', 'chembl']
 
 paired_dataset_names = ['uspto50k', 'uspto']
 
-property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3', 'jnk3',]
+property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
 evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy', 'mse', 'mae', 'r2', 'micro-f1', 'macro-f1', 'kappa', 'avg-roc-auc']
 

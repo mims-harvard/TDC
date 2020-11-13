@@ -45,7 +45,7 @@ class Oracle:
 		elif self.name == 'sa':
 			self.evaluator_func = SA 
 		elif self.name == 'gsk3b':
-			oracle_object = gsk3b()
+			oracle_object = gsk3b
 			self.evaluator_func = oracle_object
 		elif self.name == 'jnk3':
 			oracle_object = jnk3()
