@@ -87,7 +87,10 @@ guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothi
 				   'Amlodipine_MPO', 'Sitagliptin_MPO', 'Zaleplon_MPO', \
 				   'Valsartan_SMARTS', 'deco_hop', 'scaffold_hop', 'median1', 'median2']
 
-molecule_evaluator_name = ['novelty', 'diversity', 'uniqueness', 'validity']
+#### evaluator for distribution learning, the input of __call__ is list of smiles
+molecule_evaluator_name = ['novelty', 'diversity', 'uniqueness', 'validity']  
+
+#### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 oracle_names = download_oracle_names + trivial_oracle_names + molecule_evaluator_name

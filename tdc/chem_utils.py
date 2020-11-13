@@ -584,17 +584,14 @@ def smiles_2_fingerprint_ECFP6(smiles):
 
 
 def celecoxib_rediscovery(test_smiles):
-	# celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
-	# 'ECFP4'
-
   if 'celecoxib_fp' not in globals().keys():
     global celecoxib_fp
     celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
     celecoxib_fp = smiles_2_fingerprint_ECFP4(celecoxib_smiles)
 
-	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-	similarity_value = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
-	return similarity_value
+  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+  similarity_value = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
+  return similarity_value
 
 
 def troglitazone_rediscovery(test_smiles):
@@ -605,9 +602,9 @@ def troglitazone_rediscovery(test_smiles):
     troglitazone_smiles='Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O'
     troglitazone_fp = smiles_2_fingerprint_ECFP4(troglitazone_smiles)
 
-	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-	similarity_value = DataStructs.TanimotoSimilarity(troglitazone_fp, test_fp)
-	return similarity_value	
+  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+  similarity_value = DataStructs.TanimotoSimilarity(troglitazone_fp, test_fp)
+  return similarity_value	
 
 
 def thiothixene_rediscovery(test_smiles):
@@ -618,59 +615,59 @@ def thiothixene_rediscovery(test_smiles):
     Thiothixene_smiles='CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1'  
     Thiothixene_fp = smiles_2_fingerprint_ECFP4(Thiothixene_smiles)
 
-	test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-	similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
-	return similarity_value
+  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+  similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
+  return similarity_value
 
 
 
 
 def aripiprazole_similarity(test_smiles):
-	threshold = 0.75
+  threshold = 0.75
   if 'Aripiprazole_fp' not in globals().keys():
     global Aripiprazole_fp
     Aripiprazole_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl'
     Aripiprazole_fp = smiles_2_fingerprint_FCFP4(Aripiprazole_smiles)
 
-	test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
-	similarity_value = DataStructs.TanimotoSimilarity(Aripiprazole_fp, test_fp)
-	modifier = ClippedScoreModifier(upper_x=threshold)
-	modified_similarity = modifier(similarity_value)
-	return modified_similarity 
+  test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
+  similarity_value = DataStructs.TanimotoSimilarity(Aripiprazole_fp, test_fp)
+  modifier = ClippedScoreModifier(upper_x=threshold)
+  modified_similarity = modifier(similarity_value)
+  return modified_similarity 
 
 
 def albuterol_similarity(test_smiles):
-	threshold = 0.75
+  threshold = 0.75
   if 'Albuterol_fp' not in globals().keys():
     global Albuterol_fp
     Albuterol_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1'
     Albuterol_fp = smiles_2_fingerprint_FCFP4(Albuterol_smiles)
 
-	test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
-	similarity_value = DataStructs.TanimotoSimilarity(Albuterol_fp, test_fp)
-	modifier = ClippedScoreModifier(upper_x=threshold)
-	modified_similarity = modifier(similarity_value)
-	return modified_similarity 
+  test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
+  similarity_value = DataStructs.TanimotoSimilarity(Albuterol_fp, test_fp)
+  modifier = ClippedScoreModifier(upper_x=threshold)
+  modified_similarity = modifier(similarity_value)
+  return modified_similarity 
 
 
 
 
 def mestranol_similarity(test_smiles):
-	threshold = 0.75 
+  threshold = 0.75 
   if 'Mestranol_fp' not in globals().keys():
     global Mestranol_fp
     Mestranol_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1'
     Mestranol_fp = smiles_2_fingerprint_AP(Mestranol_smiles)
 
-	test_fp = smiles_2_fingerprint_AP(test_smiles)
-	similarity_value = DataStructs.TanimotoSimilarity(Mestranol_fp, test_fp)
-	modifier = ClippedScoreModifier(upper_x=threshold)
-	modified_similarity = modifier(similarity_value)
-	return modified_similarity 
+  test_fp = smiles_2_fingerprint_AP(test_smiles)
+  similarity_value = DataStructs.TanimotoSimilarity(Mestranol_fp, test_fp)
+  modifier = ClippedScoreModifier(upper_x=threshold)
+  modified_similarity = modifier(similarity_value)
+  return modified_similarity 
 
 
 def median1(test_smiles):
-	# median mol between camphor and menthol, ECFP4 
+  # median mol between camphor and menthol, ECFP4 
   if 'camphor_fp' not in globals().keys():
     global camphor_fp, menthol_fp
     camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
@@ -680,15 +677,15 @@ def median1(test_smiles):
 	
   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
 
-	similarity_v1 = DataStructs.TanimotoSimilarity(camphor_fp, test_fp)
-	similarity_v2 = DataStructs.TanimotoSimilarity(menthol_fp, test_fp)
-	similarity_gmean = gmean([similarity_v1, similarity_v2])
-	return similarity_gmean
+  similarity_v1 = DataStructs.TanimotoSimilarity(camphor_fp, test_fp)
+  similarity_v2 = DataStructs.TanimotoSimilarity(menthol_fp, test_fp)
+  similarity_gmean = gmean([similarity_v1, similarity_v2])
+  return similarity_gmean
 
 
 
 def median2(test_smiles):
-	# median mol between tadalafil and sildenafil, ECFP6 
+  # median mol between tadalafil and sildenafil, ECFP6 
 
   if 'tadalafil_fp' not in globals().keys():
     global tadalafil_fp, sildenafil_fp
@@ -698,10 +695,10 @@ def median2(test_smiles):
     sildenafil_fp = smiles_2_fingerprint_ECFP6(sildenafil_smiles)
 	
   test_fp = smiles_2_fingerprint_ECFP6(test_smiles)
-	similarity_v1 = DataStructs.TanimotoSimilarity(tadalafil_fp, test_fp)
-	similarity_v2 = DataStructs.TanimotoSimilarity(sildenafil_fp, test_fp)
-	similarity_gmean = gmean([similarity_v1, similarity_v2])
-	return similarity_gmean 
+  similarity_v1 = DataStructs.TanimotoSimilarity(tadalafil_fp, test_fp)
+  similarity_v2 = DataStructs.TanimotoSimilarity(sildenafil_fp, test_fp)
+  similarity_gmean = gmean([similarity_v1, similarity_v2])
+  return similarity_gmean 
 
 
 
@@ -711,27 +708,34 @@ def median2(test_smiles):
 
 
 
-osimertinib_smiles = 'COc1cc(N(C)CCN(C)C)c(NC(=O)C=C)cc1Nc2nccc(n2)c3cn(C)c4ccccc34'
-osimertinib_fp_fcfc4 = smiles_2_fingerprint_FCFP4(osimertinib_smiles)
-osimertinib_fp_ecfc6 = smiles_2_fingerprint_ECFP6(osimertinib_smiles)
 
 def osimertinib_mpo(test_smiles):
 
-	sim_v1_modifier = ClippedScoreModifier(upper_x=0.8)
-	sim_v2_modifier = MinGaussianModifier(mu=0.85, sigma=0.1)
-	tpsa_modifier = MaxGaussianModifier(mu=100, sigma=10) 
-	logp_modifier = MinGaussianModifier(mu=1, sigma=1) 
+  if '' not in globals().keys():
+    global osimertinib_fp_fcfc4, osimertinib_fp_ecfc6
+    osimertinib_smiles = 'COc1cc(N(C)CCN(C)C)c(NC(=O)C=C)cc1Nc2nccc(n2)c3cn(C)c4ccccc34'
+    osimertinib_fp_fcfc4 = smiles_2_fingerprint_FCFP4(osimertinib_smiles)
+    osimertinib_fp_ecfc6 = smiles_2_fingerprint_ECFP6(osimertinib_smiles)
 
-	molecule = smiles_to_rdkit_mol(test_smiles)
-	fp_fcfc4 = smiles_2_fingerprint_FCFP4(test_smiles)
-	fp_ecfc6 = smiles_2_fingerprint_ECFP6(test_smiles)
-	tpsa_score = tpsa_modifier(Descriptors.TPSA(molecule))
-	logp_score = logp_modifier(Descriptors.MolLogP(molecule))
-	similarity_v1 = sim_v1_modifier(DataStructs.TanimotoSimilarity(osimertinib_fp_fcfc4, fp_fcfc4))
-	similarity_v2 = sim_v2_modifier(DataStructs.TanimotoSimilarity(osimertinib_fp_ecfc6, fp_ecfc6))
 
-	osimertinib_gmean = gmean([tpsa_score, logp_score, similarity_v1, similarity_v2])
-	return osimertinib_gmean 
+  sim_v1_modifier = ClippedScoreModifier(upper_x=0.8)
+  sim_v2_modifier = MinGaussianModifier(mu=0.85, sigma=0.1)
+  tpsa_modifier = MaxGaussianModifier(mu=100, sigma=10) 
+  logp_modifier = MinGaussianModifier(mu=1, sigma=1) 
+
+  molecule = smiles_to_rdkit_mol(test_smiles)
+  fp_fcfc4 = smiles_2_fingerprint_FCFP4(test_smiles)
+  fp_ecfc6 = smiles_2_fingerprint_ECFP6(test_smiles)
+  tpsa_score = tpsa_modifier(Descriptors.TPSA(molecule))
+  logp_score = logp_modifier(Descriptors.MolLogP(molecule))
+  similarity_v1 = sim_v1_modifier(DataStructs.TanimotoSimilarity(osimertinib_fp_fcfc4, fp_fcfc4))
+  similarity_v2 = sim_v2_modifier(DataStructs.TanimotoSimilarity(osimertinib_fp_ecfc6, fp_ecfc6))
+
+  osimertinib_gmean = gmean([tpsa_score, logp_score, similarity_v1, similarity_v2])
+  return osimertinib_gmean 
+
+
+
 
 fexofenadine_smiles = 'CC(C)(C(=O)O)c1ccc(cc1)C(O)CCCN2CCC(CC2)C(O)(c3ccccc3)c4ccccc4'
 fexofenadine_fp = smiles_2_fingerprint_AP(fexofenadine_smiles)
@@ -758,14 +762,14 @@ def Fexofenadine_mpo(test_smiles):
 
 class AtomCounter:
 
-    def __init__(self, element: str) -> None:
+    def __init__(self, element):
         """
         Args:
             element: element to count within a molecule
         """
         self.element = element
 
-    def __call__(self, mol: Mol) -> int:
+    def __call__(self, mol):
         """
         Count the number of atoms of a given type.
 
