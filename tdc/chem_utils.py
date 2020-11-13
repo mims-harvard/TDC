@@ -686,6 +686,176 @@ def Fexofenadine_mpo(test_smiles):
 
 # def Perindopril_mpo(test_smiles):
 
+'''
+Synthesizability from a full retrosynthetic analysis
+Including:
+    1. MIT ASKCOS
+    ASKCOS (https://askcos.mit.edu) is an open-source software 
+    framework that integrates efforts to generalize known chemistry 
+    to new substrates by learning to apply retrosynthetic transformations, 
+    to identify suitable reaction conditions, and to evaluate whether 
+    reactions are likely to be successful. The data-driven models are trained 
+    with USPTO and Reaxys databases.
+    
+    Reference:
+    https://doi.org/10.1021/acs.jcim.0c00174
+
+    2. IBM_RXN
+    IBM RXN (https://rxn.res.ibm.com) is an AI platform integarting 
+    forward reaction prediction and retrosynthetic analysis. The 
+    backend of the IBM RXN retrosynthetic analysis is Molecular 
+    Transformer model (see reference). The model was mainly trained 
+    with USPTO, Pistachio databases.
+    Reference:
+    https://doi.org/10.1021/acscentsci.9b00576
+'''
+
+def tree_analysis(current):
+    """
+    Analyze the result of tree builder
+    Calculate: 1. Number of steps 2. \Pi plausibility 3. If find a path
+    In case of celery error, all values are -1
+    
+    return:
+        num_path = number of paths found
+        status: Same as implemented in ASKCOS one
+        num_step: number of steps
+        p_score: \Pi plausibility
+        synthesizability: binary code
+        price: price for synthesize query compound
+    """
+    if 'error' in current.keys():
+        return -1, {}, 11, -1, -1, -1
+    
+    if 'price' in current.keys():
+        return 0, {}, 0, 1, 1, current['price']
+    
+    num_path = len(current['trees'])
+    if num_path != 0:
+        current = [current['trees'][0]]
+        if current[0]['ppg'] != 0:
+            return 0, {}, 0, 1, 1, current[0]['ppg']
+    else:
+        current = []
+        
+    depth = 0
+    p_score = 1
+    status = {0:1}
+    price = 0
+    while True:
+        num_child = 0
+        depth += 0.5
+        temp = []
+        for i, item in enumerate(current):
+            num_child += len(item['children'])
+            temp = temp + item['children']
+        if num_child == 0:
+            break
+        if depth % 1 != 0:
+            for sth in temp:
+                p_score = p_score * sth['plausibility']
+        else:
+            for mol in temp:
+                price += mol['ppg']
+        status[depth] = num_child
+        current = temp
+    if len(status) > 1:
+        synthesizability = 1
+    else:
+        synthesizability = 0
+    if int(depth - 0.5) == 0:
+        depth = 11
+        price = -1
+    else:
+        depth = int(depth - 0.5)
+    return num_path, status, depth, p_score*synthesizability, synthesizability, price
+
+def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='tree_builder_result.json', num_trials=5,
+           max_depth=9, max_branching=25, expansion_time=60, max_ppg=100, template_count=1000, max_cum_prob=0.999, 
+           chemical_property_logic='none', max_chemprop_c=0, max_chemprop_n=0, max_chemprop_o=0, max_chemprop_h=0, 
+           chemical_popularity_logic='none', min_chempop_reactants=5, min_chempop_products=5, filter_threshold=0.1, return_first='true'):
+    """
+    The ASKCOS retrosynthetic analysis oracle function. 
+    Please refer https://github.com/connorcoley/ASKCOS to run the ASKCOS with docker on a server to receive requests.
+    """
+
+    if output is not in ['num_step', 'plausibility', 'synthesizability', 'price']:
+        raise NameError("This output value is not implemented. Please select one from 'num_step', 'plausibility', 'synthesizability', 'price'.")
+    
+    import json, requests
+    
+    params = {
+        'smiles': smiles
+    }
+    resp = requests.get(host_ip+'/api/price/', params=params, verify=False)
+
+    if resp.json()['price'] == 0:
+        # Parameters for Tree Builder
+        params = {
+            'smiles': smiles, 
+
+            # optional
+            'max_depth': max_depth,
+            'max_branching': max_branching,
+            'expansion_time': expansion_time,
+            'max_ppg': max_ppg,
+            'template_count': template_count,
+            'max_cum_prob': max_cum_prob,
+            'chemical_property_logic': chemical_property_logic,
+            'max_chemprop_c': max_chemprop_c,
+            'max_chemprop_n': max_chemprop_n,
+            'max_chemprop_o': max_chemprop_o,
+            'max_chemprop_h': max_chemprop_h,
+            'chemical_popularity_logic': chemical_popularity_logic,
+            'min_chempop_reactants': min_chempop_reactants,
+            'min_chempop_products': min_chempop_products,
+            'filter_threshold': filter_threshold,
+            'return_first': return_first
+        }
+
+        # For each entry, repeat to test up to num_trials times if got error message
+        for _ in range(num_trials):
+            print('Trying to send the request, for the %i times now' % (_ + 1))
+            resp = requests.get(HOST + '/api/treebuilder/', params=params, verify=False)
+            if 'error' not in resp.json().keys():
+                break
+                
+    if save_json:
+        with open(name, 'w') as f_data:
+            json.dump(resp.json(), f_data)
+        
+    num_path, status, depth, p_score, synthesizability, price = tree_analysis(resp.json())
+    
+    if output == 'plausibility':
+        return p_score
+    elif output == 'num_step':
+        return depth
+    elif output == 'synthesizability':
+        return synthesizability
+    elif output == 'price':
+        return price
+
+def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
+    
+    from rxn4chemistry import RXN4ChemistryWrapper
+    import time
+    
+    rxn4chemistry_wrapper = RXN4ChemistryWrapper(api_key=api_key)
+    response = rxn4chemistry_wrapper.create_project('test')
+    time.sleep(sleep_time)
+    response = rxn4chemistry_wrapper.predict_automatic_retrosynthesis(product=smiles)
+    status = ''
+    while status != 'SUCCESS':
+        time.sleep(sleep_time)
+        results = rxn4chemistry_wrapper.get_predict_automatic_retrosynthesis_results(response['prediction_id'])
+        status = results['status']
+
+    if output == 'confidence':
+        return results['retrosynthetic_paths'][0]['confidence']
+    elif output == 'result':
+        return results
+    else:
+        raise NameError("This output value is not implemented.")
 
 
 '''
