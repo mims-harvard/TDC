@@ -705,7 +705,78 @@ def Fexofenadine_mpo(test_smiles):
 	return fexofenadine_gmean 
 
 
-# def Ranolazine_mpo(test_smiles):
+
+def ranolazine_mpo() -> GoalDirectedBenchmark:
+    """
+    Make start_pop_ranolazine more polar and add a fluorine
+    """
+
+    modifier = ClippedScoreModifier(upper_x=0.7)
+    similar_to_ranolazine = TanimotoScoringFunction(ranolazine, fp_type='AP', score_modifier=modifier)
+
+    logP_under_4 = RdkitScoringFunction(descriptor=logP, score_modifier=MaxGaussianModifier(mu=7, sigma=1))
+
+    tpsa_f = RdkitScoringFunction(descriptor=tpsa, score_modifier=MaxGaussianModifier(mu=95, sigma=20))
+
+    fluorine = RdkitScoringFunction(descriptor=AtomCounter('F'), score_modifier=GaussianModifier(mu=1, sigma=1.0))
+
+    optimize_ranolazine = GeometricMeanScoringFunction([similar_to_ranolazine, logP_under_4, fluorine, tpsa_f])
+
+    specification = uniform_specification(1, 10, 100)
+
+    return GoalDirectedBenchmark(name='Ranolazine MPO',
+                                 objective=optimize_ranolazine,
+                                 contribution_specification=specification,
+                                 starting_population=[ranolazine])
+
+
+
+class AtomCounter:
+
+    def __init__(self, element: str) -> None:
+        """
+        Args:
+            element: element to count within a molecule
+        """
+        self.element = element
+
+    def __call__(self, mol: Mol) -> int:
+        """
+        Count the number of atoms of a given type.
+
+        Args:
+            mol: molecule
+
+        Returns:
+            The number of atoms of the given type.
+        """
+        # if the molecule contains H atoms, they may be implicit, so add them
+        if self.element == 'H':
+            mol = Chem.AddHs(mol)
+
+        return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)
+
+
+
+ranolazine_smiles = 'COc1ccccc1OCC(O)CN2CCN(CC(=O)Nc3c(C)cccc3C)CC2'
+ranolazine_fp = smiles_2_fingerprint_AP(ranolazine_smiles)
+fluorine_counter = AtomCounter('F')
+def Ranolazine_mpo(test_smiles):
+  
+  similar_modifier = ClippedScoreModifier(upper_x=0.7)
+  tpsa_modifier = MaxGaussianModifier(mu=95, sigma=20)
+  logp_modifier = MaxGaussianModifier(mu=7, sigma=1)
+  fluorine_modifier = GaussianModifier(mu=1, sigma=1.0)
+
+  molecule = smiles_to_rdkit_mol(test_smiles)
+  fp_ap = smiles_2_fingerprint_AP(test_smiles)
+  tpsa_score = tpsa_modifier(Descriptors.TPSA(molecule))
+  logp_score = logp_modifier(Descriptors.MolLogP(molecule))
+  similarity_value = similar_modifier(DataStructs.TanimotoSimilarity(fp_ap, ranolazine_fp))
+  fluorine_value = fluorine_modifier(fluorine_counter(molecule))
+
+  ranolazine_gmean = gmean([tpsa_score, logp_score, similarity_value, fluorine_value])
+  return ranolazine_gmean
 
 # def Perindopril_mpo(test_smiles):
 
