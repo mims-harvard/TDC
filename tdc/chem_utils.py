@@ -706,31 +706,6 @@ def Fexofenadine_mpo(test_smiles):
 
 
 
-def ranolazine_mpo() -> GoalDirectedBenchmark:
-    """
-    Make start_pop_ranolazine more polar and add a fluorine
-    """
-
-    modifier = ClippedScoreModifier(upper_x=0.7)
-    similar_to_ranolazine = TanimotoScoringFunction(ranolazine, fp_type='AP', score_modifier=modifier)
-
-    logP_under_4 = RdkitScoringFunction(descriptor=logP, score_modifier=MaxGaussianModifier(mu=7, sigma=1))
-
-    tpsa_f = RdkitScoringFunction(descriptor=tpsa, score_modifier=MaxGaussianModifier(mu=95, sigma=20))
-
-    fluorine = RdkitScoringFunction(descriptor=AtomCounter('F'), score_modifier=GaussianModifier(mu=1, sigma=1.0))
-
-    optimize_ranolazine = GeometricMeanScoringFunction([similar_to_ranolazine, logP_under_4, fluorine, tpsa_f])
-
-    specification = uniform_specification(1, 10, 100)
-
-    return GoalDirectedBenchmark(name='Ranolazine MPO',
-                                 objective=optimize_ranolazine,
-                                 contribution_specification=specification,
-                                 starting_population=[ranolazine])
-
-
-
 class AtomCounter:
 
     def __init__(self, element: str) -> None:
