@@ -69,11 +69,11 @@ catalyst_dataset_names = ['uspto_catalyst']
 # generation
 retrosyn_dataset_names = ['uspto50k', 'uspto']
 
-forwardsyn_dataset_names = ['uspto']
+forwardsyn_dataset_names = ['uspto', 'uspto50k']
 
 single_molecule_dataset_names = ['zinc', 'moses', 'chembl']
 
-paired_dataset_names = ['uspto50k']
+paired_dataset_names = ['uspto50k', 'uspto']
 
 property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3', 'jnk3',]
 
@@ -163,6 +163,7 @@ name2type = {'toxcast': 'tab',
  'twosides': 'csv',
  'mhc1_iedb-imgt_nielsen': 'tab',
  'mhc2_iedb_jensen': 'tab',
+ 'uspto': 'csv',
  'uspto50k': 'csv',
  'zinc': 'tab', 
  'moses': 'tab',
@@ -187,7 +188,7 @@ name2type = {'toxcast': 'tab',
  'uspto_yields': 'pkl', 
  'uspto_catalyst': 'csv',
  'buchwald-hartwig': 'pkl',
- 'uspto_reaction': 'csv'
+ # 'uspto_reaction': 'csv'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -247,11 +248,12 @@ name2id = {'bbb_adenot': 4139555,
  'mirtarbase': 4167359,
  'disgenet': 4168282,
  'sabdab_liberis': 4168425,
+ # 'uspto':'xxxx',
  'uspto50k': 'xxxxx',
  'buchwald-hartwig': 4171576,
  'uspto_yields': 4171575, 
  'uspto_catalyst': 4171574,
- 'uspto_reaction': 4170964
+ 'uspto': 4170964
  }
 
 oracle2type = {'drd2': 'pkl', 
@@ -325,6 +327,7 @@ versioning = {
  'disgenet',
  'sabdab_liberis',
  'uspto50k',
+ 'uspto',
  'buchwald-hartwig',
  'uspto_yields',
  'uspto_catalyst',
