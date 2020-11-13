@@ -667,6 +667,13 @@ def median2(test_smiles):
 	return similarity_gmean 
 
 
+
+
+
+
+
+
+
 osimertinib_smiles = 'COc1cc(N(C)CCN(C)C)c(NC(=O)C=C)cc1Nc2nccc(n2)c3cn(C)c4ccccc34'
 osimertinib_fp_fcfc4 = smiles_2_fingerprint_FCFP4(osimertinib_smiles)
 osimertinib_fp_ecfc6 = smiles_2_fingerprint_ECFP6(osimertinib_smiles)
@@ -706,6 +713,12 @@ def Fexofenadine_mpo(test_smiles):
 
 
 
+
+
+
+
+
+
 class AtomCounter:
 
     def __init__(self, element: str) -> None:
@@ -731,8 +744,6 @@ class AtomCounter:
 
         return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)
 
-
-
 ranolazine_smiles = 'COc1ccccc1OCC(O)CN2CCN(CC(=O)Nc3c(C)cccc3C)CC2'
 ranolazine_fp = smiles_2_fingerprint_AP(ranolazine_smiles)
 fluorine_counter = AtomCounter('F')
@@ -753,7 +764,35 @@ def Ranolazine_mpo(test_smiles):
   ranolazine_gmean = gmean([tpsa_score, logp_score, similarity_value, fluorine_value])
   return ranolazine_gmean
 
-# def Perindopril_mpo(test_smiles):
+
+
+
+
+
+
+
+perindopril_smiles = 'O=C(OCC)C(NC(C(=O)N1C(C(=O)O)CC2CCCCC12)C)CCC'
+perindopril_fp = smiles_2_fingerprint_ECFP4(perindopril_smiles)
+def num_aromatic_rings(mol):
+    return rdMolDescriptors.CalcNumAromaticRings(mol)
+
+def Perindopril_mpo(test_smiles):
+  ## no similar_modifier
+  arom_rings_modifier = GaussianModifier(mu = 2, sigma = 0.5)
+
+  molecule = smiles_to_rdkit_mol(test_smiles)
+  fp_ecfp4 = smiles_2_fingerprint_ECFP4(test_smiles)
+
+  similarity_value = DataStructs.Tanimoto(fp_ecfp4, perindopril_fp)
+  num_aromatic_rings_value = arom_rings_modifier(num_aromatic_rings(molecule))
+
+  perindopril_gmean = gmean([similarity_value, num_aromatic_rings_value])
+  return perindopril_gmean
+
+
+
+
+
 
 '''
 Synthesizability from a full retrosynthetic analysis
