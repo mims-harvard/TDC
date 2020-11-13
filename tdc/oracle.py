@@ -6,7 +6,7 @@ warnings.filterwarnings("ignore")
 
 # from. evaluator import Evaluator
 from .utils import * 
-from .metadata import download_oracle_names, oracle_names
+from .metadata import download_oracle_names, oracle_names, molecule_evaluator_name
 from .chem_utils import novelty, diversity, unique_rate, validity_ratio
 from .chem_utils import penalized_logp, qed, drd2, SA, gsk3b, jnk3, askcos, ibm_rxn
 from .chem_utils import celecoxib_rediscovery, troglitazone_rediscovery, thiothixene_rediscovery
@@ -76,7 +76,14 @@ class Oracle:
 	def __call__(self, smiles, temp = None):
 		if temp is None:
 			if type(smiles)==list:
-				return list(map(self.evaluator_func, smiles))
+				if self.name in molecule_evaluator_name: 
+					#### evaluator for distribution learning, e.g., diversity, validity
+					#### the input of __call__ is list of smiles
+					return self.evaluator_func(smiles) 
+				else:
+					#### evaluator for single molecule, 
+					#### the input of __call__ is a single smiles OR list of smiles
+					return list(map(self.evaluator_func, smiles))
 			else: ### type(smiles)==str:
 				return self.evaluator_func(smiles)
 		else:
