@@ -802,7 +802,7 @@ def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='t
     Please refer https://github.com/connorcoley/ASKCOS to run the ASKCOS with docker on a server to receive requests.
     """
 
-    if output is not in ['num_step', 'plausibility', 'synthesizability', 'price']:
+    if output not in ['num_step', 'plausibility', 'synthesizability', 'price']:
         raise NameError("This output value is not implemented. Please select one from 'num_step', 'plausibility', 'synthesizability', 'price'.")
     
     import json, requests
