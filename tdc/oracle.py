@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore")
 from .utils import * 
 from .metadata import download_oracle_names, oracle_names
 from .chem_utils import novelty, diversity, unique_rate, validity_ratio
-from .chem_utils import penalized_logp, qed, drd2, SA, gsk3b, jnk3, 
+from .chem_utils import penalized_logp, qed, drd2, SA, gsk3b, jnk3, askcos, ibm_rxn
 from .chem_utils import celecoxib_rediscovery, troglitazone_rediscovery, thiothixene_rediscovery
 from .chem_utils import aripiprazole_similarity, albuterol_similarity, mestranol_similarity, median1, median2
 
@@ -67,7 +67,9 @@ class Oracle:
 		elif self.name == 'median2':
 			self.evaluator_func = median2
 		elif self.name == 'askcos':
-			self.evaluator_func = median2
+			self.evaluator_func = askcos
+		elif self.name == 'ibm_rxn':
+			self.evaluator_func = ibm_rxn
 		else:
 			return 
 
