@@ -1,0 +1,4 @@
+prune tdc/test
+prune tests
+include README.md
+include requirements.txt
