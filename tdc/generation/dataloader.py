@@ -10,12 +10,12 @@ from ..metadata import dataset_names
 
 class Reaction(generation_dataset.PairedDataLoader):
 
-	def __init__(self, name, path = './data', print_stats = False, input_name = 'reactants', output_name = 'product'): 
+	def __init__(self, name, path = './data', print_stats = False, input_name = 'reactant', output_name = 'product'): 
 		super().__init__(name, path, print_stats, input_name, output_name)
 
 class RetroSyn(generation_dataset.PairedDataLoader):
 
-	def __init__(self, name, path = './data', print_stats = False, input_name = 'product', output_name = 'reactants'): 
+	def __init__(self, name, path = './data', print_stats = False, input_name = 'product', output_name = 'reactant'): 
 		super().__init__(name, path, print_stats, input_name, output_name)
 
 
