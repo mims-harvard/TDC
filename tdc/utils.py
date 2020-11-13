@@ -126,11 +126,13 @@ def generation_paired_dataset_load(name, path, dataset_names, input_name, output
 
 def distribution_dataset_load(name, path, dataset_names, column_name):
 	name = download_wrapper(name, path, dataset_names)
+	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df[column_name]
 
 def generation_dataset_load(name, path, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
+	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df['input'], df['target'] 
 
