@@ -120,6 +120,7 @@ def multi_dataset_load(name, path, dataset_names):
 
 def generation_paired_dataset_load(name, path, dataset_names, input_name, output_name):
 	name = download_wrapper(name, path, dataset_names)
+	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df[input_name], df[output_name]
 

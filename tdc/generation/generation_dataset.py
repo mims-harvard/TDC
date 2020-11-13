@@ -68,7 +68,8 @@ class PairedDataLoader(base_dataset.DataLoader):
 		self.dataset_names = paired_dataset_names
 		if print_stats: 
 			self.print_stats() 
-
+		print_sys('Done!')
+		
 	def print_stats(self):
 		print("There are " + str(len(self.input_smiles_lst)) + ' paired samples', flush = True, file = sys.stderr)
 
