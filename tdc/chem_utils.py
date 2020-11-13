@@ -794,6 +794,45 @@ def Perindopril_mpo(test_smiles):
 
 
 
+
+amlodipine_smiles = 'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC'
+amlodipine_fp = smiles_2_fingerprint_ECFP4(amlodipine_smiles)
+def num_rings(mol):
+    return rdMolDescriptors.CalcNumRings(mol)
+
+def Amlodipine_mpo(test_smiles):
+  ## no similar_modifier
+  num_rings_modifier = GaussianModifier(mu=3, sigma=0.5)
+
+  molecule = smiles_to_rdkit_mol(test_smiles)
+  fp_ecfp4 = smiles_2_fingerprint_ECFP4(test_smiles)
+
+  similarity_value = DataStructs.Tanimoto(fp_ecfp4, amlodipine_fp)
+  num_rings_value = arom_rings_modifier(num_rings(molecule))
+
+  amlodipine_gmean = gmean([similarity_value, num_rings_value])
+  return amlodipine_gmean
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###########################################################################
+###               END of Guacamol
+###########################################################################
+
+
 '''
 Synthesizability from a full retrosynthetic analysis
 Including:
