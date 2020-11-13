@@ -60,7 +60,7 @@ drugsyn_dataset_names = ['oncopolypharmacology']
 
 antibodyaff_dataset_names = ['protein_sabdab']
 
-yield_dataset_names = ['uspto_yields', 'buchwald-hartwig', 'suzuki–miyaura']
+yield_dataset_names = ['uspto_yields', 'buchwald-hartwig']
 
 catalyst_dataset_names = ['uspto_catalyst']
 
@@ -186,8 +186,7 @@ name2type = {'toxcast': 'tab',
  'sabdab_liberis': 'pkl',
  'uspto_yields': 'pkl', 
  'uspto_catalyst': 'csv',
- 'buchwald-hartwig': 'tab',
- 'suzuki–miyaura': 'csv',
+ 'buchwald-hartwig': 'pkl',
  'uspto_reaction': 'csv'
  }
 
@@ -249,10 +248,9 @@ name2id = {'bbb_adenot': 4139555,
  'disgenet': 4168282,
  'sabdab_liberis': 4168425,
  'uspto50k': 'xxxxx',
- 'buchwald-hartwig': 'xxxx',
- 'uspto_yields': 'xxxx', 
- 'suzuki–miyaura': 'xxxx',
- 'uspto_catalyst': 4170960,
+ 'buchwald-hartwig': 4171576,
+ 'uspto_yields': 4171575, 
+ 'uspto_catalyst': 4171574,
  'uspto_reaction': 4170964
  }
 
@@ -268,3 +266,67 @@ oracle2id = {'drd2': 4170294,
 			 'fpscores': 4170416
 }
 
+versioning = {
+	'0.0.1': ['bbb_adenot',
+ 'bbb_martins',
+ 'bindingdb_ic50',
+ 'bindingdb_kd',
+ 'bindingdb_ki',
+ 'bioavailability_ma',
+ 'caco2_wang',
+ 'clearance_edrug3d',
+ 'clintox',
+ 'cyp1a2_veith',
+ 'cyp2c19_veith',
+ 'cyp2c9_veith',
+ 'cyp2d6_veith',
+ 'cyp3a4_veith',
+ 'davis',
+ 'drugbank',
+ 'f20_edrug3d',
+ 'f30_edrug3d',
+ 'halflife_edrug3d',
+ 'hia_hou',
+ 'hiv',
+ 'huri',
+ 'hydrationfreeenergy_freesolv',
+ 'kiba',
+ 'lipophilicity_astrazeneca',
+ 'pgp_broccatelli',
+ 'ppbr_edrug3d',
+ 'ppbr_ma',
+ 'sarscov2_3clpro_diamond',
+ 'sarscov2_vitro_touret',
+ 'solubility_aqsoldb',
+ 'tox21',
+ 'toxcast',
+ 'twosides',
+ 'vd_edrug3d',
+ 'mhc1_iedb-imgt_nielsen',
+ 'mhc2_iedb_jensen',
+ 'zinc',
+ 'moses',
+ 'chembl',
+ 'qed',
+ 'drd2',
+ 'logp',
+ 'gdsc1',
+ 'gdsc2',
+ 'iedb_jespersen',
+ 'pdb_jespersen',
+ 'qm7b',
+ 'qm8',
+ 'qm9',
+ 'tap',
+ 'sabdab_chen',
+ 'protein_sabdab',
+ 'oncopolypharmacology',
+ 'mirtarbase',
+ 'disgenet',
+ 'sabdab_liberis',
+ 'uspto50k',
+ 'buchwald-hartwig',
+ 'uspto_yields',
+ 'uspto_catalyst',
+ 'uspto_reaction']
+}

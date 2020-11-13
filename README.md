@@ -74,7 +74,7 @@ data.get_split(seed = 'benchmark')
 ```
 You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'cold_drug', seed = 1, frac = [0.7, 0.1, 0.2])`. For other splitting methods (e.g. scaffold split), check out the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) on the website.
 
-#### Data Evaluation
+#### Model Evaluation
 
 We provide various evaluation metrics for the tasks in TDC, which are described in [data evaluation page](https://zitniklab.hms.harvard.edu/TDC/functions/data_evaluation/) on the website. For example, to use metric ROC-AUC, you could simply type
 
@@ -120,15 +120,15 @@ Paper is in progress and will come out soon.
 
 ## Benchmark and Leaderboard
 
-We are actively working on the benchmark and leaderboard methods. We would release this feature in the next major release. In the meantime, if you have expertise or interest in helping build this feature, please send emails to kexinhuang@hsph.harvard.edu.
+We are actively working on the benchmark and leaderboard. We would release this feature in the next major release. In the meantime, if you have expertise or interest in helping build this feature, please send emails to [us](kexinhuang@hsph.harvard.edu).
 
 ## Contribute
 
-TDC is designed to be a community-driven effort. If you have new dataset or task that wants to be included in TDC, please reachout to kexinhuang@hsph.harvard.edu. 
+TDC is designed to be a community-driven effort. If you have new dataset or task or data function that wants to be included in TDC, please reachout to [us](kexinhuang@hsph.harvard.edu). 
 
 ## Contact
 
-Send emails to kexinhuang@hsph.harvard.edu or open an issue.
+Send emails to [us](kexinhuang@hsph.harvard.edu) or open an issue.
 
 ## Disclaimer
 
