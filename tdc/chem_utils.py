@@ -557,7 +557,7 @@ def diversity(list_of_smiles):
 ########################################
 ######## KL divergence ########
 
-def _calculate_pc_descriptors(smiles: str, pc_descriptors: List[str]) -> np.array:
+def _calculate_pc_descriptors(smiles, pc_descriptors):
     from rdkit.ML.Descriptors import MoleculeDescriptors
     calc = MoleculeDescriptors.MolecularDescriptorCalculator(pc_descriptors)
 
@@ -573,7 +573,7 @@ def _calculate_pc_descriptors(smiles: str, pc_descriptors: List[str]) -> np.arra
 
     return _fp 
 
-def calculate_pc_descriptors(smiles: Iterable[str], pc_descriptors: List[str]) -> np.array:
+def calculate_pc_descriptors(smiles, pc_descriptors):
     output = []
 
     for i in smiles:
