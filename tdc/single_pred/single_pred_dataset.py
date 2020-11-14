@@ -37,9 +37,9 @@ class DataLoader(base_dataset.DataLoader):
 		if format == 'df':
 			return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx, self.entity1_name: self.entity1, 'Y': self.y})
 		elif format == 'dict':
-			return {self.entity1_name + '_ID': self.entity1_idx, self.entity1_name: self.entity1, 'Y': self.y}
+			return {self.entity1_name + '_ID': self.entity1_idx.values, self.entity1_name: self.entity1.values, 'Y': self.y.values}
 		elif format == 'DeepPurpose':
-			return self.entity1, self.y
+			return self.entity1.values, self.y.values
 		elif format == 'sklearn':
 			pass
 		else:

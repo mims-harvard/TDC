@@ -80,12 +80,12 @@ class DataLoader(base_dataset.DataLoader):
                                  self.entity2_name + '_ID': self.entity2_idx,
                                  self.entity2_name: self.entity2, 'Y': self.y})
         elif format == 'DeepPurpose':
-            return self.entity1, self.entity2, self.y
+            return self.entity1.values, self.entity2.values, self.y.values
         elif format == 'dict':
-            return {self.entity1_name + '_ID': self.entity1_idx,
-                    self.entity1_name: self.entity1,
-                    self.entity2_name + '_ID': self.entity2_idx,
-                    self.entity2_name: self.entity2, 'Y': self.y}
+            return {self.entity1_name + '_ID': self.entity1_idx.values,
+                    self.entity1_name: self.entity1.values,
+                    self.entity2_name + '_ID': self.entity2_idx.values,
+                    self.entity2_name: self.entity2.values, 'Y': self.y.values}
         else:
             raise AttributeError("Please use the correct format input")
 
