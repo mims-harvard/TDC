@@ -74,12 +74,10 @@ class DataLoader:
 	def convert_to_log(self):
 		print('To log space...', flush = True, file = sys.stderr)
 		self.y = utils.convert_to_log(self.y)
-		return self
 
 	def convert_from_log(self):
 		print('Convert Back To Original space...', flush = True, file = sys.stderr)
 		self.y = utils.convert_back_log(self.y)
-		return self		
 
 	def get_label_meaning(self, output_format = 'dict'):
 		return utils.get_label_map(self.name, self.path, self.target, file_format = self.file_format, output_format = output_format)
