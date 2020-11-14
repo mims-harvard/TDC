@@ -711,7 +711,7 @@ def median2(test_smiles):
 
 def osimertinib_mpo(test_smiles):
 
-  if '' not in globals().keys():
+  if 'osimertinib_fp_fcfc4' not in globals().keys():
     global osimertinib_fp_fcfc4, osimertinib_fp_ecfc6
     osimertinib_smiles = 'COc1cc(N(C)CCN(C)C)c(NC(=O)C=C)cc1Nc2nccc(n2)c3cn(C)c4ccccc34'
     osimertinib_fp_fcfc4 = smiles_2_fingerprint_FCFP4(osimertinib_smiles)
@@ -812,13 +812,18 @@ def Ranolazine_mpo(test_smiles):
 
 
 
-perindopril_smiles = 'O=C(OCC)C(NC(C(=O)N1C(C(=O)O)CC2CCCCC12)C)CCC'
-perindopril_fp = smiles_2_fingerprint_ECFP4(perindopril_smiles)
-def num_aromatic_rings(mol):
-    return rdMolDescriptors.CalcNumAromaticRings(mol)
+
 
 def Perindopril_mpo(test_smiles):
   ## no similar_modifier
+
+  if 'perindopril_fp' not in globals().keys():
+    global perindopril_fp, num_aromatic_rings
+    perindopril_smiles = 'O=C(OCC)C(NC(C(=O)N1C(C(=O)O)CC2CCCCC12)C)CCC'
+    perindopril_fp = smiles_2_fingerprint_ECFP4(perindopril_smiles)
+    def num_aromatic_rings(mol):
+      return rdMolDescriptors.CalcNumAromaticRings(mol)
+
   arom_rings_modifier = GaussianModifier(mu = 2, sigma = 0.5)
 
   molecule = smiles_to_rdkit_mol(test_smiles)
@@ -836,13 +841,18 @@ def Perindopril_mpo(test_smiles):
 
 
 
-amlodipine_smiles = 'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC'
-amlodipine_fp = smiles_2_fingerprint_ECFP4(amlodipine_smiles)
-def num_rings(mol):
-    return rdMolDescriptors.CalcNumRings(mol)
+
+
 
 def Amlodipine_mpo(test_smiles):
   ## no similar_modifier
+  if 'amlodipine_fp' not in globals().keys():
+    global amlodipine_fp, num_rings
+    amlodipine_smiles = 'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC'
+    amlodipine_fp = smiles_2_fingerprint_ECFP4(amlodipine_smiles)
+  
+    def num_rings(mol):
+      return rdMolDescriptors.CalcNumRings(mol)  
   num_rings_modifier = GaussianModifier(mu=3, sigma=0.5)
 
   molecule = smiles_to_rdkit_mol(test_smiles)
