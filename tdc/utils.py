@@ -156,6 +156,17 @@ def get_label_map(name, path = './data', target = None, file_format = 'csv', out
 	else:
 		raise ValueError("Please use the correct output format, select from dict, df, array.")
 
+def get_reaction_type(name, path = './data', output_format = 'array'):
+	name = fuzzy_search(name, dataset_names['RetroSyn'])		
+	df = pd_load(name, path)
+
+	if output_format == 'df':
+		return df
+	elif output_format == 'array':
+		return df['category'].values
+	else:
+		raise ValueError("Please use the correct output format, select from df, array.")
+
 def dataverse_download(url, path, name, types):
 	save_path = os.path.join(path, name + '.' + types[name])
 	response = requests.get(url, stream=True)
