@@ -72,11 +72,11 @@ data = X(name = Y)
 data.get_split(seed = 'benchmark')
 # {'train': df_train, 'val': df_val, ''test': df_test}
 ```
-You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'cold_drug', seed = 1, frac = [0.7, 0.1, 0.2])`. For other splitting methods (e.g. scaffold split), check out the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) on the website.
+You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'scaffold', seed = 1, frac = [0.7, 0.1, 0.2])`. Check out the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) on the website for details.
 
 #### Model Evaluation
 
-We provide various evaluation metrics for the tasks in TDC, which are described in [data evaluation page](https://zitniklab.hms.harvard.edu/TDC/functions/data_evaluation/) on the website. For example, to use metric ROC-AUC, you could simply type
+We provide various evaluation metrics for the tasks in TDC, which are described in [model evaluation page](https://zitniklab.hms.harvard.edu/TDC/functions/data_evaluation/) on the website. For example, to use metric ROC-AUC, you could simply type
 
 ```python
 from tdc import Evaluator
