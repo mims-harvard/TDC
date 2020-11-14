@@ -1,6 +1,11 @@
 <p align="center"><img src="fig/logo.png" alt="logo" width="600px" /></p>
 
-This repository hosts Therapeutics Data Commons (TDC), an open, user-friendly and extensive machine learning dataset hub for therapeutics. So far, it includes more than 50+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to manufacturing, safety survellience and etc) in many therapeutics development stages across small molecules and biologics. 
+----
+
+[![PyPI version](https://badge.fury.io/py/PyTDC.svg)](https://badge.fury.io/py/PyTDC)
+[![Downloads](https://static.pepy.tech/personalized-badge/pytdc?period=total&units=international_system&left_color=green&right_color=grey&left_text=Downloads)](https://pepy.tech/project/pytdc)
+
+This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendly and extensive machine learning dataset hub for therapeutics. So far, it includes more than 50+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to manufacturing, safety surveillance and etc) in many therapeutics development stages across small molecules and biologics. 
 
 [**Project Website**](https://zitniklab.hms.harvard.edu/TDC/)
 
@@ -124,13 +129,15 @@ We are actively working on the benchmark and leaderboard. We would release this 
 
 ## Contribute
 
-TDC is designed to be a community-driven effort. If you have new dataset or task or data function that wants to be included in TDC, please reachout to [us](kexinhuang@hsph.harvard.edu). 
+TDC is designed to be a community-driven effort. If you have new dataset or task or data function that wants to be included in TDC, please reach out to [us](mailto:kexinhuang@hsph.harvard.edu). 
 
 ## Contact
 
-Send emails to [us](kexinhuang@hsph.harvard.edu) or open an issue.
+Send emails to [us](mailto:kexinhuang@hsph.harvard.edu) or open an issue.
 
 ## Disclaimer
 
-TDC is an open-source effort. Many datasets are aggregated from various public website sources. We use the Attribution-NonCommercial-ShareAlike 4.0 International license to suffice many datasets requirement. If it still infringes the copyright of the dataset author, please let us know and we will take it down ASAP.
+TDC is an open-source effort. Many datasets are aggregated from various public website sources. 
+We use the Attribution-NonCommercial-ShareAlike 4.0 International license (open-source) to suffice many datasets requirement. 
+If you feel there might be a potential infringement of the copyright, please let us know and we will address it ASAP.
 
