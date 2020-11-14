@@ -725,19 +725,41 @@ def kldiv(generated_lst_smiles, training_lst_smiles):
   score = sum(partial_scores) / len(partial_scores)
   return score 
 
-def fcd_distance(list_of_smiles):
-
+def fcd_distance(generated_molecules, reference_molecules):
   try:
     import fcd
   except:
     raise ImportError("Please install networkx by 'pip install FCD'!")
   import pkgutil, tempfile
 
-  chemnet_model_filename='ChemNet_v0.13_pretrained.h5'
-  model_bytes = pkgutil.get_data('fcd', chemnet_model_filename)
-  tmpdir = tempfile.gettempdir()
-  model_path = os.path.join(tmpdir, chemnet_model_filename)
-  
+  if 'chemnet' not in globals().keys():
+    global chemnet
+    ### _load_chemnet
+    chemnet_model_filename='ChemNet_v0.13_pretrained.h5'
+    model_bytes = pkgutil.get_data('fcd', chemnet_model_filename)
+    tmpdir = tempfile.gettempdir()
+    model_path = os.path.join(tmpdir, chemnet_model_filename)
+    with open(model_path, 'wb') as f:
+      f.write(model_bytes)
+    chemnet = fcd.load_ref_model(model_path)
+    # _load_chemnet
+
+  def _calculate_distribution_statistics(chemnet, molecules):
+    sample_std = fcd.canonical_smiles(molecules)
+    gen_mol_act = fcd.get_predictions(chemnet, sample_std)
+
+    mu = np.mean(gen_mol_act, axis=0)
+    cov = np.cov(gen_mol_act.T)
+    return mu, cov
+
+  mu_ref, cov_ref = _calculate_distribution_statistics(chemnet, reference_molecules)
+  mu, cov = _calculate_distribution_statistics(chemnet, generated_molecules)
+
+  FCD = fcd.calculate_frechet_distance(mu1=mu_ref, mu2=mu,
+                                     sigma1=cov_ref, sigma2=cov)
+  score = np.exp(-0.2 * FCD)
+  return score
+
 
 
 
