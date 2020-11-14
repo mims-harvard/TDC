@@ -53,33 +53,7 @@ class DataLoader:
 			raise AttributeError("Please specify the correct splitting method")
 
 	def label_distribution(self):
-		try:
-			import seaborn as sns
-			import matplotlib.pyplot as plt
-		except:
-			utils.install("seaborn")
-			utils.install("matplotlib")
-			import seaborn as sns
-			import matplotlib.pyplot as plt
-
-		median = np.median(self.y)
-		mean = np.mean(self.y)
-
-		f, (ax_box, ax_hist) = plt.subplots(2, sharex=True, gridspec_kw= {"height_ratios": (0.15, 1)})
-
-		sns.boxplot(self.y, ax=ax_box).set_title("Label Distribution of " + str(self.name) + " Dataset")
-		ax_box.axvline(median, color='b', linestyle='--')
-		ax_box.axvline(mean, color='g', linestyle='--')
-
-		sns.distplot(self.y, ax = ax_hist)
-		ax_hist.axvline(median, color='b', linestyle='--')
-		ax_hist.axvline(mean, color='g', linestyle='--')
-		ax_hist.legend({'Median':median,'Mean':mean})
-
-		ax_box.set(xlabel='')
-		plt.show()
-		print("The median is " + str(median), flush = True, file = sys.stderr)
-		print("The mean is " + str(mean), flush = True, file = sys.stderr)
+		utils.label_dist(self.y, self.name)
 
 	def binarize(self, threshold = None, order = 'descending'):
 		if threshold is None:

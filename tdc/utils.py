@@ -249,6 +249,36 @@ def binarize(y, threshold, order = 'ascending'):
 		raise AttributeError("'order' must be either ascending or descending")
 	return y
 
+def label_dist(y, name):
+	try:
+		import seaborn as sns
+		import matplotlib.pyplot as plt
+	except:
+		utils.install("seaborn")
+		utils.install("matplotlib")
+		import seaborn as sns
+		import matplotlib.pyplot as plt
+
+	median = np.median(y)
+	mean = np.mean(y)
+
+	f, (ax_box, ax_hist) = plt.subplots(2, sharex=True, gridspec_kw= {"height_ratios": (0.15, 1)})
+
+	sns.boxplot(y, ax=ax_box).set_title("Label Distribution of " + str(name) + " Dataset")
+	ax_box.axvline(median, color='b', linestyle='--')
+	ax_box.axvline(mean, color='g', linestyle='--')
+
+	sns.distplot(y, ax = ax_hist)
+	ax_hist.axvline(median, color='b', linestyle='--')
+	ax_hist.axvline(mean, color='g', linestyle='--')
+	ax_hist.legend({'Median':median,'Mean':mean})
+
+	ax_box.set(xlabel='')
+	plt.show()
+	print("The median is " + str(median), flush = True, file = sys.stderr)
+	print("The mean is " + str(mean), flush = True, file = sys.stderr)
+
+
 # random split
 def create_fold(df, fold_seed, frac):
 	train_frac, val_frac, test_frac = frac

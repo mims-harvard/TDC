@@ -3,7 +3,7 @@ import numpy as np
 import re
 import os.path as op
 import math
-from collections import defaultdict
+from collections import defaultdict, Iterable
 from abc import abstractmethod
 from functools import partial
 from typing import List
@@ -604,7 +604,7 @@ def discrete_kldiv(X_baseline: np.array, X_sampled: np.array) -> float:
 
     return entropy(P, Q)
 
-def get_fingerprints(mols: Iterable[Chem.Mol], radius=2, length=4096):
+def get_fingerprints(mols, radius=2, length=4096):
     """
     Converts molecules to ECFP bitvectors.
 
@@ -618,7 +618,7 @@ def get_fingerprints(mols: Iterable[Chem.Mol], radius=2, length=4096):
     return [AllChem.GetMorganFingerprintAsBitVect(m, radius, length) for m in mols]
 
 
-def get_mols(smiles_list: Iterable[str]) -> Iterable[Chem.Mol]:
+def get_mols(smiles_list):
     for i in smiles_list:
         try:
             mol = Chem.MolFromSmiles(i)
@@ -629,7 +629,7 @@ def get_mols(smiles_list: Iterable[str]) -> Iterable[Chem.Mol]:
 
 
 
-def calculate_internal_pairwise_similarities(smiles_list: Collection[str]) -> np.array:
+def calculate_internal_pairwise_similarities(smiles_list):
     """
     Computes the pairwise similarities of the provided list of smiles against itself.
 
@@ -668,7 +668,7 @@ def kldiv(generated_lst_smiles, training_lst_smiles):
             'NumAromaticRings'
   ]
 
-  def canonical(smiles)
+  def canonical(smiles):
     mol = Chem.MolFromSmiles(smiles)
     if mol is not None:
         return Chem.MolToSmiles(mol, isomericSmiles=include_stereocenters)
