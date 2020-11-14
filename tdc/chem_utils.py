@@ -1192,7 +1192,7 @@ def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='t
         # For each entry, repeat to test up to num_trials times if got error message
         for _ in range(num_trials):
             print('Trying to send the request, for the %i times now' % (_ + 1))
-            resp = requests.get(HOST + '/api/treebuilder/', params=params, verify=False)
+            resp = requests.get(host_ip + '/api/treebuilder/', params=params, verify=False)
             if 'error' not in resp.json().keys():
                 break
                 
