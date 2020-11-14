@@ -725,6 +725,22 @@ def kldiv(generated_lst_smiles, training_lst_smiles):
   score = sum(partial_scores) / len(partial_scores)
   return score 
 
+def fcd_distance(list_of_smiles):
+
+  try:
+    import fcd
+  except:
+    raise ImportError("Please install networkx by 'pip install FCD'!")
+  import pkgutil, tempfile
+
+  chemnet_model_filename='ChemNet_v0.13_pretrained.h5'
+  model_bytes = pkgutil.get_data('fcd', chemnet_model_filename)
+  tmpdir = tempfile.gettempdir()
+  model_path = os.path.join(tmpdir, chemnet_model_filename)
+  
+
+
+
 ##################################################
 #### End of distribution learning Evaluator
 ##################################################
