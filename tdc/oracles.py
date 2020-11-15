@@ -20,6 +20,10 @@ class Oracle:
 		self.assign_evaluator() 
 
 	def assign_evaluator(self):
+		'''
+		from .chem_utils import eval(self.name)
+		self.evaluator_func = eval(self.name)
+		'''
 		if self.name == 'novelty':
 			from .chem_utils import novelty
 			self.evaluator_func = novelty  
@@ -85,19 +89,43 @@ class Oracle:
 		else:
 			return 
 
-	def __call__(self, smiles, temp = None):
-		if temp is None:
-			if type(smiles)==list:
-				if self.name in molecule_evaluator_name: 
-					#### evaluator for distribution learning, e.g., diversity, validity
-					#### the input of __call__ is list of smiles
-					return self.evaluator_func(smiles) 
-				else:
-					#### evaluator for single molecule, 
-					#### the input of __call__ is a single smiles OR list of smiles
-					return list(map(self.evaluator_func, smiles))
-			else: ### type(smiles)==str:
-				return self.evaluator_func(smiles)
-		else:
-			# novelty
-			return self.evaluator_func(smiles, temp)
+	# ### old version without args and kwargs 
+	# def __call__(self, smiles, temp = None):
+	# 	if temp is None:
+	# 		if type(smiles)==list:
+	# 			if self.name in molecule_evaluator_name: 
+	# 				#### evaluator for distribution learning, e.g., diversity, validity
+	# 				#### the input of __call__ is list of smiles
+	# 				return self.evaluator_func(smiles) 
+	# 			else:
+	# 				#### evaluator for single molecule, 
+	# 				#### the input of __call__ is a single smiles OR list of smiles
+	# 				return list(map(self.evaluator_func, smiles))
+	# 		else: ### type(smiles)==str:
+	# 			return self.evaluator_func(smiles)
+	# 	else:
+	# 		# novelty
+	# 		return self.evaluator_func(smiles, temp)
+
+
+	def __call__(self, *args, **kwargs):
+		smiles_lst = args[0]
+		if type(smiles_lst) == list:
+			if self.name in molecule_evaluator_name:
+				#### evaluator for distribution learning, e.g., diversity, validity
+				#### the input of __call__ is list of smiles
+				return self.evaluator_func(*args, **kwargs)
+			else:
+				#### evaluator for single molecule, 
+				#### the input of __call__ is a single smiles OR list of smiles
+				results_lst = []
+				for smiles in smiles_lst:
+					results_lst.append(self.evaluator_func(smiles, *(args[1:]), **kwargs))
+				return results_lst
+		else:	
+			## a single smiles
+			return self.evaluator_func(*args, **kwargs)
+
+
+
+
