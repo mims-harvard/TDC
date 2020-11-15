@@ -725,6 +725,44 @@ def kldiv(generated_lst_smiles, training_lst_smiles):
   score = sum(partial_scores) / len(partial_scores)
   return score 
 
+def fcd_distance(generated_molecules, reference_molecules):
+  try:
+    import fcd
+  except:
+    raise ImportError("Please install networkx by 'pip install FCD'!")
+  import pkgutil, tempfile
+
+  if 'chemnet' not in globals().keys():
+    global chemnet
+    ### _load_chemnet
+    chemnet_model_filename='ChemNet_v0.13_pretrained.h5'
+    model_bytes = pkgutil.get_data('fcd', chemnet_model_filename)
+    tmpdir = tempfile.gettempdir()
+    model_path = os.path.join(tmpdir, chemnet_model_filename)
+    with open(model_path, 'wb') as f:
+      f.write(model_bytes)
+    chemnet = fcd.load_ref_model(model_path)
+    # _load_chemnet
+
+  def _calculate_distribution_statistics(chemnet, molecules):
+    sample_std = fcd.canonical_smiles(molecules)
+    gen_mol_act = fcd.get_predictions(chemnet, sample_std)
+
+    mu = np.mean(gen_mol_act, axis=0)
+    cov = np.cov(gen_mol_act.T)
+    return mu, cov
+
+  mu_ref, cov_ref = _calculate_distribution_statistics(chemnet, reference_molecules)
+  mu, cov = _calculate_distribution_statistics(chemnet, generated_molecules)
+
+  FCD = fcd.calculate_frechet_distance(mu1=mu_ref, mu2=mu,
+                                     sigma1=cov_ref, sigma2=cov)
+  score = np.exp(-0.2 * FCD)
+  return score
+
+
+
+
 ##################################################
 #### End of distribution learning Evaluator
 ##################################################
@@ -915,20 +953,24 @@ def osimertinib_mpo(test_smiles):
 
 
 
-fexofenadine_smiles = 'CC(C)(C(=O)O)c1ccc(cc1)C(O)CCCN2CCC(CC2)C(O)(c3ccccc3)c4ccccc4'
-fexofenadine_fp = smiles_2_fingerprint_AP(fexofenadine_smiles)
-def Fexofenadine_mpo(test_smiles):
-	similar_modifier = ClippedScoreModifier(upper_x=0.8)
-	tpsa_modifier=MaxGaussianModifier(mu=90, sigma=10)
-	logp_modifier=MinGaussianModifier(mu=4, sigma=1)
 
-	molecule = smiles_to_rdkit_mol(test_smiles)
-	fp_ap = smiles_2_fingerprint_AP(test_smiles)
-	tpsa_score = tpsa_modifier(Descriptors.TPSA(molecule))
-	logp_score = logp_modifier(Descriptors.MolLogP(molecule))
-	similarity_value = similar_modifier(DataStructs.TanimotoSimilarity(fp_ap, fexofenadine_fp))
-	fexofenadine_gmean = gmean([tpsa_score, logp_score, similarity_value])
-	return fexofenadine_gmean 
+def Fexofenadine_mpo(test_smiles):
+  if 'fexofenadine_fp' not in globals().keys():
+    global fexofenadine_fp
+    fexofenadine_smiles = 'CC(C)(C(=O)O)c1ccc(cc1)C(O)CCCN2CCC(CC2)C(O)(c3ccccc3)c4ccccc4'
+    fexofenadine_fp = smiles_2_fingerprint_AP(fexofenadine_smiles)
+
+  similar_modifier = ClippedScoreModifier(upper_x=0.8)
+  tpsa_modifier=MaxGaussianModifier(mu=90, sigma=10)
+  logp_modifier=MinGaussianModifier(mu=4, sigma=1)
+
+  molecule = smiles_to_rdkit_mol(test_smiles)
+  fp_ap = smiles_2_fingerprint_AP(test_smiles)
+  tpsa_score = tpsa_modifier(Descriptors.TPSA(molecule))
+  logp_score = logp_modifier(Descriptors.MolLogP(molecule))
+  similarity_value = similar_modifier(DataStructs.TanimotoSimilarity(fp_ap, fexofenadine_fp))
+  fexofenadine_gmean = gmean([tpsa_score, logp_score, similarity_value])
+  return fexofenadine_gmean 
 
 
 
@@ -963,11 +1005,14 @@ class AtomCounter:
 
         return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)
 
-ranolazine_smiles = 'COc1ccccc1OCC(O)CN2CCN(CC(=O)Nc3c(C)cccc3C)CC2'
-ranolazine_fp = smiles_2_fingerprint_AP(ranolazine_smiles)
-fluorine_counter = AtomCounter('F')
+
 def Ranolazine_mpo(test_smiles):
-  
+  if 'ranolazine_fp' not in globals().keys():
+    global ranolazine_fp, fluorine_counter  
+    ranolazine_smiles = 'COc1ccccc1OCC(O)CN2CCN(CC(=O)Nc3c(C)cccc3C)CC2'
+    ranolazine_fp = smiles_2_fingerprint_AP(ranolazine_smiles)
+    fluorine_counter = AtomCounter('F')
+
   similar_modifier = ClippedScoreModifier(upper_x=0.7)
   tpsa_modifier = MaxGaussianModifier(mu=95, sigma=20)
   logp_modifier = MaxGaussianModifier(mu=7, sigma=1)
