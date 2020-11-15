@@ -1092,7 +1092,6 @@ def Amlodipine_mpo(test_smiles):
 todo 
   Sitagliptin MPO
   Zaleplon MPO 
-  Isomer xxx, xxx, xxx
 
 '''
 
@@ -1163,6 +1162,43 @@ def isomers_c9h10n2o2pf2cl(test_smiles):
     global isomers_scoring_C9H10N2O2PF2Cl
     isomers_scoring_C9H10N2O2PF2Cl = Isomer_scoring(target_smiles = 'C7H8N2O2', means = 'geometric')
   return isomers_scoring_C9H10N2O2PF2Cl(test_smiles)
+
+
+def zaleplon_mpo(test_smiles):
+  if 'zaleplon_fp' not in globals().keys():
+    global zaleplon_fp, isomer_scoring_C19H17N3O2
+    zaleplon_smiles = 'O=C(C)N(CC)C1=CC=CC(C2=CC=NC3=C(C=NN23)C#N)=C1'
+    zaleplon_fp = smiles_2_fingerprint_ECFP4(zaleplon_smiles)
+    isomer_scoring_C19H17N3O2 = Isomer_scoring(target_smiles = 'C19H17N3O2')
+
+  fp = smiles_2_fingerprint_ECFP4(test_smiles)
+  similarity_value = DataStructs.Tanimoto(fp, zaleplon_fp)
+  isomer_value = isomer_scoring_C19H17N3O2(test_smiles)
+  return gmean([similarity_value, isomer_value])
+
+def sitagliptin_mpo(test_smiles):
+  if 'sitagliptin_fp_ecfp4' not in globals().keys():
+    global sitagliptin_fp_ecfp4, sitagliptin_logp_modifier, sitagliptin_tpsa_modifier, \
+           isomers_scoring_C16H15F6N5O, sitagliptin_similar_modifier
+    sitagliptin_smiles = 'Fc1cc(c(F)cc1F)CC(N)CC(=O)N3Cc2nnc(n2CC3)C(F)(F)F'
+    sitagliptin_fp_ecfp4 = smiles_2_fingerprint_ECFP4(sitagliptin_smiles)
+    sitagliptin_mol = Chem.MolFromSmiles(sitagliptin_smiles)
+    sitagliptin_logp = Descriptors.MolLogP(sitagliptin_mol)
+    sitagliptin_tpsa = Descriptors.TPSA(sitagliptin_mol)
+    sitagliptin_logp_modifier = GaussianModifier(mu=sitagliptin_logp, sigma=0.2)
+    sitagliptin_tpsa_modifier = GaussianModifier(mu=sitagliptin_tpsa, sigma=5)
+    isomers_scoring_C16H15F6N5O = Isomer_scoring('C16H15F6N5O')
+    sitagliptin_similar_modifier = GaussianModifier(mu=0, sigma=0.1)
+
+  molecule = Chem.MolFromSmiles(test_smiles)
+  fp_ecfp4 = smiles_2_fingerprint_ECFP4(test_smiles)
+  logp_score = Descriptors.MolLogP(molecule)
+  tpsa_score = Descriptors.TPSA(molecule)
+  isomer_score = isomers_scoring_C16H15F6N5O(test_smiles)
+  similarity_value = DataStructs.Tanimoto(fp_ecfp4, sitagliptin_fp_ecfp4)
+  return gmean([similarity_value, logp_score, tpsa_score, isomer_score])
+
+
 
 
 
