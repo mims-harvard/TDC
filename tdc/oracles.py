@@ -56,6 +56,15 @@ class Oracle:
 			from .chem_utils import jnk3
 			oracle_object = jnk3()
 			self.evaluator_func = oracle_object
+		'''
+			guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
+				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
+				   'C11H24_isomer', 'C9H10N2O2PF2Cl_isomer', \
+				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
+				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
+				   'median1', 'median2', \
+				   'valsartan_smarts', 'deco_hop', 'scaffold_hop', ]
+		'''
 		elif self.name == 'celecoxib_rediscovery':
 			from .chem_utils import celecoxib_rediscovery
 			self.evaluator_func = celecoxib_rediscovery
@@ -80,6 +89,18 @@ class Oracle:
 		elif self.name == 'median2':
 			from .chem_utils import median2
 			self.evaluator_func = median2
+		elif self.name == 'osimertinib_mpo':
+			from .chem_utils import osimertinib_mpo
+			self.evaluator_func = osimertinib_mpo
+		elif self.name == 'fexofenadine_mpo':
+			from .chem_utils import fexofenadine_mpo
+			self.evaluator_func = fexofenadine_mpo
+		elif self.name == 'ranolazine_mpo':
+			from .chem_utils import ranolazine_mpo
+			self.evaluator_func = ranolazine_mpo
+		### todo .........
+
+		#### synthetic analysis 
 		elif self.name == 'askcos':
 			from .chem_utils import askcos
 			self.evaluator_func = askcos

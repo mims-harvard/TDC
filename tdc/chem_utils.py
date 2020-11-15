@@ -954,7 +954,7 @@ def osimertinib_mpo(test_smiles):
 
 
 
-def Fexofenadine_mpo(test_smiles):
+def fexofenadine_mpo(test_smiles):
   if 'fexofenadine_fp' not in globals().keys():
     global fexofenadine_fp
     fexofenadine_smiles = 'CC(C)(C(=O)O)c1ccc(cc1)C(O)CCCN2CCC(CC2)C(O)(c3ccccc3)c4ccccc4'
@@ -1006,7 +1006,7 @@ class AtomCounter:
         return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)
 
 
-def Ranolazine_mpo(test_smiles):
+def ranolazine_mpo(test_smiles):
   if 'ranolazine_fp' not in globals().keys():
     global ranolazine_fp, fluorine_counter  
     ranolazine_smiles = 'COc1ccccc1OCC(O)CN2CCN(CC(=O)Nc3c(C)cccc3C)CC2'
@@ -1037,7 +1037,7 @@ def Ranolazine_mpo(test_smiles):
 
 
 
-def Perindopril_mpo(test_smiles):
+def perindopril_mpo(test_smiles):
   ## no similar_modifier
 
   if 'perindopril_fp' not in globals().keys():
@@ -1067,7 +1067,7 @@ def Perindopril_mpo(test_smiles):
 
 
 
-def Amlodipine_mpo(test_smiles):
+def amlodipine_mpo(test_smiles):
   ## no similar_modifier
   if 'amlodipine_fp' not in globals().keys():
     global amlodipine_fp, num_rings

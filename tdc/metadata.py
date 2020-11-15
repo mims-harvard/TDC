@@ -81,11 +81,25 @@ evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy', 
 
 guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
 				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
-				   'C11H24_isomer', 'C9H10N2O2PF2Cl_isomor', \
-				   'median_molecule_1', 'median_molecule_2', \
-				   'Osimertinib_MPO', 'Fexofenadine_MPO', 'Ranolazine_MPO', 'Perindopril_MPO', \
-				   'Amlodipine_MPO', 'Sitagliptin_MPO', 'Zaleplon_MPO', \
-				   'Valsartan_SMARTS', 'deco_hop', 'scaffold_hop', 'median1', 'median2']
+				   'C11H24_isomer', 'C9H10N2O2PF2Cl_isomer', \
+				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
+				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
+				   'median1', 'median2', \
+				   'valsartan_smarts', 'deco_hop', 'scaffold_hop', ]
+
+'''
+  rediscovery:  		3
+  similarity:  			3
+  isomer: 				2
+  mpo: 					7
+  median: 				2
+  other:				3 
+-------------         ------
+  total: 				20 
+
+'''
+
+
 
 #### evaluator for distribution learning, the input of __call__ is list of smiles
 molecule_evaluator_name = ['novelty', 'diversity', 'uniqueness', 'validity']  
