@@ -125,7 +125,7 @@ Paper is in progress and will come out soon.
 
 ## Benchmark and Leaderboard
 
-We are actively working on the benchmark and leaderboard. We would release this feature in the next major release. In the meantime, if you have expertise or interest in helping build this feature, please send emails to [us](kexinhuang@hsph.harvard.edu).
+We are actively working on the benchmark and leaderboard. We would release this feature in the next major release. In the meantime, if you have expertise or interest in helping build this feature, please send emails to [us](mailto:kexinhuang@hsph.harvard.edu).
 
 ## Contribute
 

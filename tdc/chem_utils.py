@@ -342,7 +342,7 @@ def calculateScore(m):
 def load_drd2_model():
     # global clf_model
     # name = op.join(op.dirname(__file__), 'clf_py36.pkl')
-    print("==== load drd2 oracle =====")
+    #print("==== load drd2 oracle =====")
     name = 'oracle/drd2.pkl'
     with open(name, "rb") as f:
         clf_model = pickle.load(f)
@@ -467,7 +467,7 @@ https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py
 
 def load_gsk3b_model():
     gsk3_model_path = 'oracle/gsk3b.pkl'
-    print('==== load gsk3b oracle =====')
+    #print_sys('==== load gsk3b oracle =====')
     with open(gsk3_model_path, 'rb') as f:
         gsk3_model = pickle.load(f)
     return gsk3_model 
