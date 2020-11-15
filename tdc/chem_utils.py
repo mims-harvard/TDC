@@ -1090,14 +1090,82 @@ def Amlodipine_mpo(test_smiles):
 
 '''
 todo 
-  Valsartan SMARTS 
-  Deco Hop 
-  Scaffold Hop 
   Sitagliptin MPO
   Zaleplon MPO 
-  Isomer 
+  Isomer xxx, xxx, xxx
 
 '''
+
+
+def parse_molecular_formula(formula):
+    """
+    Parse a molecular formulat to get the element types and counts.
+
+    Args:
+        formula: molecular formula, f.i. "C8H3F3Br"
+
+    Returns:
+        A list of tuples containing element types and number of occurrences.
+    """
+    import re 
+    matches = re.findall(r'([A-Z][a-z]*)(\d*)', formula)
+
+    # Convert matches to the required format
+    results = []
+    for match in matches:
+        # convert count to an integer, and set it to 1 if the count is not visible in the molecular formula
+        count = 1 if not match[1] else int(match[1])
+        results.append((match[0], count))
+
+    return results
+
+
+class Isomer_scoring:
+  def __init__(self, target_smiles, means = 'geometric'):
+    assert means in ['geometric', 'arithmetic']
+    if means == 'geometric':
+      self.mean_func = gmean 
+    else: 
+      self.mean_func = np.mean 
+    
+
+    atom2cnt_lst = parse_molecular_formula(target_smiles)
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst]) 
+    self.total_atom_modifier = GaussianModifier(mu=total_atom_num, sigma=2.0)
+    self.AtomCounter_Modifier_lst = [((AtomCounter(atom)), GaussianModifier(mu=cnt,sigma=1.0)) for atom,cnt in atom2cnt_lst]
+
+
+
+  def __call__(self, test_smiles):
+    molecule = smiles_to_rdkit_mol(test_smiles)
+    all_scores = []
+    for atom_counter, modifier_func in self.AtomCounter_Modifier_lst:
+      all_scores.append(modifier_func(atom_counter(molecule)))
+
+    ### total atom number
+    atom2cnt_lst = parse_molecular_formula(test_smiles)
+    ## todo add Hs 
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst])
+    all_scores.append(self.total_atom_modifier(total_atom_num))
+
+    return self.mean_func(all_scores)
+
+
+def isomers_c7h8n2o2(test_smiles):
+  if 'isomers_scoring_c7h8n2o2' not in globals().keys():
+    global isomers_scoring_c7h8n2o2
+    isomers_scoring_c7h8n2o2 = Isomer_scoring(target_smiles = 'C7H8N2O2', means = 'geometric')
+  return isomers_scoring_c7h8n2o2(test_smiles)
+
+
+def isomers_c9h10n2o2pf2cl(test_smiles):
+  if 'isomers_scoring_C9H10N2O2PF2Cl' not in globals().keys():
+    global isomers_scoring_C9H10N2O2PF2Cl
+    isomers_scoring_C9H10N2O2PF2Cl = Isomer_scoring(target_smiles = 'C7H8N2O2', means = 'geometric')
+  return isomers_scoring_C9H10N2O2PF2Cl(test_smiles)
+
+
+
 
 
 def get_PHCO_fingerprint(mol):
