@@ -165,7 +165,6 @@ class DataLoader(base_dataset.DataLoader):
         self.entity2 = df[self.entity2_name]
         self.y = df['Y']
         self.raw_y = self.y
-        return self
 
     def to_graph(self, threshold=None, format='edge_list', split=True,
                  frac=[0.7, 0.1, 0.2], seed='benchmark', order='descending'):
