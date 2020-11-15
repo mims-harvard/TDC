@@ -1100,7 +1100,52 @@ todo
 '''
 
 
+def get_PHCO_fingerprint(mol):
+  if 'Gobbi_Pharm2D' not in globals().keys():
+    global Gobbi_Pharm2D
+    from rdkit.Chem.Pharm2D import Generate, Gobbi_Pharm2D
+  return Generate.Gen2DFingerprint(mol, Gobbi_Pharm2D.factory)
 
+
+class SMARTS_scoring:
+  def __init__(self, target_smarts, inverse):
+    self.target_mol = Chem.MolFromSmarts(target_smarts)
+    self.inverse = inverse
+
+  def __call__(self, mol):
+    matches = molecule.GetSubstructMatches(valsartan_mol)
+    if len(matches) > 0:
+      if self.inverse:
+        return 0.0
+      else:
+        return 1.0
+    else:
+      if self.inverse:
+        return 1.0
+      else:
+        return 0.0
+
+def deco_hop(test_smiles):
+  if 'pharmacophor_fp' not in globals().keys():
+    global pharmacophor_fp, deco1_smarts_scoring, deco2_smarts_scoring, scaffold_smarts_scoring   
+    pharmacophor_smiles = 'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'
+    pharmacophor_mol = smiles_to_rdkit_mol(pharmacophor_smiles)
+    pharmacophor_fp = get_PHCO_fingerprint(pharmacophor_mol)
+
+    deco1_smarts_scoring = SMARTS_scoring(target_smarts = 'CS([#6])(=O)=O', inverse = True)
+    deco2_smarts_scoring = SMARTS_scoring(target_smarts = '[#7]-c1ccc2ncsc2c1', inverse = True) 
+    scaffold_smarts_scoring = SMARTS_scoring(target_smarts = '[#7]-c1n[c;h1]nc2[c;h1]c(-[#8])[c;h0][c;h1]c12', inverse = False) 
+
+  molecule = smiles_to_rdkit_mol(test_smiles)
+  fp = get_PHCO_fingerprint(molecule)
+  
+  similarity_value = DataStructs.Tanimoto(fp, pharmacophor_fp)
+  deco1_score = deco1_smarts_scoring(molecule)
+  deco2_score = deco2_smarts_scoring(molecule)
+  scaffold_score = scaffold_smarts_scoring(molecule)
+
+  all_scores = np.mean([similarity_value, deco1_score, deco2_score, scaffold_score])
+  return all_scores
 
 
 def valsartan_smarts(test_smiles):
