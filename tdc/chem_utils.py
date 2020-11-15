@@ -1138,14 +1138,51 @@ def deco_hop(test_smiles):
 
   molecule = smiles_to_rdkit_mol(test_smiles)
   fp = get_PHCO_fingerprint(molecule)
-  
-  similarity_value = DataStructs.Tanimoto(fp, pharmacophor_fp)
+  similarity_modifier = ClippedScoreModifier(upper_x=0.85)
+
+  similarity_value = similarity_modifier(DataStructs.Tanimoto(fp, pharmacophor_fp))
   deco1_score = deco1_smarts_scoring(molecule)
   deco2_score = deco2_smarts_scoring(molecule)
   scaffold_score = scaffold_smarts_scoring(molecule)
 
   all_scores = np.mean([similarity_value, deco1_score, deco2_score, scaffold_score])
   return all_scores
+
+
+
+
+
+
+
+def scaffold_hop(test_smiles):
+  if 'pharmacophor_fp' not in globals().keys():
+    global pharmacophor_fp, deco_smarts_scoring, scaffold_smarts_scoring   
+    pharmacophor_smiles = 'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'
+    pharmacophor_mol = smiles_to_rdkit_mol(pharmacophor_smiles)
+    pharmacophor_fp = get_PHCO_fingerprint(pharmacophor_mol)
+
+    deco_smarts_scoring = SMARTS_scoring(target_smarts = '[#6]-[#6]-[#6]-[#8]-[#6]~[#6]~[#6]~[#6]~[#6]-[#7]-c1ccc2ncsc2c1', 
+                                         inverse=False)
+
+    scaffold_smarts_scoring = SMARTS_scoring(target_smarts = '[#7]-c1n[c;h1]nc2[c;h1]c(-[#8])[c;h0][c;h1]c12', 
+                                             inverse=True)
+
+  molecule = smiles_to_rdkit_mol(test_smiles)
+  fp = get_PHCO_fingerprint(molecule)
+  similarity_modifier = ClippedScoreModifier(upper_x=0.75)
+
+  similarity_value = similarity_modifier(DataStructs.Tanimoto(fp, pharmacophor_fp))
+  deco_score = deco_smarts_scoring(molecule)
+  scaffold_score = scaffold_smarts_scoring(molecule)
+
+  all_scores = np.mean([similarity_value, deco_score, scaffold_score])
+  return all_scores
+
+
+
+
+
+
 
 
 def valsartan_smarts(test_smiles):
