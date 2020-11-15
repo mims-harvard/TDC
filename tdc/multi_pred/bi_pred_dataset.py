@@ -50,7 +50,6 @@ class DataLoader(base_dataset.DataLoader):
         self.path = path
         self.file_format = 'csv'
         self.label_name = label_name
-        self.print_stats = print_stats
 
         self.entity1_name = 'Entity1'
         self.entity2_name = 'Entity2'
@@ -221,6 +220,8 @@ class DataLoader(base_dataset.DataLoader):
             # already binary
             df['label_binary'] = df['Y']
 
+        df[self.entity1_name + '_ID'] = df[self.entity1_name + '_ID'].astype(str)
+        df[self.entity2_name + '_ID'] = df[self.entity2_name + '_ID'].astype(str)
         df_pos = df[df.label_binary == 1]
         df_neg = df[df.label_binary == 0]
 

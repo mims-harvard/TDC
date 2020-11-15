@@ -1125,7 +1125,7 @@ def valsartan_smarts(test_smiles):
   if len(matches) > 0:
     smarts_score = 1.0
   else:
-    return smarts_score = 0.0
+    smarts_score = 0.0
 
   tpsa_score = tpsa_modifier(Descriptors.TPSA(molecule))
   logp_score = logp_modifier(Descriptors.MolLogP(molecule))
