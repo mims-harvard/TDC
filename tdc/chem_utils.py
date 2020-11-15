@@ -1088,17 +1088,104 @@ def Amlodipine_mpo(test_smiles):
   return amlodipine_gmean
 
 
+'''
+todo 
+  Valsartan SMARTS 
+  Deco Hop 
+  Scaffold Hop 
+  Sitagliptin MPO
+  Zaleplon MPO 
+  Isomer 
+
+'''
+
+'''
+def smarts_with_other_target(smarts: str, other_molecule: str) -> ScoringFunction:
+    smarts_scoring_function = SMARTSScoringFunction(target=smarts)
+    other_mol = Chem.MolFromSmiles(other_molecule)
+    target_logp = logP(other_mol)
+    target_tpsa = tpsa(other_mol)
+    target_bertz = bertz(other_mol)
+
+    lp = RdkitScoringFunction(descriptor=logP,
+                              score_modifier=GaussianModifier(mu=target_logp, sigma=0.2))
+    tp = RdkitScoringFunction(descriptor=tpsa,
+                              score_modifier=GaussianModifier(mu=target_tpsa, sigma=5))
+    bz = RdkitScoringFunction(descriptor=bertz,
+                              score_modifier=GaussianModifier(mu=target_bertz, sigma=30))
+
+    return GeometricMeanScoringFunction([smarts_scoring_function, lp, tp, bz])
 
 
+def valsartan_smarts() -> GoalDirectedBenchmark:
+    # valsartan smarts with sitagliptin properties
+    sitagliptin_smiles = 'NC(CC(=O)N1CCn2c(nnc2C(F)(F)F)C1)Cc1cc(F)c(F)cc1F'
+    valsartan_smarts = 'CN(C=O)Cc1ccc(c2ccccc2)cc1'
+    specification = uniform_specification(1, 10, 100)
+    return GoalDirectedBenchmark(name='Valsartan SMARTS',
+                                 objective=smarts_with_other_target(valsartan_smarts, sitagliptin_smiles),
+                                 contribution_specification=specification)
+
+class SMARTSScoringFunction(ScoringFunctionBasedOnRdkitMol):
+    """
+    Tests for SMARTS which should be or should not be present in the compound.
 
 
+    """
+
+    def __init__(self, target: str, inverse=False) -> None:
+        """
+
+        :param target: The SMARTS string to match.
+        :param inverse: Specifies whether the SMARTS is desired (False) or an antipattern, which we don't want to see
+                        in the molecules (inverse=False)
+        """
+        super().__init__()
+        self.inverse = inverse
+        self.smarts = target
+        self.target = Chem.MolFromSmarts(target)
+
+        assert target is not None
+
+    def score_mol(self, mol: Chem.Mol) -> float:
+
+        matches = mol.GetSubstructMatches(self.target)
+
+        if len(matches) > 0:
+            if self.inverse:
+                return 0.0
+            else:
+                return 1.0
+        else:
+            if self.inverse:
+                return 1.0
+            else:
+                return 0.0
+'''
 
 
+def valsartan_smarts(test_smiles):
+  if 'sitagliptin_mol' not in globals().keys():
+    global sitagliptin_mol
+    sitagliptin_smiles = 'NC(CC(=O)N1CCn2c(nnc2C(F)(F)F)C1)Cc1cc(F)c(F)cc1F' ### other mol
+    valsartan_smarts = 'CN(C=O)Cc1ccc(c2ccccc2)cc1' ### smarts 
+    sitagliptin_mol = Chem.MolFromSmiles(sitagliptin_smiles)
 
+    target_logp = Descriptors.MolLogP(sitagliptin_mol)
+    target_tpsa = Descriptors.TPSA(sitagliptin_mol)
+    target_bertz = Descriptors.BertzCT(sitagliptin_mol)
 
+    logp_modifier = GaussianModifier(mu=target_logp, sigma=0.2)
+    tpsa_modifier = GaussianModifier(mu=target_tpsa, sigma=5)
+    bertz_modifier = GaussianModifier(mu=target_bertz, sigma=30)
 
-
-
+  molecule = smiles_to_rdkit_mol(test_smiles)
+  smarts_score = 1 ### todo 
+  tpsa_score = tpsa_modifier(Descriptors.TPSA(molecule))
+  logp_score = logp_modifier(Descriptors.MolLogP(molecule))
+  bertz_score = bertz_modifier(Descriptors.BertzCT(molecule))
+  valsartan_gmean = gmean([smarts_score, tpsa_score, logp_score, bertz_score])
+  return valsartan_gmean
 
 
 
