@@ -1,6 +1,10 @@
 from tdc.oracles import Oracle
 
-mpo_lst = ['median1', 'median2',]
+oracle = Oracle(name = 'diversity')
+oracle = Oracle(name = 'diversity')
+oracle = Oracle(name = 'diversity')
+oracle = Oracle(name = 'diversity')
+oracle = Oracle(name = 'diversity')
 
 
 

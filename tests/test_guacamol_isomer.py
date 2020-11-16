@@ -1,6 +1,6 @@
 from tdc.oracles import Oracle
 
-mpo_lst = ['median1', 'median2',]
+mpo_lst = ['isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl']
 
 
 

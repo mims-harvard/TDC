@@ -1,4 +1,4 @@
-from tdc.oracle import Oracle
+from tdc.oracles import Oracle
 
 mpo_lst = ['osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
 		   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', ]

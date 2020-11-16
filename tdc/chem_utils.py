@@ -926,7 +926,7 @@ def median2(test_smiles):
 
 
 def osimertinib_mpo(test_smiles):
-  
+
   if 'osimertinib_fp_fcfc4' not in globals().keys():
     global osimertinib_fp_fcfc4, osimertinib_fp_ecfc6
     osimertinib_smiles = 'COc1cc(N(C)CCN(C)C)c(NC(=O)C=C)cc1Nc2nccc(n2)c3cn(C)c4ccccc34'
@@ -1052,7 +1052,7 @@ def perindopril_mpo(test_smiles):
   molecule = smiles_to_rdkit_mol(test_smiles)
   fp_ecfp4 = smiles_2_fingerprint_ECFP4(test_smiles)
 
-  similarity_value = DataStructs.Tanimoto(fp_ecfp4, perindopril_fp)
+  similarity_value = DataStructs.TanimotoSimilarity(fp_ecfp4, perindopril_fp)
   num_aromatic_rings_value = arom_rings_modifier(num_aromatic_rings(molecule))
 
   perindopril_gmean = gmean([similarity_value, num_aromatic_rings_value])
@@ -1081,8 +1081,8 @@ def amlodipine_mpo(test_smiles):
   molecule = smiles_to_rdkit_mol(test_smiles)
   fp_ecfp4 = smiles_2_fingerprint_ECFP4(test_smiles)
 
-  similarity_value = DataStructs.Tanimoto(fp_ecfp4, amlodipine_fp)
-  num_rings_value = arom_rings_modifier(num_rings(molecule))
+  similarity_value = DataStructs.TanimotoSimilarity(fp_ecfp4, amlodipine_fp)
+  num_rings_value = num_rings_modifier(num_rings(molecule))
 
   amlodipine_gmean = gmean([similarity_value, num_rings_value])
   return amlodipine_gmean
@@ -1172,7 +1172,7 @@ def zaleplon_mpo(test_smiles):
     isomer_scoring_C19H17N3O2 = Isomer_scoring(target_smiles = 'C19H17N3O2')
 
   fp = smiles_2_fingerprint_ECFP4(test_smiles)
-  similarity_value = DataStructs.Tanimoto(fp, zaleplon_fp)
+  similarity_value = DataStructs.TanimotoSimilarity(fp, zaleplon_fp)
   isomer_value = isomer_scoring_C19H17N3O2(test_smiles)
   return gmean([similarity_value, isomer_value])
 
@@ -1195,7 +1195,7 @@ def sitagliptin_mpo(test_smiles):
   logp_score = Descriptors.MolLogP(molecule)
   tpsa_score = Descriptors.TPSA(molecule)
   isomer_score = isomers_scoring_C16H15F6N5O(test_smiles)
-  similarity_value = DataStructs.Tanimoto(fp_ecfp4, sitagliptin_fp_ecfp4)
+  similarity_value = DataStructs.TanimotoSimilarity(fp_ecfp4, sitagliptin_fp_ecfp4)
   return gmean([similarity_value, logp_score, tpsa_score, isomer_score])
 
 
@@ -1206,7 +1206,7 @@ def sitagliptin_mpo(test_smiles):
 
 def get_PHCO_fingerprint(mol):
   if 'Gobbi_Pharm2D' not in globals().keys():
-    global Gobbi_Pharm2D
+    global Gobbi_Pharm2D, Generate
     from rdkit.Chem.Pharm2D import Generate, Gobbi_Pharm2D
   return Generate.Gen2DFingerprint(mol, Gobbi_Pharm2D.factory)
 
@@ -1217,7 +1217,7 @@ class SMARTS_scoring:
     self.inverse = inverse
 
   def __call__(self, mol):
-    matches = molecule.GetSubstructMatches(valsartan_mol)
+    matches = mol.GetSubstructMatches(valsartan_mol)
     if len(matches) > 0:
       if self.inverse:
         return 0.0
@@ -1244,7 +1244,7 @@ def deco_hop(test_smiles):
   fp = get_PHCO_fingerprint(molecule)
   similarity_modifier = ClippedScoreModifier(upper_x=0.85)
 
-  similarity_value = similarity_modifier(DataStructs.Tanimoto(fp, pharmacophor_fp))
+  similarity_value = similarity_modifier(DataStructs.TanimotoSimilarity(fp, pharmacophor_fp))
   deco1_score = deco1_smarts_scoring(molecule)
   deco2_score = deco2_smarts_scoring(molecule)
   scaffold_score = scaffold_smarts_scoring(molecule)
@@ -1259,7 +1259,9 @@ def deco_hop(test_smiles):
 
 
 def scaffold_hop(test_smiles):
-  if 'pharmacophor_fp' not in globals().keys():
+  if 'pharmacophor_fp' not in globals().keys() \
+      or 'scaffold_smarts_scoring' not in globals().keys() \
+      or 'deco_smarts_scoring' not in globals().keys():
     global pharmacophor_fp, deco_smarts_scoring, scaffold_smarts_scoring   
     pharmacophor_smiles = 'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'
     pharmacophor_mol = smiles_to_rdkit_mol(pharmacophor_smiles)
@@ -1275,7 +1277,7 @@ def scaffold_hop(test_smiles):
   fp = get_PHCO_fingerprint(molecule)
   similarity_modifier = ClippedScoreModifier(upper_x=0.75)
 
-  similarity_value = similarity_modifier(DataStructs.Tanimoto(fp, pharmacophor_fp))
+  similarity_value = similarity_modifier(DataStructs.TanimotoSimilarity(fp, pharmacophor_fp))
   deco_score = deco_smarts_scoring(molecule)
   scaffold_score = scaffold_smarts_scoring(molecule)
 
@@ -1290,8 +1292,8 @@ def scaffold_hop(test_smiles):
 
 
 def valsartan_smarts(test_smiles):
-  if 'sitagliptin_mol' not in globals().keys():
-    global sitagliptin_mol
+  if 'valsartan_logp_modifier' not in globals().keys():
+    global valsartan_mol, valsartan_logp_modifier, valsartan_tpsa_modifier, valsartan_bertz_modifier
     valsartan_smarts = 'CN(C=O)Cc1ccc(c2ccccc2)cc1' ### smarts 
     valsartan_mol = Chem.MolFromSmarts(valsartan_smarts)
 
@@ -1302,9 +1304,9 @@ def valsartan_smarts(test_smiles):
     target_tpsa = Descriptors.TPSA(sitagliptin_mol)
     target_bertz = Descriptors.BertzCT(sitagliptin_mol)
 
-    logp_modifier = GaussianModifier(mu=target_logp, sigma=0.2)
-    tpsa_modifier = GaussianModifier(mu=target_tpsa, sigma=5)
-    bertz_modifier = GaussianModifier(mu=target_bertz, sigma=30)
+    valsartan_logp_modifier = GaussianModifier(mu=target_logp, sigma=0.2)
+    valsartan_tpsa_modifier = GaussianModifier(mu=target_tpsa, sigma=5)
+    valsartan_bertz_modifier = GaussianModifier(mu=target_bertz, sigma=30)
 
   molecule = smiles_to_rdkit_mol(test_smiles)
   matches = molecule.GetSubstructMatches(valsartan_mol)
@@ -1313,9 +1315,9 @@ def valsartan_smarts(test_smiles):
   else:
     smarts_score = 0.0
 
-  tpsa_score = tpsa_modifier(Descriptors.TPSA(molecule))
-  logp_score = logp_modifier(Descriptors.MolLogP(molecule))
-  bertz_score = bertz_modifier(Descriptors.BertzCT(molecule))
+  logp_score = valsartan_logp_modifier(Descriptors.MolLogP(molecule))
+  tpsa_score = valsartan_tpsa_modifier(Descriptors.TPSA(molecule))
+  bertz_score = valsartan_bertz_modifier(Descriptors.BertzCT(molecule))
   valsartan_gmean = gmean([smarts_score, tpsa_score, logp_score, bertz_score])
   return valsartan_gmean
 

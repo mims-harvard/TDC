@@ -1,6 +1,6 @@
 from tdc.oracles import Oracle
 
-mpo_lst = ['median1', 'median2',]
+mpo_lst = ['valsartan_smarts', 'deco_hop', 'scaffold_hop']
 
 
 
