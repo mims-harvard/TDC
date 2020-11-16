@@ -1,4 +1,4 @@
-from tdc.oracle import Oracle
+from tdc.oracles import Oracle
 
 oracle = Oracle(name = 'ibm_rxn')
 # oracle = Oracle(name = 'qed')

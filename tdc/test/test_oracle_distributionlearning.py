@@ -3,7 +3,7 @@ from tdc.oracles import Oracle
 ### one args
 one_args_oracle = [ 'validity', 'diversity']
 
-two_args_oracle = ['novelty','fcd_distance', 'kl_divergence']
+two_args_oracle = ['NOVELTY','fcd', 'kl']
 
 
 

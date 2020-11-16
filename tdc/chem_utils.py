@@ -1214,7 +1214,7 @@ class SMARTS_scoring:
     self.inverse = inverse
 
   def __call__(self, mol):
-    matches = mol.GetSubstructMatches(valsartan_mol)
+    matches = mol.GetSubstructMatches(self.target_mol)
     if len(matches) > 0:
       if self.inverse:
         return 0.0
