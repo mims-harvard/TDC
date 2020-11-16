@@ -81,7 +81,7 @@ evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy', 
 
 guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
 				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
-				   'C11H24_isomer', 'C9H10N2O2PF2Cl_isomer', \
+				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', \
 				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
 				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
 				   'median1', 'median2', \

@@ -110,6 +110,12 @@ class Oracle:
 		elif self.name == 'scaffold_hop':
 			from .chem_utils import scaffold_hop
 			self.evaluator_func = scaffold_hop
+		elif self.name == 'isomers_c7h8n2o2':
+			from .chem_utils import isomers_c7h8n2o2
+			self.evaluator_func = isomers_c7h8n2o2
+		elif self.name == 'isomers_c9h10n2o2pf2cl':
+			from .chem_utils import isomers_c9h10n2o2pf2cl
+			self.evaluator_func = isomers_c9h10n2o2pf2cl  
 		elif self.name == 'askcos':  		#### synthetic analysis 
 			from .chem_utils import askcos
 			self.evaluator_func = askcos
