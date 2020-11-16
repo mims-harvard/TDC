@@ -104,9 +104,10 @@ For molecule generation tasks, we provide 10+ oracles for both goal-oriented and
 from tdc import Oracle
 oracle = Oracle(name = 'GSK3B')
 oracle(['CC(C)(C)....' 
-		'C[C@@H]1....',
-		'CCNC(=O)....', 
-		'C[C@@H]1....'])
+	'C[C@@H]1....',
+	'CCNC(=O)....', 
+	'C[C@@H]1....'])
+
 # [0.03, 0.02, 0.0, 0.1]
 ```
 Note that the graph-to-graph paired molecule generation is provided as separate [datasets](https://zitniklab.hms.harvard.edu/TDC/generation_tasks/pairmolgen/). 
