@@ -20,6 +20,10 @@ class Oracle:
 		self.assign_evaluator() 
 
 	def assign_evaluator(self):
+		'''
+		from .chem_utils import eval(self.name)
+		self.evaluator_func = eval(self.name)
+		'''
 		if self.name == 'novelty':
 			from .chem_utils import novelty
 			self.evaluator_func = novelty  
@@ -76,7 +80,37 @@ class Oracle:
 		elif self.name == 'median2':
 			from .chem_utils import median2
 			self.evaluator_func = median2
-		elif self.name == 'askcos':
+		elif self.name == 'osimertinib_mpo':
+			from .chem_utils import osimertinib_mpo
+			self.evaluator_func = osimertinib_mpo
+		elif self.name == 'fexofenadine_mpo':
+			from .chem_utils import fexofenadine_mpo
+			self.evaluator_func = fexofenadine_mpo
+		elif self.name == 'ranolazine_mpo':
+			from .chem_utils import ranolazine_mpo
+			self.evaluator_func = ranolazine_mpo
+		elif self.name == 'perindopril_mpo':
+			from .chem_utils import perindopril_mpo
+			self.evaluator_func = perindopril_mpo
+		elif self.name == 'amlodipine_mpo':
+			from .chem_utils import amlodipine_mpo
+			self.evaluator_func = amlodipine_mpo
+		elif self.name == 'sitagliptin_mpo':
+			from .chem_utils import sitagliptin_mpo
+			self.evaluator_func = sitagliptin_mpo
+		elif self.name == 'zaleplon_mpo':
+			from .chem_utils import zaleplon_mpo
+			self.evaluator_func = zaleplon_mpo
+		elif self.name == 'valsartan_smarts':
+			from .chem_utils import valsartan_smarts
+			self.evaluator_func = valsartan_smarts
+		elif self.name == 'deco_hop':
+			from .chem_utils import deco_hop
+			self.evaluator_func = deco_hop
+		elif self.name == 'scaffold_hop':
+			from .chem_utils import scaffold_hop
+			self.evaluator_func = scaffold_hop
+		elif self.name == 'askcos':  		#### synthetic analysis 
 			from .chem_utils import askcos
 			self.evaluator_func = askcos
 		elif self.name == 'ibm_rxn':
@@ -85,19 +119,43 @@ class Oracle:
 		else:
 			return 
 
-	def __call__(self, smiles, temp = None):
-		if temp is None:
-			if type(smiles)==list:
-				if self.name in molecule_evaluator_name: 
-					#### evaluator for distribution learning, e.g., diversity, validity
-					#### the input of __call__ is list of smiles
-					return self.evaluator_func(smiles) 
-				else:
-					#### evaluator for single molecule, 
-					#### the input of __call__ is a single smiles OR list of smiles
-					return list(map(self.evaluator_func, smiles))
-			else: ### type(smiles)==str:
-				return self.evaluator_func(smiles)
-		else:
-			# novelty
-			return self.evaluator_func(smiles, temp)
+	# ### old version without args and kwargs 
+	# def __call__(self, smiles, temp = None):
+	# 	if temp is None:
+	# 		if type(smiles)==list:
+	# 			if self.name in molecule_evaluator_name: 
+	# 				#### evaluator for distribution learning, e.g., diversity, validity
+	# 				#### the input of __call__ is list of smiles
+	# 				return self.evaluator_func(smiles) 
+	# 			else:
+	# 				#### evaluator for single molecule, 
+	# 				#### the input of __call__ is a single smiles OR list of smiles
+	# 				return list(map(self.evaluator_func, smiles))
+	# 		else: ### type(smiles)==str:
+	# 			return self.evaluator_func(smiles)
+	# 	else:
+	# 		# novelty
+	# 		return self.evaluator_func(smiles, temp)
+
+
+	def __call__(self, *args, **kwargs):
+		smiles_lst = args[0]
+		if type(smiles_lst) == list:
+			if self.name in molecule_evaluator_name:
+				#### evaluator for distribution learning, e.g., diversity, validity
+				#### the input of __call__ is list of smiles
+				return self.evaluator_func(*args, **kwargs)
+			else:
+				#### evaluator for single molecule, 
+				#### the input of __call__ is a single smiles OR list of smiles
+				results_lst = []
+				for smiles in smiles_lst:
+					results_lst.append(self.evaluator_func(smiles, *(args[1:]), **kwargs))
+				return results_lst
+		else:	
+			## a single smiles
+			return self.evaluator_func(*args, **kwargs)
+
+
+
+
