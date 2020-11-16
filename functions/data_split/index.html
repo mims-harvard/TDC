@@ -216,7 +216,7 @@ Below describes the various split schemes:
 </code></pre></div></div>
 
 <h3 id="cold-start-split">Cold-Start Split</h3>
-<p class="is-size-6">  <strong> Description: </strong> Cold split is for multi-instance prediction problems such as DTI, GDA, DrugRes, MTI, where they present two entity types. It first splits on one entity type into train/valid/test and then move all pairs associated with that entity in each set as the final splits. To use that, set <code>column_name</code>&gt; to be the entity that you want to split on. For example, to do cold drug split on DTI task: </p>
+<p class="is-size-6">  <strong> Description: </strong> Cold-start split is for multi-instance prediction problems such as DTI, GDA, DrugRes, MTI, where they present two entity types. It first splits on one entity type into train/valid/test and then move all pairs associated with that entity in each set as the final splits. To use that, set <code>column_name</code> to be the entity that you want to split on. For example, to do cold drug split on DTI task: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>

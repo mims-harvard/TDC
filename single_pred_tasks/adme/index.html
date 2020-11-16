@@ -200,7 +200,6 @@
       <li><a href="#bioavailability-f20f30-edrug3d">Bioavailability F20/F30, eDrug3D</a></li>
       <li><a href="#lipophilicity-astrazeneca">Lipophilicity, AstraZeneca</a></li>
       <li><a href="#solubility-aqsoldb">Solubility, AqSolDB</a></li>
-      <li><a href="#solubility-esol">Solubility, ESOL</a></li>
       <li><a href="#hydration-free-energy-freesolv">Hydration Free Energy, FreeSolv</a></li>
     </ul>
   </li>
@@ -398,29 +397,6 @@
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://doi.org/10.1038/s41597-019-0151-1">[1] Sorkun, M.C., Khetan, A. &amp; Er, S. AqSolDB, a curated reference set of aqueous solubility and 2D descriptors for a diverse set of compounds. Sci Data 6, 143 (2019). </a></p>
-
-<hr />
-
-<h3 id="solubility-esol">Solubility, ESOL</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: ESOL (delaney) is a standard regression dataset containing structures and water solubility data for 1128 compounds. From MoleculeNet. </strong>  </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the activity of solubility.   </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong>  1,128 drugs. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Solubility_ESOL'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci034243x">[1] Delaney, John S. “ESOL: estimating aqueous solubility directly from molecular structure.” Journal of chemical information and computer sciences 44.3 (2004): 1000-1005.</a></p>
-
-<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
 
 <hr />
 

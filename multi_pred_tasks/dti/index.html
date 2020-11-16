@@ -216,18 +216,17 @@
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the target amino acid sequence/compound SMILES string, predict their binding affinity. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> (# of DTI pairs, # of drugs, # of proteins) 66,444/10,665/1,413 for Kd, 1,073,803/549,205/5,078 for IC50, 151,413/91,773/1,240 for EC50, 41,0478/174,662/3,070 for Ki. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> (# of DTI pairs, # of drugs, # of proteins) 52,284/10,665/1,413 for Kd, 991,486/549,205/5,078 for IC50, 375,032/174,662/3,070 for Ki. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Drug Split</span> <span class="tag is-info is-light">Cold Protein Split</span> </p>
 
-<p class="is-size-6">  <strong> Note: </strong> BindingDB is the collection of many assays. Since different assays use different metrics, TDC separates them as separate datasets. Specifically, it has four datasets with Kd, IC50, EC50, Ki as the units. </p>
+<p class="is-size-6">  <strong> Note: </strong> BindingDB is the collection of many assays. Since different assays use different metrics, TDC separates them as separate datasets. Specifically, it has four datasets with Kd, IC50, Ki as the units. </p>
 
 <p class="is-size-6"> <strong>Tips:</strong> Checkout the <a href="/TDC/functions/data_process">data processing</a> page for binarization, label distribution visualization, edge list/DGL/PyTorch graph transformation. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'BindingDB_Kd'</span><span class="p">)</span>
 <span class="c1"># data = DTI(name = 'BindingDB_IC50')
-# data = DTI(name = 'BindingDB_EC50')
 # data = DTI(name = 'BindingDB_Ki')
 </span><span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
@@ -244,7 +243,7 @@
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the target amino acid sequence/compound SMILES string, predict their binding affinity. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 30,056 DTI pairs, 68 drugs, 379 proteins. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 27,621 DTI pairs, 68 drugs, 379 proteins. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Drug Split</span> <span class="tag is-info is-light">Cold Protein Split</span> </p>
 
@@ -266,14 +265,14 @@
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the target amino acid sequence/compound SMILES string, predict their binding affinity. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 118,254 DTI pairs, 2,068 drugs, 229 proteins. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 118,036 DTI pairs, 2,068 drugs, 229 proteins. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Drug Split</span> <span class="tag is-info is-light">Cold Protein Split</span> </p>
 
 <p class="is-size-6"> <strong>Tips:</strong> Checkout the <a href="/TDC/functions/data_process">data processing</a> page for binarization, label distribution visualization, edge list/DGL/PyTorch graph transformation. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'KIBA'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
