@@ -68,5 +68,10 @@ class DataLoader(base_dataset.DataLoader):
 
 	def print_stats(self):
 		print_sys('--- Dataset Statistics ---')
-		print(str(len(np.unique(self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.', flush = True, file = sys.stderr)
+		try:
+			x = np.unique(self.entity1)
+		except:
+			x = np.unique(self.entity1_idx)
+
+		print(str(len(x)) + ' unique ' + self.entity1_name.lower() + 's.', flush = True, file = sys.stderr)
 		print_sys('--------------------------')
