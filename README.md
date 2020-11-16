@@ -1,4 +1,4 @@
-<p align="center"><img src="fig/logo.png" alt="logo" width="600px" /></p>
+<p align="center"><img src="https://github.com/mims-harvard/TDC/blob/master/fig/logo.png" alt="logo" width="600px" /></p>
 
 ----
 
@@ -21,7 +21,7 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 - *Benchmark*: provides a benchmark for fair model comparison. A leaderboard will be released soon!
 - *Community-driven effort*: TDC is a community-driven effort. Contact us if you want to contribute a new dataset or task!
 
-<p align="center"><img src="fig/tdc_overview.png" alt="overview" width="600px" /></p>
+<p align="center"><img src="https://github.com/mims-harvard/TDC/blob/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
 
 ## Installation
 
@@ -103,11 +103,11 @@ For molecule generation tasks, we provide 10+ oracles for both goal-oriented and
 ```python
 from tdc import Oracle
 oracle = Oracle(name = 'GSK3B')
-smiles_lst = ['CC(C)(C)....' 'C[C@@H]1....','CCNC(=O)....', 'C[C@@H]1....']
-oracle(smiles_lst)
+oracle(['CC(C)(C)....' 
+		'C[C@@H]1....',
+		'CCNC(=O)....', 
+		'C[C@@H]1....'])
 # [0.03, 0.02, 0.0, 0.1]
-oracle('CC(C)(C)....')
-# 0.03
 ```
 Note that the graph-to-graph paired molecule generation is provided as separate [datasets](https://zitniklab.hms.harvard.edu/TDC/generation_tasks/pairmolgen/). 
 
