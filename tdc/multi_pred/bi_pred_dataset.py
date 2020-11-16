@@ -92,17 +92,25 @@ class DataLoader(base_dataset.DataLoader):
         """Add a method description here.
         """
         print_sys('--- Dataset Statistics ---')
-        print(str(len(np.unique(
-            self.entity1))) + ' unique ' + self.entity1_name.lower() + 's.',
+        try:
+            x = np.unique(self.entity1)
+        except:
+            x = np.unique(self.entity1_idx)
+
+        try:
+            y = np.unique(self.entity2)
+        except:
+            y = np.unique(self.entity2_idx)
+
+        print(str(len(x)) + ' unique ' + self.entity1_name.lower() + 's.',
               flush=True, file=sys.stderr)
-        print(str(len(np.unique(
-            self.entity2))) + ' unique ' + self.entity2_name.lower() + 's.',
+        print(str(len(y)) + ' unique ' + self.entity2_name.lower() + 's.',
               flush=True, file=sys.stderr)
         print(str(len(self.y)) + ' ' + self.entity1_name.lower() +
               '-' + self.entity2_name.lower() + ' pairs.',
               flush=True, file=sys.stderr)
         print_sys('--------------------------')
-
+    
     def get_split(self, method='random', seed='benchmark',
                   frac=[0.7, 0.1, 0.2], column_name=None):
         """Add a method description here.

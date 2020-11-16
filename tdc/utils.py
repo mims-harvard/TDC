@@ -81,6 +81,10 @@ def pd_load(name, path):
 		df = pd.read_pickle(os.path.join(path, name + '.' + name2type[name]))
 	else:
 		raise ValueError("The file type must be one of tab/csv/pickle.")
+	try:
+		df = df.drop_duplicates()
+	except:
+		pass
 	return df	
 
 def property_dataset_load(name, path, target, dataset_names):
