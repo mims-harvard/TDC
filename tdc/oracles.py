@@ -89,18 +89,28 @@ class Oracle:
 		elif self.name == 'ranolazine_mpo':
 			from .chem_utils import ranolazine_mpo
 			self.evaluator_func = ranolazine_mpo
-		### todo .........
-		'''
-			guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
-				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
-				   'C11H24_isomer', 'C9H10N2O2PF2Cl_isomer', \
-				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
-				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
-				   'median1', 'median2', \
-				   'valsartan_smarts', 'deco_hop', 'scaffold_hop', ]
-		'''
-		#### synthetic analysis 
-		elif self.name == 'askcos':
+		elif self.name == 'perindopril_mpo':
+			from .chem_utils import perindopril_mpo
+			self.evaluator_func = perindopril_mpo
+		elif self.name == 'amlodipine_mpo':
+			from .chem_utils import amlodipine_mpo
+			self.evaluator_func = amlodipine_mpo
+		elif self.name == 'sitagliptin_mpo':
+			from .chem_utils import sitagliptin_mpo
+			self.evaluator_func = sitagliptin_mpo
+		elif self.name == 'zaleplon_mpo':
+			from .chem_utils import zaleplon_mpo
+			self.evaluator_func = zaleplon_mpo
+		elif self.name == 'valsartan_smarts':
+			from .chem_utils import valsartan_smarts
+			self.evaluator_func = valsartan_smarts
+		elif self.name == 'deco_hop':
+			from .chem_utils import deco_hop
+			self.evaluator_func = deco_hop
+		elif self.name == 'scaffold_hop':
+			from .chem_utils import scaffold_hop
+			self.evaluator_func = scaffold_hop
+		elif self.name == 'askcos':  		#### synthetic analysis 
 			from .chem_utils import askcos
 			self.evaluator_func = askcos
 		elif self.name == 'ibm_rxn':
