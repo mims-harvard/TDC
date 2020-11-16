@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/mims-harvard/TDC/blob/master/fig/logo.png" alt="logo" width="600px" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/logo.png" alt="logo" width="600px" /></p>
 
 ----
 
@@ -21,7 +21,7 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 - *Benchmark*: provides a benchmark for fair model comparison. A leaderboard will be released soon!
 - *Community-driven effort*: TDC is a community-driven effort. Contact us if you want to contribute a new dataset or task!
 
-<p align="center"><img src="https://github.com/mims-harvard/TDC/blob/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
 
 ## Installation
 
