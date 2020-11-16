@@ -1,10 +1,9 @@
 from tdc.oracles import Oracle
 
-oracle = Oracle(name = 'diversity')
-oracle = Oracle(name = 'diversity')
-oracle = Oracle(name = 'diversity')
-oracle = Oracle(name = 'diversity')
-oracle = Oracle(name = 'diversity')
+### one args
+one_args_oracle = [ 'validity', 'diversity']
+
+two_args_oracle = ['novelty','fcd_distance', 'kl_divergence']
 
 
 
@@ -16,9 +15,12 @@ smiles_lst = ['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
 
 
 
-for name in mpo_lst:
-	print(name)
+
+for name in one_args_oracle:
 	oracle = Oracle(name = name)
 	print(oracle(smiles_lst))
-	print(oracle(smiles_lst[0]))
 
+
+for name in two_args_oracle:
+	oracle = Oracle(name = name)
+	print(oracle(smiles_lst, smiles_lst))

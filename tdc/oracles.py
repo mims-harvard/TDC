@@ -31,11 +31,17 @@ class Oracle:
 			from .chem_utils import diversity
 			self.evaluator_func = diversity 
 		elif self.name == 'validity':
-			from .chem_utils import validity_ratio
-			self.evaluator_func = validity_ratio 
+			from .chem_utils import validity
+			self.evaluator_func = validity 
 		elif self.name == 'uniqueness':
-			from .chem_utils import unique_rate
-			self.evaluator_func = unique_rate 
+			from .chem_utils import uniqueness
+			self.evaluator_func = uniqueness 
+		elif self.name == 'kl_divergence':
+			from .chem_utils import kl_divergence
+			self.evaluator_func = kl_divergence
+		elif self.name == 'fcd_distance':
+			from .chem_utils import fcd_distance
+			self.evaluator_func = fcd_distance
 		elif self.name == 'logp':
 			from .chem_utils import penalized_logp
 			self.evaluator_func = penalized_logp 

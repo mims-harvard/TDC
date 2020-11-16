@@ -509,7 +509,7 @@ def single_molecule_validity(smiles):
 		return False 
 	return True
 
-def validity_ratio(list_of_smiles):
+def validity(list_of_smiles):
 	valid_list_smiles = list(filter(single_molecule_validity, list_of_smiles))
 	return 1.0*len(valid_list_smiles)/len(list_of_smiles)
 
@@ -527,7 +527,7 @@ def unique_lst_of_smiles(list_of_smiles):
 	canonical_smiles_lst = list(set(canonical_smiles_lst))
 	return canonical_smiles_lst
 
-def unique_rate(list_of_smiles):
+def uniqueness(list_of_smiles):
 	canonical_smiles_lst = unique_lst_of_smiles(list_of_smiles)
 	return 1.0*len(canonical_smiles_lst)/len(list_of_smiles)
 
@@ -655,7 +655,7 @@ def calculate_internal_pairwise_similarities(smiles_list):
 
 
 
-def kldiv(generated_lst_smiles, training_lst_smiles):
+def kl_divergence(generated_lst_smiles, training_lst_smiles):
   pc_descriptor_subset = [
             'BertzCT',
             'MolLogP',
@@ -671,7 +671,7 @@ def kldiv(generated_lst_smiles, training_lst_smiles):
   def canonical(smiles):
     mol = Chem.MolFromSmiles(smiles)
     if mol is not None:
-        return Chem.MolToSmiles(mol, isomericSmiles=include_stereocenters)
+        return Chem.MolToSmiles(mol, isomericSmiles=True) ### todo double check
     else:
         return None
 
@@ -685,6 +685,7 @@ def kldiv(generated_lst_smiles, training_lst_smiles):
   d_sampled = calculate_pc_descriptors(generated_lst_mol, pc_descriptor_subset)
   d_chembl = calculate_pc_descriptors(training_lst_mol, pc_descriptor_subset)
 
+  kldivs = {}
   for i in range(4):
     kldiv = continuous_kldiv(X_baseline=d_chembl[:, i], X_sampled=d_sampled[:, i])
     kldivs[pc_descriptor_subset[i]] = kldiv
@@ -697,10 +698,10 @@ def kldiv(generated_lst_smiles, training_lst_smiles):
 
   # pairwise similarity
 
-  chembl_sim = calculate_internal_pairwise_similarities(self.training_set_molecules)
+  chembl_sim = calculate_internal_pairwise_similarities(training_lst_mol)
   chembl_sim = chembl_sim.max(axis=1)
 
-  sampled_sim = calculate_internal_pairwise_similarities(unique_molecules)
+  sampled_sim = calculate_internal_pairwise_similarities(generated_lst_mol)
   sampled_sim = sampled_sim.max(axis=1)
 
   kldiv_int_int = continuous_kldiv(X_baseline=chembl_sim, X_sampled=sampled_sim)
@@ -714,10 +715,6 @@ def kldiv(generated_lst_smiles, training_lst_smiles):
         # kldivs['external_similarity'] = kldiv_ext
         # kldiv_sum += kldiv_ext
   '''
-  metadata = {
-            'number_samples': self.number_samples,
-            'kl_divs': kldivs
-  }
 
   # Each KL divergence value is transformed to be in [0, 1].
   # Then their average delivers the final score.
@@ -730,7 +727,7 @@ def fcd_distance(generated_molecules, reference_molecules):
     import fcd
   except:
     raise ImportError("Please install networkx by 'pip install FCD'!")
-  import pkgutil, tempfile
+  import pkgutil, tempfile, os
 
   if 'chemnet' not in globals().keys():
     global chemnet

@@ -102,7 +102,7 @@ guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothi
 
 
 #### evaluator for distribution learning, the input of __call__ is list of smiles
-molecule_evaluator_name = ['novelty', 'diversity', 'uniqueness', 'validity']  
+molecule_evaluator_name = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
 
 #### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
