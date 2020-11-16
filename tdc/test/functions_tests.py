@@ -76,6 +76,18 @@ smiles_lst = ['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
 			  'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O']
 oracle(smiles_lst)
 
+oracle = Oracle(name = 'Hop')
+print(oracle(['CC(=O)OC1=CC=CC=C1C(=O)O',
+       'C1=CC=C(C=C1)C=O']))
+
+oracle = Oracle(name = 'Valsartan_SMARTS')
+oracle(['CC(=O)OC1=CC=CC=C1C(=O)O',
+       'C1=CC=C(C=C1)C=O'])
+
+oracle = Oracle(name = 'Rediscovery')
+oracle(['CC(=O)OC1=CC=CC=C1C(=O)O',
+       'C1=CC=C(C=C1)C=O'])
+
 oracle = Oracle(name = 'SA')
 smiles_lst = ['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
 			  'C[C@@H]1CCc2c(sc(NC(=O)c3ccco3)c2C(N)=O)C1', \
