@@ -79,7 +79,7 @@ property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
 evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy', 'mse', 'mae', 'r2', 'micro-f1', 'macro-f1', 'kappa', 'avg-roc-auc']
 
-guacamol_oracle = ['celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
+guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop', 'celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
 				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
 				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', \
 				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \

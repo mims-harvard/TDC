@@ -726,7 +726,7 @@ def fcd_distance(generated_molecules, reference_molecules):
   try:
     import fcd
   except:
-    raise ImportError("Please install networkx by 'pip install FCD'!")
+    raise ImportError("Please install fcd by 'pip install FCD'!")
   import pkgutil, tempfile, os
 
   if 'chemnet' not in globals().keys():
