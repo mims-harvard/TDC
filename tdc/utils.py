@@ -3,6 +3,7 @@ from zipfile import ZipFile
 import os, sys
 import numpy as np
 import pandas as pd
+from pandas.errors import EmptyDataError
 import json
 import warnings
 warnings.filterwarnings("ignore")
@@ -67,25 +68,30 @@ def oracle_download_wrapper(name, path, oracle_names):
 	if os.path.exists(os.path.join(path, name + '.' + oracle2type[name])):
 		print_sys('Found local copy...')
 	else:
-		print_sys("Downloading...")
+		print_sys("Downloading Oracle...")
 		dataverse_download(dataset_path, path, name, oracle2type) ## to-do to-check
+		print_sys("Done!")
 	return name
 
 
 def pd_load(name, path):
-	if name2type[name] == 'tab':
-		df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]), sep = '\t')
-	elif name2type[name] == 'csv':
-		df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]))
-	elif name2type[name] == 'pkl':
-		df = pd.read_pickle(os.path.join(path, name + '.' + name2type[name]))
-	else:
-		raise ValueError("The file type must be one of tab/csv/pickle.")
 	try:
-		df = df.drop_duplicates()
-	except:
-		pass
-	return df	
+		if name2type[name] == 'tab':
+			df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]), sep = '\t')
+		elif name2type[name] == 'csv':
+			df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]))
+		elif name2type[name] == 'pkl':
+			df = pd.read_pickle(os.path.join(path, name + '.' + name2type[name]))
+		else:
+			raise ValueError("The file type must be one of tab/csv/pickle.")
+		try:
+			df = df.drop_duplicates()
+		except:
+			pass
+		return df	
+	except EmptyDataError:
+		import sys
+		sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 
 def property_dataset_load(name, path, target, dataset_names):
 	if target is None:
