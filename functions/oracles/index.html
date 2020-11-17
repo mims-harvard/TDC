@@ -384,6 +384,15 @@
 <span class="c1"># {'Celecoxib': 0.03, 'Troglitazone': 0.01, 'Thiothixene': 0.6}
 </span></code></pre></div></div>
 
+<p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Celecoxib_Rediscovery'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+</span></code></pre></div></div>
+
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
@@ -401,6 +410,14 @@
 <span class="c1"># {'Aripiprazole': [0.03, 0.32, 0.01, 0.1], 'Albuterol': [0.33, 0.12, 0.0, 0.12], 'Mestranol': [0.032, 0.021, 0.02, 0.1]}
 </span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
 <span class="c1"># {'Aripiprazole': 0.03, 'Albuterol': 0.01, 'Mestranol': 0.6}
+</span></code></pre></div></div>
+<p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Aripiprazole_Similarity'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -422,6 +439,15 @@
 <span class="c1"># {'Median 1': 0.03, 'Median 2': 0.01}
 </span></code></pre></div></div>
 
+<p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Median 1'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+</span></code></pre></div></div>
+
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
@@ -439,6 +465,15 @@
 <span class="c1"># {'C11H24': [0.03, 0.32, 0.01, 0.1], 'C9H10N2O2PF2Cl': [0.33, 0.12, 0.0, 0.12]}
 </span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
 <span class="c1"># {'C11H24': 0.03, 'C9H10N2O2PF2Cl': 0.01}
+</span></code></pre></div></div>
+
+<p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Isomers_C11H24'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -459,6 +494,14 @@
 </span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
 <span class="c1"># {'Osimertinib': 0.03, 'Fexofenadine': 0.33, 'Ranolazine': 0.03, 'Perindopril': 0.33, 'Amlodipine': 0.03, 'Sitagliptin': 0.33, 'Zaleplon': 0.32}
 </span></code></pre></div></div>
+<p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Osimertinib_MPO'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+</span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
@@ -471,7 +514,7 @@
 <p class="is-size-6">  <strong> Description: </strong> The valsartan SMARTS benchmark targets molecules containing a SMARTS pattern related to valsartan while being characterized by physicochemical properties corresponding to the sitagliptin molecule. From Guacamol Benchmark. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
-<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Valsartan'</span><span class="p">)</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Valsartan_SMARTS'</span><span class="p">)</span>
 <span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
 <span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
 <span class="c1"># [0.03, 0.32, 0.01, 0.1]
@@ -496,6 +539,14 @@
 <span class="c1"># {'Scaffold Hop': [0.03, 0.32, 0.01, 0.1], 'Decorator Hop': [0.33, 0.12, 0.0, 0.12]}
 </span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
 <span class="c1"># {'Scaffold Hop': 0.03, 'Decorator Hop': 0.01}
+</span></code></pre></div></div>
+<p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Scaffold Hop'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -529,8 +580,9 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'KL_Divergence'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="n">gen_smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">train_smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CCNC[C@@H]....'</span><span class="p">,</span> <span class="s">'[C@H](O)C2)....'</span><span class="p">,</span> <span class="s">'C(=O)CCCc2....'</span><span class="p">,</span> <span class="s">'sc(NC(=O)....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">gen_smiles_lst</span><span class="p">,</span> <span class="n">train_smiles_lst</span><span class="p">)</span>
 <span class="c1"># 0.2
 </span></code></pre></div></div>
 
@@ -547,7 +599,8 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'FCD_Distance'</span><span class="p">)</span>
 <span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="n">ref_smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CCNC[C@@H]....'</span><span class="p">,</span> <span class="s">'[C@H](O)C2)....'</span><span class="p">,</span> <span class="s">'C(=O)CCCc2....'</span><span class="p">,</span> <span class="s">'sc(NC(=O)....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">,</span> <span class="n">ref_smiles_lst</span><span class="p">)</span>
 <span class="c1"># 0.2
 </span></code></pre></div></div>
 
