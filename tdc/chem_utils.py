@@ -797,27 +797,7 @@ def smiles_2_fingerprint_ECFP6(smiles):
 
 
 
-def parse_molecular_formula(formula):
-    """
-    Parse a molecular formulat to get the element types and counts.
 
-    Args:
-        formula: molecular formula, f.i. "C8H3F3Br"
-        
-    Returns:
-        A list of tuples containing element types and number of occurrences.
-    """
-    import re 
-    matches = re.findall(r'([A-Z][a-z]*)(\d*)', formula)
-
-    # Convert matches to the required format
-    results = []
-    for match in matches:
-        # convert count to an integer, and set it to 1 if the count is not visible in the molecular formula
-        count = 1 if not match[1] else int(match[1])
-        results.append((match[0], count))
-
-    return results
 
 class AtomCounter:
 
@@ -844,9 +824,30 @@ class AtomCounter:
 
         return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)
 
+def parse_molecular_formula(formula):
+    """
+    Parse a molecular formulat to get the element types and counts.
 
+    Args:
+        formula: molecular formula, f.i. "C8H3F3Br"
+        
+    Returns:
+        A list of tuples containing element types and number of occurrences.
+    """
+    import re 
+    matches = re.findall(r'([A-Z][a-z]*)(\d*)', formula)
+
+    # Convert matches to the required format
+    results = []
+    for match in matches:
+        # convert count to an integer, and set it to 1 if the count is not visible in the molecular formula
+        count = 1 if not match[1] else int(match[1])
+        results.append((match[0], count))
+
+    return results
   
-
+####################################################################
+#################### isomer 
 class Isomer_scoring:
   def __init__(self, target_smiles, means = 'geometric'):
     assert means in ['geometric', 'arithmetic']
@@ -915,43 +916,48 @@ class Rediscovery_meta:
   def __call__(self, test_smiles):
     test_fp = self.similarity_func(test_smiles)
     similarity_value = DataStructs.TanimotoSimilarity(self.target_fp, test_fp)
+    return similarity_value 
 
 
-def celecoxib_rediscovery(test_smiles):
-  if 'celecoxib_fp' not in globals().keys():
-    global celecoxib_fp
-    celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
-    celecoxib_fp = smiles_2_fingerprint_ECFP4(celecoxib_smiles)
+celecoxib_rediscovery = Rediscovery_meta(target_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F', fp = 'ECFP4')
+troglitazone_rediscovery = Rediscovery_meta(target_smiles = 'Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O', fp = 'ECFP4')
+thiothixene_rediscovery = Rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1', fp = 'ECFP4')
 
-  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
-  return similarity_value
+# def celecoxib_rediscovery(test_smiles):
+#   if 'celecoxib_fp' not in globals().keys():
+#     global celecoxib_fp
+#     celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
+#     celecoxib_fp = smiles_2_fingerprint_ECFP4(celecoxib_smiles)
 
-
-def troglitazone_rediscovery(test_smiles):
-	### ECFP4
-
-  if 'troglitazone_fp' not in globals().keys():
-    global troglitazone_fp
-    troglitazone_smiles='Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O'
-    troglitazone_fp = smiles_2_fingerprint_ECFP4(troglitazone_smiles)
-
-  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(troglitazone_fp, test_fp)
-  return similarity_value	
+#   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+#   similarity_value = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
+#   return similarity_value
 
 
-def thiothixene_rediscovery(test_smiles):
-	### ECFP4
+# def troglitazone_rediscovery(test_smiles):
+# 	### ECFP4
 
-  if 'Thiothixene_fp' not in globals().keys():
-    global Thiothixene_fp
-    Thiothixene_smiles='CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1'  
-    Thiothixene_fp = smiles_2_fingerprint_ECFP4(Thiothixene_smiles)
+#   if 'troglitazone_fp' not in globals().keys():
+#     global troglitazone_fp
+#     troglitazone_smiles='Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O'
+#     troglitazone_fp = smiles_2_fingerprint_ECFP4(troglitazone_smiles)
 
-  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
-  return similarity_value
+#   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+#   similarity_value = DataStructs.TanimotoSimilarity(troglitazone_fp, test_fp)
+#   return similarity_value	
+
+
+# def thiothixene_rediscovery(test_smiles):
+# 	### ECFP4
+
+#   if 'Thiothixene_fp' not in globals().keys():
+#     global Thiothixene_fp
+#     Thiothixene_smiles='CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1'  
+#     Thiothixene_fp = smiles_2_fingerprint_ECFP4(Thiothixene_smiles)
+
+#   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+#   similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
+#   return similarity_value
 
 
 
