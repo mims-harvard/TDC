@@ -796,6 +796,109 @@ def smiles_2_fingerprint_ECFP6(smiles):
 	return fp 
 
 
+
+def parse_molecular_formula(formula):
+    """
+    Parse a molecular formulat to get the element types and counts.
+
+    Args:
+        formula: molecular formula, f.i. "C8H3F3Br"
+        
+    Returns:
+        A list of tuples containing element types and number of occurrences.
+    """
+    import re 
+    matches = re.findall(r'([A-Z][a-z]*)(\d*)', formula)
+
+    # Convert matches to the required format
+    results = []
+    for match in matches:
+        # convert count to an integer, and set it to 1 if the count is not visible in the molecular formula
+        count = 1 if not match[1] else int(match[1])
+        results.append((match[0], count))
+
+    return results
+
+class AtomCounter:
+
+    def __init__(self, element):
+        """
+        Args:
+            element: element to count within a molecule
+        """
+        self.element = element
+
+    def __call__(self, mol):
+        """
+        Count the number of atoms of a given type.
+
+        Args:
+            mol: molecule
+
+        Returns:
+            The number of atoms of the given type.
+        """
+        # if the molecule contains H atoms, they may be implicit, so add them
+        if self.element == 'H':
+            mol = Chem.AddHs(mol)
+
+        return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)
+
+
+  
+
+class Isomer_scoring:
+  def __init__(self, target_smiles, means = 'geometric'):
+    assert means in ['geometric', 'arithmetic']
+    if means == 'geometric':
+      self.mean_func = gmean 
+    else: 
+      self.mean_func = np.mean 
+    atom2cnt_lst = parse_molecular_formula(target_smiles)
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst]) 
+    self.total_atom_modifier = GaussianModifier(mu=total_atom_num, sigma=2.0)
+    self.AtomCounter_Modifier_lst = [((AtomCounter(atom)), GaussianModifier(mu=cnt,sigma=1.0)) for atom,cnt in atom2cnt_lst]
+
+  def __call__(self, test_smiles):
+    molecule = smiles_to_rdkit_mol(test_smiles)
+    all_scores = []
+    for atom_counter, modifier_func in self.AtomCounter_Modifier_lst:
+      all_scores.append(modifier_func(atom_counter(molecule)))
+
+    ### total atom number
+    atom2cnt_lst = parse_molecular_formula(test_smiles)
+    ## todo add Hs 
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst])
+    all_scores.append(self.total_atom_modifier(total_atom_num))
+    return self.mean_func(all_scores)
+
+
+def isomer_meta(target_smiles, means = 'geometric'):
+  return Isomer_scoring(target_smiles, means = means)
+
+
+# global isomers_c7h8n2o2 
+isomers_c7h8n2o2 = isomer_meta(target_smiles = 'C7H8N2O2', means = 'geometric')
+isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
+
+## old version 
+# def isomers_c7h8n2o2(test_smiles):
+#   if 'isomers_scoring_c7h8n2o2' not in globals().keys():
+#     global isomers_scoring_c7h8n2o2
+#     isomers_scoring_c7h8n2o2 = Isomer_scoring(target_smiles = 'C7H8N2O2', means = 'geometric')
+#   return isomers_scoring_c7h8n2o2(test_smiles)
+
+# def isomers_c9h10n2o2pf2cl(test_smiles):
+#   if 'isomers_scoring_C9H10N2O2PF2Cl' not in globals().keys():
+#     global isomers_scoring_C9H10N2O2PF2Cl
+#     isomers_scoring_C9H10N2O2PF2Cl = Isomer_scoring(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
+#   return isomers_scoring_C9H10N2O2PF2Cl(test_smiles)
+
+####################################################################
+#################### isomer 
+####################################################################
+#################### rediscovery 
+
 class Rediscovery_meta:
   def __init__(self, target_smiles, fp):
     if fp == 'ECFP4':
@@ -813,12 +916,6 @@ class Rediscovery_meta:
     test_fp = self.similarity_func(test_smiles)
     similarity_value = DataStructs.TanimotoSimilarity(self.target_fp, test_fp)
 
-class Isomer_meta:
-  def __init__(self, target_smiles):
-    self.target_smiles = target_smiles
-  
-  def __call__(self, test_smiles):
-    pass   
 
 def celecoxib_rediscovery(test_smiles):
   if 'celecoxib_fp' not in globals().keys():
@@ -1001,30 +1098,6 @@ def fexofenadine_mpo(test_smiles):
 
 
 
-class AtomCounter:
-
-    def __init__(self, element):
-        """
-        Args:
-            element: element to count within a molecule
-        """
-        self.element = element
-
-    def __call__(self, mol):
-        """
-        Count the number of atoms of a given type.
-
-        Args:
-            mol: molecule
-
-        Returns:
-            The number of atoms of the given type.
-        """
-        # if the molecule contains H atoms, they may be implicit, so add them
-        if self.element == 'H':
-            mol = Chem.AddHs(mol)
-
-        return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)
 
 
 def ranolazine_mpo(test_smiles):
@@ -1109,80 +1182,10 @@ def amlodipine_mpo(test_smiles):
   return amlodipine_gmean
 
 
-'''
-todo 
-  Sitagliptin MPO
-  Zaleplon MPO 
-
-'''
-
-
-def parse_molecular_formula(formula):
-    """
-    Parse a molecular formulat to get the element types and counts.
-
-    Args:
-        formula: molecular formula, f.i. "C8H3F3Br"
-
-    Returns:
-        A list of tuples containing element types and number of occurrences.
-    """
-    import re 
-    matches = re.findall(r'([A-Z][a-z]*)(\d*)', formula)
-
-    # Convert matches to the required format
-    results = []
-    for match in matches:
-        # convert count to an integer, and set it to 1 if the count is not visible in the molecular formula
-        count = 1 if not match[1] else int(match[1])
-        results.append((match[0], count))
-
-    return results
-
-
-class Isomer_scoring:
-  def __init__(self, target_smiles, means = 'geometric'):
-    assert means in ['geometric', 'arithmetic']
-    if means == 'geometric':
-      self.mean_func = gmean 
-    else: 
-      self.mean_func = np.mean 
-    
-
-    atom2cnt_lst = parse_molecular_formula(target_smiles)
-    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst]) 
-    self.total_atom_modifier = GaussianModifier(mu=total_atom_num, sigma=2.0)
-    self.AtomCounter_Modifier_lst = [((AtomCounter(atom)), GaussianModifier(mu=cnt,sigma=1.0)) for atom,cnt in atom2cnt_lst]
 
 
 
-  def __call__(self, test_smiles):
-    molecule = smiles_to_rdkit_mol(test_smiles)
-    all_scores = []
-    for atom_counter, modifier_func in self.AtomCounter_Modifier_lst:
-      all_scores.append(modifier_func(atom_counter(molecule)))
 
-    ### total atom number
-    atom2cnt_lst = parse_molecular_formula(test_smiles)
-    ## todo add Hs 
-    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst])
-    all_scores.append(self.total_atom_modifier(total_atom_num))
-
-    return self.mean_func(all_scores)
-
-
-def isomers_c7h8n2o2(test_smiles):
-  if 'isomers_scoring_c7h8n2o2' not in globals().keys():
-    global isomers_scoring_c7h8n2o2
-    isomers_scoring_c7h8n2o2 = Isomer_scoring(target_smiles = 'C7H8N2O2', means = 'geometric')
-  return isomers_scoring_c7h8n2o2(test_smiles)
-
-
-def isomers_c9h10n2o2pf2cl(test_smiles):
-  if 'isomers_scoring_C9H10N2O2PF2Cl' not in globals().keys():
-    global isomers_scoring_C9H10N2O2PF2Cl
-    isomers_scoring_C9H10N2O2PF2Cl = Isomer_scoring(target_smiles = 'C7H8N2O2', means = 'geometric')
-  return isomers_scoring_C9H10N2O2PF2Cl(test_smiles)
 
 
 def zaleplon_mpo(test_smiles):
