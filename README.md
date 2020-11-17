@@ -145,7 +145,7 @@ We are actively working on the benchmark and leaderboard. We would release this 
 
 ## Contribute
 
-TDC is designed to be a community-driven effort. If you have new dataset or task or data function that wants to be included in TDC, please reach out to [us](mailto:kexinhuang@hsph.harvard.edu) or join our [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-jiv2mjjk-ZabFtKQVnozHAxMdRxcG_Q).
+TDC is designed to be a community-driven effort. If you have new dataset or task or data function that wants to be included in TDC, please fill in this [form](https://kexinhuang.typeform.com/to/W5DKjXDg)!
 
 ## Contact
 
