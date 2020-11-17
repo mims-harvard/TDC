@@ -796,7 +796,7 @@ def smiles_2_fingerprint_ECFP6(smiles):
 	return fp 
 
 
-class Rediscovery:
+class Rediscovery_meta:
   def __init__(self, target_smiles, fp):
     if fp == 'ECFP4':
       self.similarity_func = smiles_2_fingerprint_ECFP4
@@ -813,7 +813,12 @@ class Rediscovery:
     test_fp = self.similarity_func(test_smiles)
     similarity_value = DataStructs.TanimotoSimilarity(self.target_fp, test_fp)
 
-
+class Isomer_meta:
+  def __init__(self, target_smiles):
+    self.target_smiles = target_smiles
+  
+  def __call__(self, test_smiles):
+    pass   
 
 def celecoxib_rediscovery(test_smiles):
   if 'celecoxib_fp' not in globals().keys():
