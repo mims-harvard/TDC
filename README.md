@@ -11,6 +11,7 @@
 This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendly and extensive machine learning dataset hub for therapeutics. So far, it includes more than 50+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to manufacturing, safety surveillance and etc) in many therapeutics development stages across small molecules and biologics. 
 
 [**Project Website**](https://zitniklab.hms.harvard.edu/TDC/)
+
 [**Join TDC Mailing List**](https://groups.io/g/tdc)
 
 ## Features
