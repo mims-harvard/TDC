@@ -126,6 +126,18 @@ If you found our work useful, please cite us:
 ```
 Paper is in progress and will come out soon.
 
+## Tutorials
+
+We provide a series of tutorials for you to get started using TDC:
+
+| Name  | Description                                             |
+|-------|---------------------------------------------------------|
+| [101](tutorials/TDC_101_Data_Loader.ipynb)   | Introduce TDC Data Loaders                              |
+| [102](tutorials/TDC_102_Data_Functions.ipynb)   | Introduce TDC Data Functions                            |
+| [103.1](tutorials/TDC_103.1_Datasets_Small_Molecules.ipynb) | Walk through TDC Small Molecule Datasets                |
+| [103.2](tutorials/TDC_103.2_Datasets_Biologics.ipynb) | Walk through TDC Biologics Datasets                     |
+| [104](tutorials/TDC_104_ML_Model_DeepPurpose.ipynb)   | Generate 21 ADME ML Predictors with 15 Lines of Code |
+| [105](tutorials/TDC_105_Oracle.ipynb)   | Molecule Generation Oracles                             |
 
 ## Benchmark and Leaderboard
 
