@@ -796,6 +796,25 @@ def smiles_2_fingerprint_ECFP6(smiles):
 	return fp 
 
 
+class Rediscovery:
+  def __init__(self, target_smiles, fp):
+    if fp == 'ECFP4':
+      self.similarity_func = smiles_2_fingerprint_ECFP4
+    elif fp == 'ECFP6':
+      self.similarity_func = smiles_2_fingerprint_ECFP6
+    elif fp == 'FCFP4':
+      self.similarity_func = smiles_2_fingerprint_FCFP4
+    elif fp == 'AP':
+      self.similarity_func = smiles_2_fingerprint_AP
+
+    self.target_fp = self.similarity_func(target_smiles)
+
+  def __call__(self, test_smiles):
+    test_fp = self.similarity_func(test_smiles)
+    similarity_value = DataStructs.TanimotoSimilarity(self.target_fp, test_fp)
+
+
+
 def celecoxib_rediscovery(test_smiles):
   if 'celecoxib_fp' not in globals().keys():
     global celecoxib_fp
