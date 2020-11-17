@@ -12,6 +12,8 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 [**Project Website**](https://zitniklab.hms.harvard.edu/TDC/)
 
+[**Join TDC Mailing List**](https://groups.io/g/tdc)
+
 ## Features
 
 - *From Bench to Bedside*: covers 50+ datasets for 20+ tasks in numerous therapeutics development stages across small molecules and biologics.
@@ -29,7 +31,7 @@ To install TDC, simply open terminal and type:
 ```bash
 pip install PyTDC
 ```
- The core data loaders are designed to be lightweight, thus has minimum package dependency:
+The core data loaders are designed to be lightweight, thus has minimum package dependency:
 
 ```bash
 numpy
@@ -37,6 +39,13 @@ pandas
 tqdm
 scikit-learn
 fuzzywuzzy
+```
+
+For other utilities requiring extra packages, TDC will print out the relevant installation instruction (e.g. for molecule generation oracles, TDC will print out RDKit installation instruction). 
+
+**Note**: TDC is in beta release. Please update your local copy regularly by
+```bash
+pip install PyTDC --upgrade
 ```
 
 ## TDC Data Loader
@@ -145,15 +154,18 @@ We are actively working on the benchmark and leaderboard. We would release this 
 
 ## Contribute
 
-TDC is designed to be a community-driven effort. If you have new dataset or task or data function that wants to be included in TDC, please reach out to [us](mailto:kexinhuang@hsph.harvard.edu) or join our [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-jiv2mjjk-ZabFtKQVnozHAxMdRxcG_Q).
+TDC is designed to be a community-driven effort. If you have new dataset or task or data function that wants to be included in TDC, please fill in this [form](https://kexinhuang.typeform.com/to/W5DKjXDg)!
 
 ## Contact
 
 Send emails to [us](mailto:kexinhuang@hsph.harvard.edu) or open an issue.
 
+## Data Server Maintenance Issues
+
+TDC is hosted in [Harvard Dataverse](https://dataverse.harvard.edu/). When dataverse is under maintenance, TDC will not able to retrieve datasets. Although rare, when it happens, please come back in couple of hours or check the status by visiting the [dataverse website](https://dataverse.harvard.edu/).
+
 ## Disclaimer
 
-TDC is an open-source effort. Many datasets are aggregated from various public website sources. 
-We use the Attribution-NonCommercial-ShareAlike 4.0 International license (open-source) to suffice many datasets requirement. 
+TDC is an open-source effort. Many datasets are aggregated from various public website sources. We use the Attribution-NonCommercial-ShareAlike 4.0 International license (open-source) to suffice many datasets requirement. 
 If you feel there might be a potential infringement of the copyright, please let us know and we will address it ASAP.
 

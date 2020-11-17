@@ -265,8 +265,13 @@ def readFragmentScores(name='fpscores'):
     # if name == "fpscores":
     #     name = op.join(previous_directory(op.dirname(__file__)), name)
     name = oracle_load('fpscores')
-    with open('oracle/fpscores.pkl', "rb") as f:
-      _fscores = pickle.load(f)
+    try:
+      with open('oracle/fpscores.pkl', "rb") as f:
+        _fscores = pickle.load(f)
+    except EOFError:
+      import sys
+      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+
     outDict = {}
     for i in _fscores:
         for j in range(1,len(i)):
@@ -344,8 +349,13 @@ def load_drd2_model():
     # name = op.join(op.dirname(__file__), 'clf_py36.pkl')
     #print("==== load drd2 oracle =====")
     name = 'oracle/drd2.pkl'
-    with open(name, "rb") as f:
-        clf_model = pickle.load(f)
+    try:
+      with open(name, "rb") as f:
+          clf_model = pickle.load(f)
+    except EOFError:
+      import sys
+      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+
     return clf_model
 
 def fingerprints_from_mol(mol):
@@ -468,8 +478,12 @@ https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py
 def load_gsk3b_model():
     gsk3_model_path = 'oracle/gsk3b.pkl'
     #print_sys('==== load gsk3b oracle =====')
-    with open(gsk3_model_path, 'rb') as f:
-        gsk3_model = pickle.load(f)
+    try:
+      with open(gsk3_model_path, 'rb') as f:
+          gsk3_model = pickle.load(f)
+    except EOFError:
+      import sys
+      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
     return gsk3_model 
 
 def gsk3b(smiles):
@@ -487,19 +501,23 @@ def gsk3b(smiles):
 
 
 class jnk3:
-	def __init__(self):
-		jnk3_model_path = 'oracle/jnk3.pkl'
-		with open(jnk3_model_path, 'rb') as f:
-			self.jnk3_model = pickle.load(f)
-
-	def __call__(self, smiles):
-		molecule = smiles_to_rdkit_mol(smiles)
-		fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
-		features = np.zeros((1,))
-		DataStructs.ConvertToNumpyArray(fp, features)
-		fp = features.reshape(1, -1) 
-		jnk3_score = self.jnk3_model.predict_proba(fp)[0,1]
-		return jnk3_score 	
+  def __init__(self):
+    jnk3_model_path = 'oracle/jnk3.pkl'
+    try:
+      with open(jnk3_model_path, 'rb') as f:
+        self.jnk3_model = pickle.load(f)
+    except EOFError:
+      import sys
+      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+  
+  def __call__(self, smiles):
+    molecule = smiles_to_rdkit_mol(smiles)
+    fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
+    features = np.zeros((1,))
+    DataStructs.ConvertToNumpyArray(fp, features)
+    fp = features.reshape(1, -1) 
+    jnk3_score = self.jnk3_model.predict_proba(fp)[0,1]
+    return jnk3_score 	
 
 def single_molecule_validity(smiles):
 	if smiles.strip() == '':
@@ -1501,6 +1519,9 @@ def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='t
         return price
 
 def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
+    """
+    This function is modified from Dr. Jan Jensen's code
+    """
     
     from rxn4chemistry import RXN4ChemistryWrapper
     import time
