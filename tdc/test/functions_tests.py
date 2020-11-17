@@ -77,8 +77,8 @@ smiles_lst = ['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
 oracle(smiles_lst)
 
 oracle = Oracle(name = 'Hop')
-print(oracle(['CC(=O)OC1=CC=CC=C1C(=O)O',
-       'C1=CC=C(C=C1)C=O']))
+oracle(['CC(=O)OC1=CC=CC=C1C(=O)O',
+       'C1=CC=C(C=C1)C=O'])
 
 oracle = Oracle(name = 'Valsartan_SMARTS')
 oracle(['CC(=O)OC1=CC=CC=C1C(=O)O',
@@ -102,7 +102,7 @@ smiles_lst = ['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
 			  'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1', \
 			  'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O']
 
-print(oracle(smiles_lst))
+oracle(smiles_lst)
 
 oracle = Oracle(name = 'Novelty')
 
@@ -111,7 +111,7 @@ smiles_lst = ['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
 			  'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1', \
 			  'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O']
 
-print(oracle(smiles_lst, smiles_lst))
+oracle(smiles_lst, smiles_lst)
 
 oracle = Oracle(name = 'Diversity')
 
@@ -120,5 +120,9 @@ smiles_lst = ['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
 			  'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1', \
 			  'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O']
 
-print(oracle(smiles_lst))
+oracle(smiles_lst)
+
+oracle = Oracle(name = 'Scaffold Hop')
+oracle(['CC(=O)OC1=CC=CC=C1C(=O)O',
+       'C1=CC=C(C=C1)C=O'])
 

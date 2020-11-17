@@ -89,10 +89,12 @@ def pd_load(name, path):
 
 def property_dataset_load(name, path, target, dataset_names):
 	if target is None:
-		target = 'Y'		
+		target = 'Y'
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
+	if target is not None:
+		target = fuzzy_search(target, df.columns.values)	
 	df = df[df[target].notnull()].reset_index(drop = True)
 
 	return df['X'], df[target], df['ID']
@@ -112,6 +114,8 @@ def interaction_dataset_load(name, path, target, dataset_names):
 	if target not in df.columns.values:
 		# for binary interaction data, the labels are all 1. negative samples can be sampled from utils.NegSample function
 		df[target] = 1
+	if target is not None:
+		target = fuzzy_search(target, df.columns.values)
 
 	df = df[df[target].notnull()].reset_index(drop = True)
 
