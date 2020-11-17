@@ -959,51 +959,43 @@ thiothixene_rediscovery = Rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2
 #   similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
 #   return similarity_value
 
+####################################################################
+#################### rediscovery 
+####################################################################
+#################### similarity 
+class Similarity_meta:
+  def __init__(self, target_smiles, fp, modifier_func):
+    if fp == 'ECFP4':
+      self.similarity_func = smiles_2_fingerprint_ECFP4
+    elif fp == 'ECFP6':
+      self.similarity_func = smiles_2_fingerprint_ECFP6
+    elif fp == 'FCFP4':
+      self.similarity_func = smiles_2_fingerprint_FCFP4
+    elif fp == 'AP':
+      self.similarity_func = smiles_2_fingerprint_AP
 
+    self.target_fp = self.similarity_func(target_smiles)
+    self.modifier_func = modifier_func 
 
+  def __call__(self, test_smiles):
+    test_fp = self.similarity_func(test_smiles)
+    similarity_value = DataStructs.TanimotoSimilarity(self.target_fp, test_fp)
+    modifier_score = self.modifier_func(similarity_value)
+    return modifier_score 
 
-def aripiprazole_similarity(test_smiles):
-  threshold = 0.75
-  if 'Aripiprazole_fp' not in globals().keys():
-    global Aripiprazole_fp
-    Aripiprazole_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl'
-    Aripiprazole_fp = smiles_2_fingerprint_FCFP4(Aripiprazole_smiles)
+similarity_modifier = ClippedScoreModifier(upper_x=0.75)
+aripiprazole_similarity = Similarity_meta(target_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl', 
+                                          fp = 'FCFP4', 
+                                          modifier_func = similarity_modifier)
 
-  test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(Aripiprazole_fp, test_fp)
-  modifier = ClippedScoreModifier(upper_x=threshold)
-  modified_similarity = modifier(similarity_value)
-  return modified_similarity 
+albuterol_similarity = Similarity_meta(target_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1', 
+                                       fp = 'FCFP4', 
+                                       modifier_func = similarity_modifier)
 
+mestranol_similarity = Similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1', 
+                                       fp = 'AP', 
+                                       modifier_func = similarity_modifier)
 
-def albuterol_similarity(test_smiles):
-  threshold = 0.75
-  if 'Albuterol_fp' not in globals().keys():
-    global Albuterol_fp
-    Albuterol_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1'
-    Albuterol_fp = smiles_2_fingerprint_FCFP4(Albuterol_smiles)
-
-  test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(Albuterol_fp, test_fp)
-  modifier = ClippedScoreModifier(upper_x=threshold)
-  modified_similarity = modifier(similarity_value)
-  return modified_similarity 
-
-
-
-
-def mestranol_similarity(test_smiles):
-  threshold = 0.75 
-  if 'Mestranol_fp' not in globals().keys():
-    global Mestranol_fp
-    Mestranol_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1'
-    Mestranol_fp = smiles_2_fingerprint_AP(Mestranol_smiles)
-
-  test_fp = smiles_2_fingerprint_AP(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(Mestranol_fp, test_fp)
-  modifier = ClippedScoreModifier(upper_x=threshold)
-  modified_similarity = modifier(similarity_value)
-  return modified_similarity 
 
 
 def median1(test_smiles):
