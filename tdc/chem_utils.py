@@ -1527,6 +1527,9 @@ def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='t
         return price
 
 def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
+    """
+    This function is modified from Dr. Jan Jensen's code
+    """
     
     from rxn4chemistry import RXN4ChemistryWrapper
     import time
