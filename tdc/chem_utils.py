@@ -1004,23 +1004,23 @@ mestranol_similarity = Similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C
                                        fp = 'AP', 
                                        modifier_func = similarity_modifier)
 
-
-
 def median1(test_smiles):
-  # median mol between camphor and menthol, ECFP4 
-  if 'camphor_fp' not in globals().keys():
-    global camphor_fp, menthol_fp
+  if 'menthol_similar_func' not in globals().keys():
+    global camphor_similar_func, menthol_similar_func
     camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
     menthol_smiles = 'CC(C)C1CCC(C)CC1O'
-    camphor_fp = smiles_2_fingerprint_ECFP4(camphor_smiles)
-    menthol_fp = smiles_2_fingerprint_ECFP4(menthol_smiles)
-	
-  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+    camphor_similar_func = Similarity_meta(target_smiles = camphor_smiles, 
+                                         fp = 'ECFP4', 
+                                         modifier_func = None)
+    menthol_similar_func = Similarity_meta(target_smiles = menthol_smiles, 
+                                         fp = 'ECFP4', 
+                                         modifier_func = None)
 
-  similarity_v1 = DataStructs.TanimotoSimilarity(camphor_fp, test_fp)
-  similarity_v2 = DataStructs.TanimotoSimilarity(menthol_fp, test_fp)
+  similarity_v1 = camphor_similar_func(test_smiles)
+  similarity_v2 = menthol_similar_func(test_smiles)
   similarity_gmean = gmean([similarity_v1, similarity_v2])
-  return similarity_gmean
+  return similarity_gmean  
+
 
 
 
