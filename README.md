@@ -27,37 +27,34 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 ## Installation
 
-### Using `conda`
-
-It is recommended to use [conda](https://docs.conda.io/projects/conda/en/latest/index.html) (or [mamba](https://github.com/mamba-org/mamba)) as it will also install `rdkit`:
-
-```bash
-mamba install -c conda-forge pytdc
-```
-
 ### Using `pip`
 
-To install TDC with `pip`:
+To install the core environment dependencies of TDC, use `pip`:
 
 ```bash
 pip install PyTDC
 ```
 
+**Note**: TDC is in beta release. Please update your local copy regularly by
+
+```bash
+pip install PyTDC --upgrade
+```
+
 The core data loaders are designed to be lightweight, thus has minimum package dependency:
 
 ```bash
-numpy
-pandas
-tqdm
-scikit-learn
-fuzzywuzzy
+numpy, pandas, tqdm, scikit-learn, fuzzywuzzy
 ```
 
-For other utilities requiring extra packages, TDC will print out the relevant installation instruction (e.g. for molecule generation oracles, TDC will print out RDKit installation instruction). 
+For other utilities requiring extra dependencies, TDC will print out the relevant installation instruction. To install the full dependencies, please consider use the below conda-forge solution. 
 
-**Note**: TDC is in beta release. Please update your local copy regularly by
+### Using `conda`
+
+To use data functions such as molecule oracles, scaffold split, etc., they require packages such as RDKit. To do that, use the below `conda` installation: 
+
 ```bash
-pip install PyTDC --upgrade
+conda install -c conda-forge pytdc
 ```
 
 ## TDC Data Loader
