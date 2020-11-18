@@ -14,7 +14,7 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 [**Join TDC Mailing List**](https://groups.io/g/tdc)
 
-**Invited talk at the National Symposium on Drug Repurposing for Future Pandemics (#futuretx20)** [**Slides**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view)
+**Invited talk at the [National Symposium on Drug Repurposing for Future Pandemics (#futuretx20)](drugsymposium.org)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view)
 
 ## Features
 
