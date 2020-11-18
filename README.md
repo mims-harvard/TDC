@@ -162,9 +162,3 @@ Send emails to [us](mailto:kexinhuang@hsph.harvard.edu) or open an issue.
 ## Data Server Maintenance Issues
 
 TDC is hosted in [Harvard Dataverse](https://dataverse.harvard.edu/). When dataverse is under maintenance, TDC will not able to retrieve datasets. Although rare, when it happens, please come back in couple of hours or check the status by visiting the [dataverse website](https://dataverse.harvard.edu/).
-
-## Disclaimer
-
-TDC is an open-source effort. Many datasets are aggregated from various public website sources. We use the Attribution-NonCommercial-ShareAlike 4.0 International license (open-source) to suffice many datasets requirement. 
-If you feel there might be a potential infringement of the copyright, please let us know and we will address it ASAP.
-
