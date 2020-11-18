@@ -5,8 +5,8 @@
 [![Website](https://img.shields.io/badge/Homepage-docs-<COLOR>.svg)](https://zitniklab.hms.harvard.edu/TDC/)
 [![PyPI version](https://badge.fury.io/py/PyTDC.svg)](https://badge.fury.io/py/PyTDC)
 [![Downloads](https://static.pepy.tech/personalized-badge/pytdc?period=total&units=international_system&left_color=green&right_color=grey&left_text=Downloads)](https://pepy.tech/project/pytdc)
-[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://github.com/mims-harvard/TDC/blob/master/LICENSE)
-
+[![GitHub Repo stars](https://img.shields.io/github/stars/mims-harvard/TDC)](https://github.com/mims-harvard/TDC/stargazers)
+[![GitHub Repo stars](https://img.shields.io/github/forks/mims-harvard/TDC)](https://github.com/mims-harvard/TDC/network/members)
 
 This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendly and extensive machine learning dataset hub for therapeutics. So far, it includes more than 50+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to manufacturing, safety surveillance and etc) in many therapeutics development stages across small molecules and biologics. 
 
@@ -27,25 +27,34 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 ## Installation
 
-To install TDC, simply open terminal and type:
+### Using `pip`
+
+To install the core environment dependencies of TDC, use `pip`:
+
 ```bash
 pip install PyTDC
 ```
+
+**Note**: TDC is in beta release. Please update your local copy regularly by
+
+```bash
+pip install PyTDC --upgrade
+```
+
 The core data loaders are designed to be lightweight, thus has minimum package dependency:
 
 ```bash
-numpy
-pandas
-tqdm
-scikit-learn
-fuzzywuzzy
+numpy, pandas, tqdm, scikit-learn, fuzzywuzzy
 ```
 
-For other utilities requiring extra packages, TDC will print out the relevant installation instruction (e.g. for molecule generation oracles, TDC will print out RDKit installation instruction). 
+For other utilities requiring extra dependencies, TDC will print out the relevant installation instruction. To install the full dependencies, please consider use the below conda-forge solution. 
 
-**Note**: TDC is in beta release. Please update your local copy regularly by
+### Using `conda`
+
+To use data functions such as molecule oracles, scaffold split, etc., they require packages such as RDKit. To do that, use the below `conda` installation: 
+
 ```bash
-pip install PyTDC --upgrade
+conda install -c conda-forge pytdc
 ```
 
 ## TDC Data Loader
@@ -163,9 +172,3 @@ Send emails to [us](mailto:kexinhuang@hsph.harvard.edu) or open an issue.
 ## Data Server Maintenance Issues
 
 TDC is hosted in [Harvard Dataverse](https://dataverse.harvard.edu/). When dataverse is under maintenance, TDC will not able to retrieve datasets. Although rare, when it happens, please come back in couple of hours or check the status by visiting the [dataverse website](https://dataverse.harvard.edu/).
-
-## Disclaimer
-
-TDC is an open-source effort. Many datasets are aggregated from various public website sources. We use the Attribution-NonCommercial-ShareAlike 4.0 International license (open-source) to suffice many datasets requirement. 
-If you feel there might be a potential infringement of the copyright, please let us know and we will address it ASAP.
-
