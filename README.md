@@ -27,10 +27,22 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 ## Installation
 
-To install TDC, simply open terminal and type:
+### Using `conda`
+
+It is recommended to use [conda](https://docs.conda.io/projects/conda/en/latest/index.html) (or [mamba](https://github.com/mamba-org/mamba)) as it will also install `rdkit`:
+
+```bash
+mamba install -c conda-forge pytdc
+```
+
+### Using `pip`
+
+To install TDC with `pip`:
+
 ```bash
 pip install PyTDC
 ```
+
 The core data loaders are designed to be lightweight, thus has minimum package dependency:
 
 ```bash
