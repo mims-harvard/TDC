@@ -896,22 +896,9 @@ def isomer_meta(target_smiles, means = 'geometric'):
   return Isomer_scoring(target_smiles, means = means)
 
 
-# global isomers_c7h8n2o2 
 isomers_c7h8n2o2 = isomer_meta(target_smiles = 'C7H8N2O2', means = 'geometric')
 isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
 
-## old version 
-# def isomers_c7h8n2o2(test_smiles):
-#   if 'isomers_scoring_c7h8n2o2' not in globals().keys():
-#     global isomers_scoring_c7h8n2o2
-#     isomers_scoring_c7h8n2o2 = Isomer_scoring(target_smiles = 'C7H8N2O2', means = 'geometric')
-#   return isomers_scoring_c7h8n2o2(test_smiles)
-
-# def isomers_c9h10n2o2pf2cl(test_smiles):
-#   if 'isomers_scoring_C9H10N2O2PF2Cl' not in globals().keys():
-#     global isomers_scoring_C9H10N2O2PF2Cl
-#     isomers_scoring_C9H10N2O2PF2Cl = Isomer_scoring(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
-#   return isomers_scoring_C9H10N2O2PF2Cl(test_smiles)
 
 ####################################################################
 #################### isomer 
@@ -982,7 +969,7 @@ thiothixene_rediscovery = Rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2
 ####################################################################
 #################### similarity 
 class Similarity_meta:
-  def __init__(self, target_smiles, fp, modifier_func):
+  def __init__(self, target_smiles, fp, modifier_func = None):
     if fp == 'ECFP4':
       self.similarity_func = smiles_2_fingerprint_ECFP4
     elif fp == 'ECFP6':
@@ -998,7 +985,10 @@ class Similarity_meta:
   def __call__(self, test_smiles):
     test_fp = self.similarity_func(test_smiles)
     similarity_value = DataStructs.TanimotoSimilarity(self.target_fp, test_fp)
-    modifier_score = self.modifier_func(similarity_value)
+    if self.modifier_func is None:
+      modifier_score = similarity_value
+    else:
+      modifier_score = self.modifier_func(similarity_value)
     return modifier_score 
 
 similarity_modifier = ClippedScoreModifier(upper_x=0.75)
