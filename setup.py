@@ -25,6 +25,7 @@ with open(path.join(this_directory, 'requirements.txt'),
 
 setup(name='PyTDC',
       version=__version__,
+      license='MIT',
       description='Therapeutics Data Commons',
       long_description=readme(),
       long_description_content_type='text/markdown',
