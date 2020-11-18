@@ -14,6 +14,8 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 [**Join TDC Mailing List**](https://groups.io/g/tdc)
 
+**Invited talk at the National Symposium on Drug Repurposing for Future Pandemics (#futuretx20)** [**Slides**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view)
+
 ## Features
 
 - *From Bench to Bedside*: covers 50+ datasets for 20+ tasks in numerous therapeutics development stages across small molecules and biologics.
