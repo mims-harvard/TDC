@@ -14,7 +14,7 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 [**Join TDC Mailing List**](https://groups.io/g/tdc)
 
-**Invited talk at the [National Symposium on Drug Repurposing for Future Pandemics (#futuretx20)](drugsymposium.org)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view)
+**Invited talk at the [National Symposium on Drug Repurposing for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view)
 
 ## Features
 
@@ -174,3 +174,6 @@ Send emails to [us](mailto:kexinhuang@hsph.harvard.edu) or open an issue.
 ## Data Server Maintenance Issues
 
 TDC is hosted in [Harvard Dataverse](https://dataverse.harvard.edu/). When dataverse is under maintenance, TDC will not able to retrieve datasets. Although rare, when it happens, please come back in couple of hours or check the status by visiting the [dataverse website](https://dataverse.harvard.edu/).
+
+## License
+TDC codebase is under MIT license. For individual dataset usage, please refer to the dataset license. We will also collect and provide them in the website soon.
