@@ -3,6 +3,7 @@ from zipfile import ZipFile
 import os, sys
 import numpy as np
 import pandas as pd
+from pandas.errors import EmptyDataError
 import json
 import warnings
 warnings.filterwarnings("ignore")
@@ -67,33 +68,49 @@ def oracle_download_wrapper(name, path, oracle_names):
 	if os.path.exists(os.path.join(path, name + '.' + oracle2type[name])):
 		print_sys('Found local copy...')
 	else:
-		print_sys("Downloading...")
+		print_sys("Downloading Oracle...")
 		dataverse_download(dataset_path, path, name, oracle2type) ## to-do to-check
+		print_sys("Done!")
 	return name
 
 
 def pd_load(name, path):
-	if name2type[name] == 'tab':
-		df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]), sep = '\t')
-	elif name2type[name] == 'csv':
-		df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]))
-	elif name2type[name] == 'pkl':
-		df = pd.read_pickle(os.path.join(path, name + '.' + name2type[name]))
-	else:
-		raise ValueError("The file type must be one of tab/csv/pickle.")
 	try:
-		df = df.drop_duplicates()
-	except:
-		pass
-	return df	
+		if name2type[name] == 'tab':
+			df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]), sep = '\t')
+		elif name2type[name] == 'csv':
+			df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]))
+		elif name2type[name] == 'pkl':
+			df = pd.read_pickle(os.path.join(path, name + '.' + name2type[name]))
+		else:
+			raise ValueError("The file type must be one of tab/csv/pickle.")
+		try:
+			df = df.drop_duplicates()
+		except:
+			pass
+		return df	
+	except (EmptyDataError, EOFError) as e:
+		import sys
+		sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 
 def property_dataset_load(name, path, target, dataset_names):
 	if target is None:
-		target = 'Y'		
+		target = 'Y'
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
-	df = df[df[target].notnull()].reset_index(drop = True)
+	try:
+		if target is not None:
+			target = fuzzy_search(target, df.columns.values)
+		df = df[df[target].notnull()].reset_index(drop = True)
+	except:
+		with open(os.path.join(path, name + '.' + name2type[name]), 'r') as f:
+			flag = 'Service Unavailable' in ' '.join(f.readlines())
+			if flag:
+				import sys
+				sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+			else:
+				sys.exit("Please report this error to cosamhkx@gmail.com, thanks!")
 
 	return df['X'], df[target], df['ID']
 
@@ -107,15 +124,25 @@ def interaction_dataset_load(name, path, target, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
-	if target is None:
-		target = 'Y'
-	if target not in df.columns.values:
-		# for binary interaction data, the labels are all 1. negative samples can be sampled from utils.NegSample function
-		df[target] = 1
+	try:
+		if target is None:
+			target = 'Y'
+		if target not in df.columns.values:
+			# for binary interaction data, the labels are all 1. negative samples can be sampled from utils.NegSample function
+			df[target] = 1
+		if target is not None:
+			target = fuzzy_search(target, df.columns.values)
+		df = df[df[target].notnull()].reset_index(drop = True)
+		return df['X1'], df['X2'], df[target], df['ID1'], df['ID2']
+	except:
+		with open(os.path.join(path, name + '.' + name2type[name]), 'r') as f:
+			flag = 'Service Unavailable' in ' '.join(f.readlines())
+			if flag:
+				import sys
+				sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+			else:
+				sys.exit("Please report this error to cosamhkx@gmail.com, thanks!")
 
-	df = df[df[target].notnull()].reset_index(drop = True)
-
-	return df['X1'], df['X2'], df[target], df['ID1'], df['ID2']
 
 def multi_dataset_load(name, path, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
@@ -517,7 +544,7 @@ def get_closet_match(predefined_tokens, test_token, threshold=0.8):
     # match similarity is low
     if prob_max / 100 < threshold:
         raise ValueError(test_token,
-                         "does not match to existing datasets. "
+                         "does not match to available values. "
                          "Please double check.")
     return token_max, prob_max / 100
 

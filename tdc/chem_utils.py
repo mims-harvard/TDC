@@ -265,8 +265,13 @@ def readFragmentScores(name='fpscores'):
     # if name == "fpscores":
     #     name = op.join(previous_directory(op.dirname(__file__)), name)
     name = oracle_load('fpscores')
-    with open('oracle/fpscores.pkl', "rb") as f:
-      _fscores = pickle.load(f)
+    try:
+      with open('oracle/fpscores.pkl', "rb") as f:
+        _fscores = pickle.load(f)
+    except EOFError:
+      import sys
+      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+
     outDict = {}
     for i in _fscores:
         for j in range(1,len(i)):
@@ -344,8 +349,13 @@ def load_drd2_model():
     # name = op.join(op.dirname(__file__), 'clf_py36.pkl')
     #print("==== load drd2 oracle =====")
     name = 'oracle/drd2.pkl'
-    with open(name, "rb") as f:
-        clf_model = pickle.load(f)
+    try:
+      with open(name, "rb") as f:
+          clf_model = pickle.load(f)
+    except EOFError:
+      import sys
+      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+
     return clf_model
 
 def fingerprints_from_mol(mol):
@@ -468,8 +478,12 @@ https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py
 def load_gsk3b_model():
     gsk3_model_path = 'oracle/gsk3b.pkl'
     #print_sys('==== load gsk3b oracle =====')
-    with open(gsk3_model_path, 'rb') as f:
-        gsk3_model = pickle.load(f)
+    try:
+      with open(gsk3_model_path, 'rb') as f:
+          gsk3_model = pickle.load(f)
+    except EOFError:
+      import sys
+      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
     return gsk3_model 
 
 def gsk3b(smiles):
@@ -487,19 +501,23 @@ def gsk3b(smiles):
 
 
 class jnk3:
-	def __init__(self):
-		jnk3_model_path = 'oracle/jnk3.pkl'
-		with open(jnk3_model_path, 'rb') as f:
-			self.jnk3_model = pickle.load(f)
-
-	def __call__(self, smiles):
-		molecule = smiles_to_rdkit_mol(smiles)
-		fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
-		features = np.zeros((1,))
-		DataStructs.ConvertToNumpyArray(fp, features)
-		fp = features.reshape(1, -1) 
-		jnk3_score = self.jnk3_model.predict_proba(fp)[0,1]
-		return jnk3_score 	
+  def __init__(self):
+    jnk3_model_path = 'oracle/jnk3.pkl'
+    try:
+      with open(jnk3_model_path, 'rb') as f:
+        self.jnk3_model = pickle.load(f)
+    except EOFError:
+      import sys
+      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+  
+  def __call__(self, smiles):
+    molecule = smiles_to_rdkit_mol(smiles)
+    fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
+    features = np.zeros((1,))
+    DataStructs.ConvertToNumpyArray(fp, features)
+    fp = features.reshape(1, -1) 
+    jnk3_score = self.jnk3_model.predict_proba(fp)[0,1]
+    return jnk3_score 	
 
 def single_molecule_validity(smiles):
 	if smiles.strip() == '':
@@ -796,87 +814,196 @@ def smiles_2_fingerprint_ECFP6(smiles):
 	return fp 
 
 
-def celecoxib_rediscovery(test_smiles):
-  if 'celecoxib_fp' not in globals().keys():
-    global celecoxib_fp
-    celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
-    celecoxib_fp = smiles_2_fingerprint_ECFP4(celecoxib_smiles)
-
-  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
-  return similarity_value
-
-
-def troglitazone_rediscovery(test_smiles):
-	### ECFP4
-
-  if 'troglitazone_fp' not in globals().keys():
-    global troglitazone_fp
-    troglitazone_smiles='Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O'
-    troglitazone_fp = smiles_2_fingerprint_ECFP4(troglitazone_smiles)
-
-  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(troglitazone_fp, test_fp)
-  return similarity_value	
-
-
-def thiothixene_rediscovery(test_smiles):
-	### ECFP4
-
-  if 'Thiothixene_fp' not in globals().keys():
-    global Thiothixene_fp
-    Thiothixene_smiles='CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1'  
-    Thiothixene_fp = smiles_2_fingerprint_ECFP4(Thiothixene_smiles)
-
-  test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
-  return similarity_value
 
 
 
+class AtomCounter:
 
-def aripiprazole_similarity(test_smiles):
-  threshold = 0.75
-  if 'Aripiprazole_fp' not in globals().keys():
-    global Aripiprazole_fp
-    Aripiprazole_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl'
-    Aripiprazole_fp = smiles_2_fingerprint_FCFP4(Aripiprazole_smiles)
+    def __init__(self, element):
+        """
+        Args:
+            element: element to count within a molecule
+        """
+        self.element = element
 
-  test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(Aripiprazole_fp, test_fp)
-  modifier = ClippedScoreModifier(upper_x=threshold)
-  modified_similarity = modifier(similarity_value)
-  return modified_similarity 
+    def __call__(self, mol):
+        """
+        Count the number of atoms of a given type.
+
+        Args:
+            mol: molecule
+
+        Returns:
+            The number of atoms of the given type.
+        """
+        # if the molecule contains H atoms, they may be implicit, so add them
+        if self.element == 'H':
+            mol = Chem.AddHs(mol)
+
+        return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)
+
+def parse_molecular_formula(formula):
+    """
+    Parse a molecular formulat to get the element types and counts.
+
+    Args:
+        formula: molecular formula, f.i. "C8H3F3Br"
+        
+    Returns:
+        A list of tuples containing element types and number of occurrences.
+    """
+    import re 
+    matches = re.findall(r'([A-Z][a-z]*)(\d*)', formula)
+
+    # Convert matches to the required format
+    results = []
+    for match in matches:
+        # convert count to an integer, and set it to 1 if the count is not visible in the molecular formula
+        count = 1 if not match[1] else int(match[1])
+        results.append((match[0], count))
+
+    return results
+  
+####################################################################
+#################### isomer 
+class Isomer_scoring:
+  def __init__(self, target_smiles, means = 'geometric'):
+    assert means in ['geometric', 'arithmetic']
+    if means == 'geometric':
+      self.mean_func = gmean 
+    else: 
+      self.mean_func = np.mean 
+    atom2cnt_lst = parse_molecular_formula(target_smiles)
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst]) 
+    self.total_atom_modifier = GaussianModifier(mu=total_atom_num, sigma=2.0)
+    self.AtomCounter_Modifier_lst = [((AtomCounter(atom)), GaussianModifier(mu=cnt,sigma=1.0)) for atom,cnt in atom2cnt_lst]
+
+  def __call__(self, test_smiles):
+    molecule = smiles_to_rdkit_mol(test_smiles)
+    all_scores = []
+    for atom_counter, modifier_func in self.AtomCounter_Modifier_lst:
+      all_scores.append(modifier_func(atom_counter(molecule)))
+
+    ### total atom number
+    atom2cnt_lst = parse_molecular_formula(test_smiles)
+    ## todo add Hs 
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst])
+    all_scores.append(self.total_atom_modifier(total_atom_num))
+    return self.mean_func(all_scores)
 
 
-def albuterol_similarity(test_smiles):
-  threshold = 0.75
-  if 'Albuterol_fp' not in globals().keys():
-    global Albuterol_fp
-    Albuterol_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1'
-    Albuterol_fp = smiles_2_fingerprint_FCFP4(Albuterol_smiles)
-
-  test_fp = smiles_2_fingerprint_FCFP4(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(Albuterol_fp, test_fp)
-  modifier = ClippedScoreModifier(upper_x=threshold)
-  modified_similarity = modifier(similarity_value)
-  return modified_similarity 
+def isomer_meta(target_smiles, means = 'geometric'):
+  return Isomer_scoring(target_smiles, means = means)
 
 
+isomers_c7h8n2o2 = isomer_meta(target_smiles = 'C7H8N2O2', means = 'geometric')
+isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
 
 
-def mestranol_similarity(test_smiles):
-  threshold = 0.75 
-  if 'Mestranol_fp' not in globals().keys():
-    global Mestranol_fp
-    Mestranol_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1'
-    Mestranol_fp = smiles_2_fingerprint_AP(Mestranol_smiles)
+####################################################################
+#################### isomer 
+####################################################################
+#################### rediscovery 
 
-  test_fp = smiles_2_fingerprint_AP(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(Mestranol_fp, test_fp)
-  modifier = ClippedScoreModifier(upper_x=threshold)
-  modified_similarity = modifier(similarity_value)
-  return modified_similarity 
+class Rediscovery_meta:
+  def __init__(self, target_smiles, fp):
+    if fp == 'ECFP4':
+      self.similarity_func = smiles_2_fingerprint_ECFP4
+    elif fp == 'ECFP6':
+      self.similarity_func = smiles_2_fingerprint_ECFP6
+    elif fp == 'FCFP4':
+      self.similarity_func = smiles_2_fingerprint_FCFP4
+    elif fp == 'AP':
+      self.similarity_func = smiles_2_fingerprint_AP
+
+    self.target_fp = self.similarity_func(target_smiles)
+
+  def __call__(self, test_smiles):
+    test_fp = self.similarity_func(test_smiles)
+    similarity_value = DataStructs.TanimotoSimilarity(self.target_fp, test_fp)
+    return similarity_value 
+
+
+celecoxib_rediscovery = Rediscovery_meta(target_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F', fp = 'ECFP4')
+troglitazone_rediscovery = Rediscovery_meta(target_smiles = 'Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O', fp = 'ECFP4')
+thiothixene_rediscovery = Rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1', fp = 'ECFP4')
+
+# def celecoxib_rediscovery(test_smiles):
+#   if 'celecoxib_fp' not in globals().keys():
+#     global celecoxib_fp
+#     celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
+#     celecoxib_fp = smiles_2_fingerprint_ECFP4(celecoxib_smiles)
+
+#   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+#   similarity_value = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
+#   return similarity_value
+
+
+# def troglitazone_rediscovery(test_smiles):
+# 	### ECFP4
+
+#   if 'troglitazone_fp' not in globals().keys():
+#     global troglitazone_fp
+#     troglitazone_smiles='Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O'
+#     troglitazone_fp = smiles_2_fingerprint_ECFP4(troglitazone_smiles)
+
+#   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+#   similarity_value = DataStructs.TanimotoSimilarity(troglitazone_fp, test_fp)
+#   return similarity_value	
+
+
+# def thiothixene_rediscovery(test_smiles):
+# 	### ECFP4
+
+#   if 'Thiothixene_fp' not in globals().keys():
+#     global Thiothixene_fp
+#     Thiothixene_smiles='CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1'  
+#     Thiothixene_fp = smiles_2_fingerprint_ECFP4(Thiothixene_smiles)
+
+#   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
+#   similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
+#   return similarity_value
+
+####################################################################
+#################### rediscovery 
+####################################################################
+#################### similarity 
+class Similarity_meta:
+  def __init__(self, target_smiles, fp, modifier_func = None):
+    if fp == 'ECFP4':
+      self.similarity_func = smiles_2_fingerprint_ECFP4
+    elif fp == 'ECFP6':
+      self.similarity_func = smiles_2_fingerprint_ECFP6
+    elif fp == 'FCFP4':
+      self.similarity_func = smiles_2_fingerprint_FCFP4
+    elif fp == 'AP':
+      self.similarity_func = smiles_2_fingerprint_AP
+
+    self.target_fp = self.similarity_func(target_smiles)
+    self.modifier_func = modifier_func 
+
+  def __call__(self, test_smiles):
+    test_fp = self.similarity_func(test_smiles)
+    similarity_value = DataStructs.TanimotoSimilarity(self.target_fp, test_fp)
+    if self.modifier_func is None:
+      modifier_score = similarity_value
+    else:
+      modifier_score = self.modifier_func(similarity_value)
+    return modifier_score 
+
+similarity_modifier = ClippedScoreModifier(upper_x=0.75)
+aripiprazole_similarity = Similarity_meta(target_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl', 
+                                          fp = 'FCFP4', 
+                                          modifier_func = similarity_modifier)
+
+albuterol_similarity = Similarity_meta(target_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1', 
+                                       fp = 'FCFP4', 
+                                       modifier_func = similarity_modifier)
+
+mestranol_similarity = Similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1', 
+                                       fp = 'AP', 
+                                       modifier_func = similarity_modifier)
+
 
 
 def median1(test_smiles):
@@ -977,30 +1104,6 @@ def fexofenadine_mpo(test_smiles):
 
 
 
-class AtomCounter:
-
-    def __init__(self, element):
-        """
-        Args:
-            element: element to count within a molecule
-        """
-        self.element = element
-
-    def __call__(self, mol):
-        """
-        Count the number of atoms of a given type.
-
-        Args:
-            mol: molecule
-
-        Returns:
-            The number of atoms of the given type.
-        """
-        # if the molecule contains H atoms, they may be implicit, so add them
-        if self.element == 'H':
-            mol = Chem.AddHs(mol)
-
-        return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)
 
 
 def ranolazine_mpo(test_smiles):
@@ -1085,80 +1188,10 @@ def amlodipine_mpo(test_smiles):
   return amlodipine_gmean
 
 
-'''
-todo 
-  Sitagliptin MPO
-  Zaleplon MPO 
-
-'''
-
-
-def parse_molecular_formula(formula):
-    """
-    Parse a molecular formulat to get the element types and counts.
-
-    Args:
-        formula: molecular formula, f.i. "C8H3F3Br"
-
-    Returns:
-        A list of tuples containing element types and number of occurrences.
-    """
-    import re 
-    matches = re.findall(r'([A-Z][a-z]*)(\d*)', formula)
-
-    # Convert matches to the required format
-    results = []
-    for match in matches:
-        # convert count to an integer, and set it to 1 if the count is not visible in the molecular formula
-        count = 1 if not match[1] else int(match[1])
-        results.append((match[0], count))
-
-    return results
-
-
-class Isomer_scoring:
-  def __init__(self, target_smiles, means = 'geometric'):
-    assert means in ['geometric', 'arithmetic']
-    if means == 'geometric':
-      self.mean_func = gmean 
-    else: 
-      self.mean_func = np.mean 
-    
-
-    atom2cnt_lst = parse_molecular_formula(target_smiles)
-    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst]) 
-    self.total_atom_modifier = GaussianModifier(mu=total_atom_num, sigma=2.0)
-    self.AtomCounter_Modifier_lst = [((AtomCounter(atom)), GaussianModifier(mu=cnt,sigma=1.0)) for atom,cnt in atom2cnt_lst]
 
 
 
-  def __call__(self, test_smiles):
-    molecule = smiles_to_rdkit_mol(test_smiles)
-    all_scores = []
-    for atom_counter, modifier_func in self.AtomCounter_Modifier_lst:
-      all_scores.append(modifier_func(atom_counter(molecule)))
 
-    ### total atom number
-    atom2cnt_lst = parse_molecular_formula(test_smiles)
-    ## todo add Hs 
-    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst])
-    all_scores.append(self.total_atom_modifier(total_atom_num))
-
-    return self.mean_func(all_scores)
-
-
-def isomers_c7h8n2o2(test_smiles):
-  if 'isomers_scoring_c7h8n2o2' not in globals().keys():
-    global isomers_scoring_c7h8n2o2
-    isomers_scoring_c7h8n2o2 = Isomer_scoring(target_smiles = 'C7H8N2O2', means = 'geometric')
-  return isomers_scoring_c7h8n2o2(test_smiles)
-
-
-def isomers_c9h10n2o2pf2cl(test_smiles):
-  if 'isomers_scoring_C9H10N2O2PF2Cl' not in globals().keys():
-    global isomers_scoring_C9H10N2O2PF2Cl
-    isomers_scoring_C9H10N2O2PF2Cl = Isomer_scoring(target_smiles = 'C7H8N2O2', means = 'geometric')
-  return isomers_scoring_C9H10N2O2PF2Cl(test_smiles)
 
 
 def zaleplon_mpo(test_smiles):
@@ -1476,6 +1509,9 @@ def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='t
         return price
 
 def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
+    """
+    This function is modified from Dr. Jan Jensen's code
+    """
     
     from rxn4chemistry import RXN4ChemistryWrapper
     import time
