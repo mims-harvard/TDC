@@ -814,8 +814,11 @@ def smiles_2_fingerprint_ECFP6(smiles):
 	return fp 
 
 
-
-
+fp2fpfunc = {'ECFP4': smiles_2_fingerprint_ECFP4, 
+             'FCFP4': smiles_2_fingerprint_FCFP4, 
+             'AP': smiles_2_fingerprint_AP, 
+             'ECFP6': smiles_2_fingerprint_ECFP6
+}
 
 class AtomCounter:
 
@@ -907,15 +910,7 @@ isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = '
 
 class Rediscovery_meta:
   def __init__(self, target_smiles, fp):
-    if fp == 'ECFP4':
-      self.similarity_func = smiles_2_fingerprint_ECFP4
-    elif fp == 'ECFP6':
-      self.similarity_func = smiles_2_fingerprint_ECFP6
-    elif fp == 'FCFP4':
-      self.similarity_func = smiles_2_fingerprint_FCFP4
-    elif fp == 'AP':
-      self.similarity_func = smiles_2_fingerprint_AP
-
+    self.similarity_func = fp2fpfunc[fp]
     self.target_fp = self.similarity_func(target_smiles)
 
   def __call__(self, test_smiles):
@@ -970,15 +965,7 @@ thiothixene_rediscovery = Rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2
 #################### similarity 
 class Similarity_meta:
   def __init__(self, target_smiles, fp, modifier_func = None):
-    if fp == 'ECFP4':
-      self.similarity_func = smiles_2_fingerprint_ECFP4
-    elif fp == 'ECFP6':
-      self.similarity_func = smiles_2_fingerprint_ECFP6
-    elif fp == 'FCFP4':
-      self.similarity_func = smiles_2_fingerprint_FCFP4
-    elif fp == 'AP':
-      self.similarity_func = smiles_2_fingerprint_AP
-
+    self.similarity_func = fp2fpfunc[fp]
     self.target_fp = self.similarity_func(target_smiles)
     self.modifier_func = modifier_func 
 
@@ -1003,6 +990,11 @@ albuterol_similarity = Similarity_meta(target_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(
 mestranol_similarity = Similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1', 
                                        fp = 'AP', 
                                        modifier_func = similarity_modifier)
+
+
+
+
+
 
 def median1(test_smiles):
   if 'menthol_similar_func' not in globals().keys():
