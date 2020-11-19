@@ -820,6 +820,12 @@ fp2fpfunc = {'ECFP4': smiles_2_fingerprint_ECFP4,
              'ECFP6': smiles_2_fingerprint_ECFP6
 }
 
+mean2func = {
+  'geometric': gmean, 
+  'arithmetic': np.mean, 
+}
+
+
 class AtomCounter:
 
     def __init__(self, element):
@@ -992,45 +998,90 @@ mestranol_similarity = Similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C
                                        modifier_func = similarity_modifier)
 
 
+class Median_meta:
+  def __init__(self, target_smiles_1, target_smiles_2, fp1, fp2, modifier_func1, modifier_func2, means):
+    self.similarity_func1 = fp2fpfunc[fp1]
+    self.similarity_func2 = fp2fpfunc[fp2]
+    self.target_fp1 = self.similarity_func1(target_smiles_1)
+    self.target_fp2 = self.similarity_func2(target_smiles_2)
+    self.modifier_func1 = modifier_func1 
+    self.modifier_func2 = modifier_func2 
+    assert means in ['geometric', 'arithmetic']
+    self.mean_func = mean2func[means]
+
+  def __call__(self, test_smiles):
+    test_fp1 = self.similarity_func1(test_smiles)
+    test_fp2 = test_fp1 if self.similarity_func2 == self.similarity_func1 else self.similarity_func2(test_smiles)
+    similarity_value1 = DataStructs.TanimotoSimilarity(self.target_fp1, test_fp1)
+    similarity_value2 = DataStructs.TanimotoSimilarity(self.target_fp2, test_fp2)
+    if self.modifier_func1 is None:
+      modifier_score1 = similarity_value1
+    else:
+      modifier_score1 = self.modifier_func1(similarity_value1)
+    if self.modifier_func2 is None:
+      modifier_func2 = similarity_value2
+    else:
+      modifier_score2 = self.modifier_func2(similarity_value2)
+    final_score = self.mean_func([modifier_func1, modifier_func2])
+    return final_score
+
+camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
+menthol_smiles = 'CC(C)C1CCC(C)CC1O'
+
+median1 = Median_meta(target_smiles_1 = camphor_smiles, 
+                      target_smiles_2 = menthol_smiles, 
+                      fp1 = 'ECFP4', 
+                      fp2 = 'ECFP4', 
+                      modifier_func1 = None, 
+                      modifier_func2 = None, 
+                      means = 'geometric')
+
+tadalafil_smiles = 'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'
+sildenafil_smiles = 'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
+median2 = Median_meta(target_smiles_1 = tadalafil_smiles, 
+                      target_smiles_2 = sildenafil_smiles, 
+                      fp1 = 'ECFP6', 
+                      fp2 = 'ECFP6', 
+                      modifier_func1 = None, 
+                      modifier_func2 = None, 
+                      means = 'geometric')
+
+
+# def median1(test_smiles):
+#   if 'menthol_similar_func' not in globals().keys():
+#     global camphor_similar_func, menthol_similar_func
+#     camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
+#     menthol_smiles = 'CC(C)C1CCC(C)CC1O'
+#     camphor_similar_func = Similarity_meta(target_smiles = camphor_smiles, 
+#                                          fp = 'ECFP4', 
+#                                          modifier_func = None)
+#     menthol_similar_func = Similarity_meta(target_smiles = menthol_smiles, 
+#                                          fp = 'ECFP4', 
+#                                          modifier_func = None)
+
+#   similarity_v1 = camphor_similar_func(test_smiles)
+#   similarity_v2 = menthol_similar_func(test_smiles)
+#   similarity_gmean = gmean([similarity_v1, similarity_v2])
+#   return similarity_gmean  
 
 
 
 
-def median1(test_smiles):
-  if 'menthol_similar_func' not in globals().keys():
-    global camphor_similar_func, menthol_similar_func
-    camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
-    menthol_smiles = 'CC(C)C1CCC(C)CC1O'
-    camphor_similar_func = Similarity_meta(target_smiles = camphor_smiles, 
-                                         fp = 'ECFP4', 
-                                         modifier_func = None)
-    menthol_similar_func = Similarity_meta(target_smiles = menthol_smiles, 
-                                         fp = 'ECFP4', 
-                                         modifier_func = None)
+# def median2(test_smiles):
+#   # median mol between tadalafil and sildenafil, ECFP6 
 
-  similarity_v1 = camphor_similar_func(test_smiles)
-  similarity_v2 = menthol_similar_func(test_smiles)
-  similarity_gmean = gmean([similarity_v1, similarity_v2])
-  return similarity_gmean  
-
-
-
-
-def median2(test_smiles):
-  # median mol between tadalafil and sildenafil, ECFP6 
-
-  if 'tadalafil_fp' not in globals().keys():
-    global tadalafil_fp, sildenafil_fp
-    tadalafil_smiles = 'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'
-    sildenafil_smiles = 'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
-    tadalafil_fp = smiles_2_fingerprint_ECFP6(tadalafil_smiles)
-    sildenafil_fp = smiles_2_fingerprint_ECFP6(sildenafil_smiles)
+#   if 'tadalafil_fp' not in globals().keys():
+#     global tadalafil_fp, sildenafil_fp
+#     tadalafil_smiles = 'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'
+#     sildenafil_smiles = 'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
+#     tadalafil_fp = smiles_2_fingerprint_ECFP6(tadalafil_smiles)
+#     sildenafil_fp = smiles_2_fingerprint_ECFP6(sildenafil_smiles)
 	
-  test_fp = smiles_2_fingerprint_ECFP6(test_smiles)
-  similarity_v1 = DataStructs.TanimotoSimilarity(tadalafil_fp, test_fp)
-  similarity_v2 = DataStructs.TanimotoSimilarity(sildenafil_fp, test_fp)
-  similarity_gmean = gmean([similarity_v1, similarity_v2])
-  return similarity_gmean 
+#   test_fp = smiles_2_fingerprint_ECFP6(test_smiles)
+#   similarity_v1 = DataStructs.TanimotoSimilarity(tadalafil_fp, test_fp)
+#   similarity_v2 = DataStructs.TanimotoSimilarity(sildenafil_fp, test_fp)
+#   similarity_gmean = gmean([similarity_v1, similarity_v2])
+#   return similarity_gmean 
 
 
 
