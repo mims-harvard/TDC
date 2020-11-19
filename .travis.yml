@@ -17,7 +17,6 @@ install:
   - pip install --upgrade pip
   - pip install -r requirements_ci.txt
   - sudo apt-get install python-rdkit librdkit1 rdkit-data
-  - conda install -c conda-forge rdkit
   - pip install pytest
   - pip install pytest-cov
   - pip install coveralls
