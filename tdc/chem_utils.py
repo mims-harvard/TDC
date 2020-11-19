@@ -1084,9 +1084,24 @@ median2 = Median_meta(target_smiles_1 = tadalafil_smiles,
 #   return similarity_gmean 
 
 
+class MPO_meta:
+  def __init__(self, means):
+    '''
+      target_smiles, fp in ['ECFP4', 'AP', ..., ]
+      scoring, 
+      modifier, 
+
+    '''
+
+    assert means in ['geometric', 'arithmetic']
+    self.mean_func = mean2func[means]
 
 
+  def __call__(self, test_smiles):
+    molecule = smiles_to_rdkit_mol(test_smiles)
 
+    score_lst = []
+    return self.mean_func(score_lst)
 
 
 
