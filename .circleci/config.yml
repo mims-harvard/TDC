@@ -34,7 +34,7 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
             pip install conda
-            apt-get install python-rdkit librdkit1 rdkit-data
+            sudo apt-get install python-rdkit librdkit1 rdkit-data
             pip install pytest
             pip install pytest-cov
 
