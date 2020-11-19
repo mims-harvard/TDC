@@ -12,7 +12,7 @@ import shutil
 # temporary solution for relative imports in case TDC is not installed
 # if TDC is installed, no need to use the following line
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                             '../..')))
+                                             '../../..')))
 
 
 class TestFunctions(unittest.TestCase):
@@ -22,7 +22,7 @@ class TestFunctions(unittest.TestCase):
 
     def test_Oracle(self):
         from tdc import Oracle
-        oracle = Oracle(name='aripiprazole_similarity')
+        oracle = Oracle(name='celecoxib rediscovery')
         print(oracle(['CC(=O)OC1=CC=CC=C1C(=O)O',
                       'C1=CC=C(C=C1)C=O']))
 

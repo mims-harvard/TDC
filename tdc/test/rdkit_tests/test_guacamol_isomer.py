@@ -14,7 +14,7 @@ import shutil
 # temporary solution for relative imports in case TDC is not installed
 # if TDC is installed, no need to use the following line
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                             '../..')))
+                                             '../../..')))
 
 
 class TestFunctions(unittest.TestCase):

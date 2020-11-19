@@ -24,7 +24,7 @@ install:
 
 # command to run tests
 script:
-   pytest --cov=pyod/
+   pytest --cov=pyod/ --ignore=tdc/test/rdkit_tests/
 
 after_success:
   - coveralls

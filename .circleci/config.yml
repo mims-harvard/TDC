@@ -50,7 +50,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            pytest
+            pytest --ignore=tdc/test/rdkit_tests/
 
       - store_artifacts:
           path: test-reports
