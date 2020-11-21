@@ -400,6 +400,15 @@
 <span class="c1"># [0.03, 0.32, 0.01, 0.1]
 </span></code></pre></div></div>
 
+<p class="is-size-6"> TDC also provides an oracle that takes any SMILES string that users want to rediscover. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Rediscovery_Meta'</span><span class="p">,</span> <span class="n">target_smiles</span> <span class="o">=</span> <span class="s">'CC(=O)OC1=CC=CC=C1C(=O)O'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+</span></code></pre></div></div>
+
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
@@ -422,6 +431,15 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Aripiprazole_Similarity'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+</span></code></pre></div></div>
+
+<p class="is-size-6"> TDC also provides an oracle that takes any SMILES string that users want to be similar/dissimilar with. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Similarity_Meta'</span><span class="p">,</span> <span class="n">target_smiles</span> <span class="o">=</span> <span class="s">'CC(=O)OC1=CC=CC=C1C(=O)O'</span><span class="p">)</span>
 <span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
 <span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
 <span class="c1"># [0.03, 0.32, 0.01, 0.1]
@@ -455,6 +473,17 @@
 <span class="c1"># [0.03, 0.32, 0.01, 0.1]
 </span></code></pre></div></div>
 
+<p class="is-size-6"> TDC also provides an oracle that takes any two SMILES strings that users want to simultaneously maximize similarities with. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">tadalafil_smiles</span> <span class="o">=</span> <span class="s">'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'</span>
+<span class="n">sildenafil_smiles</span> <span class="o">=</span> <span class="s">'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Median_Meta'</span><span class="p">,</span> <span class="n">target_smiles</span> <span class="o">=</span> <span class="p">(</span><span class="n">tadalafil_smiles</span><span class="p">,</span> <span class="n">sildenafil_smiles</span><span class="p">))</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+</span></code></pre></div></div>
+
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
@@ -478,6 +507,14 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Isomers_C11H24'</span><span class="p">)</span>
+<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
+<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
+<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+</span></code></pre></div></div>
+<p class="is-size-6"> TDC also provides an oracle that takes any SMILES string of the simple pattern. For example, </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Isomers_Meta'</span><span class="p">,</span> <span class="n">target_smiles</span> <span class="o">=</span> <span class="s">'CC(=O)OC1=CC=CC=C1C(=O)O'</span><span class="p">)</span>
 <span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
 <span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
 <span class="c1"># [0.03, 0.32, 0.01, 0.1]
