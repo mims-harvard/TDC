@@ -9,8 +9,9 @@ from .utils import *
 from .metadata import download_oracle_names, oracle_names, molecule_evaluator_name
 
 class Oracle:
-	def __init__(self, name, target_smiles = None):
+	def __init__(self, name, target_smiles = None, **kwargs):
 		self.target_smiles = target_smiles
+		self.kwargs = kwargs
 
 		name = fuzzy_search(name, oracle_names)
 		if name in download_oracle_names:
@@ -65,13 +66,18 @@ class Oracle:
 			self.evaluator_func = oracle_object
 		elif self.name == 'similarity_meta':	############################ oracle meta
 			from .chem_utils import similarity_meta
-			self.evaluator_func = similarity_meta(target_smiles = self.target_smiles)
+			self.evaluator_func = similarity_meta(target_smiles = self.target_smiles, **self.kwargs)
 		elif self.name == 'rediscovery_meta':
 			from .chem_utils import rediscovery_meta 
-			self.evaluator_func = rediscovery_meta(target_smiles = self.target_smiles)
+			self.evaluator_func = rediscovery_meta(target_smiles = self.target_smiles, **self.kwargs)
 		elif self.name == 'isomer_meta':
 			from .chem_utils import isomer_meta 
-			self.evaluator_func = isomer_meta(target_smiles = self.target_smiles) 
+			self.evaluator_func = isomer_meta(target_smiles = self.target_smiles, **self.kwargs)
+		elif self.name == 'median_meta':
+			from .chem_utils import median_meta 
+			self.evaluator_func = median_meta(target_smiles_1 = self.target_smiles[0], 
+											  target_smiles_2 = self.target_smiles[1], 
+											  **self.kwargs) 
 		elif self.name == 'rediscovery':	############################ guacamol 
 			from .chem_utils import celecoxib_rediscovery, troglitazone_rediscovery, thiothixene_rediscovery
 			self.evaluator_func = {"Celecoxib": celecoxib_rediscovery, 

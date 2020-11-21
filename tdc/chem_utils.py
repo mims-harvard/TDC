@@ -1019,10 +1019,10 @@ class median_meta:
     else:
       modifier_score1 = self.modifier_func1(similarity_value1)
     if self.modifier_func2 is None:
-      modifier_func2 = similarity_value2
+      modifier_score2 = similarity_value2
     else:
       modifier_score2 = self.modifier_func2(similarity_value2)
-    final_score = self.mean_func([modifier_func1, modifier_func2])
+    final_score = self.mean_func([modifier_score1 , modifier_score2])
     return final_score
 
 camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
