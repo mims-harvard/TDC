@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """Docstring to be finished.
 """
-# Author:
-# License: CC BY-NC-SA 4.0
-
+# Author: TDC Team
+# License: MIT
 
 import sys
 

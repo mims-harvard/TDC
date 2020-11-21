@@ -999,7 +999,7 @@ mestranol_similarity = similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C
 
 
 class median_meta:
-  def __init__(self, target_smiles_1, target_smiles_2, fp1, fp2, modifier_func1, modifier_func2, means):
+  def __init__(self, target_smiles_1, target_smiles_2, fp1 = 'ECFP6', fp2 = 'ECFP6', modifier_func1 = None, modifier_func2 = None, means = 'geometric'):
     self.similarity_func1 = fp2fpfunc[fp1]
     self.similarity_func2 = fp2fpfunc[fp2]
     self.target_fp1 = self.similarity_func1(target_smiles_1)

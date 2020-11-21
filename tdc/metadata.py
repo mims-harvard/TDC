@@ -75,6 +75,13 @@ single_molecule_dataset_names = ['zinc', 'moses', 'chembl']
 
 paired_dataset_names = ['uspto50k', 'uspto']
 
+####################################
+# resource
+compound_library_names = ['DrugBank', 'ChEMBL', 'Broad_Repurposing_Hub', 'Antivirals']
+
+####################################
+# oracles
+
 property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
 evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy', 'mse', 'mae', 'r2', 'micro-f1', 'macro-f1', 'kappa', 'avg-roc-auc']
@@ -142,6 +149,7 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"Paratope": paratope_dataset_names, 
 				"Yields": yield_dataset_names, 
 				"Catalyst": catalyst_dataset_names, 
+				"CompoundLibrary": compound_library_names
 				}
 
 dataset_list = []
@@ -208,7 +216,7 @@ name2type = {'toxcast': 'tab',
  'disgenet': 'csv',
  'sabdab_liberis': 'pkl',
  'uspto_yields': 'pkl', 
- 'uspto_catalyst': 'csv',
+ 'uspto_catalyst': 'pkl',
  'buchwald-hartwig': 'pkl',
  }
 
@@ -271,7 +279,7 @@ name2id = {'bbb_adenot': 4139555,
  'sabdab_liberis': 4168425,
  'uspto50k': 4171823,
  'buchwald-hartwig': 4171576,
- 'uspto_yields': 4171575, 
+ 'uspto_yields': 4183525, 
  'uspto_catalyst': 4171574,
  'uspto': 4171642,
  }

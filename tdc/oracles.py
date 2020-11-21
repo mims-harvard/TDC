@@ -4,7 +4,6 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-# from. evaluator import Evaluator
 from .utils import * 
 from .metadata import download_oracle_names, oracle_names, molecule_evaluator_name
 
