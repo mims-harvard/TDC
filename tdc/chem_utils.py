@@ -914,8 +914,8 @@ isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = '
 ####################################################################
 #################### rediscovery 
 
-class Rediscovery_meta:
-  def __init__(self, target_smiles, fp):
+class rediscovery_meta:
+  def __init__(self, target_smiles, fp = 'ECFP4'):
     self.similarity_func = fp2fpfunc[fp]
     self.target_fp = self.similarity_func(target_smiles)
 
@@ -925,9 +925,9 @@ class Rediscovery_meta:
     return similarity_value 
 
 
-celecoxib_rediscovery = Rediscovery_meta(target_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F', fp = 'ECFP4')
-troglitazone_rediscovery = Rediscovery_meta(target_smiles = 'Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O', fp = 'ECFP4')
-thiothixene_rediscovery = Rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1', fp = 'ECFP4')
+celecoxib_rediscovery = rediscovery_meta(target_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F', fp = 'ECFP4')
+troglitazone_rediscovery = rediscovery_meta(target_smiles = 'Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O', fp = 'ECFP4')
+thiothixene_rediscovery = rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1', fp = 'ECFP4')
 
 # def celecoxib_rediscovery(test_smiles):
 #   if 'celecoxib_fp' not in globals().keys():
@@ -969,8 +969,8 @@ thiothixene_rediscovery = Rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2
 #################### rediscovery 
 ####################################################################
 #################### similarity 
-class Similarity_meta:
-  def __init__(self, target_smiles, fp, modifier_func = None):
+class similarity_meta:
+  def __init__(self, target_smiles, fp = 'FCFP4', modifier_func = None):
     self.similarity_func = fp2fpfunc[fp]
     self.target_fp = self.similarity_func(target_smiles)
     self.modifier_func = modifier_func 
@@ -985,20 +985,20 @@ class Similarity_meta:
     return modifier_score 
 
 similarity_modifier = ClippedScoreModifier(upper_x=0.75)
-aripiprazole_similarity = Similarity_meta(target_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl', 
+aripiprazole_similarity = similarity_meta(target_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl', 
                                           fp = 'FCFP4', 
                                           modifier_func = similarity_modifier)
 
-albuterol_similarity = Similarity_meta(target_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1', 
+albuterol_similarity = similarity_meta(target_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1', 
                                        fp = 'FCFP4', 
                                        modifier_func = similarity_modifier)
 
-mestranol_similarity = Similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1', 
+mestranol_similarity = similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1', 
                                        fp = 'AP', 
                                        modifier_func = similarity_modifier)
 
 
-class Median_meta:
+class median_meta:
   def __init__(self, target_smiles_1, target_smiles_2, fp1, fp2, modifier_func1, modifier_func2, means):
     self.similarity_func1 = fp2fpfunc[fp1]
     self.similarity_func2 = fp2fpfunc[fp2]
@@ -1028,7 +1028,7 @@ class Median_meta:
 camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
 menthol_smiles = 'CC(C)C1CCC(C)CC1O'
 
-median1 = Median_meta(target_smiles_1 = camphor_smiles, 
+median1 = median_meta(target_smiles_1 = camphor_smiles, 
                       target_smiles_2 = menthol_smiles, 
                       fp1 = 'ECFP4', 
                       fp2 = 'ECFP4', 
@@ -1038,7 +1038,7 @@ median1 = Median_meta(target_smiles_1 = camphor_smiles,
 
 tadalafil_smiles = 'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'
 sildenafil_smiles = 'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
-median2 = Median_meta(target_smiles_1 = tadalafil_smiles, 
+median2 = median_meta(target_smiles_1 = tadalafil_smiles, 
                       target_smiles_2 = sildenafil_smiles, 
                       fp1 = 'ECFP6', 
                       fp2 = 'ECFP6', 

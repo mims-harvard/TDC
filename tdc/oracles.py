@@ -9,7 +9,8 @@ from .utils import *
 from .metadata import download_oracle_names, oracle_names, molecule_evaluator_name
 
 class Oracle:
-	def __init__(self, name):
+	def __init__(self, name, target_smiles = None):
+		self.target_smiles = target_smiles
 
 		name = fuzzy_search(name, oracle_names)
 		if name in download_oracle_names:
@@ -24,7 +25,7 @@ class Oracle:
 		from .chem_utils import eval(self.name)
 		self.evaluator_func = eval(self.name)
 		'''
-		if self.name == 'novelty':
+		if self.name == 'novelty':   		############################ distribution learning 
 			from .chem_utils import novelty
 			self.evaluator_func = novelty  
 		elif self.name == 'diversity':
@@ -42,7 +43,7 @@ class Oracle:
 		elif self.name == 'fcd_distance':
 			from .chem_utils import fcd_distance
 			self.evaluator_func = fcd_distance
-		elif self.name == 'logp':
+		elif self.name == 'logp':			############################ molecular property 
 			from .chem_utils import penalized_logp
 			self.evaluator_func = penalized_logp 
 		elif self.name == 'qed':
@@ -62,7 +63,16 @@ class Oracle:
 			from .chem_utils import jnk3
 			oracle_object = jnk3()
 			self.evaluator_func = oracle_object
-		elif self.name == 'rediscovery':
+		elif self.name == 'similarity_meta':	############################ oracle meta
+			from .chem_utils import similarity_meta
+			self.evaluator_func = similarity_meta(target_smiles = self.target_smiles)
+		elif self.name == 'rediscovery_meta':
+			from .chem_utils import rediscovery_meta 
+			self.evaluator_func = rediscovery_meta(target_smiles = self.target_smiles)
+		elif self.name == 'isomer_meta':
+			from .chem_utils import isomer_meta 
+			self.evaluator_func = isomer_meta(target_smiles = self.target_smiles) 
+		elif self.name == 'rediscovery':	############################ guacamol 
 			from .chem_utils import celecoxib_rediscovery, troglitazone_rediscovery, thiothixene_rediscovery
 			self.evaluator_func = {"Celecoxib": celecoxib_rediscovery, 
 								"Troglitazone": troglitazone_rediscovery, 
