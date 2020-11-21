@@ -216,7 +216,7 @@ name2type = {'toxcast': 'tab',
  'disgenet': 'csv',
  'sabdab_liberis': 'pkl',
  'uspto_yields': 'pkl', 
- 'uspto_catalyst': 'pkl',
+ 'uspto_catalyst': 'csv',
  'buchwald-hartwig': 'pkl',
  }
 
