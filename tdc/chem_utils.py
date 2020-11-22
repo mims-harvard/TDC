@@ -673,7 +673,7 @@ def calculate_internal_pairwise_similarities(smiles_list):
 
 
 
-def kl_divergence(generated_lst_smiles, training_lst_smiles):
+def kl_divergence(generated_smiles_lst, training_smiles_lst):
   pc_descriptor_subset = [
             'BertzCT',
             'MolLogP',
@@ -694,8 +694,8 @@ def kl_divergence(generated_lst_smiles, training_lst_smiles):
         return None
 
 
-  generated_lst_mol = list(map(canonical, generated_lst_smiles))
-  training_lst_mol = list(map(canonical, training_lst_smiles))
+  generated_lst_mol = list(map(canonical, generated_smiles_lst))
+  training_lst_mol = list(map(canonical, training_smiles_lst))
   filter_out_func = lambda x:x is not None 
   generated_lst_mol = list(filter(filter_out_func, generated_lst_mol))
   training_lst_mol = list(filter(filter_out_func, generated_lst_mol))
@@ -740,7 +740,7 @@ def kl_divergence(generated_lst_smiles, training_lst_smiles):
   score = sum(partial_scores) / len(partial_scores)
   return score 
 
-def fcd_distance(generated_molecules, reference_molecules):
+def fcd_distance(generated_smiles_lst, training_smiles_lst):
   try:
     import fcd
   except:
@@ -767,8 +767,8 @@ def fcd_distance(generated_molecules, reference_molecules):
     cov = np.cov(gen_mol_act.T)
     return mu, cov
 
-  mu_ref, cov_ref = _calculate_distribution_statistics(chemnet, reference_molecules)
-  mu, cov = _calculate_distribution_statistics(chemnet, generated_molecules)
+  mu_ref, cov_ref = _calculate_distribution_statistics(chemnet, training_smiles_lst)
+  mu, cov = _calculate_distribution_statistics(chemnet, generated_smiles_lst)
 
   FCD = fcd.calculate_frechet_distance(mu1=mu_ref, mu2=mu,
                                      sigma1=cov_ref, sigma2=cov)
