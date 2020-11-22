@@ -20,11 +20,10 @@ install:
   - pip install pytest
   - pip install pytest-cov
   - pip install coveralls
-  - travis_wait 30 mvn install
 
 # command to run tests
 script:
-   pytest --cov=pyod/ --ignore=tdc/test/rdkit_tests/
+   travis_wait 30 pytest --cov=pyod/ --ignore=tdc/test/rdkit_tests/
 
 after_success:
   - coveralls
