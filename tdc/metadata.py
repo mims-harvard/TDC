@@ -108,7 +108,7 @@ molecule_evaluator_name = ['novelty', 'diversity', 'uniqueness', 'validity', 'fc
 #### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
-synthetic_oracle_name = ['ibm_rxn']
+synthetic_oracle_name = ['ibm_rxn'] 
 
 meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta']
 
