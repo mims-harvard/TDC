@@ -47,6 +47,7 @@ jobs:
       # run tests!
       - run:
           name: run tests
+          no_output_timeout: 30m
           command: |
             . venv/bin/activate
             pytest --ignore=tdc/test/rdkit_tests/

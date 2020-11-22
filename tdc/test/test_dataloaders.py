@@ -20,7 +20,7 @@ class TestDataloader(unittest.TestCase):
         print(os.getcwd())
         pass
 
-    # ADME
+    # ADME, HTS
     def test_ADME(self):
         from tdc.single_pred import ADME
         data = ADME(name='Caco2_Wang')
@@ -32,12 +32,6 @@ class TestDataloader(unittest.TestCase):
         label_list = retrieve_label_name_list('Tox21')
         from tdc.single_pred import Tox
         data = Tox(name='Tox21', label_name=label_list[0])
-        split = data.get_split()
-
-    # HTS
-    def test_HTS(self):
-        from tdc.single_pred import HTS
-        data = HTS(name='SARSCoV2_Vitro_Touret')
         split = data.get_split()
 
     # QM
@@ -54,16 +48,10 @@ class TestDataloader(unittest.TestCase):
         data = Yields(name='Buchwald-Hartwig')
         split = data.get_split()
 
-    # Paratope
+    # Paratope Epitope
     def test_Paratope(self):
         from tdc.single_pred import Paratope
         data = Paratope(name='SAbDab_Liberis')
-        split = data.get_split()
-
-    # Epitope
-    def test_Epitope(self):
-        from tdc.single_pred import Epitope
-        data = Epitope(name='IEDB_Jespersen')
         split = data.get_split()
 
     # Develop
@@ -150,16 +138,10 @@ class TestDataloader(unittest.TestCase):
         data = PairMolGen(name='DRD2')
         split = data.get_split()
 
-    # RetroSyn
+    # RetroSyn Reaction
     def test_RetroSyn(self):
         from tdc.generation import RetroSyn
         data = RetroSyn(name='USPTO-50K')
-        split = data.get_split()
-
-    # Reaction
-    def test_Reaction(self):
-        from tdc.generation import Reaction
-        data = Reaction(name='USPTO')
         split = data.get_split()
 
     def tearDown(self):
