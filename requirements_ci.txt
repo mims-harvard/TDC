@@ -2,7 +2,7 @@ dgl
 fuzzywuzzy
 networkx
 numpy
-pandas==1.1.4
+pandas
 requests
 scikit-learn
 torch

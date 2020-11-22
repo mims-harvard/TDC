@@ -1,5 +1,5 @@
 fuzzywuzzy
 numpy
-pandas==1.1.4
+pandas
 tqdm
 scikit-learn
