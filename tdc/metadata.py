@@ -110,16 +110,16 @@ guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop
 
 
 #### evaluator for distribution learning, the input of __call__ is list of smiles
-molecule_evaluator_name = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
+distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
 
 #### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
-synthetic_oracle_name = ['ibm_rxn']
+synthetic_oracle_name = ['ibm_rxn'] 
 
 meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta']
 
-oracle_names = download_oracle_names + trivial_oracle_names + molecule_evaluator_name + synthetic_oracle_name + meta_oracle_name 
+oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name 
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 

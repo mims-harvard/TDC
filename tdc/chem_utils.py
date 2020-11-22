@@ -549,10 +549,10 @@ def uniqueness(list_of_smiles):
 	canonical_smiles_lst = unique_lst_of_smiles(list_of_smiles)
 	return 1.0*len(canonical_smiles_lst)/len(list_of_smiles)
 
-def novelty(new_smiles, smiles_database):
-	new_smiles = unique_lst_of_smiles(new_smiles)
-	smiles_database = unique_lst_of_smiles(smiles_database)
-	novel_ratio = sum([1 if i in smiles_database else 0 for i in new_smiles])*1.0 / len(new_smiles)
+def novelty(generated_smiles_lst, training_smiles_lst):
+	generated_smiles_lst = unique_lst_of_smiles(generated_smiles_lst)
+	training_smiles_lst = unique_lst_of_smiles(training_smiles_lst)
+	novel_ratio = sum([1 if i in training_smiles_lst else 0 for i in generated_smiles_lst])*1.0 / len(generated_smiles_lst)
 	return 1 - novel_ratio
 
 def diversity(list_of_smiles):
@@ -673,7 +673,7 @@ def calculate_internal_pairwise_similarities(smiles_list):
 
 
 
-def kl_divergence(generated_lst_smiles, training_lst_smiles):
+def kl_divergence(generated_smiles_lst, training_smiles_lst):
   pc_descriptor_subset = [
             'BertzCT',
             'MolLogP',
@@ -694,8 +694,8 @@ def kl_divergence(generated_lst_smiles, training_lst_smiles):
         return None
 
 
-  generated_lst_mol = list(map(canonical, generated_lst_smiles))
-  training_lst_mol = list(map(canonical, training_lst_smiles))
+  generated_lst_mol = list(map(canonical, generated_smiles_lst))
+  training_lst_mol = list(map(canonical, training_smiles_lst))
   filter_out_func = lambda x:x is not None 
   generated_lst_mol = list(filter(filter_out_func, generated_lst_mol))
   training_lst_mol = list(filter(filter_out_func, generated_lst_mol))
@@ -740,7 +740,7 @@ def kl_divergence(generated_lst_smiles, training_lst_smiles):
   score = sum(partial_scores) / len(partial_scores)
   return score 
 
-def fcd_distance(generated_molecules, reference_molecules):
+def fcd_distance(generated_smiles_lst, training_smiles_lst):
   try:
     import fcd
   except:
@@ -767,8 +767,8 @@ def fcd_distance(generated_molecules, reference_molecules):
     cov = np.cov(gen_mol_act.T)
     return mu, cov
 
-  mu_ref, cov_ref = _calculate_distribution_statistics(chemnet, reference_molecules)
-  mu, cov = _calculate_distribution_statistics(chemnet, generated_molecules)
+  mu_ref, cov_ref = _calculate_distribution_statistics(chemnet, training_smiles_lst)
+  mu, cov = _calculate_distribution_statistics(chemnet, generated_smiles_lst)
 
   FCD = fcd.calculate_frechet_distance(mu1=mu_ref, mu2=mu,
                                      sigma1=cov_ref, sigma2=cov)
@@ -929,42 +929,6 @@ celecoxib_rediscovery = rediscovery_meta(target_smiles = 'CC1=CC=C(C=C1)C1=CC(=N
 troglitazone_rediscovery = rediscovery_meta(target_smiles = 'Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O', fp = 'ECFP4')
 thiothixene_rediscovery = rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1', fp = 'ECFP4')
 
-# def celecoxib_rediscovery(test_smiles):
-#   if 'celecoxib_fp' not in globals().keys():
-#     global celecoxib_fp
-#     celecoxib_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F'
-#     celecoxib_fp = smiles_2_fingerprint_ECFP4(celecoxib_smiles)
-
-#   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-#   similarity_value = DataStructs.TanimotoSimilarity(celecoxib_fp, test_fp)
-#   return similarity_value
-
-
-# def troglitazone_rediscovery(test_smiles):
-# 	### ECFP4
-
-#   if 'troglitazone_fp' not in globals().keys():
-#     global troglitazone_fp
-#     troglitazone_smiles='Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O'
-#     troglitazone_fp = smiles_2_fingerprint_ECFP4(troglitazone_smiles)
-
-#   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-#   similarity_value = DataStructs.TanimotoSimilarity(troglitazone_fp, test_fp)
-#   return similarity_value	
-
-
-# def thiothixene_rediscovery(test_smiles):
-# 	### ECFP4
-
-#   if 'Thiothixene_fp' not in globals().keys():
-#     global Thiothixene_fp
-#     Thiothixene_smiles='CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1'  
-#     Thiothixene_fp = smiles_2_fingerprint_ECFP4(Thiothixene_smiles)
-
-#   test_fp = smiles_2_fingerprint_ECFP4(test_smiles)
-#   similarity_value = DataStructs.TanimotoSimilarity(Thiothixene_fp, test_fp)
-#   return similarity_value
-
 ####################################################################
 #################### rediscovery 
 ####################################################################
@@ -997,6 +961,10 @@ mestranol_similarity = similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C
                                        fp = 'AP', 
                                        modifier_func = similarity_modifier)
 
+####################################################################
+#################### similarity 
+####################################################################
+#################### median 
 
 class median_meta:
   def __init__(self, target_smiles_1, target_smiles_2, fp1 = 'ECFP6', fp2 = 'ECFP6', modifier_func1 = None, modifier_func2 = None, means = 'geometric'):
@@ -1046,43 +1014,10 @@ median2 = median_meta(target_smiles_1 = tadalafil_smiles,
                       modifier_func2 = None, 
                       means = 'geometric')
 
-
-# def median1(test_smiles):
-#   if 'menthol_similar_func' not in globals().keys():
-#     global camphor_similar_func, menthol_similar_func
-#     camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
-#     menthol_smiles = 'CC(C)C1CCC(C)CC1O'
-#     camphor_similar_func = Similarity_meta(target_smiles = camphor_smiles, 
-#                                          fp = 'ECFP4', 
-#                                          modifier_func = None)
-#     menthol_similar_func = Similarity_meta(target_smiles = menthol_smiles, 
-#                                          fp = 'ECFP4', 
-#                                          modifier_func = None)
-
-#   similarity_v1 = camphor_similar_func(test_smiles)
-#   similarity_v2 = menthol_similar_func(test_smiles)
-#   similarity_gmean = gmean([similarity_v1, similarity_v2])
-#   return similarity_gmean  
-
-
-
-
-# def median2(test_smiles):
-#   # median mol between tadalafil and sildenafil, ECFP6 
-
-#   if 'tadalafil_fp' not in globals().keys():
-#     global tadalafil_fp, sildenafil_fp
-#     tadalafil_smiles = 'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'
-#     sildenafil_smiles = 'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
-#     tadalafil_fp = smiles_2_fingerprint_ECFP6(tadalafil_smiles)
-#     sildenafil_fp = smiles_2_fingerprint_ECFP6(sildenafil_smiles)
-	
-#   test_fp = smiles_2_fingerprint_ECFP6(test_smiles)
-#   similarity_v1 = DataStructs.TanimotoSimilarity(tadalafil_fp, test_fp)
-#   similarity_v2 = DataStructs.TanimotoSimilarity(sildenafil_fp, test_fp)
-#   similarity_gmean = gmean([similarity_v1, similarity_v2])
-#   return similarity_gmean 
-
+####################################################################
+#################### median 
+####################################################################
+#################### MPO  
 
 class MPO_meta:
   def __init__(self, means):

@@ -5,7 +5,32 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from .utils import * 
-from .metadata import download_oracle_names, oracle_names, molecule_evaluator_name
+from .metadata import download_oracle_names, oracle_names, distribution_oracles
+'''
+
+guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop', \
+				   'celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
+				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
+				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', \
+				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
+				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
+				   'median1', 'median2', \
+				   'valsartan_smarts', 'deco_hop', 'scaffold_hop', ]
+
+#### evaluator for distribution learning, the input of __call__ is list of smiles
+distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
+
+#### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
+download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
+trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
+synthetic_oracle_name = ['ibm_rxn'] 
+
+meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta']
+
+oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name 
+
+'''
+
 
 class Oracle:
 	def __init__(self, name, target_smiles = None, **kwargs):
@@ -178,28 +203,27 @@ class Oracle:
 			return 
 
 	def __call__(self, *args, **kwargs):
+		if self.name in distribution_oracles:  
+			return self.evaluator_func(*args, **kwargs)
+			#### evaluator for distribution learning, e.g., diversity, validity   
 		smiles_lst = args[0]
 		if type(smiles_lst) == list:
-			if self.name in molecule_evaluator_name:
-				#### evaluator for distribution learning, e.g., diversity, validity
-				#### the input of __call__ is list of smiles
-				return self.evaluator_func(*args, **kwargs)
-			else:
-				#### evaluator for single molecule, 
-				#### the input of __call__ is a single smiles OR list of smiles
-				if isinstance(self.evaluator_func, dict):
-					all_ = {}
-					for i, fct in self.evaluator_func.items():
-						results_lst = []
-						for smiles in smiles_lst:
-							results_lst.append(fct(smiles, *(args[1:]), **kwargs))
-						all_[i] = results_lst
-					return all_
-				else:
+
+			#### evaluator for single molecule, 
+			#### the input of __call__ is a single smiles OR list of smiles
+			if isinstance(self.evaluator_func, dict):
+				all_ = {}
+				for i, fct in self.evaluator_func.items():
 					results_lst = []
 					for smiles in smiles_lst:
-						results_lst.append(self.evaluator_func(smiles, *(args[1:]), **kwargs))
-					return results_lst
+						results_lst.append(fct(smiles, *(args[1:]), **kwargs))
+					all_[i] = results_lst
+				return all_
+			else:
+				results_lst = []
+				for smiles in smiles_lst:
+					results_lst.append(self.evaluator_func(smiles, *(args[1:]), **kwargs))
+				return results_lst
 		else:	
 			## a single smiles
 			if type(self.evaluator_func) == dict:
