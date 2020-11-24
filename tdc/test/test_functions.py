@@ -79,14 +79,14 @@ class TestFunctions(unittest.TestCase):
     #                   seed='benchmark', order='descending')
     #     # output: {'pyg_graph': the PyG graph object, 'index_to_entities': a dict map from ID in the data to node ID in the PyG object, 'split': {'train': df, 'valid': df, 'test': df}}
 
-    def test_cid2smiles(self):
-        from tdc.utils import cid2smiles
-        smiles = cid2smiles(2248631)
+    # def test_cid2smiles(self):
+    #   from tdc.utils import cid2smiles
+    #    smiles = cid2smiles(2248631)
 
-    def test_uniprot2seq(self):
-        from tdc.utils import uniprot2seq
+    #def test_uniprot2seq(self):
+    #    from tdc.utils import uniprot2seq
 
-        seq = uniprot2seq('P49122')
+    #    seq = uniprot2seq('P49122')
 
     def tearDown(self):
         print(os.getcwd())
