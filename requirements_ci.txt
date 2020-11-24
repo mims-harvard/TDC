@@ -1,4 +1,3 @@
-dgl
 fuzzywuzzy
 networkx
 numpy
@@ -6,5 +5,4 @@ pandas
 requests
 scikit-learn
 torch
-torch_geometric
 tqdm
