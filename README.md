@@ -90,6 +90,13 @@ split = data.get_split(method = 'scaffold', seed = 'benchmark')
 # get the entire data in the various formats
 data.get_data(format = 'df')
 ```
+
+You can see all the datasets belonging to a task via:
+```python
+from tdc.utils import retrieve_dataset_names
+retrieve_dataset_names('ADME')
+```
+
 Explore all therapeutic tasks and datasets in the [website](https://zitniklab.hms.harvard.edu/TDC/overview/)!
 
 ## TDC Data Functions
