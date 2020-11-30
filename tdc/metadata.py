@@ -367,5 +367,6 @@ versioning = {
  'uspto',
  'buchwald-hartwig',
  'uspto_yields',
- 'uspto_catalyst']
+ 'uspto_catalyst', 
+ 'hetionet',]
 }

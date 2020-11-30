@@ -16,3 +16,10 @@ class CompoundLibrary(dataset.DataLoader):
             self.print_stats()
 
         print('Done!', flush=True, file=sys.stderr)
+
+
+'''
+from tdc.resource import CompoundLibrary
+data = CompoundLibrary(name = 'hetionet')
+
+'''
