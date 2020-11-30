@@ -60,7 +60,7 @@ class Evaluator:
 			self.evaluator_func = novelty 
 		elif self.name == 'diversity':
 			self.evaluator_func = diversity 
-		elif self.name == 'uniqueness'
+		elif self.name == 'uniqueness':
 			self.evaluator_func = uniqueness 
 		elif self.name == 'validity':
 			self.evaluator_func = validity
