@@ -70,7 +70,18 @@ class Evaluator:
 			self.evaluator_func = kl_divergence
 
 
-	def __call__(self, y_true, y_pred, threshold = 0.5):
+	def __call__(self, *args, **kwargs):
+		if self.name in distribution_oracles:  
+			return self.evaluator_func(*args, **kwargs)	
+		# 	#### evaluator for distribution learning, e.g., diversity, validity   
+		y_true = kwargs['y_true'] if 'y_true' in kwargs else args[0]
+		y_pred = kwargs['y_pred'] if 'y_pred' in kwargs else args[1]
+		if len(args)<=2 and 'threshold' not in kwargs:
+			threshold = 0.5 
+		else:
+			threshold = kwargs['threshold'] if 'threshold' in kwargs else args[2]
+
+		### original __call__(self, y_true, y_pred, threshold = 0.5)
 		y_true = np.array(y_true)
 		y_pred = np.array(y_pred)
 		if self.name in ['precision','recall','f1','accuracy']:
@@ -78,3 +89,15 @@ class Evaluator:
 		if self.name in ['micro-f1', 'macro-f1']:
 			return self.evaluator_func(y_true, y_pred, average = self.name[:5])
 		return self.evaluator_func(y_true, y_pred)
+
+
+	# def __call__(self, y_true, y_pred, threshold = 0.5):
+	# 	y_true = np.array(y_true)
+	# 	y_pred = np.array(y_pred)
+	# 	if self.name in ['precision','recall','f1','accuracy']:
+	# 		y_pred = [1 if i > threshold else 0 for i in y_pred]
+	# 	if self.name in ['micro-f1', 'macro-f1']:
+	# 		return self.evaluator_func(y_true, y_pred, average = self.name[:5])
+	# 	return self.evaluator_func(y_true, y_pred)
+
+

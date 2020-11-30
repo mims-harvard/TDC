@@ -50,25 +50,26 @@ class Oracle:
 		from .chem_utils import eval(self.name)
 		self.evaluator_func = eval(self.name)
 		'''
-		if self.name == 'novelty':   		############################ distribution learning 
-			from .chem_utils import novelty
-			self.evaluator_func = novelty  
-		elif self.name == 'diversity':
-			from .chem_utils import diversity
-			self.evaluator_func = diversity 
-		elif self.name == 'validity':
-			from .chem_utils import validity
-			self.evaluator_func = validity 
-		elif self.name == 'uniqueness':
-			from .chem_utils import uniqueness
-			self.evaluator_func = uniqueness 
-		elif self.name == 'kl_divergence':
-			from .chem_utils import kl_divergence
-			self.evaluator_func = kl_divergence
-		elif self.name == 'fcd_distance':
-			from .chem_utils import fcd_distance
-			self.evaluator_func = fcd_distance
-		elif self.name == 'logp':			############################ molecular property 
+		# if self.name == 'novelty':   		############################ distribution learning 
+		# 	from .chem_utils import novelty
+		# 	self.evaluator_func = novelty  
+		# elif self.name == 'diversity':
+		# 	from .chem_utils import diversity
+		# 	self.evaluator_func = diversity 
+		# elif self.name == 'validity':
+		# 	from .chem_utils import validity
+		# 	self.evaluator_func = validity 
+		# elif self.name == 'uniqueness':
+		# 	from .chem_utils import uniqueness
+		# 	self.evaluator_func = uniqueness 
+		# elif self.name == 'kl_divergence':
+		# 	from .chem_utils import kl_divergence
+		# 	self.evaluator_func = kl_divergence
+		# elif self.name == 'fcd_distance':
+		# 	from .chem_utils import fcd_distance
+		# 	self.evaluator_func = fcd_distance
+		
+		if self.name == 'logp':			############################ molecular property 
 			from .chem_utils import penalized_logp
 			self.evaluator_func = penalized_logp 
 		elif self.name == 'qed':
@@ -203,9 +204,9 @@ class Oracle:
 			return 
 
 	def __call__(self, *args, **kwargs):
-		if self.name in distribution_oracles:  
-			return self.evaluator_func(*args, **kwargs)
-			#### evaluator for distribution learning, e.g., diversity, validity   
+		# if self.name in distribution_oracles:  
+		# 	return self.evaluator_func(*args, **kwargs)
+		# 	#### evaluator for distribution learning, e.g., diversity, validity   
 		smiles_lst = args[0]
 		if type(smiles_lst) == list:
 
