@@ -82,9 +82,18 @@ compound_library_names = ['DrugBank', 'ChEMBL', 'Broad_Repurposing_Hub', 'Antivi
 ####################################
 # oracles
 
+
+#### evaluator for distribution learning, the input of __call__ is list of smiles
+distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
+
+
 property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
-evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', 'accuracy', 'mse', 'mae', 'r2', 'micro-f1', 'macro-f1', 'kappa', 'avg-roc-auc']
+evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', \
+				  'accuracy', 'mse', 'mae', 'r2', 'micro-f1', 'macro-f1', \
+				  'kappa', 'avg-roc-auc']
+				  
+evaluator_name.extend(distribution_oracles)
 
 guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop', \
 				   'celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
@@ -109,8 +118,6 @@ guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop
 
 
 
-#### evaluator for distribution learning, the input of __call__ is list of smiles
-distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
 
 #### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']

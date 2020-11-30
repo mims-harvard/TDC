@@ -6,6 +6,12 @@ warnings.filterwarnings("ignore")
 
 from .utils import * 
 from .metadata import evaluator_name
+
+from .chem_utils import novelty, diversity, uniqueness, validity, fcd_distance, kl_divergence 
+'''
+metadata.py:
+	distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
+'''
 try:
 	from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score
 	from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, cohen_kappa_score
