@@ -10,7 +10,6 @@ from .metadata import evaluator_name, distribution_oracles
 metadata.py:
 	distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
 '''
-from .chem_utils import novelty, diversity, uniqueness, validity, fcd_distance, kl_divergence 
 
 try:
 	from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score
@@ -56,19 +55,24 @@ class Evaluator:
 			self.evaluator_func = cohen_kappa_score
 		elif self.name == 'avg-roc-auc':
 			self.evaluator_func = avg_auc
-		elif self.name == 'novelty':
-			self.evaluator_func = novelty 
+		elif self.name == 'novelty':   	
+			from .chem_utils import novelty
+			self.evaluator_func = novelty  
 		elif self.name == 'diversity':
+			from .chem_utils import diversity
 			self.evaluator_func = diversity 
-		elif self.name == 'uniqueness':
-			self.evaluator_func = uniqueness 
 		elif self.name == 'validity':
-			self.evaluator_func = validity
-		elif self.name == 'fcd_distance':
-			self.evaluator_func = fcd_distance 
+			from .chem_utils import validity
+			self.evaluator_func = validity 
+		elif self.name == 'uniqueness':
+			from .chem_utils import uniqueness
+			self.evaluator_func = uniqueness 
 		elif self.name == 'kl_divergence':
+			from .chem_utils import kl_divergence
 			self.evaluator_func = kl_divergence
-
+		elif self.name == 'fcd_distance':
+			from .chem_utils import fcd_distance
+			self.evaluator_func = fcd_distance
 
 	def __call__(self, *args, **kwargs):
 		if self.name in distribution_oracles:  
