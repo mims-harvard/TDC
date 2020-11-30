@@ -77,7 +77,7 @@ paired_dataset_names = ['uspto50k', 'uspto']
 
 ####################################
 # resource
-compound_library_names = ['DrugBank', 'ChEMBL', 'Broad_Repurposing_Hub', 'Antivirals']
+compound_library_names = ['DrugBank', 'ChEMBL', 'Broad_Repurposing_Hub', 'Antivirals', 'hetionet']
 
 ####################################
 # oracles
@@ -92,7 +92,7 @@ property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', \
 				  'accuracy', 'mse', 'mae', 'r2', 'micro-f1', 'macro-f1', \
 				  'kappa', 'avg-roc-auc']
-				  
+
 evaluator_name.extend(distribution_oracles)
 
 guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop', \
@@ -225,6 +225,7 @@ name2type = {'toxcast': 'tab',
  'uspto_yields': 'pkl', 
  'uspto_catalyst': 'csv',
  'buchwald-hartwig': 'pkl',
+ 'hetionet':'csv', 
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -289,6 +290,7 @@ name2id = {'bbb_adenot': 4139555,
  'uspto_yields': 4186956, 
  'uspto_catalyst': 4171574,
  'uspto': 4171642,
+ 'hetionet': 'xxxxxx', 
  }
 
 oracle2type = {'drd2': 'pkl', 
