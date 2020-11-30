@@ -5,13 +5,13 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from .utils import * 
-from .metadata import evaluator_name
-
-from .chem_utils import novelty, diversity, uniqueness, validity, fcd_distance, kl_divergence 
+from .metadata import evaluator_name, distribution_oracles
 '''
 metadata.py:
 	distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
 '''
+from .chem_utils import novelty, diversity, uniqueness, validity, fcd_distance, kl_divergence 
+
 try:
 	from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score
 	from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, cohen_kappa_score
@@ -56,6 +56,19 @@ class Evaluator:
 			self.evaluator_func = cohen_kappa_score
 		elif self.name == 'avg-roc-auc':
 			self.evaluator_func = avg_auc
+		elif self.name == 'novelty':
+			self.evaluator_func = novelty 
+		elif self.name == 'diversity':
+			self.evaluator_func = diversity 
+		elif self.name == 'uniqueness'
+			self.evaluator_func = uniqueness 
+		elif self.name == 'validity':
+			self.evaluator_func = validity
+		elif self.name == 'fcd_distance':
+			self.evaluator_func = fcd_distance 
+		elif self.name == 'kl_divergence':
+			self.evaluator_func = kl_divergence
+
 
 	def __call__(self, y_true, y_pred, threshold = 0.5):
 		y_true = np.array(y_true)
