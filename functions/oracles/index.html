@@ -67,6 +67,8 @@
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
+                            <a href="/TDC/resources/overview" class="navbar-item ">Resource</a>
+                            
                         </div>
                     </div>
                     
@@ -164,34 +166,20 @@
     <div class="menu">
         <p class="menu-label">Function Index</p>
         <ul class="menu-list">
-  <li><a href="#goal-oriented-oracles">Goal-oriented Oracles</a>
-    <ul>
-      <li><a href="#glycogen-synthase-kinase-3-beta-gsk3β">Glycogen Synthase Kinase 3 Beta (GSK3β)</a></li>
-      <li><a href="#c-jun-n-terminal-kinases-3-jnk3">c-Jun N-terminal Kinases-3 (JNK3)</a></li>
-      <li><a href="#dopamine-receptor-d2-drd2">Dopamine Receptor D2 (DRD2)</a></li>
-      <li><a href="#synthetic-accessibility-sa">Synthetic Accessibility (SA)</a></li>
-      <li><a href="#ibm-rxn-synthetic-accessibility-ibm_rxn">IBM RXN Synthetic Accessibility (IBM_RXN)</a></li>
-      <li><a href="#quantitative-estimate-of-drug-likeness-qed">Quantitative Estimate of Drug-likeness (QED)</a></li>
-      <li><a href="#octanol-water-partition-coefficient-logp">Octanol-water Partition Coefficient (LogP)</a></li>
-      <li><a href="#rediscovery">Rediscovery</a></li>
-      <li><a href="#similaritydissimilarity">Similarity/Dissimilarity</a></li>
-      <li><a href="#median-molecules">Median Molecules</a></li>
-      <li><a href="#isomers">Isomers</a></li>
-      <li><a href="#multi-property-objective-mpo">Multi-Property Objective (MPO)</a></li>
-      <li><a href="#valsartan-smarts">Valsartan SMARTS</a></li>
-      <li><a href="#hop">Hop</a></li>
-    </ul>
-  </li>
-  <li><a href="#distribution-learning-oracles">Distribution Learning Oracles</a>
-    <ul>
-      <li><a href="#diversity">Diversity</a></li>
-      <li><a href="#kl-divergence">KL divergence</a></li>
-      <li><a href="#frechet-chemnet-distance-fcd">Frechet ChemNet Distance (FCD)</a></li>
-      <li><a href="#novelty">Novelty</a></li>
-      <li><a href="#validity">Validity</a></li>
-      <li><a href="#uniqueness">Uniqueness</a></li>
-    </ul>
-  </li>
+  <li><a href="#glycogen-synthase-kinase-3-beta-gsk3β">Glycogen Synthase Kinase 3 Beta (GSK3β)</a></li>
+  <li><a href="#c-jun-n-terminal-kinases-3-jnk3">c-Jun N-terminal Kinases-3 (JNK3)</a></li>
+  <li><a href="#dopamine-receptor-d2-drd2">Dopamine Receptor D2 (DRD2)</a></li>
+  <li><a href="#synthetic-accessibility-sa">Synthetic Accessibility (SA)</a></li>
+  <li><a href="#ibm-rxn-synthetic-accessibility-ibm_rxn">IBM RXN Synthetic Accessibility (IBM_RXN)</a></li>
+  <li><a href="#quantitative-estimate-of-drug-likeness-qed">Quantitative Estimate of Drug-likeness (QED)</a></li>
+  <li><a href="#octanol-water-partition-coefficient-logp">Octanol-water Partition Coefficient (LogP)</a></li>
+  <li><a href="#rediscovery">Rediscovery</a></li>
+  <li><a href="#similaritydissimilarity">Similarity/Dissimilarity</a></li>
+  <li><a href="#median-molecules">Median Molecules</a></li>
+  <li><a href="#isomers">Isomers</a></li>
+  <li><a href="#multi-property-objective-mpo">Multi-Property Objective (MPO)</a></li>
+  <li><a href="#valsartan-smarts">Valsartan SMARTS</a></li>
+  <li><a href="#hop">Hop</a></li>
 </ul>
     </div>
 </div>
@@ -200,20 +188,16 @@
 
 
 <div class="content">
-    <h2 id="goal-oriented-oracles">Goal-oriented Oracles</h2>
-<hr />
-
-<h3 id="glycogen-synthase-kinase-3-beta-gsk3β">Glycogen Synthase Kinase 3 Beta (GSK3β)</h3>
+    <h3 id="glycogen-synthase-kinase-3-beta-gsk3β">Glycogen Synthase Kinase 3 Beta (GSK3β)</h3>
 
 <p class="is-size-6">  <strong> Description: </strong>Glycogen synthase kinase 3 beta, also known as GSK3β, is an enzyme that in humans is encoded by the GSK3β gene. Abnormal regulation and expression of GSK3β is associated with an increased susceptibility towards bipolar disorder. The oracle is a random forest classifer using ECFP6 fingerprints using ExCAPE-DB dataset. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'GSK3B'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.02, 0.0, 0.1]
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># 0.03
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.03, 0.0, 0.0]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -233,11 +217,10 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'JNK3'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.02, 0.0, 0.1]
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># 0.03
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.01, 0.0, 0.01]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -257,11 +240,10 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DRD2'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.02, 0.0, 0.1]
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># 0.03
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.0015465365340340924, 0.0023541754878916416, 0.004715407010872501]
 </span></code></pre></div></div>
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
@@ -281,11 +263,10 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'SA'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.02, 0.0, 0.1]
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># 0.03
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [2.706977149048555, 2.8548373344538067, 2.659973244931228]
 </span></code></pre></div></div>
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
@@ -338,11 +319,10 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'QED'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.02, 0.0, 0.1]
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># 0.03
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.7369335974098526, 0.7965866720151891, 0.9026967965647689]
 </span></code></pre></div></div>
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
@@ -362,12 +342,12 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'LogP'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.02, 0.0, 0.1]
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># 0.03
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [2.126496327138913, 0.073949389117486, 0.48850176431612924]
 </span></code></pre></div></div>
+
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://openreview.net/forum?id=rJeeKTNKDB">[1] Jin, Wengong, et al. “Learning multimodal graph-to-graph translation for molecular optimization.” ICLR (2019).
@@ -384,29 +364,30 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Rediscovery'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># {'Celecoxib': [0.03, 0.32, 0.01, 0.1], 'Troglitazone': [0.33, 0.12, 0.0, 0.12], 'Thiothixene': [0.032, 0.021, 0.02, 0.1]}
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># {'Celecoxib': 0.03, 'Troglitazone': 0.01, 'Thiothixene': 0.6}
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># {'Celecoxib': [0.14728682170542637, 0.11666666666666667, 0.09649122807017543], 'Troglitazone': [0.24427480916030533,  0.14615384615384616, 0.12903225806451613], 'Thiothixene': [0.17391304347826086, 0.15625, 0.17796610169491525]}
 </span></code></pre></div></div>
 
 <p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Celecoxib_Rediscovery'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.14728682170542637, 0.11666666666666667, 0.09649122807017543]
 </span></code></pre></div></div>
 
 <p class="is-size-6"> TDC also provides an oracle that takes any SMILES string that users want to rediscover. For example, </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Rediscovery_Meta'</span><span class="p">,</span> <span class="n">target_smiles</span> <span class="o">=</span> <span class="s">'CC(=O)OC1=CC=CC=C1C(=O)O'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.16666666666666666, 0.18072289156626506, 0.2191780821917808]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -421,28 +402,29 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Similarity'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># {'Aripiprazole': [0.03, 0.32, 0.01, 0.1], 'Albuterol': [0.33, 0.12, 0.0, 0.12], 'Mestranol': [0.032, 0.021, 0.02, 0.1]}
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># {'Aripiprazole': 0.03, 'Albuterol': 0.01, 'Mestranol': 0.6}
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># {'Aripiprazole': [0.5356125356125356, 0.3908045977011494, 0.39143730886850153], 'Albuterol': [0.2772277227722772, 0.38095238095238093, 0.3589743589743589], 'Mestranol': [0.19460880999342536, 0.2567901234567901, 0.2612872238232469]}
 </span></code></pre></div></div>
 <p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Aripiprazole_Similarity'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.5356125356125356, 0.3908045977011494, 0.39143730886850153]
 </span></code></pre></div></div>
 
 <p class="is-size-6"> TDC also provides an oracle that takes any SMILES string that users want to be similar/dissimilar with. For example, </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Similarity_Meta'</span><span class="p">,</span> <span class="n">target_smiles</span> <span class="o">=</span> <span class="s">'CC(=O)OC1=CC=CC=C1C(=O)O'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.23076923076923078, 0.1951219512195122, 0.2361111111111111]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -457,20 +439,20 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Median'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># {'Median 1': [0.03, 0.32, 0.01, 0.1], 'Median 2': [0.33, 0.12, 0.0, 0.12]}
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># {'Median 1': 0.03, 'Median 2': 0.01}
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># {'Median 1': [0.09722243533981723, 0.14166129393101462, 0.12765694770084507], 'Median 2': [0.12259690287307903, 0.11470387424947118, 0.11491261514365983]}
 </span></code></pre></div></div>
 
 <p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Median 1'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.09722243533981723, 0.14166129393101462, 0.12765694770084507]
 </span></code></pre></div></div>
 
 <p class="is-size-6"> TDC also provides an oracle that takes any two SMILES strings that users want to simultaneously maximize similarities with. For example, </p>
@@ -479,9 +461,10 @@
 <span class="n">tadalafil_smiles</span> <span class="o">=</span> <span class="s">'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'</span>
 <span class="n">sildenafil_smiles</span> <span class="o">=</span> <span class="s">'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Median_Meta'</span><span class="p">,</span> <span class="n">target_smiles</span> <span class="o">=</span> <span class="p">(</span><span class="n">tadalafil_smiles</span><span class="p">,</span> <span class="n">sildenafil_smiles</span><span class="p">))</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.12259690287307903, 0.11470387424947118, 0.11491261514365983]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -496,28 +479,29 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Isomers'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># {'C11H24': [0.03, 0.32, 0.01, 0.1], 'C9H10N2O2PF2Cl': [0.33, 0.12, 0.0, 0.12]}
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># {'C11H24': 0.03, 'C9H10N2O2PF2Cl': 0.01}
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># {'c7h8n2o2': [7.077155389805107e-22, 9.454886273886542e-18, 3.7105915150029394e-14], 'c9h10n2o2pf2cl': [3.775134544279098e-11, 4.944450501938644e-09, 1.1793585051615319e-07]}
 </span></code></pre></div></div>
 
 <p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
-<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Isomers_C11H24'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Isomers_C7H8N2O2'</span><span class="p">)</span>
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [7.077155389805107e-22, 9.454886273886542e-18, 3.7105915150029394e-14]
 </span></code></pre></div></div>
-<p class="is-size-6"> TDC also provides an oracle that takes any SMILES string of the simple pattern. For example, </p>
+<p class="is-size-6"> TDC also provides an oracle that takes any SMILES string and then it would transform it to the chemical formula and use that as the comparison. For example, </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Isomers_Meta'</span><span class="p">,</span> <span class="n">target_smiles</span> <span class="o">=</span> <span class="s">'CC(=O)OC1=CC=CC=C1C(=O)O'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [4.632351332478028e-57, 5.853717984129625e-37, 3.120771099829009e-32]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -532,19 +516,19 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MPO'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># {'Osimertinib': [0.03, 0.32, 0.01, 0.1], 'Fexofenadine': [0.33, 0.12, 0.0, 0.12], 'Ranolazine': [0.03, 0.32, 0.01, 0.1], 'Perindopril': [0.33, 0.12, 0.0, 0.12], 'Amlodipine': [0.03, 0.32, 0.01, 0.1], 'Sitagliptin': [0.33, 0.12, 0.0, 0.12], 'Zaleplon': [0.03, 0.32, 0.01, 0.1]}
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># {'Osimertinib': 0.03, 'Fexofenadine': 0.33, 'Ranolazine': 0.03, 'Perindopril': 0.33, 'Amlodipine': 0.03, 'Sitagliptin': 0.33, 'Zaleplon': 0.32}
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># {'Osimertinib': [0.09011742702110873, 0.4083890176872189, 0.0069208742335098465], 'Fexofenadine': [0.4336446174984538, 0.5101327504385935, 0.01074314980818085], 'Ranolazine': [0.29285467466584664, 0.027222138370807142,  0.015384988076712304], 'Perindopril': [0.36023741111440966, 0.1540877417148235, 0.13584848674330968], 'Amlodipine': [0.461083967620704, 0.15454027643871737, 0.15152116723579184], 'Sitagliptin': [0.00562486906491877,  0.008394273324064522, 0.0036371294214424814], 'Zaleplon': [7.752152611462035e-05, 8.370947134491376e-05, 1.3261169904325478e-05]}
 </span></code></pre></div></div>
 <p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Osimertinib_MPO'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.09011742702110873, 0.4083890176872189, 0.0069208742335098465]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -559,11 +543,10 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Valsartan_SMARTS'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># 0.03
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.0, 0.0, 0.0]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -578,131 +561,24 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Hop'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># {'Scaffold Hop': [0.03, 0.32, 0.01, 0.1], 'Decorator Hop': [0.33, 0.12, 0.0, 0.12]}
-</span><span class="n">oracle</span><span class="p">(</span><span class="s">'CC(C)(C)....'</span><span class="p">)</span>
-<span class="c1"># {'Scaffold Hop': 0.03, 'Decorator Hop': 0.01}
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># {'Deco Hop': [0.5338365434669443, 0.5200860832137733, 0.5038648836670017], 'Scaffold Hop': [0.38446411012782694, 0.36368563685636857, 0.3391736019856913]}
 </span></code></pre></div></div>
 <p class="is-size-6"><strong>Note</strong>: You can also access individual oracle in the set. For example, </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Scaffold Hop'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># [0.03, 0.32, 0.01, 0.1]
+<span class="n">oracle</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+        <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+        <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+<span class="c1"># [0.38446411012782694, 0.36368563685636857, 0.3391736019856913]
 </span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
-
-<hr />
-
-<h2 id="distribution-learning-oracles">Distribution Learning Oracles</h2>
-
-<h3 id="diversity">Diversity</h3>
-
-<p class="is-size-6">  <strong> Description: </strong>The diversity of a set of molecules is defined as the average pairwise Tanimoto distance between the Morgan fingerprints.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
-<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Diversity'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># 0.2
-</span></code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://arxiv.org/abs/1708.08227"> Benhenda, Mostapha. “ChemGAN challenge for drug discovery: can AI reproduce natural chemical diversity?.” arXiv preprint arXiv:1708.08227 (2017).</a></p>
-
-<hr />
-
-<h3 id="kl-divergence">KL divergence</h3>
-
-<p class="is-size-6">  <strong> Description: </strong>  KL divergence between the probability distributions of a variety of physicochemical descriptors for the training set and a set of generated molecules. Models able to capture the distributions of molecules in the training set will lead to small KL divergence values. To increase diversity, we want high KL.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
-<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'KL_Divergence'</span><span class="p">)</span>
-<span class="n">gen_smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">train_smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CCNC[C@@H]....'</span><span class="p">,</span> <span class="s">'[C@H](O)C2)....'</span><span class="p">,</span> <span class="s">'C(=O)CCCc2....'</span><span class="p">,</span> <span class="s">'sc(NC(=O)....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">gen_smiles_lst</span><span class="p">,</span> <span class="n">train_smiles_lst</span><span class="p">)</span>
-<span class="c1"># 0.2
-</span></code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
-
-<hr />
-
-<h3 id="frechet-chemnet-distance-fcd">Frechet ChemNet Distance (FCD)</h3>
-
-<p class="is-size-6">  <strong> Description: </strong> FCD first takes the means and covariances of the activations of the penultimate layer of ChemNet are calculated for the reference set and for the set of generated molecules. The FCD is then calculated as the Frechet distance for both pairs of values. Similar molecule distributions are characterized by low FCD values.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
-<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'FCD_Distance'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">ref_smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CCNC[C@@H]....'</span><span class="p">,</span> <span class="s">'[C@H](O)C2)....'</span><span class="p">,</span> <span class="s">'C(=O)CCCc2....'</span><span class="p">,</span> <span class="s">'sc(NC(=O)....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">,</span> <span class="n">ref_smiles_lst</span><span class="p">)</span>
-<span class="c1"># 0.2
-</span></code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
-
-<hr />
-
-<h3 id="novelty">Novelty</h3>
-
-<p class="is-size-6">  <strong> Description: </strong> Novelty is the fraction of the generated molecules that are not present in the training set.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
-<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Novelty'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">train_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'NC(=O)c3....'</span> <span class="s">'CCCc2ccc....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'NC(=O)c1c....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">,</span> <span class="n">train_set</span><span class="p">)</span>
-<span class="c1"># 0.2
-</span></code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
-
-<hr />
-
-<h3 id="validity">Validity</h3>
-
-<p class="is-size-6">  <strong> Description: </strong> Validity is calculated using RDKit’s molecular structure parser that checks atoms’ valency and consistency of bonds in aromatic rings.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
-<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Validity'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># 0.2
-</span></code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
-
-<hr />
-
-<h3 id="uniqueness">Uniqueness</h3>
-
-<p class="is-size-6">  <strong> Description: </strong> Uniqueness measures how often a model is able to generate duplicated molecules. If that is the case, the uniqueness is low and vice versa. </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
-<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Uniqueness'</span><span class="p">)</span>
-<span class="n">smiles_lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)....'</span> <span class="s">'C[C@@H]1....'</span><span class="p">,</span><span class="s">'CCNC(=O)....'</span><span class="p">,</span> <span class="s">'C[C@@H]1....'</span><span class="p">]</span>
-<span class="n">oracle</span><span class="p">(</span><span class="n">smiles_lst</span><span class="p">)</span>
-<span class="c1"># 0.2
-</span></code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
 
 <hr />
 

@@ -67,6 +67,8 @@
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
+                            <a href="/TDC/resources/overview" class="navbar-item ">Resource</a>
+                            
                         </div>
                     </div>
                     
@@ -177,6 +179,10 @@
                 <li><a href="/TDC/generation_tasks/overview/" class="">Generation Problem</a></li>
                 
                 
+                
+                <li><a href="/TDC/resources/overview/" class="">Resources</a></li>
+                
+                
             </ul>
             
         </li>
@@ -198,6 +204,10 @@
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
+  <li><a href="#herg-blockers">hERG blockers</a></li>
+  <li><a href="#ames-mutagenicity">Ames Mutagenicity</a></li>
+  <li><a href="#dili-drug-induced-liver-injury">DILI (Drug Induced Liver Injury)</a></li>
+  <li><a href="#skin-reaction">Skin Reaction</a></li>
   <li><a href="#tox21">Tox21</a></li>
   <li><a href="#toxcast">ToxCast</a></li>
   <li><a href="#clintox">ClinTox</a></li>
@@ -209,7 +219,103 @@
 
 
 <div class="content">
-    <h3 id="tox21">Tox21</h3>
+    <h3 id="herg-blockers">hERG blockers</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Blockade of human ether-à-go-go related gene (hERG) channel by compounds may lead to drug-induced QT prolongation, arrhythmia, and Torsades de Pointes (TdP), and therefore reliable prediction of hERG liability in the early stages of drug design is quite important to reduce the risk of cardiotoxicity-related attritions in the later development stages. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict whether it blocks (1) or not blocks (0). </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 655 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'hERG'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.molpharmaceut.6b00471?casa_token=YszQx1sl0QgAAAAA:lIztZjmLzi3CPjnYh4lVFe3FAjOKF12N9IwBxjV4wiGw6S6QbpnegfgHEjwPzbgmpW-Bk9VvY9RLAsVo">[1] Wang, Shuangquan, et al. “ADMET evaluation in drug discovery. 16. Predicting hERG blockers by combining multiple pharmacophores and machine learning approaches.” Molecular Pharmaceutics 13.8 (2016): 2855-2866.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="ames-mutagenicity">Ames Mutagenicity</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The mutagenic effect has a close relationship with the carcinogenicity. Nowadays, the most widely used assay for testing the mutagenicity of compounds is the Ames experiment which was invented by a professor named Ames. The Ames test is a short-term bacterial reverse mutation assay detecting a large number of compounds which can induce genetic damage and frameshift mutations. The dataset is aggregated from four papers. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict whether it is mutagenic (1) or not mutagenic (0). </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 7,617 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'AMES'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci300400a?casa_token=A86ksblef0kAAAAA:2kLxP4j2NOigeBsSqUb8C9ThZLVBR_Ztc8gJg_HhyLCRtZF-MfMMyq4bIwhMlH0MyJXZuWkFXXrGqiMR">[1] Xu, Congying, et al. “In silico prediction of chemical Ames mutagenicity.” Journal of chemical information and modeling 52.11 (2012): 2840-2847.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="dili-drug-induced-liver-injury">DILI (Drug Induced Liver Injury)</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> More than 700 drugs have been found to be associated with liver injury. Drug-induced liver injury (DILI) has been the single most frequent cause of safety-related drug marketing withdrawals for the past 50 years (e.g., iproniazid, etc.) continuing to the present (e.g., ticrynafen, benoxaprofen, bromfenac, troglitazone, nefazodone). Drugs that cause severe DILI in humans typically do not show clear hepatotoxicity in animals, do not show dose-related toxicity, and cause low rates of severe injury (1 in 5000 to 10 000 or less). This dataset is aggregated from U.S. FDA’s National Center for Toxicological Research. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict whether it can cause liver injury (1) or not (0). </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 475 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DILI'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.5b00238">[1] Xu, Youjun, et al. “Deep learning for drug-induced liver injury.” Journal of chemical information and modeling 55.10 (2015): 2085-2093.
+</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="skin-reaction">Skin Reaction</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Repetitive exposure to a chemical agent can induce an immune reaction in inherently susceptible individuals that leads to skin sensitization. The dataset used in this study was retrieved from the ICCVAM (Interagency Coordinating Committee on the Validation of Alternative Methods) report on the rLLNA. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict whether it can cause skin reaction (1) or not (0). </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 405 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Skin Reaction'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0041008X14004529?casa_token=gMz283g8Tj0AAAAA:DNKlQvZC2fUfMNz4vbqB7WEQGSDMpibtoST_G8vhZ7I4GK950VKxrLTK3jBrSlYKH5flC4sJ6O4">[1] Alves, Vinicius M., et al. “Predicting chemically-induced skin reactions. Part I: QSAR models of skin sensitization and their application to identify potentially hazardous compounds.” Toxicology and applied pharmacology 284.2 (2015): 262-272.
+</a></p>
+
+<p><a href="https://ntp.niehs.nih.gov/whatwestudy/niceatm/test-method-evaluations/immunotoxicity/llna/index.html"> [2] The reduced murine local lymph node assay: an alternative test method using fewer animals to assess the allergic contact dermatitis potential of chemicals and products. </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="tox21">Tox21</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> 2014 Tox21 Data Challenge contains qualitative toxicity measurements for 8k compounds on 12 different targets, including nuclear receptors and stress response pathways. </p>
 

@@ -67,6 +67,8 @@
                             
                             <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
                             
+                            <a href="/TDC/resources/overview" class="navbar-item ">Resource</a>
+                            
                         </div>
                     </div>
                     
@@ -177,6 +179,10 @@
                 <li><a href="/TDC/generation_tasks/overview/" class="">Generation Problem</a></li>
                 
                 
+                
+                <li><a href="/TDC/resources/overview/" class="">Resources</a></li>
+                
+                
             </ul>
             
         </li>
@@ -214,6 +220,7 @@
     <ul>
       <li><a href="#bbb-blood-brain-barrier-adenot-et-al">BBB (Blood-Brain Barrier), Adenot et al.</a></li>
       <li><a href="#bbb-blood-brain-barrier-martins-et-al">BBB (Blood-Brain Barrier), Martins et al.</a></li>
+      <li><a href="#ppbr-plasma-protein-binding-rate-astrazeneca">PPBR (Plasma Protein Binding Rate), AstraZeneca</a></li>
       <li><a href="#ppbr-plasma-protein-binding-rate-ma-et-al">PPBR (Plasma Protein Binding Rate), Ma et al.</a></li>
       <li><a href="#ppbr-plasma-protein-binding-rate-edrug3d">PPBR (Plasma Protein Binding Rate), eDrug3D</a></li>
       <li><a href="#vd-volumn-of-distribution-edrug3d">VD (Volumn of Distribution), eDrug3D</a></li>
@@ -496,6 +503,29 @@
 
 <p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
+<h3 id="ppbr-plasma-protein-binding-rate-astrazeneca">PPBR (Plasma Protein Binding Rate), AstraZeneca</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins. Medications attach to proteins within the blood. A drug's efficiency may be affected by the degree to which it binds. The less bound a drug is, the more efficiently it can traverse cell membranes or diffuse. From a ChEMBL assay deposited by AstraZeneca.  </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the rate of PPBR.  </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 2,790 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PPBR_AZ'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.6019/chembl3301361">[1] AstraZeneca. Experimental in vitro Dmpk and physicochemical data on a set of publicly disclosed compounds (2016) </a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
 <hr />
 
 <h3 id="ppbr-plasma-protein-binding-rate-ma-et-al">PPBR (Plasma Protein Binding Rate), Ma et al.</h3>
@@ -525,7 +555,7 @@
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins. Medications attach to proteins within the blood. A drug's efficiency may be affected by the degree to which it binds. The less bound a drug is, the more efficiently it can traverse cell membranes or diffuse. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of PPBR. </p>
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the rate of PPBR. </p>
 
 <p class="is-size-6">  <strong> Dataset Statistics: </strong> 828 drugs. </p>
 
