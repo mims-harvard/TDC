@@ -17,9 +17,12 @@ class CompoundLibrary(dataset.DataLoader):
 
         print('Done!', flush=True, file=sys.stderr)
 
+class BioKG(dataset.DataLoader):
+    def __init__(self, name, path='./data', print_stats=False):
+        super().__init__(name, path, print_stats,
+                         dataset_names=dataset_names["BioKG"])
 
-'''
-from tdc.resource import CompoundLibrary
-data = CompoundLibrary(name = 'hetionet')
+        if print_stats:
+            self.print_stats()
 
-'''
+        print('Done!', flush=True, file=sys.stderr)

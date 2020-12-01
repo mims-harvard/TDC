@@ -1,7 +1,7 @@
 # datasets for each task
 
 # single_pred prediction
-toxicity_dataset_names = ['toxcast', 'tox21', 'clintox']
+toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames']
 
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
@@ -23,7 +23,8 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'bbb_adenot',
  'bbb_martins',
  'ppbr_ma',
- 'ppbr_edrug3d']
+ 'ppbr_edrug3d',
+ 'ppbr_az']
 
 hts_dataset_names = ['hiv', 
 'sarscov2_3clpro_diamond', 
@@ -77,7 +78,8 @@ paired_dataset_names = ['uspto50k', 'uspto']
 
 ####################################
 # resource
-compound_library_names = ['DrugBank', 'ChEMBL', 'Broad_Repurposing_Hub', 'Antivirals', 'hetionet']
+compound_library_names = ['drugbank_drugs', 'chembl_drugs', 'broad_repurposing_hub', 'antivirals']
+biokg_library_names = ['hetionet']
 
 ####################################
 # oracles
@@ -102,7 +104,7 @@ guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop
 				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
 				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
 				   'median1', 'median2', \
-				   'valsartan_smarts', 'deco_hop', 'scaffold_hop', ]
+				   'valsartan_smarts', 'deco_hop', 'scaffold_hop']
 
 '''
   rediscovery:  		3
@@ -156,7 +158,8 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"Paratope": paratope_dataset_names, 
 				"Yields": yield_dataset_names, 
 				"Catalyst": catalyst_dataset_names, 
-				"CompoundLibrary": compound_library_names
+				"CompoundLibrary": compound_library_names,
+				"BioKG": biokg_library_names
 				}
 
 dataset_list = []
@@ -225,7 +228,12 @@ name2type = {'toxcast': 'tab',
  'uspto_yields': 'pkl', 
  'uspto_catalyst': 'csv',
  'buchwald-hartwig': 'pkl',
- 'hetionet':'csv', 
+ 'hetionet':'tab', 
+ 'herg': 'tab',
+ 'dili': 'tab',
+ 'ppbr_az': 'tab',
+ 'ames': 'tab',
+ 'skin_reaction': 'tab'
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -289,8 +297,13 @@ name2id = {'bbb_adenot': 4139555,
  'buchwald-hartwig': 4186955,
  'uspto_yields': 4186956, 
  'uspto_catalyst': 4171574,
- 'uspto': 4171642,
- 'hetionet': 'xxxxxx', 
+ 'uspto': 4171642, 
+ 'hetionet': 4201734, # 0.0.8
+ 'herg': 4201737,
+ 'dili': 4201733,
+ 'ppbr_az': 4201738,
+ 'ames': 4201735,
+ 'skin_reaction': 4201736
  }
 
 oracle2type = {'drd2': 'pkl', 
@@ -303,70 +316,4 @@ oracle2id = {'drd2': 4178625,
 			 'gsk3b': 4170295,
 			 'jnk3': 4170293,
 			 'fpscores': 4170416
-}
-
-versioning = {
-	'0.0.1': ['bbb_adenot',
- 'bbb_martins',
- 'bindingdb_ic50',
- 'bindingdb_kd',
- 'bindingdb_ki',
- 'bioavailability_ma',
- 'caco2_wang',
- 'clearance_edrug3d',
- 'clintox',
- 'cyp1a2_veith',
- 'cyp2c19_veith',
- 'cyp2c9_veith',
- 'cyp2d6_veith',
- 'cyp3a4_veith',
- 'davis',
- 'drugbank',
- 'f20_edrug3d',
- 'f30_edrug3d',
- 'halflife_edrug3d',
- 'hia_hou',
- 'hiv',
- 'huri',
- 'hydrationfreeenergy_freesolv',
- 'kiba',
- 'lipophilicity_astrazeneca',
- 'pgp_broccatelli',
- 'ppbr_edrug3d',
- 'ppbr_ma',
- 'sarscov2_3clpro_diamond',
- 'sarscov2_vitro_touret',
- 'solubility_aqsoldb',
- 'tox21',
- 'toxcast',
- 'twosides',
- 'vd_edrug3d',
- 'mhc1_iedb-imgt_nielsen',
- 'mhc2_iedb_jensen',
- 'zinc',
- 'moses',
- 'chembl',
- 'qed',
- 'drd2',
- 'logp',
- 'gdsc1',
- 'gdsc2',
- 'iedb_jespersen',
- 'pdb_jespersen',
- 'qm7b',
- 'qm8',
- 'qm9',
- 'tap',
- 'sabdab_chen',
- 'protein_sabdab',
- 'oncopolypharmacology',
- 'mirtarbase',
- 'disgenet',
- 'sabdab_liberis',
- 'uspto50k',
- 'uspto',
- 'buchwald-hartwig',
- 'uspto_yields',
- 'uspto_catalyst', 
- 'hetionet',]
 }

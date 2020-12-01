@@ -6,31 +6,6 @@ warnings.filterwarnings("ignore")
 
 from .utils import * 
 from .metadata import download_oracle_names, oracle_names, distribution_oracles
-'''
-
-guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop', \
-				   'celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
-				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
-				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', \
-				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
-				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
-				   'median1', 'median2', \
-				   'valsartan_smarts', 'deco_hop', 'scaffold_hop', ]
-
-#### evaluator for distribution learning, the input of __call__ is list of smiles
-distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
-
-#### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
-download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
-trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
-synthetic_oracle_name = ['ibm_rxn'] 
-
-meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta']
-
-oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name 
-
-'''
-
 
 class Oracle:
 	def __init__(self, name, target_smiles = None, **kwargs):
@@ -45,30 +20,7 @@ class Oracle:
 		self.evaluator_func = None
 		self.assign_evaluator() 
 
-	def assign_evaluator(self):
-		'''
-		from .chem_utils import eval(self.name)
-		self.evaluator_func = eval(self.name)
-		'''
-		# if self.name == 'novelty':   		############################ distribution learning 
-		# 	from .chem_utils import novelty
-		# 	self.evaluator_func = novelty  
-		# elif self.name == 'diversity':
-		# 	from .chem_utils import diversity
-		# 	self.evaluator_func = diversity 
-		# elif self.name == 'validity':
-		# 	from .chem_utils import validity
-		# 	self.evaluator_func = validity 
-		# elif self.name == 'uniqueness':
-		# 	from .chem_utils import uniqueness
-		# 	self.evaluator_func = uniqueness 
-		# elif self.name == 'kl_divergence':
-		# 	from .chem_utils import kl_divergence
-		# 	self.evaluator_func = kl_divergence
-		# elif self.name == 'fcd_distance':
-		# 	from .chem_utils import fcd_distance
-		# 	self.evaluator_func = fcd_distance
-		
+	def assign_evaluator(self):		
 		if self.name == 'logp':			############################ molecular property 
 			from .chem_utils import penalized_logp
 			self.evaluator_func = penalized_logp 
