@@ -4,7 +4,7 @@
 
 [![Website](https://img.shields.io/badge/Homepage-docs-<COLOR>.svg)](https://zitniklab.hms.harvard.edu/TDC/)
 [![PyPI version](https://badge.fury.io/py/PyTDC.svg)](https://badge.fury.io/py/PyTDC)
-[![Downloads](https://static.pepy.tech/personalized-badge/pytdc?period=total&units=international_system&left_color=green&right_color=grey&left_text=Downloads)](https://pepy.tech/project/pytdc)
+[![Downloads](https://pepy.tech/badge/pytdc)](https://pepy.tech/project/pytdc)
 [![GitHub Repo stars](https://img.shields.io/github/stars/mims-harvard/TDC)](https://github.com/mims-harvard/TDC/stargazers)
 [![GitHub Repo stars](https://img.shields.io/github/forks/mims-harvard/TDC)](https://github.com/mims-harvard/TDC/network/members)
 [![Build Status](https://travis-ci.org/mims-harvard/TDC.svg?branch=master)](https://travis-ci.org/mims-harvard/TDC)
