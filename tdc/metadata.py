@@ -233,7 +233,8 @@ name2type = {'toxcast': 'tab',
  'dili': 'tab',
  'ppbr_az': 'tab',
  'ames': 'tab',
- 'skin_reaction': 'tab'
+ 'skin_reaction': 'tab',
+ 'drugbank_drugs': 'csv', 
  }
 
 name2id = {'bbb_adenot': 4139555,
@@ -303,7 +304,8 @@ name2id = {'bbb_adenot': 4139555,
  'dili': 4201733,
  'ppbr_az': 4201738,
  'ames': 4201735,
- 'skin_reaction': 4201736
+ 'skin_reaction': 4201736, 
+ 'drugbank_drugs': 'xxxxx', 
  }
 
 oracle2type = {'drd2': 'pkl', 
