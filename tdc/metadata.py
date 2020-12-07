@@ -3,6 +3,21 @@
 # single_pred prediction
 toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames']
 
+'''
+Table 1 of https://pubs.acs.org/doi/pdf/10.1021/ci300367a
+ 6: 
+ 14,15,16: 'cyp2c9_substrate_carbonmangels',  'cyp2d6_substrate_carbonmangels', 'cyp3a4_substrate_carbonmangels', 
+ 20:
+ 21,22: 'rainbow_trout_li', 'lepomis_li',   
+ 23: 
+ 24: 
+ 25: 
+ 26: 
+ 27: 
+ 28: 
+ 29: 
+'''
+
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
  'hydrationfreeenergy_freesolv',
