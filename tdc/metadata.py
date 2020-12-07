@@ -7,7 +7,7 @@ toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_r
 Table 1 of https://pubs.acs.org/doi/pdf/10.1021/ci300367a
  6: 
  14,15,16: 'cyp2c9_substrate_carbonmangels',  'cyp2d6_substrate_carbonmangels', 'cyp3a4_substrate_carbonmangels', 
- 20:
+ 20: carcinogens_lagunin    sdf to smiles
  21,22: 'rainbow_trout_li', 'lepomis_li',   
  23: 
  24: 
@@ -36,6 +36,7 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'cyp2c9_substrate_carbonmangels', 
  'cyp2d6_substrate_carbonmangels',
  'cyp3a4_substrate_carbonmangels', 
+ 'carcinogens_lagunin', 
  'rainbow_trout_li',
  'lepomis_li',
  'halflife_edrug3d',
@@ -207,6 +208,7 @@ name2type = {'toxcast': 'tab',
  'cyp2c9_substrate_carbonmangels': 'csv', 
  'cyp2d6_substrate_carbonmangels': 'csv',
  'cyp3a4_substrate_carbonmangels': 'csv', 
+ 'carcinogens_lagunin': 'csv', 
  'rainbow_trout_li': 'csv', 
  'lepomis_li': 'csv',
  'halflife_edrug3d': 'tab',
@@ -279,6 +281,7 @@ name2id = {'bbb_adenot': 4139555,
  'cyp2c9_substrate_carbonmangels': 'xxxxx',
  'cyp2d6_substrate_carbonmangels': 'xxxxx',
  'cyp3a4_substrate_carbonmangels': 'xxxxx', 
+ 'carcinogens_lagunin': 'xxxxx',
  'rainbow_trout_li': 'xxxxx', 
  'lepomis_li': 'xxxxx', 
  'davis': 4139572,
