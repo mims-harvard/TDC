@@ -276,3 +276,6 @@ dataset2target_lists = {'qm7b': QM7_targets,
                             'tap': TAP_targets,
                             'toxcast': ToxCast_targets,
                             'tox21': Tox21_targets}
+
+drugcomb_targets = ['CSS', 'Synergy_ZIP', 'Synergy_Bliss', 
+                    'Synergy_Loewe', 'Synergy_HSA']

@@ -3,21 +3,6 @@
 # single_pred prediction
 toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames']
 
-'''
-Table 1 of https://pubs.acs.org/doi/pdf/10.1021/ci300367a
- 6: 
- 14,15,16: 'cyp2c9_substrate_carbonmangels',  'cyp2d6_substrate_carbonmangels', 'cyp3a4_substrate_carbonmangels', 
- 20: carcinogens_lagunin    sdf to smiles
- 21,22: 'rainbow_trout_li', 'lepomis_li',   
- 23: 
- 24: 
- 25: 
- 26: 
- 27: 
- 28: 
- 29: 
-'''
-
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
  'hydrationfreeenergy_freesolv',
@@ -36,9 +21,6 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'cyp2c9_substrate_carbonmangels', 
  'cyp2d6_substrate_carbonmangels',
  'cyp3a4_substrate_carbonmangels', 
- 'carcinogens_lagunin', 
- 'rainbow_trout_li',
- 'lepomis_li',
  'halflife_edrug3d',
  'clearance_edrug3d',
  'bbb_adenot',
@@ -78,7 +60,8 @@ gda_dataset_names = ['disgenet']
 
 drugres_dataset_names = ['gdsc1', 'gdsc2']
 
-drugsyn_dataset_names = ['oncopolypharmacology']
+drugsyn_dataset_names = ['oncopolypharmacology', 
+                         'drugcomb']
 
 antibodyaff_dataset_names = ['protein_sabdab']
 
@@ -208,9 +191,6 @@ name2type = {'toxcast': 'tab',
  'cyp2c9_substrate_carbonmangels': 'csv', 
  'cyp2d6_substrate_carbonmangels': 'csv',
  'cyp3a4_substrate_carbonmangels': 'csv', 
- 'carcinogens_lagunin': 'csv', 
- 'rainbow_trout_li': 'csv', 
- 'lepomis_li': 'csv',
  'halflife_edrug3d': 'tab',
  'clearance_edrug3d': 'tab',
  'bbb_adenot': 'tab',
@@ -221,6 +201,7 @@ name2type = {'toxcast': 'tab',
  'sarscov2_3clpro_diamond': 'tab',
  'sarscov2_vitro_touret': 'tab',
  'davis': 'tab',
+ 'drugcomb': 'pkl',
  'kiba': 'tab',
  'bindingdb_kd': 'tab',
  'bindingdb_ic50': 'csv',
@@ -281,11 +262,9 @@ name2id = {'bbb_adenot': 4139555,
  'cyp2c9_substrate_carbonmangels': 'xxxxx',
  'cyp2d6_substrate_carbonmangels': 'xxxxx',
  'cyp3a4_substrate_carbonmangels': 'xxxxx', 
- 'carcinogens_lagunin': 'xxxxx',
- 'rainbow_trout_li': 'xxxxx', 
- 'lepomis_li': 'xxxxx', 
  'davis': 4139572,
  'drugbank': 4139573,
+ 'drugcomb': 4214596,
  'f20_edrug3d': 4139564,
  'f30_edrug3d': 4139571,
  'halflife_edrug3d': 4139559,
