@@ -78,7 +78,7 @@ gda_dataset_names = ['disgenet']
 
 drugres_dataset_names = ['gdsc1', 'gdsc2']
 
-drugsyn_dataset_names = ['oncopolypharmacology']
+drugsyn_dataset_names = ['oncopolypharmacology', 'drugcomb']
 
 antibodyaff_dataset_names = ['protein_sabdab']
 
@@ -238,6 +238,7 @@ name2type = {'toxcast': 'tab',
  'qed': 'tab', 
  'drd2': 'tab', 
  'logp': 'tab',
+ 'drugcomb':'pkl',
  'gdsc1': 'pkl',
  'gdsc2': 'pkl',
  'iedb_jespersen': 'pkl',
@@ -286,6 +287,7 @@ name2id = {'bbb_adenot': 4139555,
  'lepomis_li': 'xxxxx', 
  'davis': 4139572,
  'drugbank': 4139573,
+ 'drugcomb': 4214596,
  'f20_edrug3d': 4139564,
  'f30_edrug3d': 4139571,
  'halflife_edrug3d': 4139559,

@@ -269,6 +269,8 @@ QM9_targets = [
 
 TAP_targets = ['CDR_Length', 'PSH', 'PPC', 'PNC', 'SFvCSP']
 
+drugcomb_targets = ['CSS', 'Synergy_ZIP', 'Synergy_Bliss',
+                    'Synergy_Loewe','Synergy_HSA']
 
 dataset2target_lists = {'qm7b': QM7_targets,
                             'qm8': QM8_targets,
