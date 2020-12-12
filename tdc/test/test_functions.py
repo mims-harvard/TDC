@@ -14,8 +14,8 @@ import shutil
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
                                              '../..')))
 
-
 class TestFunctions(unittest.TestCase):
+
     def setUp(self):
         print(os.getcwd())
         pass
@@ -33,25 +33,25 @@ class TestFunctions(unittest.TestCase):
     #     data.label_distribution()
 
     def test_binarize(self):
-        from tdc.multi_pred import DTI
-        data = DTI(name='DAVIS')
-        data.binarize(threshold=30, order='descending')
+        from tdc.single_pred import ADME
+        data = ADME(name = 'Caco2_Wang')
+        data.binarize(threshold=-5, order='descending')
 
     def test_convert_to_log(self):
-        from tdc.multi_pred import DTI
-        data = DTI(name='DAVIS')
+        from tdc.single_pred import ADME
+        data = ADME(name = 'Caco2_Wang')
         data.convert_to_log()
 
-    def test_get_label_map(self):
-        from tdc.multi_pred import DDI
-        from tdc.utils import get_label_map
-        data = DDI(name='DrugBank')
-        split = data.get_split()
-        get_label_map(name='DrugBank', task='DDI')
+    #def test_get_label_map(self):
+    #    from tdc.multi_pred import DDI
+    #    from tdc.utils import get_label_map
+    #    data = DDI(name='DrugBank')
+    #    split = data.get_split()
+    #    get_label_map(name='DrugBank', task='DDI')
 
     def test_print_stats(self):
-        from tdc.multi_pred import GDA
-        data = GDA(name='DisGeNET')
+        from tdc.single_pred import ADME
+        data = ADME(name = 'Caco2_Wang')
         data.print_stats()
 
     def test_balanced(self):
