@@ -35,12 +35,12 @@ class TestDataloader(unittest.TestCase):
     #    split = data.get_split()
 
     # QM, single instance pkl file
-    def test_QM(self):
-        from tdc.utils import retrieve_label_name_list
-        label_list = retrieve_label_name_list('QM7b')
-        from tdc.single_pred import QM
-        data = QM(name='QM7b', label_name=label_list[0])
-        split = data.get_split()
+    #def test_QM(self):
+    #    from tdc.utils import retrieve_label_name_list
+    #    label_list = retrieve_label_name_list('QM7b')
+    #    from tdc.single_pred import QM
+    #    data = QM(name='QM7b', label_name=label_list[0])
+    #    split = data.get_split()
 
     # Yields
     #def test_Yields(self):
@@ -64,10 +64,10 @@ class TestDataloader(unittest.TestCase):
     #    split = data.get_split()
 
     # DTI, multi-instance, csv
-    def test_DTI(self):
-        from tdc.multi_pred import DTI
-        data = DTI(name='DAVIS')
-        split = data.get_split()
+    #def test_DTI(self):
+    #    from tdc.multi_pred import DTI
+    #    data = DTI(name='DAVIS')
+    #    split = data.get_split()
 
     # DDI
     # def test_DDI(self):
@@ -90,10 +90,10 @@ class TestDataloader(unittest.TestCase):
     #    split = data.get_split()
 
     # DrugRes, multi-instance, pkl
-    def test_DrugRes(self):
-        from tdc.multi_pred import DrugRes
-        data = DrugRes(name='GDSC1')
-        split = data.get_split()
+    #def test_DrugRes(self):
+    #    from tdc.multi_pred import DrugRes
+    #    data = DrugRes(name='GDSC1')
+    #    split = data.get_split()
 
     # DrugSyn, too large
     #def test_DrugSyn(self):
@@ -102,16 +102,16 @@ class TestDataloader(unittest.TestCase):
     #    split = data.get_split()
 
     # PeptideMHC
-    def test_PeptideMHC(self):
-        from tdc.multi_pred import PeptideMHC
-        data = PeptideMHC(name='MHC1_IEDB-IMGT_Nielsen')
-        split = data.get_split()
-
-    # AntibodyAff
-    #def test_AntibodyAff(self):
-    #    from tdc.multi_pred import AntibodyAff
-    #    data = AntibodyAff(name='Protein_SAbDab')
+    #def test_PeptideMHC(self):
+    #    from tdc.multi_pred import PeptideMHC
+    #    data = PeptideMHC(name='MHC1_IEDB-IMGT_Nielsen')
     #    split = data.get_split()
+
+    # AntibodyAff multi instance
+    def test_AntibodyAff(self):
+        from tdc.multi_pred import AntibodyAff
+        data = AntibodyAff(name='Protein_SAbDab')
+        split = data.get_split()
 
     # MTI, too large
     # def test_MTI(self):
@@ -126,22 +126,22 @@ class TestDataloader(unittest.TestCase):
     #    split = data.get_split()
 
     # MolGen
-    def test_MolGen(self):
-        from tdc.generation import MolGen
-        data = MolGen(name='ZINC')
-        split = data.get_split()
+    #def test_MolGen(self):
+    #    from tdc.generation import MolGen
+    #    data = MolGen(name='ZINC')
+    #    split = data.get_split()
 
     # PairMolGen
-    def test_PairMolGen(self):
-        from tdc.generation import PairMolGen
-        data = PairMolGen(name='DRD2')
-        split = data.get_split()
+    #def test_PairMolGen(self):
+    #    from tdc.generation import PairMolGen
+    #    data = PairMolGen(name='DRD2')
+    #    split = data.get_split()
 
     # RetroSyn Reaction
-    def test_RetroSyn(self):
-        from tdc.generation import RetroSyn
-        data = RetroSyn(name='USPTO-50K')
-        split = data.get_split()
+    #def test_RetroSyn(self):
+    #    from tdc.generation import RetroSyn
+    #    data = RetroSyn(name='USPTO-50K')
+    #    split = data.get_split()
 
     def tearDown(self):
         print(os.getcwd())
