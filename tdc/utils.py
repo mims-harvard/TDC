@@ -360,15 +360,21 @@ def create_scaffold_split(df, frac, entity):
 	scaffolds = defaultdict(set)
 	idx2mol = dict(zip(list(range(len(s))),s))
 
+	error_smiles = 0
 	for i, smiles in tqdm(enumerate(s), total=len(s)):
-		scaffold = MurckoScaffold.MurckoScaffoldSmiles(mol = Chem.MolFromSmiles(smiles), includeChirality = False)
-		scaffolds[scaffold].add(i)
+		try:
+			scaffold = MurckoScaffold.MurckoScaffoldSmiles(mol = Chem.MolFromSmiles(smiles), includeChirality = False)
+			scaffolds[scaffold].add(i)
+		except:
+			print_sys(smiles + ' returns RDKit error and is thus omitted...')
+			error_smiles += 1
+		
 	index_sets = sorted(list(scaffolds.values()), key=lambda i: len(i), reverse=True)
 
 	train, val, test = [], [], []
-	train_size = int(len(df) * frac[0])
-	val_size = int(len(df) * frac[1])
-	test_size = len(df) - train_size - val_size
+	train_size = int((len(df) - error_smiles) * frac[0])
+	val_size = int((len(df) - error_smiles) * frac[1])
+	test_size = (len(df) - error_smiles) - train_size - val_size
 	train_scaffold_count, val_scaffold_count, test_scaffold_count = 0, 0, 0
 
 	for index_set in index_sets:

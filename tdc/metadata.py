@@ -1,7 +1,7 @@
 # datasets for each task
 
 # single_pred prediction
-toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames']
+toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'rainbow_trout_li', 'lepomis_li']
 
 '''
 Table 1 of https://pubs.acs.org/doi/pdf/10.1021/ci300367a
@@ -36,9 +36,6 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'cyp2c9_substrate_carbonmangels', 
  'cyp2d6_substrate_carbonmangels',
  'cyp3a4_substrate_carbonmangels', 
- 'carcinogens_lagunin', 
- 'rainbow_trout_li',
- 'lepomis_li',
  'halflife_edrug3d',
  'clearance_edrug3d',
  'bbb_adenot',
@@ -78,7 +75,7 @@ gda_dataset_names = ['disgenet']
 
 drugres_dataset_names = ['gdsc1', 'gdsc2']
 
-drugsyn_dataset_names = ['oncopolypharmacology', 'drugcomb']
+drugsyn_dataset_names = ['oncopolypharmacology', 'drugcomb_nci60']
 
 antibodyaff_dataset_names = ['protein_sabdab']
 
@@ -205,12 +202,12 @@ name2type = {'toxcast': 'tab',
  'cyp3a4_veith': 'tab',
  'cyp1a2_veith': 'tab',
  'cyp2c9_veith': 'tab',
- 'cyp2c9_substrate_carbonmangels': 'csv', 
- 'cyp2d6_substrate_carbonmangels': 'csv',
- 'cyp3a4_substrate_carbonmangels': 'csv', 
- 'carcinogens_lagunin': 'csv', 
- 'rainbow_trout_li': 'csv', 
- 'lepomis_li': 'csv',
+ 'cyp2c9_substrate_carbonmangels': 'tab', 
+ 'cyp2d6_substrate_carbonmangels': 'tab',
+ 'cyp3a4_substrate_carbonmangels': 'tab', 
+ 'carcinogens_lagunin': 'tab', 
+ 'rainbow_trout_li': 'tab', 
+ 'lepomis_li': 'tab',
  'halflife_edrug3d': 'tab',
  'clearance_edrug3d': 'tab',
  'bbb_adenot': 'tab',
@@ -238,7 +235,7 @@ name2type = {'toxcast': 'tab',
  'qed': 'tab', 
  'drd2': 'tab', 
  'logp': 'tab',
- 'drugcomb':'pkl',
+ 'drugcomb_nci60':'pkl',
  'gdsc1': 'pkl',
  'gdsc2': 'pkl',
  'iedb_jespersen': 'pkl',
@@ -279,15 +276,15 @@ name2id = {'bbb_adenot': 4139555,
  'cyp2c9_veith': 4139575,
  'cyp2d6_veith': 4139568,
  'cyp3a4_veith': 4139576,
- 'cyp2c9_substrate_carbonmangels': 'xxxxx',
- 'cyp2d6_substrate_carbonmangels': 'xxxxx',
- 'cyp3a4_substrate_carbonmangels': 'xxxxx', 
- 'carcinogens_lagunin': 'xxxxx',
- 'rainbow_trout_li': 'xxxxx', 
- 'lepomis_li': 'xxxxx', 
+ 'cyp2c9_substrate_carbonmangels': 4215722,
+ 'cyp2d6_substrate_carbonmangels': 4215719,
+ 'cyp3a4_substrate_carbonmangels': 4215721, 
+ 'carcinogens_lagunin': 4215724,
+ 'rainbow_trout_li': 4215723, 
+ 'lepomis_li': 4215725, 
  'davis': 4139572,
  'drugbank': 4139573,
- 'drugcomb': 4214596,
+ 'drugcomb_nci60': 4215720,
  'f20_edrug3d': 4139564,
  'f30_edrug3d': 4139571,
  'halflife_edrug3d': 4139559,
