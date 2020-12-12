@@ -62,7 +62,7 @@ class DataLoader(base_dataset.DataLoader):
 		elif method == 'cold_' + self.entity1_name.lower():
 			return create_fold_setting_cold(df, seed, frac, self.entity1_name)
 		elif method == 'scaffold':
-			return create_scaffold_split(df, seed, frac, self.entity1_name)
+			return create_scaffold_split(df, frac, self.entity1_name)
 		else:
 			raise AttributeError("Please specify the correct splitting method")
 

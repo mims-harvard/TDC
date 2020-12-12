@@ -345,7 +345,7 @@ def create_fold_setting_cold(df, fold_seed, frac, entity):
 			'test': test.reset_index(drop = True)}
 
 # scaffold split
-def create_scaffold_split(df, fold_seed, frac, entity):
+def create_scaffold_split(df, frac, entity):
 	# reference: https://github.com/chemprop/chemprop/blob/master/chemprop/data/scaffold.py
 	try:
 		from rdkit import Chem
