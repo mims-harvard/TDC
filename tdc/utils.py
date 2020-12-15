@@ -11,7 +11,7 @@ import subprocess
 import pickle
 from fuzzywuzzy import fuzz
 from tqdm import tqdm
-from .metadata import name2type, name2id, dataset_list, dataset_names
+from .metadata import name2type, name2id, dataset_list, dataset_names, benchmark_names
 from .metadata import property_names, paired_dataset_names, single_molecule_dataset_names
 from .metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
 from .metadata import oracle2id, download_oracle_names, trivial_oracle_names, oracle_names, oracle2type 
@@ -111,8 +111,10 @@ def property_dataset_load(name, path, target, dataset_names):
 				sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 			else:
 				sys.exit("Please report this error to cosamhkx@gmail.com, thanks!")
-
-	return df['X'], df[target], df['ID']
+	try:
+		return df['X'], df[target], df['ID']
+	except:
+		return df['Drug'], df[target], df['Drug_ID']
 
 def molpair_process(name, path, dataset_names):
 	name = download_wrapper(name, path, dataset_names)
@@ -568,3 +570,9 @@ def retrieve_label_name_list(name):
 
 def retrieve_dataset_names(name):
 	return dataset_names[name]
+
+def retrieve_all_benchmarks():
+	return list(benchmark_names.keys())
+
+def retrieve_benchmark_names(name):
+	return benchmark_names[name]
