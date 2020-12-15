@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Quick-Start Guide - TDC</title>
+    <title>Quick Start Guide - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Quick-Start Guide | TDC</title>
+<title>Quick Start Guide | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Quick-Start Guide" />
+<meta property="og:title" content="Quick Start Guide" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/start/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/start/","headline":"Quick-Start Guide","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/start/","headline":"Quick Start Guide","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -51,7 +51,11 @@
                 
                 
                     
-                    <a href="/TDC/start/" class="navbar-item is-active">Quick-Start</a>
+                    <a href="/TDC/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/TDC/start/" class="navbar-item is-active">Quick Start</a>
                     
                 
                     
@@ -120,44 +124,80 @@
                     
                     
 <div class="content">
-    <h1 id="quick-start-guide">Quick-Start Guide</h1>
+    <h1 id="quick-start-guide">Quick Start Guide</h1>
 
-<h2 id="installation">Installation</h2>
+<p class="is-size-5"> 
+Machine learning applied to discovery and development of therapeutics is an increasingly popular area of research. To facilitate progress in this field, we introduce the Therapeutics Data Commons, 
+a large set of biomedically relevant learning tasks spread across different domains of drug discovery and development. We curate tasks into specific training, validation, and test splits to ensure 
+that each task tests a biomedically relevant generalization that transfers to real-world scenarios. TDC will help the machine learning community focus effort on scientifically relevant problems.
+</p>
 
-<p class="is-size-5"> To install TDC, simply open terminal and type: </p>
+<p><img src="/TDC/img/tdc_vision.png" alt="Vision for TDC" class="img-responsive" /></p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>PyTDC
-</code></pre></div></div>
-
-<p class="is-size-5"> The core data loaders are designed to be lightweight, thus has minimum package dependency. </p>
+<p class="is-size-5"> 
+All methods and datasets are integrated and are accessible via an open source TDC package. TDC is built upon multiple public databases. 
+The full collection currently includes over 70 datasets covering a wide range of tasks and biomedical products. 
+</p>
 
 <div class="column is-12">
     <hr />
 </div>
 
-<h2 id="tdc-central-dogma--data-loader-usage">TDC “Central Dogma” &amp; Data Loader Usage</h2>
+<h2 id="installation">Installation</h2>
+
+<p class="is-size-5"> To install the TDC package, open the terminal and type: </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>PyTDC
+</code></pre></div></div>
+
+<p class="is-size-5"> The core data loaders in TDC are lightweight. The installation of the TDC package is hassle-free with minimum dependency on external packages. </p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h2 id="design-of-therapeutics-data-commons">Design of Therapeutics Data Commons</h2>
 
 <div class="container">
     <div class="columns is-vcentered">
         <div class="column is-8">
-              <p class="is-size-5">TDC provides a simple API with three lines of codes to load and split any dataset. As TDC covers a wide range of therapeutics tasks with varying data structures, we organize into several layers of hierarchies. First, we divide into three distinctive machine learning <i>problems</i>: </p>
+              <p class="is-size-5">
+              TDC has a unique three-layer hierarchical structure, which to our knowledge is the first attempt at systematically evaluating machine learning across the field of therapeutics. 
+              We organize TDC into three distinct <i>problems,</i> each of these problems is instantiated through a variety of <i>tasks</i>, and each task, in turn, is evaluated on a series of <i>datasets</i>.
+              </p> 
+              <p class="is-size-5">
+              We choose our datasets to highlight three major areas (<i>problems</i>) where machine learning can facilitate scientific advances: single-instance prediction, multi-instance prediction, and generative modeling: 
+              </p>
               <ul>
 			    <li><strong>Single-instance prediction </strong> <code>single_pred</code>: Prediction of property given individual biomedical entity. </li>
 			    <li><strong>Multi-instance prediction </strong><code>multi_pred</code>: Prediction of property given multiple biomedical entities. </li>
 			    <li><strong>Generation</strong> <code>generation</code>: Generation of new biomedical entity. </li>
 			  </ul>
-			  <p class="is-size-5">The second layer is <i>task</i>. Each therapeutic <i>task</i> falls into one of the machine learning <i>problem</i>. We create a data loader class for every <i>task</i> that inherits from the base <i>problem</i> data loader. The last layer is <i>dataset</i>, where each <i>task</i> consists of many of them. As the data structure of most <i>datasets</i> in a <i>task</i> is the same, the <i>dataset</i> is used as a function input to the <i>task</i> data loader. </p>
         </div>
         <div class="column is-3 has-text-centered">
-            <img src="/TDC/img/tdc_hierarchy.png" alt="TDC hi" class="img-responsive" />
+            <img src="/TDC/img/tdc_hierarchy.png" alt="TDC hierarchy" class="img-responsive" />
         </div>
     </div>
 </div>
 
-<div class="columns is-vcentered">
-	<div class="column is-8">
-	<p class="is-size-5"> Supposed a <i>dataset</i> X is from <i>task</i> Y with <i>problem</i> Z, then to obtain the data and splits, simply type: </p>
-</div>
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-8">
+			  <p class="is-size-5">
+			  The second layer in the TDC structure is organized into <i>tasks</i>. Improvement on these tasks range in applications, including designing
+              new antibodies, identifying personalized combinatorial therapies, improving disease diagnosis, and finding new cures for emerging diseases. Finally, in the third layer of TDC, each task is instantiated via multiple <i>datasets</i>. For each dataset, we construct data splits to simulate biomedically relevant generalizations, such as a
+              model's ability to generalize to entirely unseen compounds, or to granularly resolve patient response to a polytherapy.  
+              </p>
+              <p class="is-size-5">
+	          Practically, we create a data loader class for every <i>task</i> that inherits from the base <i>problem</i> data loader. 
+	          Suppose you want to retrieve <i>dataset</i> `X` to study therapeutics <i>task</i> `Y` which falls under the <i>problem</i> Z. To obtain the dataset and its associated data split, use the following: 
+	          </p>
+	          <p class="is-size-5"> </p>
+        </div>
+        <div class="column is-3 has-text-centered">
+            <img src="/TDC/img/tdc_problems.png" alt="TDC problems" class="img-responsive" />
+        </div>
+    </div>
 </div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.Z</span> <span class="kn">import</span> <span class="n">Y</span>
@@ -169,7 +209,9 @@
     <hr />
 </div>
 
-<h2 id="data-loader-example">Data Loader Example</h2>
+<h2 id="data-loaders">Data Loaders</h2>
+
+<p class="is-size-5">  TDC provides a powerful API that loads a dataset and provides a meaningful split of the data into training, validation and test sets in just three lines of codes.</p>
 
 <div class="column is-8 is-offset-2">
     <img src="/TDC/img/tdc_API_relation2.png" alt="TDC api" class="img-responsive" />
@@ -187,7 +229,7 @@
     <hr />
 </div>
 
-<h2 id="data-function">Data Function</h2>
+<h2 id="data-functions">Data Functions</h2>
 
 <p class="is-size-5"> TDC includes numerous data functions. They can be used either directly on the data loader object, or as a separate utility functions. Currently, it has four major categories. </p>
 <ul>
@@ -197,7 +239,7 @@
     <li><strong>Molecule Generation Oracles</strong>: Property oracles for molecule generation tasks. </li>
   </ul>
 
-<p>See the functions documentation for detail usage for each function.</p>
+<p class="is-size-5"> See the functions documentation for detail usage for each function. </p>
 
 <div class="column is-12">
     <hr />
@@ -210,24 +252,24 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@misc{tdc,
   author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Zitnik, Marinka},
   title={Therapeutics Data Commons: Machine Learning Datasets for Therapeutics},
-  howpublished={\url{http://tdc.hms.harvard.edu}},
+  howpublished={\url{https://zitniklab.hms.harvard.edu/TDC}},
   month=nov,
   year=2020
 }
 </code></pre></div></div>
 
-<p>If you use any of the dataset, please also cite the original data provided in the datasets section.</p>
+<p class="is-size-5"> If you use any of the datasets, please make sure to also cite the primary data source as described in the Datasets section. </p>
 
 <div class="column is-12">
     <hr />
 </div>
 
-<p class="is-size-3 has-text-centered"> <strong>Start Exploring TDC</strong> </p>
+<p class="is-size-3 has-text-centered"> <strong>Start Exploring Therapeutics Data Commons:</strong> </p>
 
 <div class="container">
         <div class="columns is-vcentered is-size-5">
-            <div class="column is-4 is-offset-2 has-text-centered"> <a href="/TDC/overview" class="box has-background-info has-text-white">Dataset Overview</a></div>
-            <div class="column is-4 has-text-centered"> <a href="/TDC/fct_overview" class="box has-background-info has-text-white">Data Function Overview</a></div>
+            <div class="column is-4 is-offset-2 has-text-centered"> <a href="/TDC/overview" class="box has-background-info has-text-white">Overview of Datasets</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/TDC/fct_overview" class="box has-background-info has-text-white">Overview of Data Functions</a></div>
         </div>
 </div>
 

@@ -51,7 +51,11 @@
                 
                 
                     
-                    <a href="/TDC/start/" class="navbar-item ">Quick-Start</a>
+                    <a href="/TDC/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/TDC/start/" class="navbar-item ">Quick Start</a>
                     
                 
                     
@@ -231,6 +235,9 @@
       <li><a href="#cyp-p450-3a4-inhibition-veith-et-al">CYP P450 3A4 Inhibition, Veith et al.</a></li>
       <li><a href="#cyp-p450-1a2-inhibition-veith-et-al">CYP P450 1A2 Inhibition, Veith et al.</a></li>
       <li><a href="#cyp-p450-2c9-inhibition-veith-et-al">CYP P450 2C9 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp2c9-substrate-carbon-mangels-et-al">CYP2C9 Substrate, Carbon-Mangels et al.</a></li>
+      <li><a href="#cyp2d6-substrate-carbon-mangels-et-al">CYP2D6 Substrate, Carbon-Mangels et al.</a></li>
+      <li><a href="#cyp3a4-substrate-carbon-mangels-et-al">CYP3A4 Substrate, Carbon-Mangels et al.</a></li>
     </ul>
   </li>
   <li><a href="#excretion">Excretion</a>
@@ -258,7 +265,7 @@
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the Caco-2 cell effective permeability. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 910 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 906 drugs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
@@ -304,7 +311,7 @@
 
 <p class="is-size-6">  <strong> Task Description: </strong>  Binary classification. Given a drug SMILES string, predict the activity of Pgp inhibition. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,267 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,212 drugs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
@@ -461,7 +468,7 @@
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of BBB. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,581 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,580 drugs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
@@ -484,7 +491,7 @@
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of BBB. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 2,050 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,975 drugs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
@@ -509,7 +516,7 @@
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the rate of PPBR.  </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 2,790 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,797 drugs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
@@ -707,6 +714,81 @@
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="cyp2c9-substrate-carbon-mangels-et-al">CYP2C9 Substrate, Carbon-Mangels et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> CYP P450 2C9 plays a major role in the oxidation of both xenobiotic and endogenous compounds. Substrates are drugs that are metabolized by the enzyme. TDC used a dataset from [1], which merged information on substrates and nonsubstrates from six publications. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict if it is a substrate to the enzyme. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 666 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2C9_Substrate_CarbonMangels'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/minf.201100069?casa_token=an2_FKO2WnMAAAAA:d-W7F_Ukq1ArtZoSaqh96zcwyAQlVtzc9IR12M9WltU8U0iJJW_BLINGNbC9qN7dk7mFmsNIy1bVcZdt">[1] Carbon‐Mangels, Miriam, and Michael C. Hutter. “Selecting relevant descriptors for classification by bayesian estimates: a comparison with decision trees and support vector machines approaches for disparate data sets.” Molecular informatics 30.10 (2011): 885-895.</a></p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci300367a?casa_token=9fEKYcMw5zoAAAAA:ZDPZ-e-M9RulemgBjAPNkSnWXlVCcPzkxNK9bX40Abz9o24NpitsXY0tizgDL5ekPiNtEPFSeOwwUTHG">[2] Cheng, Feixiong, et al. “admetSAR: a comprehensive source and free tool for assessment of chemical ADMET properties.” (2012): 3099-3105.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="cyp2d6-substrate-carbon-mangels-et-al">CYP2D6 Substrate, Carbon-Mangels et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> CYP2D6 is primarily expressed in the liver. It is also highly expressed in areas of the central nervous system, including the substantia nigra. TDC used a dataset from [1], which merged information on substrates and nonsubstrates from six publications. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict if it is a substrate to the enzyme. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 664 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2D6_Substrate_CarbonMangels'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/minf.201100069?casa_token=an2_FKO2WnMAAAAA:d-W7F_Ukq1ArtZoSaqh96zcwyAQlVtzc9IR12M9WltU8U0iJJW_BLINGNbC9qN7dk7mFmsNIy1bVcZdt">[1] Carbon‐Mangels, Miriam, and Michael C. Hutter. “Selecting relevant descriptors for classification by bayesian estimates: a comparison with decision trees and support vector machines approaches for disparate data sets.” Molecular informatics 30.10 (2011): 885-895.</a></p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci300367a?casa_token=9fEKYcMw5zoAAAAA:ZDPZ-e-M9RulemgBjAPNkSnWXlVCcPzkxNK9bX40Abz9o24NpitsXY0tizgDL5ekPiNtEPFSeOwwUTHG">[2] Cheng, Feixiong, et al. “admetSAR: a comprehensive source and free tool for assessment of chemical ADMET properties.” (2012): 3099-3105.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="cyp3a4-substrate-carbon-mangels-et-al">CYP3A4 Substrate, Carbon-Mangels et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> CYP3A4 is an important enzyme in the body, mainly found in the liver and in the intestine. It oxidizes small foreign organic molecules (xenobiotics), such as toxins or drugs, so that they can be removed from the body. TDC used a dataset from [1], which merged information on substrates and nonsubstrates from six publications. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict if it is a substrate to the enzyme. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 667 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP3A4_Substrate_CarbonMangels'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/minf.201100069?casa_token=an2_FKO2WnMAAAAA:d-W7F_Ukq1ArtZoSaqh96zcwyAQlVtzc9IR12M9WltU8U0iJJW_BLINGNbC9qN7dk7mFmsNIy1bVcZdt">[1] Carbon‐Mangels, Miriam, and Michael C. Hutter. “Selecting relevant descriptors for classification by bayesian estimates: a comparison with decision trees and support vector machines approaches for disparate data sets.” Molecular informatics 30.10 (2011): 885-895.</a></p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci300367a?casa_token=9fEKYcMw5zoAAAAA:ZDPZ-e-M9RulemgBjAPNkSnWXlVCcPzkxNK9bX40Abz9o24NpitsXY0tizgDL5ekPiNtEPFSeOwwUTHG">[2] Cheng, Feixiong, et al. “admetSAR: a comprehensive source and free tool for assessment of chemical ADMET properties.” (2012): 3099-3105.</a></p>
 
 <p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
