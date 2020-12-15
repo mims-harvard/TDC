@@ -18,6 +18,12 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 **Invited talk at the [National Symposium on Drug Repurposing for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view)
 
+
+## News
+- `0.1.0`: Molecule quality check for ADME, Toxicity and HTS (canonicalized, and remove error mols).
+- `0.0.9`: Added DrugComb NCI-60, CYP2C9/2D6/3A4 substrates, Carcinogens/Rainbow Trout/Lepomis toxicity! 
+- `0.0.8`: Added hREG, DILI, Skin Reaction, Ames Mutagenicity, PPBR from AstraZeneca; added meta oracles!
+
 ## Features
 
 - *From Bench to Bedside*: covers 50+ datasets for 20+ tasks in numerous therapeutics development stages across small molecules and biologics.
