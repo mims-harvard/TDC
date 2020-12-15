@@ -149,12 +149,34 @@ admet_benchmark = {'ADME': ['caco2_wang',
 							'cyp1a2_veith',
 							'cyp3a4_veith',
 							'cyp2c9_veith',
-							'halflife_edrug3d'],
+							'VD_eDrug3D',
+							'halflife_edrug3d',
+							'clearance_edrug3d'],
 					'Tox':['herg',
 							'ames',
 							'dili']
 					}
 
+
+#### Benchmark Metrics
+admet_metrics = {'caco2_wang': 'r2',
+					'hia_hou': 'pr-auc',
+					'pgp_broccatelli': 'pr-auc', 
+					'bioavailability_ma': 'pr-auc',
+					'bbb_martins': 'pr-auc',
+					'ppbr_az': 'r2',
+					'VD_eDrug3D': 'r2',
+					'cyp2c19_veith': 'pr-auc',
+					'cyp2d6_veith': 'pr-auc',
+					'cyp1a2_veith': 'pr-auc',
+					'cyp3a4_veith': 'pr-auc',
+					'cyp2c9_veith': 'pr-auc',
+					'halflife_edrug3d': 'r2',
+					'clearance_edrug3d': 'r2',
+					'herg': 'pr-auc',
+					'ames': 'pr-auc',
+					'dili': 'pr-auc'
+					}
 
 #### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
@@ -170,6 +192,38 @@ molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 generation_datasets = retrosyn_dataset_names + forwardsyn_dataset_names + molgenpaired_dataset_names 
 # generation
 ####################################
+
+category_names = {'single_pred': ["Tox",
+									"ADME",
+									"HTS",
+									"Epitope",
+									"Develop",
+									"QM",
+									"Paratope",
+									"Yields"],
+				'multi_pred': ["DTI",
+								"PPI",
+								"DDI",
+								"PeptideMHC",
+								"DrugRes",
+								"AntibodyAff",
+								"DrugSyn",
+								"MTI",
+								"GDA",
+								"Catalyst"],
+				'generation': ["RetroSyn",
+								"Reaction",
+								"PairMolGen",
+								"MolGen"
+								]
+				}
+
+def get_task2category():
+	task2category = {}
+	for i, j in category_names.items():
+		for x in j:
+			task2category[x] = i
+	return task2category
 
 dataset_names = {"Toxicity": toxicity_dataset_names, 
 				"ADME": adme_dataset_names, 
@@ -198,6 +252,8 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				}
 
 benchmark_names = {"admet": admet_benchmark}
+metric_names = {"admet": admet_metrics}
+
 
 dataset_list = []
 for i in dataset_names.keys():
