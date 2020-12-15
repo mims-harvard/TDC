@@ -1,14 +1,14 @@
 # datasets for each task
 
 # single_pred prediction
-toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'rainbow_trout_li', 'lepomis_li']
+toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin']
 
 '''
 Table 1 of https://pubs.acs.org/doi/pdf/10.1021/ci300367a
  6: 
  14,15,16: 'cyp2c9_substrate_carbonmangels',  'cyp2d6_substrate_carbonmangels', 'cyp3a4_substrate_carbonmangels', 
  20: carcinogens_lagunin    sdf to smiles
- 21,22: 'rainbow_trout_li', 'lepomis_li',   
+ 21,22: 'rainbow_trout_li', 'lepomis_li',  (not suitable) 
  23: 
  24: 
  25: 
@@ -281,8 +281,6 @@ name2type = {'toxcast': 'tab',
  'cyp2d6_substrate_carbonmangels': 'tab',
  'cyp3a4_substrate_carbonmangels': 'tab', 
  'carcinogens_lagunin': 'tab', 
- 'rainbow_trout_li': 'tab', 
- 'lepomis_li': 'tab',
  'halflife_edrug3d': 'tab',
  'clearance_edrug3d': 'tab',
  'bbb_adenot': 'tab',
@@ -355,8 +353,6 @@ name2id = {'bbb_adenot': 4259565,
  'cyp2d6_substrate_carbonmangels': 4259578,
  'cyp3a4_substrate_carbonmangels': 4259581, 
  'carcinogens_lagunin': 4259570,
- 'rainbow_trout_li': 4259604, 
- 'lepomis_li': 4259596, 
  'davis': 4139572,
  'drugbank': 4139573,
  'drugcomb_nci60': 4215720,
