@@ -9,7 +9,7 @@ Table 1 of https://pubs.acs.org/doi/pdf/10.1021/ci300367a
  14,15,16: 'cyp2c9_substrate_carbonmangels',  'cyp2d6_substrate_carbonmangels', 'cyp3a4_substrate_carbonmangels', 
  20: carcinogens_lagunin    sdf to smiles
  21,22: 'rainbow_trout_li', 'lepomis_li',  (not suitable) 
- 23: 
+ 23: 'tetrahymena_pyriformis_cheng'
  24: 
  25: 
  26: 
@@ -36,6 +36,7 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'cyp2c9_substrate_carbonmangels', 
  'cyp2d6_substrate_carbonmangels',
  'cyp3a4_substrate_carbonmangels', 
+ 'tetrahymena_pyriformis_cheng', 
  'halflife_edrug3d',
  'clearance_edrug3d',
  'bbb_adenot',
@@ -280,6 +281,7 @@ name2type = {'toxcast': 'tab',
  'cyp2c9_substrate_carbonmangels': 'tab', 
  'cyp2d6_substrate_carbonmangels': 'tab',
  'cyp3a4_substrate_carbonmangels': 'tab', 
+ 'tetrahymena_pyriformis_cheng': 'csv', 
  'carcinogens_lagunin': 'tab', 
  'halflife_edrug3d': 'tab',
  'clearance_edrug3d': 'tab',
@@ -352,6 +354,7 @@ name2id = {'bbb_adenot': 4259565,
  'cyp2c9_substrate_carbonmangels': 4259584,
  'cyp2d6_substrate_carbonmangels': 4259578,
  'cyp3a4_substrate_carbonmangels': 4259581, 
+ 'tetrahymena_pyriformis_cheng': 'xxxx', 
  'carcinogens_lagunin': 4259570,
  'davis': 4139572,
  'drugbank': 4139573,
