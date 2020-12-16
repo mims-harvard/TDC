@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/","headline":"Therapeutics Data Commons","name":"TDC","description":"Datasets for Medicinal Machine Learning","@type":"WebSite","@context":"https://schema.org"}</script>
+{"name":"TDC","description":"Datasets for Medicinal Machine Learning","@type":"WebSite","url":"http://localhost:4000/TDC/","headline":"Therapeutics Data Commons","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -133,16 +133,31 @@
     
     <section class="section">
     <div class="container">
+        <p class="is-size-3">Therapeutics Data Commons (TDC) is a collection of machine learning tasks spread across different domains of therapeutics.</p>
+    </div>
+
+    <div class="container">
         <div class="columns is-vcentered">
-            <div class="column is-7">
-                <p class="is-size-3">Therapeutics Data Commons is a machine learning data hub for therapeutics.</p>
-                <p class="is-size-3">TDC includes over 70 datasets, covering a wide range of tasks, including target discovery, activity screening, efficacy, safety, and manufacturing, and a wide range of products, including small molecules, antibodies, vaccines, and mRNA. </p>
-            </div>
-            <div class="column is-5 has-text-centered">
-                <img src="/TDC/logo.png" alt="TDC logo" class="img-responsive">
+            <div class="column is-12 is-size-2 has-text-centered">
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <div class="columns is-vcentered">
+            <div class="column is-12 is-size-2 has-text-centered">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <p class="is-size-3">
+            Therapeutics machine learning is an exciting field with incredible opportunities for expansion, innovation, and impact. We hope that the
+            datasets and benchmarks in TDC will provide a systematic model development and evaluation framework that allows
+            more machine learning researchers to contribute to the field.
+        </p>
+    </div>
+
     <div class="container">
         <div class="columns is-vcentered">
             <div class="column is-12 is-size-2 has-text-centered">
@@ -203,7 +218,7 @@
                             
                             
                             <div class="content has-text-left">
-                                <p>TDC supports a wide range of ML tasks in the area of therapeutics throughout entire process of drug discovery and development.<br />
+                                <p>TDC covers a wide range of learning tasks, including target discovery, activity screening, efficacy, safety, and manufacturing across biomedical products, including small molecules, antibodies, and vaccines.<br />
 </p>
                             </div>
                             
@@ -249,9 +264,47 @@
     <div class="container">
         <div class="columns is-vcentered">
             <div class="column is-10 is-offset-1 has-text-centered">
-                <p class="is-size-3"> Loading a dataset is as simple as... </p>
-                <img src="/TDC/demo1.png" alt="TDC Demo" class="img-responsive" />
-                <p class="is-size-3">  </p>
+                <p class="is-size-3 "> Loading a dataset in TDC: </p>
+            </div>
+        </div>
+</div>
+
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-12 is-size-2 has-text-centered">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-12 is-size-2 has-text-centered">
+        </div>
+    </div>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="s">'benchmark'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-12 is-size-2 has-text-centered">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-12 is-size-2 has-text-centered">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+        <div class="columns is-vcentered">
+            <div class="column is-10 is-offset-1 has-text-centered">
                 <a href="/TDC/start/" class="button is-rounded is-large is-info is-focused">Get Started</a>
             </div>
         </div>
