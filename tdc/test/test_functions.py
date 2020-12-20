@@ -57,7 +57,7 @@ class TestFunctions(unittest.TestCase):
     def test_balanced(self):
         from tdc.single_pred import HTS
         data = HTS(name='SARSCoV2_3CLPro_Diamond')
-        data.balanced(oversample=True, seed='benchmark')
+        data.balanced(oversample=True, seed=42)
 
     # TODO: fix dependency later
     # def test_to_graph(self):
