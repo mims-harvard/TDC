@@ -11,7 +11,7 @@ import subprocess
 import pickle
 from fuzzywuzzy import fuzz
 from tqdm import tqdm
-from .metadata import name2type, name2id, dataset_list, dataset_names, benchmark_names
+from .metadata import name2type, name2id, dataset_list, dataset_names, benchmark_names, benchmark2id, benchmark2type
 from .metadata import property_names, paired_dataset_names, single_molecule_dataset_names
 from .metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
 from .metadata import oracle2id, download_oracle_names, trivial_oracle_names, oracle_names, oracle2type 
@@ -73,6 +73,24 @@ def oracle_download_wrapper(name, path, oracle_names):
 		print_sys("Done!")
 	return name
 
+def bm_download_wrapper(name, path):
+	name = fuzzy_search(name, list(benchmark_names.keys()))
+	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
+	dataset_path = server_path + str(benchmark2id[name])
+
+	if not os.path.exists(path):
+		os.mkdir(path)
+
+	if os.path.exists(os.path.join(path, name)):
+		print_sys('Found local copy...')
+	else:
+		print_sys('Downloading Benchmark Group...')
+		dataverse_download(dataset_path, path, name, benchmark2type)
+		print_sys('Extracting zip file...')
+		with ZipFile(os.path.join(path, name + '.zip'), 'r') as zip: 
+			zip.extractall(path = os.path.join(path))
+		print_sys("Done!")
+	return name
 
 def pd_load(name, path):
 	try:
@@ -174,6 +192,10 @@ def generation_dataset_load(name, path, dataset_names):
 def oracle_load(name, path = './oracle', oracle_names = oracle_names):
 	name = oracle_download_wrapper(name, path, oracle_names)
 	return name 
+
+def bm_group_load(name, path):
+	name = bm_download_wrapper(name, path)
+	return name
 
 def get_label_map(name, path = './data', target = None, file_format = 'csv', output_format = 'dict', task = 'DDI'):
 	name = fuzzy_search(name, dataset_names[task])
@@ -589,4 +611,12 @@ def retrieve_all_benchmarks():
 	return list(benchmark_names.keys())
 
 def retrieve_benchmark_names(name):
-	return benchmark_names[name]
+	name = fuzzy_search(name, list(benchmark_names.keys()))
+	datasets = benchmark_names[name]
+
+	dataset_names = []
+
+	for task, datasets in datasets.items():
+		for dataset in datasets:
+			dataset_names.append(dataset)
+	return dataset_names

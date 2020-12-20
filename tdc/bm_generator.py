@@ -52,7 +52,7 @@ class BenchmarkGenerator:
 		# create a benchmark folder
 		if not os.path.exists(path):
 			os.mkdir(path)
-		self.benchmark_path = os.path.join(path, name+'_benchmark')
+		self.benchmark_path = os.path.join(path, name)
 		if not os.path.exists(self.benchmark_path):
 			os.mkdir(self.benchmark_path)
 

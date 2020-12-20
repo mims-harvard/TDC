@@ -30,6 +30,7 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'ppbr_ma',
  'ppbr_edrug3d',
  'ppbr_az',
+ 'half_life_obach',
  'clearance_hepatocyte_az',
  'clearance_microsome_az']
 
@@ -173,7 +174,35 @@ admet_metrics = {'caco2_wang': 'mae',
 				'dili': 'pr-auc'
 				}
 
-#### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
+
+#### Benchmark Splits
+admet_splits = {'caco2_wang': 'scaffold',
+				'hia_hou': 'scaffold',
+				'pgp_broccatelli': 'scaffold', 
+				'bioavailability_ma': 'scaffold',
+				'lipophilicity_astrazeneca': 'scaffold',
+				'solubility_aqsoldb': 'scaffold',
+				'bbb_martins': 'scaffold',
+				'ppbr_az': 'scaffold',
+				'vdss_lombardo': 'scaffold',
+				'cyp2c9_veith': 'scaffold',
+				'cyp2d6_veith': 'scaffold',
+				'cyp3a4_veith': 'scaffold',
+				'cyp2c9_substrate_carbonmangels': 'scaffold',
+				'cyp3a4_substrate_carbonmangels': 'scaffold',
+				'cyp2d6_substrate_carbonmangels': 'scaffold',
+				'half_life_obach': 'scaffold',
+				'clearance_hepatocyte_az': 'scaffold',
+				'clearance_microsome_az': 'scaffold',
+				'ld50_zhu': 'scaffold',
+				'herg': 'scaffold',
+				'ames': 'scaffold',
+				'dili': 'scaffold'
+				}
+
+####################################
+
+# evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['ibm_rxn'] 
@@ -247,8 +276,8 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				}
 
 benchmark_names = {"admet_group": admet_benchmark}
-metric_names = {"admet_group": admet_metrics}
-
+bm_metric_names = {"admet_group": admet_metrics}
+bm_split_names = {"admet_group": admet_splits}
 
 dataset_list = []
 for i in dataset_names.keys():
@@ -425,4 +454,8 @@ oracle2id = {'drd2': 4178625,
 			 'gsk3b': 4170295,
 			 'jnk3': 4170293,
 			 'fpscores': 4170416
-}
+			}
+
+benchmark2type = {'admet_group': 'zip'}
+
+benchmark2id = {'admet_group': 4267442}
