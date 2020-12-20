@@ -103,7 +103,7 @@ class BenchmarkGroup:
 				test = pd.read_csv(os.path.join(data_path, 'test.csv'))
 				y = test.Y.values
 				evaluator = eval('Evaluator(name = \'' + metric_dict[data_name] + '\')')
-				out[data_name] = {metric_dict[data_name]: evaluator(y, pred_)}
+				out[data_name] = {metric_dict[data_name]: round(evaluator(y, pred_), 3)}
 			return out
 		else:
 			# validation set evaluation
@@ -112,4 +112,4 @@ class BenchmarkGroup:
 			data_name = fuzzy_search(benchmark, self.dataset_names)
 			metric_dict = bm_metric_names[self.name]
 			evaluator = eval('Evaluator(name = \'' + metric_dict[data_name] + '\')')
-			return {metric_dict[data_name]: evaluator(true, pred)}
+			return {metric_dict[data_name]: round(evaluator(true, pred), 3)}
