@@ -45,15 +45,13 @@ class DataLoader(base_dataset.DataLoader):
 		else:
 			raise AttributeError("Please use the correct format input")
 
-	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
+	def get_split(self, method = 'random', seed = 42, frac = [0.7, 0.1, 0.2]):
 		'''
 		Arguments:
 			method: splitting schemes: random, cold_drug, scaffold split
-			seed: 'benchmark' seed set to 1234, or int values
+			seed: default 42
 			frac: train/val/test split
 		'''
-		if seed == 'benchmark':
-			seed = 1234
 
 		df = self.get_data(format = 'df')
 
@@ -62,7 +60,7 @@ class DataLoader(base_dataset.DataLoader):
 		elif method == 'cold_' + self.entity1_name.lower():
 			return create_fold_setting_cold(df, seed, frac, self.entity1_name)
 		elif method == 'scaffold':
-			return create_scaffold_split(df, frac, self.entity1_name)
+			return create_scaffold_split(df, seed, frac, self.entity1_name)
 		else:
 			raise AttributeError("Please specify the correct splitting method")
 

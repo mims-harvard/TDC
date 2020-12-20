@@ -31,16 +31,13 @@ class DataLoader(base_dataset.DataLoader):
 		else:
 			raise AttributeError("Please use the correct format input")
 
-	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
+	def get_split(self, method = 'random', seed = 42, frac = [0.7, 0.1, 0.2]):
 		'''
 		Arguments:
 			method: splitting schemes: random, cold_drug, cold_target
-			seed: 'benchmark' seed set to 1234, or int values
+			seed: default 42
 			frac: train/val/test split
 		'''
-		if seed == 'benchmark':
-			seed = 1234
-
 		df = self.get_data(format = 'df')
 
 		if method == 'random':
@@ -83,15 +80,13 @@ class PairedDataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please use the correct format input")
 
 
-	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
+	def get_split(self, method = 'random', seed = 42, frac = [0.7, 0.1, 0.2]):
 		'''
 		Arguments:
 			method: splitting schemes: random, cold_drug, cold_target
-			seed: 'benchmark' seed set to 1234, or int values
+			seed: 42
 			frac: train/val/test split
 		'''
-		if seed == 'benchmark':
-			seed = 1234
 
 		df = self.get_data(format = 'df')
 
@@ -99,15 +94,6 @@ class PairedDataLoader(base_dataset.DataLoader):
 			return create_fold(df, seed, frac)
 		else:
 			raise AttributeError("Please use the correct split method")
-
-
-if __name__ == "__main__":
-	paired_dataloader = PairedDataLoader(name = 'uspto50k', path = './data', 
-										 print_stats = True, input_name = 'reactants', 
-										 output_name = 'product')
-
-	input_data, output_data = paired_dataloader.get_data()
-
 
 
 

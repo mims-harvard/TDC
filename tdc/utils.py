@@ -347,7 +347,7 @@ def create_fold_setting_cold(df, fold_seed, frac, entity):
 			'test': test.reset_index(drop = True)}
 
 # scaffold split
-def create_scaffold_split(df, frac, entity):
+def create_scaffold_split(df, seed, frac, entity):
 	# reference: https://github.com/chemprop/chemprop/blob/master/chemprop/data/scaffold.py
 	try:
 		from rdkit import Chem
@@ -355,9 +355,11 @@ def create_scaffold_split(df, frac, entity):
 	except:
 		raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")
 	from tqdm import tqdm
+	from random import Random
 
 	from collections import defaultdict
-
+	random = Random(seed)
+	
 	s = df[entity].values
 	scaffolds = defaultdict(set)
 	idx2mol = dict(zip(list(range(len(s))),s))
@@ -370,14 +372,26 @@ def create_scaffold_split(df, frac, entity):
 		except:
 			print_sys(smiles + ' returns RDKit error and is thus omitted...')
 			error_smiles += 1
-		
-	index_sets = sorted(list(scaffolds.values()), key=lambda i: len(i), reverse=True)
-
+	
 	train, val, test = [], [], []
 	train_size = int((len(df) - error_smiles) * frac[0])
 	val_size = int((len(df) - error_smiles) * frac[1])
 	test_size = (len(df) - error_smiles) - train_size - val_size
 	train_scaffold_count, val_scaffold_count, test_scaffold_count = 0, 0, 0
+
+	#index_sets = sorted(list(scaffolds.values()), key=lambda i: len(i), reverse=True)
+	index_sets = list(scaffolds.values())
+	big_index_sets = []
+	small_index_sets = []
+	for index_set in index_sets:
+		if len(index_set) > val_size / 2 or len(index_set) > test_size / 2:
+			big_index_sets.append(index_set)
+		else:
+			small_index_sets.append(index_set)
+	random.seed(seed)
+	random.shuffle(big_index_sets)
+	random.shuffle(small_index_sets)
+	index_sets = big_index_sets + small_index_sets
 
 	for index_set in index_sets:
 		if len(train) + len(index_set) <= train_size:

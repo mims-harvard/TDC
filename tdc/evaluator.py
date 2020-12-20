@@ -6,10 +6,6 @@ warnings.filterwarnings("ignore")
 
 from .utils import * 
 from .metadata import evaluator_name, distribution_oracles
-'''
-metadata.py:
-	distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
-'''
 
 try:
 	from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score
@@ -22,6 +18,9 @@ def avg_auc(y_true, y_pred):
 	for i in range(np.array(y_true).shape[0]):
 	    scores.append(roc_auc_score(y_true[i], y_pred[i]))
 	return sum(scores)/len(scores)
+
+def rmse(y_true, y_pred):
+	return np.sqrt(mean_squared_error(y_true, y_pred))
 
 class Evaluator:
 	def __init__(self, name):
@@ -43,6 +42,8 @@ class Evaluator:
 			self.evaluator_func = accuracy_score
 		elif self.name == 'mse':
 			self.evaluator_func = mean_squared_error
+		elif self.name == 'rmse':
+			self.evaluator_func = rmse
 		elif self.name == 'mae':
 			self.evaluator_func = mean_absolute_error
 		elif self.name == 'r2':
@@ -93,15 +94,3 @@ class Evaluator:
 		if self.name in ['micro-f1', 'macro-f1']:
 			return self.evaluator_func(y_true, y_pred, average = self.name[:5])
 		return self.evaluator_func(y_true, y_pred)
-
-
-	# def __call__(self, y_true, y_pred, threshold = 0.5):
-	# 	y_true = np.array(y_true)
-	# 	y_pred = np.array(y_pred)
-	# 	if self.name in ['precision','recall','f1','accuracy']:
-	# 		y_pred = [1 if i > threshold else 0 for i in y_pred]
-	# 	if self.name in ['micro-f1', 'macro-f1']:
-	# 		return self.evaluator_func(y_true, y_pred, average = self.name[:5])
-	# 	return self.evaluator_func(y_true, y_pred)
-
-

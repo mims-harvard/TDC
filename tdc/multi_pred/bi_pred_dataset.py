@@ -111,7 +111,7 @@ class DataLoader(base_dataset.DataLoader):
               flush=True, file=sys.stderr)
         print_sys('--------------------------')
     
-    def get_split(self, method='random', seed='benchmark',
+    def get_split(self, method='random', seed=42,
                   frac=[0.7, 0.1, 0.2], column_name=None):
         """Add a method description here.
 
@@ -133,9 +133,6 @@ class DataLoader(base_dataset.DataLoader):
         -------
 
         """
-
-        if seed == 'benchmark':
-            seed = 1234
 
         df = self.get_data(format='df')
 
@@ -174,7 +171,7 @@ class DataLoader(base_dataset.DataLoader):
         self.raw_y = self.y
 
     def to_graph(self, threshold=None, format='edge_list', split=True,
-                 frac=[0.7, 0.1, 0.2], seed='benchmark', order='descending'):
+                 frac=[0.7, 0.1, 0.2], seed=42, order='descending'):
         """Add a method description here.
 
         Parameters
@@ -205,8 +202,6 @@ class DataLoader(base_dataset.DataLoader):
         Arguments:
             format: edge_list / dgl / pyg df object
         '''
-        if seed == 'benchmark':
-            seed = 1234
 
         df = self.get_data(format='df')
 

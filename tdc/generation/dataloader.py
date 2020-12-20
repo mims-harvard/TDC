@@ -63,16 +63,13 @@ class PairMolGen(generation_dataset.DataLoader):
 		else:
 			return 
 
-	def get_split(self, method = 'random', seed = 'benchmark', frac = [0.7, 0.1, 0.2]):
+	def get_split(self, method = 'random', seed = 42, frac = [0.7, 0.1, 0.2]):
 		'''
 		Arguments:
 			method: splitting schemes: random, cold_drug, scaffold split
-			seed: 'benchmark' seed set to 1234, or int values
+			seed: set to 42
 			frac: train/val/test split
 		'''
-
-		if seed == 'benchmark':
-			seed = 1234
 
 		df = self.get_data(format = 'df')
 		

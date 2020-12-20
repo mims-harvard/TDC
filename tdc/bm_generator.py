@@ -8,7 +8,7 @@ from .utils import *
 from .metadata import get_task2category
 from .evaluator import Evaluator
 
-class BenchmarkGroup:
+class BenchmarkGenerator:
 	def __init__(self, name, path = './data'):
 		'''
 		-- PATH
@@ -104,31 +104,3 @@ class BenchmarkGroup:
 		else:
 			raise StopIteration
 			
-	def get_more_train_val_splits(self, seed = 42):
-		raise NotImplementedError
-
-	def get(self, benchmark):
-		pass
-
-	def evaluate(self, pred, true = None, benchmark = 'all'):
-		'''
-		When benchmark is set to all, it expects the pred to be a dictionary with key: benchmark name and value: prediction array on test set
-		When benchmark is individual dataset name, the pred is just an array of prediction scores.
-		'''
-		metric_dict = metric_names[self.name]
-		if benchmark == 'all':
-			out = {}
-			for data_name, pred_ in pred.items():
-				data_name = fuzzy_search(data_name, self.all_datasets)
-				data_path = os.path.join(self.benchmark_path, data_name)
-				test = pd.read_csv(os.path.join(data_path, 'test.csv'))
-				y = test.Y.values
-				exec('evaluator = Evaluator(name = ' + metric_dict[data_name] + ')')
-				out[data_name] = {metric_dict[data_name]: evaluator(y, pred_)}
-		else:
-			data_name = fuzzy_search(benchmark, self.all_datasets)
-			data_path = os.path.join(self.benchmark_path, data_name)
-			test = pd.read_csv(os.path.join(data_path, 'test.csv'))
-			y = test.Y.values
-			exec('evaluator = Evaluator(name = ' + metric_dict[data_name] + ')')
-			return {metric_dict[data_name]: evaluator(y, pred)}

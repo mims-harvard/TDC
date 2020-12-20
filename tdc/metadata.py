@@ -1,22 +1,7 @@
-# datasets for each task
-
+####################################
 # single_pred prediction
-toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin']
 
-'''
-Table 1 of https://pubs.acs.org/doi/pdf/10.1021/ci300367a
- 6: 
- 14,15,16: 'cyp2c9_substrate_carbonmangels',  'cyp2d6_substrate_carbonmangels', 'cyp3a4_substrate_carbonmangels', 
- 20: carcinogens_lagunin    sdf to smiles
- 21,22: 'rainbow_trout_li', 'lepomis_li',  (not suitable) 
- 23: 
- 24: 
- 25: 
- 26: 
- 27: 
- 28: 
- 29: 
-'''
+toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
 
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
@@ -28,6 +13,7 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'f30_edrug3d',
  'bioavailability_ma',
  'vd_edrug3d',
+ 'vdss_lombardo',
  'cyp2c19_veith',
  'cyp2d6_veith',
  'cyp3a4_veith',
@@ -38,11 +24,14 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'cyp3a4_substrate_carbonmangels', 
  'halflife_edrug3d',
  'clearance_edrug3d',
+ 'half_life_obach'
  'bbb_adenot',
  'bbb_martins',
  'ppbr_ma',
  'ppbr_edrug3d',
- 'ppbr_az']
+ 'ppbr_az',
+ 'clearance_hepatocyte_az',
+ 'clearance_microsome_az']
 
 hts_dataset_names = ['hiv', 
 'sarscov2_3clpro_diamond', 
@@ -55,8 +44,10 @@ epitope_dataset_names = ['iedb_jespersen', 'pdb_jespersen']
 paratope_dataset_names = ['sabdab_liberis']
 
 develop_dataset_names = ['tap', 'sabdab_chen']
+
 ####################################
 # multi_pred prediction
+
 dti_dataset_names = ['davis',
  'kiba',
  'bindingdb_kd',
@@ -86,6 +77,8 @@ catalyst_dataset_names = ['uspto_catalyst']
 
 ####################################
 # generation
+
+
 retrosyn_dataset_names = ['uspto50k', 'uspto']
 
 forwardsyn_dataset_names = ['uspto']
@@ -94,14 +87,15 @@ single_molecule_dataset_names = ['zinc', 'moses', 'chembl']
 
 paired_dataset_names = ['uspto50k', 'uspto']
 
+
 ####################################
 # resource
+
 compound_library_names = ['drugbank_drugs', 'chembl_drugs', 'broad_repurposing_hub', 'antivirals']
 biokg_library_names = ['hetionet']
 
 ####################################
 # oracles
-
 
 #### evaluator for distribution learning, the input of __call__ is list of smiles
 distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
@@ -110,7 +104,7 @@ distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_d
 property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
 evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', \
-				  'accuracy', 'mse', 'mae', 'r2', 'micro-f1', 'macro-f1', \
+				  'accuracy', 'mse', 'rmse', 'mae', 'r2', 'micro-f1', 'macro-f1', \
 				  'kappa', 'avg-roc-auc']
 
 evaluator_name.extend(distribution_oracles)
@@ -124,59 +118,60 @@ guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop
 				   'median1', 'median2', \
 				   'valsartan_smarts', 'deco_hop', 'scaffold_hop']
 
-'''
-  rediscovery:  		3
-  similarity:  			3
-  isomer: 				2
-  mpo: 					7
-  median: 				2
-  other:				3 
--------------         ------
-  total: 				20 
-
-'''
-
-#### Benchmark Datasets
+####################################
+# Benchmark Datasets
 
 admet_benchmark = {'ADME': ['caco2_wang', 
 							'hia_hou',
 							'pgp_broccatelli', 
 							'bioavailability_ma',
+							'lipophilicity_astrazeneca',
+							'solubility_aqsoldb',
 							'bbb_martins',
 							'ppbr_az',
-							'cyp2c19_veith',
+							'vdss_lombardo',
 							'cyp2d6_veith',
-							'cyp1a2_veith',
 							'cyp3a4_veith',
 							'cyp2c9_veith',
-							'VD_eDrug3D',
-							'halflife_edrug3d',
-							'clearance_edrug3d'],
+							'cyp2d6_substrate_carbonmangels',
+							'cyp3a4_substrate_carbonmangels',
+							'cyp2c9_substrate_carbonmangels',
+							'half_life_obach',
+							'clearance_microsome_az',
+							'clearance_hepatocyte_az'],
 					'Tox':['herg',
 							'ames',
-							'dili']
+							'dili',
+							'ld50_zhu']
 					}
 
+
+####################################
 
 #### Benchmark Metrics
-admet_metrics = {'caco2_wang': 'r2',
-					'hia_hou': 'pr-auc',
-					'pgp_broccatelli': 'pr-auc', 
-					'bioavailability_ma': 'pr-auc',
-					'bbb_martins': 'pr-auc',
-					'ppbr_az': 'r2',
-					'VD_eDrug3D': 'r2',
-					'cyp2c19_veith': 'pr-auc',
-					'cyp2d6_veith': 'pr-auc',
-					'cyp1a2_veith': 'pr-auc',
-					'cyp3a4_veith': 'pr-auc',
-					'cyp2c9_veith': 'pr-auc',
-					'halflife_edrug3d': 'r2',
-					'clearance_edrug3d': 'r2',
-					'herg': 'pr-auc',
-					'ames': 'pr-auc',
-					'dili': 'pr-auc'
-					}
+admet_metrics = {'caco2_wang': 'mae',
+				'hia_hou': 'pr-auc',
+				'pgp_broccatelli': 'pr-auc', 
+				'bioavailability_ma': 'pr-auc',
+				'lipophilicity_astrazeneca': 'mae',
+				'solubility_aqsoldb': 'mae',
+				'bbb_martins': 'pr-auc',
+				'ppbr_az': 'mae',
+				'vdss_lombardo': 'mae',
+				'cyp2c9_veith': 'pr-auc',
+				'cyp2d6_veith': 'pr-auc',
+				'cyp3a4_veith': 'pr-auc',
+				'cyp2c9_substrate_carbonmangels': 'pr-auc',
+				'cyp3a4_substrate_carbonmangels': 'pr-auc',
+				'cyp2d6_substrate_carbonmangels': 'pr-auc',
+				'half_life_obach': 'r2',
+				'clearance_hepatocyte_az': 'r2',
+				'clearance_microsome_az': 'r2',
+				'ld50_zhu': 'mae',
+				'herg': 'pr-auc',
+				'ames': 'pr-auc',
+				'dili': 'pr-auc'
+				}
 
 #### evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
@@ -251,8 +246,8 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"BioKG": biokg_library_names
 				}
 
-benchmark_names = {"admet": admet_benchmark}
-metric_names = {"admet": admet_metrics}
+benchmark_names = {"admet_group": admet_benchmark}
+metric_names = {"admet_group": admet_metrics}
 
 
 dataset_list = []
@@ -333,6 +328,11 @@ name2type = {'toxcast': 'tab',
  'ames': 'tab',
  'skin_reaction': 'tab',
  'drugbank_drugs': 'csv', 
+ 'clearance_microsome_az': 'tab',
+ 'clearance_hepatocyte_az': 'tab',
+ 'half_life_obach': 'tab',
+ 'ld50_zhu': 'tab',
+ 'vdss_lombardo': 'tab'
  }
 
 name2id = {'bbb_adenot': 4259565,
@@ -407,7 +407,12 @@ name2id = {'bbb_adenot': 4259565,
  'dili': 4259585,
  'ppbr_az': 4259599,
  'ames': 4259564,
- 'skin_reaction': 4259609
+ 'skin_reaction': 4259609,
+ 'clearance_microsome_az': 4266186,
+ 'clearance_hepatocyte_az': 4266187,
+ 'ld50_zhu': 4267146,
+ 'half_life_obach': 4266799,
+ 'vdss_lombardo': 4267387
  }
 
 oracle2type = {'drd2': 'pkl', 

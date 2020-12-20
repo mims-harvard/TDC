@@ -39,16 +39,14 @@ class DataLoader:
             self.entity1))) + ' unique ' + self.entity1_name.lower() + 's',
               flush=True, file=sys.stderr)
 
-    def get_split(self, method='random', seed='benchmark',
+    def get_split(self, method='random', seed=42,
                   frac=[0.7, 0.1, 0.2]):
         '''
         Arguments:
             method: splitting schemes: random, cold_drug, cold_target
-            seed: 'benchmark' seed set to 1234, or int values
+            seed: default 42
             frac: train/val/test split
         '''
-        if seed == 'benchmark':
-            seed = 1234
 
         df = self.get_data(format='df')
 
@@ -100,9 +98,7 @@ class DataLoader:
                                    file_format=self.file_format,
                                    output_format=output_format)
 
-    def balanced(self, oversample=False, seed='benchmark'):
-        if seed == 'benchmark':
-            seed = 1234
+    def balanced(self, oversample=False, seed=42):
 
         if len(np.unique(self.y)) > 2:
             raise AttributeError(
