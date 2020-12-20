@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/functions/data_evaluation/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/functions/data_evaluation/","headline":"Model Evaluation","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"http://localhost:4000/TDC/functions/data_evaluation/","headline":"Model Evaluation","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -59,10 +59,6 @@
                     
                 
                     
-                    <a href="/TDC/news/" class="navbar-item ">News</a>
-                    
-                
-                    
                     <div class="navbar-item has-dropdown is-hoverable">
                         <a href="/TDC/overview/" class="navbar-link ">Datasets</a>
                         <div class="navbar-dropdown">
@@ -96,6 +92,10 @@
                             
                         </div>
                     </div>
+                    
+                
+                    
+                    <a href="/TDC/news/" class="navbar-item ">News</a>
                     
                 
                     
@@ -188,8 +188,6 @@
       <li><a href="#precision">Precision</a></li>
       <li><a href="#recall">Recall</a></li>
       <li><a href="#f1-score">F1 Score</a></li>
-      <li><a href="#precision-at-recall-of-k">Precision at Recall of K</a></li>
-      <li><a href="#recall-at-precision-of-k">Recall at Precision of K</a></li>
     </ul>
   </li>
   <li><a href="#multi-class-classification-metric">Multi-class Classification Metric</a>
@@ -332,28 +330,6 @@
 <span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'F1'</span><span class="p">)</span>
 <span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
 </span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
-<span class="c1"># score: 0.8
-</span></code></pre></div></div>
-
-<h3 id="precision-at-recall-of-k">Precision at Recall of K</h3>
-
-<p class="is-size-6">  <strong> Description: </strong> At some realistic settings for retrieval tasks, it is important to have high precision given a high recall rate for increasing the precision in the retrieved positive set while retrieve large proportions of positive data. This metric calculates the precision value at the minimum threshold where recall has K. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the PR@K score. The default of threshold value is 0.9. </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
-<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PR@K'</span><span class="p">)</span>
-<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
-</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">)</span>
-<span class="c1"># score: 0.8
-</span></code></pre></div></div>
-
-<h3 id="recall-at-precision-of-k">Recall at Precision of K</h3>
-
-<p class="is-size-6">  <strong> Description: </strong> At some realistic settings for retrieval tasks, it is important to have high recall given a high precision rate to prevent false alarms. This metric calculates the recall value at the minimum threshold where precision has K. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the RP@K score. The default of threshold value is 0.9. </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
-<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'RP@K'</span><span class="p">)</span>
-<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
-</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">)</span>
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
 
