@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/single_pred_tasks/adme/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"http://localhost:4000/TDC/single_pred_tasks/adme/","headline":"ADME","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/single_pred_tasks/adme/","headline":"ADME","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -212,7 +212,6 @@
       <li><a href="#hia-human-intestinal-absorption-hou-et-al">HIA (Human Intestinal Absorption), Hou et al.</a></li>
       <li><a href="#pgp-p-glycoprotein-inhibition-broccatelli-et-al">Pgp (P-glycoprotein) Inhibition, Broccatelli et al.</a></li>
       <li><a href="#bioavailability-ma-et-al">Bioavailability, Ma et al.</a></li>
-      <li><a href="#bioavailability-f20f30-edrug3d">Bioavailability F20/F30, eDrug3D</a></li>
       <li><a href="#lipophilicity-astrazeneca">Lipophilicity, AstraZeneca</a></li>
       <li><a href="#solubility-aqsoldb">Solubility, AqSolDB</a></li>
       <li><a href="#hydration-free-energy-freesolv">Hydration Free Energy, FreeSolv</a></li>
@@ -220,12 +219,9 @@
   </li>
   <li><a href="#distribution">Distribution</a>
     <ul>
-      <li><a href="#bbb-blood-brain-barrier-adenot-et-al">BBB (Blood-Brain Barrier), Adenot et al.</a></li>
       <li><a href="#bbb-blood-brain-barrier-martins-et-al">BBB (Blood-Brain Barrier), Martins et al.</a></li>
       <li><a href="#ppbr-plasma-protein-binding-rate-astrazeneca">PPBR (Plasma Protein Binding Rate), AstraZeneca</a></li>
-      <li><a href="#ppbr-plasma-protein-binding-rate-ma-et-al">PPBR (Plasma Protein Binding Rate), Ma et al.</a></li>
-      <li><a href="#ppbr-plasma-protein-binding-rate-edrug3d">PPBR (Plasma Protein Binding Rate), eDrug3D</a></li>
-      <li><a href="#vd-volumn-of-distribution-edrug3d">VD (Volumn of Distribution), eDrug3D</a></li>
+      <li><a href="#vdss-volumn-of-distribution-at-steady-state-lombardo-et-al">VDss (Volumn of Distribution at steady state), Lombardo et al.</a></li>
     </ul>
   </li>
   <li><a href="#metabolism">Metabolism</a>
@@ -242,8 +238,8 @@
   </li>
   <li><a href="#excretion">Excretion</a>
     <ul>
-      <li><a href="#half-life-edrug3d">Half Life, eDrug3D</a></li>
-      <li><a href="#clearance-edrug3d">Clearance, eDrug3D</a></li>
+      <li><a href="#half-life-obach-et-al">Half Life, Obach et al.</a></li>
+      <li><a href="#clearance-astrazeneca">Clearance, AstraZeneca</a></li>
     </ul>
   </li>
 </ul>
@@ -351,40 +347,6 @@
 
 <hr />
 
-<h3 id="bioavailability-f20f30-edrug3d">Bioavailability F20/F30, eDrug3D</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> Oral bioavailability is defined as “the rate and extent to which the active ingredient or active moiety is absorbed from a drug product and becomes available at the site of action”.  </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of bioavailability. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 403 drugs. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
-
-<p class="is-size-6"> TDC includes two thresholds, 20%/30% to construct binary tasks. </p>
-
-<p>For 20%, use:</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'F20_eDrug3D'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p>Similarly, for 30%, use</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'F30_eDrug3D'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
-
-<hr />
-
 <h3 id="lipophilicity-astrazeneca">Lipophilicity, AstraZeneca</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> Lipophilicity is a dataset curated from ChEMBL database containing experimental results on octanol/water distribution coefficient (logD at pH=7.4). From MoleculeNet. </p>
@@ -460,30 +422,8 @@
 
 <h2 id="distribution">Distribution</h2>
 
-<p class="is-size-4">Drug distribution refers to the movement of a drug to and from the blood and various tissues of the body and the relative proportions of drug in the tissues.</p>
-
-<h3 id="bbb-blood-brain-barrier-adenot-et-al">BBB (Blood-Brain Barrier), Adenot et al.</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> The blood–brain barrier (BBB) is a highly selective semipermeable border of endothelial cells that prevents solutes in the circulating blood from non-selectively crossing into the extracellular fluid of the central nervous system where neurons reside.	 </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of BBB. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,580 drugs. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'BBB_Adenot'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/14741033/">[1] Adenot M, Lahana R. Blood-brain barrier permeation models: discriminating between potential CNS and non-CNS drugs including P-glycoprotein substrates. J Chem Inf Comput Sci. 2004;44(1):239-248. </a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
-
-<hr />
+<p class="is-size-4">Drug distribution refers to how drug moves to and from the various tissues of the body and the amount of drugs in the tissues.
+</p>
 
 <h3 id="bbb-blood-brain-barrier-martins-et-al">BBB (Blood-Brain Barrier), Martins et al.</h3>
 
@@ -533,77 +473,32 @@
 
 <hr />
 
-<h3 id="ppbr-plasma-protein-binding-rate-ma-et-al">PPBR (Plasma Protein Binding Rate), Ma et al.</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins. Medications attach to proteins within the blood. A drug's efficiency may be affected by the degree to which it binds. The less bound a drug is, the more efficiently it can traverse cell membranes or diffuse. </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong>Binary Classification. Given a drug SMILES string, predict the activity of PPBR. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 765 drugs. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PPBR_Ma'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://doi.org/10.1016/j.jpba.2008.03.023">[1] Ma, Chang-Ying, et al. “Prediction models of human plasma protein binding rate and oral bioavailability derived by using GA–CG–SVM method.” Journal of pharmaceutical and biomedical analysis 47.4-5 (2008): 677-682 </a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
-
-<hr />
-
-<h3 id="ppbr-plasma-protein-binding-rate-edrug3d">PPBR (Plasma Protein Binding Rate), eDrug3D</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins. Medications attach to proteins within the blood. A drug's efficiency may be affected by the degree to which it binds. The less bound a drug is, the more efficiently it can traverse cell membranes or diffuse. </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the rate of PPBR. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 828 drugs. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PPBR_eDrug3D'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
-
-<hr />
-
-<h3 id="vd-volumn-of-distribution-edrug3d">VD (Volumn of Distribution), eDrug3D</h3>
+<h3 id="vdss-volumn-of-distribution-at-steady-state-lombardo-et-al">VDss (Volumn of Distribution at steady state), Lombardo et al.</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> The volume of distribution is the theoretical volume that would be necessary to contain the total amount of an administered drug at the same concentration that it is observed in the blood plasma. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the volume of distributon. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 749 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,130 drugs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'VD_eDrug3D'</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'VDss_Lombardo'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.6b00044?casa_token=SQhDZjizB08AAAAA:zrP4aW5361rH880nm_vVroPqBxjZU8wy0Yb6a0cM7Qvap1aeLQSo0KS3n79wIW0xa64n3Z3V1-lBaQpN">[1] Lombardo, Franco, and Yankang Jing. “In silico prediction of volume of distribution in humans. Extensive data set and the exploration of linear and nonlinear methods coupled with molecular interaction fields descriptors.” Journal of Chemical Information and Modeling 56.10 (2016): 2042-2052. </a></p>
 
 <p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
 <hr />
 
 <h2 id="metabolism">Metabolism</h2>
-<p class="is-size-4">Drug metabolism is the metabolic breakdown of drugs by living organisms, usually through specialized enzymatic systems. </p>
+<p class="is-size-4">Drug metabolism measures how specialized enzymatic systems breakdown the drugs and it determines the duration and intensity of a drug's action.
+ </p>
 
 <h3 id="cyp-p450-2c19-inhibition-veith-et-al">CYP P450 2C19 Inhibition, Veith et al.</h3>
 
@@ -795,49 +690,53 @@
 <hr />
 
 <h2 id="excretion">Excretion</h2>
-<p class="is-size-4">Drug excretion is the removal of drugs from the body, either as a metabolite or unchanged drug. There are many different routes of excretion, including urine, bile, sweat, saliva, tears, milk, and stool. </p>
+<p class="is-size-4">Drug excretion is the removal of drugs from the body using various different routes of excretion, including urine, bile, sweat, saliva, tears, milk, and stool.
+ </p>
 
-<h3 id="half-life-edrug3d">Half Life, eDrug3D</h3>
+<h3 id="half-life-obach-et-al">Half Life, Obach et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The duration of action of a drug is known as its half life. This is the period of time required for the concentration or amount of drug in the body to be reduced by one-half. Processed from eDrug3D dataset. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> The duration of action of a drug is known as its half life. This is the period of time required for the concentration or amount of drug in the body to be reduced by one-half. This dataset is from [1] and we obtain the deposited version under CHEMBL assay 1614674. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the half life duration. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 942 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 667 drugs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HalfLife_eDrug3D'</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Half_Life_Obach'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
+<p><a href="http://dmd.aspetjournals.org/content/36/7/1385.short?casa_token=9RLY3ZV5uqwAAAAA:j6LPQLnRLDOdzsVkew-nT5eIk9i_6LfkRf6FaBkIS1UKDe7oqP2NmymGeSRsGYigtTQXVHgXyoek">[1] Obach, R. Scott, Franco Lombardo, and Nigel J. Waters. “Trend analysis of a database of intravenous pharmacokinetic parameters in humans for 670 drug compounds.” Drug Metabolism and Disposition 36.7 (2008): 1385-1405. </a></p>
 
 <p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
 <hr />
 
-<h3 id="clearance-edrug3d">Clearance, eDrug3D</h3>
+<h3 id="clearance-astrazeneca">Clearance, AstraZeneca</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> Drug clearance is concerned with the rate at which the active drug is removed from the body. Clearance is defined as the rate of drug elimination divided by the plasma concentration of the drug. Processed from eDrug3D dataset. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Drug clearance is concerned with the rate at which the active drug is removed from the body. This is a dataset curated from ChEMBL database containing experimental results on intrinsic clearance, deposited from AstraZeneca. It contains clearance measures from two experiments types, hepatocyte and microsomes. As many studies [2] have shown various clearance outcomes given these two different types, we separate them. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the clearance rate. </p>
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of clearance. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 731 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,102/1,020 drugs for microsome/hepatocyte clearance. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Clearance_eDrug3D'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Clearance_Hepatocyte_AZ'</span><span class="p">)</span>
+<span class="c1"># data = ADME(name = 'Clearance_Microsome_AZ')
+</span><span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/22539672/">[1] Pihan E, Colliandre L, Guichou JF, Douguet D. e-Drug3D: 3D structure collections dedicated to drug repurposing and fragment-based drug design. Bioinformatics. 2012;28(11):1540-1541. </a></p>
+<p><a href="https://doi.org/10.6019/chembl3301361">[1] AstraZeneca. Experimental in vitro Dmpk and physicochemical data on a set of publicly disclosed compounds (2016) </a></p>
+
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0223523412003959?casa_token=MNBb1xkUT_YAAAAA:3s1kw30Nlv_tSrXYURqsz4j7it5wswWolxgkAPOg_Ts-FqVv3jLnyUFRQu9rNEdyV2FyyXL0VxI">[2] Di, Li, et al. “Mechanistic insights from comparing intrinsic clearance values between human liver microsomes and hepatocytes to guide drug design.” European journal of medicinal chemistry 57 (2012): 441-448. </a></p>
 
 <p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 

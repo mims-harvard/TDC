@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/functions/data_evaluation/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"http://localhost:4000/TDC/functions/data_evaluation/","headline":"Model Evaluation","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/functions/data_evaluation/","headline":"Model Evaluation","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -175,6 +175,7 @@
   <li><a href="#regression-metric">Regression Metric</a>
     <ul>
       <li><a href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
+      <li><a href="#root-mean-squared-error-rmse">Root-Mean Squared Error (RMSE)</a></li>
       <li><a href="#mean-absolute-error-mae">Mean Absolute Error (MAE)</a></li>
       <li><a href="#coefficient-of-determination-r">Coefficient of Determination (R²)</a></li>
     </ul>
@@ -230,6 +231,17 @@
 <span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
 </span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 <span class="c1"># score: 0.1
+</span></code></pre></div></div>
+
+<h3 id="root-mean-squared-error-rmse">Root-Mean Squared Error (RMSE)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The root mean square error measures the square root of MSE. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the RMSE value.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'RMSE'</span><span class="p">)</span>
+<span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.31
 </span></code></pre></div></div>
 
 <h3 id="mean-absolute-error-mae">Mean Absolute Error (MAE)</h3>

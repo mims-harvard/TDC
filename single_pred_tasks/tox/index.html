@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/single_pred_tasks/tox/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"http://localhost:4000/TDC/single_pred_tasks/tox/","headline":"Toxicity","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/single_pred_tasks/tox/","headline":"Toxicity","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -206,6 +206,7 @@
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
+  <li><a href="#acute-toxicity-ld50">Acute Toxicity LD50</a></li>
   <li><a href="#herg-blockers">hERG blockers</a></li>
   <li><a href="#ames-mutagenicity">Ames Mutagenicity</a></li>
   <li><a href="#dili-drug-induced-liver-injury">DILI (Drug Induced Liver Injury)</a></li>
@@ -222,7 +223,31 @@
 
 
 <div class="content">
-    <h3 id="herg-blockers">hERG blockers</h3>
+    <h3 id="acute-toxicity-ld50">Acute Toxicity LD50</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Acute toxicity LD50 measures the most conservative dose that can lead to lethal adverse effects. This dataset contains experimental values of acute toxicity in rodents from oral exposures. It is collected from National Library of Medicine. This dataset is kindly provided by the authors of [1]. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict its acute toxicity. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 7,385 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'LD50_Zhu'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/tx900189p?casa_token=vfBbuxuUCqEAAAAA:YAcI0r4Z3rtlRYP_l5H8OlTfdUh3DVlO6ws_h1NkhpaXH3-NrdI2-s5ghWWJbxfPQw-KhQIAwMi1Di3v">[1] Zhu, Hao, et al. “Quantitative structure− activity relationship modeling of rat acute toxicity by oral exposure.” Chemical research in toxicology 22.12 (2009): 1913-1921.
+</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="herg-blockers">hERG blockers</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> Blockade of human ether-à-go-go related gene (hERG) channel by compounds may lead to drug-induced QT prolongation, arrhythmia, and Torsades de Pointes (TdP), and therefore reliable prediction of hERG liability in the early stages of drug design is quite important to reduce the risk of cardiotoxicity-related attritions in the later development stages. </p>
 

@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/start/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"http://localhost:4000/TDC/start/","headline":"Quick Start Guide","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/start/","headline":"Quick Start Guide","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -221,7 +221,7 @@ The full collection currently includes over 70 datasets covering a wide range of
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 <p class="is-size-5"> The splits would in default output a dictionary where keys are train, val, test and values are the pandas DataFrame with the Drug IDs, SMILES strings and the label. For detailed outputs, see the dataset documentation. </p>
 

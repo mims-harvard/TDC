@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/news/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"http://localhost:4000/TDC/news/","headline":"News","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/news/","headline":"News","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -128,10 +128,18 @@
 
 <hr />
 
+<p class="is-size-5"><strong>2020.12.19</strong> TDC updates to <code>0.1.1</code>, major changes:</p>
+
+<ul class="is-medium">
+    <li><strong> Quality Check and New datasets! </strong> We replaced VD, Half Life abd Clearance datasets in <code>ADME</code> from new sources that have higher qualities. We also added LD50 to <code>Tox</code>.  </li>
+</ul>
+
+<hr />
+
 <p class="is-size-5"><strong>2020.12.15</strong> TDC updates to <code>0.1.0</code>, major changes:</p>
 
 <ul class="is-medium">
-    <li><strong> Five new datasets! </strong> Added CYP2C9/2D6/3A4 Substrate, for <code>ADME</code>, Carcinogens for <code>Tox</code> and NCI-60 for <code>DrugSyn</code>. </li>
+    <li><strong> Five New Datasets! </strong> Added CYP2C9/2D6/3A4 Substrate, for <code>ADME</code>, Carcinogens for <code>Tox</code> and NCI-60 for <code>DrugSyn</code>. </li>
     <li><strong>Quality Check.</strong> We conducted a canonicalization of all SMILES and removed ones that return errors in the <code>ADME</code>, <code>Tox</code>, and <code>HTS</code> datasets. </li>
 </ul>
 
@@ -140,7 +148,7 @@
 <p class="is-size-5"><strong>2020.11.30</strong> TDC updates to <code>0.0.8</code>, major changes:</p>
 
 <ul class="is-medium">
-    <li><strong> Five new datasets! </strong> Added hREG, DILI (Drug Induced Liver Injury), Skin Reaction, Ames Mutagenicity for <code>Tox</code> and PPBR from AstraZeneca for <code>ADME</code>. </li>
+    <li><strong> Five New Datasets! </strong> Added hREG, DILI (Drug Induced Liver Injury), Skin Reaction, Ames Mutagenicity for <code>Tox</code> and PPBR from AstraZeneca for <code>ADME</code>. </li>
     <li><strong>Distribution Learning Metrics Moved to Evaluators.</strong> Checkout <a href="/TDC/functions/data_evaluation"> here </a> for the updated usage.</li>
     <li><strong>Meta Oracles.</strong> We included a helper function where you can specify your own set of molecules for Rediscovery, Similarity, Medians, Isomers. Checkout an example usage <a href="/TDC/functions/oracles/#rediscovery"> here</a>. </li>
     <li><strong>Tutorials.</strong> We have provided various tutorials for you to start using TDC. Click <a href="https://github.com/mims-harvard/TDC/tree/master/tutorials"> here </a>.

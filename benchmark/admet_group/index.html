@@ -1,0 +1,753 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ADMET Benchmark Group - TDC</title>
+    <link rel="stylesheet" href="/TDC/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/TDC/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ADMET Benchmark Group | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="ADMET Benchmark Group" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Datasets for Medicinal Machine Learning" />
+<meta property="og:description" content="Datasets for Medicinal Machine Learning" />
+<link rel="canonical" href="http://localhost:4000/TDC/benchmark/admet_group/" />
+<meta property="og:url" content="http://localhost:4000/TDC/benchmark/admet_group/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/TDC/benchmark/admet_group/","headline":"ADMET Benchmark Group","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/TDC/">
+            <span><img src="/TDC/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/TDC/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/TDC/start/" class="navbar-item ">Quick Start</a>
+                    
+                
+                    
+                    <a href="/TDC/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
+                            
+                            <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/TDC/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-12">
+                    
+                    
+                    
+                    
+<div class="content">
+    <h2 id="admet-benchmark-group">ADMET Benchmark Group</h2>
+
+<p class="is-size-5"> ADMET is one of the cornerstones for small molecule drug discovery, where it defines the drug's efficacy and toxicity's profile. Thus, a machine learning model that can accurately predict all of the ADMET properties given the drug's structural information is highly valuable. We select 18 ADMET datasets from TDC's collection and formulate it as a benchmark group. To access, type: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Follow the <a href="/TDC/benchmark/overview/">instruction</a> on how to use the <code>BenchmarkGroup</code> class. For every dataset, we use scaffold split with 70%/10%/20% training/validation/testing fractions.</p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="absorption">Absorption</h3>
+
+<p class="is-size-5"> Absorption measures how a drug travels from the site of administration to site of action.</p>
+
+<h4 id="summary">Summary</h4>
+
+<table class="table is-striped is-hoverable">
+  <thead>
+  <tr>
+    <th>Dataset</th>
+    <th>Unit</th>
+    <th>Number</th>
+    <th>Task</th>
+    <th>Metric</th>
+    <th>Split</th>
+  </tr>
+  </thead>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#caco-2-cell-effective-permeability-wang-et-al"> Caco2 </a></td>
+    <td>cm/s</td>
+    <td>906</td>
+    <td>Regression</td>
+    <td>MAE</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#hia-human-intestinal-absorption-hou-et-al"> HIA </a></td>
+    <td>%</td>
+    <td>578</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#pgp-p-glycoprotein-inhibition-broccatelli-et-al"> Pgp </a></td>
+    <td>%</td>
+    <td>1,212</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#bioavailability-ma-et-al"> Bioavail </a></td>
+    <td>%</td>
+    <td>640</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#lipophilicity-astrazeneca"> Lipo </a></td>
+    <td>log-ratio</td>
+    <td>4,200</td>
+    <td>Regression</td>
+    <td>MAE</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#solubility-aqsoldb"> AqSol </a></td>
+    <td>log mol/L</td>
+    <td>9,982</td>
+    <td>Regression</td>
+    <td>MAE</td>
+    <td>Scaffold</td>
+  </tr>
+
+</table>
+
+<h4 id="leaderboard">Leaderboard</h4>
+
+<table class="table is-striped is-hoverable" id="A">
+  <thead>
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th onclick="sortTable(3, 'A', 'asc')">Caco2<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(4, 'A', 'desc')">HIA<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(5, 'A', 'desc')">Pgp<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(6, 'A', 'desc')">Bioavail<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Lipo<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(8, 'A', 'asc')">AqSol<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+  </tr>
+</thead>
+  <tr>
+    <td>CNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.785 <span>&#177;</span> 0.001</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>RDKit2D (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.795 <span>&#177;</span> 0.001</td>
+    <td>0.899 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>MPNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.755 <span>&#177;</span> 0.001</td>
+    <td>0.902 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+</table>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="distribution">Distribution</h3>
+
+<p class="is-size-5"> Drug distribution refers to how drug moves to and from the various tissues of the body and the amount of drugs in the tissues. </p>
+
+<h4 id="summary-1">Summary</h4>
+
+<table class="table is-striped is-hoverable">
+  <thead>
+  <tr>
+    <th>Dataset</th>
+    <th>Unit</th>
+    <th>Number</th>
+    <th>Task</th>
+    <th>Metric</th>
+    <th>Split</th>
+  </tr>
+  </thead>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#bbb-blood-brain-barrier-martins-et-al"> BBB </a></td>
+    <td>%</td>
+    <td>1,975</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#ppbr-plasma-protein-binding-rate-astrazeneca"> PPBR </a></td>
+    <td>%</td>
+    <td>1,797</td>
+    <td>Regression</td>
+    <td>r2</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#vdss-volumn-of-distribution-at-steady-state-lombardo-et-al"> VDss </a></td>
+    <td>L/kg</td>
+    <td>1,130</td>
+    <td>Regression</td>
+    <td>r2</td>
+    <td>Scaffold</td>
+  </tr>
+
+</table>
+
+<h4 id="leaderboard-1">Leaderboard</h4>
+
+<table class="table is-striped is-hoverable" id="D">
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th onclick="sortTable(3, 'D', 'desc')">BBB<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(4, 'D', 'desc')">PPBR<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(5, 'D', 'asc')">VD<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+  </tr>
+  <tr>
+    <td>CNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.785 <span>&#177;</span> 0.001</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>RDKit2D (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.795 <span>&#177;</span> 0.001</td>
+    <td>0.899 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>MPNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.755 <span>&#177;</span> 0.001</td>
+    <td>0.902 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+</table>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="metabolism">Metabolism</h3>
+
+<p class="is-size-5"> Drug metabolism measures how specialized enzymatic systems breakdown the drugs and it determines the duration and intensity of a drug's action. </p>
+
+<h4 id="summary-2">Summary</h4>
+
+<table class="table is-striped is-hoverable">
+  <thead>
+  <tr>
+    <th>Dataset</th>
+    <th>Unit</th>
+    <th>Number</th>
+    <th>Task</th>
+    <th>Metric</th>
+    <th>Split</th>
+  </tr>
+  </thead>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#cyp-p450-2c9-inhibition-veith-et-al"> CYP2C9 Inhibition </a></td>
+    <td>%</td>
+    <td>12,092</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#cyp-p450-2d6-inhibition-veith-et-al"> CYP2D6 Inhibition </a></td>
+    <td>%</td>
+    <td>13,130</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#cyp-p450-3a4-inhibition-veith-et-al"> CYP3A4 Inhibition </a></td>
+    <td>%</td>
+    <td>12,328</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+  <td><a href="/TDC/single_pred_tasks/ADME/#cyp2c9-substrate-carbon-mangels-et-al"> CYP2C9 Substrate </a></td>
+    <td>%</td>
+    <td>666</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#cyp2d6-substrate-carbon-mangels-et-al"> CYP2D6 Substrate </a></td>
+    <td>%</td>
+    <td>664</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#cyp3a4-substrate-carbon-mangels-et-al"> CYP3A4 Substrate </a></td>
+    <td>%</td>
+    <td>667</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+
+</table>
+
+<h4 id="leaderboard-2">Leaderboard</h4>
+
+<table class="table is-striped is-hoverable" id="M">
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th onclick="sortTable(3, 'M', 'desc')">CYP2C9 Inhibition <span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(4, 'M', 'desc')">CYP2D6 Inhibition <span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(5, 'M', 'desc')">CYP3A4 Inhibition <span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(6, 'M', 'desc')">CYP2C9 Substrate<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(7, 'M', 'desc')">CYP2D6 Substrate<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(8, 'M', 'desc')">CYP3A4 Substrate<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+  </tr>
+  <tr>
+    <td>CNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.785 <span>&#177;</span> 0.001</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.785 <span>&#177;</span> 0.001</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>RDKit2D (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.795 <span>&#177;</span> 0.001</td>
+    <td>0.899 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.785 <span>&#177;</span> 0.001</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>MPNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.755 <span>&#177;</span> 0.001</td>
+    <td>0.902 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.785 <span>&#177;</span> 0.001</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+</table>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="excretion">Excretion</h3>
+
+<p class="is-size-5"> Drug excretion is the removal of drugs from the body using various different routes of excretion, including urine, bile, sweat, saliva, tears, milk, and stool. </p>
+
+<h4 id="summary-3">Summary</h4>
+
+<table class="table is-striped is-hoverable">
+  <thead>
+  <tr>
+    <th>Dataset</th>
+    <th>Unit</th>
+    <th>Number</th>
+    <th>Task</th>
+    <th>Metric</th>
+    <th>Split</th>
+  </tr>
+  </thead>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#half-life-obach-et-al"> Half Life </a></td>
+    <td>hr</td>
+    <td>667</td>
+    <td>Regression</td>
+    <td>r2</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#clearance-astrazeneca"> CL-Hepa </a></td>
+    <td>uL.min-1.(10^6 cells)-1</td>
+    <td>1,020</td>
+    <td>Regression</td>
+    <td>r2</td>
+    <td>Scaffold</td>
+  </tr>
+
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/ADME/#clearance-astrazeneca"> CL-Micro </a></td>
+    <td>mL.min-1.g-1</td>
+    <td>1,102</td>
+    <td>Regression</td>
+    <td>r2</td>
+    <td>Scaffold</td>
+  </tr>
+
+</table>
+
+<h4 id="leaderboard-3">Leaderboard</h4>
+
+<table class="table is-striped is-hoverable" id="E">
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th onclick="sortTable(3, 'E', 'desc')">Half Life<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(4, 'E', 'desc')">CL-Hepa<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(4, 'E', 'desc')">CL-Micro<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+  </tr>
+  <tr>
+    <td>CNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.785 <span>&#177;</span> 0.001</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.899 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>RDKit2D (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.795 <span>&#177;</span> 0.001</td>
+    <td>0.899 <span>&#177;</span> 0.002</td>
+    <td>0.899 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>MPNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.755 <span>&#177;</span> 0.001</td>
+    <td>0.902 <span>&#177;</span> 0.002</td>
+    <td>0.899 <span>&#177;</span> 0.002</td>
+  </tr>
+</table>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="toxicity">Toxicity</h3>
+<p class="is-size-5"> Toxicity measures how much damage a drug could cause to organisms. </p>
+
+<h4 id="summary-4">Summary</h4>
+
+<table class="table is-striped is-hoverable">
+  <thead>
+  <tr>
+    <th>Dataset</th>
+    <th>Unit</th>
+    <th>Number</th>
+    <th>Task</th>
+    <th>Metric</th>
+    <th>Split</th>
+  </tr>
+  </thead>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/tox/#acute-toxicity-ld50"> LD50 </a></td>
+    <td>log(1/(mol/kg))</td>
+    <td>7,385</td>
+    <td>Regression</td>
+    <td>r2</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/tox/#herg-blockers"> hERG </a></td>
+    <td>%</td>
+    <td>648</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/tox/#ames-mutagenicity"> Ames </a></td>
+    <td>%</td>
+    <td>7,255</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+  <tr>
+    <td><a href="/TDC/single_pred_tasks/tox/#dili-drug-induced-liver-injury"> DILI </a></td>
+    <td>%</td>
+    <td>475</td>
+    <td>Binary</td>
+    <td>PR-AUC</td>
+    <td>Scaffold</td>
+  </tr>
+
+</table>
+
+<h4 id="leaderboard-4">Leaderboard</h4>
+
+<table class="table is-striped is-hoverable" id="T">
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th onclick="sortTable(6, 'T', 'desc')">LD50<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(3, 'T', 'desc')">hERG<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(4, 'T', 'desc')">Ames<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th onclick="sortTable(5, 'T', 'desc')">DILI<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+  </tr>
+  <tr>
+    <td>CNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.785 <span>&#177;</span> 0.001</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>RDKit2D (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.795 <span>&#177;</span> 0.001</td>
+    <td>0.899 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+  <tr>
+    <td>MPNN (DeepPurpose)</td>
+    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
+    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
+    <td>0.755 <span>&#177;</span> 0.001</td>
+    <td>0.902 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+    <td>0.889 <span>&#177;</span> 0.002</td>
+  </tr>
+</table>
+
+<script>
+function sortTable(n, name, d) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById(name);
+  switching = true;
+  //Set the sorting direction to ascending:
+  if (d == 'desc'){
+    dir = "desc"; 
+  } else{
+    dir = "asc"; 
+  }
+  
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+        if (Number(x.innerHTML.substring(0,5)) > Number(y.innerHTML.substring(0,5))) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (Number(x.innerHTML.substring(0,5)) < Number(y.innerHTML.substring(0,5))) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;      
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (d == 'desc'){
+        if (switchcount == 0 && dir == "desc") {
+          dir = "asc";
+          switching = true;
+        }
+      } else{
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+}
+</script>
+
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/TDC/">
+                    <span><img src="/TDC/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/TDC/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+

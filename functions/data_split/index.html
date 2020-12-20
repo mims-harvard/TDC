@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://localhost:4000/TDC/functions/data_split/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"http://localhost:4000/TDC/functions/data_split/","headline":"Data Split","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/functions/data_split/","headline":"Data Split","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -193,7 +193,7 @@
 
 <ul>
 	<li><code>method</code> the spliting scheme. TDC provides various spliting schemes to reflect realistic evaluations (details in section below). Default is random split. </li>
-	<li><code>seed</code> the random seed. TDC has a benchmark seed for fair comparison, which is set in default. </li>
+	<li><code>seed</code> the random seed. </li>
 	<li><code>frac</code> the fraction of train/validation/test set, in default, it is set to be [0.7, 0.1, 0.2].</li>
 </ul>
 <p class="is-size-6"> 
@@ -202,9 +202,13 @@ As the default TDC data format is Pandas DataFrame, it will return a dictionary 
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.X</span> <span class="kn">import</span> <span class="n">Y</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Y</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="n">Z</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'random'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'random'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
 <span class="c1"># split: {'train': train dataframe, 'valid': valid dataframe, 'test': test dataframe}
 </span></code></pre></div></div>
+
+<p class="is-size-6"> 
+<strong> Important Note: </strong> in this part, TDC provides a generic data split function where you can tune splitting schemes for your various research needs. In the benchmark mode, it is set to be a specific splitting method with fixed seed and fractions. To get that split, please use the <code>BenchmarkGroup</code> class in the <a href="/TDC/benchmark/overview">Leaderboard</a> page.
+</p>
 
 <p class="is-size-6"> 
 Below describes the various split schemes:
