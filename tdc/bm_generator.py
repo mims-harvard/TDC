@@ -74,10 +74,7 @@ class BenchmarkGenerator:
 
 				if not os.path.exists(os.path.join(dataset_path, 'train.csv')):
 					
-					if name == 'admet_group':
-						out = data_.get_split(method = 'scaffold', seed = 42, frac = [0.7, 0.1, 0.2])
-					else:
-						out = data_.get_split()
+					out = data_.get_split(method = bm_split_names[self.name][dataset], seed = 42, frac = [0.7, 0.1, 0.2])
 					
 					out['train'].to_csv(os.path.join(dataset_path, 'train.csv'), index = False)
 					out['valid'].to_csv(os.path.join(dataset_path, 'valid.csv'), index = False)

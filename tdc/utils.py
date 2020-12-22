@@ -415,16 +415,25 @@ def create_scaffold_split(df, seed, frac, entity):
 	random.shuffle(small_index_sets)
 	index_sets = big_index_sets + small_index_sets
 
-	for index_set in index_sets:
-		if len(train) + len(index_set) <= train_size:
-			train += index_set
-			train_scaffold_count += 1
-		elif len(val) + len(index_set) <= val_size:
-			val += index_set
-			val_scaffold_count += 1
-		else:
-			test += index_set
-			test_scaffold_count += 1
+	if frac[2] == 0:
+		for index_set in index_sets:
+			if len(train) + len(index_set) <= train_size:
+				train += index_set
+				train_scaffold_count += 1
+			else:
+				val += index_set
+				val_scaffold_count += 1
+	else:
+		for index_set in index_sets:
+			if len(train) + len(index_set) <= train_size:
+				train += index_set
+				train_scaffold_count += 1
+			elif len(val) + len(index_set) <= val_size:
+				val += index_set
+				val_scaffold_count += 1
+			else:
+				test += index_set
+				test_scaffold_count += 1
 
 	return {'train': df.iloc[train].reset_index(drop = True), 
 			'valid': df.iloc[val].reset_index(drop = True), 
@@ -587,6 +596,7 @@ def get_closet_match(predefined_tokens, test_token, threshold=0.8):
 
     # match similarity is low
     if prob_max / 100 < threshold:
+        print_sys(predefined_tokens)
         raise ValueError(test_token,
                          "does not match to available values. "
                          "Please double check.")

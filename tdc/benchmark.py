@@ -80,6 +80,8 @@ class BenchmarkGroup:
 		train_val = pd.concat([train, valid]).reset_index(drop = True)
 		if bm_split_names[self.name][dataset] == 'scaffold':
 			out = create_scaffold_split(train_val, seed, frac = [0.875, 0.125, 0], entity = 'Drug')
+		elif bm_split_names[self.name][dataset] == 'random':
+			out = create_fold(train_val, seed, frac = [0.875, 0.125, 0])
 		else:
 			raise NotImplementedError
 		return out

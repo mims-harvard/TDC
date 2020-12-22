@@ -22,19 +22,22 @@ def avg_auc(y_true, y_pred):
 def rmse(y_true, y_pred):
 	return np.sqrt(mean_squared_error(y_true, y_pred))
 
-def recall_at_precision_k(y_true, y_pred, threshold = 0.8):
+def recall_at_precision_k(y_true, y_pred, threshold = 0.9):
 	pr, rc, thr = precision_recall_curve(y_true, y_pred)
 	if len(np.where(pr >= threshold)[0]) > 0:
-		return rc[np.where(pr > threshold)[0][-1]]
+		return rc[np.where(pr >= threshold)[0][0]]
 	else:
 		return 0.
 
-def precision_at_recall_k(y_true, y_pred, threshold = 0.8):
+def precision_at_recall_k(y_true, y_pred, threshold = 0.9):
 	pr, rc, thr = precision_recall_curve(y_true, y_pred)	 
 	if len(np.where(rc >= threshold)[0]) > 0:
-		return pr[np.where(rc > threshold)[0][-1]]
+		return pr[np.where(rc >= threshold)[0][-1]]
 	else:
 		return 0.
+
+def pcc(y_true, y_pred):
+	return np.corrcoef(y_true, y_pred)[1,0]
 
 class Evaluator:
 	def __init__(self, name):
@@ -66,6 +69,8 @@ class Evaluator:
 			self.evaluator_func = mean_absolute_error
 		elif self.name == 'r2':
 			self.evaluator_func = r2_score
+		elif self.name == 'pcc':
+			self.evaluator_func = pcc
 		elif self.name == 'micro-f1':
 			self.evaluator_func = f1_score
 		elif self.name == 'macro-f1':
