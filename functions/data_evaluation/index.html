@@ -178,6 +178,7 @@
       <li><a href="#root-mean-squared-error-rmse">Root-Mean Squared Error (RMSE)</a></li>
       <li><a href="#mean-absolute-error-mae">Mean Absolute Error (MAE)</a></li>
       <li><a href="#coefficient-of-determination-r">Coefficient of Determination (R²)</a></li>
+      <li><a href="#pearson-correlation-coefficient-pcc">Pearson Correlation Coefficient (PCC)</a></li>
     </ul>
   </li>
   <li><a href="#binary-classification-metric">Binary Classification Metric</a>
@@ -262,6 +263,17 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
 <span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'R2'</span><span class="p">)</span>
+<span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="pearson-correlation-coefficient-pcc">Pearson Correlation Coefficient (PCC)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The PCC measures the amount of linear correlations between the true values and the predicted values. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the PCC score.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PCC'</span><span class="p">)</span>
 <span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
 </span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 <span class="c1"># score: 0.8
