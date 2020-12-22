@@ -20,7 +20,7 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 
 ## Updates
-- `0.1.1`: Replaced VD, Half Life abd Clearance datasets from new sources that have higher qualities. Added LD50 to Tox.
+- `0.1.1`: Replaced VD, Half Life and Clearance datasets from new sources that have higher qualities. Added LD50 to Tox.
 - `0.1.0`: Molecule quality check for ADME, Toxicity and HTS (canonicalized, and remove error mols).
 - `0.0.9`: Added DrugComb NCI-60, CYP2C9/2D6/3A4 substrates, Carcinogens toxicity! 
 - `0.0.8`: Added hREG, DILI, Skin Reaction, Ames Mutagenicity, PPBR from AstraZeneca; added meta oracles!

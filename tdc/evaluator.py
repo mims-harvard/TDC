@@ -8,7 +8,7 @@ from .utils import *
 from .metadata import evaluator_name, distribution_oracles
 
 try:
-	from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score
+	from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score, precision_recall_curve
 	from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, cohen_kappa_score
 except:
 	ImportError("Please install sklearn by 'conda install -c anaconda scikit-learn' or 'pip install scikit-learn '! ")
@@ -22,6 +22,23 @@ def avg_auc(y_true, y_pred):
 def rmse(y_true, y_pred):
 	return np.sqrt(mean_squared_error(y_true, y_pred))
 
+def recall_at_precision_k(y_true, y_pred, threshold = 0.9):
+	pr, rc, thr = precision_recall_curve(y_true, y_pred)
+	if len(np.where(pr >= threshold)[0]) > 0:
+		return rc[np.where(pr >= threshold)[0][0]]
+	else:
+		return 0.
+
+def precision_at_recall_k(y_true, y_pred, threshold = 0.9):
+	pr, rc, thr = precision_recall_curve(y_true, y_pred)	 
+	if len(np.where(rc >= threshold)[0]) > 0:
+		return pr[np.where(rc >= threshold)[0][-1]]
+	else:
+		return 0.
+
+def pcc(y_true, y_pred):
+	return np.corrcoef(y_true, y_pred)[1,0]
+
 class Evaluator:
 	def __init__(self, name):
 		self.name = fuzzy_search(name, evaluator_name)
@@ -34,6 +51,10 @@ class Evaluator:
 			self.evaluator_func = f1_score 
 		elif self.name == 'pr-auc':
 			self.evaluator_func = average_precision_score 
+		elif self.name == 'rp@k':
+			self.evaluator_func = recall_at_precision_k
+		elif self.name == 'pr@k':
+			self.evaluator_func = precision_at_recall_k
 		elif self.name == 'precision':
 			self.evaluator_func = precision_score
 		elif self.name == 'recall':
@@ -48,6 +69,8 @@ class Evaluator:
 			self.evaluator_func = mean_absolute_error
 		elif self.name == 'r2':
 			self.evaluator_func = r2_score
+		elif self.name == 'pcc':
+			self.evaluator_func = pcc
 		elif self.name == 'micro-f1':
 			self.evaluator_func = f1_score
 		elif self.name == 'macro-f1':
@@ -93,4 +116,6 @@ class Evaluator:
 			y_pred = [1 if i > threshold else 0 for i in y_pred]
 		if self.name in ['micro-f1', 'macro-f1']:
 			return self.evaluator_func(y_true, y_pred, average = self.name[:5])
+		if self.name in ['rp@k', 'pr@k']:
+			return self.evaluator_func(y_true, y_pred, threshold = threshold)
 		return self.evaluator_func(y_true, y_pred)

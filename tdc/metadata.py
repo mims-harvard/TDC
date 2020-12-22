@@ -24,7 +24,6 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'cyp3a4_substrate_carbonmangels', 
  'halflife_edrug3d',
  'clearance_edrug3d',
- 'half_life_obach'
  'bbb_adenot',
  'bbb_martins',
  'ppbr_ma',
@@ -106,7 +105,7 @@ property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
 evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', \
 				  'accuracy', 'mse', 'rmse', 'mae', 'r2', 'micro-f1', 'macro-f1', \
-				  'kappa', 'avg-roc-auc']
+				  'kappa', 'avg-roc-auc', 'rp@k', 'pr@k', 'pcc']
 
 evaluator_name.extend(distribution_oracles)
 
@@ -151,29 +150,28 @@ admet_benchmark = {'ADME': ['caco2_wang',
 
 #### Benchmark Metrics
 admet_metrics = {'caco2_wang': 'mae',
-				'hia_hou': 'pr-auc',
-				'pgp_broccatelli': 'pr-auc', 
-				'bioavailability_ma': 'pr-auc',
+				'hia_hou': 'roc-auc',
+				'pgp_broccatelli': 'roc-auc', 
+				'bioavailability_ma': 'roc-auc',
 				'lipophilicity_astrazeneca': 'mae',
 				'solubility_aqsoldb': 'mae',
-				'bbb_martins': 'pr-auc',
+				'bbb_martins': 'roc-auc',
 				'ppbr_az': 'mae',
-				'vdss_lombardo': 'mae',
+				'vdss_lombardo': 'pcc',
 				'cyp2c9_veith': 'pr-auc',
 				'cyp2d6_veith': 'pr-auc',
 				'cyp3a4_veith': 'pr-auc',
 				'cyp2c9_substrate_carbonmangels': 'pr-auc',
-				'cyp3a4_substrate_carbonmangels': 'pr-auc',
+				'cyp3a4_substrate_carbonmangels': 'roc-auc',
 				'cyp2d6_substrate_carbonmangels': 'pr-auc',
-				'half_life_obach': 'r2',
-				'clearance_hepatocyte_az': 'r2',
-				'clearance_microsome_az': 'r2',
+				'half_life_obach': 'pcc',
+				'clearance_hepatocyte_az': 'pcc',
+				'clearance_microsome_az': 'pcc',
 				'ld50_zhu': 'mae',
-				'herg': 'pr-auc',
-				'ames': 'pr-auc',
-				'dili': 'pr-auc'
+				'herg': 'roc-auc',
+				'ames': 'roc-auc',
+				'dili': 'roc-auc'
 				}
-
 
 #### Benchmark Splits
 admet_splits = {'caco2_wang': 'scaffold',
