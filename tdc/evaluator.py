@@ -71,6 +71,12 @@ class Evaluator:
 			self.evaluator_func = r2_score
 		elif self.name == 'pcc':
 			self.evaluator_func = pcc
+		elif self.name == 'spearman':
+			try:
+				from scipy import stats
+			except:
+				ImportError("Please install scipy by 'pip install scipy'! ")
+			self.evaluator_func = stats.spearmanr
 		elif self.name == 'micro-f1':
 			self.evaluator_func = f1_score
 		elif self.name == 'macro-f1':
@@ -118,4 +124,6 @@ class Evaluator:
 			return self.evaluator_func(y_true, y_pred, average = self.name[:5])
 		if self.name in ['rp@k', 'pr@k']:
 			return self.evaluator_func(y_true, y_pred, threshold = threshold)
+		if self.name == 'spearman':
+			return self.evaluator_func(y_true, y_pred)[0]
 		return self.evaluator_func(y_true, y_pred)
