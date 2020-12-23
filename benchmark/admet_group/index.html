@@ -126,13 +126,28 @@
 <div class="content">
     <h2 id="admet-benchmark-group">ADMET Benchmark Group</h2>
 
-<p class="is-size-5"> ADMET is one of the cornerstones for small molecule drug discovery, where it defines the drug's efficacy and toxicity's profile. Thus, a machine learning model that can accurately predict all of the ADMET properties given the drug's structural information is highly valuable. We select 18 ADMET datasets from TDC's collection and formulate it as a benchmark group. To access, type: </p>
+<p class="is-size-5"> ADMET is one of the cornerstones for small molecule drug discovery, where it defines the drug's efficacy and toxicity's profile. Thus, a machine learning model that can accurately predict all of the ADMET properties given the drug's structural information is highly valuable. We select 22 ADMET datasets from TDC's collection and formulate it as a benchmark group. To access, type: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p class="is-size-5"> Follow the <a href="/TDC/benchmark/overview/">instruction</a> on how to use the <code>BenchmarkGroup</code> class. For every dataset, we use scaffold split into 70%/10%/20% training/validation/testing fractions. For binary classification, we use ROC-AUC when the number of positive samples is larger than or equal to negatives and use PR-AUC when it is smaller. For regression, we use MAE for majority of benchmarks, but for benchmarks where experimental values depend on factors beyond the experiments, we use correlation coefficient. </p>
+<p class="is-size-6"> Follow the <a href="/TDC/benchmark/overview/">instruction</a> on how to use the <code>BenchmarkGroup</code> class. For every dataset, we use scaffold split into 70%/10%/20% training/validation/testing fractions. The evaluation metrics are selected given the following criteria: </p>
+
+<ul class="is-large">
+    <li>For binary classification,</li>
+    <ul class="is-large">
+      <li>AUROC is used when the number of positive and negative samples are close.</li>
+      <li>AUPRC is used when the number of positive samples are much smaller than negative samples. </li>
+    </ul>
+    <li>For regression,</li>
+    <ul class="is-large">
+      <li> MAE is used for majority of benchmarks.</li>
+      <li> For benchmarks that are usually depended on factors beyond the chemical structure, Spearman Correlation Coefficient is used. </li>
+    </ul>
+</ul>
+
+<p class="is-size-6"> We encourage submissions that contain the entire benchmark group while we also accept submissions that contain results for one of the five ADMET categories. </p>
 
 <div class="column is-12">
     <hr />
@@ -168,7 +183,7 @@
     <td>%</td>
     <td>578</td>
     <td>Binary</td>
-    <td>ROC-AUC</td>
+    <td>AUROC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -176,15 +191,15 @@
     <td>%</td>
     <td>1,212</td>
     <td>Binary</td>
-    <td>ROC-AUC</td>
+    <td>AUROC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
-    <td><a href="/TDC/single_pred_tasks/ADME/#bioavailability-ma-et-al"> Bioavail </a></td>
+    <td><a href="/TDC/single_pred_tasks/ADME/#bioavailability-ma-et-al"> Bioav </a></td>
     <td>%</td>
     <td>640</td>
     <td>Binary</td>
-    <td>ROC-AUC</td>
+    <td>AUROC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -206,57 +221,71 @@
 
 </table>
 
+<div class="column is-12">
+</div>
+
 <h4 id="leaderboard">Leaderboard</h4>
 
 <table class="table is-striped is-hoverable" id="A">
   <thead>
   <tr>
    <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>
     <th>Model</th>
     <th>Contact</th>
     <th>Link</th>
-    <th onclick="sortTable(3, 'A', 'asc')">Caco2<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(4, 'A', 'desc')">HIA<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(5, 'A', 'desc')">Pgp<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(6, 'A', 'desc')">Bioavail<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(7, 'A', 'asc')">Lipo<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(8, 'A', 'asc')">AqSol<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'A', 'asc')">Caco2 <i class="fas fa-long-arrow-alt-down"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(6, 'A', 'desc')">HIA <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(7, 'A', 'desc')">Pgp <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(8, 'A', 'desc')">Bioav <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(9, 'A', 'asc')">Lipo <i class="fas fa-long-arrow-alt-down"></i>  <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(10, 'A', 'asc')">AqSol <i class="fas fa-long-arrow-alt-down"></i>  <i class="fas fa-sort"></i></th>
   </tr>
 </thead>
-  <tr>
-    <td>CNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.785 <span>&#177;</span> 0.001</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>RDKit2D (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.795 <span>&#177;</span> 0.001</td>
-    <td>0.899 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>MPNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.755 <span>&#177;</span> 0.001</td>
-    <td>0.902 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
+  <tr> 
+  <td> 1 </td> 
+  <td> RDKit2D + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 633,409 </td> 
+  <td>0.393 <span>&#177;</span> 0.024 </td> 
+  <td>0.972 <span>&#177;</span> 0.008 </td> 
+  <td>0.918 <span>&#177;</span> 0.007 </td> 
+  <td>0.672 <span>&#177;</span> 0.021 </td> 
+  <td>0.574 <span>&#177;</span> 0.017 </td> 
+  <td>0.827 <span>&#177;</span> 0.047 </td> 
+</tr>
+<tr> 
+  <td> 2 </td> 
+  <td> CNN (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 226,625 </td> 
+  <td>0.446 <span>&#177;</span> 0.036 </td> 
+  <td>0.869 <span>&#177;</span> 0.026 </td> 
+  <td>0.908 <span>&#177;</span> 0.012 </td> 
+  <td>0.613 <span>&#177;</span> 0.013 </td> 
+  <td>0.743 <span>&#177;</span> 0.020 </td> 
+  <td>1.023 <span>&#177;</span> 0.023 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> Morgan + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 1,477,185 </td> 
+  <td>0.908 <span>&#177;</span> 0.060 </td> 
+  <td>0.807 <span>&#177;</span> 0.072 </td> 
+  <td>0.880 <span>&#177;</span> 0.006 </td> 
+  <td>0.581 <span>&#177;</span> 0.086 </td> 
+  <td>0.701 <span>&#177;</span> 0.009 </td> 
+  <td>1.203 <span>&#177;</span> 0.019 </td> 
+</tr>
 </table>
+<p><i class="fas fa-long-arrow-alt-up"></i>: The higher the better.
+<i class="fas fa-long-arrow-alt-down"></i>: The lower the better.
+<i class="fas fa-sort"></i>: Click to sort models for specific benchmark column.</p>
 
 <div class="column is-12">
     <hr />
@@ -284,7 +313,7 @@
     <td>%</td>
     <td>1,975</td>
     <td>Binary</td>
-    <td>ROC-AUC</td>
+    <td>AUROC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -300,49 +329,62 @@
     <td>L/kg</td>
     <td>1,130</td>
     <td>Regression</td>
-    <td>PCC</td>
+    <td>Spearman</td>
     <td>Scaffold</td>
   </tr>
 
 </table>
 
+<div class="column is-12">
+</div>
+
 <h4 id="leaderboard-1">Leaderboard</h4>
 
 <table class="table is-striped is-hoverable" id="D">
   <tr>
-   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>  
     <th>Model</th>
     <th>Contact</th>
     <th>Link</th>
-    <th onclick="sortTable(3, 'D', 'desc')">BBB<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(4, 'D', 'asc')">PPBR<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(5, 'D', 'desc')">VD<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'D', 'desc')">BBB <i class="fas fa-long-arrow-alt-up"></i> <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(6, 'D', 'asc')">PPBR <i class="fas fa-long-arrow-alt-down"></i> <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(7, 'D', 'desc')">VD <i class="fas fa-long-arrow-alt-up"></i> <i class="fas fa-sort"></i> </th>
   </tr>
-  <tr>
-    <td>CNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.785 <span>&#177;</span> 0.001</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>RDKit2D (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.795 <span>&#177;</span> 0.001</td>
-    <td>0.899 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>MPNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.755 <span>&#177;</span> 0.001</td>
-    <td>0.902 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
+  <tr> 
+  <td> 1 </td> 
+  <td> RDKit2D + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 633,409 </td> 
+  <td>0.889 <span>&#177;</span> 0.016 </td> 
+  <td>9.994 <span>&#177;</span> 0.319 </td> 
+  <td>0.561 <span>&#177;</span> 0.025 </td> 
+</tr>
+<tr> 
+  <td> 2 </td> 
+  <td> Morgan + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 1,477,185 </td> 
+  <td>0.823 <span>&#177;</span> 0.015 </td> 
+  <td>12.848 <span>&#177;</span> 0.362 </td> 
+  <td>0.493 <span>&#177;</span> 0.011 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> CNN (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 226,625 </td> 
+  <td>0.781 <span>&#177;</span> 0.030 </td> 
+  <td>11.106 <span>&#177;</span> 0.358 </td> 
+  <td>0.226 <span>&#177;</span> 0.114 </td> 
+</tr>
 </table>
+<p><i class="fas fa-long-arrow-alt-up"></i>: The higher the better.
+<i class="fas fa-long-arrow-alt-down"></i>: The lower the better.
+<i class="fas fa-sort"></i>: Click to sort models for specific benchmark column.</p>
 
 <div class="column is-12">
     <hr />
@@ -370,7 +412,7 @@
     <td>%</td>
     <td>12,092</td>
     <td>Binary</td>
-    <td>PR-AUC</td>
+    <td>AUPRC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -378,7 +420,7 @@
     <td>%</td>
     <td>13,130</td>
     <td>Binary</td>
-    <td>PR-AUC</td>
+    <td>AUPRC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -386,7 +428,7 @@
     <td>%</td>
     <td>12,328</td>
     <td>Binary</td>
-    <td>PR-AUC</td>
+    <td>AUPRC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -394,7 +436,7 @@
     <td>%</td>
     <td>666</td>
     <td>Binary</td>
-    <td>PR-AUC</td>
+    <td>AUPRC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -402,7 +444,7 @@
     <td>%</td>
     <td>664</td>
     <td>Binary</td>
-    <td>PR-AUC</td>
+    <td>AUPRC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -410,61 +452,75 @@
     <td>%</td>
     <td>667</td>
     <td>Binary</td>
-    <td>ROC-AUC</td>
+    <td>AUROC</td>
     <td>Scaffold</td>
   </tr>
 
 </table>
 
+<div class="column is-12">
+</div>
+
 <h4 id="leaderboard-2">Leaderboard</h4>
 
 <table class="table is-striped is-hoverable" id="M">
   <tr>
-   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>
     <th>Model</th>
     <th>Contact</th>
     <th>Link</th>
-    <th onclick="sortTable(3, 'M', 'desc')">CYP2C9 Inhibition <span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(4, 'M', 'desc')">CYP2D6 Inhibition <span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(5, 'M', 'desc')">CYP3A4 Inhibition <span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(6, 'M', 'desc')">CYP2C9 Substrate<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(7, 'M', 'desc')">CYP2D6 Substrate<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(8, 'M', 'desc')">CYP3A4 Substrate<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'M', 'desc')">CYP2C9 Inhibition <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(6, 'M', 'desc')">CYP2D6 Inhibition <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(7, 'M', 'desc')">CYP3A4 Inhibition <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(8, 'M', 'desc')">CYP2C9 Substrate <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(9, 'M', 'desc')">CYP2D6 Substrate <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(10, 'M', 'desc')">CYP3A4 Substrate <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
   </tr>
-  <tr>
-    <td>CNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.785 <span>&#177;</span> 0.001</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.785 <span>&#177;</span> 0.001</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>RDKit2D (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.795 <span>&#177;</span> 0.001</td>
-    <td>0.899 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.785 <span>&#177;</span> 0.001</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>MPNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.755 <span>&#177;</span> 0.001</td>
-    <td>0.902 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.785 <span>&#177;</span> 0.001</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
+  <tr> 
+  <td> 1 </td> 
+  <td> RDKit2D + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 633,409 </td> 
+  <td>0.742 <span>&#177;</span> 0.006 </td> 
+  <td>0.616 <span>&#177;</span> 0.007 </td> 
+  <td>0.829 <span>&#177;</span> 0.007 </td> 
+  <td>0.360 <span>&#177;</span> 0.040 </td> 
+  <td>0.677 <span>&#177;</span> 0.047 </td> 
+  <td>0.639 <span>&#177;</span> 0.012 </td> 
+</tr>
+<tr> 
+  <td> 2 </td> 
+  <td> Morgan + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 1,477,185 </td> 
+  <td>0.715 <span>&#177;</span> 0.004 </td> 
+  <td>0.587 <span>&#177;</span> 0.011 </td> 
+  <td>0.827 <span>&#177;</span> 0.009 </td> 
+  <td>0.380 <span>&#177;</span> 0.015 </td> 
+  <td>0.671 <span>&#177;</span> 0.066 </td> 
+  <td>0.633 <span>&#177;</span> 0.013 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> CNN (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 226,625 </td> 
+  <td>0.713 <span>&#177;</span> 0.006 </td> 
+  <td>0.544 <span>&#177;</span> 0.053 </td> 
+  <td>0.821 <span>&#177;</span> 0.003 </td> 
+  <td>0.367 <span>&#177;</span> 0.059 </td> 
+  <td>0.485 <span>&#177;</span> 0.037 </td> 
+  <td>0.662 <span>&#177;</span> 0.031 </td> 
+</tr>
+
 </table>
+<p><i class="fas fa-long-arrow-alt-up"></i>: The higher the better.
+<i class="fas fa-long-arrow-alt-down"></i>: The lower the better.
+<i class="fas fa-sort"></i>: Click to sort models for specific benchmark column.</p>
 
 <div class="column is-12">
     <hr />
@@ -492,7 +548,7 @@
     <td>hr</td>
     <td>667</td>
     <td>Regression</td>
-    <td>PCC</td>
+    <td>Spearman</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -500,7 +556,7 @@
     <td>uL.min-1.(10^6 cells)-1</td>
     <td>1,020</td>
     <td>Regression</td>
-    <td>PCC</td>
+    <td>Spearman</td>
     <td>Scaffold</td>
   </tr>
 
@@ -509,49 +565,63 @@
     <td>mL.min-1.g-1</td>
     <td>1,102</td>
     <td>Regression</td>
-    <td>PCC</td>
+    <td>Spearman</td>
     <td>Scaffold</td>
   </tr>
 
 </table>
 
+<div class="column is-12">
+</div>
+
 <h4 id="leaderboard-3">Leaderboard</h4>
 
 <table class="table is-striped is-hoverable" id="E">
   <tr>
-   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>  
     <th>Model</th>
     <th>Contact</th>
     <th>Link</th>
-    <th onclick="sortTable(3, 'E', 'desc')">Half Life<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(4, 'E', 'desc')">CL-Hepa<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(4, 'E', 'desc')">CL-Micro<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'E', 'desc')">Half Life <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(6, 'E', 'desc')">CL-Hepa <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(7, 'E', 'desc')">CL-Micro <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
   </tr>
-  <tr>
-    <td>CNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.785 <span>&#177;</span> 0.001</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.899 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>RDKit2D (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.795 <span>&#177;</span> 0.001</td>
-    <td>0.899 <span>&#177;</span> 0.002</td>
-    <td>0.899 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>MPNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.755 <span>&#177;</span> 0.001</td>
-    <td>0.902 <span>&#177;</span> 0.002</td>
-    <td>0.899 <span>&#177;</span> 0.002</td>
-  </tr>
+ <tr> 
+  <td> 1 </td> 
+  <td> RDKit2D + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 633,409 </td> 
+  <td>0.184 <span>&#177;</span> 0.111 </td> 
+  <td>0.382 <span>&#177;</span> 0.007 </td> 
+  <td>0.586 <span>&#177;</span> 0.014 </td> 
+</tr>
+<tr> 
+  <td> 2 </td> 
+  <td> Morgan + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 1,477,185 </td> 
+  <td>0.329 <span>&#177;</span> 0.083 </td> 
+  <td>0.272 <span>&#177;</span> 0.068 </td> 
+  <td>0.492 <span>&#177;</span> 0.020 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> CNN (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 226,625 </td> 
+  <td>0.038 <span>&#177;</span> 0.138 </td> 
+  <td>0.235 <span>&#177;</span> 0.021 </td> 
+  <td>0.252 <span>&#177;</span> 0.116 </td> 
+</tr>
+​
 </table>
+<p><i class="fas fa-long-arrow-alt-up"></i>: The higher the better.
+<i class="fas fa-long-arrow-alt-down"></i>: The lower the better.
+<i class="fas fa-sort"></i>: Click to sort models for specific benchmark column.</p>
 
 <div class="column is-12">
     <hr />
@@ -586,7 +656,7 @@
     <td>%</td>
     <td>648</td>
     <td>Binary</td>
-    <td>ROC-AUC</td>
+    <td>AUROC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -594,7 +664,7 @@
     <td>%</td>
     <td>7,255</td>
     <td>Binary</td>
-    <td>ROC-AUC</td>
+    <td>AUROC</td>
     <td>Scaffold</td>
   </tr>
   <tr>
@@ -602,53 +672,67 @@
     <td>%</td>
     <td>475</td>
     <td>Binary</td>
-    <td>ROC-AUC</td>
+    <td>AUROC</td>
     <td>Scaffold</td>
   </tr>
 
 </table>
 
+<div class="column is-12">
+</div>
+
 <h4 id="leaderboard-4">Leaderboard</h4>
 
 <table class="table is-striped is-hoverable" id="T">
   <tr>
-   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>
     <th>Model</th>
     <th>Contact</th>
     <th>Link</th>
-    <th onclick="sortTable(6, 'T', 'asc')">LD50<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(3, 'T', 'desc')">hERG<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(4, 'T', 'desc')">Ames<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
-    <th onclick="sortTable(5, 'T', 'desc')">DILI<span class="icon has-text is-small"> <i class="fas fa-sort"></i></span></th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'T', 'asc')">LD50 <i class="fas fa-long-arrow-alt-down"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(6, 'T', 'desc')">hERG <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(7, 'T', 'desc')">Ames <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(8, 'T', 'desc')">DILI <i class="fas fa-long-arrow-alt-up"></i>  <i class="fas fa-sort"></i> </th>
   </tr>
-  <tr>
-    <td>CNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.785 <span>&#177;</span> 0.001</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>RDKit2D (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.795 <span>&#177;</span> 0.001</td>
-    <td>0.899 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
-  <tr>
-    <td>MPNN (DeepPurpose)</td>
-    <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td>
-    <td><a href="https://github.com/kexinhuang12345/DeepPurpose">GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper</a></td>
-    <td>0.755 <span>&#177;</span> 0.001</td>
-    <td>0.902 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-    <td>0.889 <span>&#177;</span> 0.002</td>
-  </tr>
+  <tr> 
+  <td> 1 </td> 
+  <td> RDKit2D + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 633,409 </td> 
+  <td>0.678 <span>&#177;</span> 0.003 </td> 
+  <td>0.841 <span>&#177;</span> 0.020 </td> 
+  <td>0.823 <span>&#177;</span> 0.011 </td> 
+  <td>0.875 <span>&#177;</span> 0.019 </td> 
+</tr>
+<tr> 
+  <td> 2 </td> 
+  <td> Morgan + MLP (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 1,477,185 </td> 
+  <td>0.649 <span>&#177;</span> 0.019 </td> 
+  <td>0.736 <span>&#177;</span> 0.023 </td> 
+  <td>0.794 <span>&#177;</span> 0.008 </td> 
+  <td>0.832 <span>&#177;</span> 0.021 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> CNN (DeepPurpose) </td> 
+  <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/kexinhuang12345/DeepPurpose"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> 226,625 </td> 
+  <td>0.675 <span>&#177;</span> 0.011 </td> 
+  <td>0.754 <span>&#177;</span> 0.037 </td> 
+  <td>0.776 <span>&#177;</span> 0.015 </td> 
+  <td>0.792 <span>&#177;</span> 0.016 </td> 
+</tr>
+​
 </table>
+<p><i class="fas fa-long-arrow-alt-up"></i>: The higher the better.
+<i class="fas fa-long-arrow-alt-down"></i>: The lower the better.
+<i class="fas fa-sort"></i>: Click to sort models for specific benchmark column.</p>
 
 <script>
 function sortTable(n, name, d) {
