@@ -1,6 +1,5 @@
 from DeepPurpose import CompoundPred as models
 from DeepPurpose.utils import *
-from tdc.single_pred import ADME
 
 from tdc import BenchmarkGroup
 group = BenchmarkGroup(name = 'ADMET_Group', path = 'data/')
