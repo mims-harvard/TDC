@@ -20,6 +20,7 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 
 ## Updates
+- `0.1.2`: The first TDC Leaderboard is released! Checkout the leaderboard guide [here](https://zitniklab.hms.harvard.edu/TDC/benchmark/overview/) and the ADMET Leaderboard [here](https://zitniklab.hms.harvard.edu/TDC/benchmark/admet_group/).
 - `0.1.1`: Replaced VD, Half Life and Clearance datasets from new sources that have higher qualities. Added LD50 to Tox.
 - `0.1.0`: Molecule quality check for ADME, Toxicity and HTS (canonicalized, and remove error mols).
 - `0.0.9`: Added DrugComb NCI-60, CYP2C9/2D6/3A4 substrates, Carcinogens toxicity! 
@@ -31,7 +32,7 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 - *User-friendly*: 3 lines of codes to access any dataset and hassle-free installation.
 - *Ready-to-use*: the dataset is processed into machine learning ready format. 
 - *Data functions*: TDC supports various useful functions such as data evaluators, realistic data split functions, data processing helpers, and molecule generation oracles! 
-- *Benchmark*: provides a benchmark for fair model comparison. A leaderboard will be released soon!
+- *Leaderboard*: provides a benchmark for fair model comparison across many therapeutics tasks.
 - *Community-driven effort*: TDC is a community-driven effort. Contact us if you want to contribute a new dataset or task!
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
@@ -67,6 +68,22 @@ To use data functions such as molecule oracles, scaffold split, etc., they requi
 ```bash
 conda install -c conda-forge pytdc
 ```
+
+
+## Cite Us
+
+If you found our work useful, please cite us:
+```
+@misc{tdc,
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Zitnik, Marinka},
+  title={Therapeutics Data Commons: Machine Learning Datasets for Therapeutics},
+  howpublished={\url{http://tdc.hms.harvard.edu}},
+  month=nov,
+  year=2020
+}
+```
+Paper is in progress and will come out soon.
+
 
 ## TDC Data Loader
 
@@ -148,19 +165,31 @@ oracle(['CC(C)(C)....'
 ```
 Note that the graph-to-graph paired molecule generation is provided as separate [datasets](https://zitniklab.hms.harvard.edu/TDC/generation_tasks/pairmolgen/). 
 
-## Cite Us
 
-If you found our work useful, please cite us:
+## TDC Leaderboard
+
+TDC hosts a series of leaderboards for researchers to keep abreast with the state-of-the-art models on therapeutics tasks.
+
+Each dataset in TDC is a benchmark. But for a machine learning model to be useful for a specific downstream therapeutic usage, the model has to achieve consistently good performance across a set of datasets or tasks. Motivated by this, TDC intentionally group individual benchmarks into a benchmark group. Datasets in a benchmark group are centered around a theme and are all carefully selected. The dataset split and evaluation metrics are also carefully selected to reflect real-world challenges.
+
+TDC provides a programming framework to access the data in a benchmark group. We use ADMET group as an example.
+
+```python
+from tdc import BenchmarkGroup
+group = BenchmarkGroup(name = 'ADMET_Group', path = 'data/')
+predictions = {}
+
+for benchmark in group:
+    name = benchmark['name']
+    train, valid, test = benchmark['train'], benchmark['valid'], benchmark['test']
+    ## --- train your model --- ##
+    predictions[name] = y_pred
+
+group.evaluate(predictions)
+# {'caco2_wang': {'mae': 0.234}, 'hia_hou': {'roc-auc': 0.786}, ...}
 ```
-@misc{tdc,
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Zitnik, Marinka},
-  title={Therapeutics Data Commons: Machine Learning Datasets for Therapeutics},
-  howpublished={\url{http://tdc.hms.harvard.edu}},
-  month=nov,
-  year=2020
-}
-```
-Paper is in progress and will come out soon.
+
+For more functions of the `BenchmarkGroup` class, please visit [here](https://zitniklab.hms.harvard.edu/TDC/benchmark/overview/).
 
 ## Tutorials
 
@@ -175,9 +204,6 @@ We provide a series of tutorials for you to get started using TDC:
 | [104](tutorials/TDC_104_ML_Model_DeepPurpose.ipynb)   | Generate 21 ADME ML Predictors with 15 Lines of Code |
 | [105](tutorials/TDC_105_Oracle.ipynb)   | Molecule Generation Oracles                             |
 
-## Benchmark and Leaderboard
-
-We are actively working on the benchmark and leaderboard. We would release this feature in the next major release. In the meantime, if you have expertise or interest in helping build this feature, please send emails to [us](mailto:kexinhuang@hsph.harvard.edu).
 
 ## Contribute
 
