@@ -105,7 +105,7 @@ property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
 evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', \
 				  'accuracy', 'mse', 'rmse', 'mae', 'r2', 'micro-f1', 'macro-f1', \
-				  'kappa', 'avg-roc-auc', 'rp@k', 'pr@k', 'pcc']
+				  'kappa', 'avg-roc-auc', 'rp@k', 'pr@k', 'pcc', 'spearman']
 
 evaluator_name.extend(distribution_oracles)
 
@@ -157,16 +157,16 @@ admet_metrics = {'caco2_wang': 'mae',
 				'solubility_aqsoldb': 'mae',
 				'bbb_martins': 'roc-auc',
 				'ppbr_az': 'mae',
-				'vdss_lombardo': 'pcc',
+				'vdss_lombardo': 'spearman',
 				'cyp2c9_veith': 'pr-auc',
 				'cyp2d6_veith': 'pr-auc',
 				'cyp3a4_veith': 'pr-auc',
 				'cyp2c9_substrate_carbonmangels': 'pr-auc',
 				'cyp3a4_substrate_carbonmangels': 'roc-auc',
 				'cyp2d6_substrate_carbonmangels': 'pr-auc',
-				'half_life_obach': 'pcc',
-				'clearance_hepatocyte_az': 'pcc',
-				'clearance_microsome_az': 'pcc',
+				'half_life_obach': 'spearman',
+				'clearance_hepatocyte_az': 'spearman',
+				'clearance_microsome_az': 'spearman',
 				'ld50_zhu': 'mae',
 				'herg': 'roc-auc',
 				'ames': 'roc-auc',
