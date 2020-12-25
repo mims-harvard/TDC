@@ -630,3 +630,12 @@ def retrieve_benchmark_names(name):
 		for dataset in datasets:
 			dataset_names.append(dataset)
 	return dataset_names
+
+def to_submission_format(results):
+    df = pd.DataFrame(results)
+    def get_metric(x):
+        metric = []
+        for i in x:
+            metric.append(list(i.values())[0])
+        return [round(np.mean(metric), 3), round(np.std(metric), 3)]
+    return dict(df.apply(get_metric, axis = 1))
