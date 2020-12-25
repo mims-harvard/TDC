@@ -20,7 +20,7 @@ We envision that TDC can considerably accelerate machine-learning model developm
 
 [**Join TDC Mailing List**](https://groups.io/g/tdc)
 
-**Invited talk at the [National Symposium on Drug Repurposing for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
+**Invited talk at the [Harvard Symposium on Drugs for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
 
 
 ## Updates
@@ -32,8 +32,8 @@ We envision that TDC can considerably accelerate machine-learning model developm
 
 ## Features
 
-- *From bench to bedside*: TDC covers a wide range of learning tasks, including target discovery, activity screening, efficacy, safety, and manufacturing across biomedical products, including small molecules, antibodies, and vaccines.
-- *User-friendly and ready-to-use*: TDC is minimally dependent on external packages. Any TDC dataset can be retrieved using only 3 lines of code.
+- *Diverse areas of therapeutics development*: TDC covers a wide range of learning tasks, including target discovery, activity screening, efficacy, safety, and manufacturing across biomedical products, including small molecules, antibodies, and vaccines.
+- *Ready-to-use datasets*: TDC is minimally dependent on external packages. Any TDC dataset can be retrieved using only 3 lines of code.
 - *Data functions*: TDC provides extensive data functions, including data evaluators, meaningful data splits, data processors, and molecule generation oracles. 
 - *Leaderboards*: TDC provides benchmarks for fair model comparison and a systematic model development and evaluation.
 - *Open-source initiative*: TDC is an open-source initiative. If you want to get involved, let us know. 
@@ -50,23 +50,23 @@ To install the core environment dependencies of TDC, use `pip`:
 pip install PyTDC
 ```
 
-**Note**: TDC is in beta release. Please update your local copy regularly by
+**Note**: TDC is in the beta release. Please update your local copy regularly by
 
 ```bash
 pip install PyTDC --upgrade
 ```
 
-The core data loaders are designed to be lightweight, thus has minimum package dependency:
+The core data loaders are lightweight with minimum dependency on external packages:
 
 ```bash
 numpy, pandas, tqdm, scikit-learn, fuzzywuzzy
 ```
 
-For other utilities requiring extra dependencies, TDC will print out the relevant installation instruction. To install the full dependencies, please consider use the below conda-forge solution. 
+For utilities requiring extra dependencies, TDC prints installation instructions. To install full dependencies, please use the following `conda-forge` solution. 
 
 ### Using `conda`
 
-To use data functions such as molecule oracles, scaffold split, etc., they require packages such as RDKit. To do that, use the below `conda` installation: 
+Data functions for molecule oracles, scaffold split, etc., require certain packages like RDKit. To install those packages, use the following `conda` installation: 
 
 ```bash
 conda install -c conda-forge pytdc
@@ -88,25 +88,36 @@ If you found our work useful, please cite us:
 
 We are now preparing a manuscript, which we will release soon.
 
-## TDC Data Loaders
+## Design of TDC
 
-TDC covers a wide range of therapeutics tasks with varying data structures. Thus, we organize it into three layers of hierarchies. First, we divide into three distinctive machine learning **problems**:
+TDC has a unique three-layer hierarchical structure, which to our knowledge is the first attempt at systematically evaluating machine learning across the field of therapeutics. We organize TDC into three distinct *problems*, each of these problems is instantiated through a variety of *learning tasks*, and each task, in turn, is evaluated on a series of *datasets*.
+
+We choose our datasets to highlight three major areas (*problems*) where machine learning can facilitate scientific advances: single-instance prediction, multi-instance prediction, and generative modeling:
 
 * Single-instance prediction `single_pred`: Prediction of property given individual biomedical entity.
 * Multi-instance prediction `multi_pred`: Prediction of property given multiple biomedical entities. 
-* Generation `generation`: Generation of new biomedical entity.
+* Generation `generation`: Generation of a new biomedical entity.
 
-The second layer is **task**. Each therapeutic task falls into one of the machine learning problem. We create a data loader class for every *task* that inherits from the base problem data loader. 
+<p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_problems.png" alt="problems" width="500px" /></p>
 
-The last layer is **dataset**, where each task consists of many of them. As the data structure of most datasets in a task is the same, the dataset is used as a function input to the task data loader.
+The second layer in the TDC structure is organized into *learning tasks*. Improvement on these tasks range in applications, including designing new antibodies, identifying personalized combinatorial therapies, improving disease diagnosis, and finding new cures for emerging diseases. 
 
-Supposed a dataset X is from therapeutic task Y with machine learning problem Z, then to obtain the data and splits, simply type:
+Finally, in the third layer of TDC, each task is instantiated via multiple *datasets*. For each dataset, we construct data splits to simulate biomedically relevant generalizations, such as a model's ability to generalize to entirely unseen compounds, or to granularly resolve patient response to a polytherapy.
+
+## TDC Data Loaders
+
+Each machine learning problem comprises of multiple learning tasks. TDC provides a data loader class for each *task* inheriting from the base data loader. 
+
+Each learning task is instantiated through many datasets. Most datasets for a given task have the same structure. To get a dataset, use the `dataset_name` as a function input to the task data loader.
+
+Suppose you want to retrieve *dataset* `X` to study therapeutics *task* `Y` which falls under the *problem* `Z`. To obtain the dataset and its associated data split, use the following:
 
 ```python
 from tdc.Z import Y
 data = Y(name = 'X')
 splits = data.split()
 ```
+
 For example, to obtain the HIA dataset from ADME therapeutic task in the single-instance prediction problem:
 
 ```python
@@ -119,12 +130,13 @@ data.get_data(format = 'df')
 ```
 
 You can see all the datasets belonging to a task via:
+
 ```python
 from tdc.utils import retrieve_dataset_names
 retrieve_dataset_names('ADME')
 ```
 
-Explore all therapeutic tasks and datasets in the [website](https://zitniklab.hms.harvard.edu/TDC/overview/)!
+See all therapeutic tasks and datasets on the [TDC website](https://zitniklab.hms.harvard.edu/TDC/overview/)!
 
 ## TDC Data Functions
 
