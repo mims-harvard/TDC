@@ -10,13 +10,17 @@
 [![Build Status](https://travis-ci.org/mims-harvard/TDC.svg?branch=master)](https://travis-ci.org/mims-harvard/TDC)
 [![TDC CircleCI](https://circleci.com/gh/mims-harvard/TDC.svg?style=svg)](https://app.circleci.com/pipelines/github/mims-harvard/TDC)
 
-This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendly and extensive machine learning dataset hub for therapeutics. So far, it includes more than 50+ datasets for 20+ tasks (ranging from target identification, virtual screening, QSAR to manufacturing, safety surveillance and etc) in many therapeutics development stages across small molecules and biologics. 
+**Therapeutics Data Commons (TDC)** is a collection of machine learning tasks spread across different domains of therapeutics.
+
+Therapeutics machine learning is an exciting field with incredible opportunities for expansion, innovation, and impact. Datasets and benchmarks in TDC provide a systematic model development and evaluation framework that allows more machine learning researchers to contribute to the field.
+
+We envision that TDC can considerably accelerate machine-learning model development, validation and transition into production and clinical implementation. 
 
 [**Project Website**](https://zitniklab.hms.harvard.edu/TDC/)
 
 [**Join TDC Mailing List**](https://groups.io/g/tdc)
 
-**Invited talk at the [National Symposium on Drug Repurposing for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view)
+**Invited talk at the [National Symposium on Drug Repurposing for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
 
 
 ## Updates
@@ -28,12 +32,11 @@ This repository hosts **Therapeutics Data Commons (TDC)**, an open, user-friendl
 
 ## Features
 
-- *From Bench to Bedside*: covers 70+ datasets for 20+ tasks in numerous therapeutics development stages across small molecules and biologics.
-- *User-friendly*: 3 lines of codes to access any dataset and hassle-free installation.
-- *Ready-to-use*: the dataset is processed into machine learning ready format. 
-- *Data functions*: TDC supports various useful functions such as data evaluators, realistic data split functions, data processing helpers, and molecule generation oracles! 
-- *Leaderboard*: provides a benchmark for fair model comparison across many therapeutics tasks.
-- *Community-driven effort*: TDC is a community-driven effort. Contact us if you want to contribute a new dataset or task!
+- *From bench to bedside*: TDC covers a wide range of learning tasks, including target discovery, activity screening, efficacy, safety, and manufacturing across biomedical products, including small molecules, antibodies, and vaccines.
+- *User-friendly and ready-to-use*: TDC is minimally dependent on external packages. Any TDC dataset can be retrieved using only 3 lines of code.
+- *Data functions*: TDC provides extensive data functions, including data evaluators, meaningful data splits, data processors, and molecule generation oracles. 
+- *Leaderboards*: TDC provides benchmarks for fair model comparison and a systematic model development and evaluation.
+- *Open-source initiative*: TDC is an open-source initiative. If you want to get involved, let us know. 
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
 
@@ -69,23 +72,23 @@ To use data functions such as molecule oracles, scaffold split, etc., they requi
 conda install -c conda-forge pytdc
 ```
 
-
 ## Cite Us
 
 If you found our work useful, please cite us:
+
 ```
 @misc{tdc,
   author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Zitnik, Marinka},
   title={Therapeutics Data Commons: Machine Learning Datasets for Therapeutics},
-  howpublished={\url{http://tdc.hms.harvard.edu}},
+  howpublished={\url{https://zitniklab.hms.harvard.edu/TDC}},
   month=nov,
   year=2020
 }
 ```
-Paper is in progress and will come out soon.
 
+We are now preparing a manuscript, which we will release soon.
 
-## TDC Data Loader
+## TDC Data Loaders
 
 TDC covers a wide range of therapeutics tasks with varying data structures. Thus, we organize it into three layers of hierarchies. First, we divide into three distinctive machine learning **problems**:
 
@@ -166,7 +169,7 @@ oracle(['CC(C)(C)....'
 Note that the graph-to-graph paired molecule generation is provided as separate [datasets](https://zitniklab.hms.harvard.edu/TDC/generation_tasks/pairmolgen/). 
 
 
-## TDC Leaderboard
+## TDC Leaderboards
 
 TDC hosts a series of leaderboards for researchers to keep abreast with the state-of-the-art models on therapeutics tasks.
 
