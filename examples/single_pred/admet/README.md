@@ -9,14 +9,23 @@ In this directory, we show how to use DeepPurpose to build three models for ADME
 
 ## Installation
 
-Checkout the [installation page](https://github.com/kexinhuang12345/DeepPurpose#install--usage) of DeepPurpose for more details.
+```bash
+conda create -n DeepPurpose python=3.6
+conda activate DeepPurpose
+conda install -c conda-forge rdkit
+pip install git+https://github.com/bp-kelley/descriptastorus
+pip install DeepPurpose
+pip install PyTDC
+```
+
+For build from source installation, checkout the [installation page](https://github.com/kexinhuang12345/DeepPurpose#install--usage) of DeepPurpose.
 
 ## Reproduce Results
 
 ### Morgan Fingerprint + MLP
 
 ```python
-python run_morgan_mlp.py
+python run.py --model Morgan
 '''
 {'caco2_wang': [0.908, 0.06],
  'hia_hou': [0.807, 0.072],
@@ -46,7 +55,7 @@ python run_morgan_mlp.py
 ### RDKit2D Fingerprint + MLP
 
 ```python
-python run_rdkit2d_mlp.py
+python run.py --model RDKit2D
 '''
 {'caco2_wang': [0.393, 0.024],
  'hia_hou': [0.972, 0.008],
@@ -76,7 +85,7 @@ python run_rdkit2d_mlp.py
 ### CNN 1D on SMILES
 
 ```python
-python run_cnn.py
+python run.py --model CNN
 '''
 {'caco2_wang': [0.446, 0.036],
  'hia_hou': [0.869, 0.026],
