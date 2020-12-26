@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
-<link rel="canonical" href="http://localhost:4000/TDC/start/" />
-<meta property="og:url" content="http://localhost:4000/TDC/start/" />
+<link rel="canonical" href="https://tdc.hms.harvard.edu/TDC/start/" />
+<meta property="og:url" content="https://tdc.hms.harvard.edu/TDC/start/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/start/","headline":"Quick Start Guide","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"https://tdc.hms.harvard.edu/TDC/start/","headline":"Quick Start Guide","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -96,12 +96,12 @@
                 
                     
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a href="/TDC/benchmark/overview/" class="navbar-link ">Leaderboard</a>
+                        <a href="/TDC/benchmark/overview/" class="navbar-link ">Leaderboards</a>
                         <div class="navbar-dropdown">
                             
-                            <a href="/TDC/benchmark/overview/" class="navbar-item ">Guide</a>
+                            <a href="/TDC/benchmark/overview/" class="navbar-item ">Guidelines</a>
                             
-                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Group</a>
+                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Benchmark Group</a>
                             
                         </div>
                     </div>
@@ -179,7 +179,7 @@ The full collection currently includes over 70 datasets covering a wide range of
               We organize TDC into three distinct <i>problems,</i> each of these problems is instantiated through a variety of <i>learning tasks</i>, and each task, in turn, is evaluated on a series of <i>datasets</i>.
               </p> 
               <p class="is-size-5">
-              We choose our datasets to highlight three major areas (<i>problems</i>) where machine learning can facilitate scientific advances: single-instance prediction, multi-instance prediction, and generative modeling: 
+              We choose our datasets to highlight three major areas (i.e., <i>problems</i>) where machine learning can facilitate scientific advances: single-instance prediction, multi-instance prediction, and generative modeling: 
               </p>
               <ul>
 			    <li><strong>Single-instance prediction </strong> <code>single_pred</code>: Prediction of property given individual biomedical entity. </li>
@@ -202,8 +202,8 @@ The full collection currently includes over 70 datasets covering a wide range of
               model's ability to generalize to entirely unseen compounds, or to granularly resolve patient response to a polytherapy.  
               </p>
               <p class="is-size-5">
-	          Practically, we create a data loader class for every <i>task</i> that inherits from the base <i>problem</i> data loader. 
-	          Suppose you want to retrieve <i>dataset</i> `X` to study therapeutics <i>task</i> `Y` which falls under the <i>problem</i> Z. To obtain the dataset and its associated data split, use the following: 
+	          Practically, we create a data loader class for every <i>task</i> that inherits from the base data loader. 
+	          Suppose you want to retrieve <i>dataset</i> `X` to study <i>learning task</i> `Y` that belongs to a class of <i>problems</i> `Z`. To obtain the dataset and its associated data split, use the following: 
 	          </p>
 	          <p class="is-size-5"> </p>
         </div>

@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
-<link rel="canonical" href="http://localhost:4000/TDC/benchmark/admet_group/" />
-<meta property="og:url" content="http://localhost:4000/TDC/benchmark/admet_group/" />
+<link rel="canonical" href="https://tdc.hms.harvard.edu/TDC/benchmark/admet_group/" />
+<meta property="og:url" content="https://tdc.hms.harvard.edu/TDC/benchmark/admet_group/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/benchmark/admet_group/","headline":"ADMET Benchmark Group","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"https://tdc.hms.harvard.edu/TDC/benchmark/admet_group/","headline":"ADMET Benchmark Group","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -96,12 +96,12 @@
                 
                     
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a href="/TDC/benchmark/overview/" class="navbar-link ">Leaderboard</a>
+                        <a href="/TDC/benchmark/overview/" class="navbar-link ">Leaderboards</a>
                         <div class="navbar-dropdown">
                             
-                            <a href="/TDC/benchmark/overview/" class="navbar-item ">Guide</a>
+                            <a href="/TDC/benchmark/overview/" class="navbar-item ">Guidelines</a>
                             
-                            <a href="/TDC/benchmark/admet_group/" class="navbar-item is-active">ADMET Group</a>
+                            <a href="/TDC/benchmark/admet_group/" class="navbar-item is-active">ADMET Benchmark Group</a>
                             
                         </div>
                     </div>
@@ -145,22 +145,22 @@
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p class="is-size-6"> Follow the <a href="/TDC/benchmark/overview/">instruction</a> on how to use the <code>BenchmarkGroup</code> class. For every dataset, we use scaffold split into 70%/10%/20% training/validation/testing fractions. The evaluation metrics are selected given the following criteria: </p>
+<p class="is-size-5"> Follow the <a href="/TDC/benchmark/overview/">instruction</a> on how to use the <code>BenchmarkGroup</code> class. For every dataset, we use scaffold split into 70%/10%/20% training/validation/testing fractions. The evaluation metrics are selected given the following criteria: </p>
 
-<ul class="is-large">
-    <li>For binary classification,</li>
+<ul class="is-large is-size-5">
+    <li>For binary classification:</li>
     <ul class="is-large">
       <li>AUROC is used when the number of positive and negative samples are close.</li>
       <li>AUPRC is used when the number of positive samples are much smaller than negative samples. </li>
     </ul>
-    <li>For regression,</li>
+    <li>For regression:</li>
     <ul class="is-large">
       <li> MAE is used for majority of benchmarks.</li>
-      <li> For benchmarks that are usually depended on factors beyond the chemical structure, Spearman Correlation Coefficient is used. </li>
+      <li> Spearman's correlation coefficient is used for benchmarks that depend on factors beyond the chemical structure.</li>
     </ul>
 </ul>
 
-<p class="is-size-6"> We encourage submissions that contain the entire benchmark group while we also accept submissions that contain results for one of the five ADMET categories. </p>
+<p class="is-size-5"> We encourage submissions that reports results for the entire benchmark group. Still, we welcome and accept submissions that report partial results, for example, for just one of the five ADMET categories. </p>
 
 <div class="column is-12">
     <hr />

@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
-<link rel="canonical" href="http://localhost:4000/TDC/benchmark/overview/" />
-<meta property="og:url" content="http://localhost:4000/TDC/benchmark/overview/" />
+<link rel="canonical" href="https://tdc.hms.harvard.edu/TDC/benchmark/overview/" />
+<meta property="og:url" content="https://tdc.hms.harvard.edu/TDC/benchmark/overview/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/benchmark/overview/","headline":"Leaderboard Guide","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"description":"Datasets for Medicinal Machine Learning","@type":"WebPage","url":"https://tdc.hms.harvard.edu/TDC/benchmark/overview/","headline":"Leaderboard Guide","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -96,12 +96,12 @@
                 
                     
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a href="/TDC/benchmark/overview/" class="navbar-link is-active">Leaderboard</a>
+                        <a href="/TDC/benchmark/overview/" class="navbar-link is-active">Leaderboards</a>
                         <div class="navbar-dropdown">
                             
-                            <a href="/TDC/benchmark/overview/" class="navbar-item is-active">Guide</a>
+                            <a href="/TDC/benchmark/overview/" class="navbar-item is-active">Guidelines</a>
                             
-                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Group</a>
+                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Benchmark Group</a>
                             
                         </div>
                     </div>
@@ -137,21 +137,21 @@
                     
                     
 <div class="content">
-    <h1 id="leaderboard-guide">Leaderboard Guide</h1>
+    <h1 id="leaderboard-guidelines">Leaderboard Guidelines</h1>
 
-<p class="is-size-5"> TDC hosts a series of benchmarks for researchers to keep abreast with the state-of-the-art models on therapeutics tasks. </p>
+<p class="is-size-5"> TDC benchmarks provide a systematic model development and evaluation framework. TDC benchmarks can considerably accelerate machine-learning model development, validation and transition into production and clinical implementation.</p>
 
 <h2 id="benchmark-group">Benchmark Group</h2>
 
-<p class="is-size-6"> Each dataset in TDC is a benchmark. But for a machine learning model to be useful for a specific downstream therapeutic usage, the model has to achieve consistently good performance across a set of datasets or tasks. Motivated by this, TDC intentionally group individual benchmarks into a <strong>benchmark group</strong>. Datasets in a benchmark group are centered around a theme and are all carefully selected. The dataset split and evaluation metrics are also carefully selected to reflect real-world challenges. </p>
+<p class="is-size-5"> Each dataset in TDC can be thought of as a benchmark. For a machine learning model to be useful for a particular therapeutic usage, the model needs to achieve consistently good performance across a set of datasets or tasks. For this reason, we group individual benchmarks in TDC into meaningful batches, which we call <strong>benchmark groups</strong>. All datasets and tasks within a benchmark group are carefully selected and are centered around a particular theme. Further, dataset splits and evaluation metrics are also carefully selected to reflect the challenges of real-world settings where the models are ultimately implemented. </p>
 
-<h4 id="example">Example</h4>
+<h3 id="an-example-of-a-benchmark-group">An Example of a Benchmark Group</h3>
 
-<p class="is-size-6"> One important task for drug discovery is the ADMET property prediction. A machine learning model to excel at ADMET should work well for a wide range of individual ADMET indices such as Caco2, HIA and so on. Thus, the ADMET benchmark group consists of 22 datasets from <code>ADME</code> and <code>Tox</code>. </p>
+<p class="is-size-5"> One key task in drug discovery is the ADMET property prediction. A machine learning model that excels at ADMET needs to work well across a wide range of individual ADMET indices, such as Caco2, HIA and others. For this reason, TDC provides the <code>ADMET Benchmark Group</code>, which consists of 22 datasets from <code>ADME</code> and <code>Tox</code>. </p>
 
-<h2 id="access-the-benchmark-group">Access the Benchmark Group</h2>
+<h2 id="how-to-access-a-benchmark-group">How to Access a Benchmark Group</h2>
 
-<p class="is-size-6"> TDC provides a programming framework to access the data in a benchmark group. We use ADMET group as an example. </p>
+<p class="is-size-5"> TDC provides a programming framework to access the data in a benchmark group. We use ADMET group as an example. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -167,7 +167,7 @@
 <span class="c1"># {'caco2_wang': {'mae': 0.234}, 'hia_hou': {'roc-auc': 0.786}, ...}
 </span></code></pre></div></div>
 
-<p class="is-size-6"> To access and evaluate each individual benchmark, use: </p>
+<p class="is-size-5"> To access and evaluate each individual benchmark, use: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
@@ -181,14 +181,14 @@
 <span class="c1"># {'caco2_wang': {'mae': 0.234}}
 </span></code></pre></div></div>
 
-<p class="is-size-6"> You can get access to individual benchmark dataset name for a benchmark group via: </p>
+<p class="is-size-5"> You can get access to individual benchmark dataset name for a benchmark group via: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
 <span class="c1"># ['caco2_wang', 'hia_hou', ....]
 </span></code></pre></div></div>
 
-<p class="is-size-6"> In addition to the canonical data split provided above, TDC also provides a function to retrieve auxiliary training and validation splits to test model robustness. You can change the seed to get multiple splits.</p>
+<p class="is-size-5"> In addition to the canonical data split provided above, TDC also provides a function to retrieve auxiliary training and validation splits to test model robustness. You can change the seed to get multiple splits.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_auxiliary_train_valid_split</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
 <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="s">'train'</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s">'valid'</span><span class="p">]</span>
@@ -199,11 +199,11 @@
 
 <h2 id="how-to-submit-results">How to Submit Results</h2>
 
-<p class="is-size-6"> Please use this <code><a href="https://forms.gle/HYupGaV7WDuutbr9A">link</a></code> to submit your result. </p>
+<p class="is-size-5"> To submit the results of your model and be included in a TDC leaderboard, fill out <code><a href="https://forms.gle/HYupGaV7WDuutbr9A">this form</a></code>. </p>
 
 <h2 id="the-fair-guiding-principles">The FAIR Guiding Principles</h2>
 
-<p class="is-size-6"> TDC leaderboard keeps track of the state-of-the-art models in various therapeutics tasks. Thus, reproducibility is essential to TDC. TDC adheres to the FAIR guiding principle on both <a href="https://www.nature.com/articles/sdata201618%22"> data </a> and <a href="https://content.iospress.com/articles/data-science/ds190026#ref001"> software</a>. Therefore, we highly recommend submission to follow the FAIR principle as well to improve the findability, accessibility, interoperability, and reuse of the model. </p>
+<p class="is-size-5"> TDC leaderboards keep track of machine learning models across a variety of learning tasks. For this reason, we apply the FAIR4RS principles and implementation guidelines to any research software and AI/ML algorithms included in TDC leaderboards. Research software and AI/ML algorithms should be open and adhere to the FAIR principles (findable, accessible, interoperable, and repeatable) to allow repeatability, reproducibility, and reuse. Further, TDC itself follows the FAIR guidelines for both <a href="https://www.nature.com/articles/sdata201618%22"> datasets </a> as well as <a href="https://content.iospress.com/articles/data-science/ds190026#ref001">AI/ML algorithms</a>. </p>
 
 
 </div>
