@@ -75,9 +75,9 @@ conda install -c conda-forge pytdc
 If you found our work useful, please cite us:
 ```
 @misc{tdc,
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Zitnik, Marinka},
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
   title={Therapeutics Data Commons: Machine Learning Datasets for Therapeutics},
-  howpublished={\url{http://tdc.hms.harvard.edu}},
+  howpublished={\url{https://zitniklab.hms.harvard.edu/TDC/}},
   month=nov,
   year=2020
 }
