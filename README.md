@@ -130,7 +130,7 @@ Explore all therapeutic tasks and datasets in the [website](https://zitniklab.hm
 To retrieve the training/validation/test dataset split, you could simply type
 ```python 
 data = X(name = Y)
-data.get_split(seed = 'benchmark')
+data.get_split(seed = 42)
 # {'train': df_train, 'val': df_val, ''test': df_test}
 ```
 You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'scaffold', seed = 1, frac = [0.7, 0.1, 0.2])`. Check out the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) on the website for details.
