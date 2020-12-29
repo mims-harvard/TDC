@@ -1527,61 +1527,71 @@ def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
         raise NameError("This output value is not implemented.")
 
 
-'''
-    def get_AP(self, mol: Mol):
-        return AllChem.GetAtomPairFingerprint(mol, maxLength=10)
 
-    def get_PHCO(self, mol: Mol):
-        return Generate.Gen2DFingerprint(mol, Gobbi_Pharm2D.factory)
+class MoleculeLink:
 
-    def get_BPF(self, mol: Mol):
-        return GetBPFingerprint(mol)
+    '''
+    Example:
 
-    def get_BTF(self, mol: Mol):
-        return GetBTFingerprint(mol)
+    link = MoleculeLink(from = 'SMILES', to = 'Graph')
+    g = link('Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC')
+    # g: graph with edge, node features
+    g = link(['Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC',
+              'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'])
+    # g: a list of graphs with edge, node features
 
-    def get_PATH(self, mol: Mol):
-        return AllChem.RDKFingerprint(mol)
+    if from is 2D, can only to 2D output
+    if from is 3D, can do both 3D and 3D outputs
 
-    def get_ECFP4(self, mol: Mol):
-        return AllChem.GetMorganFingerprint(mol, 2)
+    from: 2D - SMILES, SMARTS, 
+          3D - SDF file, XYZ file
+    to: 2D - Graph, SMILES, SMARTS
+        3D - Columb Matrix, Our own class?
 
-    def get_ECFP6(self, mol: Mol):
-        return AllChem.GetMorganFingerprint(mol, 3)
+    '''
 
-    def get_FCFP4(self, mol: Mol):
-        return AllChem.GetMorganFingerprint(mol, 2, useFeatures=True)
+    def __init__(self, from = 'SMILES', to = 'Graph'):
+        self.from_ = from
+        self.to_ = to
 
-    def get_FCFP6(self, mol: Mol):
-        return AllChem.GetMorganFingerprint(mol, 3, useFeatures=True)
+    def __call__(self, x):
+        pass
 
-'''
+    @staticmethod
+    def eligible_format(from):
+        '''
+        given a from format, output all the available format of the from format
+        Example
 
+        MoleculeLink.eligible_format('SMILES')
+        ## ['Graph', 'SMARTS', ...] 
 
+        '''
+        pass
 
+class MoleculeFingerprint:
 
-if __name__ == "__main__":
-	smiles = '[H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C'
-	smiles = 'CCC'
-	smiles = '[NH3+][C@H](Cc1ccc(F)cc1)[C@H](O)C(=O)[O-]'
-	smiles = 'c1ccc(-c2cnc(SC3CCCC3)n2Cc2ccco2)cc1'
-	# print(similarity(smiles, smiles))
-	# print(qed(smiles))
-	# print(penalized_logp(smiles))
-	print(drd2(smiles))
-	# print(SA(smiles))
-	# list_of_smiles = ['CCC', 'fewjio', smiles, smiles]
-	# print(validity_ratio(list_of_smiles))
-	# print(unique_rate(list_of_smiles))
-	# #  conda install -c rdkit rdkit
-	# print(Mestranol_similarity(smiles))
-	# print(median1(smiles))
-	# print(median2(smiles))
-	# print(osimertinib_mpo(smiles))
-	print(gsk3(smiles))
-	print(jnk3(smiles))
-	# print(Fexofenadine_mpo(smiles))
+    '''
+    Example:
 
+    MolFP = MoleculeFingerprint(fp = 'ECFP6')
+    out = MolFp('Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC')
+    # np.array([1, 0, 1, .....])
 
+    out = MolFp(['Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC',
+                'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'])
 
+    # np.array([[1, 0, 1, .....],
+                [0, 0, 1, .....]])
+
+    
+    Supporting FPs:
+    Basic_Descriptors(atoms, chirality, ....), ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, Pubchem
+    '''
+
+    def __init__(self, fp = 'ECFP4'):
+        self.fp = fp
+
+    def __call__(self, x):
+        pass
 
