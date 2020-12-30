@@ -54,6 +54,8 @@ class DataLoader(base_dataset.DataLoader):
         self.entity1_name = 'Entity1'
         self.entity2_name = 'Entity2'
 
+        self.two_types = False
+
     def get_data(self, format='df'):
         """Add a method description here.
 
@@ -162,13 +164,14 @@ class DataLoader(base_dataset.DataLoader):
                        column_names=[self.entity1_name + '_ID',
                                      self.entity1_name,
                                      self.entity2_name + '_ID',
-                                     self.entity2_name], frac=frac)
+                                     self.entity2_name], frac=frac, two_types = self.two_types)
         self.entity1_idx = df[self.entity1_name + '_ID']
         self.entity2_idx = df[self.entity2_name + '_ID']
         self.entity1 = df[self.entity1_name]
         self.entity2 = df[self.entity2_name]
         self.y = df['Y']
         self.raw_y = self.y
+        return self
 
     def to_graph(self, threshold=None, format='edge_list', split=True,
                  frac=[0.7, 0.1, 0.2], seed=42, order='descending'):

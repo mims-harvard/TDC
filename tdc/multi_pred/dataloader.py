@@ -27,6 +27,7 @@ class DTI(bi_pred_dataset.DataLoader):
                          dataset_names=dataset_names["DTI"])
         self.entity1_name = 'Drug'
         self.entity2_name = 'Target'
+        self.two_types = True
 
         if print_stats:
             self.print_stats()
@@ -54,6 +55,7 @@ class DDI(bi_pred_dataset.DataLoader):
                          dataset_names=dataset_names["DDI"])
         self.entity1_name = 'Drug1'
         self.entity2_name = 'Drug2'
+        self.two_types = False
 
         if print_stats:
             self.print_stats()
@@ -90,6 +92,7 @@ class PPI(bi_pred_dataset.DataLoader):
                          dataset_names=dataset_names["PPI"])
         self.entity1_name = 'Protein1'
         self.entity2_name = 'Protein2'
+        self.two_types = False
 
         if print_stats:
             self.print_stats()
@@ -126,6 +129,7 @@ class PeptideMHC(bi_pred_dataset.DataLoader):
                          dataset_names=dataset_names["PeptideMHC"])
         self.entity1_name = 'Peptide'
         self.entity2_name = 'MHC'
+        self.two_types = True
 
         if print_stats:
             self.print_stats()
@@ -153,6 +157,7 @@ class MTI(bi_pred_dataset.DataLoader):
                          dataset_names=dataset_names["MTI"])
         self.entity1_name = 'miRNA'
         self.entity2_name = 'Target'
+        self.two_types = True
 
         if print_stats:
             self.print_stats()
@@ -180,6 +185,7 @@ class GDA(bi_pred_dataset.DataLoader):
                          dataset_names=dataset_names["GDA"])
         self.entity1_name = 'Gene'
         self.entity2_name = 'Disease'
+        self.two_types = True
 
         if print_stats:
             self.print_stats()
@@ -207,6 +213,7 @@ class AntibodyAff(bi_pred_dataset.DataLoader):
                          dataset_names=dataset_names["AntibodyAff"])
         self.entity1_name = 'Antibody'
         self.entity2_name = 'Antigen'
+        self.two_types = True
 
         if print_stats:
             self.print_stats()
@@ -234,6 +241,7 @@ class DrugRes(bi_pred_dataset.DataLoader):
                          dataset_names=dataset_names["DrugRes"])
         self.entity1_name = 'Drug'
         self.entity2_name = 'Cell Line'
+        self.two_types = True
 
         if print_stats:
             self.print_stats()
@@ -285,6 +293,8 @@ class Catalyst(bi_pred_dataset.DataLoader):
                          dataset_names=dataset_names["Catalyst"])
         self.entity1_name = 'Reactant'
         self.entity2_name = 'Product'
+        self.two_types = True
+        
         if print_stats:
             self.print_stats()
 

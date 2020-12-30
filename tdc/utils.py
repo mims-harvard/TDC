@@ -492,7 +492,7 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
     response = urlopen(apiurl, postdata)
     return response
 
-def NegSample(df, column_names, frac):
+def NegSample(df, column_names, frac, two_types):
     """Negative Sampling for Binary Interaction Dataset
 
     Parameters
@@ -506,30 +506,62 @@ def NegSample(df, column_names, frac):
     id1, x1, id2, x2 = column_names
     df[id1] = df[id1].apply(lambda x: str(x))
     df[id2] = df[id2].apply(lambda x: str(x))
-    df_unique = np.unique(df[[id1, id2]].values.reshape(-1))
-    pos = df[[id1, id2]].values
-    pos_set = set([frozenset([i[0], i[1]]) for i in pos])
-    np.random.seed(1234)
-    samples = np.random.choice(df_unique, size=(x, 2), replace=True)
-    neg_set = set([frozenset([i[0], i[1]]) for i in samples if i[0] != i[1]]) - pos_set
 
-    while len(neg_set) < x:
-        sample = np.random.choice(df_unique, 2, replace=False)
-        sample = frozenset([sample[0], sample[1]])
-        if sample not in pos_set:
-            neg_set.add(sample)
-    neg_list = [list(i) for i in neg_set]
+    if not two_types:
+        df_unique = np.unique(df[[id1, id2]].values.reshape(-1))
+        pos = df[[id1, id2]].values
+        pos_set = set([tuple([i[0], i[1]]) for i in pos])
+        np.random.seed(1234)
+        samples = np.random.choice(df_unique, size=(x, 2), replace=True)
+        neg_set = set([tuple([i[0], i[1]]) for i in samples if i[0] != i[1]]) - pos_set
 
-    id2seq = dict(df[[id1, x1]].values)
-    id2seq.update(df[[id2, x2]].values)
+        while len(neg_set) < x:
+            sample = np.random.choice(df_unique, 2, replace=False)
+            sample = tuple([sample[0], sample[1]])
+            if sample not in pos_set:
+                neg_set.add(sample)
+        neg_list = [list(i) for i in neg_set]
 
-    neg_list_val = []
-    for i in neg_list:
-        neg_list_val.append([i[0], id2seq[i[0]], i[1], id2seq[i[1]], 0])
+        id2seq = dict(df[[id1, x1]].values)
+        id2seq.update(df[[id2, x2]].values)
 
-    df = df.append(pd.DataFrame(neg_list_val).rename(columns = {0: id1, 1: x1, 2: id2, 3: x2, 4: 'Y'})).reset_index(drop = True)
-    return df
+        neg_list_val = []
+        for i in neg_list:
+            neg_list_val.append([i[0], id2seq[i[0]], i[1], id2seq[i[1]], 0])
+    
+        df = df.append(pd.DataFrame(neg_list_val).rename(columns = {0: id1, 1: x1, 2: id2, 3: x2, 4: 'Y'})).reset_index(drop = True)
+        return df
+    else:
+        df_unique_id1 = np.unique(df[id1].values.reshape(-1))
+        df_unique_id2 = np.unique(df[id2].values.reshape(-1))
 
+        pos = df[[id1, id2]].values
+        pos_set = set([tuple([i[0], i[1]]) for i in pos])
+        np.random.seed(1234)
+
+        sample_id1 = np.random.choice(df_unique_id1, size=len(df), replace=True)
+        sample_id2 = np.random.choice(df_unique_id2, size=len(df), replace=True)
+
+        neg_set = set([tuple([sample_id1[i], sample_id2[i]]) for i in range(len(df)) if sample_id1[i] != sample_id2[i]]) - pos_set
+
+        while len(neg_set) < len(df):
+            sample_id1 = np.random.choice(df_unique_id1, size=1, replace=True)
+            sample_id2 = np.random.choice(df_unique_id2, size=1, replace=True)
+
+            sample = tuple([sample_id1[0], sample_id2[0]])
+            if sample not in pos_set:
+                neg_set.add(sample)
+        neg_list = [list(i) for i in neg_set]
+
+        id2seq1 = dict(df_temp[[id1, x1]].values)
+        id2seq2 = dict(df_temp[[id2, x2]].values)
+
+        neg_list_val = []
+        for i in neg_list:
+            neg_list_val.append([i[0], id2seq[i[0]], i[1], id2seq[i[1]], 0])
+
+        df = df.append(pd.DataFrame(neg_list_val).rename(columns = {0: id1, 1: x1, 2: id2, 3: x2, 4: 'Y'})).reset_index(drop = True)
+        return df
 
 def uniprot2seq(ProteinID):
 	"""Get protein sequence from Uniprot ID
