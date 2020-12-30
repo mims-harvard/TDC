@@ -280,4 +280,5 @@ dataset2target_lists = {'qm7b': QM7_targets,
                             'qm9': QM9_targets,
                             'tap': TAP_targets,
                             'toxcast': ToxCast_targets,
-                            'tox21': Tox21_targets}
+                            'tox21': Tox21_targets,
+                            'leenay': leenay_targets}
