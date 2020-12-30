@@ -64,6 +64,8 @@ mti_dataset_names = ['mirtarbase']
 
 gda_dataset_names = ['disgenet']
 
+crisproutcome_dataset_names = ['leenay']
+
 drugres_dataset_names = ['gdsc1', 'gdsc2']
 
 drugsyn_dataset_names = ['oncopolypharmacology', 'drugcomb_nci60']
@@ -222,7 +224,8 @@ category_names = {'single_pred': ["Tox",
 									"Develop",
 									"QM",
 									"Paratope",
-									"Yields"],
+									"Yields",
+									"CRISPROutcome"],
 				'multi_pred': ["DTI",
 								"PPI",
 								"DDI",
@@ -271,6 +274,7 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"Catalyst": catalyst_dataset_names, 
 				"CompoundLibrary": compound_library_names,
 				"BioKG": biokg_library_names
+				"CRISPROutcome": crisproutcome_dataset_names
 				}
 
 benchmark_names = {"admet_group": admet_benchmark}
@@ -360,7 +364,7 @@ name2type = {'toxcast': 'tab',
  'half_life_obach': 'tab',
  'ld50_zhu': 'tab',
  'vdss_lombardo': 'tab'
- }
+ 'leenay':'csv'}
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -440,7 +444,7 @@ name2id = {'bbb_adenot': 4259565,
  'ld50_zhu': 4267146,
  'half_life_obach': 4266799,
  'vdss_lombardo': 4267387
- }
+ 'leenay':00000 } ## TODO:update dataverse ID
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 

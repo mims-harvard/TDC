@@ -272,6 +272,9 @@ TAP_targets = ['CDR_Length', 'PSH', 'PPC', 'PNC', 'SFvCSP']
 drugcomb_targets = ['CSS', 'Synergy_ZIP', 'Synergy_Bliss',
                     'Synergy_Loewe','Synergy_HSA']
 
+leenay_targets = ['Fraction_Insertions', 'Avg_Insertion_Length', 'Avg_Deletion_Length',
+       'Indel_Diversity', 'Fraction_Frameshifts']
+
 dataset2target_lists = {'qm7b': QM7_targets,
                             'qm8': QM8_targets,
                             'qm9': QM9_targets,
