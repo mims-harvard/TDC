@@ -193,6 +193,7 @@
   <li><a href="#data-balancing">Data Balancing</a></li>
   <li><a href="#graph-transformation-for-pair-data">Graph Transformation for Pair Data</a></li>
   <li><a href="#negative-samples-for-pair-data">Negative Samples for Pair Data</a></li>
+  <li><a href="#molecular-fingerprint-mapping">Molecular Fingerprint Mapping</a></li>
   <li><a href="#from-pubchem-cid-to-smiles">From PubChem CID to SMILES</a></li>
   <li><a href="#from-uniprot-id-to-amino-acid-sequence">From Uniprot ID to Amino Acid Sequence</a></li>
 </ul>
@@ -321,6 +322,20 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">PPI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">PPI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HuRI'</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="molecular-fingerprint-mapping">Molecular Fingerprint Mapping</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Given SMILES strings, generate cheminformatics fingerprints (ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, Pubchem). To do that, first initialize a mapping class and then feed in the SMILES string. The mapping class takes in the following input: </p>
+
+<ul>
+	<li><code>fp</code>: target fingerprint type. Choose from ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, Pubchem. </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MoleculeFingerprint</span>
+<span class="n">MolFp</span> <span class="o">=</span> <span class="n">MoleculeFingerprint</span><span class="p">(</span><span class="n">fp</span> <span class="o">=</span> <span class="s">'ECFP2'</span><span class="p">)</span>
+<span class="n">MolFp</span><span class="p">([</span><span class="s">'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)</span><span class="err">\</span><span class="s">C(=O)OC'</span><span class="p">,</span>
+       <span class="s">'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'</span><span class="p">])</span>
 </code></pre></div></div>
 
 <h3 id="from-pubchem-cid-to-smiles">From PubChem CID to SMILES</h3>
