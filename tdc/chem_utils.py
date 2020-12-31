@@ -3139,35 +3139,46 @@ class MoleculeFingerprint:
           arr = np.vstack(lst)
           return arr 
 
+def smiles2selfies(smiles):
+  return sf.encoder(smiles)
 
-class MoleculeLink:
+def selfies2smiles(selfies):
+  return sf.decoder(selfies)
+
+class MolConvert:
 
     '''
     Example:
-    link = MoleculeLink(src = 'SMILES', dst = 'Graph')
-    g = link('Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC')
-    # g: graph with edge, node features
-    g = link(['Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC',
-              'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'])
-    # g: a list of graphs with edge, node features
-    if src is 2D, dst can be only 2D output
-    if src is 3D, dst can be both 2D and 3D outputs
-    src: 2D - SMILES, SMARTS, 
-          3D - SDF file, XYZ file
-    dst: 2D - Graph, SMILES, SMARTS
-        3D - Columb Matrix, Our own class?
+        convert = MolConvert(src = ‘SMILES’, dst = ‘Graph’)
+        g = convert(‘Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC’)
+        # g: graph with edge, node features
+        g = convert(['Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC',
+                  'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'])
+        # g: a list of graphs with edge, node features
+        if src is 2D, dst can be only 2D output
+        if src is 3D, dst can be both 2D and 3D outputs
+        src: 2D - [SMILES, SELFIES]
+              3D - [SDF file, XYZ file] 
+        dst: 2D - [2D Graph (+ PyG, DGL format), Canonical SMILES, SELFIES, Fingerprints] 
+              3D - [3D graphs (adj matrix entry is (distance, bond type)), Columb Matrix] [3D graphs (adj matrix entry is (distance, angle), with biochemical features), 3D voxel, contact map]
     '''
 
-    def __init__(self, src = 'SMILES', dst = 'Graph'):
+    def __init__(self, src = 'SMILES', dst = 'Graph2D'):
         self._src = src
-        self._dst = _dst
+        self._dst = dst
 
         self.convert_dict = {
-          'SMILES': ['SMARTS', 'Graph'],
-          'SMARTS': ['SMILES', 'Graph'], 
-          'Graph': ['SMILES', 'SMARTS'],
-          'SDF': ['SMILES', 'SMARTS', 'Graph'], 
+          'SMILES': ['SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'SELFIES': ['SMILES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],
+          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],  
         }
+
+        if 'SELFIES' == src or 'SELFIES' == dst:
+          try:
+            import selfies as sf
+          except:
+            raise Exception("Please install selfies via pip install selfies")
 
         try:
           assert src in self.convert_dict
@@ -3178,9 +3189,16 @@ class MoleculeLink:
         except:
           raise Exception('It is not supported to convert src to dst.')
 
+        if src == 'SMILES' and dst == 'SELFIES':
+          self.func = smiles2selfies
+
 
     def __call__(self, x):
-        pass
+      if type(x) == str:
+        return self.func(x)
+      elif type(x) == list:
+        return list(map(self.func, x))
+
 
     @staticmethod
     def eligible_format(src):
@@ -3191,16 +3209,23 @@ class MoleculeLink:
         ## ['Graph', 'SMARTS', ...] 
         '''
         convert_dict = {
-          'SMILES': ['SMARTS', 'Graph'],
-          'SMARTS': ['SMILES', 'Graph'], 
-          'Graph': ['SMILES', 'SMARTS'],
-          'SDF': ['SMILES', 'SMARTS', 'Graph'], 
-        }        
+          'SMILES': ['SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'SELFIES': ['SMILES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],
+          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],  
+        }     
         try:
-          assert src in self.convert_dict
+          assert src in convert_dict
         except:
           raise Exception("src format is not supported")
         return convert_dict[src] 
+
+
+######## test the MolConvert
+# benzene = "c1ccccc1"
+# convert = MolConvert(src = 'SMILES', dst = 'SELFIES')
+# print(convert(benzene))
+
 
 ######## test the MoleculeFingerprint
 # fps = ['ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem']
