@@ -3145,6 +3145,62 @@ def smiles2selfies(smiles):
 def selfies2smiles(selfies):
   return sf.decoder(selfies)
 
+
+def smiles2mol(smiles):
+    mol = Chem.MolFromSmiles(smiles)
+    if mol is None: 
+        return None
+    Chem.Kekulize(mol)
+    return mol 
+
+def bondtype2idx(bond_type):
+  if bond_type == Chem.rdchem.BondType.SINGLE:
+    return 1
+  elif bond_type == Chem.rdchem.BondType.DOUBLE:
+    return 2
+  elif bond_type == Chem.rdchem.BondType.TRIPLE:
+    return 3
+  elif bond_type == Chem.rdchem.BondType.AROMATIC:
+    return 4
+
+def smiles2graph2D(smiles):
+  mol = smiles2mol(smiles)
+  n_atoms = mol.GetNumAtoms()
+  idx2atom = {atom.GetIdx():atom.GetSymbol() for atom in mol.GetAtoms()}
+  adj_matrix = np.zeros((n_atoms, n_atoms), dtype = int)
+  for bond in mol.GetBonds():
+    a1 = bond.GetBeginAtom()
+    a2 = bond.GetEndAtom()
+    idx1 = a1.GetIdx()
+    idx2 = a2.GetIdx() 
+    bond_type = bond.GetBondType()
+    bond_idx = bondtype2idx(bond_type)
+    adj_matrix[idx1,idx2] = bond_idx
+    adj_matrix[idx2,idx1] = bond_idx
+  return idx2atom, adj_matrix
+
+def selfies2graph2D(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2graph2D(smiles)
+
+def sdf2smiles(sdf):
+
+
+  return  
+
+def xyz2smiles(xyz):
+  
+  return  
+
+
+def sdf2graph3d(sdf):
+
+  return 
+
+
+def xyz2graph3d(sdf):
+  return 
+
 class MolConvert:
 
     '''
@@ -3160,7 +3216,7 @@ class MolConvert:
         src: 2D - [SMILES, SELFIES]
               3D - [SDF file, XYZ file] 
         dst: 2D - [2D Graph (+ PyG, DGL format), Canonical SMILES, SELFIES, Fingerprints] 
-              3D - [3D graphs (adj matrix entry is (distance, bond type)), Columb Matrix] [3D graphs (adj matrix entry is (distance, angle), with biochemical features), 3D voxel, contact map]
+              3D - [3D graphs (adj matrix entry is (distance, bond type)), Columb Matrix] 
     '''
 
     def __init__(self, src = 'SMILES', dst = 'Graph2D'):
@@ -3191,6 +3247,8 @@ class MolConvert:
 
         if src == 'SMILES' and dst == 'SELFIES':
           self.func = smiles2selfies
+        elif src == 'SELFIES' and dst == 'SMILES':
+          self.func = selfies2smiles
 
 
     def __call__(self, x):
