@@ -3902,20 +3902,62 @@ def xyzfile2graph3d(xyzfile):
   return idx2atom, distance_adj_matrix, BO 
 ############## end xyz2mol ################
 
-def sdf2smiles(sdf):
-
-
-  return 
+def sdffile2smiles_lst(sdffile):
+  from rdkit.Chem.PandasTools import LoadSDF
+  df = LoadSDF(sdffile, smilesName='SMILES')
+  smiles_lst = df['SMILES'].to_list() 
+  return smiles_lst
  
-def sdf2graph3d(sdf):
 
-  return 
+def sdffile2graph3d_lst(sdffile):
+  with open(sdffile, 'r') as fin:
+    lines = fin.readlines() 
+  texts = '\t\t\t'.join(lines)
+  graph3d_lst = []
+  texts = texts.split('$$$$')
+  for single_block in texts:
+    if single_block.strip()=='':
+      break
+    try:
+      lines = single_block.split('\t\t\t')
+      lines = list(filter(lambda x:len(x.strip())>0, lines))
+      # for line in lines:
+      #   print(line.strip())
+      atoms_feature = []
+      bonds_feature = []
+      line = lines[1]
+      atom_num = int(line.strip().split()[0])
+      bond_num = int(line.strip().split()[1]) 
+      # if atom_num > 1000:
+      #   length = int(len(line.strip().split()[0])/2)
+      #   atom_num = int(line.strip().split()[0][:length])
+      #   bond_num = int(line.strip().split()[0][length:])
+      #   print(atom_num, bond_num)
+
+      atom_lines = lines[2:2+atom_num]
+      bond_lines = lines[2+atom_num:2+atom_num+bond_num]
+      distance_adj_matrix = np.zeros((atom_num, atom_num))
+      bondtype_adj_matrix = np.zeros((atom_num, atom_num), dtype = int)
+      idx2atom = {idx:line.strip().split()[3] for idx,line in enumerate(atom_lines)}
+      coordinates = [[float(line.strip().split()[0]), float(line.strip().split()[1]), float(line.strip().split()[2])] for line in atom_lines]
+      for i in range(atom_num):
+        for j in range(i+1, atom_num):
+          distance_adj_matrix[i,j] = distance_adj_matrix[j,i] = distance3d(coordinates[i], coordinates[j])
+      for line in bond_lines:
+        a1 = int(line.strip().split()[0])-1
+        a2 = int(line.strip().split()[1])-1
+        bondtype = int(line.strip().split()[2])
+        bondtype_adj_matrix[a1,a2]=bondtype_adj_matrix[a2,a1] = bondtype
+      graph3d_lst.append((idx2atom, distance_adj_matrix, bondtype_adj_matrix))
+    except:
+      pass 
+  return graph3d_lst 
 
 
-def sdf2selfies(sdf):
-  smiles = sdf2smiles(sdf)
-  selfies = smiles2selfies(smiles)
-  return selfies 
+def sdffile2selfies_lst(sdf):
+  smiles_lst = sdffile2smiles_lst(sdf)
+  selfies_lst = list(map(smiles2selfies, smiles_lst))
+  return selfies_lst 
 
 
 
@@ -3981,11 +4023,11 @@ class MolConvert:
           self.func = xyzfile2graph3d 
         ### SDF file 
         elif src == 'SDF' and dst == 'Graph3D':
-          self.func = sdf2graph3d 
+          self.func = sdffile2graph3d_lst 
         elif src == 'SDF' and dst == 'SMILES':
-          self.func = sdf2smiles 
+          self.func = sdffile2smiles_lst  
         elif src == 'SDF' and dst == 'SELFIES':
-          self.func = sdf2selfies 
+          self.func = sdffile2selfies_lst 
 
 
     def __call__(self, x):
