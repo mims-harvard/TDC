@@ -404,7 +404,7 @@ def similarity(a, b):
 
 def qed(s):
 	if s is None: 
-		return 0.0
+		return 0.0  
 	mol = Chem.MolFromSmiles(s)
 	if mol is None: 
 		return 0.0
@@ -3183,11 +3183,7 @@ def selfies2graph2D(selfies):
   smiles = selfies2smiles(selfies)
   return smiles2graph2D(smiles)
 
-def sdf2smiles(sdf):
-
-
-  return  
-
+ 
 
 
 ############## begin xyz2mol ################
@@ -3626,7 +3622,6 @@ def AC2mol(mol, AC, atoms, charge, allow_charged_fragments=True, use_graph=True)
         allow_charged_fragments=allow_charged_fragments,
         use_graph=use_graph)
 
-    # print('BO', BO)
 
     # add BO connectivity and charge info to mol object
     mol = BO2mol(
@@ -3645,7 +3640,7 @@ def AC2mol(mol, AC, atoms, charge, allow_charged_fragments=True, use_graph=True)
     mols = rdchem.ResonanceMolSupplier(mol, Chem.UNCONSTRAINED_CATIONS, Chem.UNCONSTRAINED_ANIONS)
     mols = [mol for mol in mols]
 
-    return mols
+    return mols, BO 
 
 
 def get_proto_mol(atoms):
@@ -3836,7 +3831,7 @@ def xyz2mol(atoms, coordinates,
     # print('AC, mol', AC, mol)
     # Convert AC to bond order matrix and add connectivity and charge info to
     # mol object
-    new_mols = AC2mol(mol, AC, atoms, charge,
+    new_mols, BO = AC2mol(mol, AC, atoms, charge,
         allow_charged_fragments=allow_charged_fragments,
         use_graph=use_graph)
     # Check for stereocenters and chiral centers
@@ -3844,7 +3839,7 @@ def xyz2mol(atoms, coordinates,
     if embed_chiral:
         for new_mol in new_mols:
             chiral_stereo_check(new_mol)
-    return new_mols
+    return new_mols, BO 
 
 def xyzfile2mol(xyzfile):
   atoms, charge, xyz_coordinates = read_xyz_file(xyzfile)
@@ -3866,34 +3861,63 @@ def xyzfile2mol(xyzfile):
   charge = charge 
 
   # Get the molobjs
-  mols = xyz2mol(atoms, xyz_coordinates,
+  mols, BO = xyz2mol(atoms, xyz_coordinates,
         charge=charge,
         use_graph=quick,
         allow_charged_fragments=charged_fragments,
         embed_chiral=embed_chiral,
         use_huckel=use_huckel)
-  return mols[0]
+  return mols[0], BO
 
 def mol2smiles(mol):
   smiles = Chem.MolToSmiles(mol)
   return smiles
 
+def xyzfile2smiles(xyzfile):
+  mol, _ = xyzfile2mol(xyzfile)
+  smiles = mol2smiles(mol)
+  return smiles 
+
+def xyzfile2selfies(xyzfile):
+  smiles = xyzfile2smiles(xyzfile)
+  selfies = smiles2selfies(smiles)
+  return selfies 
+
+def distance3d(coordinate_1, coordinate_2):
+  return np.sqrt(sum([(c1-c2)**2 for c1,c2 in zip(coordinate_1, coordinate_2)])) 
+
+def upper_atom(atomsymbol):
+  return atomsymbol[0].upper() + atomsymbol[1:]
+
+def xyzfile2graph3d(xyzfile):
+  atoms, charge, xyz_coordinates = read_xyz_file(file)
+  num_atoms = len(atoms)
+  distance_adj_matrix = np.zeros((num_atoms, num_atoms))
+  for i in range(num_atoms):
+    for j in range(i+1, num_atoms):
+      distance = distance3d(xyz_coordinates[i], xyz_coordinates[j])
+      distance_adj_matrix[i,j] = distance_adj_matrix[j,i] = distance 
+  idx2atom = {idx:upper_atom(str_atom(atom)) for idx,atom in enumerate(atoms)}
+  mol, BO = xyzfile2mol(xyzfile)
+  return idx2atom, distance_adj_matrix, BO 
 ############## end xyz2mol ################
 
+def sdf2smiles(sdf):
 
 
-def xyz2smiles(xyz):
-  
-  return  
-
-
+  return 
+ 
 def sdf2graph3d(sdf):
 
   return 
 
 
-def xyz2graph3d(sdf):
-  return 
+def sdf2selfies(sdf):
+  smiles = sdf2smiles(sdf)
+  selfies = smiles2selfies(smiles)
+  return selfies 
+
+
 
 class MolConvert:
 
@@ -3942,8 +3966,26 @@ class MolConvert:
 
         if src == 'SMILES' and dst == 'SELFIES':
           self.func = smiles2selfies
+        elif src == 'SMILES' and dst == 'Graph2D':
+          self.func = smiles2graph2D
         elif src == 'SELFIES' and dst == 'SMILES':
           self.func = selfies2smiles
+        elif src == 'SELFIES' and dst == 'Graph2D':
+          self.func = selfies2graph2D
+        ### load from xyz file, input is a filename (str), only contain one smiles 
+        elif src == 'XYZ' and dst == 'SMILES':
+          self.func = xyzfile2smiles
+        elif src == 'XYZ' and dst == 'SELFIES':
+          self.func = xyzfile2selfies 
+        elif src == 'XYZ' and dst == 'Graph3D':
+          self.func = xyzfile2graph3d 
+        ### SDF file 
+        elif src == 'SDF' and dst == 'Graph3D':
+          self.func = sdf2graph3d 
+        elif src == 'SDF' and dst == 'SMILES':
+          self.func = sdf2smiles 
+        elif src == 'SDF' and dst == 'SELFIES':
+          self.func = sdf2selfies 
 
 
     def __call__(self, x):
