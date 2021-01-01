@@ -24,6 +24,7 @@ We envision that TDC can considerably accelerate machine-learning model developm
 
 
 ## Updates
+- Checkout **[Contribution Guide](CONTRIBUTE.md)** to add new dataset, task, function!
 - `0.1.3`: Added new therapeutics task on CRISPR Repair Outcome Prediction! Added a data function to map molecule to popular cheminformatics fingerprint.
 - `0.1.2`: The first TDC Leaderboard is released! Checkout the leaderboard guide [here](https://zitniklab.hms.harvard.edu/TDC/benchmark/overview/) and the ADMET Leaderboard [here](https://zitniklab.hms.harvard.edu/TDC/benchmark/admet_group/).
 - `0.1.1`: Replaced VD, Half Life and Clearance datasets from new sources that have higher qualities. Added LD50 to Tox.
