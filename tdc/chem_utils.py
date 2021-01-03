@@ -742,13 +742,10 @@ def kl_divergence(generated_smiles_lst, training_smiles_lst):
   score = sum(partial_scores) / len(partial_scores)
   return score 
 
-def fcd_distance(generated_smiles_lst, training_smiles_lst):
-  try:
-    import fcd
-  except:
-    raise ImportError("Please install fcd by 'pip install FCD'!")
-  import pkgutil, tempfile, os
 
+
+def fcd_distance_tf(generated_smiles_lst, training_smiles_lst):
+  import pkgutil, tempfile, os
   if 'chemnet' not in globals().keys():
     global chemnet
     ### _load_chemnet
@@ -775,8 +772,27 @@ def fcd_distance(generated_smiles_lst, training_smiles_lst):
   FCD = fcd.calculate_frechet_distance(mu1=mu_ref, mu2=mu,
                                      sigma1=cov_ref, sigma2=cov)
   score = np.exp(-0.2 * FCD)
-  return score
+  return score  
 
+def fcd_distance_torch(generated_smiles_lst, training_smiles_lst):
+  import os 
+  os.environ['KMP_DUPLICATE_LIB_OK']='True'
+  from fcd_torch import FCD
+  fcd = FCD(device='cpu', n_jobs=8)
+  return fcd(generated_smiles_lst, training_smiles_lst)
+
+def fcd_distance(generated_smiles_lst, training_smiles_lst):
+  try:
+    import tensorflow, fcd
+    global fcd 
+  except:
+    try:
+      import torch, fcd_torch 
+      return fcd_distance_torch(generated_smiles_lst, training_smiles_lst)
+    except:
+      raise ImportError("Please install fcd by 'pip install FCD' (for Tensorflow backend) \
+                                            or 'pip install fcd_torch' (for PyTorch backend)!")
+  return fcd_distance_tf(generated_smiles_lst, training_smiles_lst)
 
 
 
