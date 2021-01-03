@@ -4012,6 +4012,27 @@ def sdffile2selfies_lst(sdf):
 
 
 
+
+def smiles_lst2coulomb(smiles_lst):
+  molecules = [Molecule(smiles, 'smiles') for smiles in smiles_lst]
+  for mol in molecules:   
+    mol.to_xyz(optimizer='UFF')
+  cm = CoulombMatrix(cm_type='UM', n_jobs=-1)
+  features = cm.represent(molecules)
+  features = features.to_numpy() 
+  return features 
+  ## (nmol, max_atom_n**2),
+  ## where max_atom_n is maximal number of atom in the smiles_lst 
+  ## features[i].reshape(max_atom_n, max_atom_n)[:3,:3]  -> 3*3 Coulomb matrix   
+
+def sdffile2coulomb(sdf):
+  smiles_lst = sdffile2smiles_lst(sdf)
+  return smiles_lst2coulomb(smiles_lst)
+
+def xyzfile2coulomb(xyzfile):
+  smiles = xyzfile2smiles(xyzfile)
+  return smiles_lst2coulomb([smiles])
+
 class MolConvert:
 
     '''
@@ -4027,7 +4048,7 @@ class MolConvert:
         src: 2D - [SMILES, SELFIES]
               3D - [SDF file, XYZ file] 
         dst: 2D - [2D Graph (+ PyG, DGL format), Canonical SMILES, SELFIES, Fingerprints] 
-              3D - [3D graphs (adj matrix entry is (distance, bond type)), Columb Matrix] 
+              3D - [3D graphs (adj matrix entry is (distance, bond type)), Coulumb Matrix] 
     '''
 
     def __init__(self, src = 'SMILES', dst = 'Graph2D'):
@@ -4037,8 +4058,8 @@ class MolConvert:
         self.convert_dict = {
           'SMILES': ['SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
           'SELFIES': ['SMILES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
-          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],
-          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],  
+          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],
+          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
         }
 
         if 'SELFIES' == src or 'SELFIES' == dst:
@@ -4046,7 +4067,14 @@ class MolConvert:
             import selfies as sf
             global sf 
           except:
-            raise Exception("Please install selfies via pip install selfies")
+            raise Exception("Please install selfies via 'pip install selfies'")
+
+        if 'Coulumb' == dst:
+          try:
+            from chemml.chem import CoulombMatrix, Molecule
+            global CoulombMatrix, Molecule 
+          except:
+            raise Exception("Please install chemml via 'pip install pybel' and 'pip install chemml'. ")
 
         try:
           assert src in self.convert_dict
@@ -4105,6 +4133,9 @@ class MolConvert:
           self.func = xyzfile2selfies 
         elif src == 'XYZ' and dst == 'Graph3D':
           self.func = xyzfile2graph3d 
+        elif src == 'XYZ' and dst == 'Coulomb':
+          self.func = xyzfile2coulomb 
+
         ### SDF file 
         elif src == 'SDF' and dst == 'Graph3D':
           self.func = sdffile2graph3d_lst 
@@ -4112,6 +4143,8 @@ class MolConvert:
           self.func = sdffile2smiles_lst  
         elif src == 'SDF' and dst == 'SELFIES':
           self.func = sdffile2selfies_lst 
+        elif src == 'SDF' and dst == 'Coulomb':
+          self.func = sdffile2coulomb
 
 
 
