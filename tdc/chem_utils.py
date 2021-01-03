@@ -3145,6 +3145,41 @@ def smiles2selfies(smiles):
 def selfies2smiles(selfies):
   return sf.decoder(selfies)
 
+def selfies2ECFP2(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2ECFP2(smiles)
+
+def selfies2ECFP4(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2ECFP4(smiles)
+
+def selfies2ECFP6(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2ECFP6(smiles)
+
+def selfies2MACCS(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2maccs(smiles)
+
+def selfies2Daylight(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2daylight(smiles)
+
+
+def selfies2RDKit2D(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2rdkit2d(smiles)
+
+
+def selfies2Morgan(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2morgan(smiles)
+
+def selfies2Pubchem(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2pubchem(smiles)
+
+
 
 def smiles2mol(smiles):
     mol = Chem.MolFromSmiles(smiles)
@@ -4010,10 +4045,43 @@ class MolConvert:
           self.func = smiles2selfies
         elif src == 'SMILES' and dst == 'Graph2D':
           self.func = smiles2graph2D
+        elif src == 'SMILES' and dst == 'ECFP2':
+          self.func = smiles2ECFP2
+        elif src == 'SMILES' and dst == 'ECFP4':
+          self.func = smiles2ECFP4 
+        elif src == 'SMILES' and dst == 'ECFP6':
+          self.func = smiles2ECFP6 
+        elif src == 'SMILES' and dst == 'MACCS':
+          self.func = smiles2maccs 
+        elif src == 'SMILES' and dst == 'Daylight':
+          self.func = smiles2daylight 
+        elif src == 'SMILES' and dst == 'RDKit2D':
+          self.func = smiles2rdkit2d 
+        elif src == 'SMILES' and dst == 'Morgan':
+          self.func = smiles2morgan 
+        elif src == 'SMILES' and dst == 'Pubchem':
+          self.func = smiles2pubchem 
         elif src == 'SELFIES' and dst == 'SMILES':
           self.func = selfies2smiles
         elif src == 'SELFIES' and dst == 'Graph2D':
           self.func = selfies2graph2D
+        elif src == 'SELFIES' and dst == 'ECFP2':
+          self.func = selfies2ECFP2
+        elif src == 'SELFIES' and dst == 'ECFP4':
+          self.func = selfies2ECFP4
+        elif src == 'SELFIES' and dst == 'ECFP6':
+          self.func = selfies2ECFP6
+        elif src == 'SELFIES' and dst == 'MACCS':
+          self.func = selfies2MACCS
+        elif src == 'SELFIES' and dst == 'Daylight':
+          self.func = selfies2Daylight
+        elif src == 'SELFIES' and dst == 'RDKit2D':
+          self.func = selfies2RDKit2D
+        elif src == 'SELFIES' and dst == 'Morgan':
+          self.func = selfies2Morgan
+        elif src == 'SELFIES' and dst == 'Pubchem':
+          self.func = selfies2Pubchem
+
         ### load from xyz file, input is a filename (str), only contain one smiles 
         elif src == 'XYZ' and dst == 'SMILES':
           self.func = xyzfile2smiles
@@ -4028,6 +4096,7 @@ class MolConvert:
           self.func = sdffile2smiles_lst  
         elif src == 'SDF' and dst == 'SELFIES':
           self.func = sdffile2selfies_lst 
+
 
 
     def __call__(self, x):
@@ -4056,6 +4125,8 @@ class MolConvert:
         except:
           raise Exception("src format is not supported")
         return convert_dict[src] 
+
+
 
 
 ######## test the MolConvert
