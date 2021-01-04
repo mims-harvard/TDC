@@ -45,7 +45,6 @@ from .utils import oracle_load
 
 
 
-
 '''
 copy from https://benevolent.ai/guacamol.
 
@@ -4213,7 +4212,9 @@ class MolConvert:
         except:
           raise Exception('It is not supported to convert src to dst.')
 
-        if src == 'SMILES' and dst == 'SELFIES':
+        if src == 'SMILES' and dst == 'SMILES':
+          self.func = canonicalize
+        elif src == 'SMILES' and dst == 'SELFIES':
           self.func = smiles2selfies
         elif src == 'SMILES' and dst == 'Graph2D':
           self.func = smiles2graph2D
@@ -4322,7 +4323,7 @@ class MolConvert:
         ## ['Graph', 'SMARTS', ...] 
         '''
         convert_dict = {
-          'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'SMILES': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
           'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
           'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
           'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
