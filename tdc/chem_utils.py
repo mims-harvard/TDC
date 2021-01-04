@@ -3290,8 +3290,28 @@ def molfile2PyG(molfile):
 
 ############### DGL begin ###############
 def smiles2DGL(smiles):
-  
-  pass
+  mol = Chem.MolFromSmiles(smiles)
+  n_atoms = mol.GetNumAtoms()
+  bond_features = []
+  for bond in mol.GetBonds():
+    a1 = bond.GetBeginAtom()
+    a2 = bond.GetEndAtom()
+    idx1 = a1.GetIdx()
+    idx2 = a2.GetIdx() 
+    bond_features.extend([[idx1, idx2], [idx2, idx1]])
+  src, dst = tuple(zip(*bond_features))
+  g = dgl.DGLGraph()
+  g.add_nodes(n_atoms)
+  g.add_edges(src, dst) 
+  return g 
+
+def selfies2DGL(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2DGL(smiles)
+
+def molfile2DGL(molfile):
+  smiles = molfile2smiles(molfile)
+  return smiles2DGL(smiles)
 
 
 ############### DGL end ###############
@@ -4178,6 +4198,13 @@ class MolConvert:
           except:
             raise Exception("Please install PyTorch via 'pip install torch'.")
 
+        if 'DGL' == dst:
+          try: 
+            import dgl
+            global dgl 
+          except:
+            raise Exception("Please install PyTorch via 'pip install dgl'.")
+
         try:
           assert src in self.convert_dict
         except:
@@ -4191,6 +4218,10 @@ class MolConvert:
           self.func = smiles2selfies
         elif src == 'SMILES' and dst == 'Graph2D':
           self.func = smiles2graph2D
+        elif src == 'SMILES' and dst == 'PyG':
+          self.func = smiles2PyG 
+        elif src == 'SMILES' and dsst == 'DGL':
+          self.func = smiles2DGL
         elif src == 'SMILES' and dst == 'ECFP2':
           self.func = smiles2ECFP2
         elif src == 'SMILES' and dst == 'ECFP4':
@@ -4207,10 +4238,16 @@ class MolConvert:
           self.func = smiles2morgan 
         elif src == 'SMILES' and dst == 'Pubchem':
           self.func = smiles2pubchem 
+
+        #### SELFIES 
         elif src == 'SELFIES' and dst == 'SMILES':
           self.func = selfies2smiles
         elif src == 'SELFIES' and dst == 'Graph2D':
           self.func = selfies2graph2D
+        elif src == 'SELFIES' and dst == 'PyG':
+          self.func = selfies2PyG 
+        elif src == 'SELFIES' and dsst == 'DGL':
+          self.func = selfies2DGL
         elif src == 'SELFIES' and dst == 'ECFP2':
           self.func = selfies2ECFP2
         elif src == 'SELFIES' and dst == 'ECFP4':
@@ -4286,10 +4323,10 @@ class MolConvert:
         ## ['Graph', 'SMARTS', ...] 
         '''
         convert_dict = {
-          'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
-          'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
           'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],
           'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
         }
