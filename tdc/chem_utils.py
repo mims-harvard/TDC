@@ -45,7 +45,6 @@ from .utils import oracle_load
 
 
 
-
 '''
 copy from https://benevolent.ai/guacamol.
 
@@ -3234,8 +3233,87 @@ def selfies2graph2D(selfies):
   smiles = selfies2smiles(selfies)
   return smiles2graph2D(smiles)
 
- 
 
+def get_mol(smiles):
+    mol = Chem.MolFromSmiles(smiles)
+    if mol is None: 
+        return None
+    Chem.Kekulize(mol)
+    return mol
+
+############### PyG begin ###############
+ELEM_LIST = ['C', 'N', 'O', 'S', 'F', 'Si', 'P', 'Cl', 'Br', 'Mg', 'Na', 'Ca', 'Fe', 'Al', 'I', 'B', 'K', 'Se', 'Zn', 'H', 'Cu', 'Mn', 'unknown']
+ATOM_FDIM = len(ELEM_LIST) + 6 + 5 + 4 + 1
+BOND_FDIM = 5 + 6
+MAX_NB = 6
+# https://github.com/kexinhuang12345/DeepPurpose/blob/master/DeepPurpose/chemutils.py
+
+def onek_encoding_unk(x, allowable_set):
+    if x not in allowable_set:
+        x = allowable_set[-1]
+    return list(map(lambda s: x == s, allowable_set))
+
+def get_atom_features(atom):
+    return torch.Tensor(onek_encoding_unk(atom.GetSymbol(), ELEM_LIST) 
+            + onek_encoding_unk(atom.GetDegree(), [0,1,2,3,4,5]) 
+            + onek_encoding_unk(atom.GetFormalCharge(), [-1,-2,1,2,0])
+            + onek_encoding_unk(int(atom.GetChiralTag()), [0,1,2,3])
+            + [atom.GetIsAromatic()])
+
+def smiles2PyG(smiles):
+  mol = Chem.MolFromSmiles(smiles)
+  n_atoms = mol.GetNumAtoms()
+  atom_features = [get_atom_features(atom) for atom in mol.GetAtoms()]
+  atom_features = torch.stack(atom_features)
+  y = [atom.GetSymbol() for atom in mol.GetAtoms()]
+  y = list(map(lambda x: ELEM_LIST.index(x) if x in ELEM_LIST else len(ELEM_LIST)-1 , y))
+  y = torch.LongTensor(y)
+  bond_features = []
+  for bond in mol.GetBonds():
+    a1 = bond.GetBeginAtom()
+    a2 = bond.GetEndAtom()
+    idx1 = a1.GetIdx()
+    idx2 = a2.GetIdx() 
+    bond_features.extend([[idx1, idx2], [idx2, idx1]])
+  bond_features = torch.LongTensor(bond_features)
+  return atom_features, y, bond_features 
+
+def selfies2PyG(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2PyG(smiles)
+
+def molfile2PyG(molfile):
+  smiles = molfile2smiles(molfile)
+  return smiles2PyG(smiles)
+############### PyG end ###############
+
+############### DGL begin ###############
+def smiles2DGL(smiles):
+  mol = Chem.MolFromSmiles(smiles)
+  n_atoms = mol.GetNumAtoms()
+  bond_features = []
+  for bond in mol.GetBonds():
+    a1 = bond.GetBeginAtom()
+    a2 = bond.GetEndAtom()
+    idx1 = a1.GetIdx()
+    idx2 = a2.GetIdx() 
+    bond_features.extend([[idx1, idx2], [idx2, idx1]])
+  src, dst = tuple(zip(*bond_features))
+  g = dgl.DGLGraph()
+  g.add_nodes(n_atoms)
+  g.add_edges(src, dst) 
+  return g 
+
+def selfies2DGL(selfies):
+  smiles = selfies2smiles(selfies)
+  return smiles2DGL(smiles)
+
+def molfile2DGL(molfile):
+  smiles = molfile2smiles(molfile)
+  return smiles2DGL(smiles)
+
+
+############### DGL end ###############
 
 ############## begin xyz2mol ################
 global __ATOM_LIST__
@@ -4012,6 +4090,61 @@ def sdffile2selfies_lst(sdf):
 
 
 
+
+def smiles_lst2coulomb(smiles_lst):
+  molecules = [Molecule(smiles, 'smiles') for smiles in smiles_lst]
+  for mol in molecules:   
+    mol.to_xyz(optimizer='UFF')
+  cm = CoulombMatrix(cm_type='UM', n_jobs=-1)
+  features = cm.represent(molecules)
+  features = features.to_numpy() 
+  return features 
+  ## (nmol, max_atom_n**2),
+  ## where max_atom_n is maximal number of atom in the smiles_lst 
+  ## features[i].reshape(max_atom_n, max_atom_n)[:3,:3]  -> 3*3 Coulomb matrix   
+
+def sdffile2coulomb(sdf):
+  smiles_lst = sdffile2smiles_lst(sdf)
+  return smiles_lst2coulomb(smiles_lst)
+
+def xyzfile2coulomb(xyzfile):
+  smiles = xyzfile2smiles(xyzfile)
+  return smiles_lst2coulomb([smiles])
+
+
+##### mol file
+def molfile2smiles(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles 
+
+def molfile2selfies(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2selfies(smiles)
+
+def molfile2graph2d(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2graph2D(smiles)
+
+##### mol2 file 
+def mol2file2smiles(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles 
+
+def mol2file2selfies(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2selfies(smiles)
+
+def mol2file2graph2d(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2graph2D(smiles)
+
+
 class MolConvert:
 
     '''
@@ -4027,7 +4160,7 @@ class MolConvert:
         src: 2D - [SMILES, SELFIES]
               3D - [SDF file, XYZ file] 
         dst: 2D - [2D Graph (+ PyG, DGL format), Canonical SMILES, SELFIES, Fingerprints] 
-              3D - [3D graphs (adj matrix entry is (distance, bond type)), Columb Matrix] 
+              3D - [3D graphs (adj matrix entry is (distance, bond type)), Coulumb Matrix] 
     '''
 
     def __init__(self, src = 'SMILES', dst = 'Graph2D'):
@@ -4035,18 +4168,40 @@ class MolConvert:
         self._dst = dst
 
         self.convert_dict = {
-          'SMILES': ['SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'SELFIES': ['SMILES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
-          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],
-          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],  
+          'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],
+          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
         }
-
         if 'SELFIES' == src or 'SELFIES' == dst:
           try:
             import selfies as sf
             global sf 
           except:
-            raise Exception("Please install selfies via pip install selfies")
+            raise Exception("Please install selfies via 'pip install selfies'")
+
+        if 'Coulumb' == dst:
+          try:
+            from chemml.chem import CoulombMatrix, Molecule
+            global CoulombMatrix, Molecule 
+          except:
+            raise Exception("Please install chemml via 'pip install pybel' and 'pip install chemml'. ")
+
+        if 'PyG' == dst:
+          try:
+            import torch 
+            global torch 
+          except:
+            raise Exception("Please install PyTorch via 'pip install torch'.")
+
+        if 'DGL' == dst:
+          try: 
+            import dgl
+            global dgl 
+          except:
+            raise Exception("Please install PyTorch via 'pip install dgl'.")
 
         try:
           assert src in self.convert_dict
@@ -4057,10 +4212,16 @@ class MolConvert:
         except:
           raise Exception('It is not supported to convert src to dst.')
 
-        if src == 'SMILES' and dst == 'SELFIES':
+        if src == 'SMILES' and dst == 'SMILES':
+          self.func = canonicalize
+        elif src == 'SMILES' and dst == 'SELFIES':
           self.func = smiles2selfies
         elif src == 'SMILES' and dst == 'Graph2D':
           self.func = smiles2graph2D
+        elif src == 'SMILES' and dst == 'PyG':
+          self.func = smiles2PyG 
+        elif src == 'SMILES' and dsst == 'DGL':
+          self.func = smiles2DGL
         elif src == 'SMILES' and dst == 'ECFP2':
           self.func = smiles2ECFP2
         elif src == 'SMILES' and dst == 'ECFP4':
@@ -4077,10 +4238,16 @@ class MolConvert:
           self.func = smiles2morgan 
         elif src == 'SMILES' and dst == 'Pubchem':
           self.func = smiles2pubchem 
+
+        #### SELFIES 
         elif src == 'SELFIES' and dst == 'SMILES':
           self.func = selfies2smiles
         elif src == 'SELFIES' and dst == 'Graph2D':
           self.func = selfies2graph2D
+        elif src == 'SELFIES' and dst == 'PyG':
+          self.func = selfies2PyG 
+        elif src == 'SELFIES' and dsst == 'DGL':
+          self.func = selfies2DGL
         elif src == 'SELFIES' and dst == 'ECFP2':
           self.func = selfies2ECFP2
         elif src == 'SELFIES' and dst == 'ECFP4':
@@ -4105,6 +4272,9 @@ class MolConvert:
           self.func = xyzfile2selfies 
         elif src == 'XYZ' and dst == 'Graph3D':
           self.func = xyzfile2graph3d 
+        elif src == 'XYZ' and dst == 'Coulomb':
+          self.func = xyzfile2coulomb 
+
         ### SDF file 
         elif src == 'SDF' and dst == 'Graph3D':
           self.func = sdffile2graph3d_lst 
@@ -4112,6 +4282,28 @@ class MolConvert:
           self.func = sdffile2smiles_lst  
         elif src == 'SDF' and dst == 'SELFIES':
           self.func = sdffile2selfies_lst 
+        elif src == 'SDF' and dst == 'Coulomb':
+          self.func = sdffile2coulomb
+
+        ### mol file
+        elif src == 'mol' and dst == 'SMILES':
+          self.func = molfile2smiles 
+        elif src == 'mol' and dst == 'SELFIES':
+          self.func = molfile2selfies 
+        elif src == 'mol' and dst == 'Graph2D':
+          self.func = molfile2graph2d 
+        # todo 'mol': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+
+
+        ### mol2 file
+        elif src == 'mol2' and dst == 'SMILES':
+          self.func = mol2file2smiles 
+        elif src == 'mol2' and dst == 'SELFIES':
+          self.func = mol2file2selfies 
+        elif src == 'mol2' and dst == 'Graph2D':
+          self.func = mol2file2graph2d  
+        # todo 'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+
 
 
 
@@ -4131,11 +4323,13 @@ class MolConvert:
         ## ['Graph', 'SMARTS', ...] 
         '''
         convert_dict = {
-          'SMILES': ['SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'SELFIES': ['SMILES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
-          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],
-          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Columb'],  
-        }     
+          'SMILES': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],
+          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
+        }
         try:
           assert src in convert_dict
         except:
