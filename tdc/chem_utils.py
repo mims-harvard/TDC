@@ -4169,14 +4169,13 @@ class MolConvert:
         self._dst = dst
 
         self.convert_dict = {
-          'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
-          'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+          'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+          'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
           'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],
           'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
         }
-
         if 'SELFIES' == src or 'SELFIES' == dst:
           try:
             import selfies as sf
