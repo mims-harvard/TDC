@@ -4128,6 +4128,57 @@ def molfile2graph2d(molfile):
   smiles = Chem.MolToSmiles(mol)
   return smiles2graph2D(smiles)
 
+def molfile2pyg(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2PyG(smiles)
+
+def molfile2dgl(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2DGL(smiles)
+
+def molfile2ecfp2(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2ECFP2(smiles)
+
+def molfile2ecfp4(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2ECFP4(smiles)
+
+def molfile2ecfp6(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2ECFP6(smiles)
+
+def molfile2maccs(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2maccs(smiles)
+
+def molfile2daylight(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2daylight(smiles)
+
+def molfile2rdkit(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2rdkit2d(smiles)
+
+def molfile2morgan(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2morgan(smiles)
+
+def molfile2pubchem(molfile):
+  mol = Chem.MolFromMolFile(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2pubchem(smiles)
+
+
 ##### mol2 file 
 def mol2file2smiles(molfile):
   mol = Chem.MolFromMol2File(molfile)
@@ -4143,6 +4194,59 @@ def mol2file2graph2d(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
   return smiles2graph2D(smiles)
+
+def mol2file2pyg(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2PyG(smiles)
+
+def mol2file2dgl(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2DGL(smiles)
+
+def mol2file2ecfp2(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2ECFP2(smiles)
+
+def mol2file2ecfp4(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2ECFP4(smiles)
+
+def mol2file2ecfp6(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2ECFP6(smiles)
+
+def mol2file2maccs(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2maccs(smiles)
+
+def mol2file2daylight(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2daylight(smiles)
+
+def mol2file2rdkit(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2rdkit2d(smiles)
+
+def mol2file2morgan(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2morgan(smiles)
+
+def mol2file2pubchem(molfile):
+  mol = Chem.MolFromMol2File(molfile)
+  smiles = Chem.MolToSmiles(mol)
+  return smiles2pubchem(smiles)
+
+# 'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 
+#          'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
 
 
 class MolConvert:
@@ -4292,6 +4396,22 @@ class MolConvert:
           self.func = molfile2selfies 
         elif src == 'mol' and dst == 'Graph2D':
           self.func = molfile2graph2d 
+        elif src == 'mol' and dst == 'ECFP2':
+          self.func = molfile2ecfp2 
+        elif src == 'mol' and dst == 'ECFP4':
+          self.func = molfile2ecfp4 
+        elif src == 'mol' and dst == 'ECFP6':
+          self.func = molfile2ecfp6 
+        elif src == 'mol' and dst == 'MACCS':
+          self.func = molfile2maccs 
+        elif src == 'mol' and dst == 'Daylight':
+          self.func = molfile2daylight
+        elif src == 'mol' and dst == 'RDKit2D':
+          self.func = molfile2rdkit
+        elif src == 'mol' and dst == 'Morgan':
+          self.func = molfile2morgan 
+        elif src == 'mol' and dst == 'Pubchem':
+          self.func = molfile2pubchem  
         # todo 'mol': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
 
 
@@ -4301,7 +4421,23 @@ class MolConvert:
         elif src == 'mol2' and dst == 'SELFIES':
           self.func = mol2file2selfies 
         elif src == 'mol2' and dst == 'Graph2D':
-          self.func = mol2file2graph2d  
+          self.func = mol2file2graph2d 
+        elif src == 'mol2' and dst == 'ECFP2':
+          self.func = mol2file2ecfp2 
+        elif src == 'mol2' and dst == 'ECFP4':
+          self.func = mol2file2ecfp4 
+        elif src == 'mol2' and dst == 'ECFP6':
+          self.func = mol2file2ecfp6 
+        elif src == 'mol2' and dst == 'MACCS':
+          self.func = mol2file2maccs 
+        elif src == 'mol2' and dst == 'Daylight':
+          self.func = mol2file2daylight
+        elif src == 'mol2' and dst == 'RDKit2D':
+          self.func = mol2file2rdkit
+        elif src == 'mol2' and dst == 'Morgan':
+          self.func = mol2file2morgan 
+        elif src == 'mol2' and dst == 'Pubchem':
+          self.func = mol2file2pubchem     
         # todo 'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
 
 
