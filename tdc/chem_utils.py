@@ -3022,6 +3022,7 @@ def calcPubChemFingerAll(s):
     return np.array(AllBits)
 
 def smiles2pubchem(s):
+  s = canonicalize(s)
   # try:
   features = calcPubChemFingerAll(s)
   # except:
@@ -3032,6 +3033,7 @@ def smiles2pubchem(s):
 
 def smiles2morgan(s, radius = 2, nBits = 1024):
     try:
+        s = canonicalize(s)
         mol = Chem.MolFromSmiles(s)
         features_vec = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=nBits)
         features = np.zeros((1,))
@@ -3042,6 +3044,7 @@ def smiles2morgan(s, radius = 2, nBits = 1024):
     return features
 
 def smiles2rdkit2d(s): 
+    s = canonicalize(s)
     try:
         from descriptastorus.descriptors import rdDescriptors, rdNormalizedDescriptors
     except:
@@ -3058,6 +3061,7 @@ def smiles2rdkit2d(s):
 
 def smiles2daylight(s):
   try:
+    s = canonicalize(s)
     NumFinger = 2048
     mol = Chem.MolFromSmiles(s)
     bv = FingerprintMols.FingerprintMol(mol)
@@ -3070,6 +3074,7 @@ def smiles2daylight(s):
   return np.array(features)
 
 def smiles2maccs(s):
+  s = canonicalize(s)
   mol = Chem.MolFromSmiles(s)
   fp = MACCSkeys.GenMACCSKeys(mol)
   arr = np.zeros((0,), dtype=np.float64)
@@ -3085,6 +3090,7 @@ def smiles2maccs(s):
 '''
 def smiles2ECFP2(smiles):
   nbits = 2048
+  smiles = canonicalize(smiles)
   molecule = smiles_to_rdkit_mol(smiles)
   fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 1, nBits=nbits)
   arr = np.zeros((0,), dtype=np.float64)
@@ -3094,6 +3100,7 @@ def smiles2ECFP2(smiles):
 
 def smiles2ECFP4(smiles):
   nbits = 2048
+  smiles = canonicalize(smiles)
   molecule = smiles_to_rdkit_mol(smiles)
   fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=nbits)
   arr = np.zeros((0,), dtype=np.float64)
@@ -3103,6 +3110,7 @@ def smiles2ECFP4(smiles):
 
 def smiles2ECFP6(smiles):
   nbits = 2048
+  smiles = canonicalize(smiles)
   molecule = smiles_to_rdkit_mol(smiles)
   fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 1, nBits=nbits)
   arr = np.zeros((0,), dtype=np.float64)
@@ -3155,48 +3163,58 @@ class MoleculeFingerprint:
           return arr 
 
 def smiles2selfies(smiles):
+  smiles = canonicalize(smiles)
   return sf.encoder(smiles)
 
 def selfies2smiles(selfies):
-  return sf.decoder(selfies)
+  return canonicalize(sf.decoder(selfies))
 
 def selfies2ECFP2(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2ECFP2(smiles)
 
 def selfies2ECFP4(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2ECFP4(smiles)
 
 def selfies2ECFP6(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2ECFP6(smiles)
 
 def selfies2MACCS(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2maccs(smiles)
 
 def selfies2Daylight(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2daylight(smiles)
 
 
 def selfies2RDKit2D(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2rdkit2d(smiles)
 
 
 def selfies2Morgan(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2morgan(smiles)
 
 def selfies2Pubchem(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2pubchem(smiles)
 
 
 
 def smiles2mol(smiles):
+    smiles = canonicalize(smiles)
     mol = Chem.MolFromSmiles(smiles)
     if mol is None: 
         return None
@@ -3214,6 +3232,7 @@ def bondtype2idx(bond_type):
     return 4
 
 def smiles2graph2D(smiles):
+  smiles = canonicalize(smiles)
   mol = smiles2mol(smiles)
   n_atoms = mol.GetNumAtoms()
   idx2atom = {atom.GetIdx():atom.GetSymbol() for atom in mol.GetAtoms()}
@@ -3231,6 +3250,7 @@ def smiles2graph2D(smiles):
 
 def selfies2graph2D(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2graph2D(smiles)
 
 
@@ -3261,6 +3281,7 @@ def get_atom_features(atom):
             + [atom.GetIsAromatic()])
 
 def smiles2PyG(smiles):
+  smiles = canonicalize(smiles)
   mol = Chem.MolFromSmiles(smiles)
   n_atoms = mol.GetNumAtoms()
   atom_features = [get_atom_features(atom) for atom in mol.GetAtoms()]
@@ -3280,15 +3301,18 @@ def smiles2PyG(smiles):
 
 def selfies2PyG(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2PyG(smiles)
 
 def molfile2PyG(molfile):
   smiles = molfile2smiles(molfile)
+  smiles = canonicalize(smiles)
   return smiles2PyG(smiles)
 ############### PyG end ###############
 
 ############### DGL begin ###############
 def smiles2DGL(smiles):
+  smiles = canonicalize(smiles)
   mol = Chem.MolFromSmiles(smiles)
   n_atoms = mol.GetNumAtoms()
   bond_features = []
@@ -3306,10 +3330,12 @@ def smiles2DGL(smiles):
 
 def selfies2DGL(selfies):
   smiles = selfies2smiles(selfies)
+  smiles = canonicalize(smiles)
   return smiles2DGL(smiles)
 
 def molfile2DGL(molfile):
   smiles = molfile2smiles(molfile)
+  smiles = canonicalize(smiles)
   return smiles2DGL(smiles)
 
 
@@ -4000,15 +4026,18 @@ def xyzfile2mol(xyzfile):
 
 def mol2smiles(mol):
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles
 
 def xyzfile2smiles(xyzfile):
   mol, _ = xyzfile2mol(xyzfile)
   smiles = mol2smiles(mol)
+  smiles = canonicalize(smiles)
   return smiles 
 
 def xyzfile2selfies(xyzfile):
   smiles = xyzfile2smiles(xyzfile)
+  smiles = canonicalize(smiles)
   selfies = smiles2selfies(smiles)
   return selfies 
 
@@ -4109,6 +4138,7 @@ def sdffile2coulomb(sdf):
 
 def xyzfile2coulomb(xyzfile):
   smiles = xyzfile2smiles(xyzfile)
+  smiles = canonicalize(smiles)
   return smiles_lst2coulomb([smiles])
 
 
@@ -4116,66 +4146,79 @@ def xyzfile2coulomb(xyzfile):
 def molfile2smiles(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles 
 
 def molfile2selfies(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2selfies(smiles)
 
 def molfile2graph2d(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2graph2D(smiles)
 
 def molfile2pyg(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2PyG(smiles)
 
 def molfile2dgl(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2DGL(smiles)
 
 def molfile2ecfp2(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2ECFP2(smiles)
 
 def molfile2ecfp4(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2ECFP4(smiles)
 
 def molfile2ecfp6(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2ECFP6(smiles)
 
 def molfile2maccs(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2maccs(smiles)
 
 def molfile2daylight(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2daylight(smiles)
 
 def molfile2rdkit(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2rdkit2d(smiles)
 
 def molfile2morgan(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2morgan(smiles)
 
 def molfile2pubchem(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2pubchem(smiles)
 
 
@@ -4183,6 +4226,7 @@ def molfile2pubchem(molfile):
 def mol2file2smiles(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles 
 
 def mol2file2selfies(molfile):
@@ -4193,56 +4237,67 @@ def mol2file2selfies(molfile):
 def mol2file2graph2d(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2graph2D(smiles)
 
 def mol2file2pyg(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2PyG(smiles)
 
 def mol2file2dgl(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2DGL(smiles)
 
 def mol2file2ecfp2(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2ECFP2(smiles)
 
 def mol2file2ecfp4(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2ECFP4(smiles)
 
 def mol2file2ecfp6(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2ECFP6(smiles)
 
 def mol2file2maccs(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2maccs(smiles)
 
 def mol2file2daylight(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2daylight(smiles)
 
 def mol2file2rdkit(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2rdkit2d(smiles)
 
 def mol2file2morgan(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2morgan(smiles)
 
 def mol2file2pubchem(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
+  smiles = canonicalize(smiles)
   return smiles2pubchem(smiles)
 
 # 'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 
