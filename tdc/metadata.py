@@ -151,7 +151,17 @@ drugsyn_benchmark = {'Synergy': ['drugcomb_css',
                                  'drugcomb_hsa',
                                  'drugcomb_loewe',
                                  'drugcomb_bliss',
-                                 'drugcomb_zip']}
+                                 'drugcomb_zip',
+                                 'drugcomb_brain',
+                                 'drugcomb_ovary',
+                                 'drugcomb_lung',
+                                 'drugcomb_skin',
+                                 'drugcomb_hematopoietic_lymphoid',
+                                 'drugcomb_breast',
+                                 'drugcomb_prostate',
+                                 'drugcomb_kidney',
+                                 'drugcomb_colon'
+                                 ]}
 
 ####################################
 
@@ -184,7 +194,16 @@ drugsyn_metrics = {'drugcomb_css': 'mae',
                    'drugcomb_hsa':'mae',
                   'drugcomb_loewe':'mae',
                   'drugcomb_bliss':'mae',
-                  'drugcomb_zip':'mae'
+                  'drugcomb_zip':'mae',
+                  'drugcomb_brain':'mae',
+                  'drugcomb_ovary':'mae',
+                  'drugcomb_lung':'mae',
+                  'drugcomb_skin':'mae',
+                  'drugcomb_hematopoietic_lymphoid':'mae',
+                  'drugcomb_breast':'mae',
+                  'drugcomb_prostate':'mae',
+                  'drugcomb_kidney':'mae',
+                  'drugcomb_colon':'mae',
                    }
 
 #### Benchmark Splits
@@ -216,7 +235,16 @@ drugsyn_splits = {'drugcomb_css': 'random',
                     'drugcomb_hsa': 'random',
                     'drugcomb_loewe': 'random',
                     'drugcomb_bliss': 'random',
-                    'drugcomb_zip': 'random'
+                    'drugcomb_zip': 'random',
+                  'drugcomb_brain':'random',
+                  'drugcomb_ovary':'random',
+                  'drugcomb_lung':'random',
+                  'drugcomb_skin':'random',
+                  'drugcomb_hematopoietic_lymphoid':'random',
+                  'drugcomb_breast':'random',
+                  'drugcomb_prostate':'random',
+                  'drugcomb_kidney':'random',
+                  'drugcomb_colon':'random',
                     }
 
 ####################################
@@ -484,5 +512,5 @@ benchmark2type = {'admet_group': 'zip',
                   'drugsyn_group': 'zip'}
 
 benchmark2id = {'admet_group': 4267442,
-                'drugsyn_group':  000000} #TODO add dataverse id
+                'drugsyn_group':  4289194}
 
