@@ -85,8 +85,8 @@ class BenchmarkGroup:
 			train = pd.read_csv(os.path.join(data_path, 'train.csv'))
 			valid = pd.read_csv(os.path.join(data_path, 'valid.csv'))
 		elif self.file_format == 'pkl':
-			train = pd.read_csv(os.path.join(data_path, 'train.pkl'))
-			valid = pd.read_csv(os.path.join(data_path, 'valid.pkl'))
+			train = pd.read_pickle(os.path.join(data_path, 'train.pkl'))
+			valid = pd.read_pickle(os.path.join(data_path, 'valid.pkl'))
 		train_val = pd.concat([train, valid]).reset_index(drop = True)
 		if bm_split_names[self.name][dataset] == 'scaffold':
 			out = create_scaffold_split(train_val, seed, frac = [0.875, 0.125, 0], entity = 'Drug')
@@ -104,9 +104,9 @@ class BenchmarkGroup:
 			valid = pd.read_csv(os.path.join(data_path, 'valid.csv'))
 			test = pd.read_csv(os.path.join(data_path, 'test.csv'))
 		elif self.file_format == 'pkl':
-			train = pd.read_csv(os.path.join(data_path, 'train.pkl'))
-			valid = pd.read_csv(os.path.join(data_path, 'valid.pkl'))
-			test = pd.read_csv(os.path.join(data_path, 'test.pkl'))
+			train = pd.read_pickle(os.path.join(data_path, 'train.pkl'))
+			valid = pd.read_pickle(os.path.join(data_path, 'valid.pkl'))
+			test = pd.read_pickle(os.path.join(data_path, 'test.pkl'))
 		return {'train': train, 'valid': valid, 'test': test, 'name': dataset}
 
 	def evaluate(self, pred, true = None, benchmark = None):
@@ -120,7 +120,7 @@ class BenchmarkGroup:
 				if self.file_format == 'csv':
 					test = pd.read_csv(os.path.join(data_path, 'test.csv'))
 				elif self.file_format == 'pkl':
-					test = pd.read_csv(os.path.join(data_path, 'test.pkl'))
+					test = pd.read_pickle(os.path.join(data_path, 'test.pkl'))
 				y = test.Y.values
 				evaluator = eval('Evaluator(name = \'' + metric_dict[data_name] + '\')')
 				out[data_name] = {metric_dict[data_name]: round(evaluator(y, pred_), 3)}
