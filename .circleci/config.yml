@@ -1,0 +1,40 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+# Adapted from https://github.com/NeuralEnsemble/python-neo
+version: 2
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-3.6
+jobs:
+  test-3.6:
+    docker:
+      - image: circleci/python:3.6-stretch
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            echo "dependency"
+
+
+      # run tests!
+      - run:
+          name: run tests
+          no_output_timeout: 30m
+          command: |
+            . venv/bin/activate
+            echo "test"
+
+      - store_artifacts:
+          path: test-reports-gh
+          destination: test-reports-gh
