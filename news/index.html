@@ -4,26 +4,33 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Update - TDC</title>
+    <title>News - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Update | TDC</title>
+<title>News | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Update" />
+<meta property="og:title" content="News" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
-<link rel="canonical" href="http://localhost:4000/TDC/updates/" />
-<meta property="og:url" content="http://localhost:4000/TDC/updates/" />
+<link rel="canonical" href="http://localhost:4000/TDC/news/" />
+<meta property="og:url" content="http://localhost:4000/TDC/news/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/updates/","headline":"Update","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/news/","headline":"News","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<!-- head scripts --></head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
 
   <body>
     
@@ -44,7 +51,11 @@
                 
                 
                     
-                    <a href="/TDC/start/" class="navbar-item ">Quick-Start</a>
+                    <a href="/TDC/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/TDC/start/" class="navbar-item ">Quick Start</a>
                     
                 
                     
@@ -84,6 +95,23 @@
                     
                 
                     
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Benchmark Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/TDC/news/" class="navbar-item is-active">News</a>
+                    
+                
+                    
                     <a href="/TDC/team/" class="navbar-item ">Team</a>
                     
                 
@@ -109,7 +137,56 @@
                     
                     
 <div class="content">
-    
+    <h1 id="news">News</h1>
+
+<hr />
+
+<p class="is-size-5"><strong>2020.12.30</strong> TDC updates to <code>0.1.3</code>, major changes:</p>
+
+<ul class="is-medium">
+    <li><strong> New Dataset! </strong> Added a new therapeutic task CRISPR Repair Outcome Prediction! Checkout <a href="/TDC/single_pred_tasks/CRISPROutcome/"><code>CRISPROutcome</code></a>.</li>
+    <li><strong> New Function! </strong> Added a data processing helper to map SMILES string to popular cheminformatics fingerprints (ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, Pubchem)! Checkout <a href="/TDC/functions/data_process/#molecular-fingerprint-mapping">here</a> for usage.</li>
+</ul>
+
+<hr />
+
+<p class="is-size-5"><strong>2020.12.24</strong> TDC updates to <code>0.1.2</code>, major changes:</p>
+
+<ul class="is-medium">
+    <li><strong> Leaderboard Release! </strong> TDC's first leaderboard on ADMET prediction is released. You can find the leaderboard guide <a href="/TDC/benchmark/overview">here</a>, where we provide a <code>BenchmarkGroup</code> class to do model building on leaderboard tasks rapidly. The ADMET leaderboard is <a href="/TDC/benchmark/admet_group/">here</a>.</li>
+</ul>
+
+<hr />
+
+<p class="is-size-5"><strong>2020.12.19</strong> TDC updates to <code>0.1.1</code>, major changes:</p>
+
+<ul class="is-medium">
+    <li><strong> Quality Check and New datasets! </strong> We replaced VD, Half Life and Clearance datasets in <code>ADME</code> from new sources that have higher qualities. We also added LD50 to <code>Tox</code>.  </li>
+</ul>
+
+<hr />
+
+<p class="is-size-5"><strong>2020.12.15</strong> TDC updates to <code>0.1.0</code>, major changes:</p>
+
+<ul class="is-medium">
+    <li><strong> Five New Datasets! </strong> Added CYP2C9/2D6/3A4 Substrate, for <code>ADME</code>, Carcinogens for <code>Tox</code> and NCI-60 for <code>DrugSyn</code>. </li>
+    <li><strong>Quality Check.</strong> We conducted a canonicalization of all SMILES and removed ones that return errors in the <code>ADME</code>, <code>Tox</code>, and <code>HTS</code> datasets. </li>
+</ul>
+
+<hr />
+
+<p class="is-size-5"><strong>2020.11.30</strong> TDC updates to <code>0.0.8</code>, major changes:</p>
+
+<ul class="is-medium">
+    <li><strong> Five New Datasets! </strong> Added hREG, DILI (Drug Induced Liver Injury), Skin Reaction, Ames Mutagenicity for <code>Tox</code> and PPBR from AstraZeneca for <code>ADME</code>. </li>
+    <li><strong>Distribution Learning Metrics Moved to Evaluators.</strong> Checkout <a href="/TDC/functions/data_evaluation"> here </a> for the updated usage.</li>
+    <li><strong>Meta Oracles.</strong> We included a helper function where you can specify your own set of molecules for Rediscovery, Similarity, Medians, Isomers. Checkout an example usage <a href="/TDC/functions/oracles/#rediscovery"> here</a>. </li>
+    <li><strong>Tutorials.</strong> We have provided various tutorials for you to start using TDC. Click <a href="https://github.com/mims-harvard/TDC/tree/master/tutorials"> here </a>.
+ </li>
+</ul>
+
+<hr />
+
 
 </div>
                 </div>

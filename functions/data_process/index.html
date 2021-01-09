@@ -23,7 +23,14 @@
 <script type="application/ld+json">
 {"url":"http://localhost:4000/TDC/functions/data_process/","headline":"Data Processing","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<!-- head scripts --></head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
 
   <body>
     
@@ -44,7 +51,11 @@
                 
                 
                     
-                    <a href="/TDC/start/" class="navbar-item ">Quick-Start</a>
+                    <a href="/TDC/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/TDC/start/" class="navbar-item ">Quick Start</a>
                     
                 
                     
@@ -81,6 +92,23 @@
                             
                         </div>
                     </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Benchmark Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/TDC/news/" class="navbar-item ">News</a>
                     
                 
                     
@@ -165,6 +193,7 @@
   <li><a href="#data-balancing">Data Balancing</a></li>
   <li><a href="#graph-transformation-for-pair-data">Graph Transformation for Pair Data</a></li>
   <li><a href="#negative-samples-for-pair-data">Negative Samples for Pair Data</a></li>
+  <li><a href="#molecular-fingerprint-mapping">Molecular Fingerprint Mapping</a></li>
   <li><a href="#from-pubchem-cid-to-smiles">From PubChem CID to SMILES</a></li>
   <li><a href="#from-uniprot-id-to-amino-acid-sequence">From Uniprot ID to Amino Acid Sequence</a></li>
 </ul>
@@ -243,14 +272,14 @@
 
 <ul>
 	<li><code>oversample</code>: this is set to be either true (oversample) or false (subsample). In default, it is set to be false. </li>
-	<li><code>seed</code>: the random seed for oversample/subsample. The default is 'benchmark' seed. </li>
+	<li><code>seed</code>: the random seed for oversample/subsample. The default is seed 42. </li>
 </ul>
 
 <p class="is-size-6"> For example, SARS-CoV2 3CL Protease screening data is highly imbalanced, we want to oversample the positive class: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">HTS</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'SARSCoV2_3CLPro_Diamond'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">balanced</span><span class="p">(</span><span class="n">oversample</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">balanced</span><span class="p">(</span><span class="n">oversample</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h3 id="graph-transformation-for-pair-data">Graph Transformation for Pair Data</h3>
@@ -262,21 +291,21 @@
 	<li><code>format</code>: choose from 'edge_list', 'dgl' (return a DGL graph object), or 'pyg' (return a Pytorch Geometric object). Default is 'edge_list'. </li>
 	<li><code>split</code>: choose from True or False. If set to true, also return the random train/val/test edge split as in the data frame format. </li>
 	<li><code>frac</code>: if split is True, this specifies the fraction of train/val/test splits. Default is [0.7, 0.1, 0.2]. </li>
-	<li><code>seed</code>: the random seed for splitting. The default is the benchmark seed. </li>
+	<li><code>seed</code>: the random seed for splitting. The default is 42. </li>
 	<li><code>order</code>: choose from 'descending' (the larger is 0) or 'ascending' (the smaller is 0). Default is 'descending'. </li>
 </ul>
 
-<p class="is-size-6"> For example, to construct a graph for DTI DAVIS dataset with threshold 30, split set to true, fraction 70%/10%/20%, benchmark seed, and descending order: </p>
+<p class="is-size-6"> For example, to construct a graph for DTI DAVIS dataset with threshold 30, split set to true, fraction 70%/10%/20%, seed 42, and descending order: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'edge_list'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'edge_list'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
 <span class="c1"># output: {'edge_list': array of shape (X, 2), 'neg_edges': array of shape (X, 2), 'split': {'train': df, 'valid': df, 'test': df}}
 </span>
-<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'dgl'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'dgl'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
 <span class="c1"># output: {'dgl_graph': the DGL graph object, 'index_to_entities': a dict map from ID in the data to node ID in the DGL object, 'split': {'train': df, 'valid': df, 'test': df}}
 </span>
-<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'pyg'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="s">'benchmark'</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'pyg'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
 <span class="c1"># output: {'pyg_graph': the PyG graph object, 'index_to_entities': a dict map from ID in the data to node ID in the PyG object, 'split': {'train': df, 'valid': df, 'test': df}}
 </span></code></pre></div></div>
 
@@ -293,6 +322,20 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">PPI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">PPI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HuRI'</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="molecular-fingerprint-mapping">Molecular Fingerprint Mapping</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Given SMILES strings, generate cheminformatics fingerprints (ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, Pubchem). To do that, first initialize a mapping class and then feed in the SMILES string. The mapping class takes in the following input: </p>
+
+<ul>
+	<li><code>fp</code>: target fingerprint type. Choose from ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, Pubchem. </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MoleculeFingerprint</span>
+<span class="n">MolFp</span> <span class="o">=</span> <span class="n">MoleculeFingerprint</span><span class="p">(</span><span class="n">fp</span> <span class="o">=</span> <span class="s">'ECFP2'</span><span class="p">)</span>
+<span class="n">MolFp</span><span class="p">([</span><span class="s">'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)</span><span class="err">\</span><span class="s">C(=O)OC'</span><span class="p">,</span>
+       <span class="s">'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'</span><span class="p">])</span>
 </code></pre></div></div>
 
 <h3 id="from-pubchem-cid-to-smiles">From PubChem CID to SMILES</h3>

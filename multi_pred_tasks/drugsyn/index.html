@@ -23,7 +23,14 @@
 <script type="application/ld+json">
 {"url":"http://localhost:4000/TDC/multi_pred_tasks/drugsyn/","headline":"Drug Synergy Prediction","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<!-- head scripts --></head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
 
   <body>
     
@@ -44,7 +51,11 @@
                 
                 
                     
-                    <a href="/TDC/start/" class="navbar-item ">Quick-Start</a>
+                    <a href="/TDC/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/TDC/start/" class="navbar-item ">Quick Start</a>
                     
                 
                     
@@ -81,6 +92,23 @@
                             
                         </div>
                     </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Benchmark Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/TDC/news/" class="navbar-item ">News</a>
                     
                 
                     
@@ -200,6 +228,7 @@
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
   <li><a href="#oncopolypharmacology">OncoPolyPharmacology</a></li>
+  <li><a href="#drugcomb-nci-60">DrugComb NCI-60</a></li>
 </ul>
     </div>
 </div>
@@ -227,8 +256,40 @@
 
 <p><a href="https://mct.aacrjournals.org/content/15/6/1155.short">[1] O’Neil, Jennifer, et al. “An unbiased oncology compound screen to identify novel combination strategies.” Molecular cancer therapeutics 15.6 (2016): 1155-1162. </a></p>
 
-<p><a href="https://academic.oup.com/bioinformatics/article-abstract/34/9/1538/4747884">[1] Preuer, Kristina, et al. “DeepSynergy: predicting anti-cancer drug synergy with Deep Learning.” Bioinformatics 34.9 (2018): 1538-1546.
+<p><a href="https://academic.oup.com/bioinformatics/article-abstract/34/9/1538/4747884">[2] Preuer, Kristina, et al. “DeepSynergy: predicting anti-cancer drug synergy with Deep Learning.” Bioinformatics 34.9 (2018): 1538-1546.
 </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="drugcomb-nci-60">DrugComb NCI-60</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> This dataset contains the summarized results of drug combination screening studies for the NCI-60 cancer cell lines (excluding the MDA-N cell line). A total of 129 drugs are tested across 59 cell lines resulting in a total of 297098 unique drug combination-cell line pairs. For each of the combination drugs, we provide its canonical SMILES string queried from PubChem. For each cell line, we include the following features downloaded from NCI’s CellMiner interface: 25,723 gene features capturing transcript expression levels averaged from five microarray platforms, 627 microRNA expression features and 3171 proteomic features that capture the abundance levels of a subset of proteins. </p>
+
+<p class="is-size-6"> There are two kinds of labels included in this dataset. CSS measures the drug combination sensitivity and is derived using relative IC50 values of compounds and the area under their dose-response curves. The other four metrics capture the synergy between the two drugs. Synergy is a dimensionless measure of deviation of an observed drug combination response from the expected effect of non-interaction. Synergy is calculated using four different models: Bliss model, Highest Single Agent (HSA), Loewe additivity model and Zero Interaction Potency (ZIP).
+</p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Given the chemical structural information for the combining drugs and genomic features for a particular cell line, predict the drug synergy level or the drug combination sensitivity in that cell line.</p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 129 drugs are tested across 59 cell lines resulting in a total of 297098 unique drug combination-cell line pairs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Cell Line Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DrugSyn</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DrugSyn</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugComb_NCI60'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://academic.oup.com/nar/article-abstract/47/W1/W43/5486743">[1] Zagidullin, Bulat, et al. “DrugComb: an integrative cancer drug combination data portal.” Nucleic acids research 47.W1 (2019): W43-W51. </a></p>
+
+<p><a href="https://mayoclinic.pure.elsevier.com/en/publications/cellminer-a-web-based-suite-of-genomic-and-pharmacologic-tools-to">[2] Reinhold, William C., et al. “CellMiner: a web-based suite of genomic and pharmacologic tools to explore transcript and drug patterns in the NCI-60 cell line set.” Cancer research 72.14 (2012): 3499-3511.
+</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
 <hr />
 
 

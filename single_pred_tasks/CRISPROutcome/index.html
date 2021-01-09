@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>miRNA-Target Interaction - TDC</title>
+    <title>CRISPR Repair Outcome Prediction - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>miRNA-Target Interaction | TDC</title>
+<title>CRISPR Repair Outcome Prediction | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="miRNA-Target Interaction" />
+<meta property="og:title" content="CRISPR Repair Outcome Prediction" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
-<link rel="canonical" href="http://localhost:4000/TDC/multi_pred_tasks/mti/" />
-<meta property="og:url" content="http://localhost:4000/TDC/multi_pred_tasks/mti/" />
+<link rel="canonical" href="http://localhost:4000/TDC/single_pred_tasks/CRISPROutcome/" />
+<meta property="og:url" content="http://localhost:4000/TDC/single_pred_tasks/CRISPROutcome/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/multi_pred_tasks/mti/","headline":"miRNA-Target Interaction","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/single_pred_tasks/CRISPROutcome/","headline":"CRISPR Repair Outcome Prediction","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -140,48 +140,44 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/multi_pred_tasks/overview/" class=""><strong>Multi-instance Prediction Problem</strong></a>
+            <a href="/TDC/single_pred_tasks/overview/" class=""><strong>Single-instance Prediction Problem</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/dti/" class=""><code>DTI</code> Drug-Target Interaction</a></li>
+                <li><a href="/TDC/single_pred_tasks/adme/" class=""><code>ADME</code> Pharmaco-kinetics</a></li>
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/ddi/" class=""><code>DDI</code> Drug-Drug Interaction</a></li>
+                <li><a href="/TDC/single_pred_tasks/tox/" class=""><code>Tox</code> Toxicity</a></li>
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/ppi/" class=""><code>PPI</code> Protein-Protein Interaction</a></li>
+                <li><a href="/TDC/single_pred_tasks/hts/" class=""><code>HTS</code> High-Throughput Screening</a></li>
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/gdi/" class=""><code>GDA</code> Gene-Disease Association</a></li>
+                <li><a href="/TDC/single_pred_tasks/qm/" class=""><code>QM</code> Quantum Mechanics</a></li>
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/drugres/" class=""><code>DrugRes</code> Drug Response Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/yields/" class=""><code>Yields</code> Reaction Yields Prediction</a></li>
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/drugsyn/" class=""><code>DrugSyn</code> Drug Synergy Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/paratope/" class=""><code>Paratope</code> Paratope Prediction</a></li>
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/peptidemhc/" class=""><code>PeptideMHC</code> Peptide-MHC Binding</a></li>
+                <li><a href="/TDC/single_pred_tasks/epitope/" class=""><code>Epitope</code> Epitope Prediction</a></li>
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/antibodyaff/" class=""><code>AntibodyAff</code> Antibody-Antigen Affinity</a></li>
+                <li><a href="/TDC/single_pred_tasks/develop/" class=""><code>Develop</code> Developability Prediction</a></li>
                 
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/mti/" class="is-active"><code>MTI</code> miRNA-Target Interaction</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/catalyst/" class=""><code>Catalyst</code> Catalyst Prediction</a></li>
+                <li><a href="/TDC/single_pred_tasks/CRISPROutcome/" class="is-active"><code>CRISPROutcome</code> CRISPR Repair Prediction</a></li>
                 
                 
             </ul>
@@ -199,7 +195,7 @@
             <ul>
                 
                 
-                <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-instance Prediction Problem</a></li>
+                <li><a href="/TDC/multi_pred_tasks/overview/" class="">Multi-instance Prediction Problem</a></li>
                 
                 
                 
@@ -227,7 +223,7 @@
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
-  <li><a href="#mirtarbase">miRTarBase</a></li>
+  <li><a href="#leenay-et-al">Leenay et al.</a></li>
 </ul>
     </div>
 </div>
@@ -236,33 +232,36 @@
 
 
 <div class="content">
-    <h3 id="mirtarbase">miRTarBase</h3>
+    <h3 id="leenay-et-al">Leenay et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> miRTarBase has accumulated more than three hundred and sixty thousand miRNA-target interactions (MTIs), which are collected by manually surveying pertinent literature after NLP of the text systematically to filter research articles related to functional studies of miRNAs. Generally, the collected MTIs are validated experimentally by reporter assay, western blot, microarray and next-generation sequencing experiments. TDC uses miRBase to obtain miRNA mature sequence. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Primary T cells are a promising cell type for therapeutic genome editing, as they can be engineered efficiently ex vivo and transferred to patients. This dataset consists of the DNA repair outcomes of CRISPR-CAS9 knockout experiments on primary CD4+ T cells drawn from 15 donors. For each of the 1,521 unique genomic locations from 553 genes, we provide the 20-nucleotide guide sequence along with the 3-nucletoide PAM sequence. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given the miRNA mature sequence and target amino acid sequence, predict their likelihood of interaction. </p>
+<p class="is-size-6"> 5 repair outcomes are included for prediction: fraction of indel reads with an insertion, average insertion length, average deletion length, indel diversity, fraction of repair outcomes with a frameshift. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 400,082 MTI pairs, 3,465 miRNAs, 21,242 targets </p>
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a DNA sequence, predict the repair outcomes of a CRISPR-CAS9 knockout experiment. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,521 DNA sequences (guide+PAM) with 5 repair outcomes for each measured across different donor populations of primary T cells. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">MTI</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">MTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'miRTarBase'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<p>To obtain the label names,</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">retrieve_label_name_list</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'Leenay'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p class="is-size-6"> <strong>Note:</strong> The dataset contains only positive pairs. To get the negative samples, you can call: </p>
+<p>Then, proceed with the usual data loader:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">CRISPROutcome</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">CRISPROutcome</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Leenay'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://academic.oup.com/nar/article-abstract/46/D1/D296/4595852">[1] Chou, Chih-Hung, et al. “miRTarBase update 2018: a resource for experimentally validated microRNA-target interactions.” Nucleic acids research 46.D1 (2018): D296-D302.</a></p>
+<p><a href="https://idp.nature.com/authorize/casa?redirect_uri=https://www.nature.com/articles/s41587-019-0203-2&amp;casa_token=nIKOlfHR0fkAAAAA:LspabShsQSiLsP0z4vu0xYJWwIOWLbWfKBTwIwNgEFNuSan3vxMKI133KNyMTB6onOYHAS7Ql27lkl4_Og">[1] Leenay, Ryan T., et al. “Large dataset enables prediction of repair after CRISPR–Cas9 editing in primary T cells.” Nature biotechnology 37.9 (2019): 1034-1037.</a></p>
 
-<p><a href="https://academic.oup.com/nar/article-abstract/47/D1/D155/5179337">[2] Kozomara, Ana, Maria Birgaoanu, and Sam Griffiths-Jones. “miRBase: from microRNA sequences to function.” Nucleic acids research 47.D1 (2019): D155-D162.</a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+<p class="is-size-6"> <strong> Dataset License: </strong><a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
 
 <hr />
 

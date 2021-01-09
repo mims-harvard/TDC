@@ -23,7 +23,14 @@
 <script type="application/ld+json">
 {"url":"http://localhost:4000/TDC/single_pred_tasks/hts/","headline":"High-throughput Screening","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<!-- head scripts --></head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
 
   <body>
     
@@ -44,7 +51,11 @@
                 
                 
                     
-                    <a href="/TDC/start/" class="navbar-item ">Quick-Start</a>
+                    <a href="/TDC/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/TDC/start/" class="navbar-item ">Quick Start</a>
                     
                 
                     
@@ -81,6 +92,23 @@
                             
                         </div>
                     </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Benchmark Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/TDC/news/" class="navbar-item ">News</a>
                     
                 
                     
@@ -146,6 +174,10 @@
                 
                 
                 <li><a href="/TDC/single_pred_tasks/develop/" class=""><code>Develop</code> Developability Prediction</a></li>
+                
+                
+                
+                <li><a href="/TDC/single_pred_tasks/CRISPROutcome/" class=""><code>CRISPROutcome</code> CRISPR Repair Prediction</a></li>
                 
                 
             </ul>
@@ -229,9 +261,11 @@
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/27018227/">[1] Touret, F., Gilles, M., Barral, K. et al. In vitro screening of a FDA approved chemical library reveals potential inhibitors of SARS-CoV-2 replication. Sci Rep 10, 13093 (2020).</a></p>
+<p><a href="https://www.nature.com/articles/s41598-020-70143-6">[1] Touret, F., Gilles, M., Barral, K. et al. In vitro screening of a FDA approved chemical library reveals potential inhibitors of SARS-CoV-2 replication. Sci Rep 10, 13093 (2020).</a></p>
 
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/27018227/">[2] MIT AI Cures.</a></p>
+<p><a href="https://www.aicures.mit.edu/data">[2] MIT AI Cures.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
 <hr />
 
@@ -241,7 +275,7 @@
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict its activity against SARSCoV2 3CL Protease. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 880 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 879 drugs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
@@ -254,7 +288,9 @@
 
 <p><a href="https://www.diamond.ac.uk/covid-19/for-scientists/Main-protease-structure-and-XChem.html">[1] Diamond Light Source </a></p>
 
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/27018227/">[2] MIT AI Cures.</a></p>
+<p><a href="https://www.aicures.mit.edu/data">[2] MIT AI Cures.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
 <hr />
 
@@ -278,6 +314,10 @@
 <p><a href="https://wiki.nci.nih.gov/display/NCIDTPdata/AIDS+Antiviral+Screen+Data">[1] AIDS Antiviral Screen Data. </a></p>
 
 <p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
 
 
 </div>

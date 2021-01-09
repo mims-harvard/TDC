@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>miRNA-Target Interaction - TDC</title>
+    <title>BioKG - TDC</title>
     <link rel="stylesheet" href="/TDC/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/TDC/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>miRNA-Target Interaction | TDC</title>
+<title>BioKG | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="miRNA-Target Interaction" />
+<meta property="og:title" content="BioKG" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Datasets for Medicinal Machine Learning" />
 <meta property="og:description" content="Datasets for Medicinal Machine Learning" />
-<link rel="canonical" href="http://localhost:4000/TDC/multi_pred_tasks/mti/" />
-<meta property="og:url" content="http://localhost:4000/TDC/multi_pred_tasks/mti/" />
+<link rel="canonical" href="http://localhost:4000/TDC/resources/biokg/" />
+<meta property="og:url" content="http://localhost:4000/TDC/resources/biokg/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/TDC/multi_pred_tasks/mti/","headline":"miRNA-Target Interaction","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/TDC/resources/biokg/","headline":"BioKG","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -140,48 +140,12 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/TDC/multi_pred_tasks/overview/" class=""><strong>Multi-instance Prediction Problem</strong></a>
+            <a href="/TDC/resources/overview/" class=""><strong>Resources</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/TDC/multi_pred_tasks/dti/" class=""><code>DTI</code> Drug-Target Interaction</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/ddi/" class=""><code>DDI</code> Drug-Drug Interaction</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/ppi/" class=""><code>PPI</code> Protein-Protein Interaction</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/gdi/" class=""><code>GDA</code> Gene-Disease Association</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/drugres/" class=""><code>DrugRes</code> Drug Response Prediction</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/drugsyn/" class=""><code>DrugSyn</code> Drug Synergy Prediction</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/peptidemhc/" class=""><code>PeptideMHC</code> Peptide-MHC Binding</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/antibodyaff/" class=""><code>AntibodyAff</code> Antibody-Antigen Affinity</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/mti/" class="is-active"><code>MTI</code> miRNA-Target Interaction</a></li>
-                
-                
-                
-                <li><a href="/TDC/multi_pred_tasks/catalyst/" class=""><code>Catalyst</code> Catalyst Prediction</a></li>
+                <li><a href="/TDC/resources/biokg/" class="is-active"><code>BioKG</code> Biomedical Knowledge Graph</a></li>
                 
                 
             </ul>
@@ -200,6 +164,10 @@
                 
                 
                 <li><a href="/TDC/single_pred_tasks/overview/" class="">Single-instance Prediction Problem</a></li>
+                
+                
+                
+                <li><a href="/TDC/multi_pred_tasks/overview/" class="">Multi-instance Prediction Problem</a></li>
                 
                 
                 
@@ -227,7 +195,7 @@
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
-  <li><a href="#mirtarbase">miRTarBase</a></li>
+  <li><a href="#hetionet">HetioNet</a></li>
 </ul>
     </div>
 </div>
@@ -236,31 +204,24 @@
 
 
 <div class="content">
-    <h3 id="mirtarbase">miRTarBase</h3>
+    <h3 id="hetionet">HetioNet</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> miRTarBase has accumulated more than three hundred and sixty thousand miRNA-target interactions (MTIs), which are collected by manually surveying pertinent literature after NLP of the text systematically to filter research articles related to functional studies of miRNAs. Generally, the collected MTIs are validated experimentally by reporter assay, western blot, microarray and next-generation sequencing experiments. TDC uses miRBase to obtain miRNA mature sequence. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Hetionet is an integrative network of biomedical knowledge assembled from 29 different databases of genes, compounds, diseases, and more. The network combines over 50 years of biomedical information into a single resource. In the dataset, TDC processes into a list of triplets where each row contains source_type, source_id, target_type, target_id, relation type, and direction of the relation.</p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given the miRNA mature sequence and target amino acid sequence, predict their likelihood of interaction. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong>  47,031 nodes (11 types) and 2,250,197 relationships (24 types). </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 400,082 MTI pairs, 3,465 miRNAs, 21,242 targets </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">MTI</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">MTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'miRTarBase'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6"> <strong>Note:</strong> The dataset contains only positive pairs. To get the negative samples, you can call: </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.resource</span> <span class="kn">import</span> <span class="n">BioKG</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">BioKG</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HetioNet'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://academic.oup.com/nar/article-abstract/46/D1/D296/4595852">[1] Chou, Chih-Hung, et al. “miRTarBase update 2018: a resource for experimentally validated microRNA-target interactions.” Nucleic acids research 46.D1 (2018): D296-D302.</a></p>
+<p><a href="https://elifesciences.org/articles/26726">[1] Himmelstein, Daniel Scott, et al. “Systematic integration of biomedical knowledge prioritizes drugs for repurposing.” Elife 6 (2017): e26726.
+</a></p>
 
-<p><a href="https://academic.oup.com/nar/article-abstract/47/D1/D155/5179337">[2] Kozomara, Ana, Maria Birgaoanu, and Sam Griffiths-Jones. “miRBase: from microRNA sequences to function.” Nucleic acids research 47.D1 (2019): D155-D162.</a></p>
+<p><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004259"> [2] Himmelstein, Daniel S., and Sergio E. Baranzini. “Heterogeneous network edge prediction: a data integration approach to prioritize disease-associated genes.” PLoS Comput Biol 11.7 (2015): e1004259.
+</a></p>
 
 <p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 

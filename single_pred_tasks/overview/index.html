@@ -23,7 +23,14 @@
 <script type="application/ld+json">
 {"url":"http://localhost:4000/TDC/single_pred_tasks/overview/","headline":"Single-instance Prediction","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<!-- head scripts --></head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
 
   <body>
     
@@ -44,7 +51,11 @@
                 
                 
                     
-                    <a href="/TDC/start/" class="navbar-item ">Quick-Start</a>
+                    <a href="/TDC/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/TDC/start/" class="navbar-item ">Quick Start</a>
                     
                 
                     
@@ -81,6 +92,23 @@
                             
                         </div>
                     </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Benchmark Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/TDC/news/" class="navbar-item ">News</a>
                     
                 
                     
@@ -148,6 +176,10 @@
                 <li><a href="/TDC/single_pred_tasks/develop/" class=""><code>Develop</code> Developability Prediction</a></li>
                 
                 
+                
+                <li><a href="/TDC/single_pred_tasks/CRISPROutcome/" class=""><code>CRISPROutcome</code> CRISPR Repair Prediction</a></li>
+                
+                
             </ul>
             
         </li>
@@ -197,18 +229,17 @@
    <tbody>
       <tr>
       	<th><a href="/TDC/single_pred_tasks/adme"><code>ADME</code></a></th>
-      	<td> Pharmaco-Kinetics:
-      		<ul class="mt-0">
-      		<li><strong>Absorption</strong>: Caco2_Wang, HIA_Hou, Pgp_Broccatelli, Bioavailability_Ma, F20_eDrug3D, F30_eDrug3D, Lipophilicity_AstraZeneca, Solubility_AqSolDB, HydrationFreeEnergy_FreeSolv </li>
-      		<li><strong>Distribution</strong>: BBB_Adenot, BBB_Martins, PPBR_Ma, PPBR_eDrug3D, VD_eDrug3D </li>
-      		<li> <strong>Metabolism</strong>: CYP2C19_Veith, CYP2D6_Veith, CYP3A4_Veith, CYP_1A2_Veith, CYP2C9_Veith </li>
-      		<li><strong>Execretion</strong>: HalfLife_eDrug3D, Clearance_eDrug3D</li>
+      	<td> <ul class="mt-0">
+      		<li><strong>Absorption</strong>: Caco2_Wang, HIA_Hou, Pgp_Broccatelli, Bioavailability_Ma, Lipophilicity_AstraZeneca, Solubility_AqSolDB, HydrationFreeEnergy_FreeSolv </li>
+      		<li><strong>Distribution</strong>: BBB_Martins, PPBR_AZ, VDss_Lombardo </li>
+      		<li> <strong>Metabolism</strong>: CYP2C19_Veith, CYP2D6_Veith, CYP3A4_Veith, CYP_1A2_Veith, CYP2C9_Veith, CYP2C9_Substrate_CarbonMangels, CYP2D6_Substrate_CarbonMangels, CYP3A4_Substrate_CarbonMangels </li>
+      		<li><strong>Execretion</strong>: Half_Life_Obach, Clearance_Hepatocyte_AZ, Clearance_Microsome_AZ</li>
       		</ul>
       	</td>
       </tr>
       <tr>
       	<th><a href="/TDC/single_pred_tasks/tox"><code>Tox</code></a></th>
-      	<td>ToxCast, Tox21, ClinTox</td>
+      	<td>hERG, AMES, DILI, Skin Reaction, LD50_Zhu, Carcinogens_Lagunin, ToxCast, Tox21, ClinTox</td>
       </tr>
       <tr>
       	<th><a href="/TDC/single_pred_tasks/hts"> <code>HTS</code></a></th>
@@ -233,6 +264,10 @@
       <tr>
       	<th><a href="/TDC/single_pred_tasks/develop"><code>Develop</code></a></th>
       	<td>TAP, SAbDab_Chen</td>
+      </tr>
+      <tr>
+         <th><a href="/TDC/single_pred_tasks/CRISPROutcome"><code>CRISPROutcome</code></a></th>
+         <td>Leenay</td>
       </tr>
    </tbody>
 </table>

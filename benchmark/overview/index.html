@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Leaderboard Guide - TDC</title>
+    <link rel="stylesheet" href="/TDC/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/TDC/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Leaderboard Guide | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Leaderboard Guide" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Datasets for Medicinal Machine Learning" />
+<meta property="og:description" content="Datasets for Medicinal Machine Learning" />
+<link rel="canonical" href="http://localhost:4000/TDC/benchmark/overview/" />
+<meta property="og:url" content="http://localhost:4000/TDC/benchmark/overview/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/TDC/benchmark/overview/","headline":"Leaderboard Guide","description":"Datasets for Medicinal Machine Learning","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/TDC/">
+            <span><img src="/TDC/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/TDC/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/TDC/start/" class="navbar-item ">Quick Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/TDC/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/TDC/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/TDC/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/TDC/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/TDC/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/TDC/functions/data_split/" class="navbar-item ">Data Split</a>
+                            
+                            <a href="/TDC/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/TDC/benchmark/overview/" class="navbar-link is-active">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/TDC/benchmark/overview/" class="navbar-item is-active">Guidelines</a>
+                            
+                            <a href="/TDC/benchmark/admet_group/" class="navbar-item ">ADMET Benchmark Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/TDC/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/TDC/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-12">
+                    
+                    
+                    
+                    
+<div class="content">
+    <h1 id="leaderboard-guidelines">Leaderboard Guidelines</h1>
+
+<p class="is-size-5"> TDC benchmarks provide a systematic model development and evaluation framework. TDC benchmarks can considerably accelerate machine-learning model development, validation and transition into production and clinical implementation.</p>
+
+<h2 id="benchmark-group">Benchmark Group</h2>
+
+<p class="is-size-5"> Each dataset in TDC can be thought of as a benchmark. For a machine learning model to be useful for a particular therapeutic usage, the model needs to achieve consistently good performance across a set of datasets or tasks. For this reason, we group individual benchmarks in TDC into meaningful batches, which we call <strong>benchmark groups</strong>. All datasets and tasks within a benchmark group are carefully selected and are centered around a particular theme. Further, dataset splits and evaluation metrics are also carefully selected to reflect the challenges of real-world settings where the models are ultimately implemented. </p>
+
+<h3 id="an-example-of-a-benchmark-group">An Example of a Benchmark Group</h3>
+
+<p class="is-size-5"> One key task in drug discovery is the ADMET property prediction. A machine learning model that excels at ADMET needs to work well across a wide range of individual ADMET indices, such as Caco2, HIA and others. For this reason, TDC provides the <code>ADMET Benchmark Group</code>, which consists of 22 datasets from <code>ADME</code> and <code>Tox</code>. </p>
+
+<h2 id="how-to-access-a-benchmark-group">How to Access a Benchmark Group</h2>
+
+<p class="is-size-5"> TDC provides a programming framework to access the data in a benchmark group. We use ADMET group as an example. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">benchmark</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'valid'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+    <span class="c1">## --- train your model --- ##
+</span>    <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred</span>
+
+<span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<span class="c1"># {'caco2_wang': {'mae': 0.234}, 'hia_hou': {'roc-auc': 0.786}, ...}
+</span></code></pre></div></div>
+
+<p class="is-size-5"> To access and evaluate each individual benchmark, use: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+<span class="n">train</span><span class="p">,</span> <span class="n">valid</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'valid'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+<span class="c1">## --- train your model --- ##
+</span><span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred</span>
+
+<span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<span class="c1"># {'caco2_wang': {'mae': 0.234}}
+</span></code></pre></div></div>
+
+<p class="is-size-5"> You can get access to individual benchmark dataset name for a benchmark group via: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
+<span class="c1"># ['caco2_wang', 'hia_hou', ....]
+</span></code></pre></div></div>
+
+<p class="is-size-5"> In addition to the canonical data split provided above, TDC also provides a function to retrieve auxiliary training and validation splits to test model robustness. You can change the seed to get multiple splits.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_auxiliary_train_valid_split</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="s">'train'</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s">'valid'</span><span class="p">]</span>
+<span class="c1">## --- train your model --- ##
+</span><span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">y_pred_val</span><span class="p">,</span> <span class="n">y_true_val</span><span class="p">,</span> <span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="c1"># {'mae': 0.234}
+</span></code></pre></div></div>
+
+<h2 id="how-to-submit-results">How to Submit Results</h2>
+
+<p class="is-size-5"> To submit the results of your model and be included in a TDC leaderboard, fill out <code><a href="https://forms.gle/HYupGaV7WDuutbr9A">this form</a></code>. </p>
+
+<h2 id="the-fair-guiding-principles">The FAIR Guiding Principles</h2>
+
+<p class="is-size-5"> TDC leaderboards keep track of machine learning models across a variety of learning tasks. For this reason, we apply the FAIR4RS principles and implementation guidelines to any research software and AI/ML algorithms included in TDC leaderboards. Research software and AI/ML algorithms should be open and adhere to the FAIR principles (findable, accessible, interoperable, and repeatable) to allow repeatability, reproducibility, and reuse. Further, TDC itself follows the FAIR guidelines for both <a href="https://www.nature.com/articles/sdata201618%22"> datasets </a> as well as <a href="https://content.iospress.com/articles/data-science/ds190026#ref001">AI/ML algorithms</a>. </p>
+
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/TDC/">
+                    <span><img src="/TDC/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/TDC/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+
