@@ -2,8 +2,8 @@
 
 ----
 
-[![Website](https://img.shields.io/badge/Homepage-docs-<COLOR>.svg)](https://zitniklab.hms.harvard.edu/TDC/)
 [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
+[![Website](https://img.shields.io/badge/Homepage-docs-<COLOR>.svg)](https://zitniklab.hms.harvard.edu/TDC/)
 [![PyPI version](https://badge.fury.io/py/PyTDC.svg)](https://badge.fury.io/py/PyTDC)
 [![Downloads](https://pepy.tech/badge/pytdc)](https://pepy.tech/project/pytdc)
 [![GitHub Repo stars](https://img.shields.io/github/stars/mims-harvard/TDC)](https://github.com/mims-harvard/TDC/stargazers)
@@ -226,7 +226,7 @@ We provide a series of tutorials for you to get started using TDC:
 
 ## Contribute
 
-TDC is designed to be a community-driven effort. If you have new dataset or task or data function that wants to be included in TDC, please fill in this [form](https://kexinhuang.typeform.com/to/W5DKjXDg)!
+TDC is designed to be a community-driven effort. Checkout the [contribution guide](CONTRIBUTE.md) to contribute!
 
 ## Contact
 
