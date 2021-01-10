@@ -1556,7 +1556,7 @@ def smiles_to_rdkit_mol(smiles):
   return mol
 
 
-PubchemKeys = None
+PubChemKeys = None
 
 
 smartsPatts = {
@@ -2308,15 +2308,15 @@ def InitKeys(keyList, keyDict):
 
 
 def calcPubChemFingerPart1(mol, **kwargs):
-  global PubchemKeys
-  if PubchemKeys is None:
-    PubchemKeys = [(None, 0)] * len(smartsPatts.keys())
+  global PubChemKeys
+  if PubChemKeys is None:
+    PubChemKeys = [(None, 0)] * len(smartsPatts.keys())
 
-    InitKeys(PubchemKeys, smartsPatts)
+    InitKeys(PubChemKeys, smartsPatts)
   ctor = kwargs.get('ctor', DataStructs.SparseBitVect)
 
-  res = ctor(len(PubchemKeys) + 1)
-  for i, (patt, count) in enumerate(PubchemKeys):
+  res = ctor(len(PubChemKeys) + 1)
+  for i, (patt, count) in enumerate(PubChemKeys):
     if patt is not None:
       if count == 0:
         res[i + 1] = mol.HasSubstructMatch(patt)
@@ -3133,7 +3133,7 @@ class MoleculeFingerprint:
                 [0, 0, 1, .....]])
     
     Supporting FPs:
-    Basic_Descriptors(atoms, chirality, ....), ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, Pubchem
+    Basic_Descriptors(atoms, chirality, ....), ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, PubChem
     '''
 
     def __init__(self, fp = 'ECFP4'):
@@ -3144,12 +3144,12 @@ class MoleculeFingerprint:
                'Daylight': smiles2daylight, 
                'RDKit2D': smiles2rdkit2d, 
                'Morgan': smiles2morgan, 
-               'Pubchem': smiles2pubchem}
+               'PubChem': smiles2pubchem}
         try:
             assert fp in fp2func
         except:
             raise Exception("The fingerprint you specify are not supported. \
-              It can only among 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'")
+              It can only among 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'")
 
         self.fp = fp
         self.func = fp2func[fp]
@@ -3206,7 +3206,7 @@ def selfies2Morgan(selfies):
   smiles = canonicalize(smiles)
   return smiles2morgan(smiles)
 
-def selfies2Pubchem(selfies):
+def selfies2PubChem(selfies):
   smiles = selfies2smiles(selfies)
   smiles = canonicalize(smiles)
   return smiles2pubchem(smiles)
@@ -3297,7 +3297,10 @@ def smiles2PyG(smiles):
     idx2 = a2.GetIdx() 
     bond_features.extend([[idx1, idx2], [idx2, idx1]])
   bond_features = torch.LongTensor(bond_features)
-  return atom_features, y, bond_features 
+
+  data = Data(x=atom_features, edge_index=bond_features.T)
+
+  return data
 
 def selfies2PyG(selfies):
   smiles = selfies2smiles(selfies)
@@ -4300,15 +4303,23 @@ def mol2file2pubchem(molfile):
   smiles = canonicalize(smiles)
   return smiles2pubchem(smiles)
 
-# 'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 
-#          'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
+2D_format = ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
+3D_format = ['Graph3D', 'Coulumb']
 
+convert_dict = {
+          'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'],
+          'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'], 
+          'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'],
+          'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'], 
+          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],
+          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
+        }
 
 class MolConvert:
 
     '''
     Example:
-        convert = MolConvert(src = ‘SMILES’, dst = ‘Graph’)
+        convert = MolConvert(src = ‘SMILES’, dst = ‘Graph2D’)
         g = convert(‘Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC’)
         # g: graph with edge, node features
         g = convert(['Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC',
@@ -4326,14 +4337,7 @@ class MolConvert:
         self._src = src
         self._dst = dst
 
-        self.convert_dict = {
-          'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
-          'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
-          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],
-          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
-        }
+        self.convert_dict = convert_dict
         if 'SELFIES' == src or 'SELFIES' == dst:
           try:
             import selfies as sf
@@ -4350,17 +4354,19 @@ class MolConvert:
 
         if 'PyG' == dst:
           try:
-            import torch 
+            import torch
+            from torch_geometric.data import Data
             global torch 
+            global Data
           except:
-            raise Exception("Please install PyTorch via 'pip install torch'.")
+            raise Exception("Please install PyTorch Geometric via 'https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html'.")
 
         if 'DGL' == dst:
           try: 
             import dgl
             global dgl 
           except:
-            raise Exception("Please install PyTorch via 'pip install dgl'.")
+            raise Exception("Please install DGL via 'pip install dgl'.")
 
         try:
           assert src in self.convert_dict
@@ -4379,7 +4385,7 @@ class MolConvert:
           self.func = smiles2graph2D
         elif src == 'SMILES' and dst == 'PyG':
           self.func = smiles2PyG 
-        elif src == 'SMILES' and dsst == 'DGL':
+        elif src == 'SMILES' and dst == 'DGL':
           self.func = smiles2DGL
         elif src == 'SMILES' and dst == 'ECFP2':
           self.func = smiles2ECFP2
@@ -4395,7 +4401,7 @@ class MolConvert:
           self.func = smiles2rdkit2d 
         elif src == 'SMILES' and dst == 'Morgan':
           self.func = smiles2morgan 
-        elif src == 'SMILES' and dst == 'Pubchem':
+        elif src == 'SMILES' and dst == 'PubChem':
           self.func = smiles2pubchem 
 
         #### SELFIES 
@@ -4421,8 +4427,8 @@ class MolConvert:
           self.func = selfies2RDKit2D
         elif src == 'SELFIES' and dst == 'Morgan':
           self.func = selfies2Morgan
-        elif src == 'SELFIES' and dst == 'Pubchem':
-          self.func = selfies2Pubchem
+        elif src == 'SELFIES' and dst == 'PubChem':
+          self.func = selfies2PubChem
 
         ### load from xyz file, input is a filename (str), only contain one smiles 
         elif src == 'XYZ' and dst == 'SMILES':
@@ -4465,9 +4471,9 @@ class MolConvert:
           self.func = molfile2rdkit
         elif src == 'mol' and dst == 'Morgan':
           self.func = molfile2morgan 
-        elif src == 'mol' and dst == 'Pubchem':
+        elif src == 'mol' and dst == 'PubChem':
           self.func = molfile2pubchem  
-        # todo 'mol': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+        # todo 'mol': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'],
 
 
         ### mol2 file
@@ -4491,9 +4497,9 @@ class MolConvert:
           self.func = mol2file2rdkit
         elif src == 'mol2' and dst == 'Morgan':
           self.func = mol2file2morgan 
-        elif src == 'mol2' and dst == 'Pubchem':
+        elif src == 'mol2' and dst == 'PubChem':
           self.func = mol2file2pubchem     
-        # todo 'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
+        # todo 'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'],
 
 
 
@@ -4506,26 +4512,21 @@ class MolConvert:
 
 
     @staticmethod
-    def eligible_format(src):
+    def eligible_format(src = None):
         '''
         given a src format, output all the available format of the src format
         Example
         MoleculeLink.eligible_format('SMILES')
         ## ['Graph', 'SMARTS', ...] 
         '''
-        convert_dict = {
-          'SMILES': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'SELFIES': ['SMILES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
-          'mol': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'],
-          'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem'], 
-          'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],
-          'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
-        }
-        try:
-          assert src in convert_dict
-        except:
-          raise Exception("src format is not supported")
-        return convert_dict[src] 
+        if src is not None:
+          try:
+            assert src in convert_dict
+          except:
+            raise Exception("src format is not supported")
+          return convert_dict[src] 
+        else:
+          return convert_dict
 
 
 
@@ -4537,7 +4538,7 @@ class MolConvert:
 
 
 ######## test the MoleculeFingerprint
-# fps = ['ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'Pubchem']
+# fps = ['ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
 # smiles_lst = ['O=O', 'C', 'C#N', 'CC(=O)OC1=CC=CC=C1C(=O)O']
 # for fp in fps:
 #   MolFp = MoleculeFingerprint(fp = fp)
