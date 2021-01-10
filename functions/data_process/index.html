@@ -185,6 +185,7 @@
     <div class="menu">
         <p class="menu-label">Function Index</p>
         <ul class="menu-list">
+  <li><a href="#molecule-conversion">Molecule Conversion</a></li>
   <li><a href="#label-distribution-visualization">Label Distribution Visualization</a></li>
   <li><a href="#label-binarization">Label Binarization</a></li>
   <li><a href="#label-units-conversion">Label Units Conversion</a></li>
@@ -193,7 +194,6 @@
   <li><a href="#data-balancing">Data Balancing</a></li>
   <li><a href="#graph-transformation-for-pair-data">Graph Transformation for Pair Data</a></li>
   <li><a href="#negative-samples-for-pair-data">Negative Samples for Pair Data</a></li>
-  <li><a href="#molecular-fingerprint-mapping">Molecular Fingerprint Mapping</a></li>
   <li><a href="#from-pubchem-cid-to-smiles">From PubChem CID to SMILES</a></li>
   <li><a href="#from-uniprot-id-to-amino-acid-sequence">From Uniprot ID to Amino Acid Sequence</a></li>
 </ul>
@@ -204,7 +204,37 @@
 
 
 <div class="content">
-    <h3 id="label-distribution-visualization">Label Distribution Visualization</h3>
+    <h3 id="molecule-conversion">Molecule Conversion</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Map among ~15 molecular formats. For 2D: currently, we support to map from SMILES/SEFLIES and convert to SELFIES/SMILES, Graph2D, PyG, DGL, ECFP2-6, MACCS, Daylight, RDKit2D, Morgan, PubChem; For 3D: we support to map from XYZ, SDF files to Graph3D, Columb Matrix. To do that, first initialize a convert class and then feed in the input format. The conversion class takes in the following input: </p>
+
+<ul>
+	<li><code>src</code>: source molecule format. Choose from SMILES/SELFIES for 2D and SDF/XYZ for 3D. </li>
+	<li><code>dst</code>: destination molecule format. For 2D, choose from SMILES/SELFIES/Graph2D/PyG/DGL/ECFP2/ECFP4/ECFP6/MACCS/Daylight/RDKit2D/Morgan/PubChem. For 3D, choose from SMILES/SELFIES/Graph3D/Columb.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolConvert</span>
+<span class="n">converter</span> <span class="o">=</span> <span class="n">MolConvert</span><span class="p">(</span><span class="n">src</span> <span class="o">=</span> <span class="s">'SMILES'</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="s">'Graph2D'</span><span class="p">)</span>
+<span class="n">converter</span><span class="p">([</span><span class="s">'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)</span><span class="err">\</span><span class="s">C(=O)OC'</span><span class="p">,</span>
+       <span class="s">'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> <strong>Note</strong>: to check the eligible destination format for each source type, you can type: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolConvert</span>
+<span class="n">MolConvert</span><span class="o">.</span><span class="n">eligible_format</span><span class="p">()</span>
+<span class="c1"># MolConvert.eligible_format(src = 'SDF') for specific source type
+</span></code></pre></div></div>
+<p class="is-size-6"> While for 3D the destination format does not include most of 2D ones, you can also easily convert to any 2D format by: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolConvert</span>
+<span class="n">convert</span> <span class="o">=</span> <span class="n">MolConvert</span><span class="p">(</span><span class="n">src</span> <span class="o">=</span> <span class="s">'SDF'</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="s">'SMILES'</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="s">'XXX/.sdf'</span><span class="p">)</span>
+<span class="n">convert2d</span> <span class="o">=</span> <span class="n">MolConvert</span><span class="p">(</span><span class="n">src</span> <span class="o">=</span> <span class="s">'SMILES'</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="s">'ECFP4'</span><span class="p">)</span>
+<span class="n">convert2d</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="label-distribution-visualization">Label Distribution Visualization</h3>
 
 <p class="is-size-6">  <strong> Function Description: </strong> This function visualizes the label distribution and prints the basic statistics such as mean and median. </p>
 
@@ -322,20 +352,6 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">PPI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">PPI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HuRI'</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h3 id="molecular-fingerprint-mapping">Molecular Fingerprint Mapping</h3>
-
-<p class="is-size-6">  <strong> Function Description: </strong> Given SMILES strings, generate cheminformatics fingerprints (ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, Pubchem). To do that, first initialize a mapping class and then feed in the SMILES string. The mapping class takes in the following input: </p>
-
-<ul>
-	<li><code>fp</code>: target fingerprint type. Choose from ECFP2, ECFP4, ECFP6, MACCS, Daylight-type, RDKit2D, Morgan, Pubchem. </li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MoleculeFingerprint</span>
-<span class="n">MolFp</span> <span class="o">=</span> <span class="n">MoleculeFingerprint</span><span class="p">(</span><span class="n">fp</span> <span class="o">=</span> <span class="s">'ECFP2'</span><span class="p">)</span>
-<span class="n">MolFp</span><span class="p">([</span><span class="s">'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)</span><span class="err">\</span><span class="s">C(=O)OC'</span><span class="p">,</span>
-       <span class="s">'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'</span><span class="p">])</span>
 </code></pre></div></div>
 
 <h3 id="from-pubchem-cid-to-smiles">From PubChem CID to SMILES</h3>
