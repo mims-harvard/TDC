@@ -124,6 +124,20 @@ class BenchmarkGroup:
 				y = test.Y.values
 				evaluator = eval('Evaluator(name = \'' + metric_dict[data_name] + '\')')
 				out[data_name] = {metric_dict[data_name]: round(evaluator(y, pred_), 3)}
+
+				# If reporting accuracy across target classes
+				if 'target_class' in test.columns:
+					test['pred'] = pred_
+					for c in test['target_class'].unique():
+						data_name_subset = data_name + '_' + c
+						test_subset = test[test['target_class']==c]
+						y_subset = test_subset.Y.values
+						pred_subset = test_subset.pred.values
+
+						evaluator = eval('Evaluator(name = \'' +
+									     metric_dict[data_name_subset] + '\')')
+						out[data_name_subset] = {metric_dict[data_name_subset]:
+							        round(evaluator(y_subset, pred_subset), 3)}
 			return out
 		else:
 			# validation set evaluation
