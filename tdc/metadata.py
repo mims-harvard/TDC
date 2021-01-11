@@ -494,5 +494,5 @@ benchmark2type = {'admet_group': 'zip',
                   'drugsyn_group': 'zip'}
 
 benchmark2id = {'admet_group': 4267442,
-                'drugsyn_group':  4289194}
+                'drugsyn_group':  4297987}
 
