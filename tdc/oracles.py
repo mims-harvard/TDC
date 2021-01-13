@@ -152,6 +152,9 @@ class Oracle:
 		elif self.name == 'ibm_rxn':
 			from .chem_utils import ibm_rxn
 			self.evaluator_func = ibm_rxn
+		elif self.name == 'docking_meta':
+			from .chem_utils import docking_meta
+			self.evaluator_func = docking_meta(**self.kwargs)
 		else:
 			return 
 
