@@ -154,7 +154,10 @@ class Oracle:
 			self.evaluator_func = ibm_rxn
 		elif self.name == 'molecule_one_synthesis':
 			from .chem_utils import molecule_one_retro
-			self.evaluator_func = molecule_one_retro
+			self.evaluator_func = molecule_one_retro(**self.kwargs)
+		elif self.name == 'docking_score':
+			from .chem_utils import docking_meta
+			self.evaluator_func = docking_meta(**self.kwargs)
 		else:
 			return 
 

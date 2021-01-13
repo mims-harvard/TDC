@@ -1454,6 +1454,7 @@ def tree_analysis(current):
         depth = int(depth - 0.5)
     return num_path, status, depth, p_score*synthesizability, synthesizability, price
 
+
 def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='tree_builder_result.json', num_trials=5,
            max_depth=9, max_branching=25, expansion_time=60, max_ppg=100, template_count=1000, max_cum_prob=0.999, 
            chemical_property_logic='none', max_chemprop_c=0, max_chemprop_n=0, max_chemprop_o=0, max_chemprop_h=0, 
@@ -1505,7 +1506,7 @@ def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='t
                 break
                 
     if save_json:
-        with open(name, 'w') as f_data:
+        with open(file_name, 'w') as f_data:
             json.dump(resp.json(), f_data)
         
     num_path, status, depth, p_score, synthesizability, price = tree_analysis(resp.json())
@@ -1546,37 +1547,58 @@ def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
 
 # molecule.one
 
-def molecule_one_retro(smiles, api_token):
-    try:
-        from m1wrapper import MoleculeOneWrapper
-    except:
-        raise ImportError("Install Molecule.One Wrapper via pip install git+https://github.com/molecule-one/m1wrapper-python") 
+class molecule_one_retro:
 
-    if isinstance(smiles, str):
-        smiles = [smiles]
-    m1wrapper = MoleculeOneWrapper(api_token, 'https://app.molecule.one')
+    def __init__(self, api_token):
+      try:
+          from m1wrapper import MoleculeOneWrapper
+      except:
+          raise ImportError("Install Molecule.One Wrapper via pip install git+https://github.com/molecule-one/m1wrapper-python") 
+      self.m1wrapper = MoleculeOneWrapper(api_token, 'https://app.molecule.one')
     
-    search = m1wrapper.run_batch_search(
-        targets=smiles,
-        parameters={'exploratory_search': False, 'detail_level': 'score'}
-    )
 
-    status_cur = search.get_status()
-    print_sys('Started Querying...')
-    print_sys(status_cur)
-    while True:
-        time.sleep(7)
-        status = search.get_status()
+    def __call__(self, smiles):
+      if isinstance(smiles, str):
+          smiles = [smiles]
 
-        if (status['queued'] == 0) and (status['running'] == 0):
-            print_sys('Finished... Returning Results...')
-            break
+      search = self.m1wrapper.run_batch_search(
+          targets=smiles,
+          parameters={'exploratory_search': False, 'detail_level': 'score'}
+      )
+
+      status_cur = search.get_status()
+      print_sys('Started Querying...')
+      print_sys(status_cur)
+      while True:
+          time.sleep(7)
+          status = search.get_status()
+
+          if (status['queued'] == 0) and (status['running'] == 0):
+              print_sys('Finished... Returning Results...')
+              break
+          else:
+              if status_cur != status:
+                  print_sys(status)
+          status_cur = status
+      result = search.get_results(precision=5, only=["targetSmiles", "result"])
+      return {i['targetSmiles']: i['result'] for i in result}
+
+class docking_meta:
+    def __init__(self, software_calss='vina', pyscreener_path = './pyscreener', **kwargs):
+        import sys
+        sys.path.append(pyscreener_path)
+        if software_calss == 'vina':
+            from pyscreener.docking.vina import Vina as screener
+        elif software_calss == 'dock6':
+            from pyscreener.docking.dock import DOCK as screener
         else:
-            if status_cur != status:
-                print_sys(status)
-        status_cur = status
-    result = search.get_results(precision=5, only=["targetSmiles", "result"])
-    return {i['targetSmiles']: i['result'] for i in result}
+            raise ValueError("The value of software_calss is not implemented. Currently available:['vina', 'dock6']")
+
+        self.scorer = screener(**kwargs)
+
+    def __call__(self, test_smiles):
+        final_score = self.scorer(test_smiles)
+        return final_score
 
 def smiles_to_rdkit_mol(smiles):
   mol = Chem.MolFromSmiles(smiles)
