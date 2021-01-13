@@ -1438,6 +1438,7 @@ def tree_analysis(current):
         depth = int(depth - 0.5)
     return num_path, status, depth, p_score*synthesizability, synthesizability, price
 
+
 def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='tree_builder_result.json', num_trials=5,
            max_depth=9, max_branching=25, expansion_time=60, max_ppg=100, template_count=1000, max_cum_prob=0.999, 
            chemical_property_logic='none', max_chemprop_c=0, max_chemprop_n=0, max_chemprop_o=0, max_chemprop_h=0, 
@@ -1489,7 +1490,7 @@ def askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='t
                 break
                 
     if save_json:
-        with open(name, 'w') as f_data:
+        with open(file_name, 'w') as f_data:
             json.dump(resp.json(), f_data)
         
     num_path, status, depth, p_score, synthesizability, price = tree_analysis(resp.json())
@@ -1527,6 +1528,24 @@ def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
         return results
     else:
         raise NameError("This output value is not implemented.")
+
+
+class docking_meta:
+    def __init__(self, software_calss='vina', **kwargs):
+        import sys
+        sys.path.append('/Users/gaowh/Codes/pyscreener')
+        if software_calss == 'vina':
+            from pyscreener.docking.vina import Vina as screener
+        elif software_calss == 'dock6':
+            from pyscreener.docking.dock import DOCK as screener
+        else:
+            raise ValueError("The value of software_calss is not implemented. Currently available:['vina', 'dock6']")
+
+        self.scorer = screener(**kwargs)
+
+    def __call__(self, test_smiles):
+        final_score = self.scorer(test_smiles)
+        return final_score
 
 
 
