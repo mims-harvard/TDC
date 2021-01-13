@@ -208,7 +208,7 @@ download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
 
-meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta', 'docking_meta']
+meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta', 'docking_score', 'molecule_one_synthesis']
 
 oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name 
 
