@@ -7,6 +7,7 @@ from collections import defaultdict, Iterable
 from abc import abstractmethod
 from functools import partial
 from typing import List
+import time
 
 try:
 	from sklearn import svm
@@ -41,7 +42,7 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from .utils import oracle_load
+from .utils import oracle_load,print_sys
 
 
 
@@ -1543,7 +1544,39 @@ def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
     else:
         raise NameError("This output value is not implemented.")
 
+# molecule.one
 
+def molecule_one_retro(smiles, api_token):
+    try:
+        from m1wrapper import MoleculeOneWrapper
+    except:
+        raise ImportError("Install Molecule.One Wrapper via pip install git+https://github.com/molecule-one/m1wrapper-python") 
+
+    if isinstance(smiles, str):
+        smiles = [smiles]
+    m1wrapper = MoleculeOneWrapper(api_token, 'https://app.molecule.one')
+    
+    search = m1wrapper.run_batch_search(
+        targets=smiles,
+        parameters={'exploratory_search': False, 'detail_level': 'score'}
+    )
+
+    status_cur = search.get_status()
+    print_sys('Started Querying...')
+    print_sys(status_cur)
+    while True:
+        time.sleep(7)
+        status = search.get_status()
+
+        if (status['queued'] == 0) and (status['running'] == 0):
+            print_sys('Finished... Returning Results...')
+            break
+        else:
+            if status_cur != status:
+                print_sys(status)
+        status_cur = status
+    result = search.get_results(precision=5, only=["targetSmiles", "result"])
+    return {i['targetSmiles']: i['result'] for i in result}
 
 def smiles_to_rdkit_mol(smiles):
   mol = Chem.MolFromSmiles(smiles)
@@ -2302,7 +2335,7 @@ def InitKeys(keyList, keyDict):
     if patt != '?':
       sma = Chem.MolFromSmarts(patt)
       if not sma:
-        print('SMARTS parser error for key #%d: %s' % (key, patt))
+        print_sys('SMARTS parser error for key #%d: %s' % (key, patt))
       else:
         keyList[key - 1] = sma, count
 
@@ -3039,7 +3072,7 @@ def smiles2morgan(s, radius = 2, nBits = 1024):
         features = np.zeros((1,))
         DataStructs.ConvertToNumpyArray(features_vec, features)
     except:
-        print('rdkit not found this smiles for morgan: ' + s + ' convert to all 0 features')
+        print_sys('rdkit not found this smiles for morgan: ' + s + ' convert to all 0 features')
         features = np.zeros((nBits, ))
     return features
 
@@ -3055,7 +3088,7 @@ def smiles2rdkit2d(s):
         NaNs = np.isnan(features)
         features[NaNs] = 0
     except:
-        print('descriptastorus not found this smiles: ' + s + ' convert to all 0 features')
+        print_sys('descriptastorus not found this smiles: ' + s + ' convert to all 0 features')
         features = np.zeros((200, ))
     return np.array(features)
 
@@ -3069,7 +3102,7 @@ def smiles2daylight(s):
     features = np.zeros((NumFinger, ))
     features[np.array(temp)] = 1
   except:
-    print('rdkit not found this smiles: ' + s + ' convert to all 0 features')
+    print_sys('rdkit not found this smiles: ' + s + ' convert to all 0 features')
     features = np.zeros((2048, ))
   return np.array(features)
 
@@ -3727,7 +3760,7 @@ def AC2BO(AC, atoms, charge, allow_charged_fragments=True, use_graph=True):
         # valence can't be smaller than number of neighbourgs
         possible_valence = [x for x in atomic_valence[atomicNum] if x >= valence]
         if not possible_valence:
-            print('Valence of atom',i,'is',valence,'which bigger than allowed max',max(atomic_valence[atomicNum]),'. Stopping')
+            print_sys('Valence of atom',i,'is',valence,'which bigger than allowed max',max(atomic_valence[atomicNum]),'. Stopping')
             sys.exit()
         valences_list_of_lists.append(possible_valence)
 
@@ -4303,8 +4336,8 @@ def mol2file2pubchem(molfile):
   smiles = canonicalize(smiles)
   return smiles2pubchem(smiles)
 
-2D_format = ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
-3D_format = ['Graph3D', 'Coulumb']
+#2D_format = ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
+#3D_format = ['Graph3D', 'Coulumb']
 
 convert_dict = {
           'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'],

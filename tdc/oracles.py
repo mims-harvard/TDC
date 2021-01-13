@@ -152,6 +152,9 @@ class Oracle:
 		elif self.name == 'ibm_rxn':
 			from .chem_utils import ibm_rxn
 			self.evaluator_func = ibm_rxn
+		elif self.name == 'molecule_one_synthesis':
+			from .chem_utils import molecule_one_retro
+			self.evaluator_func = molecule_one_retro
 		else:
 			return 
 
@@ -160,6 +163,9 @@ class Oracle:
 		# 	return self.evaluator_func(*args, **kwargs)
 		# 	#### evaluator for distribution learning, e.g., diversity, validity   
 		smiles_lst = args[0]
+		if self.name == 'molecule_one_synthesis':
+			return self.evaluator_func(*args, **kwargs)
+
 		if type(smiles_lst) == list:
 
 			#### evaluator for single molecule, 
