@@ -10,7 +10,7 @@
 [![Build Status](https://travis-ci.org/mims-harvard/TDC.svg?branch=master)](https://travis-ci.org/mims-harvard/TDC)
 [![TDC CircleCI](https://circleci.com/gh/mims-harvard/TDC.svg?style=svg)](https://app.circleci.com/pipelines/github/mims-harvard/TDC)
 
-[**Project Website**](https://zitniklab.hms.harvard.edu/TDC/) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC) | [**TDC Mailing List**](https://groups.io/g/tdc)
+[**Project Website**](https://zitniklab.hms.harvard.edu/TDC/) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
 **Therapeutics Data Commons (TDC)** is a collection of machine learning tasks spread across different domains of therapeutics.
 
