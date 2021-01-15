@@ -2,8 +2,7 @@
 
 ----
 
-[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
-[![Website](https://img.shields.io/badge/Homepage-docs-<COLOR>.svg)](https://zitniklab.hms.harvard.edu/TDC/)
+[![website](https://img.shields.io/badge/website-live-brightgreen)](https://zitniklab.hms.harvard.edu/TDC/)
 [![PyPI version](https://badge.fury.io/py/PyTDC.svg)](https://badge.fury.io/py/PyTDC)
 [![Downloads](https://pepy.tech/badge/pytdc)](https://pepy.tech/project/pytdc)
 [![GitHub Repo stars](https://img.shields.io/github/stars/mims-harvard/TDC)](https://github.com/mims-harvard/TDC/stargazers)
@@ -11,15 +10,13 @@
 [![Build Status](https://travis-ci.org/mims-harvard/TDC.svg?branch=master)](https://travis-ci.org/mims-harvard/TDC)
 [![TDC CircleCI](https://circleci.com/gh/mims-harvard/TDC.svg?style=svg)](https://app.circleci.com/pipelines/github/mims-harvard/TDC)
 
+[**Project Website**](https://zitniklab.hms.harvard.edu/TDC/) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC) | [**TDC Mailing List**](https://groups.io/g/tdc)
+
 **Therapeutics Data Commons (TDC)** is a collection of machine learning tasks spread across different domains of therapeutics.
 
 Therapeutics machine learning is an exciting field with incredible opportunities for expansion, innovation, and impact. Datasets and benchmarks in TDC provide a systematic model development and evaluation framework that allows more machine learning researchers to contribute to the field.
 
 We envision that TDC can considerably accelerate machine-learning model development, validation and transition into production and clinical implementation. 
-
-[**Project Website**](https://zitniklab.hms.harvard.edu/TDC/)
-
-[**Join TDC Mailing List**](https://groups.io/g/tdc)
 
 **Invited talk at the [Harvard Symposium on Drugs for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
 
