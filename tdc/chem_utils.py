@@ -1524,8 +1524,10 @@ def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
     """
     This function is modified from Dr. Jan Jensen's code
     """
-    
-    from rxn4chemistry import RXN4ChemistryWrapper
+    try:
+      from rxn4chemistry import RXN4ChemistryWrapper
+    except:
+      print_sys("Please install rxn4chemistry via pip install rxn4chemistry")
     import time
     
     rxn4chemistry_wrapper = RXN4ChemistryWrapper(api_key=api_key)

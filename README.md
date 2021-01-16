@@ -25,6 +25,7 @@ We envision that TDC can considerably accelerate machine-learning model developm
 
 
 ## Updates
+- `0.1.5`: Added four realistic oracles from docking scores and synthetic accessibility! Checkout [here](https://zitniklab.hms.harvard.edu/TDC/functions/oracles/)!
 - `0.1.4`: Added the 1st version of [`MolConvert`](https://zitniklab.hms.harvard.edu/TDC/functions/data_process/#molecule-conversion) class that can map among ~15 molecular formats in 2 lines of code (For 2D: from SMILES/SEFLIES and convert to SELFIES/SMILES, Graph2D, PyG, DGL, ECFP2-6, MACCS, Daylight, RDKit2D, Morgan, PubChem; For 3D: from XYZ, SDF files to Graph3D, Columb Matrix); Also a quality check on DTI datasets with IDs added.
 - Checkout **[Contribution Guide](CONTRIBUTE.md)** to add new dataset, task, function!
 - `0.1.3`: Added new therapeutics task on CRISPR Repair Outcome Prediction! Added a data function to map molecule to popular cheminformatics fingerprint.
