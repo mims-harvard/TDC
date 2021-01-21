@@ -92,6 +92,8 @@ class BenchmarkGroup:
 			out = create_scaffold_split(train_val, seed, frac = [0.875, 0.125, 0], entity = 'Drug')
 		elif bm_split_names[self.name][dataset] == 'random':
 			out = create_fold(train_val, seed, frac = [0.875, 0.125, 0])
+		elif bm_split_names[self.name][dataset] == 'combination':
+			out = create_combination_split(train_val, seed, frac=[0.875, 0.125, 0])
 		else:
 			raise NotImplementedError
 		return out

@@ -222,11 +222,11 @@ admet_splits = {'caco2_wang': 'scaffold',
 				'dili': 'scaffold'
 				}
 
-drugsyn_splits = {'drugcomb_css': 'random',
-                    'drugcomb_hsa': 'random',
-                    'drugcomb_loewe': 'random',
-                    'drugcomb_bliss': 'random',
-                    'drugcomb_zip': 'random'
+drugsyn_splits = {'drugcomb_css': 'combination',
+                    'drugcomb_hsa': 'combination',
+                    'drugcomb_loewe': 'combination',
+                    'drugcomb_bliss': 'combination',
+                    'drugcomb_zip': 'combination'
                     }
 
 ####################################
@@ -494,5 +494,5 @@ benchmark2type = {'admet_group': 'zip',
                   'drugsyn_group': 'zip'}
 
 benchmark2id = {'admet_group': 4267442,
-                'drugsyn_group':  4297987}
+                'drugsyn_group':  4307771}
 
