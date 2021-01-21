@@ -10,7 +10,7 @@ rm -r *
 In this site, do
 ```
 bundle exec jekyll serve
-mv _site/* ../TDC/
+cp -r _site/* ./TDC/
 ```
 
 Then, commit to both repos in remote.
