@@ -68,7 +68,7 @@ crisproutcome_dataset_names = ['leenay']
 
 drugres_dataset_names = ['gdsc1', 'gdsc2']
 
-drugsyn_dataset_names = ['oncopolypharmacology', 'drugcomb_nci60']
+drugsyn_dataset_names = ['oncopolypharmacology', 'drugcomb']
 
 antibodyaff_dataset_names = ['protein_sabdab']
 
@@ -148,6 +148,12 @@ admet_benchmark = {'ADME': ['caco2_wang',
 							'ld50_zhu']
 					}
 
+drugsyn_benchmark = {'Synergy': ['drugcomb_css',
+                                 'drugcomb_hsa',
+                                 'drugcomb_loewe',
+                                 'drugcomb_bliss',
+                                 'drugcomb_zip'
+                                 ]}
 
 ####################################
 
@@ -176,6 +182,22 @@ admet_metrics = {'caco2_wang': 'mae',
 				'dili': 'roc-auc'
 				}
 
+drugsyn_metrics = {'drugcomb_css': 'mae',
+                   'drugcomb_hsa':'mae',
+                  'drugcomb_loewe':'mae',
+                  'drugcomb_bliss':'mae',
+                  'drugcomb_zip':'mae',
+                  'drugcomb_css_brain':'mae',
+                  'drugcomb_css_ovary':'mae',
+                  'drugcomb_css_lung':'mae',
+                  'drugcomb_css_skin':'mae',
+                  'drugcomb_css_hematopoietic_lymphoid':'mae',
+                  'drugcomb_css_breast':'mae',
+                  'drugcomb_css_prostate':'mae',
+                  'drugcomb_css_kidney':'mae',
+                  'drugcomb_css_colon':'mae',
+                   }
+
 #### Benchmark Splits
 admet_splits = {'caco2_wang': 'scaffold',
 				'hia_hou': 'scaffold',
@@ -200,6 +222,13 @@ admet_splits = {'caco2_wang': 'scaffold',
 				'ames': 'scaffold',
 				'dili': 'scaffold'
 				}
+
+drugsyn_splits = {'drugcomb_css': 'combination',
+                    'drugcomb_hsa': 'combination',
+                    'drugcomb_loewe': 'combination',
+                    'drugcomb_bliss': 'combination',
+                    'drugcomb_zip': 'combination'
+                    }
 
 ####################################
 
@@ -278,9 +307,12 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"CRISPROutcome": crisproutcome_dataset_names
 				}
 
-benchmark_names = {"admet_group": admet_benchmark}
-bm_metric_names = {"admet_group": admet_metrics}
-bm_split_names = {"admet_group": admet_splits}
+benchmark_names = {"admet_group": admet_benchmark,
+                   "drugsyn_group": drugsyn_benchmark}
+bm_metric_names = {"admet_group": admet_metrics,
+                  "drugsyn_group": drugsyn_metrics}
+bm_split_names = {"admet_group": admet_splits,
+                  "drugsyn_group": drugsyn_splits}
 
 dataset_list = []
 for i in dataset_names.keys():
@@ -335,7 +367,7 @@ name2type = {'toxcast': 'tab',
  'qed': 'tab', 
  'drd2': 'tab', 
  'logp': 'tab',
- 'drugcomb_nci60':'pkl',
+ 'drugcomb':'pkl',
  'gdsc1': 'pkl',
  'gdsc2': 'pkl',
  'iedb_jespersen': 'pkl',
@@ -387,7 +419,7 @@ name2id = {'bbb_adenot': 4259565,
  'carcinogens_lagunin': 4259570,
  'davis': 4291557,
  'drugbank': 4139573,
- 'drugcomb_nci60': 4215720,
+ 'drugcomb': 4215720,
  'f20_edrug3d': 4259586,
  'f30_edrug3d': 4259589,
  'halflife_edrug3d': 4259587,
@@ -459,6 +491,9 @@ oracle2id = {'drd2': 4178625,
 			 'fpscores': 4170416
 			}
 
-benchmark2type = {'admet_group': 'zip'}
+benchmark2type = {'admet_group': 'zip',
+                  'drugsyn_group': 'zip'}
 
-benchmark2id = {'admet_group': 4267442}
+benchmark2id = {'admet_group': 4267442,
+                'drugsyn_group':  4307771}
+
