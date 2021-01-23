@@ -139,10 +139,35 @@
 <div class="content">
     <h2 id="drug-synergy-benchmark-group">Drug Synergy Benchmark Group</h2>
 
-<p class="is-size-5"> Drug combination therapy is used to treat many diseases, such as almost all cancer chemotherapy and many antimicrobial regimens, or preventing cancer. They also allow lower doses of each drug and consequently lower adverse effects. Thus, accurately predicting the synergy of two drugs in treating a disease is of tremendous importance. In this benchmark group, we use the <a href="https://academic.oup.com/nar/article-abstract/47/W1/W43/5486743"> DrugComb </a> dataset. We provide five synergy scores to predict, along with the evaluation across tissue types during testing. To access, type: </p>
+<p class="is-size-5"> Drug combination therapy is used to treat many diseases, such as almost all cancer chemotherapy and many antimicrobial regimens, or preventing cancer. They also allow lower doses of each drug and consequently lower adverse effects. Thus, accurately predicting the synergy of two drugs in treating a disease is of tremendous importance. Mathematically, the degree of synergys can be assessed over the full dose–response matrix using the expected effect of non-interaction. In this benchmark group, we use the <a href="https://academic.oup.com/nar/article-abstract/47/W1/W43/5486743"> DrugComb </a> dataset. </p>
+
+<p class="is-size-5"> We provide five synergy scores to predict. The main one is the combination sensitivity scores (CSS), which is determined as the average area under curve for the combinations’ dose–response with one compound fixed at the IC50 concentration. In addition, four commonly-used reference scores are used: Bliss independence (BLISS), Highest single agent (HSA), Loewe additivity (LOEWE), and Zero interaction potency (ZIP). We also provide benchmarks for evaluation across tissue types during testing. To access, type: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugSyn_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s">'pkl'</span><span class="p">)</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">benchmark</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'valid'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+
+    <span class="c1">## --- train your model --- ##
+</span>
+    <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred</span>
+
+<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="s">'''
+Note that the output includes the evaluations across tissues:
+
+{'drugcomb_css': {'mae': 22.963}, 'drugcomb_css_kidney': {'mae': 21.811}, 'drugcomb_css_lung': {'mae': 21.367},
+'drugcomb_css_breast': {'mae': 18.25}, 'drugcomb_css_hematopoietic_lymphoid': {'mae': 40.379}, 'drugcomb_css_colon': {'mae': 25.001},
+'drugcomb_css_prostate': {'mae': 21.874}, 'drugcomb_css_ovary': {'mae': 19.468}, 'drugcomb_css_skin': {'mae': 18.683}, 
+'drugcomb_css_brain': {'mae': 21.89}, 'drugcomb_hsa': {'mae': 4.562}, 'drugcomb_loewe': {'mae': 11.109}, 'drugcomb_bliss': {'mae': 4.686}, 
+'drugcomb_zip': {'mae': 4.545}}
+'''</span>
 </code></pre></div></div>
 
 <p class="is-size-5"> Follow the <a href="/benchmark/overview/">instruction</a> on how to use the <code>BenchmarkGroup</code> class. For every dataset, we use cold drug combination split into 70%/10%/20% training/validation/testing fractions. The evaluation metrics is MAE. </p>
@@ -152,6 +177,217 @@
 <div class="column is-12">
     <hr />
 </div>
+
+<h3 id="summary">Summary</h3>
+
+<table class="table is-striped is-hoverable">
+  <thead>
+  <tr>
+    <th>Label</th>
+    <th>Number</th>
+    <th>Task</th>
+    <th>Metric</th>
+    <th>Split</th>
+  </tr>
+  </thead>
+  <tr>
+    <td>CSS</td>
+    <td>297,098</td>
+    <td>Regression</td>
+    <td>MAE</td>
+    <td>Combination</td>
+  </tr>
+  <tr>
+    <td>Loewe</td>
+    <td>297,098</td>
+    <td>Regression</td>
+    <td>MAE</td>
+    <td>Combination</td>
+  </tr>
+  <tr>
+    <td>Zip</td>
+    <td>297,098</td>
+    <td>Regression</td>
+    <td>MAE</td>
+    <td>Combination</td>
+  </tr>
+  <tr>
+    <td>Bliss</td>
+    <td>297,098</td>
+    <td>Regression</td>
+    <td>MAE</td>
+    <td>Combination</td>
+  </tr>
+  <tr>
+    <td>HSA</td>
+    <td>297,098</td>
+    <td>Regression</td>
+    <td>MAE</td>
+    <td>Combination</td>
+  </tr>
+</table>
+
+<hr />
+
+<table class="table is-striped is-hoverable">
+  <thead>
+  <tr>
+    <th>Tissue</th>
+    <th>Label</th>
+    <th># of Cell Lines</th>
+    <th>Test Set Size</th>
+    <th>Metric</th>
+  </tr>
+  </thead>
+  <tr>
+    <td>Kidney</td>
+    <td>CSS</td>
+    <td>8</td>
+    <td>8,096</td>
+    <td>MAE</td>
+  </tr>
+  <tr>
+    <td>Lung</td>
+    <td>CSS</td>
+    <td>9</td>
+    <td>9,108</td>
+    <td>MAE</td>
+  </tr>
+  <tr>
+    <td>Breast</td>
+    <td>CSS</td>
+    <td>5</td>
+    <td>20,551</td>
+    <td>MAE</td>
+  </tr>
+  <tr>
+    <td>Hema</td>
+    <td>CSS</td>
+    <td>6</td>
+    <td>6,072</td>
+    <td>MAE</td>
+  </tr>
+  <tr>
+    <td>Colon</td>
+    <td>CSS</td>
+    <td>7</td>
+    <td>7,084</td>
+    <td>MAE</td>
+  </tr>
+  <tr>
+    <td>Prostate</td>
+    <td>CSS</td>
+    <td>2</td>
+    <td>2,024</td>
+    <td>MAE</td>
+  </tr>
+  <tr>
+    <td>Ovary</td>
+    <td>CSS</td>
+    <td>7</td>
+    <td>7,084</td>
+    <td>MAE</td>
+  </tr>
+  <tr>
+    <td>Skin</td>
+    <td>CSS</td>
+    <td>9</td>
+    <td>9,108</td>
+    <td>MAE</td>
+  </tr>
+  <tr>
+    <td>Brain</td>
+    <td>CSS</td>
+    <td>6</td>
+    <td>6,072</td>
+    <td>MAE</td>
+  </tr>
+  
+</table>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="leaderboard-on-synergy-scores">Leaderboard on Synergy Scores</h3>
+
+<table class="table is-striped is-hoverable" id="A">
+  <thead>
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'A', 'asc')">CSS  <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(6, 'A', 'asc')">Loewe  <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Zip  <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(8, 'A', 'asc')">Bliss  <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(9, 'A', 'asc')">HSA  <i class="fas fa-sort"></i></th>
+  </tr>
+</thead>
+  <tr> 
+  <td> 1 </td> 
+  <td> XXX </td> 
+  <td><a href="mailto:yroohani@stanford.edu">Yusuf Roohani</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/master/examples/single_pred/admet"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> XXXX </td> 
+  <td>0.393 <span>&#177;</span> 0.024 </td> 
+  <td>0.972 <span>&#177;</span> 0.008 </td> 
+  <td>0.918 <span>&#177;</span> 0.007 </td> 
+  <td>0.672 <span>&#177;</span> 0.021 </td> 
+  <td>0.574 <span>&#177;</span> 0.017 </td> 
+</tr>
+
+</table>
+<p><i class="fas fa-sort"></i>: Click to sort models for specific benchmark column.</p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="leaderboard-on-combination-sensitivity-scores-across-tissues">Leaderboard on Combination Sensitivity Scores Across Tissues</h3>
+
+<table class="table is-striped is-hoverable" id="A">
+  <thead>
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'A', 'asc')">Kidney <i class="fas fa-sort"></i> </th>
+    <th onclick="sortTable(6, 'A', 'asc')">Lung <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Breast <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(8, 'A', 'asc')">Hema <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(9, 'A', 'asc')">Colon <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(10, 'A', 'asc')">Prost. <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(11, 'A', 'asc')">Ovary <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(12, 'A', 'asc')">Skin <i class="fas fa-sort"></i></th>
+    <th onclick="sortTable(13, 'A', 'asc')">Brain <i class="fas fa-sort"></i></th>
+  </tr>
+</thead>
+  <tr> 
+  <td> 1 </td> 
+  <td> XXX </td> 
+  <td><a href="mailto:yroohani@stanford.edu">Yusuf Roohani</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/master/examples/single_pred/admet"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
+  <td> XXXX </td> 
+  <td>0.393 <span>&#177;</span> 0.024 </td> 
+  <td>0.972 <span>&#177;</span> 0.008 </td> 
+  <td>0.918 <span>&#177;</span> 0.007 </td> 
+  <td>0.672 <span>&#177;</span> 0.021 </td> 
+  <td>0.574 <span>&#177;</span> 0.017 </td> 
+  <td>0.574 <span>&#177;</span> 0.017 </td> 
+  <td>0.574 <span>&#177;</span> 0.017 </td> 
+  <td>0.574 <span>&#177;</span> 0.017 </td> 
+  <td>0.574 <span>&#177;</span> 0.017 </td> 
+</tr>
+
+</table>
+<p><i class="fas fa-sort"></i>: Click to sort models for specific benchmark column.</p>
 
 </div>
                 </div>
