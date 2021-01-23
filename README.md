@@ -2,7 +2,7 @@
 
 ----
 
-[![website](https://img.shields.io/badge/website-live-brightgreen)](https://zitniklab.hms.harvard.edu/TDC/)
+[![website](https://img.shields.io/badge/website-live-brightgreen)](https://tdcommons.ai)
 [![PyPI version](https://badge.fury.io/py/PyTDC.svg)](https://badge.fury.io/py/PyTDC)
 [![Downloads](https://pepy.tech/badge/pytdc)](https://pepy.tech/project/pytdc)
 [![GitHub Repo stars](https://img.shields.io/github/stars/mims-harvard/TDC)](https://github.com/mims-harvard/TDC/stargazers)
@@ -10,7 +10,7 @@
 [![Build Status](https://travis-ci.org/mims-harvard/TDC.svg?branch=master)](https://travis-ci.org/mims-harvard/TDC)
 [![TDC CircleCI](https://circleci.com/gh/mims-harvard/TDC.svg?style=svg)](https://app.circleci.com/pipelines/github/mims-harvard/TDC)
 
-[**Project Website**](https://zitniklab.hms.harvard.edu/TDC/) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
+[**Project Website**](https://tdcommons.ai) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
 **Therapeutics Data Commons (TDC)** is a collection of machine learning tasks spread across different domains of therapeutics.
 
@@ -22,11 +22,11 @@ We envision that TDC can considerably accelerate machine-learning model developm
 
 
 ## Updates
-- `0.1.5`: Added four realistic oracles from docking scores and synthetic accessibility! Checkout [here](https://zitniklab.hms.harvard.edu/TDC/functions/oracles/)!
-- `0.1.4`: Added the 1st version of [`MolConvert`](https://zitniklab.hms.harvard.edu/TDC/functions/data_process/#molecule-conversion) class that can map among ~15 molecular formats in 2 lines of code (For 2D: from SMILES/SEFLIES and convert to SELFIES/SMILES, Graph2D, PyG, DGL, ECFP2-6, MACCS, Daylight, RDKit2D, Morgan, PubChem; For 3D: from XYZ, SDF files to Graph3D, Columb Matrix); Also a quality check on DTI datasets with IDs added.
+- `0.1.5`: Added four realistic oracles from docking scores and synthetic accessibility! Checkout [here](https://tdcommons.ai/functions/oracles/)!
+- `0.1.4`: Added the 1st version of [`MolConvert`](https://tdcommons.ai/functions/data_process/#molecule-conversion) class that can map among ~15 molecular formats in 2 lines of code (For 2D: from SMILES/SEFLIES and convert to SELFIES/SMILES, Graph2D, PyG, DGL, ECFP2-6, MACCS, Daylight, RDKit2D, Morgan, PubChem; For 3D: from XYZ, SDF files to Graph3D, Columb Matrix); Also a quality check on DTI datasets with IDs added.
 - Checkout **[Contribution Guide](CONTRIBUTE.md)** to add new dataset, task, function!
 - `0.1.3`: Added new therapeutics task on CRISPR Repair Outcome Prediction! Added a data function to map molecule to popular cheminformatics fingerprint.
-- `0.1.2`: The first TDC Leaderboard is released! Checkout the leaderboard guide [here](https://zitniklab.hms.harvard.edu/TDC/benchmark/overview/) and the ADMET Leaderboard [here](https://zitniklab.hms.harvard.edu/TDC/benchmark/admet_group/).
+- `0.1.2`: The first TDC Leaderboard is released! Checkout the leaderboard guide [here](https://tdcommons.ai/benchmark/overview/) and the ADMET Leaderboard [here](https://tdcommons.ai/benchmark/admet_group/).
 - `0.1.1`: Replaced VD, Half Life and Clearance datasets from new sources that have higher qualities. Added LD50 to Tox.
 - `0.1.0`: Molecule quality check for ADME, Toxicity and HTS (canonicalized, and remove error mols).
 - `0.0.9`: Added DrugComb NCI-60, CYP2C9/2D6/3A4 substrates, Carcinogens toxicity! 
@@ -82,7 +82,7 @@ If you found our work useful, please cite us:
 @misc{tdc,
   author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
   title={Therapeutics Data Commons: Machine Learning Datasets for Therapeutics},
-  howpublished={\url{https://zitniklab.hms.harvard.edu/TDC/}},
+  howpublished={\url{https://tdcommons.ai}},
   month=nov,
   year=2020
 }
@@ -228,7 +228,7 @@ TDC is designed to be a community-driven effort. Checkout the [contribution guid
 
 ## Contact
 
-Send emails to [us](mailto:kexinhuang@hsph.harvard.edu) or open an issue.
+Send emails to [us](mailto:contact@tdcommons.ai) or open an issue.
 
 ## Data Server Maintenance Issues
 
