@@ -308,11 +308,11 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				}
 
 benchmark_names = {"admet_group": admet_benchmark,
-                   "drugsyn_group": drugsyn_benchmark}
+                   "drugcombo_group": drugsyn_benchmark}
 bm_metric_names = {"admet_group": admet_metrics,
-                  "drugsyn_group": drugsyn_metrics}
+                  "drugcombo_group": drugsyn_metrics}
 bm_split_names = {"admet_group": admet_splits,
-                  "drugsyn_group": drugsyn_splits}
+                  "drugcombo_group": drugsyn_splits}
 
 dataset_list = []
 for i in dataset_names.keys():
@@ -492,8 +492,8 @@ oracle2id = {'drd2': 4178625,
 			}
 
 benchmark2type = {'admet_group': 'zip',
-                  'drugsyn_group': 'zip'}
+                  'drugcombo_group': 'zip'}
 
 benchmark2id = {'admet_group': 4267442,
-                'drugsyn_group':  4307771}
+                'drugcombo_group':  4319569}
 
