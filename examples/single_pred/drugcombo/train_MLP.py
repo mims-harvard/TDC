@@ -6,9 +6,47 @@ Some code adapted from https://github.com/yejinjkim/synergy-transfer
 """
 
 import copy
-import sys
 import tdc
 from model_classes import *
+
+import torch
+import numpy as np
+import pandas as pd
+import time
+import pickle
+import argparse
+
+import torch.nn as nn
+from torch.autograd import Variable
+import torch.optim as optim
+from torch.utils.data import DataLoader
+
+
+def arg_parse():
+    """
+    Commandline arguments parser
+    """
+
+    parser = argparse.ArgumentParser(description='Arguments.')
+    parser.add_argument('--device', type=int,
+                        help='CPU / GPU device.')
+    parser.add_argument('--drug_feats', type=str,
+                        help='Path to drug features data file.')
+    parser.add_argument('--data_df', type=str,
+                        help='Path to complete data frame for drugcomb')
+    parser.add_argument('--batch_size', type=int,
+                        help='Batch size.')
+    parser.add_argument('--epochs', type=str,
+                        help='Number of epochs')
+
+    parser.set_defaults(
+        device='3',
+        drug_feats='./data/drug_features.pkl',
+        data_df ='./data/drugcomb_nci60.pkl',
+        epochs=50,
+        batch_size=128
+    )
+    return parser.parse_args()
 
 
 def set_up_features(drug_feat_file, data_df):
@@ -151,11 +189,7 @@ def main():
 
     """
 
-    # Set parameters
-    torch.cuda.set_device(3)
-    epochs=50
-    batch_size = 128
-    cuda = True
+    args = arg_parse()
     loss_fn = nn.L1Loss()
 
     # Set paths
@@ -173,24 +207,27 @@ def main():
         train_df, valid_df, test_df = benchmark['train'], benchmark['valid'], benchmark['test']
 
         train_ = DrugCombDataset(train_df, drug_features, cell_features)
-        train_loader = DataLoader(train_, batch_size=batch_size, shuffle=True )
+        train_loader = DataLoader(train_, batch_size=args.batch_size,
+                                  shuffle=True )
         valid_ = DrugCombDataset(valid_df, drug_features, cell_features)
-        valid_loader = DataLoader(valid_, batch_size=batch_size, shuffle=True )
+        valid_loader = DataLoader(valid_, batch_size=args.batch_size,
+                                  shuffle=True )
         test_ = DrugCombDataset(test_df, drug_features, cell_features)
-        test_loader = DataLoader(test_, batch_size=batch_size, shuffle=True )
+        test_loader = DataLoader(test_, batch_size=args.batch_size,
+                                 shuffle=True )
 
         num_genes = len(cell_features.loc[0,'CellLine'])
 
         model = Comb(num_genes=num_genes)
-        if(cuda):
+        if(args.cuda):
                model.cuda()
 
         #Training
         best_val_loss = np.inf
         try:
-            for epoch in range(1, epochs+1):
+            for epoch in range(1, args.epochs+1):
                 epoch_start_time = time.time()
-                train(model, train_loader, loss_fn, batch_size)
+                train(model, train_loader, loss_fn, batch_size, args.cuda)
                 _, val_loss = evaluate(model, valid_loader, loss_fn)
                 if val_loss < best_val_loss:
                    best_val_loss = val_loss
@@ -203,7 +240,8 @@ def main():
 
         print('Best model MSE:', best_val_loss)
 
-        predictions[name], _ = evaluate(best_model, test_loader, loss_fn)
+        predictions[name], _ = evaluate(best_model, test_loader, loss_fn,
+                                        args.cuda)
         break
 
     # Evaluate performance
