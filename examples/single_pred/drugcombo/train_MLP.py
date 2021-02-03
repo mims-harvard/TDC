@@ -38,13 +38,16 @@ def arg_parse():
                         help='Batch size.')
     parser.add_argument('--epochs', type=str,
                         help='Number of epochs')
+    parser.add_argument('--cuda', type=bool,
+                        help='CUDA')
 
     parser.set_defaults(
         device='3',
         drug_feats='./data/drug_features.pkl',
         data_df ='./data/drugcomb_nci60.pkl',
         epochs=50,
-        batch_size=128
+        batch_size=128,
+        cuda=True
     )
     return parser.parse_args()
 
@@ -184,11 +187,7 @@ def evaluate(model, data_loader, loss_fn, cuda=True):
 
 
 def main():
-    """
-    Main script
-
-    """
-
+    
     args = arg_parse()
     loss_fn = nn.L1Loss()
 
@@ -242,7 +241,6 @@ def main():
 
         predictions[name], _ = evaluate(best_model, test_loader, loss_fn,
                                         args.cuda)
-        break
 
     # Evaluate performance
     out = group.evaluate(predictions)
