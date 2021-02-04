@@ -67,4 +67,4 @@ def to_submission_format(results):
         return [round(np.mean(metric), 3), round(np.std(metric), 3)]
     return dict(df.apply(get_metric, axis = 1))
 
-print(to_submission_format(results_all_seeds_CNN)) 
+print(to_submission_format(results_all_seeds)) 
