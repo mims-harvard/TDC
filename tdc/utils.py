@@ -28,6 +28,8 @@ except ImportError:
 
 def fuzzy_search(name, dataset_names):
 	name = name.lower()
+	if name[:4] == 'tdc.':
+		name = name[4:]
 	if name in dataset_names:
 		s =  name
 	else:
