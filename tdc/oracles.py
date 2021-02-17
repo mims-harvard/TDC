@@ -30,6 +30,9 @@ class Oracle:
 		elif self.name == 'drd2':
 			from .chem_utils import drd2
 			self.evaluator_func = drd2 
+		elif self.name == 'cyp3a4_veith':
+			from .chem_utils import cyp3a4_veith
+			self.evaluator_func = cyp3a4_veith 
 		elif self.name == 'sa':
 			from .chem_utils import SA
 			self.evaluator_func = SA 

@@ -383,8 +383,91 @@ def drd2(smile):
         return float(score)
     return 0.0
 
+def load_cyp3a4_veith():
+  oracle_file = "oracle/cyp3a4_veith.pkl"
+  try:
+    with open(oracle_file, "rb") as f:
+      cyp3a4_veith_model = pickle.load(f)
+  except EOFError:
+    import sys
+    sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+  return cyp3a4_veith_model
 
 
+def cyp3a4_veith(smiles):
+  try:
+    from DeepPurpose import utils 
+  except:
+    raise ImportError("Please install DeepPurpose by 'pip install DeepPurpose'")
+  
+  if 'CYP3A4_Veith_model' not in globals().keys():
+    global cyp3a4_veith_model 
+    cyp3a4_veith_model = load_cyp3a4_veith()
+
+  import warnings
+  warnings.filterwarnings("ignore")
+
+  X_drug = [smiles]
+  drug_encoding = 'CNN'
+  y = [1]
+  X_pred = utils.data_process(X_drug = X_drug, y = y, drug_encoding = drug_encoding, split_method='no_split')
+  y_pred = cyp3a4_veith_model.predict(X_pred)
+  return y_pred[0]
+  # print('The predicted score is ' + str(y_pred))
+
+'''
+###### train cyp3a4_veith oracle using DeepPurpose ######
+
+import pickle, os 
+model_path = "CYP3A4_Veith.pkl"
+
+if not os.path.exists(model_path):
+  from tdc.single_pred import ADME
+  data = ADME(name = 'CYP3A4_Veith')
+  # split = data.get_split()
+
+  df = data.get_data()
+  X_drugs, y = df['Drug'], df['Y']
+
+
+  from DeepPurpose import utils, CompoundPred
+  # drug_encoding = 'Morgan'
+  # drug_encoding = 'MPNN'
+  drug_encoding = 'CNN'
+  train, val, test = utils.data_process(X_drug = X_drugs, y = y, drug_encoding = drug_encoding,
+                                  split_method='random',frac=[0.7,0.15,0.15],
+                                  random_seed = 1)
+
+
+  config = utils.generate_config(drug_encoding = drug_encoding, 
+                           cls_hidden_dims = [1024,1024,512], 
+                           train_epoch = 5, 
+                           LR = 0.001, 
+                           batch_size = 128,
+                           hidden_dim_drug = 128,
+                           mpnn_hidden_size = 128,
+                           mpnn_depth = 3
+                          )
+
+  model = CompoundPred.model_initialize(**config)
+  model.train(train, val, test)
+  pickle.dump(model, open(model_path, 'wb'))
+else:
+  model = pickle.load(open(model_path, 'rb'))
+
+
+from DeepPurpose import utils 
+drug_encoding = 'CNN'
+smiles = 'CC1=C2C=C(C=CC2=NN1)C3=CC(=CN=C3)OCC(CC4=CC=CC=C4)N'
+X_drug = [smiles]
+y = [1]
+X_pred = utils.data_process(X_drug = X_drug, y = y, drug_encoding = drug_encoding, split_method='no_split')
+y_pred = model.predict(X_pred)
+print('The predicted score is ' + str(y_pred))
+
+###### train cyp3a4_veith oracle using DeepPurpose ######
+
+'''
 
 
 

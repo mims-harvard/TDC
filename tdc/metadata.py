@@ -233,7 +233,7 @@ drugsyn_splits = {'drugcomb_css': 'combination',
 ####################################
 
 # evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
-download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores']
+download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
 
@@ -446,6 +446,7 @@ name2id = {'bbb_adenot': 4259565,
  'chembl': 4170965,
  'qed': 4170959, 
  'drd2': 4170957, 
+ 'cyp3a4_veith': 1111111111, 
  'logp': 4170961, 
  'gdsc1': 4165726,
  'gdsc2': 4165727,
@@ -482,13 +483,15 @@ name2id = {'bbb_adenot': 4259565,
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 
 			   'gsk3b': 'pkl',
-			   'fpscores': 'pkl'
+			   'fpscores': 'pkl', 
+			   'cyp3a4_veith': 'pkl', 
 			   }
 
 oracle2id = {'drd2': 4178625,
 			 'gsk3b': 4170295,
 			 'jnk3': 4170293,
-			 'fpscores': 4170416
+			 'fpscores': 4170416, 
+			 'cyp3a4_veith': 4411249, 
 			}
 
 benchmark2type = {'admet_group': 'zip',
