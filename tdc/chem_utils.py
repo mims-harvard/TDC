@@ -4390,9 +4390,11 @@ class MolConvert:
               3D - [3D graphs (adj matrix entry is (distance, bond type)), Coulumb Matrix] 
     '''
 
-    def __init__(self, src = 'SMILES', dst = 'Graph2D'):
+    def __init__(self, src = 'SMILES', dst = 'Graph2D', radius = 2, nBits = 1024):
         self._src = src
         self._dst = dst
+        self._radius = radius 
+        self._nbits = nBits
 
         self.convert_dict = convert_dict
         if 'SELFIES' == src or 'SELFIES' == dst:
@@ -4563,9 +4565,18 @@ class MolConvert:
 
     def __call__(self, x):
       if type(x) == str:
-        return self.func(x)
+        if self.func != smiles2morgan:
+          return self.func(x)
+        else:
+          return self.func(x, radius = self._radius, nBits = self._nbits)
       elif type(x) == list:
-        return list(map(self.func, x))
+        if self.func != smiles2morgan:
+          return list(map(self.func, x))
+        else:
+          lst = []
+          for x0 in x:
+            lst.append(self.func(x0, radius = self._radius, nBits = self._nbits))
+          return lst 
 
 
     @staticmethod
