@@ -400,7 +400,7 @@ def cyp3a4_veith(smiles):
   except:
     raise ImportError("Please install DeepPurpose by 'pip install DeepPurpose'")
   
-  if 'CYP3A4_Veith_model' not in globals().keys():
+  if 'cyp3a4_veith_model' not in globals().keys():
     global cyp3a4_veith_model 
     cyp3a4_veith_model = load_cyp3a4_veith()
 
