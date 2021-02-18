@@ -8,6 +8,7 @@ from abc import abstractmethod
 from functools import partial
 from typing import List
 import time
+import os 
 
 try:
 	from sklearn import svm
@@ -399,18 +400,21 @@ def cyp3a4_veith(smiles):
     from DeepPurpose import utils 
   except:
     raise ImportError("Please install DeepPurpose by 'pip install DeepPurpose'")
-  
+
+  import os 
+  os.environ["CUDA_VISIBLE_DEVICES"]='-1'  
   if 'cyp3a4_veith_model' not in globals().keys():
     global cyp3a4_veith_model 
     cyp3a4_veith_model = load_cyp3a4_veith()
 
-  import warnings
+  import warnings, os
   warnings.filterwarnings("ignore")
 
   X_drug = [smiles]
   drug_encoding = 'CNN'
   y = [1]
   X_pred = utils.data_process(X_drug = X_drug, y = y, drug_encoding = drug_encoding, split_method='no_split')
+  # cyp3a4_veith_model = cyp3a4_veith_model.to("cuda:0")
   y_pred = cyp3a4_veith_model.predict(X_pred)
   return y_pred[0]
   # print('The predicted score is ' + str(y_pred))
