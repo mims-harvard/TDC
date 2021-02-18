@@ -4455,6 +4455,8 @@ convert_dict = {
           'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
         }
 
+fingerprints_list = ['ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
+
 class MolConvert:
 
     '''
@@ -4647,6 +4649,9 @@ class MolConvert:
 
 
     def __call__(self, x):
+      if type(x) == np.ndarray:
+        x = x.tolist()
+
       if type(x) == str:
         if self.func != smiles2morgan:
           return self.func(x)
@@ -4654,12 +4659,15 @@ class MolConvert:
           return self.func(x, radius = self._radius, nBits = self._nbits)
       elif type(x) == list:
         if self.func != smiles2morgan:
-          return list(map(self.func, x))
+          out = list(map(self.func, x))
         else:
           lst = []
           for x0 in x:
             lst.append(self.func(x0, radius = self._radius, nBits = self._nbits))
-          return lst 
+          out = lst 
+        if self._dst in fingerprints_list:
+          out = np.array(out)
+        return out
 
 
     @staticmethod

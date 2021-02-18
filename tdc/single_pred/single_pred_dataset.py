@@ -8,7 +8,7 @@ from .. import base_dataset
 from ..utils import *
 
 class DataLoader(base_dataset.DataLoader):
-	def __init__(self, name, path, label_name, print_stats, dataset_names):
+	def __init__(self, name, path, label_name, print_stats, dataset_names, convert_format):
 		if name.lower() in dataset2target_lists.keys():
 			#print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
 			if label_name is None:
@@ -24,6 +24,8 @@ class DataLoader(base_dataset.DataLoader):
 		self.path = path
 		self.file_format = 'csv'
 		self.label_name = label_name
+		self.convert_format = convert_format
+		self.convert_result = None
 
 	def get_data(self, format = 'df'):
 		'''
@@ -34,14 +36,26 @@ class DataLoader(base_dataset.DataLoader):
 			self.targets: target Amino Acid Sequence np.array
 			self.y: inter   action score np.array
 		'''
+
+		if (self.convert_format is not None) and (self.convert_result is None):
+			from ..chem_utils import MolConvert
+			converter = MolConvert(src = 'SMILES', dst = self.convert_format)
+			convert_result = converter(self.entity1.values)
+			self.convert_result = [i for i in convert_result]
+
 		if format == 'df':
-			return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx, self.entity1_name: self.entity1, 'Y': self.y})
+			if self.convert_format is not None:
+				return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx, self.entity1_name: self.entity1, self.entity1_name + '_' + self.convert_format: self.convert_result, 'Y': self.y})
+			else:
+				return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx, self.entity1_name: self.entity1, 'Y': self.y})
+			
 		elif format == 'dict':
-			return {self.entity1_name + '_ID': self.entity1_idx.values, self.entity1_name: self.entity1.values, 'Y': self.y.values}
+			if self.convert_format is not None:
+				return {self.entity1_name + '_ID': self.entity1_idx.values, self.entity1_name: self.entity1.values, self.entity1_name + '_' + self.convert_format: self.convert_result, 'Y': self.y.values}
+			else:
+				return {self.entity1_name + '_ID': self.entity1_idx.values, self.entity1_name: self.entity1.values, 'Y': self.y.values}
 		elif format == 'DeepPurpose':
 			return self.entity1.values, self.y.values
-		elif format == 'sklearn':
-			pass
 		else:
 			raise AttributeError("Please use the correct format input")
 

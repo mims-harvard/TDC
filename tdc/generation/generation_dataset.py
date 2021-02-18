@@ -95,6 +95,41 @@ class PairedDataLoader(base_dataset.DataLoader):
 		else:
 			raise AttributeError("Please use the correct split method")
 
+class DataLoader3D(base_dataset.DataLoader):
+	## TODO
+	def __init__(self, name, path, print_stats, column_name):
+		self.smiles_lst = distribution_dataset_load(name, path, single_molecule_dataset_names, column_name = column_name)  
+		### including fuzzy-search 
+		self.name = name 
+		self.path = path 
+		self.dataset_names = single_molecule_dataset_names
+		if print_stats: 
+			self.print_stats() 
+		print_sys('Done!')
+		
+	def print_stats(self):
+		print("There are " + str(len(self.smiles_lst)) + ' molecules ', flush = True, file = sys.stderr)
 
+	def get_data(self, format = 'df'):
+		if format == 'df':
+			return pd.DataFrame({'smiles': self.smiles_lst})
+		elif format == 'dict':
+			return {'smiles': self.smiles_lst} 
+		else:
+			raise AttributeError("Please use the correct format input")
+
+	def get_split(self, method = 'random', seed = 42, frac = [0.7, 0.1, 0.2]):
+		'''
+		Arguments:
+			method: splitting schemes: random, cold_drug, cold_target
+			seed: default 42
+			frac: train/val/test split
+		'''
+		df = self.get_data(format = 'df')
+
+		if method == 'random':
+			return create_fold(df, seed, frac)
+		else:
+			raise AttributeError("Please use the correct split method")
 
 
