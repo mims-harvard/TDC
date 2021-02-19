@@ -117,6 +117,7 @@
                     <a href="/team/" class="navbar-item ">Team</a>
                     
                 
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">Paper</a>
                 <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
                 
             </div>
@@ -276,7 +277,7 @@
 
 <h3 id="caco-2-cell-effective-permeability-wang-et-al">Caco-2 (Cell Effective Permeability), Wang et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The Caco-2 cell effective permeability (Peff) is an in vitro approximation of the rate at which the drug passes through intestinal tissue. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> The human colon epithelial cancer cell line, Caco-2, is used as an in vitro model to simulate the human intestinal tissue. The experimental result on the rate of drug passing through the Caco-2 cells can approximate the rate at which the drug permeates through the human intestinal tissue. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the Caco-2 cell effective permeability. </p>
 
@@ -299,7 +300,7 @@
 
 <h3 id="hia-human-intestinal-absorption-hou-et-al">HIA (Human Intestinal Absorption), Hou et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong>  The human intestinal absorption (HIA) means the process of orally administered drugs are absorbed from the gastrointestinal system into the bloodstream of the human body. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> When a drug is orally administered, it needs to be absorbed from the human gastrointestinal system into the bloodstream of the human body. This ability of absorption is called human intestinal absorption (HIA) and it is crucial for a drug to be delivered to the target. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong> Binary classification. Given a drug SMILES string, predict the activity of HIA. </p>
 
@@ -322,7 +323,7 @@
 
 <h3 id="pgp-p-glycoprotein-inhibition-broccatelli-et-al">Pgp (P-glycoprotein) Inhibition, Broccatelli et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> P-glycoprotein (Pgp or ABCB1) is an ABC transporter protein involved in intestinal absorption, drug metabolism, and brain penetration, and its inhibition can seriously alter a drug's bioavailability and safety. In addition, inhibitors of Pgp can be used to overcome multidrug resistance. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> P-glycoprotein (Pgp) is an ABC transporter protein involved in intestinal absorption, drug metabolism, and brain penetration, and its inhibition can seriously alter a drug's bioavailability and safety. In addition, inhibitors of Pgp can be used to overcome multidrug resistance. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>  Binary classification. Given a drug SMILES string, predict the activity of Pgp inhibition. </p>
 
@@ -368,7 +369,7 @@
 
 <h3 id="lipophilicity-astrazeneca">Lipophilicity, AstraZeneca</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> Lipophilicity is a dataset curated from ChEMBL database containing experimental results on octanol/water distribution coefficient (logD at pH=7.4). From MoleculeNet. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Lipophilicity measures the ability of a drug to dissolve in a lipid (e.g. fats, oils) environment. High lipophilicity often leads to high rate of metabolism, poor solubility, high turn-over, and low absorption. From MoleculeNet. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of lipophilicity. </p>
 
@@ -393,7 +394,7 @@
 
 <h3 id="solubility-aqsoldb">Solubility, AqSolDB</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> AqSolDB: A curated reference set of aqueous solubility, created by the Autonomous Energy Materials Discovery [AMD] research group, consists of aqueous solubility values of 9,982 unique compounds curated from 9 different publicly available aqueous solubility datasets. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Aqeuous solubility measures a drug's ability to dissolve in water. Poor water solubility could lead to slow drug absorptions, inadequate bioavailablity and even induce toxicity. More than 40% of new chemical entities are not soluble. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of solubility. </p>
 
@@ -446,7 +447,7 @@
 
 <h3 id="bbb-blood-brain-barrier-martins-et-al">BBB (Blood-Brain Barrier), Martins et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The blood-brain barrier penetration (BBB) dataset is extracted from a study on the modeling and prediction of the barrier permeability. As a membrane separating circulating blood and brain extracellular fluid, the blood-brain barrier blocks most drugs, hormones and neurotransmitters. Thus penetration of the barrier forms a long-standing issue in development of drugs targeting central nervous system. This dataset includes binary labels for over 2000 compounds on their permeability properties. From MoleculeNet.</p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> As a membrane separating circulating blood and brain extracellular fluid, the blood-brain barrier (BBB) is the protection layer that blocks most foreign drugs. Thus the ability of a drug to penetrate the barrier to deliver to the site of action forms a crucial challenge in development of drugs for central nervous system From MoleculeNet.</p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of BBB. </p>
 
@@ -471,7 +472,7 @@
 
 <h3 id="ppbr-plasma-protein-binding-rate-astrazeneca">PPBR (Plasma Protein Binding Rate), AstraZeneca</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins. Medications attach to proteins within the blood. A drug's efficiency may be affected by the degree to which it binds. The less bound a drug is, the more efficiently it can traverse cell membranes or diffuse. From a ChEMBL assay deposited by AstraZeneca.  </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins in the blood. This rate strongly affect a drug's efficiency of delivery. The less bound a drug is, the more efficiently it can traverse and diffuse to the site of actions. From a ChEMBL assay deposited by AstraZeneca.  </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the rate of PPBR.  </p>
 
@@ -494,7 +495,7 @@
 
 <h3 id="vdss-volumn-of-distribution-at-steady-state-lombardo-et-al">VDss (Volumn of Distribution at steady state), Lombardo et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The volume of distribution is the theoretical volume that would be necessary to contain the total amount of an administered drug at the same concentration that it is observed in the blood plasma. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> The volume of distribution at steady state (VDss) measures the degree of a drug's concentration in body tissue compared to concentration in blood. Higher VD indicates a higher distribution in the tissue and usually indicates the drug with high lipid solubility, low plasma protein binidng rate. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the volume of distributon. </p>
 
@@ -521,7 +522,7 @@
 
 <h3 id="cyp-p450-2c19-inhibition-veith-et-al">CYP P450 2C19 Inhibition, Veith et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, the CYP P450 2C19 gene provide instructions for making an enzyme that is found primarily in liver cells in a cell structure called the endoplasmic reticulum, which is involved in protein processing and transport.	 </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are essential in the breakdown (metabolism) of various molecules and chemicals within cells. A drug that can inhibit these enzymes would mean poor metabolism to this drug and other drugs, which could lead to drug-drug interactions and adverse effects. Specifically, the CYP2C19 gene provides instructions for making an enzyme called the endoplasmic reticulum, which is involved in protein processing and transport.	 </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP2C19 inhibition. </p>
 
@@ -714,7 +715,7 @@
 
 <h3 id="half-life-obach-et-al">Half Life, Obach et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The duration of action of a drug is known as its half life. This is the period of time required for the concentration or amount of drug in the body to be reduced by one-half. This dataset is from [1] and we obtain the deposited version under CHEMBL assay 1614674. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Half life of a drug is the duration for the concentration of the drug in the body to be reduced by half. It measures the duration of actions of a drug. This dataset is from [1] and we obtain the deposited version under CHEMBL assay 1614674. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the half life duration. </p>
 
@@ -737,7 +738,7 @@
 
 <h3 id="clearance-astrazeneca">Clearance, AstraZeneca</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> Drug clearance is concerned with the rate at which the active drug is removed from the body. This is a dataset curated from ChEMBL database containing experimental results on intrinsic clearance, deposited from AstraZeneca. It contains clearance measures from two experiments types, hepatocyte and microsomes. As many studies [2] have shown various clearance outcomes given these two different types, we separate them. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Drug clearance is defined as the volume of plasma cleared of a drug over a specified time period and it measures the rate at which the active drug is removed from the body. This is a dataset curated from ChEMBL database containing experimental results on intrinsic clearance, deposited from AstraZeneca. It contains clearance measures from two experiments types, hepatocyte and microsomes. As many studies [2] have shown various clearance outcomes given these two different types, we separate them. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of clearance. </p>
 
@@ -779,6 +780,12 @@
                 </a>
             </div>
             <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
                 <a href="https://github.com/mims-harvard/TDC">
                     <span class="icon is-large">
                       <i class="fas fab fa-github fa-3x"></i>
