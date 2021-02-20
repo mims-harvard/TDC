@@ -240,7 +240,31 @@
 
 
 <div class="content">
-    <h3 id="oncopolypharmacology">OncoPolyPharmacology</h3>
+    <h1 id="drug-synergy-prediction-task-overview">Drug Synergy Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+Synergy is a dimensionless measure of deviation of an observed drug combination response from the expected effect of non-interaction. Synergy can be calculated using different models such as the Bliss model, Highest Single Agent (HSA), Loewe additivity model and Zero Interaction Potency (ZIP). Another relevant metric is CSS which measures the drug combination sensitivity and is derived using relative IC50 values of compounds and the area under their dose-response curves.
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+Drug combination therapy offers enormous potential for expanding the use of existing drugs and in improving their efficacy. For instance, the simultaneous modulation of multiple targets can address the common mechanisms of drug resistance in the treatment of cancers. However, experimentally exploring the entire space of possible drug combinations is not a feasible task. Computational models that can predict the therapeutic potential of drug combinations can thus be immensely valuable in guiding this exploration.
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+It is important for model predictions to be able to adapt to varying underlying biology as captured through different cell lines drawn from multiple tissues of origin. Dosage is also an important factor that can impact model generalizability. 
+
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Activity. </p>
+
+</div>
+
+<h3 id="oncopolypharmacology">OncoPolyPharmacology</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> A large-scale oncology screen produced by Merck &amp; Co., where each sample consists of two compounds and a cell line. The dataset covers 583 distinct combinations, each tested against 39 human cancer cell lines derived from 7 different tissue types. Pairwise combinations were constructed from 38 diverse anticancer drugs (14 experimental and 24 approved). The synergy score is calculated by Loewe Additivity values using the batch processing mode of Combenefit. The genomic features are from ArrayExpress database (accession number: E-MTAB-3610) and  was quantile normalized and summarized with Factor Analysis for Robust Microarray Summarization (FARMS). The processed data is provided by DeepSynergy. </p>
 

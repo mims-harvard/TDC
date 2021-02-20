@@ -237,7 +237,26 @@
 
 
 <div class="content">
-    <h3 id="qm7b">QM7b</h3>
+    <h1 id="quantum-mechanics-modeling-task-overview">Quantum Mechanics Modeling Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+The motion of molecules and protein targets can be described accurately with quantum theory, i.e., Quantum Mechanics (QM). However, ab initio quantum calculation of many-body system suffers from large computational overhead that is impractical for most applications. Various approximations have been applied to solve energy from electronic structure but all of them have a trade-off between accuracy and computational speed. Machine learning models raise a hope to break this bottleneck by leveraging the knowledge of existing chemical data. This task aims to predict the QM results given a drug's structural information. </p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+A well-trained model can describe the potential energy surface accurately and quickly, so that more accurate and longer simulation of molecular systems are possible. The result of simulation can reveal the biological processes in molecular level and help study the function of protein targets and drug molecules. </p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> A machine learning model trained on a set of QM calculations require to extrapolate to unseen or structurally diverse set of compounds.  </p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Activity - lead development. </p>
+
+</div>
+
+<h3 id="qm7b">QM7b</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> QM7 is a subset of GDB-13 (a database of nearly 1 billion stable and synthetically accessible organic molecules) composed of all molecules of up to 23 atoms (including 7 heavy atoms C, N, O, and S), where 14 properties (e.g. polarizability, HOMO and LUMO eigenvalues, excitation energies) have to be predicted at different levels of theory (ZINDO, SCS, PBE0, GW). </p>
 

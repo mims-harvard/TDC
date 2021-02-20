@@ -235,7 +235,30 @@
 
 
 <div class="content">
-    <h3 id="leenay-et-al">Leenay et al.</h3>
+    <h1 id="crispr-repair-outcome-prediction-task-overview">CRISPR Repair Outcome Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+CRISPR-Cas9 is a gene editing technology that allows targeted deletion or modification of specific regions of the DNA within an organism. This is achieved through designing a guide RNA sequence that binds upstream of the target site which is then cleaved through a Cas9-mediated double stranded DNA break. The cell responds by employing DNA repair mechanisms (such as non-homologous end joining) that result in heterogeneous outcomes including gene insertion or deletion mutations (indels) of varying lengths and frequencies. This task aims to predict the repair outcome given a DNA sequence.
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+Gene editing offers a powerful new avenue of research for tackling intractable illnesses that are infeasible to treat using conventional approaches. For example, the FDA recently approved engineering of T-cells using gene editing to treat patients with acute lymphoblastic leukemia. However, since many human genetic variants associated with disease arise from insertions and deletions, it is critical to be able to better predict gene editing outcomes to ensure efficacy and avoid unwanted pathogenic mutations.
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+The distribution of Cas9-mediated editing products at a given target site is reproducible and dependent on local sequence context. Thus, it is expected that repair outcomes predicted using well-trained models should be able to generalize across cell lines and reagent delivery methods.
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Cell and gene therapy.</p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Efficacy and safety. </p>
+
+</div>
+
+<h3 id="leenay-et-al">Leenay et al.</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> Primary T cells are a promising cell type for therapeutic genome editing, as they can be engineered efficiently ex vivo and transferred to patients. This dataset consists of the DNA repair outcomes of CRISPR-CAS9 knockout experiments on primary CD4+ T cells drawn from 15 donors. For each of the 1,521 unique genomic locations from 553 genes, we provide the 20-nucleotide guide sequence along with the 3-nucletoide PAM sequence. </p>
 

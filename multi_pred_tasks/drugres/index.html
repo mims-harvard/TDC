@@ -240,7 +240,30 @@
 
 
 <div class="content">
-    <h3 id="gdsc1">GDSC1</h3>
+    <h1 id="drug-response-prediction-task-overview">Drug Response Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+The same drug compound could have various levels of responses in different patients. To design drug for individual or a group with certain characteristics is the central goal of precision medicine. For example, the same anti-cancer drug could have various responses to different cancer cell lines. This task aims to predict the drug response rate given a pair of drug and the cell line genomics profile.  
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+ The combinations of available drugs and all types of cell line genomics profiles are very large while to test each combination in the wet lab is prohibitively expensive. A machine learning model that can accurately predict a drug's response given various cell lines in silico can thus make the combination search feasible and greatly reduce the burdens on experiments. The fast prediction speed also allows us to screen a large set of drugs to circumvent the potential missing potent drugs. 
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+A model trained on existing drug cell-line pair should be able to predict accurately on new set of drugs and cell-lines. This requires a model to learn the biochemical knowledge instead of memorizing the training pairs.
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Activity. </p>
+
+</div>
+
+<h3 id="gdsc1">GDSC1</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> Genomics in Drug Sensitivity in Cancer (GDSC) is a resource for therapeutic biomarker discovery in cancer cells. It contains wet lab IC50 for 100s of drugs in 1000 cancer cell lines. In this dataset, we use RMD normalized gene expression for cancer lines and SMILES for drugs. Y is the log normalized IC50. This is the version 1 of GDSC. </p>
 

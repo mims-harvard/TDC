@@ -241,7 +241,30 @@
 
 
 <div class="content">
-    <h3 id="bindingdb">BindingDB</h3>
+    <h1 id="drug-target-interaction-prediction-task-overview">Drug-Target Interaction Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+The activity of a small-molecule drug is measured by its binding affinity with the target protein. Given a new target protein, the very first step is to screen a set of potential compounds to find their activity. Traditional method to gauge the affinities are through high-throughput screening wet-lab experiments. However, they are very expensive and are thus restricted by their abilities to search over a large set of candidates. Drug-target interaction prediction task aims to predict the interaction activity score in silico given only the accessible compound structural information and protein amino acid sequence. 
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+Machine learning models that can accurately predict affinities can not only save pharmaceutical research costs on reducing the amount of high-throughput screening, but also to enlarge the search space and avoid missing potential candidates.
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+Models require extrapolation on unseen compounds, unseen proteins, and unseen compound-protein pairs. Models also are expected to have consistent performance across a diverse set of disease and target groups. 
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Activity - hit identification. </p>
+
+</div>
+
+<h3 id="bindingdb">BindingDB</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> BindingDB is a public, web-accessible database of measured binding affinities, focusing chiefly on the interactions of protein considered to be drug-targets with small, drug-like molecules. </p>
 

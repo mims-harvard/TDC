@@ -217,7 +217,31 @@
 
 
 <div class="content">
-    <h3 id="moses">MOSES</h3>
+    <h1 id="molecule-generation-task-overview">Molecule Generation Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+ Molecule Generation is to generate diverse, novel molecules that has desirable chemical properties. These properties are measured by oracle functions. A machine learning task first learns the molecular characteristics from a large set of molecules where each is evaluated through the oracles. Then, from the learned distribution, we can obtain novel candidates.
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+As the entire chemical space is far too large to screen for each target, high through screening can only be restricted to a set of existing molecule library. Many novel drug candidates are thus usually omitted. A machine learning that can generate novel molecule obeying some pre-defined optimal properties can circumvent this problem and obtain novel class of candidates.
+
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+The generated molecules have to obtain superior properties given a range of structurally diverse drugs. Besides, the generated molecules have to suffice other basic properties, such as synthesizablility and low off-target effects.
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Efficacy and safety - lead development and optimization, activity - hit identification. </p>
+
+</div>
+
+<h3 id="moses">MOSES</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> Molecular Sets (MOSES) is a benchmark platform for distribution learning based molecule generation. Within this benchmark, MOSES provides a cleaned dataset of molecules that are ideal of optimization. It is processed from the ZINC Clean Leads dataset. </p>
 

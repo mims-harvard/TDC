@@ -236,7 +236,30 @@
 
 
 <div class="content">
-    <h3 id="tap">TAP</h3>
+    <h1 id="antibody-developability-prediction-task-overview">Antibody Developability Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+Immunogenicity, instability, self-association, high viscosity, polyspecificity, or poor expression can all preclude an antibody from becoming a therapeutic. Early identification of these negative characteristics is essential. This task is to predict the developability from the amino acid sequences.
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+A fast and reliable developability predictor can accelerate the antibody development by reducing wet-lab experiments. They can also alert the chemists to foresee potential efficacy and safety concerns and provide signals for modifications. Previous works have devised accurate developability index based on 3D structures of antibody. However, 3D information are expensive to acquire. A machine learning that can calculate developability based on sequence information is thus highly ideal. 
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+The model is expected to be generalized to unseen classes of antibodies with various structural and functional characteristics.
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Antibody. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Efficacy and safety. </p>
+
+</div>
+
+<h3 id="tap">TAP</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> Immunogenicity, instability, self-association, high viscosity, polyspecificity, or poor expression can all preclude an antibody from becoming a therapeutic. Early identification of these negative characteristics is essential. Akin to the Lipinski guidelines, which measure druglikeness in small molecules, Therapeutic Antibody Profiler (TAP) highlights antibodies that possess characteristics that are rare/unseen in clinical-stage mAb therapeutics. In this dataset, TDC includes five metrics measuring developability of an antibody: CDR length, patches of surface hydrophobicity (PSH), patches of positive charge (PPC), patches of negative charge (PNC), structural Fv charge symmetry parameter (SFvCSP). </p>
 

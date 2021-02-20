@@ -270,7 +270,25 @@
 
 
 <div class="content">
-    <h2 id="absorption">Absorption</h2>
+    <h1 id="adme-property-prediction-task-overview">ADME Property Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+A small-molecule drug is a chemical and it needs to travel from the site of administration (e.g., oral) to the site of action (e.g., a tissue) and then decomposes, exits the body. To do that safely and efficaciously, the chemical is required to have numerous ideal absorption, distribution, metabolism, and excretion (ADME) properties. This task aims to predict various kinds of ADME properties accurately given a drug candidate's structural information. </p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  Poor ADME profile is the most prominent reason of failure in clinical trials. Thus, an early and accurate ADME profiling during the discovery stage is a necessary condition for successful development of small-molecule candidate. </p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> In real-world discovery, the drug structures of interest evolve over time. Thus, ADME prediction requires a model to generalize to a set of unseen drugs that are structurally distant to the known drug set. While time information is usually unavailable for many datasets, one way to approximate the similar effect is via scaffold split, where it forces training and test set have distant molecular structures. </p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong>Efficacy and safety - lead development and optimization. </p>
+
+</div>
+
+<h2 id="absorption">Absorption</h2>
 
 <p class="is-size-4"> Absorption measures how a drug travels from the site of administration to site of action.  </p>
 <hr />

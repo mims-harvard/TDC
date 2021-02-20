@@ -217,7 +217,30 @@
 
 
 <div class="content">
-    <h3 id="drd2">DRD2</h3>
+    <h1 id="paired-molecule-generation-task-overview">Paired Molecule Generation Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+Paired molecule generation defines a set of molecule pairs (X,Y), where Y is a paraphrase of X with more desirable chemical property. In other words, the machine learning model aims to translate the input molecule X into a similar molecule Y with better property. 
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+Lead optimization is a crucial step in drug discovery and consumes lots of time and trial. After a drug candidate hit is identified via high throughput screening, enhanced similar candidates are created and tested in order to find a lead compound with better properties than the original hit. Paired molecule generation is able to automate and accelerate the process.  
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+The generated molecules have to obtain superior properties given a range of structurally diverse drugs. Besides, the generated molecules have to suffice other basic properties, such as synthesizablility and low off-target effects.
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Efficacy and safety - lead development and optimization. </p>
+
+</div>
+
+<h3 id="drd2">DRD2</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> DRD2 stands for dopamine type 2 receptor.  The model needs to translate inactive compounds (p &lt; 0.05) into active compounds (p ≥ 0.5), where the bioactivity is assessed by a property prediction model oracle. The dataset is curated from ZINC. </p>
 

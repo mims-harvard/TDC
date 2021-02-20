@@ -216,7 +216,30 @@
 
 
 <div class="content">
-    <h3 id="uspto-50k">USPTO-50K</h3>
+    <h1 id="retrosynthesis-prediction-task-overview">Retrosynthesis Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+Retrosynthesis is the process of finding a set of reactants that can synthesize a target molecule, i.e., product, which is a fundamental task in drug manufacturing. The target is recursively transformed into simpler precursor molecules until commercially available "starting" molecules are identified. In a data sample, there is only one product molecule, reactants can be one or multiple molecules. Retrosynthesis prediction can be seen as reverse process of Reaction outcome prediction.
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+Retrosynthesis planning is useful for chemists to design synthetic routes to target molecules. Computational retrosynthetic analysis tools can potentially greatly assist chemists in designing synthetic routes to novel molecules. Machine learning based methods will significantly save the time and cost. 
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+ The model is expected to accurately generate reactant sets for novel drug candidates with distinct structures from the training set across reaction types with varying reaction conditions.
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Manufacturing - Synthesis planning. </p>
+
+</div>
+
+<h3 id="uspto-50k">USPTO-50K</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> USPTO (United States Patent and Trademark Office)  50K consists of 50K extracted atom-mapped reactions with 10 reaction types. </p>
 

@@ -240,7 +240,31 @@
 
 
 <div class="content">
-    <h3 id="drugbank-multi-typed-ddi">DrugBank Multi-Typed DDI</h3>
+    <h1 id="drug-drug-interaction-prediction-task-overview">Drug-Drug Interaction Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+	Drug-drug interactions occur when two or more drugs interact with each other. These could result in a range of outcomes from reducing the efficacy of one or both drugs to dangerous side effects such as increased blood pressure or drowsiness. Polypharmacy side-effects are associated with drug pairs (or higher-order drug combinations) and cannot be attributed to either individual drug in the pair. This task is to predict the interaction between two drugs.
+
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+Increasing co-morbidities with age often results in the prescription of multiple drugs simultaneously. Meta analyses of patient records showed that drug-drug interactions were the cause of admission for prolonged hospital stays in 7% of the cases. Predicting possible drug-drug interactions before they are prescribed is thus an important step in preventing these adverse outcomes. In addition, as the number of combinations or even higher-order drugs is astronomical, wet-lab experiments or real-world evidence are insufficient. Machine learning can provide an alternative way to inform drug interactions.
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+As there is a very large space of possible drug-drug interactions that have not been explored, the model needs to extrapolate from known interactions to new drug combinations that have not been prescribed together in the past. Models should also taken into account dosage as that can have a significant impact on the effect of the drugs.
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Efficacy and safety - adverse event detection. </p>
+
+</div>
+
+<h3 id="drugbank-multi-typed-ddi">DrugBank Multi-Typed DDI</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> DrugBank drug-drug interaction dataset is manually sourced from FDA/Health Canada drug labels as well as primary literature. It has 86 interaction types. </p>
 

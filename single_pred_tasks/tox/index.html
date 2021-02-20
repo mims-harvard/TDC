@@ -243,9 +243,30 @@
 
 
 <div class="content">
-    <h3 id="acute-toxicity-ld50">Acute Toxicity LD50</h3>
+    <h1 id="toxicity-prediction-task-overview">Toxicity Prediction Task Overview</h1>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> Acute toxicity LD50 measures the most conservative dose that can lead to lethal adverse effects. This dataset contains experimental values of acute toxicity in rodents from oral exposures. It is collected from National Library of Medicine. This dataset is kindly provided by the authors of [1]. </p>
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+Majority of the drugs have some extents of toxicity to the human organisms. This learning task aims to predict accurately various types of toxicity of a drug molecule towards human organisms. 
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+Toxicity is one of the primary causes of compound attrition. Study shows that approximately 70% of all toxicity-related attrition occurs preclinically (i.e., in cells, animals) while they are strongly predictive of toxicities in humans. This suggests that an early but accurate prediction of toxicity can significantly reduce the compound attribution and boost the likelihood of being marketed. 
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong>  Similar to the ADME prediction, as the drug structures of interest evolve over time, toxicity prediction requires a model to generalize to a set of novel drugs with small structural similarity to the existing drug set.  </p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong>Efficacy and safety - lead development and optimization. </p>
+
+</div>
+
+<h3 id="acute-toxicity-ld50">Acute Toxicity LD50</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Acute toxicity LD50 measures the most conservative dose that can lead to lethal adverse effects. The higher the dose, the more lethal of a drug. This dataset is kindly provided by the authors of [1]. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict its acute toxicity. </p>
 
@@ -269,7 +290,7 @@
 
 <h3 id="herg-blockers">hERG blockers</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> Blockade of human ether-à-go-go related gene (hERG) channel by compounds may lead to drug-induced QT prolongation, arrhythmia, and Torsades de Pointes (TdP), and therefore reliable prediction of hERG liability in the early stages of drug design is quite important to reduce the risk of cardiotoxicity-related attritions in the later development stages. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong>  Human ether-à-go-go related gene (hERG) is crucial for the coordination of the heart's beating. Thus, if a drug blocks the hERG, it could lead to severe adverse effects. Therefore, reliable prediction of hERG liability in the early stages of drug design is quite important to reduce the risk of cardiotoxicity-related attritions in the later development stages. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict whether it blocks (1) or not blocks (0). </p>
 
@@ -292,7 +313,7 @@
 
 <h3 id="ames-mutagenicity">Ames Mutagenicity</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> The mutagenic effect has a close relationship with the carcinogenicity. Nowadays, the most widely used assay for testing the mutagenicity of compounds is the Ames experiment which was invented by a professor named Ames. The Ames test is a short-term bacterial reverse mutation assay detecting a large number of compounds which can induce genetic damage and frameshift mutations. The dataset is aggregated from four papers. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Mutagenicity means the ability of a drug to induce genetic alterations. Drugs that can cause damage to the DNA can result in cell death or other severe adverse effects. Nowadays, the most widely used assay for testing the mutagenicity of compounds is the Ames experiment which was invented by a professor named Ames. The Ames test is a short-term bacterial reverse mutation assay detecting a large number of compounds which can induce genetic damage and frameshift mutations. The dataset is aggregated from four papers. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict whether it is mutagenic (1) or not mutagenic (0). </p>
 
@@ -315,7 +336,7 @@
 
 <h3 id="dili-drug-induced-liver-injury">DILI (Drug Induced Liver Injury)</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> More than 700 drugs have been found to be associated with liver injury. Drug-induced liver injury (DILI) has been the single most frequent cause of safety-related drug marketing withdrawals for the past 50 years (e.g., iproniazid, etc.) continuing to the present (e.g., ticrynafen, benoxaprofen, bromfenac, troglitazone, nefazodone). Drugs that cause severe DILI in humans typically do not show clear hepatotoxicity in animals, do not show dose-related toxicity, and cause low rates of severe injury (1 in 5000 to 10 000 or less). This dataset is aggregated from U.S. FDA’s National Center for Toxicological Research. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong>  Drug-induced liver injury (DILI) is fatal liver disease caused by drugs and it has been the single most frequent cause of safety-related drug marketing withdrawals for the past 50 years (e.g. iproniazid, ticrynafen, benoxaprofen). This dataset is aggregated from U.S. FDA’s National Center for Toxicological Research. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict whether it can cause liver injury (1) or not (0). </p>
 
@@ -391,7 +412,7 @@
 
 <h3 id="tox21">Tox21</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> 2014 Tox21 Data Challenge contains qualitative toxicity measurements for 8k compounds on 12 different targets, including nuclear receptors and stress response pathways. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> Tox21 is a data challenge which contains qualitative toxicity measurements for 7,831 compounds on 12 different targets, such as nuclear receptors and stree response pathways. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the toxicity in a specific assay. </p>
 

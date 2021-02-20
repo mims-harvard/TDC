@@ -237,19 +237,28 @@
 
 
 <div class="content">
-    <section>
+    <h1 id="high-throughput-screening-prediction-task-overview">High-throughput Screening Prediction Task Overview</h1>
 
-<div class="column is-12 is-size-4 has-text-centered">
-    <div class="box has-background-info has-text-white">
-	Call for Data:  <a href="mailto:kexinhuang@hsph.harvard.edu"> <strong> Contact us </strong> </a> if you want to contribute a new assay data about disease targets of interests to the community!
-	</div>
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+High-throughput screening (HTS) is the rapid automated testing of thousands to millions of samples for biological activity at the model organism, cellular, pathway, or molecular level. The assay readout can vary from target binding affinity to fluorescence microscopy of cells treated with drug. HTS can be applied to different kinds of therapeutics however most available data is from testing of small-molecule libraries. In this task, a machine learning model is asked to predict the experimental assay values given a small-molecule compound structure. </p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+High throughput screening is a critical component of small-molecule drug discovery in both industrial and academic research settings. Increasingly more complex assays are now being automated to gain biological insights on compound activity at a large scale. However, there are still limitations on the time and cost for screening a large library that limit experimental throughput. Machine learning models that can predict experimental outcomes can alleviate these effects and save many times and costs by looking at a larger chemical space and narrowing down a small set of highly likely candidates for further smaller-scale HTS. </p>
+
+<p class="is-size-6"> <strong> Generalization: </strong>  The model should be able to generalize over structurally diverse drugs. It is also important for methods to generalize across cell lines. Drug dosage and measurement time points are also very important factors in determining the efficacy of the drug. </p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Activity - hit identification. </p>
+
 </div>
-
-</section>
 
 <h3 id="sars-cov-2-in-vitro-touret-et-al">SARS-CoV-2 In Vitro, Touret et al.</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> In-vitro screend the PRESTWICK CHEMICAL LIBRARY composed of approved drugs in an infected cell-based assay. From MIT AiCures. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong>  An in-vitro screen of the Prestwick chemical library composed of 1,480 approved drugs in an infected cell-based assay. From MIT AiCures. </p>
 
 <p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict its activity against SARSCoV2. </p>
 
