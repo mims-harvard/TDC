@@ -11,18 +11,19 @@
 [![Build Status](https://travis-ci.org/mims-harvard/TDC.svg?branch=master)](https://travis-ci.org/mims-harvard/TDC)
 [![TDC CircleCI](https://circleci.com/gh/mims-harvard/TDC.svg?style=svg)](https://app.circleci.com/pipelines/github/mims-harvard/TDC)
 
-[**Project Website**](https://tdcommons.ai) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
+[**Project Website**](https://tdcommons.ai) | [**Paper**](https://arxiv.org/abs/2102.09548) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
 **Therapeutics Data Commons (TDC)** is a collection of machine learning tasks spread across different domains of therapeutics.
 
-Therapeutics machine learning is an exciting field with incredible opportunities for expansion, innovation, and impact. Datasets and benchmarks in TDC provide a systematic model development and evaluation framework that allows more machine learning researchers to contribute to the field.
+Therapeutics machine learning is an exciting field with incredible opportunities for expansion, innovation, and impact. Datasets and benchmarks in TDC provide a systematic model development and evaluation framework that allows more machine learning researchers to contribute to the field. We envision that TDC can considerably accelerate machine-learning model development, validation and transition into production and clinical implementation. 
 
-We envision that TDC can considerably accelerate machine-learning model development, validation and transition into production and clinical implementation. 
+TDC is an open-source initiative. To get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-mks4lm4z-_N_zI9Z_YFvaGjKiCwCH2Q) and check out the [Contribution Guide](CONTRIBUTE.md)!
 
 **Invited talk at the [Harvard Symposium on Drugs for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
 
 
 ## Updates
+- TDC white paper is alive on [arXiv](https://arxiv.org/abs/2102.09548)!
 - `0.1.6`: Released the second leaderboard on drug combination screening prediction! Checkout [here](https://tdcommons.ai/benchmark/drugcombo_group/)!
 - `0.1.5`: Added four realistic oracles from docking scores and synthetic accessibility! Checkout [here](https://tdcommons.ai/functions/oracles/)!
 - `0.1.4`: Added the 1st version of [`MolConvert`](https://tdcommons.ai/functions/data_process/#molecule-conversion) class that can map among ~15 molecular formats in 2 lines of code (For 2D: from SMILES/SEFLIES and convert to SELFIES/SMILES, Graph2D, PyG, DGL, ECFP2-6, MACCS, Daylight, RDKit2D, Morgan, PubChem; For 3D: from XYZ, SDF files to Graph3D, Columb Matrix); Also a quality check on DTI datasets with IDs added.
@@ -63,7 +64,7 @@ pip install PyTDC --upgrade
 The core data loaders are lightweight with minimum dependency on external packages:
 
 ```bash
-numpy, pandas, tqdm, scikit-learn, fuzzywuzzy
+numpy, pandas, tqdm, scikit-learn, fuzzywuzzy, seaborn
 ```
 
 For utilities requiring extra dependencies, TDC prints installation instructions. To install full dependencies, please use the following `conda-forge` solution. 
@@ -81,16 +82,13 @@ conda install -c conda-forge pytdc
 If you found our work useful, please cite us:
 
 ```
-@misc{tdc,
+@article{tdc,
+  title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Therapeutics},
   author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
-  title={Therapeutics Data Commons: Machine Learning Datasets for Therapeutics},
-  howpublished={\url{https://tdcommons.ai}},
-  month=nov,
-  year=2020
+  journal={arXiv preprint arXiv:2102.09548},
+  year={2021}
 }
 ```
-
-We are now preparing a manuscript, which we will release soon.
 
 ## Design of TDC
 
