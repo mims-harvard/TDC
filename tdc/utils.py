@@ -250,7 +250,7 @@ def convert_y_unit(y, from_, to_):
 	if from_ == 'nM':
 		y = y
 	elif from_ == 'p':
-		y = 10**(-y) / 1e-9
+		y = (10**(-y) - 1e-10)/ 1e-9
 
 	if to_ == 'p':
 		y = -np.log10(y*1e-9 + 1e-10)
