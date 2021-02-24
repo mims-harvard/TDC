@@ -85,13 +85,20 @@ class DataLoader:
     def __len__(self):
         return len(self.get_data(format='df'))
 
-    def convert_to_log(self):
+    def convert_to_log(self, form = 'standard'):
         print('To log space...', flush=True, file=sys.stderr)
-        self.y = utils.convert_to_log(self.y)
+        if form == 'binding':
+            self.y = utils.convert_to_log(self.y)
+        elif form == 'standard':
+            self.sign = np.sign(self.y)
+            self.y = self.sign * np.log(abs(self.y) + 1e-10)
 
-    def convert_from_log(self):
+    def convert_from_log(self, form = 'standard'):
         print('Convert Back To Original space...', flush=True, file=sys.stderr)
-        self.y = utils.convert_back_log(self.y)
+        if form == 'binding':
+            self.y = utils.convert_back_log(self.y)
+        elif form == 'standard':
+            self.y = self.sign * (np.exp(self.sign * self.y) - 1e-10)
 
     def get_label_meaning(self, output_format='dict'):
         return utils.get_label_map(self.name, self.path, self.target,

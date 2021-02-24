@@ -13,9 +13,9 @@
 
 [**Project Website**](https://tdcommons.ai) | [**Paper**](https://arxiv.org/abs/2102.09548) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
-**Therapeutics Data Commons (TDC)** is a collection of machine learning tasks spread across different domains of therapeutics.
+**Therapeutics Data Commons (TDC)** is the first unifying framework to systematically access and evaluate machine learning across the entire range of therapeutics.
 
-Therapeutics machine learning is an exciting field with incredible opportunities for expansion, innovation, and impact. Datasets and benchmarks in TDC provide a systematic model development and evaluation framework that allows more machine learning researchers to contribute to the field. We envision that TDC can considerably accelerate machine-learning model development, validation and transition into production and clinical implementation. 
+The collection of curated datasets, learning tasks, and benchmarks in TDC serves as a meeting point for domain and machine learning scientists. We envision that TDC can considerably accelerate machine-learning model development, validation and transition into biomedical and clinical implementation.
 
 TDC is an open-source initiative. To get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-mks4lm4z-_N_zI9Z_YFvaGjKiCwCH2Q) and check out the [Contribution Guide](CONTRIBUTE.md)!
 
@@ -84,7 +84,7 @@ If you found our work useful, please cite us:
 ```
 @article{tdc,
   title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Therapeutics},
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
   journal={arXiv preprint arXiv:2102.09548},
   year={2021}
 }
@@ -125,8 +125,8 @@ For example, to obtain the HIA dataset from ADME therapeutic task in the single-
 ```python
 from tdc.single_pred import ADME
 data = ADME(name = 'HIA_Hou')
-# split into train/val/test using benchmark seed and split methods
-split = data.get_split(method = 'scaffold', seed = 'benchmark')
+# split into train/val/test with scaffold split methods
+split = data.get_split(method = 'scaffold')
 # get the entire data in the various formats
 data.get_data(format = 'df')
 ```
@@ -180,8 +180,6 @@ oracle(['CC(C)(C)....'
 
 # [0.03, 0.02, 0.0, 0.1]
 ```
-Note that the graph-to-graph paired molecule generation is provided as separate [datasets](https://zitniklab.hms.harvard.edu/TDC/generation_tasks/pairmolgen/). 
-
 
 ## TDC Leaderboards
 
