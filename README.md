@@ -15,9 +15,7 @@
 
 **Therapeutics Data Commons (TDC)** is the first unifying framework to systematically access and evaluate machine learning across the entire range of therapeutics.
 
-The collection of curated datasets, learning tasks, and benchmarks in TDC serves as a meeting point for domain and machine learning scientists.
-
-We envision that TDC can considerably accelerate machine-learning model development, validation and transition into biomedical and clinical implementation.
+The collection of curated datasets, learning tasks, and benchmarks in TDC serves as a meeting point for domain and machine learning scientists. We envision that TDC can considerably accelerate machine-learning model development, validation and transition into biomedical and clinical implementation.
 
 TDC is an open-source initiative. To get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-mks4lm4z-_N_zI9Z_YFvaGjKiCwCH2Q) and check out the [Contribution Guide](CONTRIBUTE.md)!
 
