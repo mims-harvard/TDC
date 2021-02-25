@@ -175,16 +175,15 @@ All methods and datasets are integrated and are accessible via an open source TD
     <div class="columns is-vcentered">
         <div class="column is-8">
               <p class="is-size-5">
-              TDC has a unique three-layer hierarchical structure, which to our knowledge is the first attempt at systematically evaluating machine learning across the field of therapeutics. 
-              We organize TDC into three distinct <i>problems,</i> each of these problems is instantiated through a variety of <i>learning tasks</i>, and each task, in turn, is evaluated on a series of <i>datasets</i>.
+              TDC has a unique three-tiered hierarchical structure, which to our knowledge, is the first attempt at systematically organizing machine learning for therapeutics. We organize TDC into three distinct <i>problems</i>. For each problem, we give a collection <i>learning tasks</i>. Finally, for each task, we provide a series of <i>datasets</i>.
               </p> 
               <p class="is-size-5">
-              We choose our datasets to highlight three major areas (i.e., <i>problems</i>) where machine learning can facilitate scientific advances: single-instance prediction, multi-instance prediction, and generative modeling: 
+              In the first tier, after observing a large set of therapeutics tasks, we categorize and abstract out three major areas (<i>i.e.</i>, problems) where machine learning can facilitate scientific advances, namely, single-instance prediction, multi-instance prediction, and generation:
               </p>
               <ul>
 			    <li><strong>Single-instance prediction </strong> <code>single_pred</code>: Prediction of property given individual biomedical entity. </li>
 			    <li><strong>Multi-instance prediction </strong><code>multi_pred</code>: Prediction of property given multiple biomedical entities. </li>
-			    <li><strong>Generation</strong> <code>generation</code>: Generation of new biomedical entity. </li>
+			    <li><strong>Generation</strong> <code>generation</code>: eneration of new desirable biomedical entities. </li>
 			  </ul>
         </div>
         <div class="column is-3 has-text-centered">
@@ -197,13 +196,11 @@ All methods and datasets are integrated and are accessible via an open source TD
     <div class="columns is-vcentered">
         <div class="column is-8">
 			  <p class="is-size-5">
-			  The second layer in the TDC structure is organized into <i>learning tasks</i>. Improvement on these tasks can result in numerous applications, including identifying personalized combinatorial therapies, designing novel class of antibodies, improving disease diagnosis, and finding new cures for emerging diseases. Finally, in the third layer of TDC, each task is instantiated via multiple <i>datasets</i>. For each dataset, we construct data splits to simulate biomedically relevant generalizations, such as a
-              model's ability to generalize to entirely unseen compounds, or to granularly resolve patient response to a polytherapy.  
-              </p>
-              <p class="is-size-5">
-	          Practically, we create a data loader class for every <i>task</i> that inherits from the base data loader. 
-	          Suppose you want to retrieve <i>dataset</i> `X` to study <i>learning task</i> `Y` that belongs to a class of <i>problems</i> `Z`. To obtain the dataset and its associated data split, use the following: 
-	          </p>
+			  The second tier in the TDC structure is organized into learning tasks. Improvement on these tasks can result in numerous applications, including identifying personalized combinatorial therapies, designing novel class of antibodies, improving disease diagnosis, and finding new cures for emerging diseases.
+        </p>
+        <p class="is-size-5">
+        Finally, in the third tier of TDC, each task is instantiated via multiple datasets. For each dataset, we provide several splits of the dataset into training, validation, and test sets to simulate the type of understanding and generalization (<i>e.g.</i>, the model's ability to generalize to entirely unseen compounds or to granularly resolve patient response to a polytherapy) needed for transition into production and clinical implementation.
+        </p>
 	          <p class="is-size-5"> </p>
         </div>
         <div class="column is-3 has-text-centered">
@@ -223,13 +220,14 @@ All methods and datasets are integrated and are accessible via an open source TD
 
 <h2 id="data-loaders">Data Loaders</h2>
 
-<p class="is-size-5">  TDC provides a powerful API that loads a dataset and provides a meaningful split of the data into training, validation and test sets in just three lines of codes.</p>
+<p class="is-size-5">  TDC provides a collection of workflows with intuitive, high-level APIs for both beginners and experts to create machine learning models in Python. Building off the modularized "Problem--Learning Task--Data Set" structure (see above) in TDC, we provide a three-layer API to access any learning task and dataset. This hierarchical API design allows us to easily incorporate new tasks and datasets. 
+</p>
 
 <div class="column is-8 is-offset-2">
     <img src="/img/tdc_API_relation2.png" alt="TDC api" class="img-responsive" />
 </div>
 
-<p class="is-size-5"> To obtain the Caco2 dataset from ADME therapeutic task in the single-instance prediction problem: </p>
+<p class="is-size-5"> For a concrete example, to obtain the Caco2 dataset from ADME therapeutic learning task in the single-instance prediction problem: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
@@ -238,18 +236,20 @@ All methods and datasets are integrated and are accessible via an open source TD
 </code></pre></div></div>
 <p class="is-size-5"> The variable df is a Pandas object for the entire dataset. The variable splits would in default output a dictionary where keys are train, val, test and values are the pandas DataFrame with the Drug IDs, SMILES strings and the label. For detailed outputs, see the dataset documentation. </p>
 
+<p class="is-size-5"> Note that the user only needs to specify "Problem--Learning Task--Data Set" and TDC automatically retrieve the processed machine learning-ready dataset from TDC server and generate a <i>data</i> object, which contains numerous utility functions that can be directly applied on the dataset. </p>
+
 <div class="column is-12">
     <hr />
 </div>
 
 <h2 id="data-functions">Data Functions</h2>
 
-<p class="is-size-5"> TDC includes numerous data functions. They can be used either directly on the data loader object, or as a separate utility functions. Currently, it has four major categories. </p>
+<p class="is-size-5"> TDC implements a comprehensive suite of auxiliary functions frequently used in therapeutics ML. This functionality is wrapped in an easy-to-use interface. Broadly, we provide functions for the following four major categories: </p>
 <ul>
-    <li><strong>Model Evaluation </strong>: Evaluators of various machine learning problems for TDC. </li>
-    <li><strong>Data Split</strong>: Various splits functions to reflect realistic scenarios such as scaffold split, cold drug/protein split and etc. </li>
-    <li><strong>Data Processing </strong>: Common processing functions such as label unit conversion, binarization, visualization, database queries, multi-instance to graph and etc. </li>
-    <li><strong>Molecule Generation Oracles</strong>: Property oracles for molecule generation tasks. </li>
+    <li><strong>Model Evaluation </strong>: TDC includes a series of realistic metrics functions to evaluate models for therapeutics ML tasks in TDC such that models are transferable to real-world scenarios.</li>
+    <li><strong>Data Split</strong>: Real world applications require ML models to generalize to out-of-distribution samples. TDC includes various data splits to reflect realistic generalization schemes. </li>
+    <li><strong>Data Processing </strong>: As therapeutics ML covers a wide range of data modalities and has numerous repetitive processing functions, TDC summarizes and provides wrappers for useful data helpers. </li>
+    <li><strong>Molecule Generation Oracles</strong>:  Molecular design tasks require oracle functions to measure the quality of generated entities. TDC provides oracles where each is tailored for a specific goal of interest.</li>
   </ul>
 
 <p class="is-size-5"> See the functions documentation for detail usage for each function. </p>
@@ -264,7 +264,7 @@ All methods and datasets are integrated and are accessible via an open source TD
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@article{tdc,
   title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Therapeutics},
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
   journal={arXiv preprint arXiv:2102.09548},
   year={2021}
 }
