@@ -92,35 +92,26 @@ If you found our work useful, please cite us:
 
 ## Design of TDC
 
-TDC has a unique three-layer hierarchical structure, which to our knowledge is the first attempt at systematically evaluating machine learning across the field of therapeutics. We organize TDC into three distinct *problems*, each of these problems is instantiated through a variety of *learning tasks*, and each task, in turn, is evaluated on a series of *datasets*.
+TDC has a unique three-tiered hierarchical structure, which to our knowledge, is the first attempt at systematically organizing machine learning for therapeutics. We organize TDC into three distinct *problems*. For each problem, we give a collection *learning tasks*. Finally, for each task, we provide a series of *datasets*.
 
-We choose our datasets to highlight three major areas (*problems*) where machine learning can facilitate scientific advances: single-instance prediction, multi-instance prediction, and generative modeling:
+In the first tier, after observing a large set of therapeutics tasks, we categorize and abstract out three major areas (i.e., problems) where machine learning can facilitate scientific advances, namely, single-instance prediction, multi-instance prediction, and generation:
 
 * Single-instance prediction `single_pred`: Prediction of property given individual biomedical entity.
 * Multi-instance prediction `multi_pred`: Prediction of property given multiple biomedical entities. 
-* Generation `generation`: Generation of a new biomedical entity.
+* Generation `generation`: Generation of new desirable biomedical entities.
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_problems.png" alt="problems" width="500px" /></p>
 
-The second layer in the TDC structure is organized into *learning tasks*. Improvement on these tasks range in applications, including designing new antibodies, identifying personalized combinatorial therapies, improving disease diagnosis, and finding new cures for emerging diseases. 
+The second tier in the TDC structure is organized into learning tasks. Improvement on these tasks can result in numerous applications, including identifying personalized combinatorial therapies, designing novel class of antibodies, improving disease diagnosis, and finding new cures for emerging diseases.
 
-Finally, in the third layer of TDC, each task is instantiated via multiple *datasets*. For each dataset, we construct data splits to simulate biomedically relevant generalizations, such as a model's ability to generalize to entirely unseen compounds, or to granularly resolve patient response to a polytherapy.
+Finally, in the third tier of TDC, each task is instantiated via multiple datasets. For each dataset, we provide several splits of the dataset into training, validation, and test sets to simulate the type of understanding and generalization (e.g., the model's ability to generalize to entirely unseen compounds or to granularly resolve patient response to a polytherapy) needed for transition into production and clinical implementation.
+
 
 ## TDC Data Loaders
 
-Each machine learning problem comprises of multiple learning tasks. TDC provides a data loader class for each *task* inheriting from the base data loader. 
+TDC provides a collection of workflows with intuitive, high-level APIs for both beginners and experts to create machine learning models in Python. Building off the modularized "Problem--Learning Task--Data Set" structure (see above) in TDC, we provide a three-layer API to access any learning task and dataset. This hierarchical API design allows us to easily incorporate new tasks and datasets.
 
-Each learning task is instantiated through many datasets. Most datasets for a given task have the same structure. To get a dataset, use the `dataset_name` as a function input to the task data loader.
-
-Suppose you want to retrieve *dataset* `X` to study therapeutics *task* `Y` which falls under the *problem* `Z`. To obtain the dataset and its associated data split, use the following:
-
-```python
-from tdc.Z import Y
-data = Y(name = 'X')
-splits = data.split()
-```
-
-For example, to obtain the HIA dataset from ADME therapeutic task in the single-instance prediction problem:
+For a concrete example, to obtain the HIA dataset from ADME therapeutic learning task in the single-instance prediction problem:
 
 ```python
 from tdc.single_pred import ADME
@@ -148,7 +139,7 @@ To retrieve the training/validation/test dataset split, you could simply type
 ```python 
 data = X(name = Y)
 data.get_split(seed = 42)
-# {'train': df_train, 'val': df_val, ''test': df_test}
+# {'train': df_train, 'val': df_val, 'test': df_test}
 ```
 You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'scaffold', seed = 1, frac = [0.7, 0.1, 0.2])`. Check out the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) on the website for details.
 
@@ -222,7 +213,7 @@ We provide a series of tutorials for you to get started using TDC:
 
 ## Contribute
 
-TDC is designed to be a community-driven effort. Checkout the [contribution guide](CONTRIBUTE.md) to contribute!
+TDC is an open-source community-driven effort. If you want to get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-mks4lm4z-_N_zI9Z_YFvaGjKiCwCH2Q) and checkout the [contribution guide](CONTRIBUTE.md)!
 
 ## Contact
 
@@ -233,4 +224,4 @@ Send emails to [us](mailto:contact@tdcommons.ai) or open an issue.
 TDC is hosted in [Harvard Dataverse](https://dataverse.harvard.edu/). When dataverse is under maintenance, TDC will not able to retrieve datasets. Although rare, when it happens, please come back in couple of hours or check the status by visiting the [dataverse website](https://dataverse.harvard.edu/).
 
 ## License
-TDC codebase is under MIT license. For individual dataset usage, please refer to the dataset license in the website.
+TDC codebase is under MIT license. For individual dataset usage, please refer to the dataset license found in the website.
