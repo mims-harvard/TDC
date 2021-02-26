@@ -36,11 +36,9 @@ class TestBenchmarkGroup(unittest.TestCase):
 
     def test_ADME_evaluate_many(self):
         prediction_list = []
-        num_datasets = 0
         for random_seed in range(5):
             predictions = {}
             for my_group in self.group:
-                num_datasets += 1
                 name = my_group['name']
                 test = my_group['test']
                 predictions[name] = test['Y']
