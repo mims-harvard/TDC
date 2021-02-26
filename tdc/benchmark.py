@@ -149,3 +149,29 @@ class BenchmarkGroup:
 			metric_dict = bm_metric_names[self.name]
 			evaluator = eval('Evaluator(name = \'' + metric_dict[data_name] + '\')')
 			return {metric_dict[data_name]: round(evaluator(true, pred), 3)}
+
+	def evaluate_many(self, preds):
+		"""
+		:param preds: list of dict<str dataset_name: list of float>
+		:return: dict<dataset_name: [mean_metric_result, std_metric_result]
+
+		This function returns the data in a format needed to submit to the Leaderboard
+		"""
+		if len(preds) != 5:
+			return ValueError("Must have Five Predictions For Leaderboard Submission")
+		individual_results = []
+		for pred in preds:
+			retval = self.evaluate(pred)
+			individual_results.append(retval)
+
+		given_dataset_names = list(individual_results[0].keys())
+		aggregated_results = {}
+		for dataset_name in given_dataset_names:
+			my_results = []
+			for individual_result in individual_results:
+				my_result = list(individual_result[dataset_name].values())[0]
+				my_results.append(my_result)
+			u = np.mean(my_results)
+			std = np.std(my_results)
+			aggregated_results[dataset_name] = [u, std]
+		return aggregated_results
