@@ -268,14 +268,22 @@
 
 <h3 id="label-units-conversion">Label Units Conversion</h3>
 
-<p class="is-size-6">  <strong> Function Description: </strong> This function converts the labels to different units. Currently, it only supports to transform between nM and p (log scale) for binding affinity.  </p>
+<p class="is-size-6">  <strong> Function Description: </strong> This function converts the labels to different units. Currently, it supports to transform between nM and p (log scale) for binding affinity and also regular natural log the label.  </p>
 
 <p class="is-size-6"> For example, to convert from nM to p: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">convert_to_log</span><span class="p">()</span>
-<span class="c1"># convert back: data.convert_from_log()
+<span class="n">data</span><span class="o">.</span><span class="n">convert_to_log</span><span class="p">(</span><span class="n">form</span> <span class="o">=</span> <span class="s">'binding'</span><span class="p">)</span>
+<span class="c1"># convert back: data.convert_from_log(form = 'binding')
+</span></code></pre></div></div>
+
+<p class="is-size-6">To convert to natural log scale:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">convert_to_log</span><span class="p">(</span><span class="n">form</span> <span class="o">=</span> <span class="s">'standard'</span><span class="p">)</span>
+<span class="c1"># convert back: data.convert_from_log(form = 'standard')
 </span></code></pre></div></div>
 
 <h3 id="label-meaning">Label Meaning</h3>

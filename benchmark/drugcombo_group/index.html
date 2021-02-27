@@ -155,11 +155,10 @@
 
 <span class="k">for</span> <span class="n">benchmark</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
-    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'valid'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+    <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
 
     <span class="c1">## --- train your model --- ##
-</span>
-    <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred</span>
+</span>    <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
 
 <span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 
@@ -175,7 +174,9 @@ Note that the output includes the evaluations across tissues:
 '''</span>
 </code></pre></div></div>
 
-<p class="is-size-5"> Follow the <a href="/benchmark/overview/">instruction</a> on how to use the <code>BenchmarkGroup</code> class. For every dataset, we use cold drug combination split into 70%/10%/20% training/validation/testing fractions. The evaluation metrics is MAE. </p>
+<p class="is-size-5"> Follow the <a href="/benchmark/overview/">instruction</a> on how to use the <code>BenchmarkGroup</code> class and for other useful functions to facilitate your model building.</p>
+
+<p class="is-size-5"> For every dataset, we use drug combination split and hold out a 20% test set. The evaluation metrics is MAE. </p>
 
 <p class="is-size-5"> We encourage submissions that reports results for all five synergy scores. Note that the tissue types are automatically calculated based on the test set prediction on CSS data type.</p>
 
