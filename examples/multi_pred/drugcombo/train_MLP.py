@@ -228,10 +228,10 @@ def main():
     for seed in [1, 2, 3, 4, 5]:
         predictions = {}
         for benchmark in group:
-            train_val = group.get_auxiliary_train_valid_split(seed, benchmark['name'])
+            train, valid = group.get_train_valid_split(seed = seed, benchmark = benchmark['name'])
 
             name = benchmark['name']
-            train_df, valid_df, test_df = train_val['train'], train_val['valid'], benchmark['test']
+            train_df, valid_df, test_df = train, valid, benchmark['test']
 
             train_ = DrugCombDataset(train_df, drug_features, cell_features)
             train_loader = DataLoader(train_, batch_size=args.batch_size,

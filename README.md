@@ -23,6 +23,7 @@ TDC is an open-source initiative. To get involved, join the [Slack Workspace](ht
 
 
 ## Updates
+- `0.1.7`: Streamlined the leaderboard programming frameworks! Checkout [here](https://tdcommons.ai/benchmark/overview/)!
 - TDC white paper is alive on [arXiv](https://arxiv.org/abs/2102.09548)!
 - `0.1.6`: Released the second leaderboard on drug combination screening prediction! Checkout [here](https://tdcommons.ai/benchmark/drugcombo_group/)!
 - `0.1.5`: Added four realistic oracles from docking scores and synthetic accessibility! Checkout [here](https://tdcommons.ai/functions/oracles/)!
@@ -183,16 +184,20 @@ TDC provides a programming framework to access the data in a benchmark group. We
 ```python
 from tdc import BenchmarkGroup
 group = BenchmarkGroup(name = 'ADMET_Group', path = 'data/')
-predictions = {}
+predictions_list = []
 
-for benchmark in group:
-    name = benchmark['name']
-    train, valid, test = benchmark['train'], benchmark['valid'], benchmark['test']
-    ## --- train your model --- ##
-    predictions[name] = y_pred
+for seed in [1, 2, 3, 4, 5]:
+    predictions = {}
+    for benchmark in group:
+        name = benchmark['name']
+        train_val, test = benchmark['train_val'], benchmark['test']
+        train, valid = group.get_train_valid_split(benchmark = name, split_type = 'default', seed = seed)
+        ## --- train your model --- ##
+        y_pred = [1] * len(test)
+        predictions[name] = y_pred
+    predictions_list.append(predictions)
 
-group.evaluate(predictions)
-# {'caco2_wang': {'mae': 0.234}, 'hia_hou': {'roc-auc': 0.786}, ...}
+group.evaluate_many(predictions_list)
 ```
 
 For more functions of the `BenchmarkGroup` class, please visit [here](https://zitniklab.hms.harvard.edu/TDC/benchmark/overview/).

@@ -14,12 +14,10 @@ class BenchmarkGroup:
 		-- PATH
 			-- ADMET_Benchmark
 				-- HIA_Hou
-					-- train.csv
-					-- valid.csv
+					-- train_val.csv
 					-- test.csv
 				-- Caco2_Wang
-					-- train.csv
-					-- valid.csv
+					-- train_val.csv
 					-- test.csv
 				....
 		from tdc import BenchmarkGroup
@@ -28,7 +26,11 @@ class BenchmarkGroup:
 
 		for benchmark in group:
 		   name = benchmark['name']
-		   train, valid, test = benchmark['train'], benchmark['valid'], benchmark['test']
+		   train_val, test = benchmark['train_val'], benchmark['test']
+		   
+		   # to obtain any number of train:valid split
+		   train, valid = group.get_train_valid_split(benchmark = name, split_type = 'default', seed = 42, frac = [0.875, 0.125])
+
 		   ## --- train your model --- ##
 		   predictions[name] = y_pred
 
@@ -40,8 +42,24 @@ class BenchmarkGroup:
 		## --- train your model --- ##
 		group.evaluate(y_pred, benchmark = 'Caco2_Wang')
 		# 0.234
+		
+		from tdc import BenchmarkGroup
+		group = BenchmarkGroup(name = 'ADMET_Group', path = 'data/')
+		predictions_list = []
 
-		group.get_more_splits()
+		for seed in [1, 2, 3, 4, 5]:
+		    predictions = {}
+		    for benchmark in group:
+		        name = benchmark['name']
+		        train_val, test = benchmark['train_val'], benchmark['test']
+		        train, valid = group.get_train_valid_split(benchmark = name, split_type = 'default', seed = seed)
+		        ## --- train your model --- ##
+		        y_pred = [1] * len(test)
+		        predictions[name] = y_pred
+		    predictions_list.append(predictions)
+
+		group.evaluate_many(predictions_list)
+
 		'''
 		
 		self.name = bm_group_load(name, path)
@@ -66,50 +84,61 @@ class BenchmarkGroup:
 			print_sys('--- ' + dataset + ' ---')
 			data_path = os.path.join(self.path, dataset)
 			if self.file_format == 'csv':
-				train = pd.read_csv(os.path.join(data_path, 'train.csv'))
-				valid = pd.read_csv(os.path.join(data_path, 'valid.csv'))
+				train = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 				test = pd.read_csv(os.path.join(data_path, 'test.csv'))
 			elif self.file_format == 'pkl':
-				train = pd.read_pickle(os.path.join(data_path, 'train.pkl'))
-				valid = pd.read_pickle(os.path.join(data_path, 'valid.pkl'))
+				train = pd.read_pickle(os.path.join(data_path, 'train_val.pkl'))
 				test = pd.read_pickle(os.path.join(data_path, 'test.pkl'))
 			self.index += 1
-			return {'train': train, 'valid': valid, 'test': test, 'name': dataset}
+			return {'train_val': train, 'test': test, 'name': dataset}
 		else:
 			raise StopIteration
 			
-	def get_auxiliary_train_valid_split(self, seed, benchmark):
+	def get_train_valid_split(self, seed, benchmark, split_type = 'default'):
+		print_sys('generating training, validation splits...')
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		if self.file_format == 'csv':
-			train = pd.read_csv(os.path.join(data_path, 'train.csv'))
-			valid = pd.read_csv(os.path.join(data_path, 'valid.csv'))
+			train_val = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 		elif self.file_format == 'pkl':
-			train = pd.read_pickle(os.path.join(data_path, 'train.pkl'))
-			valid = pd.read_pickle(os.path.join(data_path, 'valid.pkl'))
-		train_val = pd.concat([train, valid]).reset_index(drop = True)
-		if bm_split_names[self.name][dataset] == 'scaffold':
-			out = create_scaffold_split(train_val, seed, frac = [0.875, 0.125, 0], entity = 'Drug')
-		elif bm_split_names[self.name][dataset] == 'random':
-			out = create_fold(train_val, seed, frac = [0.875, 0.125, 0])
-		elif bm_split_names[self.name][dataset] == 'combination':
-			out = create_combination_split(train_val, seed, frac=[0.875, 0.125, 0])
+			train_val = pd.read_pickle(os.path.join(data_path, 'train_val.pkl'))
+
+		if split_type == 'default':
+			split_method = bm_split_names[self.name][dataset]
+		else:
+			split_method = split_type
+
+		frac = [0.875, 0.125, 0.0]
+		'''
+		if len(frac) == 3:
+			# train:val:test split
+			train_frac = frac[0]/(frac[0] + frac[1])
+			valid_frac = 1 - train_frac
+			frac = [train_frac, valid_frac, 0.0]
+		else:
+			# train:val split
+			frac = [frac[0], frac[1], 0.0]
+		'''
+		if split_method == 'scaffold':
+			out = create_scaffold_split(train_val, seed, frac = frac, entity = 'Drug')
+		elif split_method == 'random':
+			out = create_fold(train_val, seed, frac = frac)
+		elif split_method == 'combination':
+			out = create_combination_split(train_val, seed, frac=frac)
 		else:
 			raise NotImplementedError
-		return out
+		return out['train'], out['valid']
 
 	def get(self, benchmark):
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		if self.file_format == 'csv':
-			train = pd.read_csv(os.path.join(data_path, 'train.csv'))
-			valid = pd.read_csv(os.path.join(data_path, 'valid.csv'))
+			train = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 			test = pd.read_csv(os.path.join(data_path, 'test.csv'))
 		elif self.file_format == 'pkl':
-			train = pd.read_pickle(os.path.join(data_path, 'train.pkl'))
-			valid = pd.read_pickle(os.path.join(data_path, 'valid.pkl'))
+			train = pd.read_pickle(os.path.join(data_path, 'train_val.pkl'))
 			test = pd.read_pickle(os.path.join(data_path, 'test.pkl'))
-		return {'train': train, 'valid': valid, 'test': test, 'name': dataset}
+		return {'train': train, 'test': test, 'name': dataset}
 
 	def evaluate(self, pred, true = None, benchmark = None):
 		if true is None:
@@ -157,8 +186,8 @@ class BenchmarkGroup:
 
 		This function returns the data in a format needed to submit to the Leaderboard
 		"""
-		if len(preds) != 5:
-			return ValueError("Must have Five Predictions For Leaderboard Submission")
+		if len(preds) < 5:
+			return ValueError("Must have predictions from at least five runs for leaderboard submission")
 		individual_results = []
 		for pred in preds:
 			retval = self.evaluate(pred)
@@ -173,5 +202,5 @@ class BenchmarkGroup:
 				my_results.append(my_result)
 			u = np.mean(my_results)
 			std = np.std(my_results)
-			aggregated_results[dataset_name] = [u, std]
+			aggregated_results[dataset_name] = [round(u, 3), round(std, 3)]
 		return aggregated_results

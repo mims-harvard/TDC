@@ -26,13 +26,13 @@ results_all_seeds = {}
 for seed in [1, 2, 3, 4, 5]:
     predictions = {}
     for benchmark in group:
-        train_val = group.get_auxiliary_train_valid_split(seed, benchmark['name'])
+        train, valid = group.get_train_valid_split(benchmark = benchmark['name'], split_type = 'default', seed = seed)
 
-        train = data_process(X_drug = train_val['train'].Drug.values, y = train_val['train'].Y.values, 
+        train = data_process(X_drug = train.Drug.values, y = train.Y.values, 
                         drug_encoding = drug_encoding,
                         split_method='no_split')
 
-        val = data_process(X_drug = train_val['valid'].Drug.values, y = train_val['valid'].Y.values, 
+        val = data_process(X_drug = valid.Drug.values, y = valid.Y.values, 
                         drug_encoding = drug_encoding,
                         split_method='no_split')
 
