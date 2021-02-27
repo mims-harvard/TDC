@@ -376,6 +376,8 @@ def create_scaffold_split(df, seed, frac, entity):
 	try:
 		from rdkit import Chem
 		from rdkit.Chem.Scaffolds import MurckoScaffold
+		from rdkit import RDLogger
+		RDLogger.DisableLog('rdApp.*')
 	except:
 		raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")
 	from tqdm import tqdm
