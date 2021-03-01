@@ -56,6 +56,26 @@ def download_wrapper(name, path, dataset_names):
 		dataverse_download(dataset_path, path, name, name2type)
 	return name
 
+def zip_data_download_wrapper(name, path, dataset_names):
+	name = fuzzy_search(name, dataset_names)
+	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
+
+	dataset_path = server_path + str(name2id[name])
+
+	if not os.path.exists(path):
+		os.mkdir(path)
+
+	if os.path.exists(os.path.join(path, name)):
+		print_sys('Found local copy...')
+	else:
+		print_sys('Downloading...')
+		dataverse_download(dataset_path, path, name, name2type)
+		print_sys('Extracting zip file...')
+		with ZipFile(os.path.join(path, name + '.zip'), 'r') as zip:
+			zip.extractall(path = os.path.join(path))
+		print_sys("Done!")
+	return name
+
 def oracle_download_wrapper(name, path, oracle_names):
 	name = fuzzy_search(name, oracle_names)
 	if name in trivial_oracle_names:
@@ -102,6 +122,8 @@ def pd_load(name, path):
 			df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]))
 		elif name2type[name] == 'pkl':
 			df = pd.read_pickle(os.path.join(path, name + '.' + name2type[name]))
+		elif name2type[name] == 'zip':
+			df = pd.read_pickle(os.path.join(path, name + '/' + name + '.pkl'))
 		else:
 			raise ValueError("The file type must be one of tab/csv/pickle.")
 		try:
@@ -178,6 +200,11 @@ def generation_paired_dataset_load(name, path, dataset_names, input_name, output
 	df = pd_load(name, path)
 	return df[input_name], df[output_name]
 
+def three_dim_dataset_load(name, path, dataset_names):
+	name = zip_data_download_wrapper(name, path, dataset_names)
+	print_sys('Loading...')
+	df = pd_load(name, path)
+	return df, os.path.join(path, name), name
 
 def distribution_dataset_load(name, path, dataset_names, column_name):
 	name = download_wrapper(name, path, dataset_names)
