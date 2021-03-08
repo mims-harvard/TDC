@@ -152,9 +152,46 @@
 
 <p class="is-size-5"> One key task in drug discovery is the ADMET property prediction. A machine learning model that excels at ADMET needs to work well across a wide range of individual ADMET indices, such as Caco2, HIA and others. For this reason, TDC provides the <code>ADMET Benchmark Group</code>, which consists of 22 datasets from <code>ADME</code> and <code>Tox</code>. </p>
 
-<h2 id="how-to-access-a-benchmark-group">How to Access a Benchmark Group</h2>
+<h2 id="instructions-to-submit-your-results">Instructions to Submit your Results</h2>
 
 <p class="is-size-5"> TDC provides a programming framework to access the data in a benchmark group. We use ADMET group as an example. </p>
+
+<h4 id="step-1-train-your-model-using-tdc-benchmarkgroup-class">Step 1: Train your model using TDC BenchmarkGroup class</h4>
+
+<p class="is-size-5"> Copy-paste the following code and replace the comment line block with your model training codes. The train, valid, test variables contain the dataset in the ML-ready format. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">predictions_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">benchmark</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+        <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+        <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+        
+        <span class="c1"># --------------------------------------------- # 
+</span>        <span class="c1">#  Train your model using train, valid, test    #
+</span>        <span class="c1">#  Save test prediction in y_pred_test variable #
+</span>        <span class="c1"># --------------------------------------------- #
+</span>        
+        <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
+    <span class="n">predictions_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+<span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
+<span class="c1"># {'caco2_wang': [6.328, 0.101], 'hia_hou': [0.5, 0.01], ...}
+</span></code></pre></div></div>
+
+<p class="is-size-5"> Copy the output of the result dictionary containing mean and standard deviation of all benchmarks in the benchmark group. </p>
+
+<h4 id="step-2-submit-to-tdc-leaderboard">Step 2: Submit to TDC Leaderboard</h4>
+
+<p class="is-size-5"> Fill out <code><a href="https://forms.gle/HYupGaV7WDuutbr9A">this form</a></code> with the copied result. </p>
+
+<h2 id="details-about-the-benchmarkgroup-class">Details about the BenchmarkGroup Class</h2>
+
+<p class="is-size-5"> The BenchmarkGroup Class is a wrapper that iterates all benchmarks in a benchmark group. For each benchmark, TDC provides a fixed <code>test</code> set and a <code>train_val</code> set. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -170,7 +207,7 @@
 <span class="c1"># {'caco2_wang': {'mae': 4.328}, 'hia_hou': {'roc-auc': 0.802}, ...}
 </span></code></pre></div></div>
 
-<p class="is-size-5"> For each benchmark, TDC provides a fixed <code>test</code> set and a <code>train_val</code> set. Users can construct their own training and validation split from the <code>train_val</code> set but must evaluate on the given test set for fair comparison. User can either (1) directly construct customized training and validation set from the <code>train_val</code> variable or (2) use TDC utility function by specifying the supported split scheme from <a href="https://tdcommons.ai/functions/data_split/"> here </a> given different random seeds: </p>
+<p class="is-size-5"> Users can construct their own training and validation split from the <code>train_val</code> set but must evaluate on the given test set for fair comparison. User can either (1) directly construct customized training and validation set from the <code>train_val</code> variable or (2) use TDC utility function by specifying the supported split scheme from <a href="https://tdcommons.ai/functions/data_split/"> here </a> given different random seeds: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </code></pre></div></div>
@@ -216,10 +253,6 @@
 <span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
 <span class="c1"># ['caco2_wang', 'hia_hou', ....]
 </span></code></pre></div></div>
-
-<h2 id="how-to-submit-results">How to Submit Results</h2>
-
-<p class="is-size-5"> To submit the results of your model and be included in a TDC leaderboard, fill out <code><a href="https://forms.gle/HYupGaV7WDuutbr9A">this form</a></code>. </p>
 
 <h2 id="the-fair-guiding-principles">The FAIR Guiding Principles</h2>
 
