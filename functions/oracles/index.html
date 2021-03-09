@@ -219,7 +219,18 @@
 
 <p class="is-size-6"> De novo molecular generation has been focusing on simple heuristic oracles, such as QED, LogP. Those oracles are either too easy to optimize or can produce unrealistic molecules. This is aptly summarized in Coley et al. (2019) [1] as: “The current evaluations for generative models do not reflect the complexity of real discovery problems.” Recent work by Cieplinski et al. (2020) [2] also titled: "We Should At Least Be Able To Design Molecules That Dock Well." Thus, we decided to include a meta oracle of the molecular docking method. We adopted the python wrapper from pyscreener [3] that allows easy access to various docking software, including vina, smina, qvina2, psovina and DOCK6. Users can specify the target based on their own interests while providing several typical oracle functions for the leaderboard. </p>
 
-<p class="is-size-6">  <strong> Installation instruction: </strong> To use this oracle, the user should first install the pyscreener, its dependencies, and the external docking software user wants to use. For vina-type software, ADFR Suite and one of the docking software are required. For DOCK6, sphgen_cpp and chimera are needed apart from DOCK6. All external software should be accessible from the $PATH variable (one can use export PATH=$PATH:#dir to bin#). Then by specifying the directory of pyscreener to the oracle function, we can use the docking oracle. One can find the installation instruction of the pyscreener in https://github.com/coleygroup/pyscreener. It should take approximately 10 minutes to install locally. Please open an <a href="https://github.com/mims-harvard/TDC/issues">issue</a> if you meet any problem.
+<p class="is-size-6">  <strong> Installation instruction: </strong> 
+</p>
+<ul>
+    <li> 1. Install ADFR. The guidance can be found in https://ccsb.scripps.edu/adfr/downloads/ </li>   
+    <li> 2. Install Vina. The guidance can be found in http://vina.scripps.edu/   (alternative ways include qvina, smina and DOCK6). The executable can be directly used.  </li>
+    <li> 3. Git clone https://github.com/coleygroup/pyscreener and use "python setup.py install" to install. </li>
+    <li> 4. Install pdbfixer using "conda install -c omnia pdbfixer". </li>
+
+</ul>
+
+<p class="is-size-6">
+ It should take approximately 10 minutes to install locally. Please open an <a href="https://github.com/mims-harvard/TDC/issues">issue</a> if you meet any problem.
  </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>

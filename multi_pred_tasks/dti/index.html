@@ -276,7 +276,7 @@ Models require extrapolation on unseen compounds, unseen proteins, and unseen co
 
 <p class="is-size-6">  <strong> Note: </strong> BindingDB is the collection of many assays. Since different assays use different metrics, TDC separates them as separate datasets. Specifically, it has four datasets with Kd, IC50, Ki as the units. </p>
 
-<p class="is-size-6"> <strong>Tips:</strong> Checkout the <a href="/TDC/functions/data_process">data processing</a> page for binarization, label distribution visualization, edge list/DGL/PyTorch graph transformation. </p>
+<p class="is-size-6"> <strong>Tips:</strong> Transforming to log-scale pIC50, pKi, and pKd can usually lead to more stable training. You can achieve this transformation via <a href="/functions/data_process/#label-units-conversion">here</a>. Checkout the <a href="/functions/data_process">data processing</a> page for binarization, label distribution visualization, edge list/DGL/PyTorch graph transformation. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'BindingDB_Kd'</span><span class="p">)</span>
@@ -305,7 +305,7 @@ Models require extrapolation on unseen compounds, unseen proteins, and unseen co
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Drug Split</span> <span class="tag is-info is-light">Cold Protein Split</span> </p>
 
-<p class="is-size-6"> <strong>Tips:</strong> Checkout the <a href="/TDC/functions/data_process">data processing</a> page for binarization, label distribution visualization, edge list/DGL/PyTorch graph transformation. </p>
+<p class="is-size-6"> <strong>Tips:</strong> Transforming to log-scale pIC50, pKi, and pKd can usually lead to more stable training. You can achieve this transformation via <a href="/functions/data_process/#label-units-conversion">here</a>. Checkout the <a href="/functions/data_process">data processing</a> page for binarization, label distribution visualization, edge list/DGL/PyTorch graph transformation. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
@@ -332,7 +332,7 @@ Models require extrapolation on unseen compounds, unseen proteins, and unseen co
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Drug Split</span> <span class="tag is-info is-light">Cold Protein Split</span> </p>
 
-<p class="is-size-6"> <strong>Tips:</strong> Checkout the <a href="/TDC/functions/data_process">data processing</a> page for binarization, label distribution visualization, edge list/DGL/PyTorch graph transformation. </p>
+<p class="is-size-6"> <strong>Tips:</strong> Checkout the <a href="/functions/data_process">data processing</a> page for binarization, label distribution visualization, edge list/DGL/PyTorch graph transformation. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'KIBA'</span><span class="p">)</span>
