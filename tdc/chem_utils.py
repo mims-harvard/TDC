@@ -1687,7 +1687,11 @@ class docking_meta:
 
     def __call__(self, test_smiles):
         final_score = self.scorer(test_smiles)
-        return final_score
+        if type(test_smiles)==str:
+          return list(final_score.values())[0]
+        else:  ## list 
+          return [list(i.values())[0] for i in final_score]
+
 
 def smiles_to_rdkit_mol(smiles):
   mol = Chem.MolFromSmiles(smiles)
