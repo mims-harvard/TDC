@@ -655,8 +655,9 @@ def diversity(list_of_smiles):
 	avg_lst = []
 	for idx, fp in enumerate(list_of_fp):
 		for fp2 in list_of_fp[idx+1:]:
+
 			sim = DataStructs.TanimotoSimilarity(fp, fp2) 			
-			avg_lst.append(sim)
+			avg_lst.append(sim); print("similarity:",sim) 
 	return np.mean(avg_lst)
 
 
@@ -692,6 +693,8 @@ def calculate_pc_descriptors(smiles, pc_descriptors):
 
 
 def continuous_kldiv(X_baseline: np.array, X_sampled: np.array) -> float:
+    X_baseline += 1e-5
+    X_sampled += 1e-5 
     from scipy.stats import entropy, gaussian_kde
     kde_P = gaussian_kde(X_baseline)
     kde_Q = gaussian_kde(X_sampled)
