@@ -43,7 +43,7 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from .utils import oracle_load,print_sys
+from .utils import oracle_load, print_sys
 
 
 
@@ -4638,7 +4638,7 @@ class MolConvert:
           self.func = xyzfile2selfies 
         elif src == 'XYZ' and dst == 'Graph3D':
           self.func = xyzfile2graph3d 
-        elif src == 'XYZ' and dst == 'Coulomb':
+        elif src == 'XYZ' and dst == 'Coulumb':
           self.func = xyzfile2coulomb 
 
         ### SDF file 
@@ -4648,7 +4648,7 @@ class MolConvert:
           self.func = sdffile2smiles_lst  
         elif src == 'SDF' and dst == 'SELFIES':
           self.func = sdffile2selfies_lst 
-        elif src == 'SDF' and dst == 'Coulomb':
+        elif src == 'SDF' and dst == 'Coulumb':
           self.func = sdffile2coulomb
 
         ### mol file

@@ -96,25 +96,39 @@ class PairedDataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please use the correct split method")
 
 class DataLoader3D(base_dataset.DataLoader):
-	## TODO
-	def __init__(self, name, path, print_stats, column_name):
-		self.smiles_lst = distribution_dataset_load(name, path, single_molecule_dataset_names, column_name = column_name)  
-		### including fuzzy-search 
-		self.name = name 
-		self.path = path 
-		self.dataset_names = single_molecule_dataset_names
+	### locally, unzip a folder, with the main file the dataframe with SMILES, Mol Object for various kinds of entities.
+	### also, for each column, contains a sdf file. 
+
+	def __init__(self, name, path, print_stats, dataset_names, column_name):
+		self.df, self.path, self.name = three_dim_dataset_load(name, path, dataset_names)  
 		if print_stats: 
 			self.print_stats() 
 		print_sys('Done!')
 		
 	def print_stats(self):
-		print("There are " + str(len(self.smiles_lst)) + ' molecules ', flush = True, file = sys.stderr)
+		print("There are " + str(len(self.df)) + ' data points ', flush = True, file = sys.stderr)
 
-	def get_data(self, format = 'df'):
+	def get_data(self, format = 'df', more_features = 'None'):
+		
+		if more_features in ['None', 'SMILES']:
+			pass
+		elif more_features in ['Graph3D', 'Coulumb', 'SELFIES']:
+			try: 
+				from rdkit.Chem.PandasTools import LoadSDF
+				from rdkit import rdBase
+				rdBase.DisableLog('rdApp.error')
+			except:
+				raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")	
+
+			from ..chem_utils import MolConvert
+			from ..metadata import sdf_file_names
+
+			convert = MolConvert(src = 'SDF', dst = more_features)
+			for i in sdf_file_names[self.name]:
+				self.df[i + '_' + more_features] = convert(self.path + i + '.sdf')
+
 		if format == 'df':
-			return pd.DataFrame({'smiles': self.smiles_lst})
-		elif format == 'dict':
-			return {'smiles': self.smiles_lst} 
+			return self.df
 		else:
 			raise AttributeError("Please use the correct format input")
 

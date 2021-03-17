@@ -138,7 +138,7 @@ class BenchmarkGroup:
 		elif self.file_format == 'pkl':
 			train = pd.read_pickle(os.path.join(data_path, 'train_val.pkl'))
 			test = pd.read_pickle(os.path.join(data_path, 'test.pkl'))
-		return {'train': train, 'test': test, 'name': dataset}
+		return {'train_val': train, 'test': test, 'name': dataset}
 
 	def evaluate(self, pred, true = None, benchmark = None):
 		if true is None:
