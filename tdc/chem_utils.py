@@ -655,8 +655,9 @@ def diversity(list_of_smiles):
 	avg_lst = []
 	for idx, fp in enumerate(list_of_fp):
 		for fp2 in list_of_fp[idx+1:]:
+
 			sim = DataStructs.TanimotoSimilarity(fp, fp2) 			
-			avg_lst.append(sim)
+			avg_lst.append(sim); print("similarity:",sim) 
 	return np.mean(avg_lst)
 
 
@@ -692,6 +693,8 @@ def calculate_pc_descriptors(smiles, pc_descriptors):
 
 
 def continuous_kldiv(X_baseline: np.array, X_sampled: np.array) -> float:
+    X_baseline += 1e-5
+    X_sampled += 1e-5 
     from scipy.stats import entropy, gaussian_kde
     kde_P = gaussian_kde(X_baseline)
     kde_Q = gaussian_kde(X_sampled)
@@ -1687,7 +1690,11 @@ class docking_meta:
 
     def __call__(self, test_smiles):
         final_score = self.scorer(test_smiles)
-        return final_score
+        if type(test_smiles)==str:
+          return list(final_score.values())[0]
+        else:  ## list 
+          return [list(i.values())[0] for i in final_score]
+
 
 def smiles_to_rdkit_mol(smiles):
   mol = Chem.MolFromSmiles(smiles)
@@ -4214,49 +4221,95 @@ def sdffile2smiles_lst(sdffile):
   return smiles_lst
  
 
-def sdffile2graph3d_lst(sdffile):
-  with open(sdffile, 'r') as fin:
-    lines = fin.readlines() 
-  texts = '\t\t\t'.join(lines)
-  graph3d_lst = []
-  texts = texts.split('$$$$')
-  for single_block in texts:
-    if single_block.strip()=='':
-      break
-    try:
-      lines = single_block.split('\t\t\t')
-      lines = list(filter(lambda x:len(x.strip())>0, lines))
-      # for line in lines:
-      #   print(line.strip())
-      atoms_feature = []
-      bonds_feature = []
-      line = lines[1]
-      atom_num = int(line.strip().split()[0])
-      bond_num = int(line.strip().split()[1]) 
-      # if atom_num > 1000:
-      #   length = int(len(line.strip().split()[0])/2)
-      #   atom_num = int(line.strip().split()[0][:length])
-      #   bond_num = int(line.strip().split()[0][length:])
-      #   print(atom_num, bond_num)
+def sdffile2mol_conformer(sdffile):
+  from rdkit.Chem.PandasTools import LoadSDF
+  df = LoadSDF(sdffile, smilesName='SMILES')
+  mol_lst = df['ROMol'].tolist() 
+  conformer_lst = []
+  for mol in mol_lst:
+    conformer = mol.GetConformer(id=0)
+    conformer_lst.append(conformer)
+  mol_conformer_lst = list(zip(mol_lst, conformer_lst))
+  return mol_conformer_lst   
 
-      atom_lines = lines[2:2+atom_num]
-      bond_lines = lines[2+atom_num:2+atom_num+bond_num]
-      distance_adj_matrix = np.zeros((atom_num, atom_num))
-      bondtype_adj_matrix = np.zeros((atom_num, atom_num), dtype = int)
-      idx2atom = {idx:line.strip().split()[3] for idx,line in enumerate(atom_lines)}
-      coordinates = [[float(line.strip().split()[0]), float(line.strip().split()[1]), float(line.strip().split()[2])] for line in atom_lines]
-      for i in range(atom_num):
-        for j in range(i+1, atom_num):
-          distance_adj_matrix[i,j] = distance_adj_matrix[j,i] = distance3d(coordinates[i], coordinates[j])
-      for line in bond_lines:
-        a1 = int(line.strip().split()[0])-1
-        a2 = int(line.strip().split()[1])-1
-        bondtype = int(line.strip().split()[2])
-        bondtype_adj_matrix[a1,a2]=bondtype_adj_matrix[a2,a1] = bondtype
-      graph3d_lst.append((idx2atom, distance_adj_matrix, bondtype_adj_matrix))
-    except:
-      pass 
-  return graph3d_lst 
+
+
+def mol_conformer2graph3d(mol_conformer_lst):
+  graph3d_lst = []
+  bond2num = {'SINGLE': 1, 'DOUBLE':2, 'TRIPLE':3, "AROMATIC":4}
+  for mol, conformer in mol_conformer_lst:
+    atom_num = mol.GetNumAtoms() 
+    distance_adj_matrix = np.zeros((atom_num, atom_num))
+    bondtype_adj_matrix = np.zeros((atom_num, atom_num), dtype = int)
+    idx2atom = {i:v.GetSymbol() for i,v in enumerate(mol.GetAtoms())}
+    positions = []
+    for i in range(atom_num):
+      pos = conformer.GetAtomPosition(i)
+      coordinate = np.array([pos.x, pos.y, pos.z]).reshape(1,3)
+      positions.append(coordinate)
+    positions = np.concatenate(positions, 0)
+    for i in range(atom_num):
+      for j in range(i+1, atom_num):
+        distance_adj_matrix[i,j] = distance_adj_matrix[j,i] = distance3d(positions[i], positions[j])
+    for bond in mol.GetBonds():
+      a1 = bond.GetBeginAtom().GetIdx()
+      a2 = bond.GetEndAtom().GetIdx()
+      bt = bond.GetBondType()
+      bondtype_adj_matrix[a1,a2] = bond2num[str(bt)]
+      bondtype_adj_matrix[a1,a2] = bond2num[str(bt)]
+    graph3d_lst.append((idx2atom, distance_adj_matrix, bondtype_adj_matrix))
+  return graph3d_lst
+
+
+def sdffile2graph3d_lst(sdffile):
+  mol_conformer_lst = sdffile2mol_conformer(sdffile)
+  graph3d_lst = mol_conformer2graph3d(mol_conformer_lst)
+  return graph3d_lst
+
+
+# def sdffile2graph3d_lst(sdffile):
+#   with open(sdffile, 'r') as fin:
+#     lines = fin.readlines() 
+#   texts = '\t\t\t'.join(lines)
+#   graph3d_lst = []
+#   texts = texts.split('$$$$')
+#   for single_block in texts:
+#     if single_block.strip()=='':
+#       break
+#     try:
+#       lines = single_block.split('\t\t\t')
+#       lines = list(filter(lambda x:len(x.strip())>0, lines))
+#       # for line in lines:
+#       #   print(line.strip())
+#       atoms_feature = []
+#       bonds_feature = []
+#       line = lines[1]
+#       atom_num = int(line.strip().split()[0])
+#       bond_num = int(line.strip().split()[1]) 
+#       # if atom_num > 1000:
+#       #   length = int(len(line.strip().split()[0])/2)
+#       #   atom_num = int(line.strip().split()[0][:length])
+#       #   bond_num = int(line.strip().split()[0][length:])
+#       #   print(atom_num, bond_num)
+
+#       atom_lines = lines[2:2+atom_num]
+#       bond_lines = lines[2+atom_num:2+atom_num+bond_num]
+#       distance_adj_matrix = np.zeros((atom_num, atom_num))
+#       bondtype_adj_matrix = np.zeros((atom_num, atom_num), dtype = int)
+#       idx2atom = {idx:line.strip().split()[3] for idx,line in enumerate(atom_lines)}
+#       coordinates = [[float(line.strip().split()[0]), float(line.strip().split()[1]), float(line.strip().split()[2])] for line in atom_lines]
+#       for i in range(atom_num):
+#         for j in range(i+1, atom_num):
+#           distance_adj_matrix[i,j] = distance_adj_matrix[j,i] = distance3d(coordinates[i], coordinates[j])
+#       for line in bond_lines:
+#         a1 = int(line.strip().split()[0])-1
+#         a2 = int(line.strip().split()[1])-1
+#         bondtype = int(line.strip().split()[2])
+#         bondtype_adj_matrix[a1,a2]=bondtype_adj_matrix[a2,a1] = bondtype
+#       graph3d_lst.append((idx2atom, distance_adj_matrix, bondtype_adj_matrix))
+#     except:
+#       pass 
+#   return graph3d_lst 
 
 
 def sdffile2selfies_lst(sdf):

@@ -161,13 +161,42 @@ class Oracle:
 		elif self.name == 'docking_score':
 			from .chem_utils import docking_meta
 			self.evaluator_func = docking_meta(**self.kwargs)
+		# distribution oracle 
+		# ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
+		elif self.name == 'uniqueness':
+			from .chem_utils import uniqueness
+			self.evaluator_func = uniqueness 
+			# uniqueness(list_of_smiles)
+		elif self.name == 'validity':
+			from .chem_utils import validity 
+			self.evaluator_func = validity
+			# def validity(list_of_smiles):
+		elif self.name == 'diversity':
+			from .chem_utils import diversity 
+			self.evaluator_func = diversity 
+			# diversity(list_of_smiles) 
+		elif self.name == 'novelty':
+			from .chem_utils import novelty
+			self.evaluator_func = novelty
+			# novelty(generated_smiles_lst, training_smiles_lst)
+		elif self.name == 'fcd_distance':
+			from .chem_utils import fcd_distance 
+			self.evaluator_func = fcd_distance 
+			# def fcd_distance(generated_smiles_lst, training_smiles_lst):
+		elif self.name == 'kl_divergence':
+			from .chem_utils import kl_divergence 
+			self.evaluator_func = kl_divergence 
+			# def kl_divergence(generated_smiles_lst, training_smiles_lst):
+
 		else:
 			return 
 
 	def __call__(self, *args, **kwargs):
-		# if self.name in distribution_oracles:  
-		# 	return self.evaluator_func(*args, **kwargs)
-		# 	#### evaluator for distribution learning, e.g., diversity, validity   
+		if self.name in distribution_oracles:  
+			return self.evaluator_func(*args, **kwargs)
+			#### evaluator for distribution learning, e.g., diversity, validity   
+
+
 		smiles_lst = args[0]
 		if self.name == 'molecule_one_synthesis':
 			return self.evaluator_func(*args, **kwargs)
