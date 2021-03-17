@@ -101,9 +101,9 @@
                             
                             <a href="/benchmark/overview/" class="navbar-item is-active">Guidelines</a>
                             
-                            <a href="/benchmark/admet_group/" class="navbar-item ">ADMET Benchmark Group</a>
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
                             
-                            <a href="/benchmark/drugcombo_group/" class="navbar-item ">DrugCombo Benchmark Group</a>
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
                             
                         </div>
                     </div>
@@ -144,75 +144,115 @@
 
 <p class="is-size-5"> TDC benchmarks provide a systematic model development and evaluation framework. TDC benchmarks can considerably accelerate machine-learning model development, validation and transition into production and clinical implementation.</p>
 
-<h2 id="benchmark-group">Benchmark Group</h2>
+<p class="is-size-5"> <b> Each dataset in TDC is a benchmark. </b> For each benchmark, TDC provides a fixed training and testing set, with predefined data split scheme and evaluation metrics. After you developed your model, you can then submit the test set performance to TDC leaderboard.</p>
 
-<p class="is-size-5"> Each dataset in TDC can be thought of as a benchmark. For a machine learning model to be useful for a particular therapeutic usage, the model needs to achieve consistently good performance across a set of datasets or tasks. For this reason, we group individual benchmarks in TDC into meaningful batches, which we call <strong>benchmark groups</strong>. All datasets and tasks within a benchmark group are carefully selected and are centered around a particular theme. Further, dataset splits and evaluation metrics are also carefully selected to reflect the challenges of real-world settings where the models are ultimately implemented.</p>
+<p class="is-size-5"> As many datasets share the same therapeutics theme and with similar data structures, we group individual benchmarks in TDC into meaningful batches, which we call <strong>benchmark groups</strong>. All datasets and tasks within a benchmark group are carefully selected and are centered around a particular theme. Further, dataset splits and evaluation metrics are also carefully selected to reflect the challenges of real-world settings where the models are ultimately implemented. While there are many datasets in a benchmark group, <i>you can submit result for each individual dataset/benchmark.</i></p>
 
-<h3 id="an-example-of-a-benchmark-group">An Example of a Benchmark Group</h3>
+<hr />
 
-<p class="is-size-5"> One key task in drug discovery is the ADMET property prediction. A machine learning model that excels at ADMET needs to work well across a wide range of individual ADMET indices, such as Caco2, HIA and others. For this reason, TDC provides the <code>ADMET Benchmark Group</code>, which consists of 22 datasets from <code>ADME</code> and <code>Tox</code>. </p>
+<h2 id="step-by-step-submission-instruction">Step-by-step Submission Instruction</h2>
 
-<h2 id="instructions-to-submit-your-results">Instructions to Submit your Results</h2>
-
-<p class="is-size-5"> TDC provides a programming framework to access the data in a benchmark group. We use ADMET group as an example. </p>
+<p class="is-size-5"> TDC provides a programming framework to access the benchmark data. Here are the step-by-step instructions:</p>
 
 <h4 id="step-1-train-your-model-using-tdc-benchmarkgroup-class">Step 1: Train your model using TDC BenchmarkGroup class</h4>
 
-<p class="is-size-5"> Copy-paste the following code and replace the comment line block with your model training codes. The train, valid, test variables contain the dataset in the ML-ready format. </p>
+<p class="is-size-5"> Suppose you want to evaluate on the <code>Caco2_Wang</code> from the <code>ADMET_Group</code>. Copy-paste the following code and replace the comment line block with your model training codes. The train, valid, test variables contain the dataset in the ML-ready format. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
 <span class="n">predictions_list</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
-    <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">benchmark</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
-        <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
-        <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
-        
+    <span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span> 
+    <span class="c1"># all benchmark names in a benchmark group are stored in group.dataset_names
+</span>    <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+    <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+    
         <span class="c1"># --------------------------------------------- # 
 </span>        <span class="c1">#  Train your model using train, valid, test    #
 </span>        <span class="c1">#  Save test prediction in y_pred_test variable #
 </span>        <span class="c1"># --------------------------------------------- #
 </span>        
-        <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
+    <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
     <span class="n">predictions_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 
 <span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
-<span class="c1"># {'caco2_wang': [6.328, 0.101], 'hia_hou': [0.5, 0.01], ...}
+<span class="c1"># {'caco2_wang': [6.328, 0.101]}
 </span></code></pre></div></div>
 
-<p class="is-size-5"> Copy the output of the result dictionary containing mean and standard deviation of all benchmarks in the benchmark group. </p>
+<p class="is-size-5"> Copy the output of the last line with dictionary containing mean and standard deviation of the performance on this benchmark. </p>
 
 <h4 id="step-2-submit-to-tdc-leaderboard">Step 2: Submit to TDC Leaderboard</h4>
 
-<p class="is-size-5"> Fill out <code><a href="https://forms.gle/HYupGaV7WDuutbr9A">this form</a></code> with the copied result. </p>
+<p class="is-size-5"> TDC invites submission for result on any single benchmark in a group. Simply fill out <code><a href="https://forms.gle/HYupGaV7WDuutbr9A">this form</a></code> with the copied result and additional information such as number of parameters and hardware details. </p>
+
+<hr />
 
 <h2 id="details-about-the-benchmarkgroup-class">Details about the BenchmarkGroup Class</h2>
 
-<p class="is-size-5"> The BenchmarkGroup Class is a wrapper that iterates all benchmarks in a benchmark group. For each benchmark, TDC provides a fixed <code>test</code> set and a <code>train_val</code> set. </p>
+<p class="is-size-5"> The BenchmarkGroup Class is a wrapper that contains utility functions to facilitate benchmarking ML models. For each benchmark, TDC provides a fixed <code>test</code> set and a <code>train_val</code> set. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
+
 <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+<span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
 
-<span class="k">for</span> <span class="n">benchmark</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
-    <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
-    <span class="c1">## --- train your model --- ##
-</span>    <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
-
+<span class="c1">## --- train your model --- ##
+</span>
+<span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred</span>
 <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-<span class="c1"># {'caco2_wang': {'mae': 4.328}, 'hia_hou': {'roc-auc': 0.802}, ...}
+<span class="c1"># {'caco2_wang': {'mae': 0.234}}
 </span></code></pre></div></div>
 
-<p class="is-size-5"> Users can construct their own training and validation split from the <code>train_val</code> set but must evaluate on the given test set for fair comparison. User can either (1) directly construct customized training and validation set from the <code>train_val</code> variable or (2) use TDC utility function by specifying the supported split scheme from <a href="https://tdcommons.ai/functions/data_split/"> here </a> given different random seeds: </p>
+<p class="is-size-5"> You can construct your own training and validation split from the <code>train_val</code> set but must evaluate on the given test set for fair comparison. You can either (1) directly construct customized training and validation set from the <code>train_val</code> variable or (2) use TDC utility function by specifying the supported split scheme from <a href="https://tdcommons.ai/functions/data_split/"> here </a> given different random seeds: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p class="is-size-5"> To encourage performance robutsness, TDC requires at least five model runs and reports the mean and standard deviation of the result. Here is an example to load five different train and validation splits and use the <code>evaluate_many</code> function to calculate the mean and standard deviation in the submission format: </p>
+<p class="is-size-5"> To encourage performance robutsness, TDC requires at least five model runs and reports the mean and standard deviation of the result. Here is an example to load five different train and validation splits: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">predictions_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+
+    <span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
+    
+    <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+    <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+    
+    <span class="c1">## --- train your model --- ##
+</span>        
+    <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
+    <span class="n">predictions_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+<span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
+<span class="c1"># {'caco2_wang': [6.328, 0.101]}
+</span></code></pre></div></div>
+
+<p class="is-size-5"> You can get access to individual benchmark dataset name for a benchmark group via: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
+<span class="c1"># ['caco2_wang', 'hia_hou', ....]
+</span></code></pre></div></div>
+<p class="is-size-5"> Or </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">group</span><span class="o">.</span><span class="n">dataset_names</span>
+<span class="c1"># ['caco2_wang', 'hia_hou', ....]
+</span></code></pre></div></div>
+
+<p class="is-size-5"> For every benchmark group, there are multiple benchmarks with the same machine learning task I/O. For more robust evaluation, we encourage you to submit results for the entire benchmark group while also allow single benchmark submission. TDC provides a helper function to access all benchmarks in a group:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -231,32 +271,22 @@
 <span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
 <span class="c1"># {'caco2_wang': [6.328, 0.101], 'hia_hou': [0.5, 0.01], ...}
 </span></code></pre></div></div>
-
-<p class="is-size-5"> To access and evaluate each individual benchmark, use: </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
-
-<span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
-<span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
-<span class="c1">## --- train your model --- ##
-</span><span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred</span>
-
-<span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-<span class="c1"># {'caco2_wang': {'mae': 0.234}}
-</span></code></pre></div></div>
-
-<p class="is-size-5"> You can get access to individual benchmark dataset name for a benchmark group via: </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
-<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
-<span class="c1"># ['caco2_wang', 'hia_hou', ....]
-</span></code></pre></div></div>
+<hr />
 
 <h2 id="the-fair-guiding-principles">The FAIR Guiding Principles</h2>
 
 <p class="is-size-5"> TDC leaderboards keep track of machine learning models across a variety of learning tasks. For this reason, we apply the FAIR4RS principles and implementation guidelines to any research software and AI/ML algorithms included in TDC leaderboards. Research software and AI/ML algorithms should be open and adhere to the FAIR principles (findable, accessible, interoperable, and repeatable) to allow repeatability, reproducibility, and reuse. Further, TDC itself follows the FAIR guidelines for both <a href="https://www.nature.com/articles/sdata201618%22"> datasets </a> as well as <a href="https://content.iospress.com/articles/data-science/ds190026#ref001">AI/ML algorithms</a>. </p>
+
+<hr />
+
+<p class="is-size-3 has-text-centered"> <strong>Start Exploring TDC Leaderboards:</strong> </p>
+
+<div class="container">
+        <div class="columns is-vcentered is-size-5">
+            <div class="column is-4 is-offset-2 has-text-centered"> <a href="/benchmark/admet_group/overview" class="box has-background-info has-text-white">ADMET Group</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/benchmark/drugcombo_group/overview" class="box has-background-info has-text-white">Drug Combination Group</a></div>
+        </div>
+</div>
 
 
 </div>
