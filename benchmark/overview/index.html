@@ -140,23 +140,30 @@
                     
                     
 <div class="content">
-    <h1 id="leaderboard-guidelines">Leaderboard Guidelines</h1>
+    <h1 id="leaderboard-guideline">Leaderboard Guideline</h1>
 
-<p class="is-size-5"> TDC benchmarks provide a systematic model development and evaluation framework. TDC benchmarks can considerably accelerate machine-learning model development, validation and transition into production and clinical implementation.</p>
+<p class="is-size-5"> Each dataset in TDC is a benchmark, and we provide training/validation and test sets for it, together with data splits and performance evaluation metrics. To participate in the leaderboard for a specific benchmark, follow these steps: </p>
 
-<p class="is-size-5"> <b> Each dataset in TDC is a benchmark. </b> For each benchmark, TDC provides a fixed training and testing set, with predefined data split scheme and evaluation metrics. After you developed your model, you can then submit the test set performance to TDC leaderboard.</p>
+<ul>
+    <li><p class="is-size-5">Use the TDC benchmark data loader to retrieve the benchmark.</p></li>
+    <li><p class="is-size-5">Use training and/or validation set to train your model.</p></li>
+    <li><p class="is-size-5">Use the TDC model evaluator to calculate the performance of your model on the test set.</p></li>
+    <li><p class="is-size-5">Submit the test set performance to a TDC leaderboard.</p></li>
+</ul>
 
-<p class="is-size-5"> As many datasets share the same therapeutics theme and with similar data structures, we group individual benchmarks in TDC into meaningful batches, which we call <strong>benchmark groups</strong>. All datasets and tasks within a benchmark group are carefully selected and are centered around a particular theme. Further, dataset splits and evaluation metrics are also carefully selected to reflect the challenges of real-world settings where the models are ultimately implemented. While there are many datasets in a benchmark group, <i>you can submit result for each individual dataset/benchmark.</i></p>
+<p class="is-size-5">Below we provide detailed instructions participating in TDC leaderboards. </p>
+
+<p class="is-size-5">As many datasets share a therapeutics theme, we organize specific benchmarks into meaningfully defined groups, referred to as benchmark groups. Datasets and tasks within a benchmark group are carefully curated and centered around a theme (for example, prediction of ADMET properties). While each benchmark group consists of multiple benchmarks, you can submit each dataset/benchmark result separately.</p>
 
 <hr />
 
-<h2 id="step-by-step-submission-instruction">Step-by-step Submission Instruction</h2>
+<h2 id="step-by-step-instructions">Step-by-step Instructions</h2>
 
 <p class="is-size-5"> TDC provides a programming framework to access the benchmark data. Here are the step-by-step instructions:</p>
 
-<h4 id="step-1-train-your-model-using-tdc-benchmarkgroup-class">Step 1: Train your model using TDC BenchmarkGroup class</h4>
+<h4 id="step-1-train-your-model-using-tdc-benchmarkgroup">Step 1: Train your model using TDC BenchmarkGroup</h4>
 
-<p class="is-size-5"> Suppose you want to evaluate on the <code>Caco2_Wang</code> from the <code>ADMET_Group</code>. Copy-paste the following code and replace the comment line block with your model training codes. The train, valid, test variables contain the dataset in the ML-ready format. </p>
+<p class="is-size-5"> Suppose you want to evaluate on the <code>Caco2_Wang</code> from the <code>ADMET_Group</code>. Use the following code where you replace the commented line block with the code to train your model. The <code>train</code>, <code>valid</code>, <code>test</code> variables contain the benchmark information. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -178,21 +185,21 @@
     <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
     <span class="n">predictions_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 
-<span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
 <span class="c1"># {'caco2_wang': [6.328, 0.101]}
 </span></code></pre></div></div>
 
-<p class="is-size-5"> Copy the output of the last line with dictionary containing mean and standard deviation of the performance on this benchmark. </p>
+<p class="is-size-5"> Save <code>results</code>, representing a dictionary with average values and standard deviations of performance metrics achieved by your model on <code>Caco2_Wang</code> benchmark. </p>
 
 <h4 id="step-2-submit-to-tdc-leaderboard">Step 2: Submit to TDC Leaderboard</h4>
 
-<p class="is-size-5"> TDC invites submission for result on any single benchmark in a group. Simply fill out <code><a href="https://forms.gle/HYupGaV7WDuutbr9A">this form</a></code> with the copied result and additional information such as number of parameters and hardware details. </p>
+<p class="is-size-5"> We invite submissions for any one or multiple benchmarks in a group. To be included in the leaderboard, please fill out <b><a href="https://forms.gle/HYupGaV7WDuutbr9A">THIS FORM</a></b>, include results of your model and provide brief information about your model (e.g., the number of parameters and hardware details).</p>
 
 <hr />
 
-<h2 id="details-about-the-benchmarkgroup-class">Details about the BenchmarkGroup Class</h2>
+<h2 id="further-details-about-benchmark-groups-in-tdc">Further Details about Benchmark Groups in TDC</h2>
 
-<p class="is-size-5"> The BenchmarkGroup Class is a wrapper that contains utility functions to facilitate benchmarking ML models. For each benchmark, TDC provides a fixed <code>test</code> set and a <code>train_val</code> set. </p>
+<p class="is-size-5"> The BenchmarkGroup Class is a wrapper providing utility functions for benchmarking. For each benchmark, TDC provides a fixed <code>test</code> set and a <code>train_val</code> set. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -209,12 +216,12 @@
 <span class="c1"># {'caco2_wang': {'mae': 0.234}}
 </span></code></pre></div></div>
 
-<p class="is-size-5"> You can construct your own training and validation split from the <code>train_val</code> set but must evaluate on the given test set for fair comparison. You can either (1) directly construct customized training and validation set from the <code>train_val</code> variable or (2) use TDC utility function by specifying the supported split scheme from <a href="https://tdcommons.ai/functions/data_split/"> here </a> given different random seeds: </p>
+<p class="is-size-5"> You are free to use <code>train_val</code> to construct training and validation sets as you see best fit. For example, you can (1) construct a customized training and validation set from the <code>train_val</code>, or (2) use a TDC utility function to get a data split from <a href="https://tdcommons.ai/functions/data_split/"> HERE </a> for different random seeds: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p class="is-size-5"> To encourage performance robutsness, TDC requires at least five model runs and reports the mean and standard deviation of the result. Here is an example to load five different train and validation splits: </p>
+<p class="is-size-5"> Importantly, you must evaluate your model on the test set as specified by TDC to ensure a fair comparison of models. To encourage performance robutsness, TDC requires at least five independent runs of the model to report average performance and standard deviation. Here is an example showing how to obtain five different train and validation splits: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -238,13 +245,13 @@
 <span class="c1"># {'caco2_wang': [6.328, 0.101]}
 </span></code></pre></div></div>
 
-<p class="is-size-5"> You can get access to individual benchmark dataset name for a benchmark group via: </p>
+<p class="is-size-5"> You can get a list of benchmarks included in the benchmark group as follows: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
 <span class="c1"># ['caco2_wang', 'hia_hou', ....]
 </span></code></pre></div></div>
-<p class="is-size-5"> Or </p>
+<p class="is-size-5"> Alternatively, the same can be achieved via: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -252,7 +259,7 @@
 <span class="c1"># ['caco2_wang', 'hia_hou', ....]
 </span></code></pre></div></div>
 
-<p class="is-size-5"> For every benchmark group, there are multiple benchmarks with the same machine learning task I/O. For more robust evaluation, we encourage you to submit results for the entire benchmark group while also allow single benchmark submission. TDC provides a helper function to access all benchmarks in a group:</p>
+<p class="is-size-5"> For every benchmark group, we provide multiple benchmarks that all instantiate the same learning task. We encourage you to submit results for the entire benchmark group; however, we also accept submissions reporting performance on just one benchmark in the group. To access all benchmarks in a group, TDC provides the following helper function:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
