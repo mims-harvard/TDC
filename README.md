@@ -23,7 +23,7 @@ TDC is an open-source initiative. To get involved, join the [Slack Workspace](ht
 
 
 ## Updates
-- `0.1.7`: Streamlined the leaderboard programming frameworks! Checkout [here](https://tdcommons.ai/benchmark/overview/)!
+- `0.1.8`: Streamlined and simplified the leaderboard programming frameworks! Now, you can submit a result for a single dataset! Checkout [here](https://tdcommons.ai/benchmark/overview/)!
 - TDC white paper is alive on [arXiv](https://arxiv.org/abs/2102.09548)!
 - `0.1.6`: Released the second leaderboard on drug combination screening prediction! Checkout [here](https://tdcommons.ai/benchmark/drugcombo_group/)!
 - `0.1.5`: Added four realistic oracles from docking scores and synthetic accessibility! Checkout [here](https://tdcommons.ai/functions/oracles/)!
