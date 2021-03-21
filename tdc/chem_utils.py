@@ -4764,4 +4764,47 @@ class MolConvert:
 #   print(arr.shape, np.sum(arr))
 ######## test the MoleculeFingerprint
 
+class MolFilter:
+  def __init__(self):
+    try:
+        from rd_filters.rd_filters import RDFilters, read_rules
+    except:
+        install('git+https://github.com/PatWalters/rd_filters.git')
+        
+    import pkg_resources
 
+    alert_file_name = pkg_resources.resource_filename('rd_filters', "data/alert_collection.csv")
+    rules_file_path = pkg_resources.resource_filename('rd_filters', "data/rules.json")
+    self.rf = RDFilters(alert_file_name)
+    self.rule_dict = read_rules(rules_file_path)
+    rule_list = [x.replace("Rule_", "") for x in self.rule_dict.keys() if x.startswith("Rule") and self.rule_dict[x]]
+    rule_str = " and ".join(rule_list)
+    self.rf.build_rule_list(rule_list)
+
+  def __call__(self, input_data):
+    import multiprocessing as mp
+    from multiprocessing import Pool
+    import pandas as pd
+
+    if isinstance(input_data, str):
+      input_data = [input_data]
+    elif not isinstance(input_data, (list, np.ndarray, np.generic)):
+      raise ValueError('Input must be a list/numpy array of SMILES or one SMILES string!')
+
+    input_data = list(tuple(zip(input_data, list(range(len(input_data))))))
+
+    num_cores = int(mp.cpu_count())
+    p = Pool(num_cores)
+
+    res = list(p.map(self.rf.evaluate, input_data))
+    df = pd.DataFrame(res, columns=["SMILES", "NAME", "FILTER", "MW", "LogP", "HBD", "HBA", "TPSA", "Rot"])
+    df_ok = df[
+        (df.FILTER == "OK") &
+        df.MW.between(*self.rule_dict["MW"]) &
+        df.LogP.between(*self.rule_dict["LogP"]) &
+        df.HBD.between(*self.rule_dict["HBD"]) &
+        df.HBA.between(*self.rule_dict["HBA"]) &
+        df.TPSA.between(*self.rule_dict["TPSA"]) &
+        df.Rot.between(*self.rule_dict["Rot"])
+        ]
+    return df_ok.SMILES.values
