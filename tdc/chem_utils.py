@@ -4765,7 +4765,8 @@ class MolConvert:
 ######## test the MoleculeFingerprint
 
 class MolFilter:
-  def __init__(self):
+  # MIT License: Checkout https://github.com/PatWalters/rd_filters
+  def __init__(self, filters = 'all', HBA = [0, 10], HBD = [0, 5], LogP = [-5, 5], MW = [0, 500], Rot = [0, 10], TPSA = [0, 200]):
     try:
         from rd_filters.rd_filters import RDFilters, read_rules
     except:
@@ -4773,10 +4774,35 @@ class MolFilter:
         
     import pkg_resources
 
+    all_filters = ['BMS', 'Dundee', 'Glaxo', 'Inpharmatica', 'LINT', 'MLSMR', 'PAINS', 'SureChEMBL']
+    if filters == 'all':
+      filters = all_filters
+    else:
+      if isinstance(filters, str):
+        filters = [filters]
+      if isinstance(filters, list):
+        ## a set of filters
+        for i in filters:
+          if i not in all_filters:
+            raise ValueError(i + " not found; Please choose from a list of available filters from 'BMS', 'Dundee', 'Glaxo', 'Inpharmatica', 'LINT', 'MLSMR', 'PAINS', 'SureChEMBL'")
+
     alert_file_name = pkg_resources.resource_filename('rd_filters', "data/alert_collection.csv")
     rules_file_path = pkg_resources.resource_filename('rd_filters', "data/rules.json")
     self.rf = RDFilters(alert_file_name)
     self.rule_dict = read_rules(rules_file_path)
+    self.rule_dict['Rule_Inpharmatica'] = False
+    for i in filters:
+      self.rule_dict['Rule_'+ i] = True
+
+    self.rule_dict['HBA'], self.rule_dict['HBD'], self.rule_dict['LogP'], self.rule_dict['MW'], self.rule_dict['Rot'], self.rule_dict['TPSA'] = HBA, HBD, LogP, MW, Rot, TPSA
+    print_sys("MolFilter is using the following filters:")
+
+    for i,j in self.rule_dict.items():
+      if i[:4] == 'Rule':
+        if j:
+          print_sys(i + ': ' + str(j))
+      else:
+        print_sys(i + ': ' + str(j))
     rule_list = [x.replace("Rule_", "") for x in self.rule_dict.keys() if x.startswith("Rule") and self.rule_dict[x]]
     rule_str = " and ".join(rule_list)
     self.rf.build_rule_list(rule_list)
