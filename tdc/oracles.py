@@ -215,9 +215,13 @@ class Oracle:
 				return all_
 			else:
 				results_lst = []
-				for smiles in smiles_lst:
-					results_lst.append(self.evaluator_func(smiles, *(args[1:]), **kwargs))
-				return results_lst
+
+				if not self.name == 'docking_score':
+					for smiles in smiles_lst:
+						results_lst.append(self.evaluator_func(smiles, *(args[1:]), **kwargs))
+					return results_lst
+				else:
+					return self.evaluator_func(smiles_lst, *(args[1:]), **kwargs)
 		else:	
 			## a single smiles
 			if type(self.evaluator_func) == dict:
