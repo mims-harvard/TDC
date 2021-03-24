@@ -214,6 +214,7 @@ We provide a series of tutorials for you to get started using TDC:
 | [103.2](tutorials/TDC_103.2_Datasets_Biologics.ipynb) | Walk through TDC Biologics Datasets                     |
 | [104](tutorials/TDC_104_ML_Model_DeepPurpose.ipynb)   | Generate 21 ADME ML Predictors with 15 Lines of Code |
 | [105](tutorials/TDC_105_Oracle.ipynb)   | Molecule Generation Oracles                             |
+| [106](tutorials/TDC_106_BenchmarkGroup_Submission_Demo.ipynb)   | Benchmark submission                             |
 
 
 ## Contribute
