@@ -17,7 +17,7 @@
 
 The collection of curated datasets, learning tasks, and benchmarks in TDC serves as a meeting point for domain and machine learning scientists. We envision that TDC can considerably accelerate machine-learning model development, validation and transition into biomedical and clinical implementation.
 
-TDC is an open-source initiative. To get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-mks4lm4z-_N_zI9Z_YFvaGjKiCwCH2Q) and check out the [Contribution Guide](CONTRIBUTE.md)!
+TDC is an open-source initiative. To get involved, join the [Slack Workspace](https://rb.gy/bv0ffd) and check out the [Contribution Guide](CONTRIBUTE.md)!
 
 **Invited talk at the [Harvard Symposium on Drugs for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
 
