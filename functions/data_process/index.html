@@ -189,6 +189,7 @@
         <p class="menu-label">Function Index</p>
         <ul class="menu-list">
   <li><a href="#molecule-conversion">Molecule Conversion</a></li>
+  <li><a href="#molecule-filters">Molecule Filters</a></li>
   <li><a href="#label-distribution-visualization">Label Distribution Visualization</a></li>
   <li><a href="#label-binarization">Label Binarization</a></li>
   <li><a href="#label-units-conversion">Label Units Conversion</a></li>
@@ -235,6 +236,22 @@
 <span class="n">g</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="s">'XXX/.sdf'</span><span class="p">)</span>
 <span class="n">convert2d</span> <span class="o">=</span> <span class="n">MolConvert</span><span class="p">(</span><span class="n">src</span> <span class="o">=</span> <span class="s">'SMILES'</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="s">'ECFP4'</span><span class="p">)</span>
 <span class="n">convert2d</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="molecule-filters">Molecule Filters</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> This function identifies and removes typical not drug-like molecules (false positives) using various types of filters curated by Patrick Walters. This is a wrapper around his <a href="">rd_filters</a> GitHub package. Also checkout his <a href="http://practicalcheminformatics.blogspot.com/2018/08/filtering-chemical-libraries.html">blog post </a>for more info. </p>
+
+<p class="is-size-6"> You can specify the rules for the filters. For example, specify what kinds of structure alerts to use and also the range for some properties: </p>
+
+<ul>
+	<li><code>filters</code>: a list of curated rules to use. Choose from any combinations of 'BMS', 'Dundee', 'Glaxo', 'Inpharmatica', 'LINT', 'MLSMR', 'PAINS', 'SureChEMBL'. Default use all rules. </li>
+	<li><code>HBA, HBD, LogP, MW, Rot, TPSA</code>: A set of real valued property filters. Default is HBA = [0, 10], HBD = [0, 5], LogP = [-5, 5], MW = [0, 500], Rot = [0, 10], TPSA = [0, 200]. </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolFilter</span>
+<span class="n">filters</span> <span class="o">=</span> <span class="n">MolFilter</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="p">[</span><span class="s">'PAINS'</span><span class="p">],</span> <span class="n">HBD</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">filters</span><span class="p">([</span><span class="s">'CCSc1ccccc1C(=O)Nc1onc2c1CCC2'</span><span class="p">])</span>
 </code></pre></div></div>
 
 <h3 id="label-distribution-visualization">Label Distribution Visualization</h3>
