@@ -23,6 +23,7 @@ TDC is an open-source initiative. To get involved, join the [Slack Workspace](ht
 
 
 ## Updates
+- `0.1.9`: Support molecule filters! Checkout [here](https://tdcommons.ai//functions/data_process/#molecule-filters)!
 - `0.1.8`: Streamlined and simplified the leaderboard programming frameworks! Now, you can submit a result for a single dataset! Checkout [here](https://tdcommons.ai/benchmark/overview/)!
 - TDC white paper is alive on [arXiv](https://arxiv.org/abs/2102.09548)!
 - `0.1.6`: Released the second leaderboard on drug combination screening prediction! Checkout [here](https://tdcommons.ai/benchmark/drugcombo_group/)!
@@ -193,7 +194,6 @@ for seed in [1, 2, 3, 4, 5]:
         train_val, test = benchmark['train_val'], benchmark['test']
         train, valid = group.get_train_valid_split(benchmark = name, split_type = 'default', seed = seed)
         ## --- train your model --- ##
-        y_pred = [1] * len(test)
         predictions[name] = y_pred
     predictions_list.append(predictions)
 
@@ -215,11 +215,12 @@ We provide a series of tutorials for you to get started using TDC:
 | [104](tutorials/TDC_104_ML_Model_DeepPurpose.ipynb)   | Generate 21 ADME ML Predictors with 15 Lines of Code |
 | [105](tutorials/TDC_105_Oracle.ipynb)   | Molecule Generation Oracles                             |
 | [106](tutorials/TDC_106_BenchmarkGroup_Submission_Demo.ipynb)   | Benchmark submission                             |
+| [DGL](tutorials/DGL_User_Group_Demo.ipynb)   | Demo for DGL GNN User Group Meeting                             |
 
 
 ## Contribute
 
-TDC is an open-source community-driven effort. If you want to get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-mks4lm4z-_N_zI9Z_YFvaGjKiCwCH2Q) and checkout the [contribution guide](CONTRIBUTE.md)!
+TDC is an open-source community-driven effort. If you want to get involved, join the [Slack Workspace](https://rb.gy/bv0ffd) and checkout the [contribution guide](CONTRIBUTE.md)!
 
 ## Contact
 
