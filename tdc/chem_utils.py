@@ -1693,7 +1693,6 @@ class docking_meta:
         if type(test_smiles)==str:
           return list(final_score.values())[0]
         else:  ## list 
-          print(final_score)   
           # dict: {'O=C(/C=C/c1ccc([N+](=O)[O-])o1)c1ccc(-c2ccccc2)cc1': -9.9, 'CCOc1cc(/C=C/C(=O)C(=Cc2ccc(O)c(OC)c2)C(=O)/C=C/c2ccc(O)c(OCC)c2)ccc1O': -9.1}
           # return [list(i.values())[0] for i in final_score]
           score_lst = []
