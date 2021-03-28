@@ -655,9 +655,12 @@ def diversity(list_of_smiles):
 	avg_lst = []
 	for idx, fp in enumerate(list_of_fp):
 		for fp2 in list_of_fp[idx+1:]:
-
-			sim = DataStructs.TanimotoSimilarity(fp, fp2) 			
-			avg_lst.append(sim)
+			sim = DataStructs.TanimotoSimilarity(fp, fp2) 
+      ### option I
+      distance = 1 - sim
+      ### option II 
+      # distance = -np.log2(sim)  			
+			avg_lst.append(distance)
 	return np.mean(avg_lst)
 
 
