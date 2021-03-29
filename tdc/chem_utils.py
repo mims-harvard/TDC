@@ -645,20 +645,23 @@ def novelty(generated_smiles_lst, training_smiles_lst):
 	return 1 - novel_ratio
 
 def diversity(list_of_smiles):
-	"""
-		The diversity of a set of molecules is defined as the average pairwise
-		Tanimoto distance between the Morgan fingerprints ---- GCPN
-	"""
-	list_of_unique_smiles = unique_lst_of_smiles(list_of_smiles)
-	list_of_mol = [Chem.MolFromSmiles(smiles) for smiles in list_of_unique_smiles]
-	list_of_fp = [AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=2048, useChirality=False) for mol in list_of_mol]
-	avg_lst = []
-	for idx, fp in enumerate(list_of_fp):
-		for fp2 in list_of_fp[idx+1:]:
-
-			sim = DataStructs.TanimotoSimilarity(fp, fp2) 			
-			avg_lst.append(sim); print("similarity:",sim) 
-	return np.mean(avg_lst)
+  """
+    The diversity of a set of molecules is defined as the average pairwise
+    Tanimoto distance between the Morgan fingerprints ---- GCPN
+  """
+  list_of_unique_smiles = unique_lst_of_smiles(list_of_smiles)
+  list_of_mol = [Chem.MolFromSmiles(smiles) for smiles in list_of_unique_smiles]
+  list_of_fp = [AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=2048, useChirality=False) for mol in list_of_mol]
+  avg_lst = []
+  for idx, fp in enumerate(list_of_fp):
+    for fp2 in list_of_fp[idx+1:]:
+      sim = DataStructs.TanimotoSimilarity(fp, fp2)
+      ### option I
+      distance = 1 - sim
+      ### option II 
+      # distance = -np.log2(sim)  			
+      avg_lst.append(distance)
+  return np.mean(avg_lst)
 
 
 
