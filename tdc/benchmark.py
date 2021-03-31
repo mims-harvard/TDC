@@ -5,11 +5,11 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from .utils import *
-from .metadata import get_task2category, bm_metric_names, benchmark_names, bm_split_names
+from .metadata import get_task2category, bm_metric_names, benchmark_names, bm_split_names, docking_target_info
 from .evaluator import Evaluator
 
 class BenchmarkGroup:
-	def __init__(self, name, path = './data', file_format='csv'):
+	def __init__(self, name, path = './data', file_format='csv', pyscreener_path = None, num_workers = None, num_cpus = None, num_max_call = 5000):
 		'''
 		-- PATH
 			-- ADMET_Benchmark
@@ -60,6 +60,8 @@ class BenchmarkGroup:
 
 		group.evaluate_many(predictions_list)
 
+		file_format: csv: for admet; pkl: for drugcomb; oracle: for docking score
+
 		'''
 		
 		self.name = bm_group_load(name, path)
@@ -72,6 +74,26 @@ class BenchmarkGroup:
 			for dataset in datasets:
 				self.dataset_names.append(dataset)
 
+		if self.name == 'docking_group':
+			if pyscreener_path is not None:
+				self.pyscreener_path = pyscreener_path
+			else:
+				raise ValueError("Please specify pyscreener_path!")
+			
+			if (num_workers is None) and (num_cpus is None):
+				## automatic selections
+				import psutil
+				cpu_total = psutil.cpu_count()
+				if cpu_total > 1:
+					num_cpus = 2
+				else:
+					num_cpus = 1
+				num_workers = int(cpu_total/num_cpus)
+
+			self.num_workers = num_workers
+			self.num_cpus = num_cpus
+			self.num_max_call = num_max_call
+			from tdc import Oracle
 
 	def __iter__(self):
 		self.index = 0
@@ -82,19 +104,36 @@ class BenchmarkGroup:
 		if self.index < self.num_datasets:
 			dataset = self.dataset_names[self.index]
 			print_sys('--- ' + dataset + ' ---')
+
 			data_path = os.path.join(self.path, dataset)
+			if not os.path.exists(data_path):
+				os.mkdir(data_path)
 			if self.file_format == 'csv':
 				train = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 				test = pd.read_csv(os.path.join(data_path, 'test.csv'))
 			elif self.file_format == 'pkl':
 				train = pd.read_pickle(os.path.join(data_path, 'train_val.pkl'))
 				test = pd.read_pickle(os.path.join(data_path, 'test.pkl'))
+			elif self.file_format == 'oracle':
+				target_pdb_file = os.path.join(self.path, dataset + '.pdb')
 			self.index += 1
-			return {'train_val': train, 'test': test, 'name': dataset}
+
+			if self.name == 'docking_group':
+				oracle = Oracle(name = "Docking_Score", software="vina",
+					pyscreener_path = self.pyscreener_path,
+					receptors=[target_pdb_file],
+					center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
+					buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = self.num_max_call)
+				return oracle
+			else:
+				return {'train_val': train, 'test': test, 'name': dataset}
 		else:
 			raise StopIteration
 			
 	def get_train_valid_split(self, seed, benchmark, split_type = 'default'):
+		if self.name == 'docking_group':
+			raise ValueError("Docking molecule generation does not have the concept of training/testing split! Checkout the usage in tdcommons.ai !")
+
 		print_sys('generating training, validation splits...')
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
@@ -129,7 +168,7 @@ class BenchmarkGroup:
 			raise NotImplementedError
 		return out['train'], out['valid']
 
-	def get(self, benchmark):
+	def get(self, benchmark, num_max_call = 5000):
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		if self.file_format == 'csv':
@@ -138,9 +177,101 @@ class BenchmarkGroup:
 		elif self.file_format == 'pkl':
 			train = pd.read_pickle(os.path.join(data_path, 'train_val.pkl'))
 			test = pd.read_pickle(os.path.join(data_path, 'test.pkl'))
-		return {'train_val': train, 'test': test, 'name': dataset}
+		elif self.file_format == 'oracle':
+			target_pdb_file = os.path.join(self.path, dataset + '.pdb')
 
-	def evaluate(self, pred, true = None, benchmark = None):
+		if self.name == 'docking_group':
+			oracle = Oracle(name = "Docking_Score", software="vina",
+				pyscreener_path = self.pyscreener_path,
+				receptors=[target_pdb_file],
+				center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
+				buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = num_max_call)
+			return oracle
+		else:
+			return {'train_val': train, 'test': test, 'name': dataset}
+
+	def evaluate(self, pred, true = None, benchmark = None, criteria = 'all', m1_api = None):
+
+		if self.name == 'docking_group':
+			results_all = {}
+
+			for data_name, pred_ in pred.items():
+
+				results = {}
+
+				## pred is a list of smiles strings
+				if len(pred_) != 100:
+					raise ValueError("The expected output is a list of top 100 molecules!")
+				dataset = fuzzy_search(benchmark, self.dataset_names)
+
+				# docking scores for the top K smiles (K <= 100)
+				target_pdb_file = os.path.join(self.path, dataset + '.pdb')
+
+				oracle = Oracle(name = "Docking_Score", software="vina",
+					pyscreener_path = self.pyscreener_path,
+					receptors=[target_pdb_file],
+					center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
+					buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = 10000)
+
+				docking_scores = oracle(pred_)
+				results['docking_scores_dict'] = docking_scores
+				values = np.array(list(docking_scores.values()))
+				results['AVG_Top100'] = np.mean(values)
+				results['AVG_Top10'] = np.mean(sorted(values)[:10])
+				results['Top1'] = max(values)
+
+				all_criteria = ['m1', 'filters', 'diversity', 'validity', 'uniqueness']
+
+				if criteria == 'all':
+					criteria = all_criteria
+				elif criteria == 'none':
+					criteria = []
+				else:
+					if sum([1 if i in all_criteria else 0 for i in criteria]) != len(criteria):
+						# there is at least one criteria does not match the supported evaluation
+						raise ValueError("Please select the criteria from a list of 'm1', 'filters', 'diversity', 'validity', 'uniqueness'!")
+
+				if 'm1' in criteria: 
+					if m1_api is None:
+						raise ValueError("Please input the m1_api token in the evaluate function call! You can obtain it via: https://tdcommons.ai/functions/oracles/#moleculeone")
+					m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
+					m1_scores = m1(pred_)
+					scores_array = list(m1_scores.values())
+					results['m1_scores_dict'] = m1_scores
+					results['AVG_m1_scores'] = np.mean(scores_array)
+					## TODO: how good is the m1 score? ask stan; 0.5 placeholder
+					results['AVG_docking_scores_synthesizable'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j > 0.5])
+
+				if 'filters' in criteria:
+					from tdc.chem_utils import MolFilter
+					## TODO: select an optimal set of filters. test a bit.
+					filters = MolFilter(filters = ['PAINS'], HBD = [0, 6])
+					pred_filter = filters(pred_)
+					results['pass_filter_smiles_list'] = pred_filter
+					results['unfiltered_fractions'] = float(len(pred_filter))/100
+					results['AVG_docking_scores_unfiltered'] = np.mean([docking_scores[i] for i in pred_filter])
+
+				if 'diversity' in criteria:
+					from tdc import Evaluator
+					evaluator = Evaluator(name = 'Diversity')
+					score = evaluator(pred_)
+					results['diversity'] = score
+
+				if 'validity' in criteria:
+					from tdc import Evaluator
+					evaluator = Evaluator(name = 'Validity')
+					score = evaluator(pred_)
+					results['validity'] = score
+
+				if 'uniqueness' in criteria:
+					from tdc import Evaluator
+					evaluator = Evaluator(name = 'Uniqueness')
+					score = evaluator(pred_)
+					results['uniqueness'] = score
+
+				results_all[dataset_name] = results
+			return results_all
+
 		if true is None:
 			# test set evaluation
 			metric_dict = bm_metric_names[self.name]

@@ -8,7 +8,7 @@ from .utils import *
 from .metadata import download_oracle_names, oracle_names, distribution_oracles
 
 class Oracle:
-	def __init__(self, name, target_smiles = None, **kwargs):
+	def __init__(self, name, target_smiles = None, num_max_call = None, **kwargs):
 		self.target_smiles = target_smiles
 		self.kwargs = kwargs
 
@@ -19,6 +19,12 @@ class Oracle:
 			self.name = name
 		self.evaluator_func = None
 		self.assign_evaluator() 
+		self.num_called = 0
+
+		if num_max_call is not None:
+			self.num_max_call = num_max_call
+		else:
+			self.num_max_call = None
 
 	def assign_evaluator(self):		
 		if self.name == 'logp':			############################ molecular property 
@@ -192,6 +198,7 @@ class Oracle:
 			return 
 
 	def __call__(self, *args, **kwargs):
+
 		if self.name in distribution_oracles:  
 			return self.evaluator_func(*args, **kwargs)
 			#### evaluator for distribution learning, e.g., diversity, validity   
@@ -202,6 +209,11 @@ class Oracle:
 			return self.evaluator_func(*args, **kwargs)
 
 		if type(smiles_lst) == list:
+			self.num_called += len(smiles_lst)
+			if self.num_max_call is not None:
+				if self.num_max_call < self.num_called:
+					self.num_called -= len(smiles_lst)
+					raise ValueError("The maximum number of evaluator call is reached! The maximum is: " + str(self.num_max_call) + '. The current requested call (plus accumulated calls) is: ' + str(self.num_called + len(smiles_lst)))
 
 			#### evaluator for single molecule, 
 			#### the input of __call__ is a single smiles OR list of smiles
@@ -222,7 +234,13 @@ class Oracle:
 					return results_lst
 				else:
 					return self.evaluator_func(smiles_lst, *(args[1:]), **kwargs)
-		else:	
+		else:
+			self.num_called += 1
+			if self.num_max_call is not None:
+				if self.num_max_call < self.num_called:
+					self.num_called -= 1
+					raise ValueError("The maximum number of evaluator call is reached! The maximum is: " + str(self.num_max_call) + '. The current requested call (plus accumulated calls) is: ' + str(self.num_called + 1))
+
 			## a single smiles
 			if type(self.evaluator_func) == dict:
 				all_ = {}
