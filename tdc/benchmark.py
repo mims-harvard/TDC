@@ -124,7 +124,7 @@ class BenchmarkGroup:
 					receptors=[target_pdb_file],
 					center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
 					buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = self.num_max_call)
-				return oracle
+				return {'oracle': oracle, 'name': dataset}
 			else:
 				return {'train_val': train, 'test': test, 'name': dataset}
 		else:
@@ -186,7 +186,7 @@ class BenchmarkGroup:
 				receptors=[target_pdb_file],
 				center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
 				buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = num_max_call)
-			return oracle
+			return {'oracle': oracle, 'name': dataset}
 		else:
 			return {'train_val': train, 'test': test, 'name': dataset}
 

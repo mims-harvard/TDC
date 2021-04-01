@@ -26,6 +26,10 @@ TDC is an open-source initiative. To get involved, join the [Slack Workspace](ht
 - `0.1.9`: Support molecule filters! Checkout [here](https://tdcommons.ai//functions/data_process/#molecule-filters)!
 - `0.1.8`: Streamlined and simplified the leaderboard programming frameworks! Now, you can submit a result for a single dataset! Checkout [here](https://tdcommons.ai/benchmark/overview/)!
 - TDC white paper is alive on [arXiv](https://arxiv.org/abs/2102.09548)!
+
+<details>
+  <summary>Click here for older updates!</summary>
+
 - `0.1.6`: Released the second leaderboard on drug combination screening prediction! Checkout [here](https://tdcommons.ai/benchmark/drugcombo_group/)!
 - `0.1.5`: Added four realistic oracles from docking scores and synthetic accessibility! Checkout [here](https://tdcommons.ai/functions/oracles/)!
 - `0.1.4`: Added the 1st version of [`MolConvert`](https://tdcommons.ai/functions/data_process/#molecule-conversion) class that can map among ~15 molecular formats in 2 lines of code (For 2D: from SMILES/SEFLIES and convert to SELFIES/SMILES, Graph2D, PyG, DGL, ECFP2-6, MACCS, Daylight, RDKit2D, Morgan, PubChem; For 3D: from XYZ, SDF files to Graph3D, Columb Matrix); Also a quality check on DTI datasets with IDs added.
@@ -36,6 +40,9 @@ TDC is an open-source initiative. To get involved, join the [Slack Workspace](ht
 - `0.1.0`: Molecule quality check for ADME, Toxicity and HTS (canonicalized, and remove error mols).
 - `0.0.9`: Added DrugComb NCI-60, CYP2C9/2D6/3A4 substrates, Carcinogens toxicity! 
 - `0.0.8`: Added hREG, DILI, Skin Reaction, Ames Mutagenicity, PPBR from AstraZeneca; added meta oracles!
+
+</details>
+
 
 ## Features
 
@@ -79,18 +86,22 @@ Data functions for molecule oracles, scaffold split, etc., require certain packa
 conda install -c conda-forge pytdc
 ```
 
-## Cite Us
 
-If you found our work useful, please cite us:
+## Tutorials
 
-```
-@article{tdc,
-  title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Therapeutics},
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
-  journal={arXiv preprint arXiv:2102.09548},
-  year={2021}
-}
-```
+We provide a series of tutorials for you to get started using TDC:
+
+| Name  | Description                                             |
+|-------|---------------------------------------------------------|
+| [101](tutorials/TDC_101_Data_Loader.ipynb)   | Introduce TDC Data Loaders                              |
+| [102](tutorials/TDC_102_Data_Functions.ipynb)   | Introduce TDC Data Functions                            |
+| [103.1](tutorials/TDC_103.1_Datasets_Small_Molecules.ipynb) | Walk through TDC Small Molecule Datasets                |
+| [103.2](tutorials/TDC_103.2_Datasets_Biologics.ipynb) | Walk through TDC Biologics Datasets                     |
+| [104](tutorials/TDC_104_ML_Model_DeepPurpose.ipynb)   | Generate 21 ADME ML Predictors with 15 Lines of Code |
+| [105](tutorials/TDC_105_Oracle.ipynb)   | Molecule Generation Oracles                             |
+| [106](tutorials/TDC_106_BenchmarkGroup_Submission_Demo.ipynb)   | Benchmark submission                             |
+| [DGL](tutorials/DGL_User_Group_Demo.ipynb)   | Demo for DGL GNN User Group Meeting                             |
+
 
 ## Design of TDC
 
@@ -176,11 +187,17 @@ oracle(['CC(C)(C)....'
 
 ## TDC Leaderboards
 
-TDC hosts a series of leaderboards for researchers to keep abreast with the state-of-the-art models on therapeutics tasks.
+Each dataset in TDC is a benchmark, and we provide training/validation and test sets for it, together with data splits and performance evaluation metrics. To participate in the leaderboard for a specific benchmark, follow these steps:
 
-Each dataset in TDC is a benchmark. But for a machine learning model to be useful for a specific downstream therapeutic usage, the model has to achieve consistently good performance across a set of datasets or tasks. Motivated by this, TDC intentionally group individual benchmarks into a benchmark group. Datasets in a benchmark group are centered around a theme and are all carefully selected. The dataset split and evaluation metrics are also carefully selected to reflect real-world challenges.
+* Use the TDC benchmark data loader to retrieve the benchmark.
 
-TDC provides a programming framework to access the data in a benchmark group. We use ADMET group as an example.
+* Use training and/or validation set to train your model.
+
+* Use the TDC model evaluator to calculate the performance of your model on the test set.
+
+* Submit the test set performance to a TDC leaderboard.
+
+As many datasets share a therapeutics theme, we organize specific benchmarks into meaningfully defined groups, referred to as benchmark groups. Datasets and tasks within a benchmark group are carefully curated and centered around a theme (for example, prediction of ADMET properties). While each benchmark group consists of multiple benchmarks, you can submit each dataset/benchmark result separately. Here is the code framework to access the benchmarks:
 
 ```python
 from tdc import BenchmarkGroup
@@ -188,35 +205,40 @@ group = BenchmarkGroup(name = 'ADMET_Group', path = 'data/')
 predictions_list = []
 
 for seed in [1, 2, 3, 4, 5]:
+    benchmark = group.get('Caco2_Wang') 
+    # all benchmark names in a benchmark group are stored in group.dataset_names
     predictions = {}
-    for benchmark in group:
-        name = benchmark['name']
-        train_val, test = benchmark['train_val'], benchmark['test']
-        train, valid = group.get_train_valid_split(benchmark = name, split_type = 'default', seed = seed)
-        ## --- train your model --- ##
-        predictions[name] = y_pred
+    name = benchmark['name']
+    train_val, test = benchmark['train_val'], benchmark['test']
+    train, valid = group.get_train_valid_split(benchmark = name, split_type = 'default', seed = seed)
+    
+        # --------------------------------------------- # 
+        #  Train your model using train, valid, test    #
+        #  Save test prediction in y_pred_test variable #
+        # --------------------------------------------- #
+        
+    predictions[name] = y_pred_test
     predictions_list.append(predictions)
 
-group.evaluate_many(predictions_list)
+results = group.evaluate_many(predictions_list)
+# {'caco2_wang': [6.328, 0.101]}
 ```
 
-For more functions of the `BenchmarkGroup` class, please visit [here](https://zitniklab.hms.harvard.edu/TDC/benchmark/overview/).
+For more information, please visit [here](https://tdcommons.ai/benchmark/overview/).
 
-## Tutorials
 
-We provide a series of tutorials for you to get started using TDC:
+## Cite Us
 
-| Name  | Description                                             |
-|-------|---------------------------------------------------------|
-| [101](tutorials/TDC_101_Data_Loader.ipynb)   | Introduce TDC Data Loaders                              |
-| [102](tutorials/TDC_102_Data_Functions.ipynb)   | Introduce TDC Data Functions                            |
-| [103.1](tutorials/TDC_103.1_Datasets_Small_Molecules.ipynb) | Walk through TDC Small Molecule Datasets                |
-| [103.2](tutorials/TDC_103.2_Datasets_Biologics.ipynb) | Walk through TDC Biologics Datasets                     |
-| [104](tutorials/TDC_104_ML_Model_DeepPurpose.ipynb)   | Generate 21 ADME ML Predictors with 15 Lines of Code |
-| [105](tutorials/TDC_105_Oracle.ipynb)   | Molecule Generation Oracles                             |
-| [106](tutorials/TDC_106_BenchmarkGroup_Submission_Demo.ipynb)   | Benchmark submission                             |
-| [DGL](tutorials/DGL_User_Group_Demo.ipynb)   | Demo for DGL GNN User Group Meeting                             |
+If you found our work useful, please cite us:
 
+```
+@article{tdc,
+  title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Therapeutics},
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
+  journal={arXiv preprint arXiv:2102.09548},
+  year={2021}
+}
+```
 
 ## Contribute
 
