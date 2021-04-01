@@ -155,6 +155,12 @@ drugsyn_benchmark = {'Synergy': ['drugcomb_css',
                                  'drugcomb_zip'
                                  ]}
 
+
+docking_benchmark = {'Targets': ['DRD3']}
+
+docking_target_info = {'DRD3': {'center': (9, 22.5, 26), 'size': (15, 15, 15)}
+						}
+
 ####################################
 
 #### Benchmark Metrics
@@ -308,7 +314,8 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				}
 
 benchmark_names = {"admet_group": admet_benchmark,
-                   "drugcombo_group": drugsyn_benchmark}
+                   "drugcombo_group": drugsyn_benchmark,
+                   "docking_group": docking_benchmark}
 bm_metric_names = {"admet_group": admet_metrics,
                   "drugcombo_group": drugsyn_metrics}
 bm_split_names = {"admet_group": admet_splits,
@@ -497,7 +504,8 @@ benchmark2type = {'admet_group': 'zip',
                   'drugcombo_group': 'zip'}
 
 benchmark2id = {'admet_group': 4426004,
-                'drugcombo_group':  4426002}
+                'drugcombo_group':  4426002,
+                'docking_group': 4492072}
 
 sdf_file_names = {
 	'grambow': ['Product', 'Reactant', 'TS']
