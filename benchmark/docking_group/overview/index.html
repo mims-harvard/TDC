@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Drug Combination Benchmark Group - TDC</title>
+    <title>Docking Benchmark Group - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Drug Combination Benchmark Group | TDC</title>
+<title>Docking Benchmark Group | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Drug Combination Benchmark Group" />
+<meta property="og:title" content="Docking Benchmark Group" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="http://localhost:4000/benchmark/drugcombo_group/overview/" />
-<meta property="og:url" content="http://localhost:4000/benchmark/drugcombo_group/overview/" />
+<link rel="canonical" href="http://localhost:4000/benchmark/docking_group/overview/" />
+<meta property="og:url" content="http://localhost:4000/benchmark/docking_group/overview/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/benchmark/drugcombo_group/overview/","headline":"Drug Combination Benchmark Group","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/benchmark/docking_group/overview/","headline":"Docking Benchmark Group","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -143,28 +143,12 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/benchmark/drugcombo_group/overview" class=""><strong>Drug Combination Group Leaderboard</strong></a>
+            <a href="/benchmark/docking_group/overview" class=""><strong>Docking Group Leaderboard</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/benchmark/drugcombo_group/drugcomb_css/" class=""><code>TDC.DrugComb_CSS</code> Leaderboard</a></li>
-                
-                
-                
-                <li><a href="/benchmark/drugcombo_group/drugcomb_hsa/" class=""><code>TDC.DrugComb_HSA</code> Leaderboard</a></li>
-                
-                
-                
-                <li><a href="/benchmark/drugcombo_group/drugcomb_loewe/" class=""><code>TDC.DrugComb_Loewe</code> Leaderboard</a></li>
-                
-                
-                
-                <li><a href="/benchmark/drugcombo_group/drugcomb_bliss/" class=""><code>TDC.DrugComb_Bliss</code> Leaderboard</a></li>
-                
-                
-                
-                <li><a href="/benchmark/drugcombo_group/drugcomb_zip/" class=""><code>TDC.DrugComb_ZIP</code> Leaderboard</a></li>
+                <li><a href="/benchmark/docking_group/drd3/" class=""><code>TDC.DRD3</code> Leaderboard</a></li>
                 
                 
             </ul>
@@ -208,56 +192,53 @@
                     
                     
 <div class="content">
-    <h2 id="drug-combination-benchmark-group">Drug Combination Benchmark Group</h2>
+    <h2 id="docking-molecule-generation-benchmark-group">Docking Molecule Generation Benchmark Group</h2>
 
-<p class="is-size-5">Drug combination screening offers significant potential for expanding the use of existing drugs and in improving their efficacy. For instance, the simultaneous modulation of multiple targets can address the common mechanisms of drug resistance seen in the treatment of cancers. However, experimentally exploring the entire space of possible drug combinations is not a feasible task. Thus, computational models that can predict synergistic combinations can prove very valuable. </p>
+<p class="is-size-5"> </p>
 
-<p class="is-size-5"> This benchmark group currently contains the <a href="https://academic.oup.com/nar/article-abstract/47/W1/W43/5486743"> <code>TDC.DrugComb</code> </a>dataset. In this dataset, we have five measurements of combination effects. The main endpoint is called drug combination sensitivity (<code>TDC.DrugComb_CSS</code>) score, which is derived using relative IC50 values of compounds and the area under their dose-response curves. For CSS, we also provide information on the tissue types of the cell lines. </p>
+<p class="is-size-5"> </p>
 
-<p class="is-size-5"> In addition to the CSS, we also provide four additional synergy measurements. Synergy is a measure of deviation of an observed drug combination response from the expected effect of non-interaction. We include four labels where each is a different way of calculating the deviation: Bliss model (<code>TDC.DrugComb_Bliss</code>), Highest Single Agent (<code>TDC.DrugComb_HSA</code>), Loewe additivity model (<code>TDC.DrugComb_Loewe</code>) and Zero Interaction Potency (<code>TDC.DrugComb_ZIP</code>). To retrieve the benchmark names, type: </p>
+<p class="is-size-5"> To retrieve the individual target benchmark names, type: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
-<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'DrugCombo_Group'</span><span class="p">)</span>
-<span class="c1"># ['drugcomb_css', 'drugcomb_hsa', ...]
+<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'Docking_Group'</span><span class="p">)</span>
+<span class="c1"># ['DRD3', 'XXX', ...]
 </span></code></pre></div></div>
 
 <p class="is-size-5">To access each benchmark, use the following code:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
-<span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugCombo_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s">'pkl'</span><span class="p">)</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Docking_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s">'oracle'</span><span class="p">,</span> <span class="n">pyscreener_path</span> <span class="o">=</span> <span class="s">'PATH_TO_PyScreener'</span><span class="p">)</span>
 
-<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Drugcomb_CSS'</span><span class="p">)</span>
-
+<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'DRD3'</span><span class="p">,</span> <span class="n">num_max_call</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">)</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
-<span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+<span class="n">oracle_fct</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'oracle'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
 
 <span class="c1">## --- train your model --- ##
 </span>
-<span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_test</span>
-<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_smiles</span> <span class="c1"># top 100 generated smiles
+</span><span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">criteria</span> <span class="o">=</span> <span class="s">'all'</span><span class="p">,</span> <span class="n">m1_api</span> <span class="o">=</span> <span class="s">'XXXXX'</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 <span class="s">'''
-Note that the output includes the automatic evaluations across tissues:
-
-{'drugcomb_css': {'mae': 23.082},
- 'drugcomb_css_kidney': {'mae': 21.906},
- 'drugcomb_css_lung': {'mae': 21.341},
- 'drugcomb_css_breast': {'mae': 18.542},
- 'drugcomb_css_hematopoietic_lymphoid': {'mae': 40.55},
- 'drugcomb_css_colon': {'mae': 25.224},
- 'drugcomb_css_prostate': {'mae': 22.19},
- 'drugcomb_css_ovary': {'mae': 19.638},
- 'drugcomb_css_skin': {'mae': 18.777},
- 'drugcomb_css_brain': {'mae': 21.855}}
+{'DRD3': {'AVG_Top100': -10.2,
+          'AVG_Top10': -11.3,
+          'Top1': -12.3,
+          'AVG_m1_scores': 2.5,
+          'AVG_docking_scores_synthesizable': -10.2,
+          'unfiltered_fractions': 0.7,
+          'AVG_docking_scores_unfiltered': -11.2,
+          'diversity': 0.6,
+          'validity': 0.7,
+          'uniqueness': 0.7
+}
 '''</span>
 </code></pre></div></div>
 
-<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instruction</a></b> on how to use the <code>BenchmarkGroup</code> class and training validation split, and also submission instructions. </p>
+<p class="is-size-5"> Evaluation metrics. To realistically evaluate the quality of the generated molecules, we support the following metrics. </p>
 
-<p class="is-size-5"> For every dataset, we use drug combination split and hold out a 20% test set. The evaluation metrics is MAE. </p>
+<p class="is-size-5"> Installation instructions. PyScreener, rdkit</p>
 
-<p class="is-size-5"> Note that the tissue types are <b>automatically</b> calculated based on the test set prediction on <code>TDC.DrugComb_CSS</code> endpoint.</p>
+<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instruction</a></b> on how to use the <code>BenchmarkGroup</code> class and submission instructions. </p>
 
 <div class="column is-12">
     <hr />
