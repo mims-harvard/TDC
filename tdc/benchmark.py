@@ -190,7 +190,7 @@ class BenchmarkGroup:
 		else:
 			return {'train_val': train, 'test': test, 'name': dataset}
 
-	def evaluate(self, pred, true = None, benchmark = None, criteria = 'all', m1_api = None):
+	def evaluate(self, pred, true = None, benchmark = None, m1_api = None):
 
 		if self.name == 'docking_group':
 			results_all = {}
@@ -216,58 +216,37 @@ class BenchmarkGroup:
 				docking_scores = oracle(pred_)
 				results['docking_scores_dict'] = docking_scores
 				values = np.array(list(docking_scores.values()))
-				results['AVG_Top100'] = np.mean(values)
-				results['AVG_Top10'] = np.mean(sorted(values)[:10])
-				results['Top1'] = max(values)
+				results['top100'] = np.mean(values)
+				results['top10'] = np.mean(sorted(values)[:10])
+				results['top1'] = max(values)
 
-				all_criteria = ['m1', 'filters', 'diversity', 'validity', 'uniqueness']
-
-				if criteria == 'all':
-					criteria = all_criteria
-				elif criteria == 'none':
-					criteria = []
+				if m1_api is None: 
+					print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score due to long-time. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained by You can obtain it via: https://tdcommons.ai/functions/oracles/#moleculeone')
 				else:
-					if sum([1 if i in all_criteria else 0 for i in criteria]) != len(criteria):
-						# there is at least one criteria does not match the supported evaluation
-						raise ValueError("Please select the criteria from a list of 'm1', 'filters', 'diversity', 'validity', 'uniqueness'!")
-
-				if 'm1' in criteria: 
-					if m1_api is None:
-						raise ValueError("Please input the m1_api token in the evaluate function call! You can obtain it via: https://tdcommons.ai/functions/oracles/#moleculeone")
 					m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
 					m1_scores = m1(pred_)
 					scores_array = list(m1_scores.values())
-					results['m1_scores_dict'] = m1_scores
-					results['AVG_m1_scores'] = np.mean(scores_array)
+					results['m1_dict'] = m1_scores
+					results['m1'] = np.mean(scores_array)
 					## TODO: how good is the m1 score? ask stan; 0.5 placeholder
-					results['AVG_docking_scores_synthesizable'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j > 0.5])
+					results['docking_m1'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j > 0.5])
 
-				if 'filters' in criteria:
-					from tdc.chem_utils import MolFilter
-					## TODO: select an optimal set of filters. test a bit.
-					filters = MolFilter(filters = ['PAINS'], HBD = [0, 6])
-					pred_filter = filters(pred_)
-					results['pass_filter_smiles_list'] = pred_filter
-					results['unfiltered_fractions'] = float(len(pred_filter))/100
-					results['AVG_docking_scores_unfiltered'] = np.mean([docking_scores[i] for i in pred_filter])
+				from .chem_utils import MolFilter
+				## TODO: select an optimal set of filters. test a bit.
+				filters = MolFilter(filters = ['PAINS'], HBD = [0, 6])
+				pred_filter = filters(pred_)
+				results['pass_filter_smiles_list'] = pred_filter
+				results['unfiltered'] = float(len(pred_filter))/100
+				results['docking_unfiltered'] = np.mean([docking_scores[i] for i in pred_filter])
 
-				if 'diversity' in criteria:
-					from tdc import Evaluator
-					evaluator = Evaluator(name = 'Diversity')
-					score = evaluator(pred_)
-					results['diversity'] = score
+				from .evaluator import Evaluator
+				evaluator = Evaluator(name = 'Diversity')
+				score = evaluator(pred_)
+				results['diversity'] = score
 
-				if 'validity' in criteria:
-					from tdc import Evaluator
-					evaluator = Evaluator(name = 'Validity')
-					score = evaluator(pred_)
-					results['validity'] = score
-
-				if 'uniqueness' in criteria:
-					from tdc import Evaluator
-					evaluator = Evaluator(name = 'Uniqueness')
-					score = evaluator(pred_)
-					results['uniqueness'] = score
+				evaluator = Evaluator(name = 'Validity')
+				score = evaluator(pred_)
+				results['validity'] = score
 
 				results_all[dataset_name] = results
 			return results_all
