@@ -194,9 +194,11 @@
 <div class="content">
     <h2 id="docking-molecule-generation-benchmark-group">Docking Molecule Generation Benchmark Group</h2>
 
-<p class="is-size-5"> </p>
+<p class="is-size-5"> Molecule generation seeks to generate novel molecule structure with required properties. While current focus have been on simple heuristic oracles, such as QED, LogP, they do not reflect the complexity of realistic problems. Problems include: (1) many properties such as activity towards a target are expensive to query while current methods require large amounts of calls to the oracle; (2) the ML generated molecules suffer from issues such as synthesizability, selectivity and so on. </p>
 
-<p class="is-size-5"> </p>
+<p class="is-size-5"> To tackle these problems, we construct the docking benchmark group. Docking is a theoretical evaluation of affinity between a small molecule and a target (a protein involved in a disease pathway). Given a pre-specified target, an ML model is asked to generate molecules that have high affinity. This benchmark directly tackle the above two problems: (1) since docking score is expensive to calculate and is more meaningful, we can use it to simulate the real-world wet-lab experiment under resource constraint. To achieve this, instead of allowing unlimited oracle calls, we <i>restrict the number of oracle calls</i> in this benchmark and requires models to adapt quickly; (2) in addition to the typical average oracle scores on the top molecules, we provide <i>additional evaluations</i> to probe the realistic utilities of the generation. </p>
+
+<p class="is-size-5">The importance and detailed info about docking generation can be found in these two recent articles: [<a href="https://arxiv.org/abs/2006.16955">Cieplinski et al. 2020</a>, <a href="https://chemrxiv.org/articles/preprint/Using_a_Genetic_Algorithm_to_Find_Molecules_with_Good_Docking_Scores/13525589/2#:~:text=A%20graph%2Dbased%20genetic%20algorithm,2%2Dadrenergic%20G%20protein%2Dcoupled">Steinmann and Jensen, 2021</a>].</p>
 
 <p class="is-size-5"> To retrieve the individual target benchmark names, type: </p>
 
@@ -210,33 +212,53 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Docking_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s">'oracle'</span><span class="p">,</span> <span class="n">pyscreener_path</span> <span class="o">=</span> <span class="s">'PATH_TO_PyScreener'</span><span class="p">)</span>
 
-<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'DRD3'</span><span class="p">,</span> <span class="n">num_max_call</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">)</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">oracle_fct</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'oracle'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
-
-<span class="c1">## --- train your model --- ##
+<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'DRD3'</span><span class="p">,</span> <span class="n">num_max_call</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">)</span> 
+<span class="c1"># specify the number of maximum calls your model plans to use 
 </span>
-<span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_smiles</span> <span class="c1"># top 100 generated smiles
-</span><span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">criteria</span> <span class="o">=</span> <span class="s">'all'</span><span class="p">,</span> <span class="n">m1_api</span> <span class="o">=</span> <span class="s">'XXXXX'</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">oracle_fct</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'oracle'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> 
+<span class="c1"># oracle_fct is the oracle function
+</span>
+<span class="c1">## --- train your model using oracle_fct --- ##
+</span>
+<span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_smiles</span> <span class="c1"># the top 100 smiles generated by your model
+</span><span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">m1_api</span> <span class="o">=</span> <span class="s">'XXXXX'</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
 <span class="s">'''
-{'DRD3': {'AVG_Top100': -10.2,
-          'AVG_Top10': -11.3,
-          'Top1': -12.3,
-          'AVG_m1_scores': 2.5,
-          'AVG_docking_scores_synthesizable': -10.2,
-          'unfiltered_fractions': 0.7,
-          'AVG_docking_scores_unfiltered': -11.2,
+#
+{'DRD3': {'top100': -10.2,
+          'top10': -11.3,
+          'top1': -12.3,
           'diversity': 0.6,
           'validity': 0.7,
-          'uniqueness': 0.7
+          'unfiltered': 0.7,
+          'docking_unfiltered': -11.2,
+          'm1': 2.5,
+          'docking_m1': -10.2,
 }
 '''</span>
 </code></pre></div></div>
 
-<p class="is-size-5"> Evaluation metrics. To realistically evaluate the quality of the generated molecules, we support the following metrics. </p>
+<p class="is-size-5"> <b>Evaluation metrics</b> To realistically evaluate the quality of the generated molecules, we support the following metrics: </p>
 
-<p class="is-size-5"> Installation instructions. PyScreener, rdkit</p>
+<ul class="is-large is-size-5">
+  <li><code>top100</code>: the average of top 100 generated molecules docking scores for the target.</li>
+  <li><code>top10</code>: the average of top 10 generated molecules docking scores for the target.</li>
+  <li><code>top1</code>: the docking score of the best generated molecule.</li>
+  <li><code>diversity</code>: the average pairwise Tanimoto distance between the Morgan fingerprints of the top 100 molecules.</li>
+  <li><code>validity</code>: the percentage of valid molecules based on RDKit's parser for valency and consistency of bonds in aromatic rings.</li>
+  <li><code>unfiltered</code>: the fraction of molecules that passed XXX molecule filters. These filters exclude not drug-like molecules. </li>
+  <li><code>docking_unfiltered</code>: the average docking scores for the unfiltered molecules.</li>
+  <li><code>m1</code>: the synthesizability score of the molecules from molecule.one retrosynthesis model. </li>
+  <li><code>docking_m1</code>: the average docking scores of molecules that are synthesizable determined by m1 &gt; XXX.</li>
+</ul>
+
+<p class="is-size-5">Note that all evaluations are automatically computed using <code>group.evaluate(predictions)</code> except the <code>m1, docking_m1</code>. To include these two, simply specify the <code>m1_api</code> token in the evaluation function. Checkout this <a href="/functions/oracles/#moleculeone"> page </a> to get the token. Note that this is a service provided by <a href="http://molecule.one/">molecule.one</a>. Please conform to the terms if you plan to submit the m1 scores. You can also select to opt-out and submit your results without this evaluation metric.</p>
+
+<p class="is-size-5"> <b>Maximum oracle calls</b> To simulate the realistic constraint, we provide different levels of oracle calls maximum. The smaller the number, the higher constraint and higher requirement for the model to adapt. You can change the maximum oracle call in the <code>group.get('DRD3', num_max_call = 5000)</code> function. The leaderboard supports 100, 500, 5000 three levels.</p>
+
+<p class="is-size-5"> <b>Installation</b> This benchmark requires the use of TDC oracle class. For docking score, it requires PyScreener. You can find the detailed installation steps <a href="/functions/oracles/#docking-scores">here</a>. </p>
 
 <p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instruction</a></b> on how to use the <code>BenchmarkGroup</code> class and submission instructions. </p>
 
@@ -244,52 +266,20 @@
     <hr />
 </div>
 
-<h3 id="benchmark-data-summary">Benchmark Data Summary</h3>
+<h3 id="leaderboard-data-summary">Leaderboard Data Summary</h3>
 
 <table class="table is-striped is-hoverable">
   <thead>
   <tr>
-    <th>Label</th>
-    <th>Number</th>
-    <th>Task</th>
-    <th>Metric</th>
-    <th>Split</th>
+    <th>Target</th>
+    <th>Related Diseases</th>
+    <th>Link</th>
   </tr>
   </thead>
   <tr>
-    <td><code>TDC.DrugComb_CSS</code></td>
-    <td>297,098</td>
-    <td>Regression</td>
-    <td>MAE</td>
-    <td>Combination</td>
-  </tr>
-  <tr>
-    <td><code>TDC.DrugComb_HSA</code></td>
-    <td>297,098</td>
-    <td>Regression</td>
-    <td>MAE</td>
-    <td>Combination</td>
-  </tr>
-  <tr>
-    <td><code>TDC.DrugComb_Loewe</code></td>
-    <td>297,098</td>
-    <td>Regression</td>
-    <td>MAE</td>
-    <td>Combination</td>
-  </tr>
-  <tr>
-    <td><code>TDC.DrugComb_Bliss</code></td>
-    <td>297,098</td>
-    <td>Regression</td>
-    <td>MAE</td>
-    <td>Combination</td>
-  </tr>
-  <tr>
-    <td><code>TDC.DrugComb_Zip</code></td>
-    <td>297,098</td>
-    <td>Regression</td>
-    <td>MAE</td>
-    <td>Combination</td>
+    <td><code>TDC.DRD3</code></td>
+    <td>Tremor, Schizophrenia</td>
+    <td><a href="https://www.uniprot.org/uniprot/P35462">Uniprot Page</a></td>
   </tr>
 </table>
 
