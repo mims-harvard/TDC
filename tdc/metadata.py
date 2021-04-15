@@ -1,18 +1,14 @@
 ####################################
 # single_pred prediction
 
-toxicity_dataset_names = ['toxcast', 'tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
+toxicity_dataset_names = ['tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
 
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
- 'hydrationfreeenergy_freesolv',
  'caco2_wang',
  'hia_hou',
  'pgp_broccatelli',
- 'f20_edrug3d',
- 'f30_edrug3d',
  'bioavailability_ma',
- 'vd_edrug3d',
  'vdss_lombardo',
  'cyp2c19_veith',
  'cyp2d6_veith',
@@ -22,12 +18,7 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'cyp2c9_substrate_carbonmangels', 
  'cyp2d6_substrate_carbonmangels',
  'cyp3a4_substrate_carbonmangels', 
- 'halflife_edrug3d',
- 'clearance_edrug3d',
- 'bbb_adenot',
  'bbb_martins',
- 'ppbr_ma',
- 'ppbr_edrug3d',
  'ppbr_az',
  'half_life_obach',
  'clearance_hepatocyte_az',
@@ -274,7 +265,6 @@ category_names = {'single_pred': ["Tox",
 								"Catalyst"],
 				'generation': ["RetroSyn",
 								"Reaction",
-								"PairMolGen",
 								"MolGen"
 								]
 				}
@@ -294,7 +284,6 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"DDI": ddi_dataset_names,
 				"RetroSyn": retrosyn_dataset_names,
 				"Reaction": forwardsyn_dataset_names, 
-				"PairMolGen": molgenpaired_dataset_names,
 				"MolGen": single_molecule_dataset_names,
 				"PeptideMHC": peptidemhc_dataset_names,
 				"Epitope": epitope_dataset_names,
@@ -308,8 +297,6 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"Paratope": paratope_dataset_names, 
 				"Yields": yield_dataset_names, 
 				"Catalyst": catalyst_dataset_names, 
-				"CompoundLibrary": compound_library_names,
-				"BioKG": biokg_library_names,
 				"CRISPROutcome": crisproutcome_dataset_names
 				}
 
