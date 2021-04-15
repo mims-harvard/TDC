@@ -488,7 +488,8 @@ oracle2id = {'drd2': 4178625,
 			}
 
 benchmark2type = {'admet_group': 'zip',
-                  'drugcombo_group': 'zip'}
+                  'drugcombo_group': 'zip',
+                  'docking_group': 'zip'}
 
 benchmark2id = {'admet_group': 4426004,
                 'drugcombo_group':  4426002,

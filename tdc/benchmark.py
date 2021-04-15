@@ -93,7 +93,7 @@ class BenchmarkGroup:
 			self.num_workers = num_workers
 			self.num_cpus = num_cpus
 			self.num_max_call = num_max_call
-			from tdc import Oracle
+			from .oracles import Oracle
 
 	def __iter__(self):
 		self.index = 0
@@ -124,7 +124,8 @@ class BenchmarkGroup:
 					receptors=[target_pdb_file],
 					center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
 					buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = self.num_max_call)
-				return {'oracle': oracle, 'name': dataset}
+				data = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
+				return {'oracle': oracle, 'data': data, 'name': dataset}
 			else:
 				return {'train_val': train, 'test': test, 'name': dataset}
 		else:
@@ -186,7 +187,8 @@ class BenchmarkGroup:
 				receptors=[target_pdb_file],
 				center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
 				buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = num_max_call)
-			return {'oracle': oracle, 'name': dataset}
+			data = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
+			return {'oracle': oracle, 'data': data, 'name': dataset}
 		else:
 			return {'train_val': train, 'test': test, 'name': dataset}
 
@@ -198,22 +200,36 @@ class BenchmarkGroup:
 			for data_name, pred_ in pred.items():
 
 				results = {}
+				
+				recalc = False
 
-				## pred is a list of smiles strings
+				if isinstance(pred_, dict):
+					print_sys("The input is a dictionary, expected to have SMILES string as key and docking score as value!")
+					docking_scores = pred_
+					pred_ = list(pred_.keys())
+				elif isinstance(pred_, list):
+					recalc = True
+					print_sys("The input is a list, docking score will be computed! If you already have the docking scores, please make the list as a dictionary with SMILES string as key and docking score as value")
+				else:
+					raise ValueError("The input prediction must be a dictionary with SMILES and their docking scores or a list of SMILES!")
+				## pred is a list of smiles strings or a dictionary of smiles strings if docking scores are already calculated...
 				if len(pred_) != 100:
-					raise ValueError("The expected output is a list of top 100 molecules!")
-				dataset = fuzzy_search(benchmark, self.dataset_names)
+					raise ValueError("The expected output is a list/dictionary of top 100 molecules!")
+				
+				if recalc:
+					dataset = fuzzy_search(benchmark, self.dataset_names)
 
-				# docking scores for the top K smiles (K <= 100)
-				target_pdb_file = os.path.join(self.path, dataset + '.pdb')
+					# docking scores for the top K smiles (K <= 100)
+					target_pdb_file = os.path.join(self.path, dataset + '.pdb')
 
-				oracle = Oracle(name = "Docking_Score", software="vina",
-					pyscreener_path = self.pyscreener_path,
-					receptors=[target_pdb_file],
-					center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
-					buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = 10000)
+					oracle = Oracle(name = "Docking_Score", software="vina",
+						pyscreener_path = self.pyscreener_path,
+						receptors=[target_pdb_file],
+						center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
+						buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = 10000)
 
-				docking_scores = oracle(pred_)
+					docking_scores = oracle(pred_)
+
 				results['docking_scores_dict'] = docking_scores
 				values = np.array(list(docking_scores.values()))
 				results['top100'] = np.mean(values)
@@ -232,21 +248,22 @@ class BenchmarkGroup:
 					results['docking_m1'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j > 0.5])
 
 				from .chem_utils import MolFilter
-				## TODO: select an optimal set of filters. test a bit.
-				filters = MolFilter(filters = ['PAINS'], HBD = [0, 6])
+				## follow guacamol
+				filters = MolFilter(filters = ['PAINS', 'SureChembl', 'Glaxo'])
 				pred_filter = filters(pred_)
-				results['pass_filter_smiles_list'] = pred_filter
-				results['unfiltered'] = float(len(pred_filter))/100
-				results['docking_unfiltered'] = np.mean([docking_scores[i] for i in pred_filter])
+				results['pass_list'] = pred_filter
+				results['%pass'] = float(len(pred_filter))/100
+				results['top1_%pass'] = max([docking_scores[i] for i in pred_filter])
 
 				from .evaluator import Evaluator
 				evaluator = Evaluator(name = 'Diversity')
 				score = evaluator(pred_)
 				results['diversity'] = score
 
-				evaluator = Evaluator(name = 'Validity')
-				score = evaluator(pred_)
-				results['validity'] = score
+				evaluator = Evaluator(name = 'Novelty')
+				training = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
+				score = evaluator(pred_, training.smiles.values)
+				results['novelty'] = score
 
 				results_all[dataset_name] = results
 			return results_all
