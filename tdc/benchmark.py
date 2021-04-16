@@ -82,8 +82,7 @@ class BenchmarkGroup:
 			
 			if (num_workers is None) and (num_cpus is None):
 				## automatic selections
-				import psutil
-				cpu_total = psutil.cpu_count()
+				cpu_total = os.cpu_count()
 				if cpu_total > 1:
 					num_cpus = 2
 				else:
@@ -119,6 +118,7 @@ class BenchmarkGroup:
 			self.index += 1
 
 			if self.name == 'docking_group':
+				from .oracles import Oracle
 				oracle = Oracle(name = "Docking_Score", software="vina",
 					pyscreener_path = self.pyscreener_path,
 					receptors=[target_pdb_file],
@@ -182,6 +182,7 @@ class BenchmarkGroup:
 			target_pdb_file = os.path.join(self.path, dataset + '.pdb')
 
 		if self.name == 'docking_group':
+			from .oracles import Oracle
 			oracle = Oracle(name = "Docking_Score", software="vina",
 				pyscreener_path = self.pyscreener_path,
 				receptors=[target_pdb_file],
@@ -229,7 +230,7 @@ class BenchmarkGroup:
 						buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = 10000)
 
 					docking_scores = oracle(pred_)
-
+				print_sys("---- Calculating average docking scores ----")
 				results['docking_scores_dict'] = docking_scores
 				values = np.array(list(docking_scores.values()))
 				results['top100'] = np.mean(values)
@@ -239,6 +240,7 @@ class BenchmarkGroup:
 				if m1_api is None: 
 					print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score due to long-time. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained by You can obtain it via: https://tdcommons.ai/functions/oracles/#moleculeone')
 				else:
+					print_sys("---- Calculating molecule.one synthesizability score ----")
 					m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
 					m1_scores = m1(pred_)
 					scores_array = list(m1_scores.values())
@@ -246,26 +248,27 @@ class BenchmarkGroup:
 					results['m1'] = np.mean(scores_array)
 					## TODO: how good is the m1 score? ask stan; 0.5 placeholder
 					results['docking_m1'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j > 0.5])
-
+                    
+				print_sys("---- Calculating molecular filters scores ----")
 				from .chem_utils import MolFilter
 				## follow guacamol
-				filters = MolFilter(filters = ['PAINS', 'SureChembl', 'Glaxo'])
+				filters = MolFilter(filters = ['PAINS', 'SureChEMBL', 'Glaxo'], property_filters_flag = False)
 				pred_filter = filters(pred_)
 				results['pass_list'] = pred_filter
 				results['%pass'] = float(len(pred_filter))/100
 				results['top1_%pass'] = max([docking_scores[i] for i in pred_filter])
-
+				print_sys("---- Calculating diversity ----")
 				from .evaluator import Evaluator
 				evaluator = Evaluator(name = 'Diversity')
 				score = evaluator(pred_)
 				results['diversity'] = score
-
+				print_sys("---- Calculating novelty ----")
 				evaluator = Evaluator(name = 'Novelty')
 				training = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
 				score = evaluator(pred_, training.smiles.values)
 				results['novelty'] = score
 
-				results_all[dataset_name] = results
+				results_all[data_name] = results
 			return results_all
 
 		if true is None:

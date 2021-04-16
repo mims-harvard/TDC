@@ -43,7 +43,7 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from .utils import oracle_load, print_sys
+from .utils import oracle_load, print_sys, install
 
 
 
@@ -4777,14 +4777,14 @@ class MolConvert:
 
 class MolFilter:
   # MIT License: Checkout https://github.com/PatWalters/rd_filters
-  def __init__(self, filters = 'all', HBA = [0, 10], HBD = [0, 5], LogP = [-5, 5], MW = [0, 500], Rot = [0, 10], TPSA = [0, 200]):
+  def __init__(self, filters = 'all', property_filters_flag = True, HBA = [0, 10], HBD = [0, 5], LogP = [-5, 5], MW = [0, 500], Rot = [0, 10], TPSA = [0, 200]):
     try:
         from rd_filters.rd_filters import RDFilters, read_rules
     except:
         install('git+https://github.com/PatWalters/rd_filters.git')
         
     import pkg_resources
-
+    self.property_filters_flag = property_filters_flag
     all_filters = ['BMS', 'Dundee', 'Glaxo', 'Inpharmatica', 'LINT', 'MLSMR', 'PAINS', 'SureChEMBL']
     if filters == 'all':
       filters = all_filters
@@ -4804,8 +4804,11 @@ class MolFilter:
     self.rule_dict['Rule_Inpharmatica'] = False
     for i in filters:
       self.rule_dict['Rule_'+ i] = True
-
-    self.rule_dict['HBA'], self.rule_dict['HBD'], self.rule_dict['LogP'], self.rule_dict['MW'], self.rule_dict['Rot'], self.rule_dict['TPSA'] = HBA, HBD, LogP, MW, Rot, TPSA
+    
+    if self.property_filters_flag:
+        self.rule_dict['HBA'], self.rule_dict['HBD'], self.rule_dict['LogP'], self.rule_dict['MW'], self.rule_dict['Rot'], self.rule_dict['TPSA'] = HBA, HBD, LogP, MW, Rot, TPSA
+    else:
+        del self.rule_dict['HBA'], self.rule_dict['HBD'], self.rule_dict['LogP'], self.rule_dict['MW'], self.rule_dict['Rot'], self.rule_dict['TPSA']
     print_sys("MolFilter is using the following filters:")
 
     for i,j in self.rule_dict.items():
@@ -4834,14 +4837,23 @@ class MolFilter:
     p = Pool(num_cores)
 
     res = list(p.map(self.rf.evaluate, input_data))
-    df = pd.DataFrame(res, columns=["SMILES", "NAME", "FILTER", "MW", "LogP", "HBD", "HBA", "TPSA", "Rot"])
-    df_ok = df[
-        (df.FILTER == "OK") &
-        df.MW.between(*self.rule_dict["MW"]) &
-        df.LogP.between(*self.rule_dict["LogP"]) &
-        df.HBD.between(*self.rule_dict["HBD"]) &
-        df.HBA.between(*self.rule_dict["HBA"]) &
-        df.TPSA.between(*self.rule_dict["TPSA"]) &
-        df.Rot.between(*self.rule_dict["Rot"])
-        ]
+    
+    if self.property_filters_flag:
+    
+        df = pd.DataFrame(res, columns=["SMILES", "NAME", "FILTER", "MW", "LogP", "HBD", "HBA", "TPSA", "Rot"])
+        df_ok = df[
+            (df.FILTER == "OK") &
+            df.MW.between(*self.rule_dict["MW"]) &
+            df.LogP.between(*self.rule_dict["LogP"]) &
+            df.HBD.between(*self.rule_dict["HBD"]) &
+            df.HBA.between(*self.rule_dict["HBA"]) &
+            df.TPSA.between(*self.rule_dict["TPSA"]) &
+            df.Rot.between(*self.rule_dict["Rot"])
+            ]
+        
+    else:
+        df = pd.DataFrame(res, columns=["SMILES", "NAME", "FILTER", "MW", "LogP", "HBD", "HBA", "TPSA", "Rot"])
+        df_ok = df[
+            (df.FILTER == "OK")
+            ]
     return df_ok.SMILES.values

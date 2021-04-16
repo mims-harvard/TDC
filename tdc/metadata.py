@@ -493,7 +493,7 @@ benchmark2type = {'admet_group': 'zip',
 
 benchmark2id = {'admet_group': 4426004,
                 'drugcombo_group':  4426002,
-                'docking_group': 4492072}
+                'docking_group': 4554082}
 
 sdf_file_names = {
 	'grambow': ['Product', 'Reactant', 'TS']
