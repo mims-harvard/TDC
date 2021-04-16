@@ -82,8 +82,7 @@ class BenchmarkGroup:
 			
 			if (num_workers is None) and (num_cpus is None):
 				## automatic selections
-				import psutil
-				cpu_total = psutil.cpu_count()
+				cpu_total = os.cpu_count()
 				if cpu_total > 1:
 					num_cpus = 2
 				else:
@@ -93,7 +92,7 @@ class BenchmarkGroup:
 			self.num_workers = num_workers
 			self.num_cpus = num_cpus
 			self.num_max_call = num_max_call
-			from tdc import Oracle
+			from .oracles import Oracle
 
 	def __iter__(self):
 		self.index = 0
@@ -119,12 +118,14 @@ class BenchmarkGroup:
 			self.index += 1
 
 			if self.name == 'docking_group':
+				from .oracles import Oracle
 				oracle = Oracle(name = "Docking_Score", software="vina",
 					pyscreener_path = self.pyscreener_path,
 					receptors=[target_pdb_file],
 					center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
 					buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = self.num_max_call)
-				return {'oracle': oracle, 'name': dataset}
+				data = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
+				return {'oracle': oracle, 'data': data, 'name': dataset}
 			else:
 				return {'train_val': train, 'test': test, 'name': dataset}
 		else:
@@ -181,16 +182,18 @@ class BenchmarkGroup:
 			target_pdb_file = os.path.join(self.path, dataset + '.pdb')
 
 		if self.name == 'docking_group':
+			from .oracles import Oracle
 			oracle = Oracle(name = "Docking_Score", software="vina",
 				pyscreener_path = self.pyscreener_path,
 				receptors=[target_pdb_file],
 				center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
 				buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = num_max_call)
-			return {'oracle': oracle, 'name': dataset}
+			data = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
+			return {'oracle': oracle, 'data': data, 'name': dataset}
 		else:
 			return {'train_val': train, 'test': test, 'name': dataset}
 
-	def evaluate(self, pred, true = None, benchmark = None, criteria = 'all', m1_api = None):
+	def evaluate(self, pred, true = None, benchmark = None, m1_api = None):
 
 		if self.name == 'docking_group':
 			results_all = {}
@@ -198,78 +201,74 @@ class BenchmarkGroup:
 			for data_name, pred_ in pred.items():
 
 				results = {}
+				
+				recalc = False
 
-				## pred is a list of smiles strings
+				if isinstance(pred_, dict):
+					print_sys("The input is a dictionary, expected to have SMILES string as key and docking score as value!")
+					docking_scores = pred_
+					pred_ = list(pred_.keys())
+				elif isinstance(pred_, list):
+					recalc = True
+					print_sys("The input is a list, docking score will be computed! If you already have the docking scores, please make the list as a dictionary with SMILES string as key and docking score as value")
+				else:
+					raise ValueError("The input prediction must be a dictionary with SMILES and their docking scores or a list of SMILES!")
+				## pred is a list of smiles strings or a dictionary of smiles strings if docking scores are already calculated...
 				if len(pred_) != 100:
-					raise ValueError("The expected output is a list of top 100 molecules!")
-				dataset = fuzzy_search(benchmark, self.dataset_names)
+					raise ValueError("The expected output is a list/dictionary of top 100 molecules!")
+				
+				if recalc:
+					dataset = fuzzy_search(benchmark, self.dataset_names)
 
-				# docking scores for the top K smiles (K <= 100)
-				target_pdb_file = os.path.join(self.path, dataset + '.pdb')
+					# docking scores for the top K smiles (K <= 100)
+					target_pdb_file = os.path.join(self.path, dataset + '.pdb')
 
-				oracle = Oracle(name = "Docking_Score", software="vina",
-					pyscreener_path = self.pyscreener_path,
-					receptors=[target_pdb_file],
-					center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
-					buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = 10000)
+					oracle = Oracle(name = "Docking_Score", software="vina",
+						pyscreener_path = self.pyscreener_path,
+						receptors=[target_pdb_file],
+						center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
+						buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = 10000)
 
-				docking_scores = oracle(pred_)
+					docking_scores = oracle(pred_)
+				print_sys("---- Calculating average docking scores ----")
 				results['docking_scores_dict'] = docking_scores
 				values = np.array(list(docking_scores.values()))
-				results['AVG_Top100'] = np.mean(values)
-				results['AVG_Top10'] = np.mean(sorted(values)[:10])
-				results['Top1'] = max(values)
+				results['top100'] = np.mean(values)
+				results['top10'] = np.mean(sorted(values)[:10])
+				results['top1'] = max(values)
 
-				all_criteria = ['m1', 'filters', 'diversity', 'validity', 'uniqueness']
-
-				if criteria == 'all':
-					criteria = all_criteria
-				elif criteria == 'none':
-					criteria = []
+				if m1_api is None: 
+					print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score due to long-time. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained by You can obtain it via: https://tdcommons.ai/functions/oracles/#moleculeone')
 				else:
-					if sum([1 if i in all_criteria else 0 for i in criteria]) != len(criteria):
-						# there is at least one criteria does not match the supported evaluation
-						raise ValueError("Please select the criteria from a list of 'm1', 'filters', 'diversity', 'validity', 'uniqueness'!")
-
-				if 'm1' in criteria: 
-					if m1_api is None:
-						raise ValueError("Please input the m1_api token in the evaluate function call! You can obtain it via: https://tdcommons.ai/functions/oracles/#moleculeone")
+					print_sys("---- Calculating molecule.one synthesizability score ----")
 					m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
 					m1_scores = m1(pred_)
 					scores_array = list(m1_scores.values())
-					results['m1_scores_dict'] = m1_scores
-					results['AVG_m1_scores'] = np.mean(scores_array)
+					results['m1_dict'] = m1_scores
+					results['m1'] = np.mean(scores_array)
 					## TODO: how good is the m1 score? ask stan; 0.5 placeholder
-					results['AVG_docking_scores_synthesizable'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j > 0.5])
+					results['docking_m1'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j > 0.5])
+                    
+				print_sys("---- Calculating molecular filters scores ----")
+				from .chem_utils import MolFilter
+				## follow guacamol
+				filters = MolFilter(filters = ['PAINS', 'SureChEMBL', 'Glaxo'], property_filters_flag = False)
+				pred_filter = filters(pred_)
+				results['pass_list'] = pred_filter
+				results['%pass'] = float(len(pred_filter))/100
+				results['top1_%pass'] = max([docking_scores[i] for i in pred_filter])
+				print_sys("---- Calculating diversity ----")
+				from .evaluator import Evaluator
+				evaluator = Evaluator(name = 'Diversity')
+				score = evaluator(pred_)
+				results['diversity'] = score
+				print_sys("---- Calculating novelty ----")
+				evaluator = Evaluator(name = 'Novelty')
+				training = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
+				score = evaluator(pred_, training.smiles.values)
+				results['novelty'] = score
 
-				if 'filters' in criteria:
-					from tdc.chem_utils import MolFilter
-					## TODO: select an optimal set of filters. test a bit.
-					filters = MolFilter(filters = ['PAINS'], HBD = [0, 6])
-					pred_filter = filters(pred_)
-					results['pass_filter_smiles_list'] = pred_filter
-					results['unfiltered_fractions'] = float(len(pred_filter))/100
-					results['AVG_docking_scores_unfiltered'] = np.mean([docking_scores[i] for i in pred_filter])
-
-				if 'diversity' in criteria:
-					from tdc import Evaluator
-					evaluator = Evaluator(name = 'Diversity')
-					score = evaluator(pred_)
-					results['diversity'] = score
-
-				if 'validity' in criteria:
-					from tdc import Evaluator
-					evaluator = Evaluator(name = 'Validity')
-					score = evaluator(pred_)
-					results['validity'] = score
-
-				if 'uniqueness' in criteria:
-					from tdc import Evaluator
-					evaluator = Evaluator(name = 'Uniqueness')
-					score = evaluator(pred_)
-					results['uniqueness'] = score
-
-				results_all[dataset_name] = results
+				results_all[data_name] = results
 			return results_all
 
 		if true is None:
