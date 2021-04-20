@@ -257,14 +257,14 @@ class BenchmarkGroup:
 					if save_dict:
 						results['m1_dict'] = m1_scores
 					results['m1'] = np.mean(scores_array)
-					results['docking_m1'] = np.mean([docking_scores[i] for i, j in m1_scores.items()])
                     
 				print_sys("---- Calculating molecular filters scores ----")
 				from .chem_utils import MolFilter
 				## follow guacamol
 				filters = MolFilter(filters = ['PAINS', 'SureChEMBL', 'Glaxo'], property_filters_flag = False)
 				pred_filter = filters(pred_)
-				results['pass_list'] = pred_filter
+				if save_dict:
+					results['pass_list'] = pred_filter
 				results['%pass'] = float(len(pred_filter))/100
 				results['top1_%pass'] = max([docking_scores[i] for i in pred_filter])
 				print_sys("---- Calculating diversity ----")
