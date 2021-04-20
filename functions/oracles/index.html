@@ -222,15 +222,30 @@
 <p class="is-size-6">  <strong> Installation instruction: </strong> 
 </p>
 <ul>
-    <li> 1. Install ADFR. The guidance can be found in https://ccsb.scripps.edu/adfr/downloads/ </li>   
-    <li> 2. Install Vina. The guidance can be found in http://vina.scripps.edu/   (alternative ways include qvina, smina and DOCK6). The executable can be directly used.  </li>
-    <li> 3. Git clone https://github.com/coleygroup/pyscreener and use "python setup.py install" to install. </li> 
-    <li> 4. Install pdbfixer using "conda install -c omnia pdbfixer". </li>
+    <li> 0. Setup TDC conda env: </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">tdc_env</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">tdc_env</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">pytdc</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pdbfixer</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">openbabel</span>
+</code></pre></div></div>
+<ul>
+    <li> 1. Install ADFR. The detailed instruction for different OS can be found in <a href="https://ccsb.scripps.edu/adfr/downloads/">https://ccsb.scripps.edu/adfr/downloads/</a>. </li><li> 2. Install Vina. The detailed instruction can be found in <a href="http://vina.scripps.edu/">http://vina.scripps.edu/</a>.  </li>
+    <li> 3. Git clone <a href="https://github.com/coleygroup/pyscreener"> https://github.com/coleygroup/pyscreener </a> and use <code>python setup.py install </code> to install. </li> 
+    <li> 4. Add the ADFR/Vina bin path to the PATH variable in your .bashrc / .bash_profile. For example, </li>
 
 </ul>
 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># in .bashrc or .bash_profile
+</span><span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="p">:</span><span class="n">XXXX</span><span class="o">/</span><span class="n">autodock_vina_1_1_2_linux_x86</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="p">:</span><span class="n">XXXX</span><span class="o">/</span><span class="n">ADFRsuite</span><span class="o">-</span><span class="mf">1.0</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
+<span class="c1"># please make sure the path is on the bin folder
+</span></code></pre></div></div>
+
 <p class="is-size-6">
- It should take approximately 10 minutes to install locally. Please open an <a href="https://github.com/mims-harvard/TDC/issues">issue</a> if you meet any problem. <b>Checkout this GitHub <a href="https://github.com/mims-harvard/TDC/issues/63">issue</a> for FAQ.</b>
+ It should take approximately 15 minutes to install locally. Please open an <a href="https://github.com/mims-harvard/TDC/issues">issue</a> if you meet any problem. <b>Checkout this GitHub <a href="https://github.com/mims-harvard/TDC/issues/63">issue</a> for FAQ.</b>
  </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
@@ -310,9 +325,11 @@ askcos(smiles, host_ip, output='plausibility', save_json=False, file_name='tree_
 <p class="is-size-6">  <strong> Installation instruction: </strong>  </p>
 
 <ul>
-        <li>Create an account at <a href="https://app.molecule.one/"> this link</a>. Grab the API Token in your profile page.</li>
+        <li>Create an account at <a href="https://tdc.molecule.one/"> tdc.molecule.one</a>. Grab the API Token in your profile page.</li>
         <li>Install molecule.one by <code>pip install git+https://github.com/molecule-one/m1wrapper-python</code></li>
 </ul>
+
+<p class="is-size-6"> <strong>Important Note:</strong> The use of Molecule.one software provided at tdc.molecule.one is permitted only for non-commercial use in connection with evaluation on the datasets provided by the TDC benchmark. To evaluate your molecules you need to register an account on tdc.molecule.one and accept provided terms and conditions. After registering the account, please write to stan@molecule.one a request to activate it with a brief description of the intended use. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
 <span class="n">m1</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Molecule One Synthesis'</span><span class="p">,</span> <span class="n">api_token</span> <span class="o">=</span> <span class="s">'XXXXX'</span><span class="p">)</span>
