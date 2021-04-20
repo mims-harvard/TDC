@@ -246,8 +246,7 @@ class BenchmarkGroup:
 					scores_array = list(m1_scores.values())
 					results['m1_dict'] = m1_scores
 					results['m1'] = np.mean(scores_array)
-					## TODO: how good is the m1 score? ask stan; 0.5 placeholder
-					results['docking_m1'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j > 0.5])
+					results['docking_m1'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j <= 6])
                     
 				print_sys("---- Calculating molecular filters scores ----")
 				from .chem_utils import MolFilter
