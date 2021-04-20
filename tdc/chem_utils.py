@@ -1648,8 +1648,12 @@ class molecule_one_retro:
       try:
           from m1wrapper import MoleculeOneWrapper
       except:
-          raise ImportError("Install Molecule.One Wrapper via pip install git+https://github.com/molecule-one/m1wrapper-python") 
-      self.m1wrapper = MoleculeOneWrapper(api_token, 'https://app.molecule.one')
+          try:
+              install('git+https://github.com/molecule-one/m1wrapper-python')
+          except:
+              raise ImportError("Install Molecule.One Wrapper via pip install git+https://github.com/molecule-one/m1wrapper-python") 
+              from m1wrapper import MoleculeOneWrapper
+      self.m1wrapper = MoleculeOneWrapper(api_token, 'https://tdc.molecule.one')
     
 
     def __call__(self, smiles):
@@ -4782,6 +4786,7 @@ class MolFilter:
         from rd_filters.rd_filters import RDFilters, read_rules
     except:
         install('git+https://github.com/PatWalters/rd_filters.git')
+        from rd_filters.rd_filters import RDFilters, read_rules
         
     import pkg_resources
     self.property_filters_flag = property_filters_flag

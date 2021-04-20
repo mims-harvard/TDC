@@ -193,7 +193,7 @@ class BenchmarkGroup:
 		else:
 			return {'train_val': train, 'test': test, 'name': dataset}
 
-	def evaluate(self, pred, true = None, benchmark = None, m1_api = None):
+	def evaluate(self, pred, true = None, benchmark = None, m1_api = None, save_dict = True):
 
 		if self.name == 'docking_group':
 			results_all = {}
@@ -231,23 +231,33 @@ class BenchmarkGroup:
 
 					docking_scores = oracle(pred_)
 				print_sys("---- Calculating average docking scores ----")
-				results['docking_scores_dict'] = docking_scores
+				if len(np.where(np.array(list(docking_scores.values()))>0)[0]) > 0.7:
+					## check if the scores are all positive.. if so, make them all negative
+					docking_scores = {j: -k for j, k in docking_scores.items()}
+				if save_dict:
+					results['docking_scores_dict'] = docking_scores
 				values = np.array(list(docking_scores.values()))
 				results['top100'] = np.mean(values)
 				results['top10'] = np.mean(sorted(values)[:10])
-				results['top1'] = max(values)
+				results['top1'] = min(values)
 
 				if m1_api is None: 
-					print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score due to long-time. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained by You can obtain it via: https://tdcommons.ai/functions/oracles/#moleculeone')
+					print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained via: https://tdcommons.ai/functions/oracles/#moleculeone')
 				else:
 					print_sys("---- Calculating molecule.one synthesizability score ----")
+					from .oracles import Oracle
 					m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
-					m1_scores = m1(pred_)
+					import heapq
+					from operator import itemgetter
+					top10_docking_smiles = list(dict(heapq.nsmallest(10, docking_scores.items(), key=itemgetter(1))).keys())
+					m1_scores = m1(top10_docking_smiles)
 					scores_array = list(m1_scores.values())
-					results['m1_dict'] = m1_scores
+					scores_array = np.array([float(i) for i in scores_array])
+					scores_array[np.where(scores_array == -1.0)[0]] = 10 # m1 score errors are usually large complex molecules
+					if save_dict:
+						results['m1_dict'] = m1_scores
 					results['m1'] = np.mean(scores_array)
-					## TODO: how good is the m1 score? ask stan; 0.5 placeholder
-					results['docking_m1'] = np.mean([docking_scores[i] for i, j in m1_scores.items() if j > 0.5])
+					results['docking_m1'] = np.mean([docking_scores[i] for i, j in m1_scores.items()])
                     
 				print_sys("---- Calculating molecular filters scores ----")
 				from .chem_utils import MolFilter
