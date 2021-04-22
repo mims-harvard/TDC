@@ -198,87 +198,89 @@ class BenchmarkGroup:
 		if self.name == 'docking_group':
 			results_all = {}
 
-			for data_name, pred_ in pred.items():
+			for data_name, pred_all in pred.items():
+				results_max_call = {}
+				for num_max_call, pred_ in pred_all.items():
 
-				results = {}
-				
-				recalc = False
+					results = {}
+					
+					recalc = False
 
-				if isinstance(pred_, dict):
-					print_sys("The input is a dictionary, expected to have SMILES string as key and docking score as value!")
-					docking_scores = pred_
-					pred_ = list(pred_.keys())
-				elif isinstance(pred_, list):
-					recalc = True
-					print_sys("The input is a list, docking score will be computed! If you already have the docking scores, please make the list as a dictionary with SMILES string as key and docking score as value")
-				else:
-					raise ValueError("The input prediction must be a dictionary with SMILES and their docking scores or a list of SMILES!")
-				## pred is a list of smiles strings or a dictionary of smiles strings if docking scores are already calculated...
-				if len(pred_) != 100:
-					raise ValueError("The expected output is a list/dictionary of top 100 molecules!")
-				
-				if recalc:
-					dataset = fuzzy_search(benchmark, self.dataset_names)
+					if isinstance(pred_, dict):
+						print_sys("The input is a dictionary, expected to have SMILES string as key and docking score as value!")
+						docking_scores = pred_
+						pred_ = list(pred_.keys())
+					elif isinstance(pred_, list):
+						recalc = True
+						print_sys("The input is a list, docking score will be computed! If you already have the docking scores, please make the list as a dictionary with SMILES string as key and docking score as value")
+					else:
+						raise ValueError("The input prediction must be a dictionary with SMILES and their docking scores or a list of SMILES!")
+					## pred is a list of smiles strings or a dictionary of smiles strings if docking scores are already calculated...
+					if len(pred_) != 100:
+						raise ValueError("The expected output is a list/dictionary of top 100 molecules!")
+					
+					if recalc:
+						dataset = fuzzy_search(benchmark, self.dataset_names)
 
-					# docking scores for the top K smiles (K <= 100)
-					target_pdb_file = os.path.join(self.path, dataset + '.pdb')
+						# docking scores for the top K smiles (K <= 100)
+						target_pdb_file = os.path.join(self.path, dataset + '.pdb')
 
-					oracle = Oracle(name = "Docking_Score", software="vina",
-						pyscreener_path = self.pyscreener_path,
-						receptors=[target_pdb_file],
-						center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
-						buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = 10000)
+						oracle = Oracle(name = "Docking_Score", software="vina",
+							pyscreener_path = self.pyscreener_path,
+							receptors=[target_pdb_file],
+							center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
+							buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = 10000)
 
-					docking_scores = oracle(pred_)
-				print_sys("---- Calculating average docking scores ----")
-				if len(np.where(np.array(list(docking_scores.values()))>0)[0]) > 0.7:
-					## check if the scores are all positive.. if so, make them all negative
-					docking_scores = {j: -k for j, k in docking_scores.items()}
-				if save_dict:
-					results['docking_scores_dict'] = docking_scores
-				values = np.array(list(docking_scores.values()))
-				results['top100'] = np.mean(values)
-				results['top10'] = np.mean(sorted(values)[:10])
-				results['top1'] = min(values)
-
-				if m1_api is None: 
-					print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained via: https://tdcommons.ai/functions/oracles/#moleculeone')
-				else:
-					print_sys("---- Calculating molecule.one synthesizability score ----")
-					from .oracles import Oracle
-					m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
-					import heapq
-					from operator import itemgetter
-					top10_docking_smiles = list(dict(heapq.nsmallest(10, docking_scores.items(), key=itemgetter(1))).keys())
-					m1_scores = m1(top10_docking_smiles)
-					scores_array = list(m1_scores.values())
-					scores_array = np.array([float(i) for i in scores_array])
-					scores_array[np.where(scores_array == -1.0)[0]] = 10 # m1 score errors are usually large complex molecules
+						docking_scores = oracle(pred_)
+					print_sys("---- Calculating average docking scores ----")
+					if len(np.where(np.array(list(docking_scores.values()))>0)[0]) > 0.7:
+						## check if the scores are all positive.. if so, make them all negative
+						docking_scores = {j: -k for j, k in docking_scores.items()}
 					if save_dict:
-						results['m1_dict'] = m1_scores
-					results['m1'] = np.mean(scores_array)
-                    
-				print_sys("---- Calculating molecular filters scores ----")
-				from .chem_utils import MolFilter
-				## follow guacamol
-				filters = MolFilter(filters = ['PAINS', 'SureChEMBL', 'Glaxo'], property_filters_flag = False)
-				pred_filter = filters(pred_)
-				if save_dict:
-					results['pass_list'] = pred_filter
-				results['%pass'] = float(len(pred_filter))/100
-				results['top1_%pass'] = max([docking_scores[i] for i in pred_filter])
-				print_sys("---- Calculating diversity ----")
-				from .evaluator import Evaluator
-				evaluator = Evaluator(name = 'Diversity')
-				score = evaluator(pred_)
-				results['diversity'] = score
-				print_sys("---- Calculating novelty ----")
-				evaluator = Evaluator(name = 'Novelty')
-				training = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
-				score = evaluator(pred_, training.smiles.values)
-				results['novelty'] = score
+						results['docking_scores_dict'] = docking_scores
+					values = np.array(list(docking_scores.values()))
+					results['top100'] = np.mean(values)
+					results['top10'] = np.mean(sorted(values)[:10])
+					results['top1'] = min(values)
 
-				results_all[data_name] = results
+					if m1_api is None: 
+						print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained via: https://tdcommons.ai/functions/oracles/#moleculeone')
+					else:
+						print_sys("---- Calculating molecule.one synthesizability score ----")
+						from .oracles import Oracle
+						m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
+						import heapq
+						from operator import itemgetter
+						top10_docking_smiles = list(dict(heapq.nsmallest(10, docking_scores.items(), key=itemgetter(1))).keys())
+						m1_scores = m1(top10_docking_smiles)
+						scores_array = list(m1_scores.values())
+						scores_array = np.array([float(i) for i in scores_array])
+						scores_array[np.where(scores_array == -1.0)[0]] = 10 # m1 score errors are usually large complex molecules
+						if save_dict:
+							results['m1_dict'] = m1_scores
+						results['m1'] = np.mean(scores_array)
+	                    
+					print_sys("---- Calculating molecular filters scores ----")
+					from .chem_utils import MolFilter
+					## follow guacamol
+					filters = MolFilter(filters = ['PAINS', 'SureChEMBL', 'Glaxo'], property_filters_flag = False)
+					pred_filter = filters(pred_)
+					if save_dict:
+						results['pass_list'] = pred_filter
+					results['%pass'] = float(len(pred_filter))/100
+					results['top1_%pass'] = max([docking_scores[i] for i in pred_filter])
+					print_sys("---- Calculating diversity ----")
+					from .evaluator import Evaluator
+					evaluator = Evaluator(name = 'Diversity')
+					score = evaluator(pred_)
+					results['diversity'] = score
+					print_sys("---- Calculating novelty ----")
+					evaluator = Evaluator(name = 'Novelty')
+					training = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
+					score = evaluator(pred_, training.smiles.values)
+					results['novelty'] = score
+					results_max_call[num_max_call] = results
+				results_all[data_name] = results_max_call
 			return results_all
 
 		if true is None:
