@@ -3189,11 +3189,11 @@ def calcPubChemFingerAll(s):
 
 def smiles2pubchem(s):
   s = canonicalize(s)
-  # try:
-  features = calcPubChemFingerAll(s)
-  # except:
-  #   print('pubchem fingerprint not working for smiles: ' + s + ' convert to 0 vectors')
-  #   features = np.zeros((881, ))
+  try:
+    features = calcPubChemFingerAll(s)
+  except:
+     print('pubchem fingerprint not working for smiles: ' + s + ' convert to 0 vectors')
+     features = np.zeros((881, ))
   return np.array(features)
 
 
