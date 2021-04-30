@@ -279,6 +279,7 @@ class BenchmarkGroup:
 					training = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
 					score = evaluator(pred_, training.smiles.values)
 					results['novelty'] = score
+					results['top smiles'] = [i[0] for i in sorted(docking_scores.items(), key=lambda x: x[1])]                    
 					results_max_call[num_max_call] = results
 				results_all[data_name] = results_max_call
 			return results_all
