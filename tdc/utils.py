@@ -533,8 +533,9 @@ def create_fold_time(df, frac, date_column):
 	train = train_val[train_val.Date <= split_date_valid].reset_index(drop = True)
 	valid = train_val[train_val.Date > split_date_valid].reset_index(drop = True)
 
-	return {'train': train, 'valid': valid, 'test': test}
-
+	return {'train': train, 'valid': valid, 'test': test, 'split_time': {'train_time_frame': (df.iloc[0].Date, split_date_valid), 
+                                                                         'valid_time_frame': (split_date_valid, split_date), 
+                                                                         'test_time_frame': (split_date, df.iloc[-1].Date)}}
 def train_val_test_split(len_data, frac, seed):
 	test_size = int(len_data * frac[2])
 	train_size = int(len_data * frac[0])
