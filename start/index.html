@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Quick Start Guide - TDC</title>
+    <title>Quick Start - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Quick Start Guide | TDC</title>
+<title>Quick Start | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Quick Start Guide" />
+<meta property="og:title" content="Quick Start" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="http://localhost:4000/start/" />
-<meta property="og:url" content="http://localhost:4000/start/" />
+<link rel="canonical" href="https://tdcommons.ai/start/" />
+<meta property="og:url" content="https://tdcommons.ai/start/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/start/","headline":"Quick Start Guide","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"https://tdcommons.ai/start/","headline":"Quick Start","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -84,9 +84,9 @@
                             
                             <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
                             
-                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
                             
-                            <a href="/functions/data_split/" class="navbar-item ">Data Split</a>
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -140,17 +140,105 @@
                     
                     
 <div class="content">
-    <h1 id="quick-start-guide">Quick Start Guide</h1>
+    <h1 id="introduction">Introduction</h1>
 
 <p class="is-size-5"> 
-Machine learning applied to discovery and development of therapeutics is an increasingly popular area of research. To facilitate progress in this field, we introduce the Therapeutics Data Commons, a large set of biomedically relevant learning tasks spread across different domains of drug discovery and development. We curate tasks into specific training, validation, and test splits to ensure that each task can generalize and transfer to real-world scenarios. TDC will help the machine learning community focus on solving scientifically meaningful problems.
+Developing therapeutics to cure diseases and improve human health is an overarching goal of biomedical
+research. With the advent of high-throughput techniques in genome sequencing, compound
+screening and the digitization of health records, large amounts of
+rich and diverse data have become available for research and analysis. The availability
+of large datasets call for the development of algorithmic and AI infrastructure and AI-ready datasets to facilitate discovery. 
 </p>
+
+<p class="is-size-5">
+TDC is first unifying framework to systematically access and evaluate ML across the entire range of
+therapeutics. At its core, TDC is a collection of curated datasets and learning tasks that can translate
+algorithmic innovation into biomedical and clinical implementation. Datasets in TDC cover a wide range of
+therapeutic products (e.g., small molecule, biologics, gene editing) across the entire discovery and development
+pipeline (i.e., target identification, hit discovery, lead optimization, manufacturing). 
+</p>
+
+<div class="column is-8 is-offset-2">
+    <img src="/img/tdc_triangle.png" alt="Overview of TDC" class="img-responsive" />
+</div>
+
+<p class="is-size-5">
+Importantly, datasets in TDC are AI/ML-ready, where input features are processed into the most
+accessible format possible, such that ML researchers can use them directly as input to ML algorithms. Further,
+TDC provides numerous functions for model evaluation, meaningful data splits, data processors, and oracles
+for molecule generation, all accessible via an open source TDC package. All features of TDC are designed to easily
+integrate into any ML workflow. To this end, we develop an open-source software library that allows for efficient 
+retrieval of any TDC dataset and implements supporting functions for learning tasks. 
+</p>
+
+<p class="is-size-5">
+We also provides realistic leaderboards where we curate learning tasks into meaningful train, validation, and test splits to provide 
+a systematic model development and evaluation framework and test the extent to which algorithmic advancements transfer to real-world settings.
+Finally, TDC includes ecosystem of tools, libraries, leaderboards, and community resources. 
+</p>
+
+<div class="container">
+            <div class="columns is-vcentered">
+                <div class="column is-12 is-size-5">
+                    <div class="box has-background-info has-text-white">
+                        <b>Facilitating algorithmic and scientific advance in the broad area of therapeutics</b><br />
+                        We envision TDC
+                        to be the meeting point between domain scientists and ML scientists (Figure 2). Domain scientists can
+                        pose learning tasks and identify relevant datasets that are carefully processed and integrated into the TDC
+                        and formulated as a scientifically valid learning tasks. ML scientists can then rapidly obtain these tasks
+                        and ML-ready datasets through the TDC programming framework and use them to design powerful ML
+                        methods. Predictions and other outputs produced by ML models can then facilitate algorithmic and scientific
+                        advances in therapeutics.
+                    </div>
+                </div>
+            </div>
+</div>
 
 <p><img src="/img/tdc_vision.png" alt="Vision for TDC" class="img-responsive" /></p>
 
-<p class="is-size-5"> 
-All methods and datasets are integrated and are accessible via an open source TDC package. TDC is built upon numerous public data sources such as curated database, journal supplementary, bioassay and so on. The full collection currently includes 66 datasets covering a wide range of tasks and biomedical products. 
-</p>
+<div class="column is-12">
+    <hr />
+</div>
+
+<h2 id="tiered-design-of-therapeutics-data-commons-problemlearning-taskdata-set">Tiered Design of Therapeutics Data Commons: “Problem–Learning Task–Data Set”</h2>
+
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-8">
+              <p class="is-size-5">
+              TDC has a unique three-tiered hierarchical structure, which to our knowledge, is the first attempt at systematically organizing ML for therapeutics. We organize TDC into three distinct <b>problems</b>. For each problem, we give a collection <b>learning tasks</b>. Finally, for each task, we provide a series of <b>datasets</b>.
+              </p> 
+              <p class="is-size-5">
+              In the first tier, after observing a large set of therapeutics tasks, we categorize and abstract out three major problems:
+              </p>
+              <ul>
+			    <li><strong>Single-instance prediction </strong> <code>single_pred</code>: Prediction of property for an individual biomedical entity. </li>
+			    <li><strong>Multi-instance prediction </strong><code>multi_pred</code>: Prediction of property for multiple biomedical entities. </li>
+			    <li><strong>Generation</strong> <code>generation</code>: Generation of a new desirable biomedical entity. </li>
+			  </ul>
+        </div>
+        <div class="column is-3 has-text-centered">
+            <img src="/img/tdc_hierarchy.png" alt="TDC hierarchy" class="img-responsive" />
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="columns is-vcentered">
+        <div class="column is-8">
+			  <p class="is-size-5">
+			  The second tier in the TDC structure is organized into learning tasks. Improvement on these tasks can result in numerous applications, including identifying personalized combinatorial therapies, designing novel class of antibodies, improving disease diagnosis, and finding new cures for emerging diseases.
+        </p>
+        <p class="is-size-5">
+        In the third tier of TDC, we provide multiple datasets for each task. For each dataset, we provide several splits of the dataset into training, validation, and test sets to evaluate model performance.
+        </p>
+	          <p class="is-size-5"> </p>
+        </div>
+        <div class="column is-3 has-text-centered">
+            <img src="/img/tdc_problems.png" alt="TDC problems" class="img-responsive" />
+        </div>
+    </div>
+</div>
 
 <div class="column is-12">
     <hr />
@@ -169,85 +257,61 @@ All methods and datasets are integrated and are accessible via an open source TD
     <hr />
 </div>
 
-<h2 id="design-of-therapeutics-data-commons">Design of Therapeutics Data Commons</h2>
-
-<div class="container">
-    <div class="columns is-vcentered">
-        <div class="column is-8">
-              <p class="is-size-5">
-              TDC has a unique three-tiered hierarchical structure, which to our knowledge, is the first attempt at systematically organizing machine learning for therapeutics. We organize TDC into three distinct <i>problems</i>. For each problem, we give a collection <i>learning tasks</i>. Finally, for each task, we provide a series of <i>datasets</i>.
-              </p> 
-              <p class="is-size-5">
-              In the first tier, after observing a large set of therapeutics tasks, we categorize and abstract out three major areas (<i>i.e.</i>, problems) where machine learning can facilitate scientific advances, namely, single-instance prediction, multi-instance prediction, and generation:
-              </p>
-              <ul>
-			    <li><strong>Single-instance prediction </strong> <code>single_pred</code>: Prediction of property given individual biomedical entity. </li>
-			    <li><strong>Multi-instance prediction </strong><code>multi_pred</code>: Prediction of property given multiple biomedical entities. </li>
-			    <li><strong>Generation</strong> <code>generation</code>: Generation of new desirable biomedical entities. </li>
-			  </ul>
-        </div>
-        <div class="column is-3 has-text-centered">
-            <img src="/img/tdc_hierarchy.png" alt="TDC hierarchy" class="img-responsive" />
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="columns is-vcentered">
-        <div class="column is-8">
-			  <p class="is-size-5">
-			  The second tier in the TDC structure is organized into learning tasks. Improvement on these tasks can result in numerous applications, including identifying personalized combinatorial therapies, designing novel class of antibodies, improving disease diagnosis, and finding new cures for emerging diseases.
-        </p>
-        <p class="is-size-5">
-        Finally, in the third tier of TDC, each task is instantiated via multiple datasets. For each dataset, we provide several splits of the dataset into training, validation, and test sets to simulate the type of understanding and generalization (<i>e.g.</i>, the model's ability to generalize to entirely unseen compounds or to granularly resolve patient response to a polytherapy) needed for transition into production and clinical implementation.
-        </p>
-	          <p class="is-size-5"> </p>
-        </div>
-        <div class="column is-3 has-text-centered">
-            <img src="/img/tdc_problems.png" alt="TDC problems" class="img-responsive" />
-        </div>
-    </div>
-</div>
-
-<div class="column is-12">
-    <hr />
-</div>
-
 <h2 id="data-loaders">Data Loaders</h2>
 
-<p class="is-size-5">  TDC provides a collection of workflows with intuitive, high-level APIs for both beginners and experts to create machine learning models in Python. Building off the modularized "Problem--Learning Task--Data Set" structure (see above) in TDC, we provide a three-layer API to access any learning task and dataset. This hierarchical API design allows us to easily incorporate new tasks and datasets. 
+<p class="is-size-5">  TDC provides a collection of workflows with intuitive, high-level APIs for both beginners and experts to create ML models in Python. Building off the modularized "Problem--Learning Task--Data Set" structure (see above) in TDC, we provide a three-layer API to access any learning task and dataset.  
 </p>
 
 <div class="column is-8 is-offset-2">
     <img src="/img/tdc_API_relation2.png" alt="TDC api" class="img-responsive" />
 </div>
 
-<p class="is-size-5"> For a concrete example, to obtain the Caco2 dataset from ADME therapeutic learning task in the single-instance prediction problem: </p>
+<p class="is-size-5"> As an example, to obtain the <code>Caco2</code> dataset from <code>ADME</code> task in the <code>single-instance prediction</code> problem do as follows: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
 <span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
-<p class="is-size-5"> The variable df is a Pandas object for the entire dataset. The variable splits would in default output a dictionary where keys are train, val, test and values are the pandas DataFrame with the Drug IDs, SMILES strings and the label. For detailed outputs, see the dataset documentation. </p>
+<p class="is-size-5"> The variable <code>df</code> is a Pandas object holding the entire dataset. By default, the variable <code>splits</code> is a dictionary with keys <code>train</code>, <code>val</code>, and <code>test</code> whose values are all Pandas DataFrames with Drug IDs, SMILES strings and labels. For detailed information about outputs, see <a href="/single_pred_tasks/adme/#caco-2-cell-effective-permeability-wang-et-al">Datasets documentation.</a> </p>
 
-<p class="is-size-5"> Note that the user only needs to specify "Problem--Learning Task--Data Set" and TDC automatically retrieve the processed machine learning-ready dataset from TDC server and generate a <i>data</i> object, which contains numerous utility functions that can be directly applied on the dataset. </p>
+<p class="is-size-5"> The user only needs to specify "Problem--Learning Task--Data Set." TDC then automatically retrieves the processed AI/ML-ready dataset from the TDC server and generates a <code>data</code> object, exposing numerous data functions that can be directly applied to the dataset. </p>
 
 <div class="column is-12">
     <hr />
 </div>
 
-<h2 id="data-functions">Data Functions</h2>
+<h2 id="ecosystem-of-data-functions-tools-libraries-and-community-resources">Ecosystem of Data Functions, Tools, Libraries, and Community Resources</h2>
 
-<p class="is-size-5"> TDC implements a comprehensive suite of auxiliary functions frequently used in therapeutics ML. This functionality is wrapped in an easy-to-use interface. Broadly, we provide functions for the following four major categories: </p>
-<ul>
-    <li><strong>Model Evaluation </strong>: TDC includes a series of realistic metrics functions to evaluate models for therapeutics ML tasks in TDC such that models are transferable to real-world scenarios.</li>
-    <li><strong>Data Split</strong>: Real world applications require ML models to generalize to out-of-distribution samples. TDC includes various data splits to reflect realistic generalization schemes. </li>
-    <li><strong>Data Processing </strong>: As therapeutics ML covers a wide range of data modalities and has numerous repetitive processing functions, TDC summarizes and provides wrappers for useful data helpers. </li>
-    <li><strong>Molecule Generation Oracles</strong>:  Molecular design tasks require oracle functions to measure the quality of generated entities. TDC provides oracles where each is tailored for a specific goal of interest.</li>
+<p class="is-size-5"> TDC includes numerous data functions that can be readily used with
+any TDC dataset. TDC divides its programmatic ecosystem into four broad categories: </p>
+<ul class="is-size-5">
+    <li><strong>Model Evaluation</strong>: TDC implements a series of metrics and performance functions to debug ML models, evaluate model performance for any task in TDC, and assess whether model predictions generalize to out-of-distribution datasets.</li>
+    <li><strong>Dataset Splits</strong>: Therapeutic applications require ML models to generalize to out-of-distribution samples. TDC
+implements various data splits to reflect realistic learning settings. </li>
+    <li><strong>Data Processing</strong>: As therapeutics ML covers a wide range of data modalities and requires numerous repetitive
+processing functions, TDC implements wrappers and useful data helpers for them. </li>
+    <li><strong>Molecule Generation Oracles</strong>: Molecular design tasks require oracle functions to measure the quality of generated entities. TDC implements over 17 molecule generation oracles, representing the most comprehensive colleciton of molecule oracles. Each oracle is tailored to measure the quality of AI-generated molecules in a specific dimension.</li>
   </ul>
 
-<p class="is-size-5"> See the functions documentation for detail usage for each function. </p>
+<p class="is-size-5"> For further information see <a href="/fct_overview/">Data Functions documentation.</a> </p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h2 id="public-leaderboards">Public Leaderboards</h2>
+
+<p class="is-size-5">
+TDC provides leaderboards for systematic model evaluation and comparison. Each dataset
+in TDC can be thought of as a <b>benchmark</b>. For a model to be useful for a specific therapeutic question,
+it needs to consistently perform well across multiple datasets and tasks. For this reason, we group
+individual benchmarks in TDC into meaningful groups, which we refer to as <b>benchmark groups</b>. Datasets and
+tasks within a benchmark group are carefully selected and centered around the therapeutic question.
+Further, dataset splits and evaluation metrics are also thoughtfully selected to reflect the difficulty of the therapeutic question in a real-world setting.
+</p>
+
+<p class="is-size-5"> For further information see <a href="/benchmark/overview/">Benchmark documentation.</a> </p>
 
 <div class="column is-12">
     <hr />
@@ -255,28 +319,30 @@ All methods and datasets are integrated and are accessible via an open source TD
 
 <h2 id="cite-us">Cite Us</h2>
 
-<p class="is-size-5"> If you use TDC in your work, please cite: </p>
+<p class="is-size-5"> If you use TDC in your work, consider citing our <a href="https://arxiv.org/abs/2102.09548">manuscript:</a> </p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@article{tdc,
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@article{tdc2021,
   title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Therapeutics},
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
+          Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
   journal={arXiv preprint arXiv:2102.09548},
   year={2021}
 }
 </code></pre></div></div>
 
-<p class="is-size-5"> If you use any of the datasets, please make sure to also cite the primary data source as described in the Datasets section. </p>
+<p class="is-size-5"> If you use any of the datasets, make sure to also cite the primary data source as described in <a href="overview/">Datasets section.</a> </p>
 
 <div class="column is-12">
     <hr />
 </div>
 
-<p class="is-size-3 has-text-centered"> <strong>Start Exploring Therapeutics Data Commons:</strong> </p>
+<p class="is-size-3 has-text-centered"> <strong>Start Exploring Therapeutics Data Commons</strong> </p>
 
 <div class="container">
         <div class="columns is-vcentered is-size-5">
-            <div class="column is-4 is-offset-2 has-text-centered"> <a href="/overview" class="box has-background-info has-text-white">Overview of Datasets</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/overview" class="box has-background-info has-text-white">Overview of Datasets</a></div>
             <div class="column is-4 has-text-centered"> <a href="/fct_overview" class="box has-background-info has-text-white">Overview of Data Functions</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/benchmark/overview" class="box has-background-info has-text-white">Overview of Benchmarks</a></div>
         </div>
 </div>
 
@@ -306,6 +372,18 @@ All methods and datasets are integrated and are accessible via an open source TD
                 <a href="https://github.com/mims-harvard/TDC">
                     <span class="icon is-large">
                       <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-qjjtloo4-naM1gsab8Ikpb03qXI9xzQ">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
                     </span>
                 </a>
             </div>

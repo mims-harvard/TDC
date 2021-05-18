@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Function Overview - TDC</title>
+    <title>TDC Data Functions - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Function Overview | TDC</title>
+<title>TDC Data Functions | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Function Overview" />
+<meta property="og:title" content="TDC Data Functions" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="http://localhost:4000/fct_overview/" />
-<meta property="og:url" content="http://localhost:4000/fct_overview/" />
+<link rel="canonical" href="https://tdcommons.ai/fct_overview/" />
+<meta property="og:url" content="https://tdcommons.ai/fct_overview/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/fct_overview/","headline":"Function Overview","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"https://tdcommons.ai/fct_overview/","headline":"TDC Data Functions","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -84,9 +84,9 @@
                             
                             <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
                             
-                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
                             
-                            <a href="/functions/data_split/" class="navbar-item ">Data Split</a>
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -140,37 +140,25 @@
                     
                     
 <div class="content">
-    <h1 id="tdc-function-overview">TDC Function Overview</h1>
+    <h1 id="overview-of-tdc-data-functions">Overview of TDC Data Functions</h1>
 
 <div class="container">
         <div class="columns is-vcentered">
             <div class="column is-7">
-                  <p class="is-size-4">TDC implements a comprehensive suite of auxiliary functions frequently used in therapeutics ML. This functionality is wrapped in an easy-to-use interface. Broadly, we provide functions for the following four major categories:</p>
-                  <ul class="is-size-5">
-				    <li><strong>Model Evaluation </strong>: TDC includes a series of realistic metrics functions to evaluate models for therapeutics ML tasks in TDC such that models are transferable to real-world scenarios. </li>
-            <li><strong>Data Split</strong>:  Real world applications require ML models to generalize to out-of-distribution samples. TDC includes various data splits to reflect realistic generalization schemes.</li>
-            <li><strong>Data Processing </strong>: As therapeutics ML covers a wide range of data modalities and has numerous repetitive processing functions, TDC summarizes and provides wrappers for useful data helpers. </li>
-            <li><strong>Molecule Generation Oracles</strong>: Molecular design tasks require oracle functions to measure the quality of generated entities. To date, TDC provides 17 oracles, and each oracle is tailored for a specific goal of interest. </li>
-                  </ul>
+                <p class="is-size-5">TDC implements a comprehensive suite of functions frequently used in therapeutics ML. This functionality is wrapped in an easy-to-use interface.</p>
+                
+                <p class="is-size-5">Broadly, TDC functions cover the following four major categories:</p>
+                <ul class="is-size-5">
+                    <li><strong>Model Evaluation</strong>: TDC implements a series of metrics and performance functions to debug ML models, evaluate model performance for any task in TDC, and assess whether model predictions generalize to out-of-distribution datasets. </li>
+                    <li><strong>Dataset Splits</strong>: Therapeutic applications require ML models to generalize to out-of-distribution samples. TDC implements various data splits to reflect realistic learning settings.</li>
+                    <li><strong>Data Processing</strong>: As therapeutics ML covers a wide range of data modalities and requires numerous repetitive processing functions, TDC implements wrappers and useful data helpers for them. </li>
+                    <li><strong>Molecule Generation Oracles</strong>: Molecular design tasks require oracle functions to measure the quality of generated entities. TDC implements over 17 molecule generation oracles, representing the most comprehensive colleciton of molecule oracles. Each oracle is tailored to measure the quality of AI-generated molecules in a specific dimension. </li>
+                </ul>
             </div>
             <div class="column is-5 has-text-centered">
                 <img src="/img/tdc_fct_overview.png" alt="TDC logo" class="img-responsive" />
             </div>
         </div>
-    </div>
-
-<div class="column is-12">
-    <hr />
-</div>
-
-<div class="container">
-                <div class="columns is-vcentered">
-                    <div class="column is-12 is-size-4 has-text-centered">
-                        <div class="box has-background-info has-text-white">
-                            TDC is a community-driven effort. If you want to contribute to TDC, join our <a href="https://rb.gy/bv0ffd">Slack Workspace</a>!
-                        </div>
-                    </div>
-                </div>
     </div>
 
 <div class="column is-12">
@@ -214,6 +202,18 @@
                 <a href="https://github.com/mims-harvard/TDC">
                     <span class="icon is-large">
                       <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-qjjtloo4-naM1gsab8Ikpb03qXI9xzQ">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
                     </span>
                 </a>
             </div>
