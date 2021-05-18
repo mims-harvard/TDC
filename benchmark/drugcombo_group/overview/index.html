@@ -210,18 +210,25 @@
 <div class="content">
     <h2 id="drug-combination-benchmark-group">Drug Combination Benchmark Group</h2>
 
-<p class="is-size-5">Drug combination screening offers significant potential for expanding the use of existing drugs and in improving their efficacy. For instance, the simultaneous modulation of multiple targets can address the common mechanisms of drug resistance seen in the treatment of cancers. However, experimentally exploring the entire space of possible drug combinations is not a feasible task. Thus, computational models that can predict synergistic combinations can prove very valuable. </p>
+<p class="is-size-5">Drug combinations create promising new therapeutic opportunities for expanding the use of drugs and improving their efficacy. For instance, simultaneous modulation of multiple targets can address the issue of drug resistance seen in cancer treatments. However, experimentally exploring the space of possible drug combinations is not a feasible. For this reason, ML models capable of identifying candidate combinatorial treatments could be very valuable. </p>
 
-<p class="is-size-5"> This benchmark group currently contains the <a href="https://academic.oup.com/nar/article-abstract/47/W1/W43/5486743"> <code>TDC.DrugComb</code> </a>dataset. In this dataset, we have five measurements of combination effects. The main endpoint is called drug combination sensitivity (<code>TDC.DrugComb_CSS</code>) score, which is derived using relative IC50 values of compounds and the area under their dose-response curves. For CSS, we also provide information on the tissue types of the cell lines. </p>
+<p class="is-size-5"> Synergy represents the deviation of observed drug combination response from expected effects had non-interaction. This benchmark group is defined on <a href="https://academic.oup.com/nar/article-abstract/47/W1/W43/5486743"> <code>TDC.DrugComb</code> </a>dataset and evaluates ML models for their ability to predict five established synergy endpoints:</p>
+<ul class="is-size-5">
+    <li>The main endpoint is called drug combination sensitivity score <code>TDC.DrugComb_CSS</code>, which is derived using the relative IC50 values of compounds and the areas under dose-response curves. For the CSS, we also provide information on tissue identity of cell lines where drug response was measured.</li>
+    <li>The Bliss model endpoint <code>TDC.DrugComb_Bliss</code>.</li>
+    <li>The highest single agent endpoint <code>TDC.DrugComb_HSA</code>. </li>
+    <li>The Loewe additivity model endpoint <code>TDC.DrugComb_Loewe</code>.</li>
+    <li>The zero interaction potency endpoint <code>TDC.DrugComb_ZIP</code>.</li>
+</ul>
 
-<p class="is-size-5"> In addition to the CSS, we also provide four additional synergy measurements. Synergy is a measure of deviation of an observed drug combination response from the expected effect of non-interaction. We include four labels where each is a different way of calculating the deviation: Bliss model (<code>TDC.DrugComb_Bliss</code>), Highest Single Agent (<code>TDC.DrugComb_HSA</code>), Loewe additivity model (<code>TDC.DrugComb_Loewe</code>) and Zero Interaction Potency (<code>TDC.DrugComb_ZIP</code>). To retrieve the benchmark names, type: </p>
+<p class="is-size-5">To retrieve names of all benchmarks in this group, type the following:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'DrugCombo_Group'</span><span class="p">)</span>
 <span class="c1"># ['drugcomb_css', 'drugcomb_hsa', ...]
 </span></code></pre></div></div>
 
-<p class="is-size-5">To access each benchmark, use the following code:</p>
+<p class="is-size-5">To access a benchmark in the group, use the following code:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugCombo_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s">'pkl'</span><span class="p">)</span>
@@ -253,11 +260,11 @@ Note that the output includes the automatic evaluations across tissues:
 '''</span>
 </code></pre></div></div>
 
-<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instruction</a></b> on how to use the <code>BenchmarkGroup</code> class and training validation split, and also submission instructions. </p>
+<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard. </p>
 
-<p class="is-size-5"> For every dataset, we use drug combination split and hold out a 20% test set. The evaluation metrics is MAE. </p>
+<p class="is-size-5"> For every dataset in the benchmark, we use the <a href="/functions/data_split/">drug combination split</a> to partition the dataset into training, validation, and test sets. We hold out 20% data samples fro the test set. The performance metric is MAE. </p>
 
-<p class="is-size-5"> Note that the tissue types are <b>automatically</b> calculated based on the test set prediction on <code>TDC.DrugComb_CSS</code> endpoint.</p>
+<p class="is-size-5"> Note that tissue types are <b>automatically</b> determined based on test set prediction on the <code>TDC.DrugComb_CSS</code> endpoint.</p>
 
 <div class="column is-12">
     <hr />
@@ -265,14 +272,16 @@ Note that the output includes the automatic evaluations across tissues:
 
 <h3 id="benchmark-data-summary">Benchmark Data Summary</h3>
 
+<hr />
+
 <table class="table is-striped is-hoverable">
   <thead>
   <tr>
-    <th>Label</th>
-    <th>Number</th>
+    <th>Dataset</th>
+    <th>Size</th>
     <th>Task</th>
     <th>Metric</th>
-    <th>Split</th>
+    <th>Dataset Split</th>
   </tr>
   </thead>
   <tr>
@@ -311,10 +320,6 @@ Note that the output includes the automatic evaluations across tissues:
     <td>Combination</td>
   </tr>
 </table>
-
-<div class="column is-12">
-    <hr />
-</div>
 
 </div>
                 </div>
