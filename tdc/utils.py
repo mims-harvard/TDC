@@ -519,6 +519,22 @@ def create_combination_split(df, seed, frac):
 			'valid': val_set.reset_index(drop = True),
 			'test': test_set.reset_index(drop = True)}
 
+# create time split
+
+def create_fold_time(df, frac, date_column):
+	df = df.sort_values(by = date_column).reset_index(drop = True)
+	train_frac, val_frac, test_frac = frac[0], frac[1], frac[2]
+
+	split_date = df[:int(len(df) * (train_frac + val_frac))].iloc[-1].Date
+	test = df[df.Date > split_date].reset_index(drop = True)
+	train_val = df[df.Date <= split_date]
+
+	split_date_valid = train_val[:int(len(train_val) * train_frac/(train_frac + val_frac))].iloc[-1].Date
+	train = train_val[train_val.Date <= split_date_valid].reset_index(drop = True)
+	valid = train_val[train_val.Date > split_date_valid].reset_index(drop = True)
+
+	return {'train': train, 'valid': valid, 'test': test}
+
 def train_val_test_split(len_data, frac, seed):
 	test_size = int(len_data * frac[2])
 	train_size = int(len_data * frac[0])
