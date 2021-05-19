@@ -279,8 +279,7 @@ class BenchmarkGroup:
 					training = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
 					score = evaluator(pred_, training.smiles.values)
 					results['novelty'] = score
-					if save_dict:
-						results['top smiles'] = [i[0] for i in sorted(docking_scores.items(), key=lambda x: x[1])]                    
+					results['top smiles'] = [i[0] for i in sorted(docking_scores.items(), key=lambda x: x[1])]                    
 					results_max_call[num_max_call] = results
 				results_all[data_name] = results_max_call
 			return results_all
@@ -323,7 +322,7 @@ class BenchmarkGroup:
 			evaluator = eval('Evaluator(name = \'' + metric_dict[data_name] + '\')')
 			return {metric_dict[data_name]: round(evaluator(true, pred), 3)}
 
-	def evaluate_many(self, preds):
+	def evaluate_many(self, preds, save_file_name = None):
 		"""
 		:param preds: list of dict<str dataset_name: list of float>
 		:return: dict<dataset_name: [mean_metric_result, std_metric_result]
@@ -344,22 +343,29 @@ class BenchmarkGroup:
 			individual_results.append(retval)
 
 		if self.name == 'docking_group':
-			metrics = ['top100', 'top10', 'top1', 'diversity', 'novelty', '%pass', 'top1_%pass', 'm1']
+			metrics = ['top100', 'top10', 'top1', 'diversity', 'novelty', '%pass', 'top1_%pass', 'm1', 'top smiles']
 			num_folds = len(preds) 
 
 			results_agg = {}
 
 			for target in list(individual_results[0].keys()):
-			    results_agg_target = {}
-
-			    for num_calls in individual_results[0][target].keys():
-			        results_agg_target_call = {}
-			        for metric in metrics:
-			            res = [individual_results[fold][target][num_calls][metric] for fold in range(num_folds)]
-			            results_agg_target_call[metric] = [round(np.mean(res), 3), round(np.std(res), 3)]
-			        results_agg_target[num_calls] = results_agg_target_call  
-
-			    results_agg[target] = results_agg_target
+				results_agg_target = {}
+				for num_calls in individual_results[0][target].keys():
+	        		results_agg_target_call = {}
+					for metric in metrics:
+						if metric == 'top smiles':
+							results_agg_target_call[metric] = np.unique(np.array([individual_results[fold][target][num_calls][metric] for fold in range(num_folds)]).reshape(-1)).tolist()
+						else:
+							res = [individual_results[fold][target][num_calls][metric] for fold in range(num_folds)]
+							results_agg_target_call[metric] = [round(np.mean(res), 3), round(np.std(res), 3)]
+					results_agg_target[num_calls] = results_agg_target_call  
+				results_agg[target] = results_agg_target
+			
+			import pickle
+			if save_file_name is None:
+				save_file_name = 'tdc_docking_result'				
+			with open(save_file_name + '.pkl', 'wb') as f:
+				pickle.dump(results_agg, f)
 			return results_agg
 
 		else:
