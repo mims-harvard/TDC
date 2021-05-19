@@ -322,7 +322,7 @@ class BenchmarkGroup:
 			evaluator = eval('Evaluator(name = \'' + metric_dict[data_name] + '\')')
 			return {metric_dict[data_name]: round(evaluator(true, pred), 3)}
 
-	def evaluate_many(self, preds, save_file_name = None):
+	def evaluate_many(self, preds, save_file_name = None, m1_api = None):
 		"""
 		:param preds: list of dict<str dataset_name: list of float>
 		:return: dict<dataset_name: [mean_metric_result, std_metric_result]
@@ -339,7 +339,7 @@ class BenchmarkGroup:
 			return ValueError("Must have predictions from at least " + str(min_requirement) + " runs for leaderboard submission")
 		individual_results = []
 		for pred in preds:
-			retval = self.evaluate(pred)
+			retval = self.evaluate(pred, m1_api = m1_api)
 			individual_results.append(retval)
 
 		if self.name == 'docking_group':
