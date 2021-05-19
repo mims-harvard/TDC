@@ -84,9 +84,9 @@
                             
                             <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
                             
-                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
                             
-                            <a href="/functions/data_split/" class="navbar-item ">Data Split</a>
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -278,14 +278,16 @@
 <div class="content">
     <h2 id="admet-benchmark-group">ADMET Benchmark Group</h2>
 
-<p class="is-size-5"> ADMET is one of the cornerstones for small molecule drug discovery, where it defines the drug's efficacy and toxicity's profile. Thus, a machine learning model that can accurately predict all of the ADMET properties given the drug's structural information is highly valuable. We select 22 ADMET datasets from TDC's collection and formulate it as a benchmark group. ADMET Group contains the following dataset: </p>
+<p class="is-size-5"> ADMET is a cornerstone of small molecule drug discovery, defining drug efficacy and toxicity profile. An ML model that could accurately predict all ADMET properties using structural information of compounds would be greatly valuable.</p>
+
+<p class="is-size-5">We formulate the ADMET Benchmark Group using <a href="/single_pred_tasks/adme/">22 ADMET datasets in TDC</a>. The ADMET Group contains the following datasets: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
 <span class="c1"># ['caco2_wang', 'hia_hou', ....]
 </span></code></pre></div></div>
 
-<p>To access each benchmark, for example, <code>Caco2_Wang</code>, type:</p>
+<p class="is-size-5">Type the following to access any benchmark in the group, for example, <code>Caco2_Wang</code>:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -302,14 +304,14 @@
 <span class="c1"># {'caco2_wang': {'mae': 0.234}}
 </span></code></pre></div></div>
 
-<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instruction</a></b> on how to use the <code>BenchmarkGroup</code> class and training validation split, and also submission instructions. </p>
+<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard. </p>
 
-<p class="is-size-5"> For every dataset, we use scaffold split and hold out 20% for test set. The evaluation metrics are selected given the following criteria: </p>
+<p class="is-size-5"> For every dataset in the benchmark group, we use the <a href="/functions/data_split/">scaffold split</a> to partition the dataset into training, validation, and test sets. We hold out 20% data samples for the test set. The performance metrics are: </p>
 
 <ul class="is-large is-size-5">
     <li>For binary classification:</li>
     <ul class="is-large">
-      <li>AUROC is used when the number of positive and negative samples are close.</li>
+      <li>AUROC is used when the number of positive and negative samples are similar.</li>
       <li>AUPRC is used when the number of positive samples are much smaller than negative samples. </li>
     </ul>
     <li>For regression:</li>
@@ -319,13 +321,15 @@
     </ul>
 </ul>
 
-<p class="is-size-5"> We encourage submissions that reports results for the entire benchmark group. Still, we welcome and accept submissions that report partial results, for example, for just one of the five ADMET categories. </p>
+<p class="is-size-5"> We encourage submissions that reports results for the entire benchmark group. Still, we welcome and accept submissions that report partial results, for example, submissions with results for just one out of five ADMET categories. </p>
 
 <div class="column is-12">
     <hr />
 </div>
 
 <h3 id="benchmark-data-summary">Benchmark Data Summary</h3>
+
+<hr />
 
 <h3 id="absorption">Absorption</h3>
 
@@ -336,10 +340,10 @@
   <tr>
     <th>Dataset</th>
     <th>Unit</th>
-    <th>Number</th>
+    <th>Size</th>
     <th>Task</th>
     <th>Metric</th>
-    <th>Split</th>
+    <th>Dataset Split</th>
   </tr>
   </thead>
   <tr>
@@ -393,6 +397,8 @@
 
 </table>
 
+<hr />
+
 <h3 id="distribution">Distribution</h3>
 
 <p class="is-size-5"> Drug distribution refers to how drug moves to and from the various tissues of the body and the amount of drugs in the tissues. </p>
@@ -402,10 +408,10 @@
   <tr>
     <th>Dataset</th>
     <th>Unit</th>
-    <th>Number</th>
+    <th>Size</th>
     <th>Task</th>
     <th>Metric</th>
-    <th>Split</th>
+    <th>Dataset Split</th>
   </tr>
   </thead>
   <tr>
@@ -435,21 +441,21 @@
 
 </table>
 
+<hr />
+
 <h3 id="metabolism">Metabolism</h3>
 
 <p class="is-size-5"> Drug metabolism measures how specialized enzymatic systems breakdown the drugs and it determines the duration and intensity of a drug's action. </p>
-
-<h4 id="summary">Summary</h4>
 
 <table class="table is-striped is-hoverable">
   <thead>
   <tr>
     <th>Dataset</th>
     <th>Unit</th>
-    <th>Number</th>
+    <th>Size</th>
     <th>Task</th>
     <th>Metric</th>
-    <th>Split</th>
+    <th>Dataset Split</th>
   </tr>
   </thead>
   <tr>
@@ -503,21 +509,21 @@
 
 </table>
 
+<hr />
+
 <h3 id="excretion">Excretion</h3>
 
 <p class="is-size-5"> Drug excretion is the removal of drugs from the body using various different routes of excretion, including urine, bile, sweat, saliva, tears, milk, and stool. </p>
-
-<h4 id="summary-1">Summary</h4>
 
 <table class="table is-striped is-hoverable">
   <thead>
   <tr>
     <th>Dataset</th>
     <th>Unit</th>
-    <th>Number</th>
+    <th>Size</th>
     <th>Task</th>
     <th>Metric</th>
-    <th>Split</th>
+    <th>Dataset Split</th>
   </tr>
   </thead>
   <tr>
@@ -548,20 +554,21 @@
 
 </table>
 
-<h3 id="toxicity">Toxicity</h3>
-<p class="is-size-5"> Toxicity measures how much damage a drug could cause to organisms. </p>
+<hr />
 
-<h4 id="summary-2">Summary</h4>
+<h3 id="toxicity">Toxicity</h3>
+
+<p class="is-size-5"> Toxicity measures how much damage a drug could cause to organisms. </p>
 
 <table class="table is-striped is-hoverable">
   <thead>
   <tr>
     <th>Dataset</th>
     <th>Unit</th>
-    <th>Number</th>
+    <th>Size</th>
     <th>Task</th>
     <th>Metric</th>
-    <th>Split</th>
+    <th>Dataset Split</th>
   </tr>
   </thead>
   <tr>
@@ -695,6 +702,18 @@ function sortTable(n, name, d) {
                 <a href="https://github.com/mims-harvard/TDC">
                     <span class="icon is-large">
                       <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-qjjtloo4-naM1gsab8Ikpb03qXI9xzQ">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
                     </span>
                 </a>
             </div>

@@ -84,9 +84,9 @@
                             
                             <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
                             
-                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
                             
-                            <a href="/functions/data_split/" class="navbar-item ">Data Split</a>
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -140,30 +140,33 @@
                     
                     
 <div class="content">
-    <h1 id="leaderboard-guideline">Leaderboard Guideline</h1>
+    <h1 id="leaderboard-guidelines">Leaderboard Guidelines</h1>
 
-<p class="is-size-5"> Each dataset in TDC is a benchmark, and we provide training/validation and test sets for it, together with data splits and performance evaluation metrics. To participate in the leaderboard for a specific benchmark, follow these steps: </p>
+<p class="is-size-5"> Each dataset in TDC is a benchmark, and we provide training, validation, and test sets for it, together with data splits and performance evaluation metrics. </p>
 
-<ul>
+<p class="is-size-5">To participate in the leaderboard for a specific benchmark, follow these steps: </p>
+<ol>
     <li><p class="is-size-5">Use the TDC benchmark data loader to retrieve the benchmark.</p></li>
     <li><p class="is-size-5">Use training and/or validation set to train your model.</p></li>
     <li><p class="is-size-5">Use the TDC model evaluator to calculate the performance of your model on the test set.</p></li>
     <li><p class="is-size-5">Submit the test set performance to a TDC leaderboard.</p></li>
-</ul>
+</ol>
 
-<p class="is-size-5">Below we provide detailed instructions participating in TDC leaderboards. </p>
+<p class="is-size-5">Below we provide detailed instructions on how to participate in TDC leaderboards. </p>
 
-<p class="is-size-5">As many datasets share a therapeutics theme, we organize specific benchmarks into meaningfully defined groups, referred to as benchmark groups. Datasets and tasks within a benchmark group are carefully curated and centered around a theme (for example, prediction of ADMET properties). While each benchmark group consists of multiple benchmarks, you can submit each dataset/benchmark result separately.</p>
+<p class="is-size-5">As many datasets share a therapeutics theme, we organize specific benchmarks into meaningfully defined groups, referred to as benchmark groups. Datasets and tasks within a benchmark group are carefully curated and centered around a theme (for example, prediction of ADMET properties). While each benchmark group consists of multiple benchmarks, you can submit results for each dataset/benchmark separately.</p>
 
-<hr />
+<div class="column is-12">
+    <hr />
+</div>
 
 <h2 id="step-by-step-instructions">Step-by-step Instructions</h2>
 
-<p class="is-size-5"> TDC provides a programming framework to access the benchmark data. Here are the step-by-step instructions:</p>
+<p class="is-size-5"> TDC provides a programmatic framework to access the benchmarks and use them for model evaluation.</p>
 
-<h4 id="step-1-train-your-model-using-tdc-benchmarkgroup">Step 1: Train your model using TDC BenchmarkGroup</h4>
+<h4 id="step-1-train-your-model-using-a-tdc-benchmarkgroup">Step 1: Train your model using a TDC BenchmarkGroup</h4>
 
-<p class="is-size-5"> Suppose you want to evaluate on the <code>Caco2_Wang</code> from the <code>ADMET_Group</code>. Use the following code where you replace the commented line block with the code to train your model. The <code>train</code>, <code>valid</code>, <code>test</code> variables contain the benchmark information. </p>
+<p class="is-size-5"> Suppose you want to evaluate your model on the <code>Caco2_Wang</code> benchmark that belongs to the <code>ADMET_Group</code> benchmark group. Take the following code and replace the commented line block with the code to train your model. The <code>train</code>, <code>valid</code>, <code>test</code> variables contain the split of the benchmark dataset. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -189,17 +192,19 @@
 <span class="c1"># {'caco2_wang': [6.328, 0.101]}
 </span></code></pre></div></div>
 
-<p class="is-size-5"> Save <code>results</code>, representing a dictionary with average values and standard deviations of performance metrics achieved by your model on <code>Caco2_Wang</code> benchmark. </p>
+<p class="is-size-5"> The output <code>results</code> is a dictionary storing average values and standard deviations of each performance metric achieved by your model on the <code>Caco2_Wang</code> benchmark. </p>
 
-<h4 id="step-2-submit-to-tdc-leaderboard">Step 2: Submit to TDC Leaderboard</h4>
+<h4 id="step-2-submit-results-of-your-model-to-a-tdc-leaderboard">Step 2: Submit results of your model to a TDC Leaderboard</h4>
 
-<p class="is-size-5"> We invite submissions for any one or multiple benchmarks in a group. To be included in the leaderboard, please fill out <b><a href="https://forms.gle/HYupGaV7WDuutbr9A">THIS FORM</a></b>, include results of your model and provide brief information about your model (e.g., the number of parameters and hardware details).</p>
+<p class="is-size-5"> We invite submissions to any one or multiple benchmarks in a group. To be included in the leaderboard, please fill out <b><a href="https://forms.gle/HYupGaV7WDuutbr9A">THIS FORM</a></b>, include results of your model and provide a brief summary about your model (e.g., the number of parameters and hardware details).</p>
 
-<hr />
+<div class="column is-12">
+    <hr />
+</div>
 
 <h2 id="further-details-about-benchmark-groups-in-tdc">Further Details about Benchmark Groups in TDC</h2>
 
-<p class="is-size-5"> The BenchmarkGroup Class is a wrapper providing utility functions for benchmarking. For each benchmark, TDC provides a fixed <code>test</code> set and a <code>train_val</code> set. </p>
+<p class="is-size-5"> The <code>BenchmarkGroup</code> class is a wrapper class that provides utility functions for benchmarking. For each benchmark, TDC provides a separate <code>test</code> set and a <code>train_val</code> set. </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -216,12 +221,12 @@
 <span class="c1"># {'caco2_wang': {'mae': 0.234}}
 </span></code></pre></div></div>
 
-<p class="is-size-5"> You are free to use <code>train_val</code> to construct training and validation sets as you see best fit. For example, you can (1) construct a customized training and validation set from the <code>train_val</code>, or (2) use a TDC utility function to get a data split from <a href="https://tdcommons.ai/functions/data_split/"> HERE </a> for different random seeds: </p>
+<p class="is-size-5"> You can use <code>train_val</code> to construct training and validation sets as you see best fit. For example, you can (1) construct a customized training and validation set using the <code>train_val</code> or (2) use a <a href="https://tdcommons.ai/functions/data_split/">TDC utility function</a> to get data splits for different random seeds: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p class="is-size-5"> Importantly, you must evaluate your model on the test set as specified by TDC to ensure a fair comparison of models. To encourage performance robutsness, TDC requires at least five independent runs of the model to report average performance and standard deviation. Here is an example showing how to obtain five different train and validation splits: </p>
+<p class="is-size-5"> Importantly, you must evaluate your model on the test set as specified by TDC to ensure fair comparison of models. To promote robust measurement of model performance, TDC requires at minimum five independent runs of the model to calculate average performance and standard deviation. Following is an example showing how to obtain five different train and validation splits: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ADMET_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
@@ -278,15 +283,21 @@
 <span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
 <span class="c1"># {'caco2_wang': [6.328, 0.101], 'hia_hou': [0.5, 0.01], ...}
 </span></code></pre></div></div>
-<hr />
+<div class="column is-12">
+    <hr />
+</div>
 
 <h2 id="the-fair-guiding-principles">The FAIR Guiding Principles</h2>
 
-<p class="is-size-5"> TDC leaderboards keep track of machine learning models across a variety of learning tasks. For this reason, we apply the FAIR4RS principles and implementation guidelines to any research software and AI/ML algorithms included in TDC leaderboards. Research software and AI/ML algorithms should be open and adhere to the FAIR principles (findable, accessible, interoperable, and repeatable) to allow repeatability, reproducibility, and reuse. Further, TDC itself follows the FAIR guidelines for both <a href="https://www.nature.com/articles/sdata201618%22"> datasets </a> as well as <a href="https://content.iospress.com/articles/data-science/ds190026#ref001">AI/ML algorithms</a>. </p>
+<p class="is-size-5">Software has become essential for research. TDC leaderboards keep track of ML software across the entire range of therapeutics. For this reason, to improve the findability, accessibility, interoperability, and reuse of ML software, we apply <a href="https://github.com/force11/FAIR4RS">FAIR4RS principles and implementation guidelines</a> to all software and AI/ML algorithm implementations included in TDC and listed in the leaderboards.</p>
 
-<hr />
+<p class="is-size-5">We strongly believe that software and AI/ML algorithms should be open and adhere to FAIR principles to encourage repeatability, reproducibility, and reuse. TDC follows the FAIR guidelines for both <a href="https://www.nature.com/articles/sdata201618%22"> datasets </a> as well as <a href="https://content.iospress.com/articles/data-science/ds190026#ref001">AI/ML algorithms and data functions</a>. </p>
 
-<p class="is-size-3 has-text-centered"> <strong>Start Exploring TDC Leaderboards:</strong> </p>
+<div class="column is-12">
+    <hr />
+</div>
+
+<p class="is-size-3 has-text-centered"> <strong>Start Exploring TDC Leaderboards</strong> </p>
 
 <div class="container">
         <div class="columns is-vcentered is-size-5">
@@ -322,6 +333,18 @@
                 <a href="https://github.com/mims-harvard/TDC">
                     <span class="icon is-large">
                       <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-qjjtloo4-naM1gsab8Ikpb03qXI9xzQ">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
                     </span>
                 </a>
             </div>

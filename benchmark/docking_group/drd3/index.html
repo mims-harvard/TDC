@@ -84,9 +84,9 @@
                             
                             <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
                             
-                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
                             
-                            <a href="/functions/data_split/" class="navbar-item ">Data Split</a>
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
                             
                             <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
                             
@@ -163,7 +163,7 @@
     <hr />
 </div>
 
-<h3 id="100-oracle-calls-leaderboard">100 Oracle Calls Leaderboard</h3>
+<h3 id="5000-maximum-oracle-calls-leaderboard">5000 Maximum Oracle Calls Leaderboard</h3>
 
 <table class="table is-striped is-hoverable" id="A">
   <thead>
@@ -174,55 +174,380 @@
     <th>Contact</th>
     <th>Link</th>
     <th>#Params</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Top100</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Top10</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Top1</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Diversity</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Novelty</th>
-    <th onclick="sortTable(5, 'A', 'asc')">%Pass</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Top 1 %Pass</th>
-    <th onclick="sortTable(5, 'A', 'asc')">M1</th>
+    <th onclick="sortTable(5, 'A', 'asc')">Top100 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(6, 'A', 'asc')">Top10 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Top1 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(8, 'A', 'dsc')">Diversity <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(9, 'A', 'dsc')">Novelty <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(10, 'A', 'dsc')">%Pass <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(11, 'A', 'asc')">Top 1 %Pass <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(12, 'A', 'asc')">M1 <i class="fas fa-long-arrow-alt-down"></i></th>
 
   </tr>
 </thead>
 
  <tr> 
-  <td>1</td>
-  <td>Graph-GA</td> 
+  <td> 1 </td> 
+  <td> Graph-GA </td> 
   <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
   <td><a href="https://github.com/futianfan/guacamol_tdc"> GitHub</a>, <a href="https://pubs.rsc.org/en/content/articlelanding/2019/sc/c8sc05372c#!divAbstract">Paper </a></td> 
-  <td>X</td> 
-  <td>-7.222<span>&#177;</span>0.013</td> 
-  <td>-10.177<span>&#177;</span>0.158</td> 
-  <td>-11.767<span>&#177;</span>1.087</td> 
-  <td>0.885<span>&#177;</span>0.001</td> 
-  <td>1.000<span>&#177;</span>0.000</td> 
-  <td>0.693<span>&#177;</span>0.037</td> 
-  <td>0.000<span>&#177;</span>0.000</td> 
-  <td>5.223<span>&#177;</span>0.257</td> 
+  <td> 0 </td> 
+  <td>-14.811 <span>&#177;</span> 0.413 </td> 
+  <td>-15.930 <span>&#177;</span> 0.336 </td> 
+  <td>-16.533 <span>&#177;</span> 0.309 </td> 
+  <td>0.626 <span>&#177;</span> 0.092 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.393 <span>&#177;</span> 0.308 </td> 
+  <td>-14.267 <span>&#177;</span> 0.450 </td> 
+  <td>9.669 <span>&#177;</span> 0.468 </td> 
 </tr>
-
 <tr> 
-  <td>2</td>
-  <td>MARS</td> 
+  <td> 2 </td> 
+  <td> SMILES-LSTM </td> 
   <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
-  <td><a href="XXX"> GitHub</a>, <a href="https://openreview.net/forum?id=kHSu4ebxFXY">Paper </a></td> 
-  <td>X</td> 
-  <td>-5.679<span>&#177;</span>0.222</td> 
-  <td>-7.980<span>&#177;</span>0.086</td> 
-  <td>-9.333<span>&#177;</span>0.556</td> 
-  <td>0.877<span>&#177;</span>0.005</td> 
-  <td>0.997<span>&#177;</span>0.005</td> 
-  <td>0.760<span>&#177;</span>0.043</td> 
-  <td>-3.200<span>&#177;</span>0.616</td> 
-  <td>6.071<span>&#177;</span>1.056</td> 
+  <td><a href="https://github.com/futianfan/guacamol_tdc"> GitHub</a>, <a href="https://pubs.acs.org/doi/10.1021/acscentsci.7b00512">Paper </a></td> 
+  <td> 3,149,000 </td> 
+  <td>-13.017 <span>&#177;</span> 0.385 </td> 
+  <td>-14.030 <span>&#177;</span> 0.421 </td> 
+  <td>-14.533 <span>&#177;</span> 0.525 </td> 
+  <td>0.740 <span>&#177;</span> 0.056 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.257 <span>&#177;</span> 0.103 </td> 
+  <td>-12.533 <span>&#177;</span> 0.403 </td> 
+  <td>5.826 <span>&#177;</span> 1.908 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> GCPN </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/GCPN"> GitHub</a>, <a href="https://arxiv.org/abs/1806.02473">Paper </a></td> 
+  <td> 17,600 </td> 
+  <td>-10.045 <span>&#177;</span> 0.226 </td> 
+  <td>-11.483 <span>&#177;</span> 0.581 </td> 
+  <td>-12.300 <span>&#177;</span> 0.993 </td> 
+  <td>0.922 <span>&#177;</span> 0.002 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.167 <span>&#177;</span> 0.045 </td> 
+  <td>-9.367 <span>&#177;</span> 0.170 </td> 
+  <td>10.000 <span>&#177;</span> 0.000 </td> 
 </tr>
 
 </table>
 
+<p><i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i>: The lower/higher, the better. Click <i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i> to sort based on the specific column.</p>
+
+<p><b>Note</b>: Rank is based on Top 100 average docking scores.</p>
+
 <div class="column is-12">
     <hr />
 </div>
+
+<h3 id="1000-maximum-oracle-calls-leaderboard">1000 Maximum Oracle Calls Leaderboard</h3>
+
+<table class="table is-striped is-hoverable" id="A">
+  <thead>
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'A', 'asc')">Top100 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(6, 'A', 'asc')">Top10 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Top1 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(8, 'A', 'dsc')">Diversity <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(9, 'A', 'dsc')">Novelty <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(10, 'A', 'dsc')">%Pass <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(11, 'A', 'asc')">Top 1 %Pass <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(12, 'A', 'asc')">M1 <i class="fas fa-long-arrow-alt-down"></i></th>
+
+  </tr>
+</thead>
+
+ <tr> 
+  <td> 1 </td> 
+  <td> Graph-GA </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/guacamol_tdc"> GitHub</a>, <a href="https://pubs.rsc.org/en/content/articlelanding/2019/sc/c8sc05372c#!divAbstract">Paper </a></td> 
+  <td> 0 </td> 
+  <td>-11.224 <span>&#177;</span> 0.484 </td> 
+  <td>-12.400 <span>&#177;</span> 0.782 </td> 
+  <td>-13.233 <span>&#177;</span> 0.713 </td> 
+  <td>0.815 <span>&#177;</span> 0.046 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.777 <span>&#177;</span> 0.096 </td> 
+  <td>-10.600 <span>&#177;</span> 0.374 </td> 
+  <td>7.695 <span>&#177;</span> 0.909 </td> 
+</tr>
+<tr> 
+  <td> 2 </td> 
+  <td> SMILES-LSTM </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/guacamol_tdc"> GitHub</a>, <a href="https://pubs.acs.org/doi/10.1021/acscentsci.7b00512">Paper </a></td> 
+  <td> 3,149,000 </td> 
+  <td>-9.971 <span>&#177;</span> 0.115 </td> 
+  <td>-11.163 <span>&#177;</span> 0.141 </td> 
+  <td>-11.967 <span>&#177;</span> 0.205 </td> 
+  <td>0.871 <span>&#177;</span> 0.004 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.777 <span>&#177;</span> 0.026 </td> 
+  <td>-9.367 <span>&#177;</span> 0.094 </td> 
+  <td>4.818 <span>&#177;</span> 0.541 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> GCPN </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/GCPN"> GitHub</a>, <a href="https://arxiv.org/abs/1806.02473">Paper </a></td> 
+  <td> 17,600 </td> 
+  <td>-9.053 <span>&#177;</span> 0.080 </td> 
+  <td>-11.027 <span>&#177;</span> 0.273 </td> 
+  <td>-12.033 <span>&#177;</span> 0.618 </td> 
+  <td>0.913 <span>&#177;</span> 0.001 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.170 <span>&#177;</span> 0.022 </td> 
+  <td>-8.167 <span>&#177;</span> 0.047 </td> 
+  <td>10.000 <span>&#177;</span> 0.000 </td> 
+</tr>
+
+</table>
+<p><i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i>: The lower/higher, the better. Click <i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i> to sort based on the specific column.</p>
+
+<p><b>Note</b>: Rank is based on Top 100 average docking scores.</p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="500-maximum-oracle-calls-leaderboard">500 Maximum Oracle Calls Leaderboard</h3>
+
+<table class="table is-striped is-hoverable" id="A">
+  <thead>
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'A', 'asc')">Top100 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(6, 'A', 'asc')">Top10 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Top1 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(8, 'A', 'dsc')">Diversity <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(9, 'A', 'dsc')">Novelty <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(10, 'A', 'dsc')">%Pass <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(11, 'A', 'asc')">Top 1 %Pass <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(12, 'A', 'asc')">M1 <i class="fas fa-long-arrow-alt-down"></i></th>
+
+  </tr>
+</thead>
+
+ <tr> 
+  <td> 1 </td> 
+  <td> Graph-GA </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/guacamol_tdc"> GitHub</a>, <a href="https://pubs.rsc.org/en/content/articlelanding/2019/sc/c8sc05372c#!divAbstract">Paper </a></td> 
+  <td> 0 </td> 
+  <td>-10.036 <span>&#177;</span> 0.221 </td> 
+  <td>-11.527 <span>&#177;</span> 0.533 </td> 
+  <td>-12.500 <span>&#177;</span> 0.748 </td> 
+  <td>0.857 <span>&#177;</span> 0.005 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.710 <span>&#177;</span> 0.080 </td> 
+  <td>-9.300 <span>&#177;</span> 0.163 </td> 
+  <td>6.493 <span>&#177;</span> 0.341 </td> 
+</tr>
+<tr> 
+  <td> 2 </td> 
+  <td> SMILES-LSTM </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/guacamol_tdc"> GitHub</a>, <a href="https://pubs.acs.org/doi/10.1021/acscentsci.7b00512">Paper </a></td> 
+  <td> 3,149,000 </td> 
+  <td>-9.419 <span>&#177;</span> 0.173 </td> 
+  <td>-10.687 <span>&#177;</span> 0.335 </td> 
+  <td>-11.367 <span>&#177;</span> 0.579 </td> 
+  <td>0.875 <span>&#177;</span> 0.005 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.727 <span>&#177;</span> 0.012 </td> 
+  <td>-8.767 <span>&#177;</span> 0.170 </td> 
+  <td>5.787 <span>&#177;</span> 0.934 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> GCPN </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/GCPN"> GitHub</a>, <a href="https://arxiv.org/abs/1806.02473">Paper </a></td> 
+  <td> 17,600 </td> 
+  <td>-8.119 <span>&#177;</span> 0.104 </td> 
+  <td>-10.230 <span>&#177;</span> 0.354 </td> 
+  <td>-11.967 <span>&#177;</span> 0.680 </td> 
+  <td>0.914 <span>&#177;</span> 0.001 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.127 <span>&#177;</span> 0.005 </td> 
+  <td>-7.200 <span>&#177;</span> 0.141 </td> 
+  <td>10.000 <span>&#177;</span> 0.000 </td> 
+</tr>
+​
+
+</table>
+
+<p><i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i>: The lower/higher, the better. Click <i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i> to sort based on the specific column.</p>
+
+<p><b>Note</b>: Rank is based on Top 100 average docking scores.</p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="100-maximum-oracle-calls-leaderboard">100 Maximum Oracle Calls Leaderboard</h3>
+
+<table class="table is-striped is-hoverable" id="A">
+  <thead>
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th>#Params</th>
+    <th onclick="sortTable(5, 'A', 'asc')">Top100 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(6, 'A', 'asc')">Top10 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Top1 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(8, 'A', 'dsc')">Diversity <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(9, 'A', 'dsc')">Novelty <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(10, 'A', 'dsc')">%Pass <i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(11, 'A', 'asc')">Top 1 %Pass <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(12, 'A', 'asc')">M1 <i class="fas fa-long-arrow-alt-down"></i></th>
+
+  </tr>
+</thead>
+
+ <tr> 
+  <td> 1 </td> 
+  <td> SMILES-LSTM </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/guacamol_tdc"> GitHub</a>, <a href="https://pubs.acs.org/doi/10.1021/acscentsci.7b00512">Paper </a></td> 
+  <td> 3,149,000 </td> 
+  <td>-7.594 <span>&#177;</span> 0.182 </td> 
+  <td>-10.033 <span>&#177;</span> 0.186 </td> 
+  <td>-11.133 <span>&#177;</span> 0.634 </td> 
+  <td>0.884 <span>&#177;</span> 0.002 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.763 <span>&#177;</span> 0.019 </td> 
+  <td>-1.100 <span>&#177;</span> 1.417 </td> 
+  <td>5.219 <span>&#177;</span> 0.247 </td> 
+</tr>
+<tr> 
+  <td> 2 </td> 
+  <td> Graph-GA </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/guacamol_tdc"> GitHub</a>, <a href="https://pubs.rsc.org/en/content/articlelanding/2019/sc/c8sc05372c#!divAbstract">Paper </a></td> 
+  <td> 0 </td> 
+  <td>-7.222 <span>&#177;</span> 0.013 </td> 
+  <td>-10.177 <span>&#177;</span> 0.158 </td> 
+  <td>-11.767 <span>&#177;</span> 1.087 </td> 
+  <td>0.885 <span>&#177;</span> 0.001 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.693 <span>&#177;</span> 0.037 </td> 
+  <td>0.000 <span>&#177;</span> 0.000 </td> 
+  <td>5.223 <span>&#177;</span> 0.256 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> GCPN </td> 
+  <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
+  <td><a href="https://github.com/futianfan/GCPN"> GitHub</a>, <a href="https://arxiv.org/abs/1806.02473">Paper </a></td> 
+  <td> 17,600 </td> 
+  <td>3.860 <span>&#177;</span> 0.102 </td> 
+  <td>-5.617 <span>&#177;</span> 0.413 </td> 
+  <td>-11.633 <span>&#177;</span> 2.217 </td> 
+  <td>0.909 <span>&#177;</span> 0.001 </td> 
+  <td>1.000 <span>&#177;</span> 0.000 </td> 
+  <td>0.093 <span>&#177;</span> 0.009 </td> 
+  <td>7.667 <span>&#177;</span> 0.262 </td> 
+  <td>10.000 <span>&#177;</span> 0.000 </td> 
+</tr>
+
+</table>
+
+<p><i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i>: The lower/higher, the better. Click <i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i> to sort based on the specific column.</p>
+
+<p><b>Note</b>: Rank is based on Top 100 average docking scores.</p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<script>
+function sortTable(n, name, d) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById(name);
+  switching = true;
+  //Set the sorting direction to ascending:
+  if (d == 'desc'){
+    dir = "desc"; 
+  } else{
+    dir = "asc"; 
+  }
+  
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+        if (Number(x.innerHTML.substring(0,5)) > Number(y.innerHTML.substring(0,5))) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (Number(x.innerHTML.substring(0,5)) < Number(y.innerHTML.substring(0,5))) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;      
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (d == 'desc'){
+        if (switchcount == 0 && dir == "desc") {
+          dir = "asc";
+          switching = true;
+        }
+      } else{
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+}
+</script>
+
 
 </div>
                 </div>
@@ -250,6 +575,18 @@
                 <a href="https://github.com/mims-harvard/TDC">
                     <span class="icon is-large">
                       <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-qjjtloo4-naM1gsab8Ikpb03qXI9xzQ">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
                     </span>
                 </a>
             </div>
