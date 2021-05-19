@@ -279,7 +279,8 @@ class BenchmarkGroup:
 					training = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
 					score = evaluator(pred_, training.smiles.values)
 					results['novelty'] = score
-					results['top smiles'] = [i[0] for i in sorted(docking_scores.items(), key=lambda x: x[1])]                    
+					if save_dict:
+						results['top smiles'] = [i[0] for i in sorted(docking_scores.items(), key=lambda x: x[1])]                    
 					results_max_call[num_max_call] = results
 				results_all[data_name] = results_max_call
 			return results_all
@@ -329,21 +330,47 @@ class BenchmarkGroup:
 
 		This function returns the data in a format needed to submit to the Leaderboard
 		"""
-		if len(preds) < 5:
-			return ValueError("Must have predictions from at least five runs for leaderboard submission")
+
+		if self.name == 'docking_group':
+			min_requirement = 3
+		else:
+			min_requirement = 5
+
+		if len(preds) < min_requirement:
+			return ValueError("Must have predictions from at least " + str(min_requirement) + " runs for leaderboard submission")
 		individual_results = []
 		for pred in preds:
 			retval = self.evaluate(pred)
 			individual_results.append(retval)
 
-		given_dataset_names = list(individual_results[0].keys())
-		aggregated_results = {}
-		for dataset_name in given_dataset_names:
-			my_results = []
-			for individual_result in individual_results:
-				my_result = list(individual_result[dataset_name].values())[0]
-				my_results.append(my_result)
-			u = np.mean(my_results)
-			std = np.std(my_results)
-			aggregated_results[dataset_name] = [round(u, 3), round(std, 3)]
-		return aggregated_results
+		if self.name == 'docking_group':
+			metrics = ['top100', 'top10', 'top1', 'diversity', 'novelty', '%pass', 'top1_%pass', 'm1']
+			num_folds = len(preds) 
+
+			results_agg = {}
+
+			for target in list(individual_results[0].keys()):
+			    results_agg_target = {}
+
+			    for num_calls in individual_results[0][target].keys():
+			        results_agg_target_call = {}
+			        for metric in metrics:
+			            res = [individual_results[fold][target][num_calls][metric] for fold in range(num_folds)]
+			            results_agg_target_call[metric] = [round(np.mean(res), 3), round(np.std(res), 3)]
+			        results_agg_target[num_calls] = results_agg_target_call  
+
+			    results_agg[target] = results_agg_target
+			return results_agg
+
+		else:
+			given_dataset_names = list(individual_results[0].keys())
+			aggregated_results = {}
+			for dataset_name in given_dataset_names:
+				my_results = []
+				for individual_result in individual_results:
+					my_result = list(individual_result[dataset_name].values())[0]
+					my_results.append(my_result)
+				u = np.mean(my_results)
+				std = np.std(my_results)
+				aggregated_results[dataset_name] = [round(u, 3), round(std, 3)]
+			return aggregated_results
