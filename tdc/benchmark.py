@@ -351,7 +351,7 @@ class BenchmarkGroup:
 			for target in list(individual_results[0].keys()):
 				results_agg_target = {}
 				for num_calls in individual_results[0][target].keys():
-	        		results_agg_target_call = {}
+					results_agg_target_call = {}
 					for metric in metrics:
 						if metric == 'top smiles':
 							results_agg_target_call[metric] = np.unique(np.array([individual_results[fold][target][num_calls][metric] for fold in range(num_folds)]).reshape(-1)).tolist()
