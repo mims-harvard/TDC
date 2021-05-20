@@ -174,19 +174,38 @@
     <th>Contact</th>
     <th>Link</th>
     <th>#Params</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Top100 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(6, 'A', 'asc')">Top10 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(7, 'A', 'asc')">Top1 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(8, 'A', 'dsc')">Diversity <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(9, 'A', 'dsc')">Novelty <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(10, 'A', 'dsc')">%Pass <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(11, 'A', 'asc')">Top 1 %Pass <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(12, 'A', 'asc')">M1 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(5, 'A', 'asc')">Top100<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(6, 'A', 'asc')">Top10<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Top1<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(8, 'A', 'dsc')">Diver.<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(9, 'A', 'dsc')">Novel.<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(10, 'A', 'dsc')">%Pass<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(11, 'A', 'asc')">Top 1-P<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(12, 'A', 'asc')">M1<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th>Molecules</th>
 
   </tr>
 </thead>
 
- <tr> 
+<tr> 
+  <td> - </td> 
+  <td> <i>Best-in-data</i> </td> 
+  <td> - </td> 
+  <td> - </td> 
+  <td> - </td> 
+  <td><i>-12.080</i> </td> 
+  <td><i>-12.590</i> </td> 
+  <td><i>-12.800</i> </td> 
+  <td><i>0.864</i> </td> 
+  <td> - </td> 
+  <td><i>0.780</i> </td> 
+  <td><i>-11.700</i></td> 
+  <td><i>5.100</i> </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
+
+</tr>
+
+<tr> 
   <td> 1 </td> 
   <td> Graph-GA </td> 
   <td><a href="mailto:tfu42@gatech.edu">Tianfan Fu</a></td> 
@@ -200,6 +219,7 @@
   <td>0.393 <span>&#177;</span> 0.308 </td> 
   <td>-14.267 <span>&#177;</span> 0.450 </td> 
   <td>9.669 <span>&#177;</span> 0.468 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 <tr> 
   <td> 2 </td> 
@@ -215,6 +235,7 @@
   <td>0.257 <span>&#177;</span> 0.103 </td> 
   <td>-12.533 <span>&#177;</span> 0.403 </td> 
   <td>5.826 <span>&#177;</span> 1.908 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 <tr> 
   <td> 3 </td> 
@@ -230,13 +251,16 @@
   <td>0.167 <span>&#177;</span> 0.045 </td> 
   <td>-9.367 <span>&#177;</span> 0.170 </td> 
   <td>10.000 <span>&#177;</span> 0.000 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 
 </table>
 
 <p><i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i>: The lower/higher, the better. Click <i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i> to sort based on the specific column.</p>
 
-<p><b>Note</b>: Rank is based on Top 100 average docking scores.</p>
+<p><b>*</b> Rank is based on Top 100 average docking scores.</p>
+
+<p><b>**</b> Novelty is calculated against the ZINC training dataset.</p>
 
 <div class="column is-12">
     <hr />
@@ -253,17 +277,36 @@
     <th>Contact</th>
     <th>Link</th>
     <th>#Params</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Top100 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(6, 'A', 'asc')">Top10 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(7, 'A', 'asc')">Top1 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(8, 'A', 'dsc')">Diversity <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(9, 'A', 'dsc')">Novelty <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(10, 'A', 'dsc')">%Pass <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(11, 'A', 'asc')">Top 1 %Pass <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(12, 'A', 'asc')">M1 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(5, 'A', 'asc')">Top100<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(6, 'A', 'asc')">Top10<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Top1<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(8, 'A', 'dsc')">Diver.<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(9, 'A', 'dsc')">Novel.<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(10, 'A', 'dsc')">%Pass<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(11, 'A', 'asc')">Top 1-P<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(12, 'A', 'asc')">M1<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th>Molecules</th>
 
   </tr>
 </thead>
+
+<tr> 
+  <td> - </td> 
+  <td> <i>Best-in-data</i> </td> 
+  <td> - </td> 
+  <td> - </td> 
+  <td> - </td> 
+  <td><i>-12.080</i> </td> 
+  <td><i>-12.590</i> </td> 
+  <td><i>-12.800</i> </td> 
+  <td><i>0.864</i> </td> 
+  <td> - </td> 
+  <td><i>0.780</i> </td> 
+  <td><i>-11.700</i></td> 
+  <td><i>5.100</i> </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
+
+</tr>
 
  <tr> 
   <td> 1 </td> 
@@ -279,6 +322,7 @@
   <td>0.777 <span>&#177;</span> 0.096 </td> 
   <td>-10.600 <span>&#177;</span> 0.374 </td> 
   <td>7.695 <span>&#177;</span> 0.909 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 <tr> 
   <td> 2 </td> 
@@ -294,6 +338,7 @@
   <td>0.777 <span>&#177;</span> 0.026 </td> 
   <td>-9.367 <span>&#177;</span> 0.094 </td> 
   <td>4.818 <span>&#177;</span> 0.541 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 <tr> 
   <td> 3 </td> 
@@ -309,12 +354,15 @@
   <td>0.170 <span>&#177;</span> 0.022 </td> 
   <td>-8.167 <span>&#177;</span> 0.047 </td> 
   <td>10.000 <span>&#177;</span> 0.000 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 
 </table>
 <p><i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i>: The lower/higher, the better. Click <i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i> to sort based on the specific column.</p>
 
-<p><b>Note</b>: Rank is based on Top 100 average docking scores.</p>
+<p><b>*</b> Rank is based on Top 100 average docking scores.</p>
+
+<p><b>**</b> Novelty is calculated against the ZINC training dataset.</p>
 
 <div class="column is-12">
     <hr />
@@ -331,17 +379,36 @@
     <th>Contact</th>
     <th>Link</th>
     <th>#Params</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Top100 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(6, 'A', 'asc')">Top10 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(7, 'A', 'asc')">Top1 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(8, 'A', 'dsc')">Diversity <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(9, 'A', 'dsc')">Novelty <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(10, 'A', 'dsc')">%Pass <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(11, 'A', 'asc')">Top 1 %Pass <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(12, 'A', 'asc')">M1 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(5, 'A', 'asc')">Top100<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(6, 'A', 'asc')">Top10<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Top1<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(8, 'A', 'dsc')">Diver.<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(9, 'A', 'dsc')">Novel.<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(10, 'A', 'dsc')">%Pass<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(11, 'A', 'asc')">Top 1-P<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(12, 'A', 'asc')">M1<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th>Molecules</th>
 
   </tr>
 </thead>
+
+<tr> 
+  <td> - </td> 
+  <td> <i>Best-in-data</i> </td> 
+  <td> - </td> 
+  <td> - </td> 
+  <td> - </td> 
+  <td><i>-12.080</i> </td> 
+  <td><i>-12.590</i> </td> 
+  <td><i>-12.800</i> </td> 
+  <td><i>0.864</i> </td> 
+  <td> - </td> 
+  <td><i>0.780</i> </td> 
+  <td><i>-11.700</i></td> 
+  <td><i>5.100</i> </td>
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
+ 
+</tr>
 
  <tr> 
   <td> 1 </td> 
@@ -357,6 +424,7 @@
   <td>0.710 <span>&#177;</span> 0.080 </td> 
   <td>-9.300 <span>&#177;</span> 0.163 </td> 
   <td>6.493 <span>&#177;</span> 0.341 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 <tr> 
   <td> 2 </td> 
@@ -372,6 +440,7 @@
   <td>0.727 <span>&#177;</span> 0.012 </td> 
   <td>-8.767 <span>&#177;</span> 0.170 </td> 
   <td>5.787 <span>&#177;</span> 0.934 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 <tr> 
   <td> 3 </td> 
@@ -387,14 +456,16 @@
   <td>0.127 <span>&#177;</span> 0.005 </td> 
   <td>-7.200 <span>&#177;</span> 0.141 </td> 
   <td>10.000 <span>&#177;</span> 0.000 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
-​
 
 </table>
 
 <p><i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i>: The lower/higher, the better. Click <i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i> to sort based on the specific column.</p>
 
-<p><b>Note</b>: Rank is based on Top 100 average docking scores.</p>
+<p><b>*</b> Rank is based on Top 100 average docking scores.</p>
+
+<p><b>**</b> Novelty is calculated against the ZINC training dataset.</p>
 
 <div class="column is-12">
     <hr />
@@ -411,17 +482,36 @@
     <th>Contact</th>
     <th>Link</th>
     <th>#Params</th>
-    <th onclick="sortTable(5, 'A', 'asc')">Top100 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(6, 'A', 'asc')">Top10 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(7, 'A', 'asc')">Top1 <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(8, 'A', 'dsc')">Diversity <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(9, 'A', 'dsc')">Novelty <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(10, 'A', 'dsc')">%Pass <i class="fas fa-long-arrow-alt-up"></i></th>
-    <th onclick="sortTable(11, 'A', 'asc')">Top 1 %Pass <i class="fas fa-long-arrow-alt-down"></i></th>
-    <th onclick="sortTable(12, 'A', 'asc')">M1 <i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(5, 'A', 'asc')">Top100<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(6, 'A', 'asc')">Top10<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(7, 'A', 'asc')">Top1<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(8, 'A', 'dsc')">Diver.<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(9, 'A', 'dsc')">Novel.<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(10, 'A', 'dsc')">%Pass<i class="fas fa-long-arrow-alt-up"></i></th>
+    <th onclick="sortTable(11, 'A', 'asc')">Top 1-P<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th onclick="sortTable(12, 'A', 'asc')">M1<i class="fas fa-long-arrow-alt-down"></i></th>
+    <th>Molecules</th>
 
   </tr>
 </thead>
+
+<tr> 
+  <td> - </td> 
+  <td> <i>Best-in-data</i> </td> 
+  <td> - </td> 
+  <td> - </td> 
+  <td> - </td> 
+  <td><i>-12.080</i> </td> 
+  <td><i>-12.590</i> </td> 
+  <td><i>-12.800</i> </td> 
+  <td><i>0.864</i> </td> 
+  <td> - </td> 
+  <td><i>0.780</i> </td> 
+  <td><i>-11.700</i></td> 
+  <td><i>5.100</i> </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
+
+</tr>
 
  <tr> 
   <td> 1 </td> 
@@ -437,6 +527,7 @@
   <td>0.763 <span>&#177;</span> 0.019 </td> 
   <td>-1.100 <span>&#177;</span> 1.417 </td> 
   <td>5.219 <span>&#177;</span> 0.247 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 <tr> 
   <td> 2 </td> 
@@ -452,6 +543,7 @@
   <td>0.693 <span>&#177;</span> 0.037 </td> 
   <td>0.000 <span>&#177;</span> 0.000 </td> 
   <td>5.223 <span>&#177;</span> 0.256 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 <tr> 
   <td> 3 </td> 
@@ -467,13 +559,16 @@
   <td>0.093 <span>&#177;</span> 0.009 </td> 
   <td>7.667 <span>&#177;</span> 0.262 </td> 
   <td>10.000 <span>&#177;</span> 0.000 </td> 
+  <td> <a href="/benchmark/docking_group/smiles/drd3_smiles"> Link </a> </td> 
 </tr>
 
 </table>
 
 <p><i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i>: The lower/higher, the better. Click <i class="fas fa-long-arrow-alt-down"></i><i class="fas fa-long-arrow-alt-up"></i> to sort based on the specific column.</p>
 
-<p><b>Note</b>: Rank is based on Top 100 average docking scores.</p>
+<p><b>*</b> Rank is based on Top 100 average docking scores.</p>
+
+<p><b>**</b> Novelty is calculated against the ZINC training dataset.</p>
 
 <div class="column is-12">
     <hr />

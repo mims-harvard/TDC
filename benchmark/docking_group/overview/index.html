@@ -194,11 +194,9 @@
 <div class="content">
     <h2 id="docking-molecule-generation-benchmark-group">Docking Molecule Generation Benchmark Group</h2>
 
-<p class="is-size-5"> Molecule generation seeks to generate novel molecule structure with required properties. While current focus have been on simple heuristic oracles, such as QED, LogP, they do not reflect the complexity of realistic problems. Problems include: (1) many properties such as activity towards a target are expensive to query while current methods require large amounts of calls to the oracle; (2) the ML generated molecules suffer from issues such as synthesizability, selectivity and so on. </p>
+<p class="is-size-5"> Molecule generation seeks to generate novel molecular structures with desired properties. While current evaluations focus on simple heuristic oracles, such as QED, LogP, DRD2, they do not reflect the complexity of realistic cases. Problems include: (1) Many properties, such as activity against a target, are expensive to query from experiments or computational simulation. Thus methods that require large amounts of calls to the oracle are impractical in a real-world application. (2) Despite the high objective values, generated molecules may also suffer from poor performance on other requirements of molecular design, such as low synthesizability, monotonous generated batches, etc.  </p>
 
-<p class="is-size-5"> To tackle these problems, we construct the docking benchmark group. Docking is a theoretical evaluation of affinity between a small molecule and a target (a protein involved in a disease pathway). Given a pre-specified target, an ML model is asked to generate molecules that have high affinity. This benchmark directly tackle the above two problems: (1) since docking score is expensive to calculate and is more meaningful, we can use it to simulate the real-world wet-lab experiment under resource constraint. To achieve this, instead of allowing unlimited oracle calls, we <i>restrict the number of oracle calls</i> in this benchmark and requires models to adapt quickly; (2) in addition to the typical average oracle scores on the top molecules, we provide <i>additional evaluations</i> to probe the realistic utilities of the generation. </p>
-
-<p class="is-size-5">The importance and detailed info about docking generation can be found in these two recent articles: [<a href="https://arxiv.org/abs/2006.16955">Cieplinski et al. 2020</a>, <a href="https://chemrxiv.org/articles/preprint/Using_a_Genetic_Algorithm_to_Find_Molecules_with_Good_Docking_Scores/13525589/2#:~:text=A%20graph%2Dbased%20genetic%20algorithm,2%2Dadrenergic%20G%20protein%2Dcoupled">Steinmann and Jensen, 2021</a>].</p>
+<p class="is-size-5"> To tackle these problems, we present the docking benchmark group [<a href="https://arxiv.org/abs/2006.16955">Cieplinski et al. 2020</a>, <a href="https://chemrxiv.org/articles/preprint/Using_a_Genetic_Algorithm_to_Find_Molecules_with_Good_Docking_Scores/13525589/2#:~:text=A%20graph%2Dbased%20genetic%20algorithm,2%2Dadrenergic%20G%20protein%2Dcoupled">Steinmann and Jensen, 2021</a>]. Docking is a theoretical evaluation of the affinity between a ligand (a small molecular drug) and a target (a protein involved in a disease pathway). A molecule with higher affinity is more likely to have higher bioactivity, so it is widely applied in virtual screening for drug discovery [<a href="https://www.nature.com/articles/s41586-019-0917-9?fbclid=IwAR1HDXx0kEsNlRQZXVtPkmX7hU_gDoT2aqVEiBZj04qhz_6x1WCbNkj75IE">Lyu et al. 2020</a>]. In this benchmark, the main objective is to generate molecules that have a high affinity (low docking score). This benchmark directly tackles the above two problems: (1) Since docking scores are relatively costly to calculate, we <i>restrict the number of oracle calls</i> in this benchmark and require models to adapt quickly. This task is valuable in the real drug discovery process and can simulate a case with a wet-lab experiment as an oracle under resource constraints. (2) In addition to the typical average oracle scores on the top molecules, we provide <i>additional evaluations</i> to probe the realistic utilities of the generation. The training dataset is <a href="/generation_tasks/molgen/#zinc">ZINC 250K</a>.</p>
 
 <p class="is-size-5"> To retrieve the individual target benchmark names, type: </p>
 
@@ -247,12 +245,8 @@ TDC will call the docking scores in the evaluate function.
 '''</span>
 
 <span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">m1_api</span> <span class="o">=</span> <span class="s">'XXXXX'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-
-
 <span class="s">'''
-#
-{'DRD3': {'top100': -10.2,
+{'DRD3': {5000: {'top100': -10.2,
           'top10': -11.3,
           'top1': -12.3,
           'diversity': 0.6,
@@ -260,12 +254,36 @@ TDC will call the docking scores in the evaluate function.
           '</span><span class="si">%</span><span class="s">pass': 0.7,
           'top1_</span><span class="si">%</span><span class="s">pass': -11.2,
           'm1': 2.5,
-          'docking_scores_dict': {'XXX': -10.5, ....}
+          'top smiles': ['XXX', 'XXX', ...]
+          },
+        1000: {....
+          }
+        }          
 }
 
 Note that if you put save_dict = True in evaluate function, it 
 would return more detailed evaluation outcomes, namely the list of 
-smiles pass the filter, a dictionary of smiles with m1 scores.
+smiles pass the filter, a dictionary of smiles with m1 scores and docking scores.
+
+We ask users to submit at least three random runs of models for robustness. You can use following functions to obtain submission ready format:
+'''</span>
+<span class="n">predictions_runs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pred_run1</span><span class="p">,</span> <span class="n">pred_run2</span><span class="p">,</span> <span class="n">pred_run3</span><span class="p">]</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_runs</span><span class="p">,</span> <span class="n">save_file_name</span> <span class="o">=</span> <span class="s">'result'</span><span class="p">,</span> <span class="n">m1_api</span> <span class="o">=</span> <span class="s">'XXXXX'</span><span class="p">)</span>
+<span class="s">'''
+{'DRD3': {5000: {'top100': [-10.2, 0.12],
+          'top10': [-11.3, 0.01],
+          'top1': [-12.3, 0.02],
+          'diversity': [0.6, 0.001],
+          'novelty': [0.7, 0.01],
+          '</span><span class="si">%</span><span class="s">pass': [0.7, 0.02],
+          'top1_</span><span class="si">%</span><span class="s">pass': [-11.2, 0.03],
+          'm1': [5.5, 0.04],
+          'top smiles': ['XXX', 'XXX', ...] # superset of runs
+          },
+        1000: {....
+          }
+        }          
+}
 '''</span>
 </code></pre></div></div>
 
@@ -279,7 +297,7 @@ smiles pass the filter, a dictionary of smiles with m1 scores.
   <li><code>novelty</code>: the fraction of the generated molecules that are not present in the training set.</li>
   <li><code>m1</code>: the synthesizability score of the molecules from molecule.one retrosynthesis model. </li>
   <li><code>%pass</code>: the fraction of molecules that passed XXX molecule filters. These filters exclude not drug-like molecules. </li>
-  <li><code>top1_%pass</code>: the top 1 docking score for the molecules that pass filters.</li>
+  <li><code>top1_%pass (top1-p)</code>: the top 1 docking score for the molecules that pass filters.</li>
 </ul>
 
 <p class="is-size-5">Note that all evaluations are automatically computed using <code>group.evaluate(predictions)</code> except the <code>m1</code>. To include this, simply specify the <code>m1_api</code> token in the evaluation function. Note that this is a non-commercial service kindly provided by our partner <a href="http://molecule.one/">molecule.one</a>. Please conform to the terms if you plan to submit the m1 scores. You can also select to opt-out and submit your results without this evaluation metric, by simply not specifying the <code>m1_api</code> token. Checkout this <a href="/functions/oracles/#moleculeone"> page </a> to get the token and terms/conditions. </p>
