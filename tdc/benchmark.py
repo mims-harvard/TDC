@@ -220,11 +220,12 @@ class BenchmarkGroup:
 						raise ValueError("The expected output is a list/dictionary of top 100 molecules!")
 					
 					if recalc:
-						dataset = fuzzy_search(benchmark, self.dataset_names)
+						dataset = fuzzy_search(data_name, self.dataset_names)
 
 						# docking scores for the top K smiles (K <= 100)
 						target_pdb_file = os.path.join(self.path, dataset + '.pdb')
-
+						from .oracles import Oracle    
+						data_path = os.path.join(self.path, dataset)                       
 						oracle = Oracle(name = "Docking_Score", software="vina",
 							pyscreener_path = self.pyscreener_path,
 							receptors=[target_pdb_file],
@@ -322,7 +323,7 @@ class BenchmarkGroup:
 			evaluator = eval('Evaluator(name = \'' + metric_dict[data_name] + '\')')
 			return {metric_dict[data_name]: round(evaluator(true, pred), 3)}
 
-	def evaluate_many(self, preds, save_file_name = None, m1_api = None):
+	def evaluate_many(self, preds, save_file_name = None, m1_api = None, results_individual = None):
 		"""
 		:param preds: list of dict<str dataset_name: list of float>
 		:return: dict<dataset_name: [mean_metric_result, std_metric_result]
@@ -337,11 +338,14 @@ class BenchmarkGroup:
 
 		if len(preds) < min_requirement:
 			return ValueError("Must have predictions from at least " + str(min_requirement) + " runs for leaderboard submission")
-		individual_results = []
-		for pred in preds:
-			retval = self.evaluate(pred, m1_api = m1_api)
-			individual_results.append(retval)
-
+		if results_individual is None:
+			individual_results = []
+			for pred in preds:
+				retval = self.evaluate(pred, m1_api = m1_api)
+				individual_results.append(retval)
+		else:
+			individual_results = results_individual
+            
 		if self.name == 'docking_group':
 			metrics = ['top100', 'top10', 'top1', 'diversity', 'novelty', '%pass', 'top1_%pass', 'm1', 'top smiles']
 			num_folds = len(preds) 
