@@ -147,6 +147,7 @@ drugsyn_benchmark = {'Synergy': ['drugcomb_css',
                                  'drugcomb_zip'
                                  ]}
 
+dti_dg_benchmark = {'DTI': ['bindingdb_patent']} 
 
 docking_benchmark = {'Targets': ['DRD3']}
 
@@ -196,6 +197,8 @@ drugsyn_metrics = {'drugcomb_css': 'mae',
                   'drugcomb_css_colon':'mae',
                    }
 
+dti_dg_metrics = {'bindingdb_patent': 'pcc'}
+
 #### Benchmark Splits
 admet_splits = {'caco2_wang': 'scaffold',
 				'hia_hou': 'scaffold',
@@ -227,6 +230,8 @@ drugsyn_splits = {'drugcomb_css': 'combination',
                     'drugcomb_bliss': 'combination',
                     'drugcomb_zip': 'combination'
                     }
+
+dti_dg_splits = {'bindingdb_patent': 'time'}
 
 ####################################
 
@@ -303,11 +308,16 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 
 benchmark_names = {"admet_group": admet_benchmark,
                    "drugcombo_group": drugsyn_benchmark,
-                   "docking_group": docking_benchmark}
+                   "docking_group": docking_benchmark,
+                   "dti_dg_group": dti_dg_benchmark}
+
 bm_metric_names = {"admet_group": admet_metrics,
-                  "drugcombo_group": drugsyn_metrics}
+                  "drugcombo_group": drugsyn_metrics,
+                  "dti_dg_group": dti_dg_metrics}
+
 bm_split_names = {"admet_group": admet_splits,
-                  "drugcombo_group": drugsyn_splits}
+                  "drugcombo_group": drugsyn_splits,
+                  "dti_dg_group": dti_dg_splits}
 
 dataset_list = []
 for i in dataset_names.keys():
@@ -492,11 +502,13 @@ oracle2id = {'drd2': 4178625,
 
 benchmark2type = {'admet_group': 'zip',
                   'drugcombo_group': 'zip',
-                  'docking_group': 'zip'}
+                  'docking_group': 'zip',
+                  'dti_dg_group': 'zip'}
 
 benchmark2id = {'admet_group': 4426004,
                 'drugcombo_group':  4426002,
-                'docking_group': 4554082}
+                'docking_group': 4554082,
+                'dti_dg_group': 4725171}
 
 sdf_file_names = {
 	'grambow': ['Product', 'Reactant', 'TS']

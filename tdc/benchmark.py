@@ -139,6 +139,10 @@ class BenchmarkGroup:
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		if self.file_format == 'csv':
+			if self.name == 'dti_dg_group':
+				train = pd.read_csv(os.path.join(data_path, 'train.csv'))
+				val = pd.read_csv(os.path.join(data_path, 'valid.csv'))
+				return train, val
 			train_val = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 		elif self.file_format == 'pkl':
 			train_val = pd.read_pickle(os.path.join(data_path, 'train_val.pkl'))
@@ -173,6 +177,11 @@ class BenchmarkGroup:
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		if self.file_format == 'csv':
+			if self.name == 'dti_dg_group':
+				train = pd.read_csv(os.path.join(data_path, 'train.csv'))
+				val = pd.read_csv(os.path.join(data_path, 'valid.csv'))
+				test = pd.read_csv(os.path.join(data_path, 'test.csv'))
+				return {'train': train, 'val': val, 'test': test, 'name': dataset}
 			train = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 			test = pd.read_csv(os.path.join(data_path, 'test.csv'))
 		elif self.file_format == 'pkl':
