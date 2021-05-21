@@ -164,7 +164,7 @@ def molpair_process(name, path, dataset_names):
 	df = pd_load(name, path)
 	return df['input'], df['output']
 
-def interaction_dataset_load(name, path, target, dataset_names):
+def interaction_dataset_load(name, path, target, dataset_names, aux_column):
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
@@ -177,7 +177,11 @@ def interaction_dataset_load(name, path, target, dataset_names):
 		if target is not None:
 			target = fuzzy_search(target, df.columns.values)
 		df = df[df[target].notnull()].reset_index(drop = True)
-		return df['X1'], df['X2'], df[target], df['ID1'], df['ID2']
+		if aux_column is None:
+			return df['X1'], df['X2'], df[target], df['ID1'], df['ID2'], '_'
+		else:
+			return df['X1'], df['X2'], df[target], df['ID1'], df['ID2'], df[aux_column]
+
 	except:
 		with open(os.path.join(path, name + '.' + name2type[name]), 'r') as f:
 			flag = 'Service Unavailable' in ' '.join(f.readlines())
@@ -525,17 +529,18 @@ def create_fold_time(df, frac, date_column):
 	df = df.sort_values(by = date_column).reset_index(drop = True)
 	train_frac, val_frac, test_frac = frac[0], frac[1], frac[2]
 
-	split_date = df[:int(len(df) * (train_frac + val_frac))].iloc[-1].Date
-	test = df[df.Date > split_date].reset_index(drop = True)
-	train_val = df[df.Date <= split_date]
+	split_date = df[:int(len(df) * (train_frac + val_frac))].iloc[-1][date_column]
+	test = df[df[date_column] >= split_date].reset_index(drop = True)
+	train_val = df[df[date_column] < split_date]
 
-	split_date_valid = train_val[:int(len(train_val) * train_frac/(train_frac + val_frac))].iloc[-1].Date
-	train = train_val[train_val.Date <= split_date_valid].reset_index(drop = True)
-	valid = train_val[train_val.Date > split_date_valid].reset_index(drop = True)
+	split_date_valid = train_val[:int(len(train_val) * train_frac/(train_frac + val_frac))].iloc[-1][date_column]
+	train = train_val[train_val[date_column] <= split_date_valid].reset_index(drop = True)
+	valid = train_val[train_val[date_column] > split_date_valid].reset_index(drop = True)
 
-	return {'train': train, 'valid': valid, 'test': test, 'split_time': {'train_time_frame': (df.iloc[0].Date, split_date_valid), 
+	return {'train': train, 'valid': valid, 'test': test, 'split_time': {'train_time_frame': (df.iloc[0][date_column], split_date_valid), 
                                                                          'valid_time_frame': (split_date_valid, split_date), 
-                                                                         'test_time_frame': (split_date, df.iloc[-1].Date)}}
+                                                                         'test_time_frame': (split_date, df.iloc[-1][date_column])}}
+
 def train_val_test_split(len_data, frac, seed):
 	test_size = int(len_data * frac[2])
 	train_size = int(len_data * frac[0])

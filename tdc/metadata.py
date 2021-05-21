@@ -43,7 +43,8 @@ dti_dataset_names = ['davis',
  'kiba',
  'bindingdb_kd',
  'bindingdb_ic50',
- 'bindingdb_ki']
+ 'bindingdb_ki',
+ 'bindingdb_patent']
 
 ppi_dataset_names = ['huri']
 
@@ -348,6 +349,7 @@ name2type = {'toxcast': 'tab',
  'bindingdb_kd': 'tab',
  'bindingdb_ic50': 'csv',
  'bindingdb_ki': 'csv',
+ 'bindingdb_patent': 'csv',
  'huri': 'tab',
  'drugbank': 'tab',
  'twosides': 'csv',
@@ -398,6 +400,7 @@ name2id = {'bbb_adenot': 4259565,
  'bindingdb_ic50': 4291560,
  'bindingdb_kd': 4291555,
  'bindingdb_ki': 4291556,
+ 'bindingdb_patent': 4724851,
  'bioavailability_ma': 4259567,
  'caco2_wang': 4259569,
  'clearance_edrug3d': 4259571,
@@ -545,6 +548,7 @@ name2stats = {
 	'bindingdb_kd': 52284,
 	'bindingdb_ki': 375032,
 	'bindingdb_ic50': 991486,
+	'bindingdb_patent': 243344,
 	'davis': 27621,
 	'kiba': 118036,
 	'drugbank': 191808,
