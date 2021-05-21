@@ -37,8 +37,14 @@ class DataLoader(base_dataset.DataLoader):
                     "You can use tdc.utils.retrieve_label_name_list('" +
                     name.lower() + "') to retrieve all available label names.")
 
-        entity1, entity2, raw_y, entity1_idx, entity2_idx = \
-            interaction_dataset_load(name, path, label_name, dataset_names)
+        name = fuzzy_search(name, dataset_names)
+        if name == 'bindingdb_patent':
+            aux_column = 'Year'
+        else:
+            aux_column = None
+
+        entity1, entity2, raw_y, entity1_idx, entity2_idx, aux_column_val = \
+            interaction_dataset_load(name, path, label_name, dataset_names, aux_column = aux_column)
 
         self.name = name
         self.entity1 = entity1
@@ -53,6 +59,8 @@ class DataLoader(base_dataset.DataLoader):
 
         self.entity1_name = 'Entity1'
         self.entity2_name = 'Entity2'
+        self.aux_column = aux_column
+        self.aux_column_val = aux_column_val
 
         self.two_types = False
 
@@ -76,10 +84,18 @@ class DataLoader(base_dataset.DataLoader):
             Interaction score.
         """
         if format == 'df':
-            return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx,
-                                 self.entity1_name: self.entity1,
-                                 self.entity2_name + '_ID': self.entity2_idx,
-                                 self.entity2_name: self.entity2, 'Y': self.y})
+            if self.aux_column is None:
+                return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx,
+                                     self.entity1_name: self.entity1,
+                                     self.entity2_name + '_ID': self.entity2_idx,
+                                     self.entity2_name: self.entity2, 'Y': self.y})
+            else:
+                return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx,
+                                     self.entity1_name: self.entity1,
+                                     self.entity2_name + '_ID': self.entity2_idx,
+                                     self.entity2_name: self.entity2, 'Y': self.y, 
+                                     self.aux_column: self.aux_column_val})
+
         elif format == 'DeepPurpose':
             return self.entity1.values, self.entity2.values, self.y.values
         elif format == 'dict':
@@ -114,7 +130,7 @@ class DataLoader(base_dataset.DataLoader):
         print_sys('--------------------------')
     
     def get_split(self, method='random', seed=42,
-                  frac=[0.7, 0.1, 0.2], column_name=None):
+                  frac=[0.7, 0.1, 0.2], column_name=None, time_column = None):
         """Add a method description here.
 
         Parameters
@@ -149,6 +165,11 @@ class DataLoader(base_dataset.DataLoader):
                 return create_fold_setting_cold(df, seed, frac, column_name)
         elif method == 'combination':
             return create_combination_split(df, seed, frac)
+        elif method == 'time':
+            if time_column is None:
+                raise ValueError('Please specify the column that has the time variable using time_column.')
+            return create_fold_time(df, frac, time_column)
+
         else:
             raise AttributeError("Please select from random_split, "
                                  "or cold_split. If cold split, "
