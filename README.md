@@ -23,6 +23,7 @@ TDC is an open-source initiative. To get involved, join the [Slack Workspace](ht
 
 
 ## Updates
+- `0.2.0`: Release docking molecule generation benchmark! Checkout [here](https://tdcommons.ai/benchmark/docking_group/overview/)!
 - `0.1.9`: Support molecule filters! Checkout [here](https://tdcommons.ai//functions/data_process/#molecule-filters)!
 - `0.1.8`: Streamlined and simplified the leaderboard programming frameworks! Now, you can submit a result for a single dataset! Checkout [here](https://tdcommons.ai/benchmark/overview/)!
 - TDC white paper is alive on [arXiv](https://arxiv.org/abs/2102.09548)!
