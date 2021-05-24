@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="http://localhost:4000/benchmark/docking_group/overview/" />
-<meta property="og:url" content="http://localhost:4000/benchmark/docking_group/overview/" />
+<link rel="canonical" href="https://tdcommons.ai/benchmark/docking_group/overview/" />
+<meta property="og:url" content="https://tdcommons.ai/benchmark/docking_group/overview/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/benchmark/docking_group/overview/","headline":"Docking Benchmark Group","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"https://tdcommons.ai/benchmark/docking_group/overview/","headline":"Docking Benchmark Group","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -104,6 +104,8 @@
                             <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
                             
                             <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
                             
                         </div>
                     </div>
@@ -194,18 +196,36 @@
 <div class="content">
     <h2 id="docking-molecule-generation-benchmark-group">Docking Molecule Generation Benchmark Group</h2>
 
-<p class="is-size-5"> Molecule generation seeks to generate novel molecular structures with desired properties. While current evaluations focus on simple heuristic oracles, such as QED, LogP, DRD2, they do not reflect the complexity of realistic cases. Problems include: (1) Many properties, such as activity against a target, are expensive to query from experiments or computational simulation. Thus methods that require large amounts of calls to the oracle are impractical in a real-world application. (2) Despite the high objective values, generated molecules may also suffer from poor performance on other requirements of molecular design, such as low synthesizability, monotonous generated batches, etc.  </p>
+<h3 id="introduction">Introduction</h3>
 
-<p class="is-size-5"> To tackle these problems, we present the docking benchmark group [<a href="https://arxiv.org/abs/2006.16955">Cieplinski et al. 2020</a>, <a href="https://chemrxiv.org/articles/preprint/Using_a_Genetic_Algorithm_to_Find_Molecules_with_Good_Docking_Scores/13525589/2#:~:text=A%20graph%2Dbased%20genetic%20algorithm,2%2Dadrenergic%20G%20protein%2Dcoupled">Steinmann and Jensen, 2021</a>]. Docking is a theoretical evaluation of the affinity between a ligand (a small molecular drug) and a target (a protein involved in a disease pathway). A molecule with higher affinity is more likely to have higher bioactivity, so it is widely applied in virtual screening for drug discovery [<a href="https://www.nature.com/articles/s41586-019-0917-9?fbclid=IwAR1HDXx0kEsNlRQZXVtPkmX7hU_gDoT2aqVEiBZj04qhz_6x1WCbNkj75IE">Lyu et al. 2020</a>]. In this benchmark, the main objective is to generate molecules that have a high affinity (low docking score). This benchmark directly tackles the above two problems: (1) Since docking scores are relatively costly to calculate, we <i>restrict the number of oracle calls</i> in this benchmark and require models to adapt quickly. This task is valuable in the real drug discovery process and can simulate a case with a wet-lab experiment as an oracle under resource constraints. (2) In addition to the typical average oracle scores on the top molecules, we provide <i>additional evaluations</i> to probe the realistic utilities of the generation. The training dataset is <a href="/generation_tasks/molgen/#zinc">ZINC 250K</a>.</p>
+<p class="is-size-5"> AI-assisted molecule generation aims to generate novel molecular structures with desired properties. Current techniques for evaluating the quality of generated molecules focus on heuristic oracles, such as QED, LogP, and DRD2, and do not reflect the complexity of the real-world environment. This creates several key challenges.  Many properties, such as binding propensity towards a target protein, are incredibly resource-intensive to investigate through experiments or computational simulations. For this reason, techniques that require a large number of calls to oracles do not constitute a practical strategy to evaluate the generated molecules. Even in settings where generated molecules score highly by some oracles, the generated molecules may not have other necessary properties (e.g., low synthesizability) to constitute promising therapeutic candidates.
+</p>
 
-<p class="is-size-5"> To retrieve the individual target benchmark names, type: </p>
+<p class="is-size-5"> To address these challenges, we designed a docking benchmark group [<a href="https://arxiv.org/abs/2006.16955">Cieplinski et al. 2020</a>, <a href="https://chemrxiv.org/articles/preprint/Using_a_Genetic_Algorithm_to_Find_Molecules_with_Good_Docking_Scores/13525589/2#:~:text=A%20graph%2Dbased%20genetic%20algorithm,2%2Dadrenergic%20G%20protein%2Dcoupled">Steinmann and Jensen, 2021</a>]. Docking is a theoretical evaluation of affinity between a ligand (a small molecular drug) and a target (a protein involved in the disease). As a molecule with higher affinity is more likely to have higher bioactivity, docking is widely used for virtual screening of compounds [<a href="https://www.nature.com/articles/s41586-019-0917-9?fbclid=IwAR1HDXx0kEsNlRQZXVtPkmX7hU_gDoT2aqVEiBZj04qhz_6x1WCbNkj75IE">Lyu et al. 2020</a>]. 
+</p>
+
+<p class="is-size-5">
+This benchmark evaluates generated molecules against their affinity to the target protein (i.e., quantified through docking scores). To this end, the benchmark is structured as follows:
+<ul class="is-size-5">
+<li> As docking scores are relatively costly to calculate, we <i>restrict the number of oracle calls</i> in this benchmark requiring the models to adapt quickly. This setup simulates a real-world environment with a limited number of wet-lab experiments that can be carried out.</li>
+<li>In addition to typical oracle scores, we provide <i>additional tests</i> to evaluate how realistic the generated molecules are.</li>
+</ul>
+</p>
+
+<p class="is-size-5">
+The training dataset originates from <a href="/generation_tasks/molgen/#zinc">ZINC 250K</a>.
+</p>
+
+<h3 id="accessing-the-dataset">Accessing the Dataset</h3>
+
+<p class="is-size-5"> To retrieve the names of benchmarks constitute this benchmark group, type the following: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'Docking_Group'</span><span class="p">)</span>
 <span class="c1"># ['DRD3', 'XXX', ...]
 </span></code></pre></div></div>
 
-<p class="is-size-5">To access each benchmark, use the following code:</p>
+<p class="is-size-5">To access a benchmark, use the following code:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Docking_Group'</span><span class="p">,</span> 
@@ -265,7 +285,8 @@ Note that if you put save_dict = True in evaluate function, it
 would return more detailed evaluation outcomes, namely the list of 
 smiles pass the filter, a dictionary of smiles with m1 scores and docking scores.
 
-We ask users to submit at least three random runs of models for robustness. You can use following functions to obtain submission ready format:
+We ask users to submit at least three random runs of models for robustness. 
+You can use following functions to obtain submission ready format:
 '''</span>
 <span class="n">predictions_runs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pred_run1</span><span class="p">,</span> <span class="n">pred_run2</span><span class="p">,</span> <span class="n">pred_run3</span><span class="p">]</span>
 <span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_runs</span><span class="p">,</span> <span class="n">save_file_name</span> <span class="o">=</span> <span class="s">'result'</span><span class="p">,</span> <span class="n">m1_api</span> <span class="o">=</span> <span class="s">'XXXXX'</span><span class="p">)</span>
@@ -284,29 +305,42 @@ We ask users to submit at least three random runs of models for robustness. You 
           }
         }          
 }
+
+In default, this evaluate_many function will call group.evaluate for each run. If you have the evaluate result for each fold, simply specify it with 'results_individual = XX' to skip the evaluation calls.
 '''</span>
 </code></pre></div></div>
 
-<p class="is-size-5"> <b>Evaluation metrics</b> To realistically evaluate the quality of the generated molecules, we report the following metrics (mean and standard deviation of at least 3 random runs): </p>
+<h3 id="performance-evaluation">Performance Evaluation</h3>
+
+<p class="is-size-5"> To evaluate the quality of generated molecules, we report the following metrics (average and standard deviation across 3 or more independent runs): </p>
 
 <ul class="is-large is-size-5">
-  <li><code>top100</code>: the average of top 100 generated molecules docking scores for the target.</li>
-  <li><code>top10</code>: the average of top 10 generated molecules docking scores for the target.</li>
-  <li><code>top1</code>: the docking score of the best generated molecule.</li>
-  <li><code>diversity</code>: the average pairwise Tanimoto distance between the Morgan fingerprints of the top 100 molecules.</li>
-  <li><code>novelty</code>: the fraction of the generated molecules that are not present in the training set.</li>
-  <li><code>m1</code>: the synthesizability score of the molecules from molecule.one retrosynthesis model. </li>
-  <li><code>%pass</code>: the fraction of molecules that passed XXX molecule filters. These filters exclude not drug-like molecules. </li>
-  <li><code>top1_%pass (top1-p)</code>: the top 1 docking score for the molecules that pass filters.</li>
+  <li><code>top100</code>: Average docking score of top-100 generated molecules for a given target.</li>
+  <li><code>top10</code>: Average docking score of top-10 generated molecules for a given target.</li>
+  <li><code>top1</code>: The lowest docking score of generated molecules.</li>
+  <li><code>diversity</code>: Average pairwise Tanimoto distance of Morgan fingerprints for top-100 generated molecules.</li>
+  <li><code>novelty</code>: Fraction of generated molecules that are not present in the training set.</li>
+  <li><code>m1</code>: Synthesizability score of molecules obtained via molecule.one retrosynthesis model. </li>
+  <li><code>%pass</code>: Fraction of generated molecules that successfully pass through a-priori defined filters. These filters are rules compiled by medicinal chemists and test whether compounds are promising candidates for downstream analyses.</li>
+  <li><code>top1_%pass (top1-p)</code>: The lowest docking score for molecules molecules that are not filtered out.</li>
+  <li><code>molecules</code>: Visualizations of molecular structure of the superset of top-100 molecules across independent runs of the model.</li> 
 </ul>
 
-<p class="is-size-5">Note that all evaluations are automatically computed using <code>group.evaluate(predictions)</code> except the <code>m1</code>. To include this, simply specify the <code>m1_api</code> token in the evaluation function. Note that this is a non-commercial service kindly provided by our partner <a href="http://molecule.one/">molecule.one</a>. Please conform to the terms if you plan to submit the m1 scores. You can also select to opt-out and submit your results without this evaluation metric, by simply not specifying the <code>m1_api</code> token. Checkout this <a href="/functions/oracles/#moleculeone"> page </a> to get the token and terms/conditions. </p>
+<p class="is-size-5">Note that all evaluations are automatically computed by <code>group.evaluate</code> function with the exception of <code>m1</code> evaluation metric.</p>
 
-<p class="is-size-5"> <b>Maximum oracle calls</b> To simulate different levels of realistic constraints, we provide a set of benchmarks for various maximum number of oracle calls. The smaller the number, the higher constraint and higher requirement for the model to adapt. You can change the maximum oracle call in the <code>group.get('DRD3', num_max_call = 5000)</code> function. The leaderboard supports 100, 500, 1000, 5000 four levels.</p>
+<p class="is-size-5">To include <code>m1</code> in the evaluation, specify the <code>m1_api</code> token in the evaluation function. Note that this is a non-commercial service kindly provided to TDC by our partner organization <a href="http://molecule.one/">Molecule.one</a>. Please follow Molecule.one's terms of usage if you plan to calculate <code>m1</code> scores. You can opt-out of <code>m1</code> and submit your results without it, by not specifying the <code>m1_api</code> token. Check out this <a href="/functions/oracles/#moleculeone"> page </a> to get the API token and learn about terms of usage. </p>
 
-<p class="is-size-5"> <b>Installation</b> This benchmark requires the use of TDC oracle class. For docking score, it requires PyScreener. You can find the detailed installation steps <a href="/functions/oracles/#docking-scores">here</a>. </p>
+<h3 id="maximum-number-of-calls-to-oracles">Maximum Number of Calls to Oracles</h3>
 
-<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instruction</a></b> on how to use the <code>BenchmarkGroup</code> class and submission instructions. </p>
+<p class="is-size-5">
+To evaluate models in increasingly harder learning regimes, we provide four leaderboards, each allowing only a certain number of oracle calls. The smaller the number of allowed oracle calls, the harder is the learning task. You can specify the maximum number of oracle calls as follows: <code>group.get('DRD3', num_max_call = 5000)</code>. We currently support leaderboards with a maximum of 100 (tough learning regime), 500, 1000, or 5000 (easy learning regime) calls to the oracles.
+</p>
+
+<h3 id="instructions">Instructions</h3>
+
+<p class="is-size-5">This benchmark requires the use of TDC oracle class. For docking score, it requires PyScreener. You can find the detailed installation steps <a href="/functions/oracles/#docking-scores">here</a>. </p>
+
+<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard.  </p>
 
 <div class="column is-12">
     <hr />
@@ -314,12 +348,14 @@ We ask users to submit at least three random runs of models for robustness. You 
 
 <h3 id="leaderboard-data-summary">Leaderboard Data Summary</h3>
 
+<hr />
+
 <table class="table is-striped is-hoverable">
   <thead>
   <tr>
-    <th>Target</th>
-    <th>Related Diseases</th>
-    <th>Link</th>
+    <th>Dataset</th>
+    <th>Diseases</th>
+    <th>Link to DRD3 target protein</th>
   </tr>
   </thead>
   <tr>
@@ -328,10 +364,6 @@ We ask users to submit at least three random runs of models for robustness. You 
     <td><a href="https://www.uniprot.org/uniprot/P35462">Uniprot Page</a></td>
   </tr>
 </table>
-
-<div class="column is-12">
-    <hr />
-</div>
 
 </div>
                 </div>
