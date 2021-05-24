@@ -141,8 +141,9 @@ class BenchmarkGroup:
 		if self.file_format == 'csv':
 			if self.name == 'dti_dg_group':
 				train = pd.read_csv(os.path.join(data_path, 'train.csv'))
-				val = pd.read_csv(os.path.join(data_path, 'valid.csv'))
-				return train, val
+				### TODO: get in split and out split based on a fixed fraction and seed
+				raise NotImplementedError
+				# return train, val
 			train_val = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 		elif self.file_format == 'pkl':
 			train_val = pd.read_pickle(os.path.join(data_path, 'train_val.pkl'))
@@ -179,9 +180,8 @@ class BenchmarkGroup:
 		if self.file_format == 'csv':
 			if self.name == 'dti_dg_group':
 				train = pd.read_csv(os.path.join(data_path, 'train.csv'))
-				val = pd.read_csv(os.path.join(data_path, 'valid.csv'))
 				test = pd.read_csv(os.path.join(data_path, 'test.csv'))
-				return {'train': train, 'val': val, 'test': test, 'name': dataset}
+				return {'train': train, 'test': test, 'name': dataset}
 			train = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 			test = pd.read_csv(os.path.join(data_path, 'test.csv'))
 		elif self.file_format == 'pkl':
