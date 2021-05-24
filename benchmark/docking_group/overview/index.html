@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="https://tdcommons.ai/benchmark/docking_group/overview/" />
-<meta property="og:url" content="https://tdcommons.ai/benchmark/docking_group/overview/" />
+<link rel="canonical" href="http://localhost:4000/benchmark/docking_group/overview/" />
+<meta property="og:url" content="http://localhost:4000/benchmark/docking_group/overview/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"https://tdcommons.ai/benchmark/docking_group/overview/","headline":"Docking Benchmark Group","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/benchmark/docking_group/overview/","headline":"Docking Benchmark Group","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -333,14 +333,14 @@ In default, this evaluate_many function will call group.evaluate for each run. I
 <h3 id="maximum-number-of-calls-to-oracles">Maximum Number of Calls to Oracles</h3>
 
 <p class="is-size-5">
-To evaluate models in increasingly harder learning regimes, we provide four leaderboards, each allowing only a certain number of oracle calls. The smaller the number of allowed oracle calls, the harder is the learning task. You can specify the maximum number of oracle calls as follows: <code>group.get('DRD3', num_max_call = 5000)</code>. We currently support leaderboards with a maximum of 100 (tough learning regime), 500, 1000, or 5000 (easy learning regime) calls to the oracles.
+To simulate the resource-intensiveness in real-world molecule generation, we restrict the number of maximum calls to oracles in O(10<sup>3</sup>). To evaluate models in increasingly harder learning regimes, we provide four leaderboards, each allowing only a certain number of oracle calls. The smaller the number of allowed oracle calls, the harder is the learning task. You can specify the maximum number of oracle calls as follows: <code>group.get('DRD3', num_max_call = 5000)</code>. We currently support leaderboards with a maximum of 100 (toughest learning regime), 500, 1000, or 5000 (the least tough learning regime) calls to the oracles.
 </p>
 
 <h3 id="instructions">Instructions</h3>
 
 <p class="is-size-5">This benchmark requires the use of TDC oracle class. For docking score, it requires PyScreener. You can find the detailed installation steps <a href="/functions/oracles/#docking-scores">here</a>. </p>
 
-<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard.  </p>
+<p class="is-size-5"> To submit your result, please fill out <b><a href="https://forms.gle/HYupGaV7WDuutbr9A">THIS FORM</a></b>. The evaluation result file <code>result.pkl</code> will be automatically generated after calling <code>group.evaluate_many(predictions_runs, save_file_name = 'result', m1_api = 'XXXXX')</code>. </p>
 
 <div class="column is-12">
     <hr />
