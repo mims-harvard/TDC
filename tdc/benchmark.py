@@ -139,11 +139,6 @@ class BenchmarkGroup:
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		if self.file_format == 'csv':
-			if self.name == 'dti_dg_group':
-				train = pd.read_csv(os.path.join(data_path, 'train.csv'))
-				### TODO: get in split and out split based on a fixed fraction and seed
-				raise NotImplementedError
-				# return train, val
 			train_val = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 		elif self.file_format == 'pkl':
 			train_val = pd.read_pickle(os.path.join(data_path, 'train_val.pkl'))
@@ -170,6 +165,8 @@ class BenchmarkGroup:
 			out = create_fold(train_val, seed, frac = frac)
 		elif split_method == 'combination':
 			out = create_combination_split(train_val, seed, frac=frac)
+		elif split_method == 'group':
+			out = create_group_split(train_val, seed, holdout_frac = 0.2, group_column = 'Year')
 		else:
 			raise NotImplementedError
 		return out['train'], out['valid']
@@ -178,10 +175,6 @@ class BenchmarkGroup:
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		if self.file_format == 'csv':
-			if self.name == 'dti_dg_group':
-				train = pd.read_csv(os.path.join(data_path, 'train.csv'))
-				test = pd.read_csv(os.path.join(data_path, 'test.csv'))
-				return {'train': train, 'test': test, 'name': dataset}
 			train = pd.read_csv(os.path.join(data_path, 'train_val.csv'))
 			test = pd.read_csv(os.path.join(data_path, 'test.csv'))
 		elif self.file_format == 'pkl':
