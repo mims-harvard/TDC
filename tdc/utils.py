@@ -541,6 +541,21 @@ def create_fold_time(df, frac, date_column):
                                                                          'valid_time_frame': (split_date_valid, split_date), 
                                                                          'test_time_frame': (split_date, df.iloc[-1][date_column])}}
 
+# split within each stratification defined by the group column
+
+def create_group_split(train_val, seed, holdout_frac, group_column):
+	train_df = pd.DataFrame()
+	val_df = pd.DataFrame()
+
+	for i in train_val[group_column].unique():
+		train_val_temp = train_val[train_val[group_column] == i]
+		np.random.seed(seed)
+		msk = np.random.rand(len(train_val_temp)) < (1 - holdout_frac)
+		train_df = train_df.append(train_val_temp[msk])
+		val_df = val_df.append(train_val_temp[~msk])
+
+	return {'train': train_df.reset_index(drop = True), 'valid': val_df.reset_index(drop = True)}
+	
 def train_val_test_split(len_data, frac, seed):
 	test_size = int(len_data * frac[2])
 	train_size = int(len_data * frac[0])
