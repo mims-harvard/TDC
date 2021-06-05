@@ -1,0 +1,29 @@
+language: python
+
+python:
+  # Actually not needed since rdkit installation with conda overwrites it
+  - "3.6"
+
+before_install:
+  # download and install miniconda
+  - wget http://repo.continuum.io/miniconda/Miniconda3-4.1.11-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/conda
+  - export PATH="$HOME/conda/bin:$PATH"
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+
+  - conda create -n test_env python=$TRAVIS_PYTHON_VERSION pip cmake
+  - source activate test_env
+
+install:
+  # install the most recent rdkit package from the RDKit anaconda channel.
+  - conda install -q -c rdkit rdkit
+  - pip install -r requirements.txt
+
+script:
+  # Style guide enforcement
+  - flake8 guacamol && flake8 tests
+  # Static typing enforcement
+  - mypy guacamol && mypy tests
+  # Test suite
+  - python -m pytest tests

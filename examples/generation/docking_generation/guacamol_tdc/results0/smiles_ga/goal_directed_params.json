@@ -1,0 +1,13 @@
+{
+    "gene_size": 300,
+    "generations": 1000,
+    "n_jobs": -1,
+    "n_mutations": 200,
+    "output_dir": "/net/sunlab/psunlab1/molecular_data/graphnn/guacamol_tdc/guacamol_baselines/smiles_ga",
+    "patience": 5,
+    "population_size": 100,
+    "random_start": false,
+    "seed": 42,
+    "smiles_file": "data/guacamol_v1_all.smiles",
+    "suite": "v3"
+}

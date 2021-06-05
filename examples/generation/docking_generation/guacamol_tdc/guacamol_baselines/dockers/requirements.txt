@@ -1,0 +1,10 @@
+guacamol==0.5.3
+matplotlib==3.0.2
+torch>=1.0.0
+joblib==0.12.5
+numpy==1.15.2
+tqdm==4.26.0
+cython==0.29
+nltk==3.4.5
+flake8==3.5.0
+git+https://github.com/molecularsets/moses.git@master#egg=moses

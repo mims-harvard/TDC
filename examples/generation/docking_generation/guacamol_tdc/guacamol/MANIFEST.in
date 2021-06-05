@@ -1,0 +1,4 @@
+# Include the file holdout SMILES strings when the guacamol package is generated
+include guacamol/data/holdout_set_gcm_v1.smiles
+# Marker file to say that guacamol supports type checking
+include guacamol/py.typed

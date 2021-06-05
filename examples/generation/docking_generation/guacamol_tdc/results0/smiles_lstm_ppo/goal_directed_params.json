@@ -1,0 +1,13 @@
+{
+    "batch_size": 1024,
+    "clip_param": 0.2,
+    "entropy_weight": 1,
+    "episode_size": 8192,
+    "kl_div_weight": 10,
+    "model_path": "/net/sunlab/psunlab1/molecular_data/graphnn/guacamol_tdc/guacamol_baselines/smiles_lstm_ppo/pretrained_model/model_final_0.473.pt",
+    "n_jobs": -1,
+    "num_epochs": 20,
+    "output_dir": "/net/sunlab/psunlab1/molecular_data/graphnn/guacamol_tdc/guacamol_baselines/smiles_lstm_ppo",
+    "seed": 42,
+    "suite": "v3"
+}
