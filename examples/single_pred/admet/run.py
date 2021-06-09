@@ -1,3 +1,4 @@
+from rdkit.DataStructs import cDataStructs
 from DeepPurpose import CompoundPred as models
 from DeepPurpose.utils import *
 
@@ -14,11 +15,14 @@ parser.add_argument('-m', '--model', default='RDKit2D', type=str, help='model na
 args = parser.parse_args()
 drug_encoding = args.model
 
-if drug_encoding not in ['RDKit2D', 'Morgan', 'CNN']:
-    raise ValueError("You have to specify from 'RDKit2D', 'Morgan', 'CNN'!")
+if drug_encoding not in ['RDKit2D', 'Morgan', 'CNN', 'NeuralFP', 'MPNN', 'AttentiveFP', 'AttrMasking', 'ContextPred']:
+    raise ValueError("You have to specify from 'RDKit2D', 'Morgan', 'CNN', 'NeuralFP', 'MPNN', 'AttentiveFP', 'AttrMasking', 'ContextPred'!")
 
 if drug_encoding == 'RDKit2D':
     drug_encoding = 'rdkit_2d_normalized'
+    
+if drug_encoding in ['NeuralFP', 'AttentiveFP', 'AttrMasking', 'ContextPred']:
+    drug_encoding = 'DGL_' + drug_encoding
 
 predictions_all_seeds = {}
 results_all_seeds = {}
