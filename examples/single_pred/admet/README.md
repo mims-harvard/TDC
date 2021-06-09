@@ -22,37 +22,13 @@ For build from source installation, checkout the [installation page](https://git
 
 ## Reproduce Results
 
-### Morgan Fingerprint + MLP
-
 ```python
 python run.py --model Morgan
-'''
-{'caco2_wang': [0.908, 0.06],
- 'hia_hou': [0.807, 0.072],
- 'pgp_broccatelli': [0.88, 0.006],
- 'bioavailability_ma': [0.581, 0.086],
- 'lipophilicity_astrazeneca': [0.701, 0.009],
- 'solubility_aqsoldb': [1.203, 0.019],
- 'bbb_martins': [0.823, 0.015],
- 'ppbr_az': [12.848, 0.362],
- 'vdss_lombardo': [0.493, 0.011],
- 'cyp2d6_veith': [0.587, 0.011],
- 'cyp3a4_veith': [0.827, 0.009],
- 'cyp2c9_veith': [0.715, 0.004],
- 'cyp2d6_substrate_carbonmangels': [0.671, 0.066],
- 'cyp3a4_substrate_carbonmangels': [0.633, 0.013],
- 'cyp2c9_substrate_carbonmangels': [0.38, 0.015],
- 'half_life_obach': [0.329, 0.083],
- 'clearance_microsome_az': [0.492, 0.02],
- 'clearance_hepatocyte_az': [0.272, 0.068],
- 'herg': [0.736, 0.023],
- 'ames': [0.794, 0.008],
- 'dili': [0.832, 0.021],
- 'ld50_zhu': [0.649, 0.019]}
-'''
 ```
 
-### RDKit2D Fingerprint + MLP
+You can select the following model in the --model parameter: 'Morgan', 'RDKit2D', 'CNN', 'NeuralFP', 'MPNN', 'AttentiveFP', 'AttrMasking', 'ContextPred'
+
+## Sample Output
 
 ```python
 python run.py --model RDKit2D
@@ -81,37 +57,6 @@ python run.py --model RDKit2D
  'ld50_zhu': [0.678, 0.003]}
 '''
 ```
-
-### CNN 1D on SMILES
-
-```python
-python run.py --model CNN
-'''
-{'caco2_wang': [0.446, 0.036],
- 'hia_hou': [0.869, 0.026],
- 'pgp_broccatelli': [0.908, 0.012],
- 'bioavailability_ma': [0.613, 0.013],
- 'lipophilicity_astrazeneca': [0.743, 0.02],
- 'solubility_aqsoldb': [1.023, 0.023],
- 'bbb_martins': [0.781, 0.03],
- 'ppbr_az': [11.106, 0.358],
- 'vdss_lombardo': [0.226, 0.114],
- 'cyp2d6_veith': [0.544, 0.053],
- 'cyp3a4_veith': [0.821, 0.003],
- 'cyp2c9_veith': [0.713, 0.006],
- 'cyp2d6_substrate_carbonmangels': [0.485, 0.037],
- 'cyp3a4_substrate_carbonmangels': [0.662, 0.031],
- 'cyp2c9_substrate_carbonmangels': [0.367, 0.059],
- 'half_life_obach': [0.038, 0.138],
- 'clearance_microsome_az': [0.252, 0.116],
- 'clearance_hepatocyte_az': [0.235, 0.021],
- 'herg': [0.754, 0.037],
- 'ames': [0.776, 0.015],
- 'dili': [0.792, 0.016],
- 'ld50_zhu': [0.675, 0.011]}
-'''
-```
-
 ## Contact
 
 Please contact [Kexin](mailto:kexinhuang@hsph.harvard.edu) if you have any question!
