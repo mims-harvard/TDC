@@ -43,6 +43,7 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
+from tdc.utils import oracle_load, print_sys, install
 
 mean2func = {
   'geometric': gmean, 

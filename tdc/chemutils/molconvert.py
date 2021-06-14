@@ -1704,47 +1704,47 @@ def smiles2selfies(smiles):
 def selfies2smiles(selfies):
   return canonicalize(sf.decoder(selfies))
 
-def selfies2ECFP2(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2ECFP2(smiles)
+# def selfies2ECFP2(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2ECFP2(smiles)
 
-def selfies2ECFP4(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2ECFP4(smiles)
+# def selfies2ECFP4(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2ECFP4(smiles)
 
-def selfies2ECFP6(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2ECFP6(smiles)
+# def selfies2ECFP6(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2ECFP6(smiles)
 
-def selfies2MACCS(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2maccs(smiles)
+# def selfies2MACCS(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2maccs(smiles)
 
-def selfies2Daylight(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2daylight(smiles)
-
-
-def selfies2RDKit2D(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2rdkit2d(smiles)
+# def selfies2Daylight(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2daylight(smiles)
 
 
-def selfies2Morgan(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2morgan(smiles)
+# def selfies2RDKit2D(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2rdkit2d(smiles)
 
-def selfies2PubChem(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2pubchem(smiles)
+
+# def selfies2Morgan(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2morgan(smiles)
+
+# def selfies2PubChem(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2pubchem(smiles)
 
 
 
@@ -1783,10 +1783,10 @@ def smiles2graph2D(smiles):
     adj_matrix[idx2,idx1] = bond_idx
   return idx2atom, adj_matrix
 
-def selfies2graph2D(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2graph2D(smiles)
+# def selfies2graph2D(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2graph2D(smiles)
 
 
 def get_mol(smiles):
@@ -1837,10 +1837,10 @@ def smiles2PyG(smiles):
 
   return data
 
-def selfies2PyG(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2PyG(smiles)
+# def selfies2PyG(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2PyG(smiles)
 
 def molfile2PyG(molfile):
   smiles = molfile2smiles(molfile)
@@ -1866,15 +1866,15 @@ def smiles2DGL(smiles):
   g.add_edges(src, dst) 
   return g 
 
-def selfies2DGL(selfies):
-  smiles = selfies2smiles(selfies)
-  smiles = canonicalize(smiles)
-  return smiles2DGL(smiles)
+# def selfies2DGL(selfies):
+#   smiles = selfies2smiles(selfies)
+#   smiles = canonicalize(smiles)
+#   return smiles2DGL(smiles)
 
-def molfile2DGL(molfile):
-  smiles = molfile2smiles(molfile)
-  smiles = canonicalize(smiles)
-  return smiles2DGL(smiles)
+# def molfile2DGL(molfile):
+#   smiles = molfile2smiles(molfile)
+#   smiles = canonicalize(smiles)
+#   return smiles2DGL(smiles)
 
 
 ############### DGL end ###############
@@ -2726,166 +2726,194 @@ def xyzfile2coulomb(xyzfile):
   return smiles_lst2coulomb([smiles])
 
 
-##### mol file
+
+
+
+
+
+
+# ##### mol file
+# def molfile2smiles(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles 
+
+# def molfile2selfies(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2selfies(smiles)
+
+# def molfile2graph2d(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2graph2D(smiles)
+
+# def molfile2pyg(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2PyG(smiles)
+
+# def molfile2dgl(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2DGL(smiles)
+
+# def molfile2ecfp2(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2ECFP2(smiles)
+
+# def molfile2ecfp4(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2ECFP4(smiles)
+
+# def molfile2ecfp6(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2ECFP6(smiles)
+
+# def molfile2maccs(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2maccs(smiles)
+
+# def molfile2daylight(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2daylight(smiles)
+
+# def molfile2rdkit(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2rdkit2d(smiles)
+
+# def molfile2morgan(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2morgan(smiles)
+
+# def molfile2pubchem(molfile):
+#   mol = Chem.MolFromMolFile(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2pubchem(smiles)
+
+
+
+
+# ##### mol2 file 
+# def mol2file2smiles(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles 
+
+# def mol2file2selfies(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   return smiles2selfies(smiles)
+
+# def mol2file2graph2d(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2graph2D(smiles)
+
+# def mol2file2pyg(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2PyG(smiles)
+
+# def mol2file2dgl(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2DGL(smiles)
+
+# def mol2file2ecfp2(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2ECFP2(smiles)
+
+# def mol2file2ecfp4(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2ECFP4(smiles)
+
+# def mol2file2ecfp6(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2ECFP6(smiles)
+
+# def mol2file2maccs(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2maccs(smiles)
+
+# def mol2file2daylight(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2daylight(smiles)
+
+# def mol2file2rdkit(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2rdkit2d(smiles)
+
+# def mol2file2morgan(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2morgan(smiles)
+
+# def mol2file2pubchem(molfile):
+#   mol = Chem.MolFromMol2File(molfile)
+#   smiles = Chem.MolToSmiles(mol)
+#   smiles = canonicalize(smiles)
+#   return smiles2pubchem(smiles)
+
+#2D_format = ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
+#3D_format = ['Graph3D', 'Coulumb']
+
+## XXX2smiles
 def molfile2smiles(molfile):
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
   smiles = canonicalize(smiles)
   return smiles 
 
-def molfile2selfies(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2selfies(smiles)
 
-def molfile2graph2d(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2graph2D(smiles)
-
-def molfile2pyg(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2PyG(smiles)
-
-def molfile2dgl(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2DGL(smiles)
-
-def molfile2ecfp2(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2ECFP2(smiles)
-
-def molfile2ecfp4(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2ECFP4(smiles)
-
-def molfile2ecfp6(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2ECFP6(smiles)
-
-def molfile2maccs(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2maccs(smiles)
-
-def molfile2daylight(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2daylight(smiles)
-
-def molfile2rdkit(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2rdkit2d(smiles)
-
-def molfile2morgan(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2morgan(smiles)
-
-def molfile2pubchem(molfile):
-  mol = Chem.MolFromMolFile(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2pubchem(smiles)
-
-
-##### mol2 file 
 def mol2file2smiles(molfile):
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
   smiles = canonicalize(smiles)
   return smiles 
 
-def mol2file2selfies(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  return smiles2selfies(smiles)
 
-def mol2file2graph2d(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2graph2D(smiles)
+def smiles2smiles(smiles):
+	return canonicalize(smiles)
 
-def mol2file2pyg(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2PyG(smiles)
-
-def mol2file2dgl(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2DGL(smiles)
-
-def mol2file2ecfp2(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2ECFP2(smiles)
-
-def mol2file2ecfp4(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2ECFP4(smiles)
-
-def mol2file2ecfp6(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2ECFP6(smiles)
-
-def mol2file2maccs(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2maccs(smiles)
-
-def mol2file2daylight(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2daylight(smiles)
-
-def mol2file2rdkit(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2rdkit2d(smiles)
-
-def mol2file2morgan(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2morgan(smiles)
-
-def mol2file2pubchem(molfile):
-  mol = Chem.MolFromMol2File(molfile)
-  smiles = Chem.MolToSmiles(mol)
-  smiles = canonicalize(smiles)
-  return smiles2pubchem(smiles)
-
-#2D_format = ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
-#3D_format = ['Graph3D', 'Coulumb']
+## smiles2xxx 
 
 convert_dict = {
           'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'],
@@ -2897,6 +2925,10 @@ convert_dict = {
         }
 
 fingerprints_list = ['ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
+
+twoD_format = ['SMILES', 'SELFIES', 'mol', 'mol2', ]
+threeD_format = ['SDF', 'XYZ', ]
+
 
 class MolConvert:
 
@@ -2962,61 +2994,53 @@ class MolConvert:
         except:
           raise Exception('It is not supported to convert src to dst.')
 
-        if src == 'SMILES' and dst == 'SMILES':
-          self.func = canonicalize
-        elif src == 'SMILES' and dst == 'SELFIES':
-          self.func = smiles2selfies
-        elif src == 'SMILES' and dst == 'Graph2D':
-          self.func = smiles2graph2D
-        elif src == 'SMILES' and dst == 'PyG':
-          self.func = smiles2PyG 
-        elif src == 'SMILES' and dst == 'DGL':
-          self.func = smiles2DGL
-        elif src == 'SMILES' and dst == 'ECFP2':
-          self.func = smiles2ECFP2
-        elif src == 'SMILES' and dst == 'ECFP4':
-          self.func = smiles2ECFP4 
-        elif src == 'SMILES' and dst == 'ECFP6':
-          self.func = smiles2ECFP6 
-        elif src == 'SMILES' and dst == 'MACCS':
-          self.func = smiles2maccs 
-        elif src == 'SMILES' and dst == 'Daylight':
-          self.func = smiles2daylight 
-        elif src == 'SMILES' and dst == 'RDKit2D':
-          self.func = smiles2rdkit2d 
-        elif src == 'SMILES' and dst == 'Morgan':
-          self.func = smiles2morgan 
-        elif src == 'SMILES' and dst == 'PubChem':
-          self.func = smiles2pubchem 
 
-        #### SELFIES 
-        elif src == 'SELFIES' and dst == 'SMILES':
-          self.func = selfies2smiles
-        elif src == 'SELFIES' and dst == 'Graph2D':
-          self.func = selfies2graph2D
-        elif src == 'SELFIES' and dst == 'PyG':
-          self.func = selfies2PyG 
-        elif src == 'SELFIES' and dsst == 'DGL':
-          self.func = selfies2DGL
-        elif src == 'SELFIES' and dst == 'ECFP2':
-          self.func = selfies2ECFP2
-        elif src == 'SELFIES' and dst == 'ECFP4':
-          self.func = selfies2ECFP4
-        elif src == 'SELFIES' and dst == 'ECFP6':
-          self.func = selfies2ECFP6
-        elif src == 'SELFIES' and dst == 'MACCS':
-          self.func = selfies2MACCS
-        elif src == 'SELFIES' and dst == 'Daylight':
-          self.func = selfies2Daylight
-        elif src == 'SELFIES' and dst == 'RDKit2D':
-          self.func = selfies2RDKit2D
-        elif src == 'SELFIES' and dst == 'Morgan':
-          self.func = selfies2Morgan
-        elif src == 'SELFIES' and dst == 'PubChem':
-          self.func = selfies2PubChem
+        if src in twoD_format:
+            ### 1. src -> SMILES 
+            if src == "SMILES":
+                f1 = canonicalize 
+            elif src == "SELFIES":
+                f1 = selfies2smiles 
+            elif src == "mol":
+                f1 = molfile2smiles 
+            elif src == "mol2":
+                f1 = mol2file2smiles 
+
+            ### 2. SMILES -> all 
+            # 'SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'
+            if dst == 'SMILES':
+                f2 = canonicalize 
+            elif dst == 'SELFIES':
+                f2 = smiles2selfies 
+            elif dst == "Graph2D":
+                f2 = smiles2graph2D 
+            elif dst == "PyG":
+                f2 = smiles2PyG 
+            elif dst == "DGL":
+                f2 = smiles2DGL
+            elif dst == "ECFP2":
+                f2 = smiles2ECFP2 
+            elif dst == "ECFP4":
+                f2 = smiles2ECFP4 
+            elif dst == "MACCS":
+                f2 = smiles2maccs 
+            elif dst == "Daylight":
+                f2 = smiles2daylight 
+            elif dst == "RDKit2D":
+                f2 = smiles2rdkit2d 
+            elif dst == "Morgan":
+                f2 = smiles2morgan 
+            elif dst == 'PubChem':
+                f2 = smiles2pubchem
+            self.func = lambda x:f2(f1(x)) 
+        elif src in threeD_format:
+            pass 
+
+
+
 
         ### load from xyz file, input is a filename (str), only contain one smiles 
-        elif src == 'XYZ' and dst == 'SMILES':
+        if src == 'XYZ' and dst == 'SMILES':
           self.func = xyzfile2smiles
         elif src == 'XYZ' and dst == 'SELFIES':
           self.func = xyzfile2selfies 
@@ -3035,55 +3059,108 @@ class MolConvert:
         elif src == 'SDF' and dst == 'Coulumb':
           self.func = sdffile2coulomb
 
-        ### mol file
-        elif src == 'mol' and dst == 'SMILES':
-          self.func = molfile2smiles 
-        elif src == 'mol' and dst == 'SELFIES':
-          self.func = molfile2selfies 
-        elif src == 'mol' and dst == 'Graph2D':
-          self.func = molfile2graph2d 
-        elif src == 'mol' and dst == 'ECFP2':
-          self.func = molfile2ecfp2 
-        elif src == 'mol' and dst == 'ECFP4':
-          self.func = molfile2ecfp4 
-        elif src == 'mol' and dst == 'ECFP6':
-          self.func = molfile2ecfp6 
-        elif src == 'mol' and dst == 'MACCS':
-          self.func = molfile2maccs 
-        elif src == 'mol' and dst == 'Daylight':
-          self.func = molfile2daylight
-        elif src == 'mol' and dst == 'RDKit2D':
-          self.func = molfile2rdkit
-        elif src == 'mol' and dst == 'Morgan':
-          self.func = molfile2morgan 
-        elif src == 'mol' and dst == 'PubChem':
-          self.func = molfile2pubchem  
+        # if src == 'SMILES' and dst == 'SMILES':
+        #   self.func = canonicalize
+        # elif src == 'SMILES' and dst == 'SELFIES':
+        #   self.func = smiles2selfies
+        # elif src == 'SMILES' and dst == 'Graph2D':
+        #   self.func = smiles2graph2D
+        # elif src == 'SMILES' and dst == 'PyG':
+        #   self.func = smiles2PyG 
+        # elif src == 'SMILES' and dst == 'DGL':
+        #   self.func = smiles2DGL
+        # elif src == 'SMILES' and dst == 'ECFP2':
+        #   self.func = smiles2ECFP2
+        # elif src == 'SMILES' and dst == 'ECFP4':
+        #   self.func = smiles2ECFP4 
+        # elif src == 'SMILES' and dst == 'ECFP6':
+        #   self.func = smiles2ECFP6 
+        # elif src == 'SMILES' and dst == 'MACCS':
+        #   self.func = smiles2maccs 
+        # elif src == 'SMILES' and dst == 'Daylight':
+        #   self.func = smiles2daylight 
+        # elif src == 'SMILES' and dst == 'RDKit2D':
+        #   self.func = smiles2rdkit2d 
+        # elif src == 'SMILES' and dst == 'Morgan':
+        #   self.func = smiles2morgan 
+        # elif src == 'SMILES' and dst == 'PubChem':
+        #   self.func = smiles2pubchem 
+
+        # #### SELFIES 
+        # elif src == 'SELFIES' and dst == 'SMILES':
+        #   self.func = selfies2smiles
+        # elif src == 'SELFIES' and dst == 'Graph2D':
+        #   self.func = selfies2graph2D
+        # elif src == 'SELFIES' and dst == 'PyG':
+        #   self.func = selfies2PyG 
+        # elif src == 'SELFIES' and dsst == 'DGL':
+        #   self.func = selfies2DGL
+        # elif src == 'SELFIES' and dst == 'ECFP2':
+        #   self.func = selfies2ECFP2
+        # elif src == 'SELFIES' and dst == 'ECFP4':
+        #   self.func = selfies2ECFP4
+        # elif src == 'SELFIES' and dst == 'ECFP6':
+        #   self.func = selfies2ECFP6
+        # elif src == 'SELFIES' and dst == 'MACCS':
+        #   self.func = selfies2MACCS
+        # elif src == 'SELFIES' and dst == 'Daylight':
+        #   self.func = selfies2Daylight
+        # elif src == 'SELFIES' and dst == 'RDKit2D':
+        #   self.func = selfies2RDKit2D
+        # elif src == 'SELFIES' and dst == 'Morgan':
+        #   self.func = selfies2Morgan
+        # elif src == 'SELFIES' and dst == 'PubChem':
+        #   self.func = selfies2PubChem
+
+        # ### mol file
+        # elif src == 'mol' and dst == 'SMILES':
+        #   self.func = molfile2smiles 
+        # elif src == 'mol' and dst == 'SELFIES':
+        #   self.func = molfile2selfies 
+        # elif src == 'mol' and dst == 'Graph2D':
+        #   self.func = molfile2graph2d 
+        # elif src == 'mol' and dst == 'ECFP2':
+        #   self.func = molfile2ecfp2 
+        # elif src == 'mol' and dst == 'ECFP4':
+        #   self.func = molfile2ecfp4 
+        # elif src == 'mol' and dst == 'ECFP6':
+        #   self.func = molfile2ecfp6 
+        # elif src == 'mol' and dst == 'MACCS':
+        #   self.func = molfile2maccs 
+        # elif src == 'mol' and dst == 'Daylight':
+        #   self.func = molfile2daylight
+        # elif src == 'mol' and dst == 'RDKit2D':
+        #   self.func = molfile2rdkit
+        # elif src == 'mol' and dst == 'Morgan':
+        #   self.func = molfile2morgan 
+        # elif src == 'mol' and dst == 'PubChem':
+        #   self.func = molfile2pubchem  
         # todo 'mol': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'],
 
 
-        ### mol2 file
-        elif src == 'mol2' and dst == 'SMILES':
-          self.func = mol2file2smiles 
-        elif src == 'mol2' and dst == 'SELFIES':
-          self.func = mol2file2selfies 
-        elif src == 'mol2' and dst == 'Graph2D':
-          self.func = mol2file2graph2d 
-        elif src == 'mol2' and dst == 'ECFP2':
-          self.func = mol2file2ecfp2 
-        elif src == 'mol2' and dst == 'ECFP4':
-          self.func = mol2file2ecfp4 
-        elif src == 'mol2' and dst == 'ECFP6':
-          self.func = mol2file2ecfp6 
-        elif src == 'mol2' and dst == 'MACCS':
-          self.func = mol2file2maccs 
-        elif src == 'mol2' and dst == 'Daylight':
-          self.func = mol2file2daylight
-        elif src == 'mol2' and dst == 'RDKit2D':
-          self.func = mol2file2rdkit
-        elif src == 'mol2' and dst == 'Morgan':
-          self.func = mol2file2morgan 
-        elif src == 'mol2' and dst == 'PubChem':
-          self.func = mol2file2pubchem     
+        # ### mol2 file
+        # elif src == 'mol2' and dst == 'SMILES':
+        #   self.func = mol2file2smiles 
+        # elif src == 'mol2' and dst == 'SELFIES':
+        #   self.func = mol2file2selfies 
+        # elif src == 'mol2' and dst == 'Graph2D':
+        #   self.func = mol2file2graph2d 
+        # elif src == 'mol2' and dst == 'ECFP2':
+        #   self.func = mol2file2ecfp2 
+        # elif src == 'mol2' and dst == 'ECFP4':
+        #   self.func = mol2file2ecfp4 
+        # elif src == 'mol2' and dst == 'ECFP6':
+        #   self.func = mol2file2ecfp6 
+        # elif src == 'mol2' and dst == 'MACCS':
+        #   self.func = mol2file2maccs 
+        # elif src == 'mol2' and dst == 'Daylight':
+        #   self.func = mol2file2daylight
+        # elif src == 'mol2' and dst == 'RDKit2D':
+        #   self.func = mol2file2rdkit
+        # elif src == 'mol2' and dst == 'Morgan':
+        #   self.func = mol2file2morgan 
+        # elif src == 'mol2' and dst == 'PubChem':
+        #   self.func = mol2file2pubchem     
         # todo 'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'],
 
 
