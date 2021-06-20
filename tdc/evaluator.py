@@ -86,22 +86,22 @@ class Evaluator:
 		elif self.name == 'avg-roc-auc':
 			self.evaluator_func = avg_auc
 		elif self.name == 'novelty':   	
-			from .chem_utils import novelty
+			from tdc.chemutils import novelty
 			self.evaluator_func = novelty  
 		elif self.name == 'diversity':
-			from .chem_utils import diversity
+			from tdc.chemutils import diversity
 			self.evaluator_func = diversity 
 		elif self.name == 'validity':
-			from .chem_utils import validity
+			from tdc.chemutils import validity
 			self.evaluator_func = validity 
 		elif self.name == 'uniqueness':
-			from .chem_utils import uniqueness
+			from tdc.chemutils import uniqueness
 			self.evaluator_func = uniqueness 
 		elif self.name == 'kl_divergence':
-			from .chem_utils import kl_divergence
+			from tdc.chemutils import kl_divergence
 			self.evaluator_func = kl_divergence
 		elif self.name == 'fcd_distance':
-			from .chem_utils import fcd_distance
+			from tdc.chemutils import fcd_distance
 			self.evaluator_func = fcd_distance
 
 	def __call__(self, *args, **kwargs):

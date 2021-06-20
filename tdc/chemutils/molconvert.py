@@ -3037,8 +3037,6 @@ class MolConvert:
             pass 
 
 
-
-
         ### load from xyz file, input is a filename (str), only contain one smiles 
         if src == 'XYZ' and dst == 'SMILES':
           self.func = xyzfile2smiles
