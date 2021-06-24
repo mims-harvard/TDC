@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Docstring to be finished.
+"""
+This file contains specific dataloader classes for each types of single_pred task
 """
 # Author: TDC Team
 # License: MIT
@@ -31,6 +32,9 @@ class ADME(single_pred_dataset.DataLoader):
         Description of the variable.
 
     print_stats : bool, optional (default=True)
+        Description of the variable.
+
+    convert_format : bool, optional (default=None)
         Description of the variable.
     """
 

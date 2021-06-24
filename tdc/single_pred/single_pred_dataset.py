@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+This file contains the basic dataloader class for single_pred tasks
+"""
+# Author: TDC Team
+# License: MIT
+
 import pandas as pd
 import numpy as np
 import os, sys, json 
@@ -8,6 +15,26 @@ from .. import base_dataset
 from ..utils import *
 
 class DataLoader(base_dataset.DataLoader):
+    """Docstring to be finished.
+
+    Parameters
+    ----------
+    name : str
+        Description of the variable.
+
+    path : str, optional (default="data")
+        Description of the variable.
+
+    label_name : str, optional (default=None)
+        Description of the variable.
+
+    print_stats : bool, optional (default=True)
+        Description of the variable.
+
+    convert_format : str, optional (default=None)
+        Output representation of the dataset, the tag should be a valid destination of MolConverter.
+    """
+
 	def __init__(self, name, path, label_name, print_stats, dataset_names, convert_format):
 		if name.lower() in dataset2target_lists.keys():
 			#print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
