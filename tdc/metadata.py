@@ -1,4 +1,8 @@
 ####################################
+# test cases
+test_single_pred_dataset_names = ['test_single_pred']
+test_multi_pred_dataset_names = ['test_multi_pred']
+
 # single_pred prediction
 
 toxicity_dataset_names = ['tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
@@ -303,7 +307,9 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"Paratope": paratope_dataset_names, 
 				"Yields": yield_dataset_names, 
 				"Catalyst": catalyst_dataset_names, 
-				"CRISPROutcome": crisproutcome_dataset_names
+				"CRISPROutcome": crisproutcome_dataset_names,
+				"test_single_pred": test_single_pred_dataset_names,
+				"test_multi_pred": test_multi_pred_dataset_names
 				}
 
 benchmark_names = {"admet_group": admet_benchmark,
@@ -403,7 +409,9 @@ name2type = {'toxcast': 'tab',
  'half_life_obach': 'tab',
  'ld50_zhu': 'tab',
  'vdss_lombardo': 'tab',
- 'leenay':'tab'}
+ 'leenay':'tab',
+ 'test_single_pred': 'tab',
+ 'test_multi_pred': 'tab'}
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -484,7 +492,9 @@ name2id = {'bbb_adenot': 4259565,
  'ld50_zhu': 4267146,
  'half_life_obach': 4266799,
  'vdss_lombardo': 4267387,
- 'leenay':4279966 }
+ 'leenay':4279966,
+ 'test_single_pred': 4832455,
+ 'test_multi_pred': 4832456}
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 
