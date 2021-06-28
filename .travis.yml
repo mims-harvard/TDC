@@ -23,7 +23,7 @@ install:
 
 # command to run tests
 script:
-   travis_wait 30 pytest --cov=pyod/ --ignore=tdc/test/rdkit_tests/
+   travis_wait 30 pytest --cov=pyod/ --ignore=tdc/test/dev_tests/
 
 after_success:
   - coveralls
