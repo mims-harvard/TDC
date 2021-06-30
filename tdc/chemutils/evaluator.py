@@ -50,7 +50,7 @@ def single_molecule_validity(smiles):
   """Evaluate the chemical validity of a single molecule in terms of SMILES string
 
   Args:
-    smiles: SMILES string.
+    smiles: str, SMILES string.
 
   Returns:
     Boolean: if the SMILES string is a valid molecule 
@@ -72,10 +72,10 @@ def canonicalize(smiles):
   """Convert SMILES into canonical form. 
   
   Args:
-    smiles: SMILES string
+    smiles: str, SMILES string
 
   Returns:
-    smiles: canonical SMILES string. 
+    smiles: str, canonical SMILES string. 
 
   """
   mol = Chem.MolFromSmiles(smiles)
@@ -94,19 +94,28 @@ def uniqueness(list_of_smiles):
   """Evaluate the uniqueness of a list of SMILES string.
 
   Args:
-    list_of_smiles: a list of SMILES string 
+    list_of_smiles: list (of SMILES string) 
 
   Returns:
-    uniqueness
+    uniqueness: float 
   """
   canonical_smiles_lst = unique_lst_of_smiles(list_of_smiles)
   return 1.0*len(canonical_smiles_lst)/len(list_of_smiles)
 
 def novelty(generated_smiles_lst, training_smiles_lst):
-	generated_smiles_lst = unique_lst_of_smiles(generated_smiles_lst)
-	training_smiles_lst = unique_lst_of_smiles(training_smiles_lst)
-	novel_ratio = sum([1 if i in training_smiles_lst else 0 for i in generated_smiles_lst])*1.0 / len(generated_smiles_lst)
-	return 1 - novel_ratio
+  """Evaluate the novelty of set of generated smiles using list of training smiles as reference. 
+
+  Args: 
+    generated_smiles_lst: list (of SMILES string), which are generated. 
+    training_smiles_lst: list (of SMILES string), which are used for training. 
+
+  Returns:
+    novelty: float
+  """
+  generated_smiles_lst = unique_lst_of_smiles(generated_smiles_lst)
+  training_smiles_lst = unique_lst_of_smiles(training_smiles_lst)
+  novel_ratio = sum([1 if i in training_smiles_lst else 0 for i in generated_smiles_lst])*1.0 / len(generated_smiles_lst)
+  return 1 - novel_ratio
 
 def diversity(list_of_smiles):
   """Evaluate the diversity of a set of molecules, diversity is defined as the average pairwise
@@ -116,7 +125,7 @@ def diversity(list_of_smiles):
     list_of_smiles: list of SMILES strings 
 
   Returns:
-    div: diversity of the molecules
+    div: float 
   """
   list_of_unique_smiles = unique_lst_of_smiles(list_of_smiles)
   list_of_mol = [Chem.MolFromSmiles(smiles) for smiles in list_of_unique_smiles]
@@ -216,6 +225,9 @@ def calculate_internal_pairwise_similarities(smiles_list):
     """
     Computes the pairwise similarities of the provided list of smiles against itself.
 
+    Args:
+        smiles_list: list of str
+
     Returns:
         Symmetric matrix of pairwise similarities. Diagonal is set to zero.
     """
@@ -308,6 +320,15 @@ def kl_divergence(generated_smiles_lst, training_smiles_lst):
 
 
 def fcd_distance_tf(generated_smiles_lst, training_smiles_lst):
+  """Evaluate FCD distance between generated smiles set and training smiles set using tensorflow.
+
+  Args: 
+    generated_smiles_lst: list (of SMILES string), which are generated. 
+    training_smiles_lst: list (of SMILES string), which are used for training. 
+
+  Returns:
+    fcd_distance: float
+  """
   import pkgutil, tempfile, os
   if 'chemnet' not in globals().keys():
     global chemnet
@@ -334,17 +355,36 @@ def fcd_distance_tf(generated_smiles_lst, training_smiles_lst):
 
   FCD = fcd.calculate_frechet_distance(mu1=mu_ref, mu2=mu,
                                      sigma1=cov_ref, sigma2=cov)
-  score = np.exp(-0.2 * FCD)
-  return score  
+  fcd_distance = np.exp(-0.2 * FCD)
+  return fcd_distance  
 
 def fcd_distance_torch(generated_smiles_lst, training_smiles_lst):
+  """Evaluate FCD distance between generated smiles set and training smiles set using PyTorch.
+
+  Args: 
+    generated_smiles_lst: list (of SMILES string), which are generated. 
+    training_smiles_lst: list (of SMILES string), which are used for training. 
+
+  Returns:
+    fcd_distance: float
+  """
   import os 
   os.environ['KMP_DUPLICATE_LIB_OK']='True'
   from fcd_torch import FCD
   fcd = FCD(device='cpu', n_jobs=8)
-  return fcd(generated_smiles_lst, training_smiles_lst)
+  fcd_distance = fcd(generated_smiles_lst, training_smiles_lst)
+  return fcd_distance
 
 def fcd_distance(generated_smiles_lst, training_smiles_lst):
+  """Evaluate FCD distance between generated smiles set and training smiles set.
+
+  Args: 
+    generated_smiles_lst: list (of SMILES string), which are generated. 
+    training_smiles_lst: list (of SMILES string), which are used for training. 
+
+  Returns:
+    fcd_distance: float
+  """
   try:
     import tensorflow, fcd
     global fcd 

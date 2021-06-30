@@ -52,38 +52,15 @@ mean2func = {
 
 
 def smiles_to_rdkit_mol(smiles):
-	mol = Chem.MolFromSmiles(smiles)
-	#  Sanitization check (detects invalid valence)
-	if mol is not None:
-		try:
-			Chem.SanitizeMol(mol)
-		except ValueError:
-			return None
-	return mol
+  """Convert smiles into rdkit's mol (molecule) format. 
 
-def smiles_2_fingerprint_ECFP4(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetMorganFingerprint(molecule, 2)
-	return fp 
+  Args: 
+    smiles: str
 
-def smiles_2_fingerprint_FCFP4(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetMorganFingerprint(molecule, 2, useFeatures=True)
-	return fp 
+  Returns:
+    mol: rdkit.Chem.rdchem.Mol
 
-def smiles_2_fingerprint_AP(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetAtomPairFingerprint(molecule, maxLength=10)
-	return fp 
-
-def smiles_2_fingerprint_ECFP6(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetMorganFingerprint(molecule, 3)
-	return fp 
-
-
-
-def smiles_to_rdkit_mol(smiles):
+  """
   mol = Chem.MolFromSmiles(smiles)
   #  Sanitization check (detects invalid valence)
   if mol is not None:
@@ -92,6 +69,65 @@ def smiles_to_rdkit_mol(smiles):
     except ValueError:
       return None
   return mol
+
+def smiles_2_fingerprint_ECFP4(smiles):
+  """Convert smiles into ECFP4 Morgan Fingerprint. 
+
+  Args: 
+    smiles: str
+
+  Returns:
+    fp: rdkit.DataStructs.cDataStructs.UIntSparseIntVect
+
+  """
+  molecule = smiles_to_rdkit_mol(smiles)
+  fp = AllChem.GetMorganFingerprint(molecule, 2)
+  return fp 
+
+
+def smiles_2_fingerprint_FCFP4(smiles):
+  """Convert smiles into FCFP4 Morgan Fingerprint. 
+
+  Args: 
+    smiles: str
+
+  Returns:
+    fp: rdkit.DataStructs.cDataStructs.UIntSparseIntVect
+
+  """
+  molecule = smiles_to_rdkit_mol(smiles)
+  fp = AllChem.GetMorganFingerprint(molecule, 2, useFeatures=True)
+  return fp 
+
+
+def smiles_2_fingerprint_AP(smiles):
+  """Convert smiles into Atom Pair Fingerprint. 
+
+  Args: 
+    smiles: str
+
+  Returns:
+    fp: rdkit.DataStructs.cDataStructs.IntSparseIntVect
+
+  """
+  molecule = smiles_to_rdkit_mol(smiles)
+  fp = AllChem.GetAtomPairFingerprint(molecule, maxLength=10)
+  return fp 
+
+def smiles_2_fingerprint_ECFP6(smiles):
+  """Convert smiles into ECFP6 Fingerprint. 
+
+  Args: 
+    smiles: str
+
+  Returns:
+    fp: rdkit.DataStructs.cDataStructs.UIntSparseIntVect
+
+  """  
+  molecule = smiles_to_rdkit_mol(smiles)
+  fp = AllChem.GetMorganFingerprint(molecule, 3)
+  return fp 
+
 
 
 fp2fpfunc = {'ECFP4': smiles_2_fingerprint_ECFP4, 
@@ -402,9 +438,6 @@ def calculateScore(m):
 
 # clf_model = None
 def load_drd2_model():
-    # global clf_model
-    # name = op.join(op.dirname(__file__), 'clf_py36.pkl')
-    #print("==== load drd2 oracle =====")
     name = 'oracle/drd2.pkl'
     try:
       with open(name, "rb") as f:
@@ -426,6 +459,15 @@ def fingerprints_from_mol(mol):
 
 
 def drd2(smile):
+    """Evaluate DRD2 score of a SMILES string
+
+    Args:
+      smiles: str
+
+    Returns:
+      drd_score: float 
+
+    """
 
     if 'drd2_model' not in globals().keys():
         global drd2_model
@@ -435,7 +477,8 @@ def drd2(smile):
     if mol:
         fp = fingerprints_from_mol(mol)
         score = drd2_model.predict_proba(fp)[:, 1]
-        return float(score)
+        drd_score = float(score)
+        return drd_score
     return 0.0
 
 def load_cyp3a4_veith():
@@ -480,68 +523,104 @@ def cyp3a4_veith(smiles):
 ## from https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 
 
 def similarity(a, b):
-	if a is None or b is None: 
-		return 0.0
-	amol = Chem.MolFromSmiles(a)
-	bmol = Chem.MolFromSmiles(b)
-	if amol is None or bmol is None:
-		return 0.0
-	fp1 = AllChem.GetMorganFingerprintAsBitVect(amol, 2, nBits=2048, useChirality=False)
-	fp2 = AllChem.GetMorganFingerprintAsBitVect(bmol, 2, nBits=2048, useChirality=False)
-	return DataStructs.TanimotoSimilarity(fp1, fp2) 
+  """Evaluate Tanimoto similarity between 2 SMILES strings
+
+    Args:
+      a: str
+      b: str 
+
+    Returns:
+      similarity score: float 
+
+  """
+  if a is None or b is None: 
+    return 0.0
+  amol = Chem.MolFromSmiles(a)
+  bmol = Chem.MolFromSmiles(b)
+  if amol is None or bmol is None:
+    return 0.0
+  fp1 = AllChem.GetMorganFingerprintAsBitVect(amol, 2, nBits=2048, useChirality=False)
+  fp2 = AllChem.GetMorganFingerprintAsBitVect(bmol, 2, nBits=2048, useChirality=False)
+  return DataStructs.TanimotoSimilarity(fp1, fp2) 
 
 def qed(s):
-	if s is None: 
-		return 0.0  
-	mol = Chem.MolFromSmiles(s)
-	if mol is None: 
-		return 0.0
-	return QED.qed(mol)
+  """Evaluate QED score of a SMILES string
+
+    Args:
+      smiles: str
+
+    Returns:
+      qed_score: float 
+
+  """  
+  if s is None: 
+    return 0.0  
+  mol = Chem.MolFromSmiles(s)
+  if mol is None: 
+    return 0.0
+  return QED.qed(mol)
 
 def penalized_logp(s):
-	if s is None: 
-		return -100.0
-	mol = Chem.MolFromSmiles(s)
-	if mol is None: 
-		return -100.0
+  """Evaluate LogP score of a SMILES string
 
-	logP_mean = 2.4570953396190123
-	logP_std = 1.434324401111988
-	SA_mean = -3.0525811293166134
-	SA_std = 0.8335207024513095
-	cycle_mean = -0.0485696876403053
-	cycle_std = 0.2860212110245455
+    Args:
+      smiles: str
 
-	log_p = Descriptors.MolLogP(mol)
-	# SA = -sascorer.calculateScore(mol)
-	SA = -calculateScore(mol)
+    Returns:
+      logp_score: float 
 
-	# cycle score
-	cycle_list = nx.cycle_basis(nx.Graph(Chem.rdmolops.GetAdjacencyMatrix(mol)))
-	if len(cycle_list) == 0:
-		cycle_length = 0
-	else:
-		cycle_length = max([len(j) for j in cycle_list])
-	if cycle_length <= 6:
-		cycle_length = 0
-	else:
-		cycle_length = cycle_length - 6
-	cycle_score = -cycle_length
+  """  
+  if s is None: 
+    return -100.0
+  mol = Chem.MolFromSmiles(s)
+  if mol is None: 
+    return -100.0
 
-	normalized_log_p = (log_p - logP_mean) / logP_std
-	normalized_SA = (SA - SA_mean) / SA_std
-	normalized_cycle = (cycle_score - cycle_mean) / cycle_std
-	return normalized_log_p + normalized_SA + normalized_cycle
+  logP_mean = 2.4570953396190123
+  logP_std = 1.434324401111988
+  SA_mean = -3.0525811293166134
+  SA_std = 0.8335207024513095
+  cycle_mean = -0.0485696876403053
+  cycle_std = 0.2860212110245455
+  log_p = Descriptors.MolLogP(mol)
+  # SA = -sascorer.calculateScore(mol)
+  SA = -calculateScore(mol)
+
+  # cycle score
+  cycle_list = nx.cycle_basis(nx.Graph(Chem.rdmolops.GetAdjacencyMatrix(mol)))
+  if len(cycle_list) == 0:
+    cycle_length = 0
+  else:
+    cycle_length = max([len(j) for j in cycle_list])
+  if cycle_length <= 6:
+    cycle_length = 0
+  else:
+    cycle_length = cycle_length - 6
+  cycle_score = -cycle_length
+
+  normalized_log_p = (log_p - logP_mean) / logP_std
+  normalized_SA = (SA - SA_mean) / SA_std
+  normalized_cycle = (cycle_score - cycle_mean) / cycle_std
+  return normalized_log_p + normalized_SA + normalized_cycle
 
 
 def SA(s):
-	if s is None:
-		return 100 
-	mol = Chem.MolFromSmiles(s)
-	if mol is None:
-		return 100 
-	SAscore = calculateScore(mol)
-	return SAscore 	
+  """Evaluate SA score of a SMILES string
+
+    Args:
+      smiles: str
+
+    Returns:
+      SAscore: float 
+
+  """  
+  if s is None:
+    return 100 
+  mol = Chem.MolFromSmiles(s)
+  if mol is None:
+    return 100 
+  SAscore = calculateScore(mol)
+  return SAscore 	
 
 '''
 for gsk3 and jnk3, 
@@ -577,6 +656,15 @@ def load_gsk3b_model():
     return gsk3_model 
 
 def gsk3b(smiles):
+    """Evaluate GSK3B score of a SMILES string
+
+    Args:
+      smiles: str
+
+    Returns:
+      gsk3_score: float 
+
+    """  
     if 'gsk3_model' not in globals().keys():
         global gsk3_model 
         gsk3_model = load_gsk3b_model()
@@ -591,6 +679,15 @@ def gsk3b(smiles):
 
 
 class jnk3:
+  """Evaluate JSK3 score of a SMILES string
+
+    Args:
+      smiles: str
+
+    Returns:
+      jnk3_score: float 
+
+  """  
   def __init__(self):
     jnk3_model_path = 'oracle/jnk3.pkl'
     try:
