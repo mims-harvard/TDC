@@ -47,6 +47,15 @@ except:
 
 
 def single_molecule_validity(smiles):
+  """Evaluate the chemical validity of a single molecule in terms of SMILES string
+
+  Args:
+    smiles: SMILES string.
+
+  Returns:
+    Boolean: if the SMILES string is a valid molecule 
+
+  """
 	if smiles.strip() == '':
 		return False 
 	mol = Chem.MolFromSmiles(smiles)
@@ -60,6 +69,15 @@ def validity(list_of_smiles):
 
 
 def canonicalize(smiles):
+  """Convert SMILES into canonical form. 
+  
+  Args:
+    smiles: SMILES string
+
+  Returns:
+    smiles: canonical SMILES string. 
+
+  """
 	mol = Chem.MolFromSmiles(smiles)
 	if mol is not None:
 		return Chem.MolToSmiles(mol, isomericSmiles=True)
@@ -73,6 +91,15 @@ def unique_lst_of_smiles(list_of_smiles):
 	return canonical_smiles_lst
 
 def uniqueness(list_of_smiles):
+  """Evaluate the uniqueness of a list of SMILES string.
+
+  Args:
+    list_of_smiles: a list of SMILES string 
+
+  Returns:
+    uniqueness
+
+  """
 	canonical_smiles_lst = unique_lst_of_smiles(list_of_smiles)
 	return 1.0*len(canonical_smiles_lst)/len(list_of_smiles)
 
@@ -83,9 +110,14 @@ def novelty(generated_smiles_lst, training_smiles_lst):
 	return 1 - novel_ratio
 
 def diversity(list_of_smiles):
-  """
-    The diversity of a set of molecules is defined as the average pairwise
-    Tanimoto distance between the Morgan fingerprints ---- GCPN
+  """Evaluate the diversity of a set of molecules, diversity is defined as the average pairwise
+    Tanimoto distance between the Morgan fingerprints. 
+
+  Args:
+    list_of_smiles: list of SMILES strings 
+
+  Returns:
+    div: diversity of the molecules
   """
   list_of_unique_smiles = unique_lst_of_smiles(list_of_smiles)
   list_of_mol = [Chem.MolFromSmiles(smiles) for smiles in list_of_unique_smiles]
@@ -99,7 +131,8 @@ def diversity(list_of_smiles):
       ### option II 
       # distance = -np.log2(sim)  			
       avg_lst.append(distance)
-  return np.mean(avg_lst)
+  div = np.mean(avg_lst)
+  return div
 
 
 
