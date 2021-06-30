@@ -15,7 +15,7 @@ from .. import base_dataset
 from ..utils import *
 
 class DataLoader(base_dataset.DataLoader):
-    """Docstring to be finished.
+	"""Docstring to be finished.
 
     Parameters
     ----------
@@ -33,7 +33,7 @@ class DataLoader(base_dataset.DataLoader):
 
     convert_format : str, optional (default=None)
         Output representation of the dataset, the tag should be a valid destination of MolConverter.
-    """
+	"""
 
 	def __init__(self, name, path, label_name, print_stats, dataset_names, convert_format):
 		if name.lower() in dataset2target_lists.keys():

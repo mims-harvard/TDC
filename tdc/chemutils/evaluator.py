@@ -56,12 +56,12 @@ def single_molecule_validity(smiles):
     Boolean: if the SMILES string is a valid molecule 
 
   """
-	if smiles.strip() == '':
-		return False 
-	mol = Chem.MolFromSmiles(smiles)
-	if mol is None or mol.GetNumAtoms() == 0:
-		return False 
-	return True
+  if smiles.strip() == '':
+    return False 
+  mol = Chem.MolFromSmiles(smiles)
+  if mol is None or mol.GetNumAtoms() == 0:
+    return False 
+  return True
 
 def validity(list_of_smiles):
 	valid_list_smiles = list(filter(single_molecule_validity, list_of_smiles))
@@ -78,11 +78,11 @@ def canonicalize(smiles):
     smiles: canonical SMILES string. 
 
   """
-	mol = Chem.MolFromSmiles(smiles)
-	if mol is not None:
-		return Chem.MolToSmiles(mol, isomericSmiles=True)
-	else:
-		return None
+  mol = Chem.MolFromSmiles(smiles)
+  if mol is not None:
+    return Chem.MolToSmiles(mol, isomericSmiles=True)
+  else:
+    return None
 
 def unique_lst_of_smiles(list_of_smiles):
 	canonical_smiles_lst = list(map(canonicalize, list_of_smiles))
@@ -98,10 +98,9 @@ def uniqueness(list_of_smiles):
 
   Returns:
     uniqueness
-
   """
-	canonical_smiles_lst = unique_lst_of_smiles(list_of_smiles)
-	return 1.0*len(canonical_smiles_lst)/len(list_of_smiles)
+  canonical_smiles_lst = unique_lst_of_smiles(list_of_smiles)
+  return 1.0*len(canonical_smiles_lst)/len(list_of_smiles)
 
 def novelty(generated_smiles_lst, training_smiles_lst):
 	generated_smiles_lst = unique_lst_of_smiles(generated_smiles_lst)
