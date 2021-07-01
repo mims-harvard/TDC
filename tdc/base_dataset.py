@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""Docstring to be finished.
+"""
+# Author: TDC Team
+# License: MIT
+
 import pandas as pd
 import numpy as np
 import sys
@@ -9,6 +15,23 @@ from . import utils
 
 
 class DataLoader:
+    """Docstring to be finished.
+
+    Parameters
+    ----------
+    name : str
+        Description of the variable.
+
+    path : str, optional (default="data")
+        Description of the variable.
+
+    label_name : str, optional (default=None)
+        Description of the variable.
+
+    print_stats : bool, optional (default=True)
+        Description of the variable.
+    """
+
     def __init__(self):
         pass
 

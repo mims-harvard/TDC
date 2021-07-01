@@ -264,7 +264,7 @@ class BenchmarkGroup:
 						results['m1'] = np.mean(scores_array)
 	                    
 					print_sys("---- Calculating molecular filters scores ----")
-					from .chem_utils import MolFilter
+					from tdc.chemutils import MolFilter
 					## follow guacamol
 					filters = MolFilter(filters = ['PAINS', 'SureChEMBL', 'Glaxo'], property_filters_flag = False)
 					pred_filter = filters(pred_)
