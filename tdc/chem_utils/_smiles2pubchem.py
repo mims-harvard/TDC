@@ -43,12 +43,10 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from tdc.utils import oracle_load, print_sys, install
-
+from ..utils import oracle_load, print_sys, install
+from .smartsPatts import smartsPatts
 
 PubChemKeys = None
-
-smartsPatts = pickle.load(open("tdc/chemutils/smartsPatts.pkl", 'rb'))
 
 def InitKeys(keyList, keyDict):
   assert len(keyList) == len(keyDict.keys()), 'length mismatch'

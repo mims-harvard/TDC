@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-This file contains specific dataloader classes for each types of single_pred task
+"""Docstring to be finished.
 """
 # Author: TDC Team
 # License: MIT
@@ -17,6 +16,14 @@ from ..utils import train_val_test_split
 from ..metadata import dataset_names
 
 
+class TestSinglePred(single_pred_dataset.DataLoader):
+    def __init__(self, name, path='./data', label_name=None, print_stats=False, convert_format=None):
+        super().__init__(name, path, label_name, print_stats,
+                         dataset_names=dataset_names["test_single_pred"], convert_format = convert_format)
+        if print_stats:
+            self.print_stats()
+        print('Done!', flush = True, file = sys.stderr)
+
 class ADME(single_pred_dataset.DataLoader):
     """Docstring to be finished.
 
@@ -32,9 +39,6 @@ class ADME(single_pred_dataset.DataLoader):
         Description of the variable.
 
     print_stats : bool, optional (default=True)
-        Description of the variable.
-
-    convert_format : bool, optional (default=None)
         Description of the variable.
     """
 

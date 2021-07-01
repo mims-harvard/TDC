@@ -2,8 +2,12 @@ import unittest
 import shutil
 import numpy as np
 import random
-from tdc.benchmark import BenchmarkGroup
+import sys
+import os
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                             '../..')))
+from tdc.benchmark import BenchmarkGroup
 
 def is_classification(values):
     value_set = set(values)
@@ -13,6 +17,7 @@ def is_classification(values):
 
 
 class TestBenchmarkGroup(unittest.TestCase):
+    
     def setUp(self):
         self.group = BenchmarkGroup(name='ADMET_Group', path='data/')
 

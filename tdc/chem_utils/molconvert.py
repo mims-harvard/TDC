@@ -43,14 +43,16 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from tdc.utils import oracle_load, print_sys, install
+from ..utils import oracle_load, print_sys, install
 from .oracle import smiles_to_rdkit_mol, smiles_2_fingerprint_ECFP4, smiles_2_fingerprint_FCFP4, smiles_2_fingerprint_AP, smiles_2_fingerprint_ECFP6
-# from _smiles2pubchem import smiles2pubchem
+from ._smiles2pubchem import smiles2pubchem
 
-
-
-
-
+def canonicalize(smiles):
+  mol = Chem.MolFromSmiles(smiles)
+  if mol is not None:
+    return Chem.MolToSmiles(mol, isomericSmiles=True)
+  else:
+    return None
 
 def smiles2morgan(s, radius = 2, nBits = 1024):
     """Convert smiles into Morgan Fingerprint. 
@@ -721,23 +723,3 @@ class MolConvert:
           return convert_dict[src] 
         else:
           return convert_dict
-
-
-
-
-######## test the MolConvert
-# benzene = "c1ccccc1"
-# convert = MolConvert(src = 'SMILES', dst = 'SELFIES')
-# print(convert(benzene))
-
-
-######## test the MoleculeFingerprint
-# fps = ['ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
-# smiles_lst = ['O=O', 'C', 'C#N', 'CC(=O)OC1=CC=CC=C1C(=O)O']
-# for fp in fps:
-#   MolFp = MoleculeFingerprint(fp = fp)
-#   arr = MolFp(smiles_lst)
-#   print(arr.shape, np.sum(arr))
-#   arr = MolFp(smiles_lst[0])
-#   print(arr.shape, np.sum(arr))
-######## test the MoleculeFingerprint
