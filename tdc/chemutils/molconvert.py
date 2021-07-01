@@ -44,57 +44,26 @@ except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
 from tdc.utils import oracle_load, print_sys, install
-
+from .oracle import smiles_to_rdkit_mol, smiles_2_fingerprint_ECFP4, smiles_2_fingerprint_FCFP4, smiles_2_fingerprint_AP, smiles_2_fingerprint_ECFP6
 # from _smiles2pubchem import smiles2pubchem
 
-
-def smiles_to_rdkit_mol(smiles):
-	mol = Chem.MolFromSmiles(smiles)
-	#  Sanitization check (detects invalid valence)
-	if mol is not None:
-		try:
-			Chem.SanitizeMol(mol)
-		except ValueError:
-			return None
-	return mol
-
-def smiles_2_fingerprint_ECFP4(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetMorganFingerprint(molecule, 2)
-	return fp 
-
-def smiles_2_fingerprint_FCFP4(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetMorganFingerprint(molecule, 2, useFeatures=True)
-	return fp 
-
-def smiles_2_fingerprint_AP(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetAtomPairFingerprint(molecule, maxLength=10)
-	return fp 
-
-def smiles_2_fingerprint_ECFP6(smiles):
-	molecule = smiles_to_rdkit_mol(smiles)
-	fp = AllChem.GetMorganFingerprint(molecule, 3)
-	return fp 
-
-
-
-def smiles_to_rdkit_mol(smiles):
-  mol = Chem.MolFromSmiles(smiles)
-  #  Sanitization check (detects invalid valence)
-  if mol is not None:
-    try:
-      Chem.SanitizeMol(mol)
-    except ValueError:
-      return None
-  return mol
 
 
 
 
 
 def smiles2morgan(s, radius = 2, nBits = 1024):
+    """Convert smiles into Morgan Fingerprint. 
+
+    Args: 
+      smiles: str
+      radius: int (default: 2)
+      nBits: int (default: 1024)
+
+    Returns:
+      fp: numpy.array
+
+    """  
     try:
         s = canonicalize(s)
         mol = Chem.MolFromSmiles(s)
@@ -107,6 +76,16 @@ def smiles2morgan(s, radius = 2, nBits = 1024):
     return features
 
 def smiles2rdkit2d(s): 
+    """Convert smiles into 200-dim Normalized RDKit 2D vector. 
+
+    Args: 
+      smiles: str
+
+    Returns:
+      fp: numpy.array
+
+    """ 
+
     s = canonicalize(s)
     try:
         from descriptastorus.descriptors import rdDescriptors, rdNormalizedDescriptors
@@ -123,6 +102,15 @@ def smiles2rdkit2d(s):
     return np.array(features)
 
 def smiles2daylight(s):
+  """Convert smiles into 2048-dim Daylight feature. 
+
+    Args: 
+      smiles: str
+
+    Returns:
+      fp: numpy.array
+
+  """ 
   try:
     s = canonicalize(s)
     NumFinger = 2048
@@ -137,6 +125,15 @@ def smiles2daylight(s):
   return np.array(features)
 
 def smiles2maccs(s):
+  """Convert smiles into maccs feature. 
+
+    Args: 
+      smiles: str
+
+    Returns:
+      fp: numpy.array
+
+  """ 
   s = canonicalize(s)
   mol = Chem.MolFromSmiles(s)
   fp = MACCSkeys.GenMACCSKeys(mol)
@@ -152,6 +149,15 @@ def smiles2maccs(s):
 
 '''
 def smiles2ECFP2(smiles):
+  """Convert smiles into ECFP2 Morgan Fingerprint. 
+
+  Args: 
+    smiles: str
+
+  Returns:
+    fp: rdkit.DataStructs.cDataStructs.UIntSparseIntVect
+
+  """
   nbits = 2048
   smiles = canonicalize(smiles)
   molecule = smiles_to_rdkit_mol(smiles)
@@ -162,6 +168,15 @@ def smiles2ECFP2(smiles):
 
 
 def smiles2ECFP4(smiles):
+  """Convert smiles into ECFP4 Morgan Fingerprint. 
+
+  Args: 
+    smiles: str
+
+  Returns:
+    fp: rdkit.DataStructs.cDataStructs.UIntSparseIntVect
+
+  """
   nbits = 2048
   smiles = canonicalize(smiles)
   molecule = smiles_to_rdkit_mol(smiles)
@@ -172,6 +187,15 @@ def smiles2ECFP4(smiles):
 
 
 def smiles2ECFP6(smiles):
+  """Convert smiles into ECFP6 Morgan Fingerprint. 
+
+  Args: 
+    smiles: str
+
+  Returns:
+    fp: rdkit.DataStructs.cDataStructs.UIntSparseIntVect
+
+  """
   nbits = 2048
   smiles = canonicalize(smiles)
   molecule = smiles_to_rdkit_mol(smiles)
@@ -226,10 +250,28 @@ class MoleculeFingerprint:
           return arr 
 
 def smiles2selfies(smiles):
+  """Convert smiles into selfies. 
+
+  Args: 
+    smiles: str
+
+  Returns:
+    selfies: str
+
+  """
   smiles = canonicalize(smiles)
   return sf.encoder(smiles)
 
 def selfies2smiles(selfies):
+  """Convert selfies into smiles. 
+
+  Args: 
+    selfies: str
+
+  Returns:
+    smiles: str
+
+  """
   return canonicalize(sf.decoder(selfies))
 
 
@@ -510,7 +552,11 @@ threeD_format = ['SDF', 'XYZ', ]
 
 class MolConvert:
 
-    '''
+    """MolConvert: convert the molecule from src formet to dst format. 
+
+    
+
+
     Example:
         convert = MolConvert(src = ‘SMILES’, dst = ‘Graph2D’)
         g = convert(‘Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC’)
@@ -524,7 +570,7 @@ class MolConvert:
               3D - [SDF file, XYZ file] 
         dst: 2D - [2D Graph (+ PyG, DGL format), Canonical SMILES, SELFIES, Fingerprints] 
               3D - [3D graphs (adj matrix entry is (distance, bond type)), Coulumb Matrix] 
-    '''
+    """
 
     def __init__(self, src = 'SMILES', dst = 'Graph2D', radius = 2, nBits = 1024):
         self._src = src
