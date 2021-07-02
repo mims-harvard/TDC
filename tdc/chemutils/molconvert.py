@@ -294,6 +294,16 @@ def bondtype2idx(bond_type):
     return 4
 
 def smiles2graph2D(smiles):
+  """convert SMILES string into two-dimensional molecular graph feature 
+
+  Args: 
+    smiles, str 
+
+  Returns:
+    idx2atom: dict, map from index to atom's symbol, e.g., {0:'C', 1:'N', ...}
+    adj_matrix: np.array 
+
+  """
   smiles = canonicalize(smiles)
   mol = smiles2mol(smiles)
   n_atoms = mol.GetNumAtoms()
@@ -338,6 +348,15 @@ def get_atom_features(atom):
             + [atom.GetIsAromatic()])
 
 def smiles2PyG(smiles):
+  """convert SMILES string into torch_geometric.data.Data
+
+  Args: 
+    smiles, str 
+
+  Returns:
+    data, torch_geometric.data.Data
+
+  """  
   smiles = canonicalize(smiles)
   mol = Chem.MolFromSmiles(smiles)
   n_atoms = mol.GetNumAtoms()
@@ -368,6 +387,15 @@ def molfile2PyG(molfile):
 
 ############### DGL begin ###############
 def smiles2DGL(smiles):
+  """convert SMILES string into dgl.DGLGraph
+
+  Args: 
+    smiles, str 
+
+  Returns:
+    g: dgl.DGLGraph()
+
+  """  
   smiles = canonicalize(smiles)
   mol = Chem.MolFromSmiles(smiles)
   n_atoms = mol.GetNumAtoms()
@@ -395,6 +423,15 @@ def mol2smiles(mol):
   return smiles
 
 def xyzfile2smiles(xyzfile):
+  """convert xyzfile into smiles string. 
+
+  Args: 
+    xyzfile: str, file 
+
+  Returns:
+    smiles: str
+
+  """
   mol, _ = xyzfile2mol(xyzfile)
   smiles = mol2smiles(mol)
   smiles = canonicalize(smiles)
