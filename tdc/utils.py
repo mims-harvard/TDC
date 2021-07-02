@@ -158,12 +158,6 @@ def property_dataset_load(name, path, target, dataset_names):
 	except:
 		return df['Drug'], df[target], df['Drug_ID']
 
-def molpair_process(name, path, dataset_names):
-	name = download_wrapper(name, path, dataset_names)
-	print_sys('Loading...')
-	df = pd_load(name, path)
-	return df['input'], df['output']
-
 def interaction_dataset_load(name, path, target, dataset_names, aux_column):
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')

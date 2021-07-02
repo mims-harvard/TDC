@@ -43,7 +43,7 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from tdc.utils import print_sys 
+from ..utils import print_sys 
 
 
 

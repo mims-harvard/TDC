@@ -2,6 +2,39 @@
 
 Thanks for your interest in contributing to TDC!  TDC is a community driven effort. Currently, we are looking for contributions to enrich 1) dataset for existing therapeutics tasks; 2) new meaningful therapeutic task; 3) data functions; 4) leaderboards. Below are the guideline for contributing each of the above categories.
 
+## 0) Development Environment
+Before starting to contribute, we suggest you build an environment for TDC, which installs all dependencies, following the below command:
+
+```bash
+conda create -n tdc_env python=3.7
+conda activate tdc_env
+
+conda install -c conda-forge rdkit
+conda install -c conda-forge notebook
+
+# for visualization
+pip install seaborn scikit-learn scipy networkx
+# for graph transformation
+# DGL installation page: https://www.dgl.ai/pages/start.html
+# PyG installation page: https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html
+
+# check with 
+python -c "import torch_geometric; print(torch_geometric.__version__)"
+python -c "import dgl; print(dgl.__version__)"
+
+git clone https://github.com/mims-harvard/TDC.git
+cd TDC
+```
+
+Before making a pull request to TDC repository, run the following commands to pass all development tests:
+
+```bash
+conda activate tdc_env
+cd TDC
+pytest tdc/test/
+```
+
+
 ## 1) New Dataset for Existing Task
 
 - Step 1: Create a **New Issue with label `new-dataset`**. In the issue, describe the new dataset with its justification to add to TDC. TDC team would respond to the issue ASAP. If the new dataset is discussed to be added, proceed to the next step. 

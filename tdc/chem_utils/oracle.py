@@ -43,7 +43,7 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from tdc.utils import oracle_load, print_sys, install
+from ..utils import oracle_load, print_sys, install
 
 mean2func = {
   'geometric': gmean, 
@@ -128,19 +128,11 @@ def smiles_2_fingerprint_ECFP6(smiles):
   fp = AllChem.GetMorganFingerprint(molecule, 3)
   return fp 
 
-
-
 fp2fpfunc = {'ECFP4': smiles_2_fingerprint_ECFP4, 
              'FCFP4': smiles_2_fingerprint_FCFP4, 
              'AP': smiles_2_fingerprint_AP, 
              'ECFP6': smiles_2_fingerprint_ECFP6
 }
-
-
-'''
-copy from https://benevolent.ai/guacamol.
-
-'''
 
 
 class ScoreModifier:
@@ -263,14 +255,6 @@ class ClippedScoreModifier(ScoreModifier):
     r"""
     Clips a score between specified low and high scores, and does a linear interpolation in between.
 
-    The function looks like this:
-
-       upper_x < lower_x                 lower_x < upper_x
-    __________                                   ____________
-              \                                 /
-               \                               /
-                \__________          _________/
-
     This class works as follows:
     First the input is mapped onto a linear interpolation between both specified points.
     Then the generated values are clipped between low and high scores.
@@ -341,13 +325,6 @@ class ThresholdedLinearModifier(ScoreModifier):
 
     def __call__(self, x):
         return np.minimum(x, self.threshold) / self.threshold
-
-
-
-
-
-
-
 
 # check the license for the code from readFragmentScores to CalculateScore here: https://github.com/EricTing/SAscore/blob/89d7689a85efed3cc918fb8ba6fe5cedf60b4a5a/src/sascorer.py#L134
 _fscores = None
@@ -432,8 +409,6 @@ def calculateScore(m):
 
   return sascore
 
-
-
 """Scores based on an ECFP classifier for activity."""
 
 # clf_model = None
@@ -456,7 +431,6 @@ def fingerprints_from_mol(mol):
         nidx = idx%size
         nfp[0, nidx] += int(v)
     return nfp
-
 
 def drd2(smile):
     """Evaluate DRD2 score of a SMILES string
@@ -491,7 +465,6 @@ def load_cyp3a4_veith():
     sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
   return cyp3a4_veith_model
 
-
 def cyp3a4_veith(smiles):
   try:
     from DeepPurpose import utils 
@@ -514,10 +487,6 @@ def cyp3a4_veith(smiles):
   # cyp3a4_veith_model = cyp3a4_veith_model.to("cuda:0")
   y_pred = cyp3a4_veith_model.predict(X_pred)
   return y_pred[0]
-  # print('The predicted score is ' + str(y_pred))
-
-
-
 
 ## from https://github.com/wengong-jin/iclr19-graph2graph/blob/master/props/properties.py 
 ## from https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 
@@ -622,28 +591,6 @@ def SA(s):
   SAscore = calculateScore(mol)
   return SAscore 	
 
-'''
-for gsk3 and jnk3, 
-some code are borrowed from 
-https://github.com/wengong-jin/multiobj-rationale/blob/master/properties.py 
-
-'''
-
-# class gsk3b:
-# 	def __init__(self):
-# 		gsk3_model_path = 'oracle/gsk3b.pkl'
-# 		with open(gsk3_model_path, 'rb') as f:
-# 			self.gsk3_model = pickle.load(f)
-
-# 	def __call__(self, smiles):
-# 		molecule = smiles_to_rdkit_mol(smiles)
-# 		fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
-# 		features = np.zeros((1,))
-# 		DataStructs.ConvertToNumpyArray(fp, features)
-# 		fp = features.reshape(1, -1) 
-# 		gsk3_score = self.gsk3_model.predict_proba(fp)[0,1]
-# 		return gsk3_score 
-
 def load_gsk3b_model():
     gsk3_model_path = 'oracle/gsk3b.pkl'
     #print_sys('==== load gsk3b oracle =====')
@@ -677,7 +624,6 @@ def gsk3b(smiles):
     gsk3_score = gsk3_model.predict_proba(fp)[0,1]
     return gsk3_score 
 
-
 class jnk3:
   """Evaluate JSK3 score of a SMILES string
 
@@ -704,10 +650,7 @@ class jnk3:
     DataStructs.ConvertToNumpyArray(fp, features)
     fp = features.reshape(1, -1) 
     jnk3_score = self.jnk3_model.predict_proba(fp)[0,1]
-    return jnk3_score 	
-
-
-
+    return jnk3_score
 
 class AtomCounter:
 
@@ -755,9 +698,7 @@ def parse_molecular_formula(formula):
         results.append((match[0], count))
 
     return results
-  
-####################################################################
-#################### isomer 
+
 class Isomer_scoring:
   def __init__(self, target_smiles, means = 'geometric'):
     assert means in ['geometric', 'arithmetic']
@@ -783,19 +724,8 @@ class Isomer_scoring:
     all_scores.append(self.total_atom_modifier(total_atom_num))
     return self.mean_func(all_scores)
 
-
 def isomer_meta(target_smiles, means = 'geometric'):
   return Isomer_scoring(target_smiles, means = means)
-
-
-isomers_c7h8n2o2 = isomer_meta(target_smiles = 'C7H8N2O2', means = 'geometric')
-isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
-
-
-####################################################################
-#################### isomer 
-####################################################################
-#################### rediscovery 
 
 class rediscovery_meta:
   def __init__(self, target_smiles, fp = 'ECFP4'):
@@ -807,15 +737,6 @@ class rediscovery_meta:
     similarity_value = DataStructs.TanimotoSimilarity(self.target_fp, test_fp)
     return similarity_value 
 
-
-celecoxib_rediscovery = rediscovery_meta(target_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F', fp = 'ECFP4')
-troglitazone_rediscovery = rediscovery_meta(target_smiles = 'Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O', fp = 'ECFP4')
-thiothixene_rediscovery = rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1', fp = 'ECFP4')
-
-####################################################################
-#################### rediscovery 
-####################################################################
-#################### similarity 
 class similarity_meta:
   def __init__(self, target_smiles, fp = 'FCFP4', modifier_func = None):
     self.similarity_func = fp2fpfunc[fp]
@@ -830,24 +751,6 @@ class similarity_meta:
     else:
       modifier_score = self.modifier_func(similarity_value)
     return modifier_score 
-
-similarity_modifier = ClippedScoreModifier(upper_x=0.75)
-aripiprazole_similarity = similarity_meta(target_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl', 
-                                          fp = 'FCFP4', 
-                                          modifier_func = similarity_modifier)
-
-albuterol_similarity = similarity_meta(target_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1', 
-                                       fp = 'FCFP4', 
-                                       modifier_func = similarity_modifier)
-
-mestranol_similarity = similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1', 
-                                       fp = 'AP', 
-                                       modifier_func = similarity_modifier)
-
-####################################################################
-#################### similarity 
-####################################################################
-#################### median 
 
 class median_meta:
   def __init__(self, target_smiles_1, target_smiles_2, fp1 = 'ECFP6', fp2 = 'ECFP6', modifier_func1 = None, modifier_func2 = None, means = 'geometric'):
@@ -876,32 +779,6 @@ class median_meta:
     final_score = self.mean_func([modifier_score1 , modifier_score2])
     return final_score
 
-camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
-menthol_smiles = 'CC(C)C1CCC(C)CC1O'
-
-median1 = median_meta(target_smiles_1 = camphor_smiles, 
-                      target_smiles_2 = menthol_smiles, 
-                      fp1 = 'ECFP4', 
-                      fp2 = 'ECFP4', 
-                      modifier_func1 = None, 
-                      modifier_func2 = None, 
-                      means = 'geometric')
-
-tadalafil_smiles = 'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'
-sildenafil_smiles = 'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
-median2 = median_meta(target_smiles_1 = tadalafil_smiles, 
-                      target_smiles_2 = sildenafil_smiles, 
-                      fp1 = 'ECFP6', 
-                      fp2 = 'ECFP6', 
-                      modifier_func1 = None, 
-                      modifier_func2 = None, 
-                      means = 'geometric')
-
-####################################################################
-#################### median 
-####################################################################
-#################### MPO  
-
 class MPO_meta:
   def __init__(self, means):
     '''
@@ -920,10 +797,6 @@ class MPO_meta:
 
     score_lst = []
     return self.mean_func(score_lst)
-
-
-
-
 
 def osimertinib_mpo(test_smiles):
 
@@ -950,10 +823,6 @@ def osimertinib_mpo(test_smiles):
   osimertinib_gmean = gmean([tpsa_score, logp_score, similarity_v1, similarity_v2])
   return osimertinib_gmean 
 
-
-
-
-
 def fexofenadine_mpo(test_smiles):
   if 'fexofenadine_fp' not in globals().keys():
     global fexofenadine_fp
@@ -971,16 +840,6 @@ def fexofenadine_mpo(test_smiles):
   similarity_value = similar_modifier(DataStructs.TanimotoSimilarity(fp_ap, fexofenadine_fp))
   fexofenadine_gmean = gmean([tpsa_score, logp_score, similarity_value])
   return fexofenadine_gmean 
-
-
-
-
-
-
-
-
-
-
 
 def ranolazine_mpo(test_smiles):
   if 'ranolazine_fp' not in globals().keys():
@@ -1004,15 +863,6 @@ def ranolazine_mpo(test_smiles):
   ranolazine_gmean = gmean([tpsa_score, logp_score, similarity_value, fluorine_value])
   return ranolazine_gmean
 
-
-
-
-
-
-
-
-
-
 def perindopril_mpo(test_smiles):
   ## no similar_modifier
 
@@ -1034,15 +884,6 @@ def perindopril_mpo(test_smiles):
   perindopril_gmean = gmean([similarity_value, num_aromatic_rings_value])
   return perindopril_gmean
 
-
-
-
-
-
-
-
-
-
 def amlodipine_mpo(test_smiles):
   ## no similar_modifier
   if 'amlodipine_fp' not in globals().keys():
@@ -1062,13 +903,6 @@ def amlodipine_mpo(test_smiles):
 
   amlodipine_gmean = gmean([similarity_value, num_rings_value])
   return amlodipine_gmean
-
-
-
-
-
-
-
 
 def zaleplon_mpo(test_smiles):
   if 'zaleplon_fp' not in globals().keys():
@@ -1104,18 +938,11 @@ def sitagliptin_mpo(test_smiles):
   similarity_value = DataStructs.TanimotoSimilarity(fp_ecfp4, sitagliptin_fp_ecfp4)
   return gmean([similarity_value, logp_score, tpsa_score, isomer_score])
 
-
-
-
-
-
-
 def get_PHCO_fingerprint(mol):
   if 'Gobbi_Pharm2D' not in globals().keys():
     global Gobbi_Pharm2D, Generate
     from rdkit.Chem.Pharm2D import Generate, Gobbi_Pharm2D
   return Generate.Gen2DFingerprint(mol, Gobbi_Pharm2D.factory)
-
 
 class SMARTS_scoring:
   def __init__(self, target_smarts, inverse):
@@ -1158,12 +985,6 @@ def deco_hop(test_smiles):
   all_scores = np.mean([similarity_value, deco1_score, deco2_score, scaffold_score])
   return all_scores
 
-
-
-
-
-
-
 def scaffold_hop(test_smiles):
   if 'pharmacophor_fp' not in globals().keys() \
       or 'scaffold_smarts_scoring' not in globals().keys() \
@@ -1189,13 +1010,6 @@ def scaffold_hop(test_smiles):
 
   all_scores = np.mean([similarity_value, deco_score, scaffold_score])
   return all_scores
-
-
-
-
-
-
-
 
 def valsartan_smarts(test_smiles):
   if 'valsartan_logp_modifier' not in globals().keys():
@@ -1226,9 +1040,6 @@ def valsartan_smarts(test_smiles):
   bertz_score = valsartan_bertz_modifier(Descriptors.BertzCT(molecule))
   valsartan_gmean = gmean([smarts_score, tpsa_score, logp_score, bertz_score])
   return valsartan_gmean
-
-
-
 
 ###########################################################################
 ###               END of Guacamol
@@ -1412,8 +1223,6 @@ def ibm_rxn(smiles, api_key, output='confidence', sleep_time=30):
     else:
         raise NameError("This output value is not implemented.")
 
-# molecule.one
-
 class molecule_one_retro:
 
     def __init__(self, api_token):
@@ -1481,20 +1290,3 @@ class docking_meta:
               score = 0.0 
             score_lst.append(score)
           return score_lst
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
