@@ -727,6 +727,9 @@ class Isomer_scoring:
 def isomer_meta(target_smiles, means = 'geometric'):
   return Isomer_scoring(target_smiles, means = means)
 
+isomers_c7h8n2o2 = isomer_meta(target_smiles = 'C7H8N2O2', means = 'geometric')
+isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
+
 class rediscovery_meta:
   def __init__(self, target_smiles, fp = 'ECFP4'):
     self.similarity_func = fp2fpfunc[fp]
@@ -751,6 +754,23 @@ class similarity_meta:
     else:
       modifier_score = self.modifier_func(similarity_value)
     return modifier_score 
+
+celecoxib_rediscovery = rediscovery_meta(target_smiles = 'CC1=CC=C(C=C1)C1=CC(=NN1C1=CC=C(C=C1)S(N)(=O)=O)C(F)(F)F', fp = 'ECFP4')
+troglitazone_rediscovery = rediscovery_meta(target_smiles = 'Cc1c(C)c2OC(C)(COc3ccc(CC4SC(=O)NC4=O)cc3)CCc2c(C)c1O', fp = 'ECFP4')
+thiothixene_rediscovery = rediscovery_meta(target_smiles = 'CN(C)S(=O)(=O)c1ccc2Sc3ccccc3C(=CCCN4CCN(C)CC4)c2c1', fp = 'ECFP4')
+
+similarity_modifier = ClippedScoreModifier(upper_x=0.75)
+aripiprazole_similarity = similarity_meta(target_smiles = 'Clc4cccc(N3CCN(CCCCOc2ccc1c(NC(=O)CC1)c2)CC3)c4Cl', 
+                                          fp = 'FCFP4', 
+                                          modifier_func = similarity_modifier)
+
+albuterol_similarity = similarity_meta(target_smiles = 'CC(C)(C)NCC(O)c1ccc(O)c(CO)c1', 
+                                       fp = 'FCFP4', 
+                                       modifier_func = similarity_modifier)
+
+mestranol_similarity = similarity_meta(target_smiles = 'COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1', 
+                                       fp = 'AP', 
+                                       modifier_func = similarity_modifier)
 
 class median_meta:
   def __init__(self, target_smiles_1, target_smiles_2, fp1 = 'ECFP6', fp2 = 'ECFP6', modifier_func1 = None, modifier_func2 = None, means = 'geometric'):
@@ -778,6 +798,27 @@ class median_meta:
       modifier_score2 = self.modifier_func2(similarity_value2)
     final_score = self.mean_func([modifier_score1 , modifier_score2])
     return final_score
+
+camphor_smiles = 'CC1(C)C2CCC1(C)C(=O)C2'
+menthol_smiles = 'CC(C)C1CCC(C)CC1O'
+
+median1 = median_meta(target_smiles_1 = camphor_smiles, 
+                      target_smiles_2 = menthol_smiles, 
+                      fp1 = 'ECFP4', 
+                      fp2 = 'ECFP4', 
+                      modifier_func1 = None, 
+                      modifier_func2 = None, 
+                      means = 'geometric')
+
+tadalafil_smiles = 'O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C'
+sildenafil_smiles = 'CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
+median2 = median_meta(target_smiles_1 = tadalafil_smiles, 
+                      target_smiles_2 = sildenafil_smiles, 
+                      fp1 = 'ECFP6', 
+                      fp2 = 'ECFP6', 
+                      modifier_func1 = None, 
+                      modifier_func2 = None, 
+                      means = 'geometric')
 
 class MPO_meta:
   def __init__(self, means):
