@@ -440,6 +440,15 @@ def xyzfile2smiles(xyzfile):
   return smiles 
 
 def xyzfile2selfies(xyzfile):
+  """convert xyzfile into SELFIES string. 
+
+  Args: 
+    xyzfile: str, file 
+
+  Returns:
+    selfies: str
+
+  """
   smiles = xyzfile2smiles(xyzfile)
   smiles = canonicalize(smiles)
   selfies = smiles2selfies(smiles)
@@ -465,6 +474,15 @@ def xyzfile2graph3d(xyzfile):
 ############## end xyz2mol ################
 
 def sdffile2smiles_lst(sdffile):
+  """convert sdffile into a list of SMILES string. 
+
+  Args: 
+    sdffile: str, file 
+
+  Returns:
+    smiles_lst: a list of SMILES strings. 
+
+  """
   from rdkit.Chem.PandasTools import LoadSDF
   df = LoadSDF(sdffile, smilesName='SMILES')
   smiles_lst = df['SMILES'].to_list() 
@@ -472,6 +490,15 @@ def sdffile2smiles_lst(sdffile):
  
 
 def sdffile2mol_conformer(sdffile):
+  """convert sdffile into a list of molecule conformers. 
+
+  Args: 
+    sdffile: str, file 
+
+  Returns:
+    smiles_lst: a list of molecule conformers. 
+
+  """
   from rdkit.Chem.PandasTools import LoadSDF
   df = LoadSDF(sdffile, smilesName='SMILES')
   mol_lst = df['ROMol'].tolist() 
@@ -520,6 +547,15 @@ def sdffile2graph3d_lst(sdffile):
 
 
 def sdffile2selfies_lst(sdf):
+  """convert sdffile into a list of SELFIES strings. 
+
+  Args: 
+    sdffile: str, file 
+
+  Returns:
+    selfies_lst: a list of SELFIES strings. 
+
+  """
   smiles_lst = sdffile2smiles_lst(sdf)
   selfies_lst = list(map(smiles2selfies, smiles_lst))
   return selfies_lst 
