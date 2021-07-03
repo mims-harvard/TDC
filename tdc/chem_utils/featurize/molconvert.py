@@ -192,7 +192,7 @@ def smiles2ECFP6(smiles):
   """Convert smiles into ECFP6 Morgan Fingerprint. 
 
   Args: 
-    smiles: str
+    smiles: str, a SMILES string
 
   Returns:
     fp: rdkit.DataStructs.cDataStructs.UIntSparseIntVect
@@ -255,10 +255,10 @@ def smiles2selfies(smiles):
   """Convert smiles into selfies. 
 
   Args: 
-    smiles: str
+    smiles: str, a SMILES string
 
   Returns:
-    selfies: str
+    selfies: str, a SELFIES string. 
 
   """
   smiles = canonicalize(smiles)
@@ -268,16 +268,25 @@ def selfies2smiles(selfies):
   """Convert selfies into smiles. 
 
   Args: 
-    selfies: str
+    selfies: str, a SELFIES string. 
 
   Returns:
-    smiles: str
+    smiles: str, a SMILES string
 
   """
   return canonicalize(sf.decoder(selfies))
 
 
 def smiles2mol(smiles):
+    """Convert SMILES string into rdkit.Chem.rdchem.Mol.
+
+    Args:
+      smiles: str, a SMILES string. 
+
+    Returns:
+      mol: rdkit.Chem.rdchem.Mol
+
+    """
     smiles = canonicalize(smiles)
     mol = Chem.MolFromSmiles(smiles)
     if mol is None: 
@@ -299,7 +308,7 @@ def smiles2graph2D(smiles):
   """convert SMILES string into two-dimensional molecular graph feature 
 
   Args: 
-    smiles, str 
+    smiles, str, a SMILES string 
 
   Returns:
     idx2atom: dict, map from index to atom's symbol, e.g., {0:'C', 1:'N', ...}
@@ -353,7 +362,7 @@ def smiles2PyG(smiles):
   """convert SMILES string into torch_geometric.data.Data
 
   Args: 
-    smiles, str 
+    smiles, str, a SMILES string 
 
   Returns:
     data, torch_geometric.data.Data
@@ -392,7 +401,7 @@ def smiles2DGL(smiles):
   """convert SMILES string into dgl.DGLGraph
 
   Args: 
-    smiles, str 
+    smiles, str, a SMILES string 
 
   Returns:
     g: dgl.DGLGraph()
@@ -431,7 +440,7 @@ def xyzfile2smiles(xyzfile):
     xyzfile: str, file 
 
   Returns:
-    smiles: str
+    smiles: str, a SMILES string
 
   """
   mol, _ = xyzfile2mol(xyzfile)
@@ -446,7 +455,7 @@ def xyzfile2selfies(xyzfile):
     xyzfile: str, file 
 
   Returns:
-    selfies: str
+    selfies: str, a SELFIES string. 
 
   """
   smiles = xyzfile2smiles(xyzfile)
@@ -564,6 +573,15 @@ def sdffile2selfies_lst(sdf):
 
 
 def smiles_lst2coulomb(smiles_lst):
+  """convert a list of SMILES strings into coulomb format. 
+
+  Args: 
+    smiles_lst: a list of SELFIES strings. 
+
+  Returns:
+    features: np.array 
+
+  """  
   molecules = [Molecule(smiles, 'smiles') for smiles in smiles_lst]
   for mol in molecules:   
     mol.to_xyz(optimizer='UFF')
@@ -576,6 +594,14 @@ def smiles_lst2coulomb(smiles_lst):
   ## features[i].reshape(max_atom_n, max_atom_n)[:3,:3]  -> 3*3 Coulomb matrix   
 
 def sdffile2coulomb(sdf):
+  """convert sdffile into a list of coulomb feature. 
+
+  Args: 
+    sdffile: str, file 
+
+  Returns:
+    coulomb feature: np.array 
+  """
   smiles_lst = sdffile2smiles_lst(sdf)
   return smiles_lst2coulomb(smiles_lst)
 
@@ -592,6 +618,15 @@ def xyzfile2coulomb(xyzfile):
 
 ## XXX2smiles
 def molfile2smiles(molfile):
+  """convert molfile into SMILES string
+
+  Args: 
+    molfile: str, a file. 
+
+  Returns:
+    smiles: str, SMILES strings
+
+  """    
   mol = Chem.MolFromMolFile(molfile)
   smiles = Chem.MolToSmiles(mol)
   smiles = canonicalize(smiles)
@@ -599,14 +634,20 @@ def molfile2smiles(molfile):
 
 
 def mol2file2smiles(molfile):
+  """convert mol2file into SMILES string
+
+  Args: 
+    mol2file: str, a file. 
+
+  Returns:
+    smiles: str, SMILES strings
+
+  """    
   mol = Chem.MolFromMol2File(molfile)
   smiles = Chem.MolToSmiles(mol)
   smiles = canonicalize(smiles)
   return smiles 
 
-
-def smiles2smiles(smiles):
-	return canonicalize(smiles)
 
 ## smiles2xxx 
 
