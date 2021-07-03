@@ -43,8 +43,8 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from ..utils import oracle_load, print_sys, install
-from .oracle import smiles_to_rdkit_mol, smiles_2_fingerprint_ECFP4, smiles_2_fingerprint_FCFP4, smiles_2_fingerprint_AP, smiles_2_fingerprint_ECFP6
+from tdc.utils import oracle_load, print_sys, install
+from ..oracle.oracle import smiles_to_rdkit_mol, smiles_2_fingerprint_ECFP4, smiles_2_fingerprint_FCFP4, smiles_2_fingerprint_AP, smiles_2_fingerprint_ECFP6
 from ._smiles2pubchem import smiles2pubchem
 
 def canonicalize(smiles):
