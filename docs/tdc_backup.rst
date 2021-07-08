@@ -10,6 +10,7 @@ Subpackages
    tdc.generation
    tdc.multi_pred
    tdc.single_pred
+   tdc.test
 
 Submodules
 ----------
@@ -99,6 +100,5 @@ Module contents
 
 .. automodule:: tdc
    :members:
-   :exclude-members: __version__
    :undoc-members:
    :show-inheritance:
