@@ -1364,15 +1364,15 @@ class SMARTS_scoring:
         return 0.0
 
 def deco_hop(test_smiles):
-  if 'pharmacophor_fp' not in globals().keys():
-    global pharmacophor_fp, deco1_smarts_scoring, deco2_smarts_scoring, scaffold_smarts_scoring   
-    pharmacophor_smiles = 'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'
-    pharmacophor_mol = smiles_to_rdkit_mol(pharmacophor_smiles)
-    pharmacophor_fp = get_PHCO_fingerprint(pharmacophor_mol)
+  #if 'pharmacophor_fp' not in globals().keys():
+  # global pharmacophor_fp, deco1_smarts_scoring, deco2_smarts_scoring, scaffold_smarts_scoring   
+  pharmacophor_smiles = 'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'
+  pharmacophor_mol = smiles_to_rdkit_mol(pharmacophor_smiles)
+  pharmacophor_fp = get_PHCO_fingerprint(pharmacophor_mol)
 
-    deco1_smarts_scoring = SMARTS_scoring(target_smarts = 'CS([#6])(=O)=O', inverse = True)
-    deco2_smarts_scoring = SMARTS_scoring(target_smarts = '[#7]-c1ccc2ncsc2c1', inverse = True) 
-    scaffold_smarts_scoring = SMARTS_scoring(target_smarts = '[#7]-c1n[c;h1]nc2[c;h1]c(-[#8])[c;h0][c;h1]c12', inverse = False) 
+  deco1_smarts_scoring = SMARTS_scoring(target_smarts = 'CS([#6])(=O)=O', inverse = True)
+  deco2_smarts_scoring = SMARTS_scoring(target_smarts = '[#7]-c1ccc2ncsc2c1', inverse = True) 
+  scaffold_smarts_scoring = SMARTS_scoring(target_smarts = '[#7]-c1n[c;h1]nc2[c;h1]c(-[#8])[c;h0][c;h1]c12', inverse = False) 
 
   molecule = smiles_to_rdkit_mol(test_smiles)
   fp = get_PHCO_fingerprint(molecule)
@@ -1393,18 +1393,18 @@ def deco_hop(test_smiles):
 
 
 def scaffold_hop(test_smiles):
-  if 'pharmacophor_fp' not in globals().keys() \
-      or 'scaffold_smarts_scoring' not in globals().keys() \
-      or 'deco_smarts_scoring' not in globals().keys():
-    global pharmacophor_fp, deco_smarts_scoring, scaffold_smarts_scoring   
-    pharmacophor_smiles = 'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'
-    pharmacophor_mol = smiles_to_rdkit_mol(pharmacophor_smiles)
-    pharmacophor_fp = get_PHCO_fingerprint(pharmacophor_mol)
+  # if 'pharmacophor_fp' not in globals().keys() \
+  #     or 'scaffold_smarts_scoring' not in globals().keys() \
+  #     or 'deco_smarts_scoring' not in globals().keys():
+  #   global pharmacophor_fp, deco_smarts_scoring, scaffold_smarts_scoring   
+  pharmacophor_smiles = 'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'
+  pharmacophor_mol = smiles_to_rdkit_mol(pharmacophor_smiles)
+  pharmacophor_fp = get_PHCO_fingerprint(pharmacophor_mol)
 
-    deco_smarts_scoring = SMARTS_scoring(target_smarts = '[#6]-[#6]-[#6]-[#8]-[#6]~[#6]~[#6]~[#6]~[#6]-[#7]-c1ccc2ncsc2c1', 
+  deco_smarts_scoring = SMARTS_scoring(target_smarts = '[#6]-[#6]-[#6]-[#8]-[#6]~[#6]~[#6]~[#6]~[#6]-[#7]-c1ccc2ncsc2c1', 
                                          inverse=False)
 
-    scaffold_smarts_scoring = SMARTS_scoring(target_smarts = '[#7]-c1n[c;h1]nc2[c;h1]c(-[#8])[c;h0][c;h1]c12', 
+  scaffold_smarts_scoring = SMARTS_scoring(target_smarts = '[#7]-c1n[c;h1]nc2[c;h1]c(-[#8])[c;h0][c;h1]c12', 
                                              inverse=True)
 
   molecule = smiles_to_rdkit_mol(test_smiles)
