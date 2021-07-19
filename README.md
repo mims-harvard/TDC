@@ -11,7 +11,7 @@
 [![Build Status](https://travis-ci.org/mims-harvard/TDC.svg?branch=master)](https://travis-ci.org/mims-harvard/TDC)
 [![TDC CircleCI](https://circleci.com/gh/mims-harvard/TDC.svg?style=svg)](https://app.circleci.com/pipelines/github/mims-harvard/TDC)
 
-[**Project Website**](https://tdcommons.ai) | [**Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-rwanyuhe-t8khZVQ7raUx7f33sH9wRg) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
+[**Project Website**](https://tdcommons.ai) | [**Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
 **Therapeutics Data Commons (TDC)** is the first unifying framework to systematically access and evaluate machine learning across the entire range of therapeutics.
 
@@ -243,7 +243,7 @@ If you found our work useful, please cite us:
 
 ## Contribute
 
-TDC is an open-source community-driven effort. If you want to get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-rwanyuhe-t8khZVQ7raUx7f33sH9wRg) and checkout the [contribution guide](CONTRIBUTE.md)!
+TDC is an open-source community-driven effort. If you want to get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw) and checkout the [contribution guide](CONTRIBUTE.md)!
 
 ## Contact
 
