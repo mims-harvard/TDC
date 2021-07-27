@@ -483,7 +483,7 @@ def xyzfile2graph3d(xyzfile):
 ############## end xyz2mol ################
 
 def sdffile2smiles_lst(sdffile):
-  """convert sdffile into a list of SMILES string. 
+  """convert SDF file into a list of SMILES string. 
 
   Args: 
     sdffile: str, file 
@@ -521,6 +521,16 @@ def sdffile2mol_conformer(sdffile):
 
 
 def mol_conformer2graph3d(mol_conformer_lst):
+  """convert list of (molecule, conformer) into a list of 3D graph.
+
+  Args:
+    mol_conformer_lst: list of tuple (molecule, conformer)
+
+  Returns:
+    graph3d_lst: a list of 3D graph. 
+          each graph has (i) idx2atom (dict); (ii) distance_adj_matrix (np.array); (iii) bondtype_adj_matrix (np.array)
+
+  """ 
   graph3d_lst = []
   bond2num = {'SINGLE': 1, 'DOUBLE':2, 'TRIPLE':3, "AROMATIC":4}
   for mol, conformer in mol_conformer_lst:
@@ -548,6 +558,16 @@ def mol_conformer2graph3d(mol_conformer_lst):
 
 
 def sdffile2graph3d_lst(sdffile):
+  """convert SDF file into a list of 3D graph.
+
+  Args:
+    sdffile: SDF file 
+
+  Returns:
+    graph3d_lst: a list of 3D graph. 
+          each graph has (i) idx2atom (dict); (ii) distance_adj_matrix (np.array); (iii) bondtype_adj_matrix (np.array)
+
+  """ 
   mol_conformer_lst = sdffile2mol_conformer(sdffile)
   graph3d_lst = mol_conformer2graph3d(mol_conformer_lst)
   return graph3d_lst
