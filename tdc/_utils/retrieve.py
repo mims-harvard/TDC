@@ -1,3 +1,6 @@
+import os, sys
+import pandas as pd
+from .label_name_list import dataset2target_lists
 
 def get_label_map(name, path = './data', target = None, file_format = 'csv', output_format = 'dict', task = 'DDI'):
 	name = fuzzy_search(name, dataset_names[task])

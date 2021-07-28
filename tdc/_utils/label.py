@@ -1,3 +1,6 @@
+import numpy as np
+import os, sys
+
 def convert_y_unit(y, from_, to_):
 	"""
 	Arguments:
@@ -74,8 +77,9 @@ def label_dist(y, name = None):
 		import seaborn as sns
 		import matplotlib.pyplot as plt
 	except:
-		utils.install("seaborn")
-		utils.install("matplotlib")
+		from .misc import install
+		install("seaborn")
+		install("matplotlib")
 		import seaborn as sns
 		import matplotlib.pyplot as plt
 

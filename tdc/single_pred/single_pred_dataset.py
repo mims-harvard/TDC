@@ -15,27 +15,36 @@ from .. import base_dataset
 from ..utils import *
 
 class DataLoader(base_dataset.DataLoader):
-	"""Docstring to be finished.
 
-    Parameters
-    ----------
-    name : str
-        Description of the variable.
-
-    path : str, optional (default="data")
-        Description of the variable.
-
-    label_name : str, optional (default=None)
-        Description of the variable.
-
-    print_stats : bool, optional (default=True)
-        Description of the variable.
-
-    convert_format : str, optional (default=None)
-        Output representation of the dataset, the tag should be a valid destination of MolConverter.
+	"""Summary
+	
+	Attributes:
+	    convert_format (TYPE): Description
+	    convert_result (TYPE): Description
+	    entity1 (TYPE): Description
+	    entity1_idx (TYPE): Description
+	    entity1_name (str): Description
+	    file_format (str): Description
+	    label_name (TYPE): Description
+	    name (TYPE): Description
+	    path (TYPE): Description
+	    y (TYPE): Description
 	"""
-
+	
 	def __init__(self, name, path, label_name, print_stats, dataset_names, convert_format):
+		"""Summary
+		
+		Args:
+		    name (TYPE): Description
+		    path (TYPE): Description
+		    label_name (TYPE): Description
+		    print_stats (TYPE): Description
+		    dataset_names (TYPE): Description
+		    convert_format (TYPE): Description
+		
+		Raises:
+		    ValueError: Description
+		"""
 		if name.lower() in dataset2target_lists.keys():
 			#print_sys("Tip: Use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
 			if label_name is None:
@@ -57,11 +66,21 @@ class DataLoader(base_dataset.DataLoader):
 	def get_data(self, format = 'df'):
 		'''
 		Arguments:
-			df: return pandas DataFrame; if not true, return np.arrays			
+		    format (str, optional): Description
+		
 		returns:
 			self.drugs: drug smiles strings np.array
 			self.targets: target Amino Acid Sequence np.array
 			self.y: inter   action score np.array
+		
+		Deleted Parameters:
+		    df: return pandas DataFrame; if not true, return np.arrays			
+		
+		Returns:
+		    TYPE: Description
+		
+		Raises:
+		    AttributeError: Description
 		'''
 
 		if (self.convert_format is not None) and (self.convert_result is None):
@@ -89,9 +108,15 @@ class DataLoader(base_dataset.DataLoader):
 	def get_split(self, method = 'random', seed = 42, frac = [0.7, 0.1, 0.2]):
 		'''
 		Arguments:
-			method: splitting schemes: random, cold_drug, scaffold split
-			seed: default 42
-			frac: train/val/test split
+		    method: splitting schemes: random, cold_drug, scaffold split
+		    seed: default 42
+		    frac: train/val/test split
+		
+		Returns:
+		    TYPE: Description
+		
+		Raises:
+		    AttributeError: Description
 		'''
 
 		df = self.get_data(format = 'df')
@@ -106,6 +131,8 @@ class DataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please specify the correct splitting method")
 
 	def print_stats(self):
+		"""Summary
+		"""
 		print_sys('--- Dataset Statistics ---')
 		try:
 			x = np.unique(self.entity1)

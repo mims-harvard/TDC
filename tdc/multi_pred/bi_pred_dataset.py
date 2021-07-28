@@ -1,3 +1,5 @@
+"""Summary
+"""
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -7,27 +9,40 @@ from ..utils import *
 
 
 class DataLoader(base_dataset.DataLoader):
-    """Add a Class description here.
 
-    Parameters
-    ----------
-    name :
-        Add a variable description here.
-
-    path :
-        Add a variable description here.
-
-    label_name :
-        Add a variable description here.
-
-    print_stats :
-        Add a variable description here.
-
-    dataset_names :
-        Add a variable description here.
+    """Summary
+    
+    Attributes:
+        aux_column (TYPE): Description
+        aux_column_val (TYPE): Description
+        entity1 (TYPE): Description
+        entity1_idx (TYPE): Description
+        entity1_name (str): Description
+        entity2 (TYPE): Description
+        entity2_idx (TYPE): Description
+        entity2_name (str): Description
+        file_format (str): Description
+        label_name (TYPE): Description
+        name (TYPE): Description
+        path (TYPE): Description
+        raw_y (TYPE): Description
+        two_types (bool): Description
+        y (TYPE): Description
     """
-
+    
     def __init__(self, name, path, label_name, print_stats, dataset_names):
+        """Summary
+        
+        Args:
+            name (TYPE): Description
+            path (TYPE): Description
+            label_name (TYPE): Description
+            print_stats (TYPE): Description
+            dataset_names (TYPE): Description
+        
+        Raises:
+            ValueError: Description
+        """
         if name.lower() in dataset2target_lists.keys():
             # print_sys("Tip: Use tdc.utils.retrieve_label_name_list(
             # '" + name.lower() + "') to retrieve all available label names.")
@@ -65,23 +80,16 @@ class DataLoader(base_dataset.DataLoader):
         self.two_types = False
 
     def get_data(self, format='df'):
-        """Add a method description here.
-
-        Parameters
-        ----------
-        format : str, optional (default="df")
-            If True, return Pandas DF; return numpy array otherwise.
-
-        Returns
-        -------
-        drugs : numpy array
-            Drug smiles strings.
-
-        targets : numpy array
-            Target Amino Acid Sequence.
-
-        y : numpy array
-            Interaction score.
+        """Summary
+        
+        Args:
+            format (str, optional): Description
+        
+        Returns:
+            TYPE: Description
+        
+        Raises:
+            AttributeError: Description
         """
         if format == 'df':
             if self.aux_column is None:
@@ -107,7 +115,7 @@ class DataLoader(base_dataset.DataLoader):
             raise AttributeError("Please use the correct format input")
 
     def print_stats(self):
-        """Add a method description here.
+        """Summary
         """
         print_sys('--- Dataset Statistics ---')
         try:
@@ -131,27 +139,22 @@ class DataLoader(base_dataset.DataLoader):
     
     def get_split(self, method='random', seed=42,
                   frac=[0.7, 0.1, 0.2], column_name=None, time_column = None):
-        """Add a method description here.
-
-        Parameters
-        ----------
-        method : splitting schemes
-            Splitting schemes: {"random", "cold_drug", "cold_target"}
-
-        seed : int
-            Add a variable description here.
-
-        frac : list, optional (default=[0.7, 0.1, 0.2])
-            Train/val/test split fractions.
-
-        column_name : str, optional (default=None)
-            Add a variable description here.
-
-        Returns
-        -------
-
+        """Summary
+        
+        Args:
+            method (str, optional): Description
+            seed (int, optional): Description
+            frac (list, optional): Description
+            column_name (None, optional): Description
+            time_column (None, optional): Description
+        
+        Returns:
+            TYPE: Description
+        
+        Raises:
+            AttributeError: Description
+            ValueError: Description
         """
-
         df = self.get_data(format='df')
 
         if method == 'random':
@@ -176,12 +179,13 @@ class DataLoader(base_dataset.DataLoader):
                                  "please specify the column name!")
 
     def neg_sample(self, frac=1):
-        """Add a method description here.
-
-        Parameters
-        ----------
-        frac : int or float, optional (default=1)
-            Add a variable description here.
+        """Summary
+        
+        Args:
+            frac (int, optional): Description
+        
+        Returns:
+            TYPE: Description
         """
         df = NegSample(df=self.get_data(format='df'),
                        column_names=[self.entity1_name + '_ID',
@@ -198,37 +202,23 @@ class DataLoader(base_dataset.DataLoader):
 
     def to_graph(self, threshold=None, format='edge_list', split=True,
                  frac=[0.7, 0.1, 0.2], seed=42, order='descending'):
-        """Add a method description here.
-
-        Parameters
-        ----------
-        threshold :
-            Add a variable description here.
-
-        format :
-            Add a variable description here.
-
-        split :
-            Add a variable description here.
-
-        frac : list, optional (default=frac=[0.7, 0.1, 0.2])
-            Train/val/test split fractions.
-
-        seed : int
-            Add a variable description here.
-
-        order :
-            Add a variable description here.
-
-        Returns
-        -------
-
+        """Summary
+        
+        Args:
+            threshold (None, optional): Description
+            format (str, optional): Description
+            split (bool, optional): Description
+            frac (list, optional): Description
+            seed (int, optional): Description
+            order (str, optional): Description
+        
+        Returns:
+            TYPE: Description
+        
+        Raises:
+            AttributeError: Description
+            ImportError: Description
         """
-        '''
-        Arguments:
-            format: edge_list / dgl / pyg df object
-        '''
-
         df = self.get_data(format='df')
 
         if len(np.unique(self.raw_y)) > 2:

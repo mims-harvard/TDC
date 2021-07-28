@@ -1,3 +1,13 @@
+import json
+import os, sys
+try:
+	from urllib.error import HTTPError
+	from urllib.parse import quote, urlencode
+	from urllib.request import urlopen
+except ImportError:
+	from urllib import urlencode
+	from urllib2 import quote, urlopen, HTTPError
+
 def _parse_prop(search, proplist):
 	"""Extract property value from record using the given urn search filter."""
 	props = [i for i in proplist if all(item in i['urn'].items() for item in search.items())]
