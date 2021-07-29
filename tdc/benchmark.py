@@ -4,7 +4,13 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .utils import *
+from .utils import bm_group_load, print_sys, fuzzy_search
+from .utils import create_fold,\
+					create_fold_setting_cold,\
+					create_combination_split,\
+					create_fold_time,\
+					create_scaffold_split,\
+					create_group_split
 from .metadata import get_task2category, bm_metric_names, benchmark_names, bm_split_names, docking_target_info
 from .evaluator import Evaluator
 

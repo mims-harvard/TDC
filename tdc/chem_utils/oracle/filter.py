@@ -43,11 +43,7 @@ try:
 except:
     raise ImportError("Please install networkx by 'pip install networkx'! ")    
 
-# from ..utils import oracle_load, print_sys, install
-from tdc.utils import oracle_load, print_sys, install
-
-
-
+from ...utils import print_sys, install
 
 
 class MolFilter:

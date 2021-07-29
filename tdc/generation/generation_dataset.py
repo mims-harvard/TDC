@@ -7,8 +7,8 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from .. import base_dataset
-from ..utils import *
-
+from ..utils import distribution_dataset_load, generation_paired_dataset_load, three_dim_dataset_load, print_sys
+from ..utils import create_fold
 
 class DataLoader(base_dataset.DataLoader):
 
@@ -30,7 +30,7 @@ class DataLoader(base_dataset.DataLoader):
 		    print_stats (TYPE): Description
 		    column_name (TYPE): Description
 		"""
-		from ..utils import single_molecule_dataset_names 
+		from ..metadata import single_molecule_dataset_names 
 		self.smiles_lst = distribution_dataset_load(name, path, single_molecule_dataset_names, column_name = column_name)  
 		### including fuzzy-search 
 		self.name = name 
@@ -107,7 +107,7 @@ class PairedDataLoader(base_dataset.DataLoader):
 		returns:
 			None
 		'''
-		from ..utils import paired_dataset_names 
+		from ..metadata import paired_dataset_names 
 		self.input_smiles_lst, self.output_smiles_lst = generation_paired_dataset_load(name, path, 
 																					   paired_dataset_names, input_name, 
 																					   output_name)  ### including fuzzy-search 

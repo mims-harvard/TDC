@@ -4,7 +4,7 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .utils import * 
+from .utils import fuzzy_search, oracle_load
 from .metadata import download_oracle_names, oracle_names, distribution_oracles
 
 class Oracle:

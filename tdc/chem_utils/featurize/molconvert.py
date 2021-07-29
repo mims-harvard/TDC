@@ -43,7 +43,7 @@ try:
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from tdc.utils import oracle_load, print_sys, install
+from ...utils import print_sys
 from ..oracle.oracle import smiles_to_rdkit_mol, smiles_2_fingerprint_ECFP4, smiles_2_fingerprint_FCFP4, smiles_2_fingerprint_AP, smiles_2_fingerprint_ECFP6
 from ._smiles2pubchem import smiles2pubchem
 

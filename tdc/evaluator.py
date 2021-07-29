@@ -4,7 +4,7 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .utils import * 
+from .utils import fuzzy_search 
 from .metadata import evaluator_name, distribution_oracles
 
 try:

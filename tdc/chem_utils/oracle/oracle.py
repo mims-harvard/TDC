@@ -37,13 +37,13 @@ try:
 except:
 	raise ImportError("Please install rdkit by 'pip install scipy'! ") 
 
-
 try:
 	import networkx as nx 
 except:
 	raise ImportError("Please install networkx by 'pip install networkx'! ")	
 
-from tdc.utils import oracle_load, print_sys, install
+from ...utils import oracle_load
+from ...utils import print_sys, install
 
 mean2func = {
   'geometric': gmean, 

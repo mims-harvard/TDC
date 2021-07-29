@@ -9,7 +9,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from . import single_pred_dataset
-from ..utils import print_sys, train_val_test_split
+from ..utils import print_sys
 from ..metadata import dataset_names
 
 class QM(single_pred_dataset.DataLoader):

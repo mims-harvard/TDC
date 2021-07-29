@@ -5,6 +5,15 @@ import pandas as pd
 from pandas.errors import EmptyDataError
 from tqdm import tqdm
 
+from ..metadata import name2type, name2id, dataset_list, dataset_names, benchmark_names, benchmark2id, benchmark2type
+from ..metadata import property_names, paired_dataset_names, single_molecule_dataset_names
+from ..metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
+from ..metadata import oracle2id, download_oracle_names, trivial_oracle_names, oracle_names, oracle2type 
+
+sys.path.append('../')
+
+from .misc import fuzzy_search, print_sys
+
 def download_wrapper(name, path, dataset_names):
 	name = fuzzy_search(name, dataset_names)
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
@@ -41,11 +50,6 @@ def zip_data_download_wrapper(name, path, dataset_names):
 		print_sys("Done!")
 	return name
 
-def oracle_download_wrapper(name, path, oracle_names):
-	name = fuzzy_search(name, oracle_names)
-	if name in trivial_oracle_names:
-		return name
-
 def dataverse_download(url, path, name, types):
 	save_path = os.path.join(path, name + '.' + types[name])
 	response = requests.get(url, stream=True)
@@ -58,6 +62,11 @@ def dataverse_download(url, path, name, types):
 			file.write(data)
 	progress_bar.close()
 
+
+def oracle_download_wrapper(name, path, oracle_names):
+	name = fuzzy_search(name, oracle_names)
+	if name in trivial_oracle_names:
+		return name
 
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
 	dataset_path = server_path + str(oracle2id[name])

@@ -1,5 +1,8 @@
 import numpy as np
+import pandas as pd
 import os, sys
+
+from .misc import fuzzy_search
 
 def convert_y_unit(y, from_, to_):
 	"""

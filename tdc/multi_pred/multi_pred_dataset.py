@@ -5,7 +5,11 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from .. import base_dataset
-from ..utils import *
+from ..utils import dataset2target_lists, \
+					multi_dataset_load, \
+					create_fold, \
+					create_fold_setting_cold,\
+					create_combination_split
 
 class DataLoader(base_dataset.DataLoader):
 	def __init__(self, name, path, print_stats, dataset_names):

@@ -1,6 +1,9 @@
 import os, sys
 import pandas as pd
 from .label_name_list import dataset2target_lists
+from .misc import fuzzy_search
+from .load import pd_load
+from ..metadata import dataset_names, benchmark_names
 
 def get_label_map(name, path = './data', target = None, file_format = 'csv', output_format = 'dict', task = 'DDI'):
 	name = fuzzy_search(name, dataset_names[task])
