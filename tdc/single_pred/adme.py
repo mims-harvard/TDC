@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-"""Docstring to be finished.
-"""
 # Author: TDC Team
 # License: MIT
 
