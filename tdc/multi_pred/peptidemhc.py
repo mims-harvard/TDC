@@ -10,7 +10,12 @@ from ..metadata import dataset_names
 
 class PeptideMHC(bi_pred_dataset.DataLoader):
 
-    """Summary
+    """Peptide-MHC Binding Prediction
+
+    Task Description: Regression. 
+                      Given the amino acid sequence of peptide and the pseudo amino acid sequence of MHC, 
+                      predict the binding affinity.
+
     
     Attributes:
         entity1_name (str): Description

@@ -13,8 +13,8 @@ class MTI(bi_pred_dataset.DataLoader):
     """MicroRNA-Target Interaction Prediction
 
     Task Description: Binary Classification. 
-                    Given the miRNA mature sequence and target amino acid sequence, 
-                    predict their likelihood of interaction.
+                      Given the miRNA mature sequence and target amino acid sequence, 
+                      predict their likelihood of interaction.
     
     Attributes:
         entity1_name (str): Description

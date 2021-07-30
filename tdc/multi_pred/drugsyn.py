@@ -11,8 +11,11 @@ from ..metadata import dataset_names
 class DrugSyn(multi_pred_dataset.DataLoader):
 
     """Drug Synergy Prediction 
-    Given the chemical structural information for the combining drugs and genomic features for a particular cell line, 
-    our goal is to predict the drug synergy level or the drug combination sensitivity in that cell line.
+
+    Task Description: Regression. 
+                      Given the gene expression of cell lines and two SMILES strings of the drug combos, 
+                      predict the drug synergy level.
+
     """
     
     def __init__(self, name, path='./data', print_stats=False):
