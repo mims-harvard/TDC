@@ -10,7 +10,10 @@ from ..metadata import dataset_names
 
 class Catalyst(bi_pred_dataset.DataLoader):
 
-    """Summary
+    """Catalyst Prediction
+
+    Task Description: Given reactant and product set X, predict the catalyst Y from a set of most common catalysts.
+
     
     Attributes:
         entity1_name (str): Description

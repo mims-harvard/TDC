@@ -10,7 +10,11 @@ from ..metadata import dataset_names
 
 class AntibodyAff(bi_pred_dataset.DataLoader):
 
-    """Summary
+    """Antibody-antigen Affinity Prediction
+
+    Task Description: Regression. Given the amino acid sequence of antibody and antigen, predict their binding affinity.
+
+
     
     Attributes:
         entity1_name (str): Description

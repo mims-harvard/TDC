@@ -10,7 +10,11 @@ from ..metadata import dataset_names
 
 class MTI(bi_pred_dataset.DataLoader):
 
-    """Summary
+    """MicroRNA-Target Interaction Prediction
+
+    Task Description: Binary Classification. 
+                      Given the miRNA mature sequence and target amino acid sequence, 
+                      predict their likelihood of interaction.
     
     Attributes:
         entity1_name (str): Description

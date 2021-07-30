@@ -1,46 +1,32 @@
 import pickle 
 import numpy as np 
-import re
 import os.path as op
-import math
-from collections import defaultdict, Iterable
 from abc import abstractmethod
 from functools import partial
 from typing import List
-import time
-import os 
-
-try:
-	from sklearn import svm
-	# from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score
-except:
-	ImportError("Please install sklearn by 'conda install -c anaconda scikit-learn' or 'pip install scikit-learn '! ")
+import time, os, math, re
 
 try: 
   import rdkit
   from rdkit import Chem, DataStructs
-  from rdkit.Chem import AllChem
-  from rdkit.Chem import Descriptors
+  from rdkit.Chem import AllChem, Descriptors
   import rdkit.Chem.QED as QED
   from rdkit import rdBase
   rdBase.DisableLog('rdApp.error')
   from rdkit.Chem import rdMolDescriptors
-  from rdkit.six.moves import cPickle
   from rdkit.six import iteritems
-  from rdkit.Chem.Fingerprints import FingerprintMols
-  from rdkit.Chem import MACCSkeys
 except:
   raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")	
 
 try:
 	from scipy.stats.mstats import gmean
 except:
-	raise ImportError("Please install rdkit by 'pip install scipy'! ") 
+	raise ImportError("Please install rdkit by 'pip install scipy'! ")
 
 try:
 	import networkx as nx 
 except:
-	raise ImportError("Please install networkx by 'pip install networkx'! ")	
+	raise ImportError("Please install networkx by 'pip install networkx'! ")
 
 from ...utils import oracle_load
 from ...utils import print_sys, install

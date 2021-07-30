@@ -10,16 +10,21 @@ from ..metadata import dataset_names
 
 class DrugSyn(multi_pred_dataset.DataLoader):
 
-    """Summary
+    """Drug Synergy Prediction 
+
+    Task Description: Regression. 
+                      Given the gene expression of cell lines and two SMILES strings of the drug combos, 
+                      predict the drug synergy level.
+
     """
     
     def __init__(self, name, path='./data', print_stats=False):
-        """Summary
+        """initialize function of DrugSyn. 
         
         Args:
-            name (TYPE): Description
-            path (str, optional): Description
-            print_stats (bool, optional): Description
+            name (str): can be 'OncoPolyPharmacology' or 'DrugComb'
+            path (str, optional): the path it save, the default path is "./data"  
+            print_stats (bool, optional): whether to print statistics of the dataset
         """
         super().__init__(name, path, print_stats,
                          dataset_names=dataset_names["DrugSyn"])
