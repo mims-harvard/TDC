@@ -10,7 +10,9 @@ from ..metadata import dataset_names
 
 class GDA(bi_pred_dataset.DataLoader):
 
-    """Summary
+    """Gene-Disease Association Prediction
+
+    Task Description: Regression. Given the disease description and the amino acid sequence of the gene, predict their association.
     
     Attributes:
         entity1_name (str): Description

@@ -10,7 +10,10 @@ from ..metadata import dataset_names
 
 class DTI(bi_pred_dataset.DataLoader):
 
-    """Summary
+    """Drug-Target Interaction Prediction
+
+    Regression task. Given the target amino acid sequence/compound SMILES string, predict their binding affinity.
+
     
     Attributes:
         entity1_name (str): Description

@@ -10,7 +10,10 @@ from ..metadata import dataset_names
 
 class DrugRes(bi_pred_dataset.DataLoader):
 
-    """Summary
+    """Drug Response Prediction Task
+
+    Task Description: Regression. Given the gene expression of cell lines and the SMILES of drug, predict the drug sensitivity level.
+
     
     Attributes:
         entity1_name (str): Description

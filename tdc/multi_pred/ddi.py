@@ -11,7 +11,10 @@ from ..metadata import dataset_names
 
 class DDI(bi_pred_dataset.DataLoader):
 
-    """Summary
+    """Drug-Drug Interaction Prediction 
+
+    Task Description: Multi-class classification. Given the SMILES strings of two drugs, predict their interaction type.
+
     
     Attributes:
         entity1_name (str): Description

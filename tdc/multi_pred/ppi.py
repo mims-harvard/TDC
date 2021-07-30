@@ -10,7 +10,10 @@ from ..metadata import dataset_names
 
 class PPI(bi_pred_dataset.DataLoader):
 
-    """Summary
+    """Protein-Protein Interaction Prediction
+
+    Task Description: Binary Classification. Given the target amino acid sequence pairs, predict if they interact or not.
+
     
     Attributes:
         entity1_name (str): Description
