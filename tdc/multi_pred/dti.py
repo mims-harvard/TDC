@@ -10,26 +10,26 @@ from ..metadata import dataset_names
 
 class DTI(bi_pred_dataset.DataLoader):
 
-    """Drug-Target Interaction Prediction
+    """Data loader class to load datasets in Drug-Target Interaction Prediction task. 
+    More info: https://tdcommons.ai/multi_pred_tasks/dti/
 
     Regression task. Given the target amino acid sequence/compound SMILES string, predict their binding affinity.
 
     
-    Attributes:
-        entity1_name (str): Description
-        entity2_name (str): Description
-        two_types (bool): Description
     """
     
     def __init__(self, name, path='./data', label_name=None,
                  print_stats=False):
-        """Summary
+        """Create Drug-Target Interaction Prediction dataloader object
         
         Args:
-            name (TYPE): Description
-            path (str, optional): Description
-            label_name (None, optional): Description
-            print_stats (bool, optional): Description
+            name (str): the dataset name.
+            path (str, optional): 
+                The path to save the data file, defaults to './data'
+            label_name (str, optional): 
+                For multi-label dataset, specify the label name, defaults to None
+            print_stats (bool, optional): 
+                Whether to print basic statistics of the dataset, defaults to False
         """
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["DTI"])

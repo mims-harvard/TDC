@@ -10,7 +10,8 @@ from ..metadata import dataset_names
 
 class DrugSyn(multi_pred_dataset.DataLoader):
 
-    """Drug Synergy Prediction 
+    """Data loader class to load datasets in Drug Synergy Prediction task. 
+    More info: https://tdcommons.ai/multi_pred_tasks/drugsyn/ 
 
     Task Description: Regression. 
                       Given the gene expression of cell lines and two SMILES strings of the drug combos, 
@@ -19,12 +20,14 @@ class DrugSyn(multi_pred_dataset.DataLoader):
     """
     
     def __init__(self, name, path='./data', print_stats=False):
-        """initialize function of DrugSyn. 
+        """Create Drug Synergy Prediction dataloader object
         
         Args:
-            name (str): can be 'OncoPolyPharmacology' or 'DrugComb'
-            path (str, optional): the path it save, the default path is "./data"  
-            print_stats (bool, optional): whether to print statistics of the dataset
+            name (str): the dataset name.
+            path (str, optional): 
+                The path to save the data file, defaults to './data'
+            print_stats (bool, optional): 
+                Whether to print basic statistics of the dataset, defaults to False
         """
         super().__init__(name, path, print_stats,
                          dataset_names=dataset_names["DrugSyn"])
