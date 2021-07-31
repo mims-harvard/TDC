@@ -125,7 +125,7 @@ class DataLoader(base_dataset.DataLoader):
             raise AttributeError("Please use the correct format input")
 
     def print_stats(self):
-        """Summary
+        """print the statistics of the dataset
         """
         print_sys('--- Dataset Statistics ---')
         try:
@@ -149,7 +149,7 @@ class DataLoader(base_dataset.DataLoader):
     
     def get_split(self, method='random', seed=42,
                   frac=[0.7, 0.1, 0.2], column_name=None, time_column = None):
-        """Summary
+        """split dataset into train/validation/test. 
         
         Args:
             method (str, optional): Description

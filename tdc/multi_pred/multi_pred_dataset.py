@@ -13,6 +13,8 @@ from ..utils import dataset2target_lists, \
 
 class DataLoader(base_dataset.DataLoader):
 	def __init__(self, name, path, print_stats, dataset_names):
+		"""create dataloader
+		"""
 		if name.lower() in dataset2target_lists.keys():
 			if label_name is None:
 				raise ValueError("Please select a label name. You can use tdc.utils.retrieve_label_name_list('" + name.lower() + "') to retrieve all available label names.")
@@ -24,6 +26,8 @@ class DataLoader(base_dataset.DataLoader):
 		self.path = path
 
 	def get_data(self, format = 'df'):
+		"""get the data in given format, e.g., dataframe, dictionary. 
+		"""
 		if format == 'df':
 			return self.df
 		elif format == 'dict':
@@ -32,12 +36,15 @@ class DataLoader(base_dataset.DataLoader):
 			raise AttributeError("Please use the correct format input")
 
 	def print_stats(self):
+		"""print the statistics of the dataset
+		"""
 		print_sys('--- Dataset Statistics ---')
 		print(str(len(self.df)) + ' data points.', flush = True, file = sys.stderr)
 		print_sys('--------------------------')
 
 	def get_split(self, method = 'random', seed = 42, frac = [0.7, 0.1, 0.2], column_name = None):
-
+		"""split dataset into train/validation/test. 
+		"""
 		df = self.get_data(format = 'df')
 
 		if method == 'random':
