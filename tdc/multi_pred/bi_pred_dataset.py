@@ -22,34 +22,19 @@ class DataLoader(base_dataset.DataLoader):
 
     """Summary
     
-    Attributes:
-        aux_column (TYPE): Description
-        aux_column_val (TYPE): Description
-        entity1 (TYPE): Description
-        entity1_idx (TYPE): Description
-        entity1_name (str): Description
-        entity2 (TYPE): Description
-        entity2_idx (TYPE): Description
-        entity2_name (str): Description
-        file_format (str): Description
+    Args:
+        name (str): name of dataloader 
+        path (str): the path where data is saved
         label_name (TYPE): Description
-        name (TYPE): Description
-        path (TYPE): Description
-        raw_y (TYPE): Description
-        two_types (bool): Description
-        y (TYPE): Description
+        print_stats (bool): whether to print statistics of dataset
+        dataset_names (str): dataset's name
+        
     """
     
     def __init__(self, name, path, label_name, print_stats, dataset_names):
-        """Summary
+        """Create dataloader object. 
         
-        Args:
-            name (TYPE): Description
-            path (TYPE): Description
-            label_name (TYPE): Description
-            print_stats (TYPE): Description
-            dataset_names (TYPE): Description
-        
+
         Raises:
             ValueError: Description
         """
@@ -93,7 +78,8 @@ class DataLoader(base_dataset.DataLoader):
         """Summary
         
         Args:
-            format (str, optional): Description
+            format (str, optional): 
+                format of data, the default value is 'df' (DataFrame)
         
         Returns:
             TYPE: Description
@@ -152,9 +138,14 @@ class DataLoader(base_dataset.DataLoader):
         """split dataset into train/validation/test. 
         
         Args:
-            method (str, optional): Description
-            seed (int, optional): Description
-            frac (list, optional): Description
+            method (str, optional): 
+                split method, the default value is 'random'
+            seed (int, optional): 
+                random seed, the default value is 42
+            frac (list, optional): 
+                the fraction of each split (train/validation/test),
+                the sum of all the element is 1, 
+                the default value is [0.7, 0.1, 0.2]
             column_name (None, optional): Description
             time_column (None, optional): Description
         
@@ -189,7 +180,7 @@ class DataLoader(base_dataset.DataLoader):
                                  "please specify the column name!")
 
     def neg_sample(self, frac=1):
-        """Summary
+        """negative sampling 
         
         Args:
             frac (int, optional): Description

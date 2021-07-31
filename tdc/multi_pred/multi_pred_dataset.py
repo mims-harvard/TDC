@@ -13,7 +13,7 @@ from ..utils import dataset2target_lists, \
 
 class DataLoader(base_dataset.DataLoader):
 	def __init__(self, name, path, print_stats, dataset_names):
-		"""create dataloader
+		"""create dataloader object 
 		"""
 		if name.lower() in dataset2target_lists.keys():
 			if label_name is None:

@@ -43,7 +43,7 @@ class PPI(bi_pred_dataset.DataLoader):
         print('Done!', flush=True, file=sys.stderr)
 
     def print_stats(self):
-        """Summary
+        """print the statistics of the dataset
         """
         print_sys('--- Dataset Statistics ---')
         print('There are ' + str(len(np.unique(
