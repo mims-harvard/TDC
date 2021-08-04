@@ -145,7 +145,7 @@ class BenchmarkGroup:
 		if results_individual is None:
 			individual_results = []
 			for pred in preds:
-				retval = self.evaluate(pred, m1_api = m1_api)
+				retval = self.evaluate(pred)
 				individual_results.append(retval)
 		else:
 			individual_results = results_individual
