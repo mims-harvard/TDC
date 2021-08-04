@@ -69,6 +69,8 @@ class BenchmarkGroup:
 		file_format: csv: for admet; pkl: for drugcomb; oracle: for docking score
 
 		'''
+
+		print_sys('tdc.BenchmarkGroup will be deprecated soon. Please use tdc.benchmark_group.XXX_group and check out the examples on website!')
 		
 		self.name = bm_group_load(name, path)
 		self.path = os.path.join(path, self.name)

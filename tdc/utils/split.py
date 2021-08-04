@@ -1,10 +1,21 @@
+"""Summary
+"""
 import os, sys
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-# random split
 def create_fold(df, fold_seed, frac):
+	"""create random split
+	
+	Args:
+	    df (pd.DataFrame): dataset dataframe
+	    fold_seed (int): the random seed
+	    frac (list): a list of train/valid/test fractions
+	
+	Returns:
+	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
+	"""
 	train_frac, val_frac, test_frac = frac
 	test = df.sample(frac = test_frac, replace = False, random_state = fold_seed)
 	train_val = df[~df.index.isin(test.index)]
@@ -15,8 +26,18 @@ def create_fold(df, fold_seed, frac):
 			'valid': val.reset_index(drop = True),
 			'test': test.reset_index(drop = True)}
 
-# cold setting
 def create_fold_setting_cold(df, fold_seed, frac, entity):
+	"""create cold-split where given a column, it first split based on entities in the column and then map all associated data points to each split
+	
+	Args:
+	    df (pd.DataFrame): dataset dataframe
+	    fold_seed (int): the random seed
+	    frac (list): a list of train/valid/test fractions
+	    entity (str): the "cold" entity to first split on
+	
+	Returns:
+	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
+	"""
 	train_frac, val_frac, test_frac = frac
 	gene_drop = df[entity].drop_duplicates().sample(frac = test_frac, replace = False, random_state = fold_seed).values
 
@@ -32,9 +53,20 @@ def create_fold_setting_cold(df, fold_seed, frac, entity):
 			'valid': val.reset_index(drop = True),
 			'test': test.reset_index(drop = True)}
 
-# scaffold split
 def create_scaffold_split(df, seed, frac, entity):
-	# reference: https://github.com/chemprop/chemprop/blob/master/chemprop/data/scaffold.py
+	"""create scaffold split. it first generates molecular scaffold for each molecule and then split based on scaffolds
+	reference: https://github.com/chemprop/chemprop/blob/master/chemprop/data/scaffold.py
+
+	Args:
+	    df (pd.DataFrame): dataset dataframe
+	    fold_seed (int): the random seed
+	    frac (list): a list of train/valid/test fractions
+	    entity (str): the column name for where molecule stores
+	
+	Returns:
+	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
+	"""
+	
 	try:
 		from rdkit import Chem
 		from rdkit.Chem.Scaffolds import MurckoScaffold
@@ -107,16 +139,17 @@ def create_scaffold_split(df, seed, frac, entity):
 
 def create_combination_split(df, seed, frac):
 	"""
-	Function for splitting drug combination dataset such that no
-	combinations are shared across the split
-
-	:param df: dataset to split as pd Dataframe
-	:param seed: random seed
-	:param frac: [train, val, test] split fraction as a list
-	:return: dictionary of {train, valid, test} datasets
+	Function for splitting drug combination dataset such that no combinations are shared across the split
+	
+	Args:
+	    df (pd.Dataframe): dataset to split
+	    seed (int): random seed
+	    frac (list): split fraction as a list
+	
+	Returns:
+	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
 	"""
 
-	# Set split size
 	test_size = int(len(df) * frac[2])
 	train_size = int(len(df) * frac[0])
 	val_size = len(df) - train_size - test_size
@@ -157,6 +190,16 @@ def create_combination_split(df, seed, frac):
 # create time split
 
 def create_fold_time(df, frac, date_column):
+	"""create splits based on time
+	
+	Args:
+	    df (pd.DataFrame): the dataset dataframe
+	    frac (list): list of train/valid/test fractions
+	    date_column (str): the name of the column that contains the time info
+	
+	Returns:
+	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
+	"""
 	df = df.sort_values(by = date_column).reset_index(drop = True)
 	train_frac, val_frac, test_frac = frac[0], frac[1], frac[2]
 
@@ -172,9 +215,19 @@ def create_fold_time(df, frac, date_column):
                                                                          'valid_time_frame': (split_date_valid, split_date), 
                                                                          'test_time_frame': (split_date, df.iloc[-1][date_column])}}
 
-# split within each stratification defined by the group column
 
 def create_group_split(train_val, seed, holdout_frac, group_column):
+	"""split within each stratification defined by the group column for training/validation split
+	
+	Args:
+	    train_val (pd.DataFrame): the train+valid dataframe to split on
+	    seed (int): the random seed
+	    holdout_frac (float): the fraction of validation
+	    group_column (str): the name of the group column
+	
+	Returns:
+	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
+	"""
 	train_df = pd.DataFrame()
 	val_df = pd.DataFrame()
 
@@ -186,12 +239,3 @@ def create_group_split(train_val, seed, holdout_frac, group_column):
 		val_df = val_df.append(train_val_temp[~msk])
 
 	return {'train': train_df.reset_index(drop = True), 'valid': val_df.reset_index(drop = True)}
-	
-def train_val_test_split(len_data, frac, seed):
-	test_size = int(len_data * frac[2])
-	train_size = int(len_data * frac[0])
-	val_size = len_data - train_size - test_size
-	np.random.seed(seed)
-	x = np.array(list(range(len_data)))
-	np.random.shuffle(x)
-	return x[:train_size], x[train_size:(train_size + val_size)], x[-test_size:]

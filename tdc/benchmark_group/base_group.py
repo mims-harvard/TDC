@@ -4,15 +4,15 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .utils import bm_group_load, print_sys, fuzzy_search
-from .utils import create_fold,\
+from ..utils import bm_group_load, print_sys, fuzzy_search
+from ..utils import create_fold,\
 					create_fold_setting_cold,\
 					create_combination_split,\
 					create_fold_time,\
 					create_scaffold_split,\
 					create_group_split
-from .metadata import get_task2category, bm_metric_names, benchmark_names, bm_split_names, docking_target_info
-from .evaluator import Evaluator
+from ..metadata import get_task2category, bm_metric_names, benchmark_names, bm_split_names, docking_target_info
+from ..evaluator import Evaluator
 
 class BenchmarkGroup:
 	def __init__(self, name, path = './data', file_format='csv'):		
@@ -79,7 +79,7 @@ class BenchmarkGroup:
 			raise NotImplementedError
 		return out['train'], out['valid']
 
-	def get(self, benchmark, num_max_call = 5000):
+	def get(self, benchmark):
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		if self.file_format == 'csv':
@@ -91,7 +91,7 @@ class BenchmarkGroup:
 		
 		return {'train_val': train, 'test': test, 'name': dataset}
 
-	def evaluate(self, pred, testing = True, benchmark = None, m1_api = None, save_dict = True):
+	def evaluate(self, pred, testing = True, benchmark = None, save_dict = True):
 		
 		if testing:
 			# test set evaluation

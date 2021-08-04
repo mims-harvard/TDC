@@ -1,18 +1,22 @@
+"""Summary
+"""
 import numpy as np
 import pandas as pd
 import os, sys
 
 from .misc import fuzzy_search
 
-def convert_y_unit(y, from_, to_):
-	"""
-	Arguments:
-		y: a list of labels
-		from_: 'nM' or 'p'
-		to_: 'nM' or 'p'
 
+def convert_y_unit(y, from_, to_):
+	"""label unit conversion helper function
+	
+	Args:
+	    y (list): a list of labels
+	    from_ (str): source units, 'nM'/'p'
+	    to_ (str): target units, 'p'/'nM'
+	
 	Returns:
-		y: a numpy array of transformed labels
+	    np.array: a numpy array of transformed labels
 	"""
 	if from_ == 'nM':
 		y = y
@@ -27,17 +31,22 @@ def convert_y_unit(y, from_, to_):
 	return y
 
 def label_transform(y, binary, threshold, convert_to_log, verbose = True, order = 'descending'):
-	"""
-	Arguments:
-		y: a list of labels
-		binary: binarize the label given the threshold
-		threshold: threshold values
-		convert_to_log: for continuous values such as Kd and etc
-
+	"""label transformation helper function
+	
+	Args:
+	    y (list): a list of labels
+	    binary (bool): whether or not to conduct binarization
+	    threshold (float): the threshold for binarization
+	    convert_to_log (bool): convert to log-scale for continuous values such as Kd and etc
+	    verbose (bool, optional): whether or not to print intermediate processing statements
+	    order (str, optional): if descending, then label is 1 for value less than threshold and vice versus, defaults to 'descending'
+	
 	Returns:
-		y: a numpy array of transformed labels
+	    np.array: an array of transformed labels
+	
+	Raises:
+	    ValueError: specify the correct order from 'descending'/'ascending'
 	"""
-
 	if (len(np.unique(y)) > 2) and binary:
 		if verbose:
 			print("Binariztion using threshold' + str(threshold) + ', you use specify your threhsold values by threshold = X)", flush = True, file = sys.stderr)
@@ -58,14 +67,43 @@ def label_transform(y, binary, threshold, convert_to_log, verbose = True, order 
 	return y
 
 def convert_to_log(y):
+	"""log conversion helper
+	
+	Args:
+	    y (list): a list of labels
+	
+	Returns:
+	    np.array: an array of log-transformed labels
+	"""
 	y = convert_y_unit(np.array(y), 'nM', 'p')
 	return y
 
 def convert_back_log(y):
+	"""conversion from log-scale helper
+	
+	Args:
+	    y (list): a list of labels in log-scale
+	
+	Returns:
+	    np.array: an array of nM->p labels
+	"""
 	y = convert_y_unit(np.array(y), 'p', 'nM')
 	return y
 
 def binarize(y, threshold, order = 'ascending'):
+	"""binarization of a label list given a pre-specified threshold
+	
+	Args:
+	    y (list): a list of labels
+	    threshold (float): the threshold for turning label to 1 or 0
+	    order (str, optional): if order is ascending then for label that is above threshold becomes 1, and below becomes 0, vice versus
+	
+	Returns:
+	    np.array: an array of transformed labels
+	
+	Raises:
+	    AttributeError: select the correct order "ascending/descending"
+	"""
 	if order == 'ascending':
 		y = np.array([1 if i else 0 for i in np.array(y) > threshold])
 	elif order == 'descending':
@@ -75,7 +113,12 @@ def binarize(y, threshold, order = 'ascending'):
 	return y
 
 def label_dist(y, name = None):
-
+	"""plot the distribution of label
+	
+	Args:
+	    y (list): a list of labels
+	    name (None, optional): dataset name
+	"""
 	try:
 		import seaborn as sns
 		import matplotlib.pyplot as plt
@@ -110,13 +153,15 @@ def label_dist(y, name = None):
 
 def NegSample(df, column_names, frac, two_types):
 	"""Negative Sampling for Binary Interaction Dataset
-
-	Parameters
-	----------
-	df : pandas.DataFrame
-		Data File
-	column_names: list
-		column names in the order of [id1, x1, id2, x2]
+	
+	Args:
+	    df (pandas.DataFrame): input dataset dataframe
+	    column_names (list): column names in the order of [id1, x1, id2, x2]
+	    frac (float): the ratio of negative samples compared to positive samples
+	    two_types (bool): whether or not if the two entity types are different (e.g. drug-target) or single entity type (e.g. drug-drug)
+	
+	Returns:
+	    pandas.DataFrame: a new dataframe with negative samples (Y = 0)
 	"""
 	x = int(len(df) * frac)
 	id1, x1, id2, x2 = column_names

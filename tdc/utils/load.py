@@ -1,3 +1,5 @@
+"""Summary
+"""
 import requests
 from zipfile import ZipFile 
 import os, sys
@@ -15,6 +17,16 @@ sys.path.append('../')
 from .misc import fuzzy_search, print_sys
 
 def download_wrapper(name, path, dataset_names):
+	"""wrapper for downloading a dataset given the name and path, for csv,pkl,tsv files
+	
+	Args:
+	    name (str): the rough dataset query name
+	    path (str): the path to save the dataset
+	    dataset_names (list): the list of available dataset names to search the query dataset
+	
+	Returns:
+	    str: the exact dataset query name
+	"""
 	name = fuzzy_search(name, dataset_names)
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
 
@@ -31,6 +43,16 @@ def download_wrapper(name, path, dataset_names):
 	return name
 
 def zip_data_download_wrapper(name, path, dataset_names):
+	"""wrapper for downloading a dataset given the name and path - zip file, automatically unzipping
+	
+	Args:
+	    name (str): the rough dataset query name
+	    path (str): the path to save the dataset
+	    dataset_names (list): the list of available dataset names to search the query dataset
+	
+	Returns:
+	    str: the exact dataset query name
+	"""
 	name = fuzzy_search(name, dataset_names)
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
 
@@ -51,6 +73,14 @@ def zip_data_download_wrapper(name, path, dataset_names):
 	return name
 
 def dataverse_download(url, path, name, types):
+	"""dataverse download helper with progress bar
+	
+	Args:
+	    url (str): the url of the dataset
+	    path (str): the path to save the dataset
+	    name (str): the dataset name
+	    types (dict): a dictionary mapping from the dataset name to the file format
+	"""
 	save_path = os.path.join(path, name + '.' + types[name])
 	response = requests.get(url, stream=True)
 	total_size_in_bytes= int(response.headers.get('content-length', 0))
@@ -64,6 +94,16 @@ def dataverse_download(url, path, name, types):
 
 
 def oracle_download_wrapper(name, path, oracle_names):
+	"""wrapper for downloading an oracle model checkpoint given the name and path
+	
+	Args:
+	    name (str): the rough oracle query name
+	    path (str): the path to save the oracle
+	    dataset_names (list): the list of available exact oracle names
+	
+	Returns:
+	    str: the exact oracle query name
+	"""
 	name = fuzzy_search(name, oracle_names)
 	if name in trivial_oracle_names:
 		return name
@@ -83,6 +123,16 @@ def oracle_download_wrapper(name, path, oracle_names):
 	return name
 
 def bm_download_wrapper(name, path):
+	"""wrapper for downloading a benchmark group given the name and path
+	
+	Args:
+	    name (str): the rough benckmark group query name
+	    path (str): the path to save the benchmark group
+	    dataset_names (list): the list of available benchmark group names
+	
+	Returns:
+	    str: the exact benchmark group query name
+	"""
 	name = fuzzy_search(name, list(benchmark_names.keys()))
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
 	dataset_path = server_path + str(benchmark2id[name])
@@ -102,6 +152,18 @@ def bm_download_wrapper(name, path):
 	return name
 
 def pd_load(name, path):
+	"""load a pandas dataframe from local file.
+	
+	Args:
+	    name (str): dataset name
+	    path (str): the path where the dataset is saved
+	
+	Returns:
+	    pandas.DataFrame: loaded dataset in dataframe
+	
+	Raises:
+	    ValueError: the file format is not supported. currently only support tab/csv/pkl/zip
+	"""
 	try:
 		if name2type[name] == 'tab':
 			df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]), sep = '\t')
@@ -112,7 +174,7 @@ def pd_load(name, path):
 		elif name2type[name] == 'zip':
 			df = pd.read_pickle(os.path.join(path, name + '/' + name + '.pkl'))
 		else:
-			raise ValueError("The file type must be one of tab/csv/pickle.")
+			raise ValueError("The file type must be one of tab/csv/pickle/zip.")
 		try:
 			df = df.drop_duplicates()
 		except:
@@ -123,6 +185,17 @@ def pd_load(name, path):
 		sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 
 def property_dataset_load(name, path, target, dataset_names):
+	"""a wrapper to download, process and load single-instance prediction task datasets
+	
+	Args:
+	    name (str): the rough dataset name
+	    path (str): the dataset path to save/retrieve
+	    target (str): for multi-label dataset, retrieve the label of interest
+	    dataset_names (list): a list of availabel exact dataset names
+	
+	Returns:
+	    pandas.Series: three series (entity representation, label, entity id)
+	"""
 	if target is None:
 		target = 'Y'
 	name = download_wrapper(name, path, dataset_names)
@@ -146,6 +219,17 @@ def property_dataset_load(name, path, target, dataset_names):
 		return df['Drug'], df[target], df['Drug_ID']
 
 def interaction_dataset_load(name, path, target, dataset_names, aux_column):
+	"""a wrapper to download, process and load two-instance prediction task datasets
+	
+	Args:
+	    name (str): the rough dataset name
+	    path (str): the dataset path to save/retrieve
+	    target (str): for multi-label dataset, retrieve the label of interest
+	    dataset_names (list): a list of availabel exact dataset names
+	
+	Returns:
+	    pandas.Series: three series (entity 1 representation, entity 2 representation, entity id 1, entity id 2, label)
+	"""
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
@@ -174,39 +258,113 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column):
 
 
 def multi_dataset_load(name, path, dataset_names):
+	"""a wrapper to download, process and load multiple(>2)-instance prediction task datasets. assume the downloaded file is already processed
+	
+	Args:
+	    name (str): the rough dataset name
+	    path (str): the dataset path to save/retrieve
+	    target (str): for multi-label dataset, retrieve the label of interest
+	    dataset_names (list): a list of availabel exact dataset names
+	
+	Returns:
+	    pandas.DataFrame: the raw dataframe
+	"""
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df
 
 def generation_paired_dataset_load(name, path, dataset_names, input_name, output_name):
+	"""a wrapper to download, process and load generation-paired task datasets
+	
+	Args:
+	    name (str): the rough dataset name
+	    path (str): the dataset path to save/retrieve
+	    target (str): for multi-label dataset, retrieve the label of interest
+	    dataset_names (list): a list of availabel exact dataset names
+	
+	Returns:
+	    pandas.Series: two series (entity 1 representation, label)
+	"""
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df[input_name], df[output_name]
 
 def three_dim_dataset_load(name, path, dataset_names):
+	"""a wrapper to download, process and load 3d molecule task datasets
+	
+	Args:
+	    name (str): the rough dataset name
+	    path (str): the dataset path to save/retrieve
+	    dataset_names (list): a list of availabel exact dataset names
+	
+	Returns:
+	    pandas.DataFrame: the dataframe holds 3d information
+	    str: the path of the dataset
+	    str: the name of the dataset
+	"""
 	name = zip_data_download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df, os.path.join(path, name), name
 
 def distribution_dataset_load(name, path, dataset_names, column_name):
+	"""a wrapper to download, process and load molecule distribution learning task datasets. assume the downloaded file is already processed
+	
+	Args:
+	    name (str): the rough dataset name
+	    path (str): the dataset path to save/retrieve
+	    dataset_names (list): a list of availabel exact dataset names
+	    column_name (str): the column specifying where molecule locates
+	
+	Returns:
+	    pandas.Series: the input list of molecules representation
+	"""
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df[column_name]
 
 def generation_dataset_load(name, path, dataset_names):
+	"""a wrapper to download, process and load generation task datasets. assume the downloaded file is already processed
+	
+	Args:
+	    name (str): the rough dataset name
+	    path (str): the dataset path to save/retrieve
+	    dataset_names (list): a list of availabel exact dataset names
+	
+	Returns:
+	    pandas.Series: the data series
+	"""
 	name = download_wrapper(name, path, dataset_names)
 	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df['input'], df['target']
 
 def oracle_load(name, path = './oracle', oracle_names = oracle_names):
+	"""a wrapper to download, process and load oracles. 
+	
+	Args:
+	    name (str): the rough oracle name
+	    path (str): the oracle path to save/retrieve
+	    dataset_names (list): a list of availabel exact oracle names
+	
+	Returns:
+	    str: exact oracle name
+	"""
 	name = oracle_download_wrapper(name, path, oracle_names)
 	return name
 
 def bm_group_load(name, path):
+	"""a wrapper to download, process and load benchmark group
+	
+	Args:
+	    name (str): the rough benchmark group name
+	    path (str): the benchmark group path to save/retrieve
+	
+	Returns:
+	    str: exact benchmark group name
+	"""
 	name = bm_download_wrapper(name, path)
 	return name

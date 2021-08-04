@@ -1,3 +1,5 @@
+"""Summary
+"""
 import os, sys
 import numpy as np
 import pandas as pd
@@ -5,7 +7,20 @@ import subprocess
 import pickle
 from fuzzywuzzy import fuzz
 
+
 def fuzzy_search(name, dataset_names):
+	"""Summary
+	
+	Args:
+	    name (TYPE): Description
+	    dataset_names (TYPE): Description
+	
+	Returns:
+	    TYPE: Description
+	
+	Raises:
+	    ValueError: Description
+	"""
 	name = name.lower()
 	if name[:4] == 'tdc.':
 		name = name[4:]
@@ -21,21 +36,18 @@ def fuzzy_search(name, dataset_names):
 
 def get_closet_match(predefined_tokens, test_token, threshold=0.8):
 	"""Get the closest match by Levenshtein Distance.
-
-	Parameters
-	----------
-	predefined_tokens : list of string
-		Predefined string tokens.
-
-	test_token : string
-		User input that needs matching to existing tokens.
-
-	threshold : float in (0, 1), optional (default=0.8)
-		The lowest match score to raise errors.
-
-	Returns
-	-------
-
+	
+	Args:
+	    predefined_tokens (list): Predefined string tokens.
+	    test_token (str): User input that needs matching to existing tokens.
+	    threshold (float, optional): The lowest match score to raise errors, defaults to 0.8
+	
+	Returns:
+	    str: the exact token with highest matching prob
+		float: probability
+	
+	Raises:
+	    ValueError: no name is matched
 	"""
 	prob_list = []
 
@@ -58,21 +70,53 @@ def get_closet_match(predefined_tokens, test_token, threshold=0.8):
 	return token_max, prob_max / 100
 
 def save_dict(path, obj):
+	"""save an object to a pickle file
+	
+	Args:
+	    path (str): the path to save the pickle file
+	    obj (object): any file
+	"""
 	with open(path, 'wb') as f:
 		pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
 def load_dict(path):
+	"""load an object from a path
+	
+	Args:
+	    path (str): the path where the pickle file locates
+	
+	Returns:
+	    object: loaded pickle file
+	"""
 	with open(path, 'rb') as f:
 		return pickle.load(f)
 
 
 def install(package):
+	"""install pip package
+	
+	Args:
+	    package (str): package name
+	"""
 	subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 def print_sys(s):
+	"""system print
+	
+	Args:
+	    s (str): the string to print
+	"""
 	print(s, flush = True, file = sys.stderr)
 
 def to_submission_format(results):
+	"""convert the results to submission-ready format in leaderboard
+	
+	Args:
+	    results (dict): a dictionary of metrics across five runs
+	
+	Returns:
+	    dict: a dictionary of metrics and values with mean and std
+	"""
 	df = pd.DataFrame(results)
 	def get_metric(x):
 		metric = []

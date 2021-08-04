@@ -1,3 +1,5 @@
+"""Summary
+"""
 import json
 import os, sys
 try:
@@ -9,7 +11,8 @@ except ImportError:
 	from urllib2 import quote, urlopen, HTTPError
 
 def _parse_prop(search, proplist):
-	"""Extract property value from record using the given urn search filter."""
+	"""Extract property value from record using the given urn search filter.
+	"""
 	props = [i for i in proplist if all(item in i['urn'].items() for item in search.items())]
 	if len(props) > 0:
 		return props[0]['value'][list(props[0]['value'].keys())[0]]
@@ -48,16 +51,12 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
 
 def uniprot2seq(ProteinID):
 	"""Get protein sequence from Uniprot ID
-
-	Parameters
-	----------
-	ProteinID : str
-		Uniprot ID
-
-	Returns
-	-------
-	str
-		Amino acid sequence of input uniprot ID
+	
+	Args:
+	    ProteinID (str): the uniprot ID
+	
+	Returns:
+	    str: amino acid sequence
 	"""
 	import urllib
 	import string
@@ -72,6 +71,14 @@ def uniprot2seq(ProteinID):
 	return res
 
 def cid2smiles(cid):
+	"""SMILES string from PubChem CID 
+	
+	Args:
+	    cid (str): PubChem CID
+	
+	Returns:
+	    str: SMILES string
+	"""
 	try:
 		smiles = _parse_prop({'label': 'SMILES', 'name': 'Canonical'}, json.loads(request(cid).read().decode())['PC_Compounds'][0]['props'])
 	except:
