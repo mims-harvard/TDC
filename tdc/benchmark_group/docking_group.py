@@ -1,4 +1,13 @@
+import pandas as pd
+import numpy as np
+import os, sys, json 
+import warnings
+warnings.filterwarnings("ignore")
+
 from .base_group import BenchmarkGroup
+from ..utils import bm_group_load, print_sys, fuzzy_search
+from ..metadata import get_task2category, bm_metric_names, benchmark_names, bm_split_names, docking_target_info
+from ..evaluator import Evaluator
 
 class docking_group(BenchmarkGroup):
 	def __init__(self, path = './data', pyscreener_path = None, num_workers = None, num_cpus = None, num_max_call = 5000):
@@ -98,7 +107,7 @@ class docking_group(BenchmarkGroup):
 
 					# docking scores for the top K smiles (K <= 100)
 					target_pdb_file = os.path.join(self.path, dataset + '.pdb')
-					from .oracles import Oracle    
+					from ..oracles import Oracle    
 					data_path = os.path.join(self.path, dataset)                       
 					oracle = Oracle(name = "Docking_Score", software="vina",
 						pyscreener_path = self.pyscreener_path,
@@ -122,7 +131,7 @@ class docking_group(BenchmarkGroup):
 					print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained via: https://tdcommons.ai/functions/oracles/#moleculeone')
 				else:
 					print_sys("---- Calculating molecule.one synthesizability score ----")
-					from .oracles import Oracle
+					from ..oracles import Oracle
 					m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
 					import heapq
 					from operator import itemgetter

@@ -1258,9 +1258,10 @@ class molecule_one_retro:
       except:
           try:
               install('git+https://github.com/molecule-one/m1wrapper-python')
+              from m1wrapper import MoleculeOneWrapper
           except:
               raise ImportError("Install Molecule.One Wrapper via pip install git+https://github.com/molecule-one/m1wrapper-python") 
-              from m1wrapper import MoleculeOneWrapper
+              
       self.m1wrapper = MoleculeOneWrapper(api_token, 'https://tdc.molecule.one')
     
 
