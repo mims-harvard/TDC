@@ -11,8 +11,7 @@ from .split import create_fold,\
 					create_combination_split,\
 					create_fold_time,\
 					create_scaffold_split,\
-					create_group_split,\
-					train_val_test_split
+					create_group_split
 from .misc import print_sys, install, fuzzy_search, \
 					save_dict, load_dict, \
 					to_submission_format
