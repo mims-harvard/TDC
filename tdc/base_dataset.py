@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Docstring to be finished.
+"""Summary
 """
 # Author: TDC Team
 # License: MIT
@@ -15,34 +15,26 @@ from . import utils
 
 
 class DataLoader:
-    """Docstring to be finished.
 
-    Parameters
-    ----------
-    name : str
-        Description of the variable.
-
-    path : str, optional (default="data")
-        Description of the variable.
-
-    label_name : str, optional (default=None)
-        Description of the variable.
-
-    print_stats : bool, optional (default=True)
-        Description of the variable.
+    """base data loader class that contains functions shared by almost all data loader classes.
+    
     """
-
+    
     def __init__(self):
+        """empty data loader class, to be overwritten
+        """
         pass
 
     def get_data(self, format='df'):
         '''
         Arguments:
-            df: return pandas DataFrame; if not true, return np.arrays
-        returns:
-            self.drugs: drug smiles strings np.array
-            self.targets: target Amino Acid Sequence np.array
-            self.y: inter   action score np.array
+            format (str, optional): the dataset format
+                
+        Returns:
+            pd.DataFrame/dict/np.array: when format is df/dict/DeepPurpose
+        
+        Raises:
+            AttributeError: format not supported
         '''
         if format == 'df':
             return pd.DataFrame({self.entity1_name + '_ID': self.entity1_idx,
@@ -52,12 +44,12 @@ class DataLoader:
                     self.entity1_name: self.entity1, 'Y': self.y}
         elif format == 'DeepPurpose':
             return self.entity1, self.y
-        elif format == 'sklearn':
-            pass
         else:
             raise AttributeError("Please use the correct format input")
 
     def print_stats(self):
+        """print statistics
+        """
         print('There are ' + str(len(np.unique(
             self.entity1))) + ' unique ' + self.entity1_name.lower() + 's',
               flush=True, file=sys.stderr)
@@ -65,10 +57,18 @@ class DataLoader:
     def get_split(self, method='random', seed=42,
                   frac=[0.7, 0.1, 0.2]):
         '''
+        split function, overwritten by single_pred/multi_pred/generation for more specific splits
+
         Arguments:
-            method: splitting schemes: random, cold_drug, cold_target
-            seed: default 42
-            frac: train/val/test split
+            method: splitting schemes
+            seed: random seed
+            frac: train/val/test split fractions
+        
+        Returns:
+            dict: a dictionary of train/valid/test dataframes
+        
+        Raises:
+            AttributeError: split method not supported 
         '''
 
         df = self.get_data(format='df')
@@ -82,9 +82,23 @@ class DataLoader:
             raise AttributeError("Please specify the correct splitting method")
 
     def label_distribution(self):
+        """visualize distribution of labels
+        """
         utils.label_dist(self.y, self.name)
 
     def binarize(self, threshold=None, order='descending'):
+        """binarize the labels
+        
+        Args:
+            threshold (float, optional): the threshold to binarize the label. 
+            order (str, optional): the order of binarization, if ascending, flip 1 to larger values and vice versus for descending
+        
+        Returns:
+            DataLoader: data loader class with updated label
+        
+        Raises:
+            AttributeError: no threshold specified for binarization
+        """
         if threshold is None:
             raise AttributeError(
                 "Please specify the threshold to binarize the data by "
@@ -106,9 +120,19 @@ class DataLoader:
         return self
 
     def __len__(self):
+        """get number of data points
+        
+        Returns:
+            int: number of data points
+        """
         return len(self.get_data(format='df'))
 
     def convert_to_log(self, form = 'standard'):
+        """convert labels to log-scale
+        
+        Args:
+            form (str, optional): standard log-transformation or binding nM <-> p transformation.
+        """
         print('To log space...', flush=True, file=sys.stderr)
         if form == 'binding':
             self.y = utils.convert_to_log(self.y)
@@ -117,6 +141,11 @@ class DataLoader:
             self.y = self.sign * np.log(abs(self.y) + 1e-10)
 
     def convert_from_log(self, form = 'standard'):
+        """convert labels from log-scale
+        
+        Args:
+            form (str, optional): standard log-transformation or binding nM <-> p transformation.
+        """
         print('Convert Back To Original space...', flush=True, file=sys.stderr)
         if form == 'binding':
             self.y = utils.convert_back_log(self.y)
@@ -124,12 +153,31 @@ class DataLoader:
             self.y = self.sign * (np.exp(self.sign * self.y) - 1e-10)
 
     def get_label_meaning(self, output_format='dict'):
+        """get the biomedical meaning of label
+        
+        Args:
+            output_format (str, optional): dict/df/array for label
+        
+        Returns:
+            dict/pd.DataFrame/np.array: when output_format is dict/df/array
+        """
         return utils.get_label_map(self.name, self.path, self.target,
                                    file_format=self.file_format,
                                    output_format=output_format)
 
     def balanced(self, oversample=False, seed=42):
-
+        """balance the label neg-pos ratio
+        
+        Args:
+            oversample (bool, optional): whether or not to oversample minority or subsample majority to match ratio
+            seed (int, optional): random seed
+        
+        Returns:
+            pd.DataFrame: the updated dataframe with balanced dataset
+        
+        Raises:
+            AttributeError: alert to binarize the data first as continuous values cannot do balancing
+        """
         if len(np.unique(self.y)) > 2:
             raise AttributeError(
                 "You should binarize the data first by calling "
