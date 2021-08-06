@@ -1,5 +1,7 @@
-"""Summary
-"""
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -8,17 +10,18 @@ from ..metadata import dataset_names
 
 class RetroSyn(generation_dataset.PairedDataLoader):
 
-	"""Summary
+	"""Data loader class accessing to retro-synthetic prediction task.
 	"""
 	
 	def __init__(self, name, path = './data', print_stats = False, input_name = 'product', output_name = 'reactant'): 
-		"""Summary
+		"""To create an data loader object for forward reaction prediction task. The goal is to predict 
+		the reaction products given a set of reactants
 		
 		Args:
-		    name (TYPE): Description
-		    path (str, optional): Description
-		    print_stats (bool, optional): Description
-		    input_name (str, optional): Description
-		    output_name (str, optional): Description
+		    name (str): the name of the datset
+		    path (str, optional): the path to the saved data file.
+		    print_stats (bool, optional): whether to print the basic statistics
+		    input_name (str, optional): the name of the column containing input molecular data (product)
+		    output_name (str, optional): the name of the column containing output molecular data (reactant)
 		"""
 		super().__init__(name, path, print_stats, input_name, output_name)

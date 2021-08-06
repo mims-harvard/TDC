@@ -57,7 +57,7 @@ def unique_lst_of_smiles(list_of_smiles):
 	return canonical_smiles_lst
 
 def uniqueness(list_of_smiles):
-  """Evaluate the uniqueness of a list of SMILES string.
+  """Evaluate the uniqueness of a list of SMILES string, i.e., the fraction of unique molecules among a given list.
 
   Args:
     list_of_smiles: list (of SMILES string) 
@@ -70,6 +70,7 @@ def uniqueness(list_of_smiles):
 
 def novelty(generated_smiles_lst, training_smiles_lst):
   """Evaluate the novelty of set of generated smiles using list of training smiles as reference. 
+  Novelty is defined as the fraction of generated molecules that doesn't appear in the training set.
 
   Args: 
     generated_smiles_lst: list (of SMILES string), which are generated. 
@@ -84,7 +85,7 @@ def novelty(generated_smiles_lst, training_smiles_lst):
   return 1 - novel_ratio
 
 def diversity(list_of_smiles):
-  """Evaluate the diversity of a set of molecules, diversity is defined as the average pairwise
+  """Evaluate the internal diversity of a set of molecules. The internbal diversity is defined as the average pairwise
     Tanimoto distance between the Morgan fingerprints. 
 
   Args:
@@ -114,6 +115,15 @@ def diversity(list_of_smiles):
 ######## KL divergence ########
 
 def _calculate_pc_descriptors(smiles, pc_descriptors):
+    """Calculate Physical Chemical descriptors of a single SMILES (internal function). 
+
+    Args:
+      list_of_smiles: SMILES strings 
+      pc_descriptors: list of strings, names of descriptors to calculate
+
+    Returns:
+      descriptros: list of float 
+    """
     from rdkit.ML.Descriptors import MoleculeDescriptors
     calc = MoleculeDescriptors.MolecularDescriptorCalculator(pc_descriptors)
 
@@ -130,6 +140,15 @@ def _calculate_pc_descriptors(smiles, pc_descriptors):
     return _fp 
 
 def calculate_pc_descriptors(smiles, pc_descriptors):
+    """Calculate Physical Chemical descriptors of a list of molecules. 
+
+    Args:
+      list_of_smiles: list of SMILES strings 
+      pc_descriptors: list of strings, names of descriptors to calculate
+
+    Returns:
+      descriptros: list of float 
+    """
     output = []
 
     for i in smiles:
@@ -141,6 +160,15 @@ def calculate_pc_descriptors(smiles, pc_descriptors):
 
 
 def continuous_kldiv(X_baseline: np.array, X_sampled: np.array) -> float:
+    """calculate KL divergence for two numpy arrays, conitnuous version. 
+
+    Args:
+      X_baseline: numpy array
+      X_sampled: numpy array
+
+    Returns:
+      KL divergence: float 
+    """
     X_baseline += 1e-5
     X_sampled += 1e-5 
     from scipy.stats import entropy, gaussian_kde
@@ -153,6 +181,15 @@ def continuous_kldiv(X_baseline: np.array, X_sampled: np.array) -> float:
     return entropy(P, Q)
 
 def discrete_kldiv(X_baseline: np.array, X_sampled: np.array) -> float:
+    """calculate KL divergence for two numpy arrays, discrete version. 
+
+    Args:
+      X_baseline: numpy array
+      X_sampled: numpy array
+
+    Returns:
+      KL divergence: float 
+    """
     from scipy.stats import entropy
     from scipy import histogram
     P, bins = histogram(X_baseline, bins=10, density=True)
@@ -177,6 +214,14 @@ def get_fingerprints(mols, radius=2, length=4096):
 
 
 def get_mols(smiles_list):
+    """Convert SMILES strings to RDKit RDMol objects. 
+
+    Args:
+      list_of_smiles: list of SMILES strings 
+
+    Returns:
+      mols: list of RDKit RDMol objects 
+    """
     for i in smiles_list:
         try:
             mol = Chem.MolFromSmiles(i)
@@ -217,6 +262,17 @@ def calculate_internal_pairwise_similarities(smiles_list):
 
 
 def kl_divergence(generated_smiles_lst, training_smiles_lst):
+  """Evaluate the KL divergence of set of generated smiles using list of training smiles as reference. 
+  KL divergence is defined as the averaged KL divergence of a set of physical chemical descriptors 
+  between a set of generated molecules and a set of training molecules.
+
+  Args: 
+    generated_smiles_lst: list (of SMILES string), which are generated. 
+    training_smiles_lst: list (of SMILES string), which are used for training. 
+
+  Returns:
+    KL divergence: float
+  """
   pc_descriptor_subset = [
             'BertzCT',
             'MolLogP',
