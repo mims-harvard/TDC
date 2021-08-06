@@ -136,3 +136,6 @@ test.ipynb
 file_structure.ipynb
 data/
 oracle/
+
+# vim backup
+*~

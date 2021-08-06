@@ -174,7 +174,7 @@ class DataLoader3D(base_dataset.DataLoader):
 	    df (str): the dataset in pandas DataFrame format.
 	    name (str): the name of the dataset.
 	    path (str): the path to save the data file.
-	""""
+	"""
 	
 	### locally, unzip a folder, with the main file the dataframe with SMILES, Mol Object for various kinds of entities.
 	### also, for each column, contains a sdf file. 
