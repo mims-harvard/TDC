@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+"""
+This file contains the name of datasets within corresponding dataset list.
+"""
 ####################################
 # test cases
 test_single_pred_dataset_names = ['test_single_pred']
