@@ -1,3 +1,5 @@
+"""Summary
+"""
 import pandas as pd
 import numpy as np
 import os, sys, json 
@@ -15,7 +17,18 @@ from ..metadata import get_task2category, bm_metric_names, benchmark_names, bm_s
 from ..evaluator import Evaluator
 
 class BenchmarkGroup:
+
+	"""Boilerplate of benchmark group class. It downloads, processes, and loads a set of benchmark classes along with their splits. It also provides evaluators and train/valid splitters.
+	
+	Args:
+	    name (str): the name of the benchmark group class
+	    path (str, optional): the path to save/load the benchkmark group dataset
+	    file_format (str, optional): designated file format for each dataset in the benchmark group
+	"""
+	
 	def __init__(self, name, path = './data', file_format='csv'):		
+		"""create a benchmark group class object
+		"""
 		self.name = bm_group_load(name, path)
 		self.path = os.path.join(path, self.name)
 		self.datasets = benchmark_names[self.name]
@@ -27,11 +40,24 @@ class BenchmarkGroup:
 				self.dataset_names.append(dataset)
 
 	def __iter__(self):
+		"""iterator implementation to iterate over all benchmarks in the benchmark group
+		
+		Returns:
+		    BenchmarkGroup: self
+		"""
 		self.index = 0
 		self.num_datasets = len(self.dataset_names)
 		return self
 
 	def __next__(self):
+		"""iterator implementation to define the next benchmark
+		
+		Returns:
+		    dict: a dictionary of key values in a benchmark, namely the train_val file, test file and benchmark name
+		
+		Raises:
+		    StopIteration: stop when exceed the number of benchmarks
+		"""
 		if self.index < self.num_datasets:
 			dataset = self.dataset_names[self.index]
 			print_sys('--- ' + dataset + ' ---')
@@ -51,7 +77,19 @@ class BenchmarkGroup:
 			raise StopIteration
 			
 	def get_train_valid_split(self, seed, benchmark, split_type = 'default'):
+		"""obtain training and validation split given a split type from train_val file
 		
+		Args:
+		    seed (int): the random seed of the data split
+		    benchmark (str): name of the benchmark
+		    split_type (str, optional): name of the split
+		
+		Returns:
+		    pd.DataFrame: the training and validation files
+		
+		Raises:
+		    NotImplementedError: split method not implemented
+		"""
 		print_sys('generating training, validation splits...')
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
@@ -80,6 +118,14 @@ class BenchmarkGroup:
 		return out['train'], out['valid']
 
 	def get(self, benchmark):
+		"""get individual benchmark
+		
+		Args:
+		    benchmark (str): benchmark name
+		
+		Returns:
+		    dict: a dictionary of train_val, test dataframes and normalized name of the benchmark
+		"""
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		if self.file_format == 'csv':
@@ -92,7 +138,20 @@ class BenchmarkGroup:
 		return {'train_val': train, 'test': test, 'name': dataset}
 
 	def evaluate(self, pred, testing = True, benchmark = None, save_dict = True):
+		"""automatic evaluation function
 		
+		Args:
+		    pred (dict): a dictionary of benchmark name as the key and prediction array as the value
+		    testing (bool, optional): evaluate using testing set mode or validation set mode
+		    benchmark (str, optional): name of the benchmark
+		    save_dict (bool, optional): whether or not to save the evaluation result
+		
+		Returns:
+		    dict: a dictionary with key the benchmark name and value a dictionary of metrics to metric value
+		
+		Raises:
+		    ValueError: benchmark name not found
+		"""
 		if testing:
 			# test set evaluation
 			metric_dict = bm_metric_names[self.name]
@@ -131,12 +190,20 @@ class BenchmarkGroup:
 			evaluator = eval('Evaluator(name = \'' + metric_dict[data_name] + '\')')
 			return {metric_dict[data_name]: round(evaluator(true, pred), 3)}
 
-	def evaluate_many(self, preds, save_file_name = None, m1_api = None, results_individual = None):
+	def evaluate_many(self, preds, save_file_name = None, results_individual = None):
 		"""
 		:param preds: list of dict<str dataset_name: list of float>
 		:return: dict<dataset_name: [mean_metric_result, std_metric_result]
-
+		
 		This function returns the data in a format needed to submit to the Leaderboard
+		
+		Args:
+		    preds (list of dict): list of dictionary of predictions, each item is the input to the evaluate function.
+		    save_file_name (str, optional): file name to save the result
+		    results_individual (list of dictionary, optional): if you already have results generated for each run, simply input here so that this function won't call the evaluation function again 
+		
+		Returns:
+		    dict: a dictionary where key is the benchmark name and value is another dictionary where the key is the metric name and value is a list [mean, std].
 		"""
 		min_requirement = 5
 
