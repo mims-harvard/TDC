@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Summary
-"""
 # Author: TDC Team
 # License: MIT
+"""
+This file contains a base data loader object that specific one can inherit from. 
+"""
 
 import pandas as pd
 import numpy as np
