@@ -12,7 +12,7 @@ from ..metadata import dataset_names
 
 class Tox(single_pred_dataset.DataLoader):
 
-    """Data loader class to load datasets in Tox task. More info: https://tdcommons.ai/single_pred_tasks/tox/
+    """Data loader class to load datasets in Tox (Toxicity Prediction) task. More info: https://tdcommons.ai/single_pred_tasks/tox/
 
     Args:
         name (str): the dataset name.
@@ -27,7 +27,7 @@ class Tox(single_pred_dataset.DataLoader):
     """
     
     def __init__(self, name, path='./data', label_name=None, print_stats=False, convert_format=None):
-        """Create a Tox dataloader object.
+        """Create a Tox (Toxicity Prediction) dataloader object.
         """
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["Toxicity"], convert_format = convert_format)

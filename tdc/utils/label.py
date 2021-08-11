@@ -1,4 +1,4 @@
-"""Summary
+"""Utilities functions for transform labels
 """
 import numpy as np
 import pandas as pd

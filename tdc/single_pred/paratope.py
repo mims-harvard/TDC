@@ -12,7 +12,7 @@ from ..metadata import dataset_names
 
 class Paratope(single_pred_dataset.DataLoader):
 
-    """Data loader class to load datasets in Paratope task. More info: https://tdcommons.ai/single_pred_tasks/paratope/
+    """Data loader class to load datasets in Paratope Prediction task. More info: https://tdcommons.ai/single_pred_tasks/paratope/
 
     Args:
         name (str): the dataset name.
@@ -27,7 +27,7 @@ class Paratope(single_pred_dataset.DataLoader):
     """
 
     def __init__(self, name, path='./data', label_name=None, print_stats=False, convert_format=None):
-        """Create a paratope dataloader object.
+        """Create a paratope prediction dataloader object.
         """
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["Paratope"], convert_format = convert_format)

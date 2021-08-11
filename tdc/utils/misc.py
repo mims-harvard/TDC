@@ -1,4 +1,4 @@
-"""Summary
+"""miscellaneous utilities functions
 """
 import os, sys
 import numpy as np
@@ -9,17 +9,17 @@ from fuzzywuzzy import fuzz
 
 
 def fuzzy_search(name, dataset_names):
-	"""Summary
+	"""fuzzy matching between the real dataset name and the input name
 	
 	Args:
-	    name (TYPE): Description
-	    dataset_names (TYPE): Description
+	    name (str): input dataset name given by users
+	    dataset_names (str): the exact dataset name in TDC
 	
 	Returns:
-	    TYPE: Description
+	    s: the real dataset name
 	
 	Raises:
-	    ValueError: Description
+	    ValueError: the wrong task name, no name is matched
 	"""
 	name = name.lower()
 	if name[:4] == 'tdc.':
