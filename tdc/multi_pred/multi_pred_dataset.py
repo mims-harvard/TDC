@@ -12,6 +12,18 @@ from ..utils import dataset2target_lists, \
 					create_combination_split
 
 class DataLoader(base_dataset.DataLoader):
+	"""A base data loader class that each multi-instance prediction task dataloader class can inherit from.
+    
+    Args:
+        name (str): name of dataloader 
+        path (str): the path where data is saved
+        label_name (TYPE): Description
+        print_stats (bool): whether to print statistics of dataset
+        dataset_names (str): A list of dataset names available for a task 
+        
+	"""
+
+
 	def __init__(self, name, path, print_stats, dataset_names):
 		"""create dataloader object 
 		"""
@@ -26,7 +38,17 @@ class DataLoader(base_dataset.DataLoader):
 		self.path = path
 
 	def get_data(self, format = 'df'):
-		"""get the data in given format, e.g., dataframe, dictionary. 
+		"""generate data in some format, e.g., pandas.DataFrame
+        
+        Args:
+            format (str, optional): 
+                format of data, the default value is 'df' (DataFrame)
+        
+        Returns:
+            pandas DataFrame/dict: a dataframe of a dataset/a dictionary for key information in the dataset
+        
+        Raises:
+            AttributeError: Use the correct format input (df, dict, DeepPurpose)
 		"""
 		if format == 'df':
 			return self.df
