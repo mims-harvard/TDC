@@ -18,18 +18,20 @@ from ..utils import dataset2target_lists, \
 class DataLoader(base_dataset.DataLoader):
 	"""A base data loader class that each multi-instance prediction task dataloader class can inherit from.
     
-    Args:
-        name (str): name of dataloader 
-        path (str): the path where data is saved
-        label_name (TYPE): Description
-        print_stats (bool): whether to print statistics of dataset
-        dataset_names (str): A list of dataset names available for a task 
+    Attributes: TODO
         
 	"""
 
 
 	def __init__(self, name, path, print_stats, dataset_names):
-		"""create dataloader object 
+		"""create dataloader object
+
+		Args:
+			name (str): name of dataloader 
+			path (str): the path where data is saved
+			label_name (str): name of label
+			print_stats (bool): whether to print statistics of dataset
+			dataset_names (str): A list of dataset names available for a task  
 		"""
 		if name.lower() in dataset2target_lists.keys():
 			if label_name is None:
@@ -70,6 +72,22 @@ class DataLoader(base_dataset.DataLoader):
 
 	def get_split(self, method = 'random', seed = 42, frac = [0.7, 0.1, 0.2], column_name = None):
 		"""split dataset into train/validation/test. 
+
+        Args:
+            method (str, optional): 
+                split method, the default value is 'random'
+            seed (int, optional): 
+                random seed, defaults to '42'
+            frac (list, optional): 
+                train/val/test split fractions, defaults to '[0.7, 0.1, 0.2]'
+            column_name (None, optional): Description
+        
+        Returns:
+            dict: a dictionary with three keys ('train', 'valid', 'test'), each value is a pandas dataframe object of the splitted dataset 
+        
+        Raises:
+            AttributeError: the input split method is not available. 
+
 		"""
 		df = self.get_data(format = 'df')
 

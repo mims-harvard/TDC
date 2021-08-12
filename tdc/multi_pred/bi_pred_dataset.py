@@ -24,18 +24,19 @@ class DataLoader(base_dataset.DataLoader):
 
     """A base data loader class that each bi-instance prediction task dataloader class can inherit from.
     
-    Args:
-        name (str): name of dataloader 
-        path (str): the path where data is saved
-        label_name (TYPE): Description
-        print_stats (bool): whether to print statistics of dataset
-        dataset_names (str): A list of dataset names available for a task 
+    Attributes: TODO
         
     """
     
     def __init__(self, name, path, label_name, print_stats, dataset_names):
         """Create a base dataloader object that each multi-instance prediction task dataloader class can inherit from.
-        
+           
+        Args:
+            name (str): name of dataloader 
+            path (str): the path where data is saved
+            label_name (str): name of label
+            print_stats (bool): whether to print statistics of dataset
+            dataset_names (str): A list of dataset names available for a task 
 
         Raises:
             ValueError: label name is not available
@@ -203,7 +204,7 @@ class DataLoader(base_dataset.DataLoader):
 
     def to_graph(self, threshold=None, format='edge_list', split=True,
                  frac=[0.7, 0.1, 0.2], seed=42, order='descending'):
-        """Summary
+        """Summary TODO
         
         Args:
             threshold (float, optional): threshold to binarize the data. 

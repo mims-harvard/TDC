@@ -22,14 +22,17 @@ class BenchmarkGroup:
 
 	"""Boilerplate of benchmark group class. It downloads, processes, and loads a set of benchmark classes along with their splits. It also provides evaluators and train/valid splitters.
 	
-	Args:
-	    name (str): the name of the benchmark group class
-	    path (str, optional): the path to save/load the benchkmark group dataset
-	    file_format (str, optional): designated file format for each dataset in the benchmark group
+	Attributes: TODO
 	"""
 	
 	def __init__(self, name, path = './data', file_format='csv'):		
 		"""create a benchmark group class object
+
+		Args:
+			name (str): the name of the benchmark group class
+			path (str, optional): the path to save/load the benchkmark group dataset
+			file_format (str, optional): designated file format for each dataset in the benchmark group
+
 		"""
 		self.name = bm_group_load(name, path)
 		self.path = os.path.join(path, self.name)
@@ -194,9 +197,6 @@ class BenchmarkGroup:
 
 	def evaluate_many(self, preds, save_file_name = None, results_individual = None):
 		"""
-		:param preds: list of dict<str dataset_name: list of float>
-		:return: dict<dataset_name: [mean_metric_result, std_metric_result]
-		
 		This function returns the data in a format needed to submit to the Leaderboard
 		
 		Args:
