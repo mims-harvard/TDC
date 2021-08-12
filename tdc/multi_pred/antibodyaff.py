@@ -1,5 +1,7 @@
-"""Data loader class for Antibody-antigen Affinity Prediction task. 
-"""
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
 import warnings
 warnings.filterwarnings("ignore")
 import sys

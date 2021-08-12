@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
 from .base_group import BenchmarkGroup
 
 class admet_group(BenchmarkGroup):

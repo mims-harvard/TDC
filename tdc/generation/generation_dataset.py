@@ -1,5 +1,7 @@
-"""Summary
-"""
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
 import pandas as pd
 import numpy as np
 import os, sys, json 

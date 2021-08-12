@@ -1,5 +1,7 @@
-"""Data loader class for Drug Response Prediction Task. 
-"""
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
 import warnings
 warnings.filterwarnings("ignore")
 import sys
