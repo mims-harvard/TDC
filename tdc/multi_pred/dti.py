@@ -1,4 +1,4 @@
-"""Summary
+"""Data loader class for Drug-Target Interaction Prediction task. 
 """
 import warnings
 warnings.filterwarnings("ignore")

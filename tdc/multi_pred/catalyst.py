@@ -1,4 +1,4 @@
-"""Summary
+"""Data loader class for Catalyst Prediction task
 """
 import warnings
 warnings.filterwarnings("ignore")

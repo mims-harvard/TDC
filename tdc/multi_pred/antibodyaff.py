@@ -1,4 +1,4 @@
-"""Summary
+"""Data loader class for Antibody-antigen Affinity Prediction task. 
 """
 import warnings
 warnings.filterwarnings("ignore")

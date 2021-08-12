@@ -1,4 +1,4 @@
-"""Summary
+"""base data loader class for bi-instance prediction task
 """
 import pandas as pd
 import numpy as np

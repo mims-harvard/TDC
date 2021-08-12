@@ -1,4 +1,4 @@
-"""Summary
+"""Data loader class for Drug Response Prediction Task. 
 """
 import warnings
 warnings.filterwarnings("ignore")
