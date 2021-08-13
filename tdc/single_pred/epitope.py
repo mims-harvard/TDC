@@ -12,7 +12,7 @@ from ..metadata import dataset_names
 
 class Epitope(single_pred_dataset.DataLoader):
     
-    """Data loader class to load datasets in Epitope task. More info: https://tdcommons.ai/single_pred_tasks/epitope/
+    """Data loader class to load datasets in Epitope Prediction task. More info: https://tdcommons.ai/single_pred_tasks/epitope/
 
     Args:
         name (str): the dataset name.
@@ -27,7 +27,7 @@ class Epitope(single_pred_dataset.DataLoader):
     """
 
     def __init__(self, name, path='./data', label_name=None, print_stats=False, convert_format=None):
-        """Create an Epitope dataloader object.
+        """Create an Epitope prediction dataloader object.
         """
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["Epitope"], convert_format = convert_format)

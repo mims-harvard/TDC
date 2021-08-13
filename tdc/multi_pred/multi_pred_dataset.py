@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
 import pandas as pd
 import numpy as np
 import os, sys, json 
@@ -12,8 +16,22 @@ from ..utils import dataset2target_lists, \
 					create_combination_split
 
 class DataLoader(base_dataset.DataLoader):
+	"""A base data loader class that each multi-instance prediction task dataloader class can inherit from.
+    
+    Attributes: TODO
+        
+	"""
+
+
 	def __init__(self, name, path, print_stats, dataset_names):
-		"""create dataloader object 
+		"""create dataloader object
+
+		Args:
+			name (str): name of dataloader 
+			path (str): the path where data is saved
+			label_name (str): name of label
+			print_stats (bool): whether to print statistics of dataset
+			dataset_names (str): A list of dataset names available for a task  
 		"""
 		if name.lower() in dataset2target_lists.keys():
 			if label_name is None:
@@ -26,7 +44,17 @@ class DataLoader(base_dataset.DataLoader):
 		self.path = path
 
 	def get_data(self, format = 'df'):
-		"""get the data in given format, e.g., dataframe, dictionary. 
+		"""generate data in some format, e.g., pandas.DataFrame
+        
+        Args:
+            format (str, optional): 
+                format of data, the default value is 'df' (DataFrame)
+        
+        Returns:
+            pandas DataFrame/dict: a dataframe of a dataset/a dictionary for key information in the dataset
+        
+        Raises:
+            AttributeError: Use the correct format input (df, dict, DeepPurpose)
 		"""
 		if format == 'df':
 			return self.df
@@ -44,6 +72,22 @@ class DataLoader(base_dataset.DataLoader):
 
 	def get_split(self, method = 'random', seed = 42, frac = [0.7, 0.1, 0.2], column_name = None):
 		"""split dataset into train/validation/test. 
+
+        Args:
+            method (str, optional): 
+                split method, the default value is 'random'
+            seed (int, optional): 
+                random seed, defaults to '42'
+            frac (list, optional): 
+                train/val/test split fractions, defaults to '[0.7, 0.1, 0.2]'
+            column_name (None, optional): Description
+        
+        Returns:
+            dict: a dictionary with three keys ('train', 'valid', 'test'), each value is a pandas dataframe object of the splitted dataset 
+        
+        Raises:
+            AttributeError: the input split method is not available. 
+
 		"""
 		df = self.get_data(format = 'df')
 

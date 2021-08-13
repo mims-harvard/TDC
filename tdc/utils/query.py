@@ -1,4 +1,4 @@
-"""Summary
+"""Utilities functions for query  
 """
 import json
 import os, sys

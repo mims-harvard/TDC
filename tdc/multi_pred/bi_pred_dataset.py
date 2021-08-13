@@ -1,5 +1,7 @@
-"""Summary
-"""
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
 import pandas as pd
 import numpy as np
 import os, sys, json 
@@ -20,23 +22,24 @@ from ..utils import dataset2target_lists, \
 
 class DataLoader(base_dataset.DataLoader):
 
-    """Summary
+    """A base data loader class that each bi-instance prediction task dataloader class can inherit from.
     
-    Args:
-        name (str): name of dataloader 
-        path (str): the path where data is saved
-        label_name (TYPE): Description
-        print_stats (bool): whether to print statistics of dataset
-        dataset_names (str): dataset's name
+    Attributes: TODO
         
     """
     
     def __init__(self, name, path, label_name, print_stats, dataset_names):
-        """Create dataloader object. 
-        
+        """Create a base dataloader object that each multi-instance prediction task dataloader class can inherit from.
+           
+        Args:
+            name (str): name of dataloader 
+            path (str): the path where data is saved
+            label_name (str): name of label
+            print_stats (bool): whether to print statistics of dataset
+            dataset_names (str): A list of dataset names available for a task 
 
         Raises:
-            ValueError: Description
+            ValueError: label name is not available
         """
         if name.lower() in dataset2target_lists.keys():
             # print_sys("Tip: Use tdc.utils.retrieve_label_name_list(
@@ -75,17 +78,17 @@ class DataLoader(base_dataset.DataLoader):
         self.two_types = False
 
     def get_data(self, format='df'):
-        """Summary
+        """generate data in some format, e.g., pandas.DataFrame
         
         Args:
             format (str, optional): 
                 format of data, the default value is 'df' (DataFrame)
         
         Returns:
-            TYPE: Description
+            pandas DataFrame/dict: a dataframe of a dataset/a dictionary for key information in the dataset
         
         Raises:
-            AttributeError: Description
+            AttributeError: Use the correct format input (df, dict, DeepPurpose)
         """
         if format == 'df':
             if self.aux_column is None:
@@ -141,20 +144,18 @@ class DataLoader(base_dataset.DataLoader):
             method (str, optional): 
                 split method, the default value is 'random'
             seed (int, optional): 
-                random seed, the default value is 42
+                random seed, defaults to '42'
             frac (list, optional): 
-                the fraction of each split (train/validation/test),
-                the sum of all the element is 1, 
-                the default value is [0.7, 0.1, 0.2]
+                train/val/test split fractions, defaults to '[0.7, 0.1, 0.2]'
             column_name (None, optional): Description
             time_column (None, optional): Description
         
         Returns:
-            TYPE: Description
+            dict: a dictionary with three keys ('train', 'valid', 'test'), each value is a pandas dataframe object of the splitted dataset 
         
         Raises:
-            AttributeError: Description
-            ValueError: Description
+            AttributeError: the input split method is not available. 
+
         """
         df = self.get_data(format='df')
 
@@ -183,10 +184,10 @@ class DataLoader(base_dataset.DataLoader):
         """negative sampling 
         
         Args:
-            frac (int, optional): Description
+            frac (int, optional): the ratio between negative and positive samples. 
         
         Returns:
-            TYPE: Description
+            DataLoader, the class itself. 
         """
         df = NegSample(df=self.get_data(format='df'),
                        column_names=[self.entity1_name + '_ID',
@@ -203,22 +204,22 @@ class DataLoader(base_dataset.DataLoader):
 
     def to_graph(self, threshold=None, format='edge_list', split=True,
                  frac=[0.7, 0.1, 0.2], seed=42, order='descending'):
-        """Summary
+        """Summary TODO
         
         Args:
-            threshold (None, optional): Description
-            format (str, optional): Description
-            split (bool, optional): Description
-            frac (list, optional): Description
-            seed (int, optional): Description
-            order (str, optional): Description
-        
+            threshold (float, optional): threshold to binarize the data. 
+            format (str, optional): format of data, defaults to 'edge_list'
+            split (bool, optional): if we need to split data into train/valid/test. 
+            frac (list, optional):  train/val/test split fractions, defaults to '[0.7, 0.1, 0.2]'
+            seed (int, optional):  random seed, defaults to '42'
+            order (str, optional): order of label transform 
+
         Returns:
-            TYPE: Description
+            dict: a dictionary for key information in the dataset
         
         Raises:
-            AttributeError: Description
-            ImportError: Description
+            AttributeError: the threshold is not available. 
+            ImportError: install the required package
         """
         df = self.get_data(format='df')
 

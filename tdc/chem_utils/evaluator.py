@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
 import numpy as np 
 import os 
 

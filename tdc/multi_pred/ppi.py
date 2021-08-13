@@ -1,5 +1,7 @@
-"""Summary
-"""
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
 import warnings
 warnings.filterwarnings("ignore")
 import sys

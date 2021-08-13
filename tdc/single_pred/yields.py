@@ -12,7 +12,7 @@ from ..metadata import dataset_names
 
 class Yields(single_pred_dataset.DataLoader):
     
-    """Data loader class to load datasets in Yields task. More info: https://tdcommons.ai/single_pred_tasks/yields/
+    """Data loader class to load datasets in Yields (Reaction Yields Prediction) task. More info: https://tdcommons.ai/single_pred_tasks/yields/
 
     Args:
         name (str): the dataset name.
@@ -27,7 +27,7 @@ class Yields(single_pred_dataset.DataLoader):
     """
     
     def __init__(self, name, path='./data', label_name=None, print_stats=False, convert_format=None):
-        """Create Yields dataloader object.
+        """Create Yields (Reaction Yields Prediction) dataloader object.
         """
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["Yields"], convert_format = convert_format)

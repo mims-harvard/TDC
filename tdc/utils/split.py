@@ -1,4 +1,4 @@
-"""Summary
+"""Utilities functions for splitting dataset 
 """
 import os, sys
 import numpy as np

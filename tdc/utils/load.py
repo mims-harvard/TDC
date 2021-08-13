@@ -1,4 +1,4 @@
-"""Summary
+"""wrapper for download various dataset 
 """
 import requests
 from zipfile import ZipFile 
@@ -347,7 +347,7 @@ def oracle_load(name, path = './oracle', oracle_names = oracle_names):
 	
 	Args:
 	    name (str): the rough oracle name
-	    path (str): the oracle path to save/retrieve
+	    path (str): the oracle path to save/retrieve, defaults to './oracle'
 	    dataset_names (list): a list of availabel exact oracle names
 	
 	Returns:

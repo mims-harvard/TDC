@@ -1,4 +1,4 @@
-"""Summary
+"""miscellaneous utilities functions
 """
 import os, sys
 import numpy as np
@@ -9,17 +9,17 @@ from fuzzywuzzy import fuzz
 
 
 def fuzzy_search(name, dataset_names):
-	"""fuzzy search dataset names. The user can input a rough dataset name and this function finds the closest match
+	"""fuzzy matching between the real dataset name and the input name
 	
 	Args:
-	    name (str): the query dataset name
-	    dataset_names (list): the set of candidate dataset names to be matched
+	    name (str): input dataset name given by users
+	    dataset_names (str): the exact dataset name in TDC
 	
 	Returns:
-	    str: the normalized closest matched dataset name
+	    s: the real dataset name
 	
 	Raises:
-	    ValueError: no close match found
+	    ValueError: the wrong task name, no name is matched
 	"""
 	name = name.lower()
 	if name[:4] == 'tdc.':
