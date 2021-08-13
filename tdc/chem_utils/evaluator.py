@@ -417,10 +417,3 @@ def fcd_distance(generated_smiles_lst, training_smiles_lst):
       raise ImportError("Please install fcd by 'pip install FCD' (for Tensorflow backend) \
                                             or 'pip install fcd_torch' (for PyTorch backend)!")
   return fcd_distance_tf(generated_smiles_lst, training_smiles_lst)
-
-
-
-
-
-
-

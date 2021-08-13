@@ -9,17 +9,17 @@ from fuzzywuzzy import fuzz
 
 
 def fuzzy_search(name, dataset_names):
-	"""Summary
+	"""fuzzy search dataset names. The user can input a rough dataset name and this function finds the closest match
 	
 	Args:
-	    name (TYPE): Description
-	    dataset_names (TYPE): Description
+	    name (str): the query dataset name
+	    dataset_names (list): the set of candidate dataset names to be matched
 	
 	Returns:
-	    TYPE: Description
+	    str: the normalized closest matched dataset name
 	
 	Raises:
-	    ValueError: Description
+	    ValueError: no close match found
 	"""
 	name = name.lower()
 	if name[:4] == 'tdc.':

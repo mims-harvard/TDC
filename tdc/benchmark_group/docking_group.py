@@ -1,3 +1,5 @@
+"""Docking Benchmark Group
+"""
 import pandas as pd
 import numpy as np
 import os, sys, json 
@@ -10,7 +12,25 @@ from ..metadata import get_task2category, bm_metric_names, benchmark_names, bm_s
 from ..evaluator import Evaluator
 
 class docking_group(BenchmarkGroup):
+
+	"""Create a docking group benchmark loader.
+	
+	Args:
+	    path (str, optional): the folder path to save/load the benchmarks.
+	    pyscreener_path (str, optional): the path to pyscreener repository in order to call docking scores.
+	    num_workers (int, optional): number of workers to parallelize dockings 
+	    num_cpus (int, optional): number of CPUs assigned to docking
+	    num_max_call (int, optional): maximum number of oracle calls
+
+	
+	"""
+	
 	def __init__(self, path = './data', pyscreener_path = None, num_workers = None, num_cpus = None, num_max_call = 5000):
+		"""Create a docking group benchmark loader.
+
+		Raises:
+		    ValueError: missing path to pyscreener.
+		"""
 		super().__init__(name = 'Docking_Group', path = path, file_format = 'oracle')
 
 		if pyscreener_path is not None:
@@ -33,11 +53,24 @@ class docking_group(BenchmarkGroup):
 		from ..oracles import Oracle
 
 	def __iter__(self):
+		"""iterate docking targets
+		
+		Returns:
+		    docking_group: the docking group class itself
+		"""
 		self.index = 0
 		self.num_datasets = len(self.dataset_names)
 		return self
 
 	def __next__(self):
+		"""retrieve the next benchmark
+		
+		Returns:
+		    dict: a dictionary of oracle function, molecule library dataset, and the name of docking target
+		
+		Raises:
+		    StopIteration: stop when all benchmarks are obtained.
+		"""
 		if self.index < self.num_datasets:
 			dataset = self.dataset_names[self.index]
 			print_sys('--- ' + dataset + ' ---')
@@ -61,9 +94,23 @@ class docking_group(BenchmarkGroup):
 			raise StopIteration
 
 	def get_train_valid_split(self, seed, benchmark, split_type = 'default'):
+		"""no split for docking group
+		
+		Raises:
+		    ValueError: no split for docking group
+		"""
 		raise ValueError("Docking molecule generation does not have the concept of training/testing split! Checkout the usage in tdcommons.ai !")
 
 	def get(self, benchmark, num_max_call = 5000):
+		"""retrieve one benchmark given benchmark name (docking target)
+		
+		Args:
+		    benchmark (str): the name of the benchmark
+		    num_max_call (int, optional): maximum of oracle calls
+		
+		Returns:
+		    dict: a dictionary of oracle function, molecule library dataset, and the name of docking target
+		"""
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
 		target_pdb_file = os.path.join(self.path, dataset + '.pdb')
@@ -77,8 +124,21 @@ class docking_group(BenchmarkGroup):
 		data = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
 		return {'oracle': oracle, 'data': data, 'name': dataset}
 
-	def evaluate(self, pred, true = None, benchmark = None, m1_api = None, save_dict = True):
-
+	def evaluate(self, pred, benchmark = None, m1_api = None, save_dict = True):
+		"""Summary
+		
+		Args:
+		    pred (dict): a nested dictionary, where the first level key is the docking target, the value is another dictionary where the key is the maximum oracle calls, and value can have two options. One, a dictionary of SMILES paired up with the docking scores and Second, a list of SMILES strings, where the function will generate the docking scores automatically. 
+		    benchmark (str, optional): name of the benchmark docking target.
+		    m1_api (str, optional): API token of Molecule.One. This is to use M1 service to generate synthesis score. 
+		    save_dict (bool, optional): whether or not to save the results.
+		
+		Returns:
+		    dict: result with all realistic metrics generated
+		
+		Raises:
+		    ValueError: Description
+		"""
 		results_all = {}
 
 		for data_name, pred_all in pred.items():
@@ -169,6 +229,17 @@ class docking_group(BenchmarkGroup):
 		return results_all
 
 	def evaluate_many(self, preds, save_file_name = None, m1_api = None, results_individual = None):
+		"""evaluate many runs together and output submission ready pkl file.
+		
+		Args:
+		    preds (list): a list of pred across runs, where each follows the format of pred in 'evaluate' function.
+		    save_file_name (str, optional): the name of the file to save the result.
+		    m1_api (str, optional): m1 API token for molecule synthesis score.
+		    results_individual (list, optional): if you already have generated the result from the evaluate function for each run, simply put in a list and it will not regenerate the results.
+		
+		Returns:
+		    dict: the output result file.
+		"""
 		min_requirement = 3
 		if len(preds) < min_requirement:
 			return ValueError("Must have predictions from at least " + str(min_requirement) + " runs for leaderboard submission")

@@ -1,4 +1,4 @@
-"""Summary
+"""Base benchmark group.
 """
 import pandas as pd
 import numpy as np
