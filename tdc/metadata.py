@@ -15,6 +15,7 @@ toxicity_dataset_names = ['tox21', 'clintox', 'herg', 'dili', 'skin_reaction', '
 
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
+ 'hydrationfreeenergy_freesolv',
  'caco2_wang',
  'hia_hou',
  'pgp_broccatelli',
