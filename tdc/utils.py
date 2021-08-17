@@ -670,12 +670,12 @@ def NegSample(df, column_names, frac, two_types):
 				neg_set.add(sample)
 		neg_list = [list(i) for i in neg_set]
 
-		id2seq1 = dict(df_temp[[id1, x1]].values)
-		id2seq2 = dict(df_temp[[id2, x2]].values)
+		id2seq1 = dict(df[[id1, x1]].values)
+		id2seq2 = dict(df[[id2, x2]].values)
 
 		neg_list_val = []
 		for i in neg_list:
-			neg_list_val.append([i[0], id2seq[i[0]], i[1], id2seq[i[1]], 0])
+			neg_list_val.append([i[0], id2seq1[i[0]], i[1], id2seq2[i[1]], 0])
 
 		df = df.append(pd.DataFrame(neg_list_val).rename(columns = {0: id1, 1: x1, 2: id2, 3: x2, 4: 'Y'})).reset_index(drop = True)
 		return df
