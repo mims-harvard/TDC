@@ -1304,15 +1304,15 @@ class docking_meta:
       
 
     """
-    def __init__(self, software_calss='vina', pyscreener_path = './pyscreener', **kwargs):
+    def __init__(self, software_class='vina', pyscreener_path = './pyscreener', **kwargs):
         import sys
         sys.path.append(pyscreener_path)
-        if software_calss == 'vina':
+        if software_class == 'vina':
             from pyscreener.docking.vina import Vina as screener
-        elif software_calss == 'dock6':
+        elif software_class == 'dock6':
             from pyscreener.docking.dock import DOCK as screener
         else:
-            raise ValueError("The value of software_calss is not implemented. Currently available:['vina', 'dock6']")
+            raise ValueError("The value of software_class is not implemented. Currently available:['vina', 'dock6']")
 
         self.scorer = screener(**kwargs)
 
@@ -1330,3 +1330,43 @@ class docking_meta:
               score = 0.0 
             score_lst.append(score)
           return score_lst
+
+
+class docking_3d:
+    """Evaluate docking score for conformer 
+    
+
+    """
+    def __init__(self, receptor_pdbqt_file, center, box_size):
+      try:
+        from vina import Vina
+      except:
+        raise ImportError("Please install vina following guidance in https://github.com/ccsb-scripps/AutoDock-Vina/tree/develop/build/python")
+
+      self.v = Vina(sf_name='vina') 
+      self.receptor_pdbqt_file = receptor_pdbqt_file 
+      self.center = center 
+      self.box_size = box_size 
+      self.v.set_receptor(rigid_pdbqt_filename=receptor_pdbqt_file)
+
+
+
+    def __call__(self, ligand_pdbqt_file):
+      try:
+        self.v.set_ligand_from_file(ligand_pdbqt_file)
+        self.v.compute_vina_maps(center=self.center, box_size=self.box_size)
+        energy = self.v.score()
+        energy_minimized = self.v.optimize()
+      except:
+        return np.inf 
+      return energy_minimized[0]
+
+
+
+
+
+
+
+
+
+
