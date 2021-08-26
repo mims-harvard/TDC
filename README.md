@@ -11,7 +11,7 @@
 [![Build Status](https://travis-ci.org/mims-harvard/TDC.svg?branch=master)](https://travis-ci.org/mims-harvard/TDC)
 [![TDC CircleCI](https://circleci.com/gh/mims-harvard/TDC.svg?style=svg)](https://app.circleci.com/pipelines/github/mims-harvard/TDC)
 
-[**Project Website**](https://tdcommons.ai) | [**Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
+[**Website**](https://tdcommons.ai) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
 **Therapeutics Data Commons (TDC)** is the first unifying framework to systematically access and evaluate machine learning across the entire range of therapeutics.
 
@@ -23,6 +23,7 @@ TDC is an open-source initiative. To get involved, check out the [Contribution G
 
 
 ## Updates
+- TDC paper is accepted to [NeurIPS 2021 Datasets and Benchmarks](https://openreview.net/pdf?id=8nvgnORnoWr)
 - `0.2.0`: Release docking molecule generation benchmark! Checkout [here](https://tdcommons.ai/benchmark/docking_group/overview/)!
 - `0.1.9`: Support molecule filters! Checkout [here](https://tdcommons.ai//functions/data_process/#molecule-filters)!
 - `0.1.8`: Streamlined and simplified the leaderboard programming frameworks! Now, you can submit a result for a single dataset! Checkout [here](https://tdcommons.ai/benchmark/overview/)!
@@ -90,7 +91,7 @@ conda install -c conda-forge pytdc
 
 ## Tutorials
 
-We provide a series of tutorials for you to get started using TDC:
+We provide many tutorials to get started with TDC:
 
 | Name  | Description                                             |
 |-------|---------------------------------------------------------|
@@ -123,7 +124,7 @@ Finally, in the third tier of TDC, each task is instantiated via multiple datase
 
 ## TDC Data Loaders
 
-TDC provides a collection of workflows with intuitive, high-level APIs for both beginners and experts to create machine learning models in Python. Building off the modularized "Problem--Learning Task--Data Set" structure (see above) in TDC, we provide a three-layer API to access any learning task and dataset. This hierarchical API design allows us to easily incorporate new tasks and datasets.
+TDC provides a collection of workflows with intuitive, high-level APIs for both beginners and experts to create machine learning models in Python. Building off the modularized "Problem -- Learning Task -- Data Set" structure (see above) in TDC, we provide a three-layer API to access any learning task and dataset. This hierarchical API design allows us to easily incorporate new tasks and datasets.
 
 For a concrete example, to obtain the HIA dataset from ADME therapeutic learning task in the single-instance prediction problem:
 
@@ -136,7 +137,7 @@ split = data.get_split(method = 'scaffold')
 data.get_data(format = 'df')
 ```
 
-You can see all the datasets belonging to a task via:
+You can see all the datasets that belong to a task as follows:
 
 ```python
 from tdc.utils import retrieve_dataset_names
@@ -147,7 +148,7 @@ See all therapeutic tasks and datasets on the [TDC website](https://zitniklab.hm
 
 ## TDC Data Functions
 
-#### Data Split
+#### Dataset Splits
 
 To retrieve the training/validation/test dataset split, you could simply type
 ```python 
@@ -157,7 +158,7 @@ data.get_split(seed = 42)
 ```
 You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'scaffold', seed = 1, frac = [0.7, 0.1, 0.2])`. Check out the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) on the website for details.
 
-#### Model Evaluation
+#### Strategies for Model Evaluation
 
 We provide various evaluation metrics for the tasks in TDC, which are described in [model evaluation page](https://zitniklab.hms.harvard.edu/TDC/functions/data_evaluation/) on the website. For example, to use metric ROC-AUC, you could simply type
 
@@ -169,7 +170,7 @@ score = evaluator(y_true, y_pred)
 
 #### Data Processing 
 
-We provide numerous data processing helper functions such as label transformation, data balancing, pair data to PyG/DGL graphs, negative sampling, database querying and so on. For individual function usage, please checkout the [data processing page](https://zitniklab.hms.harvard.edu/TDC/functions/data_process/) on the website.
+TDC provides numerous data processing functions, including label transformation, data balancing, pair data to PyG/DGL graphs, negative sampling, database querying and so on. For function usage, see our [data processing page](https://zitniklab.hms.harvard.edu/TDC/functions/data_process/) on the TDC website.
 
 #### Molecule Generation Oracles
 
@@ -188,7 +189,7 @@ oracle(['CC(C)(C)....'
 
 ## TDC Leaderboards
 
-Each dataset in TDC is a benchmark, and we provide training/validation and test sets for it, together with data splits and performance evaluation metrics. To participate in the leaderboard for a specific benchmark, follow these steps:
+Every dataset in TDC is a benchmark, and we provide training/validation and test sets for it, together with data splits and performance evaluation metrics. To participate in the leaderboard for a specific benchmark, follow these steps:
 
 * Use the TDC benchmark data loader to retrieve the benchmark.
 
@@ -198,7 +199,7 @@ Each dataset in TDC is a benchmark, and we provide training/validation and test 
 
 * Submit the test set performance to a TDC leaderboard.
 
-As many datasets share a therapeutics theme, we organize specific benchmarks into meaningfully defined groups, referred to as benchmark groups. Datasets and tasks within a benchmark group are carefully curated and centered around a theme (for example, prediction of ADMET properties). While each benchmark group consists of multiple benchmarks, you can submit each dataset/benchmark result separately. Here is the code framework to access the benchmarks:
+As many datasets share a therapeutics theme, we organize benchmarks into meaningfully defined groups, which we refer to as benchmark groups. Datasets and tasks within a benchmark group are carefully curated and centered around a theme (for example, TDC contains a benchmark group to support ML predictions of the ADMET properties). While every benchmark group consists of multiple benchmarks, it is possible to separately submit results for each benchmark in the group. Here is the code framework to access the benchmarks:
 
 ```python
 from tdc import BenchmarkGroup
@@ -230,20 +231,21 @@ For more information, please visit [here](https://tdcommons.ai/benchmark/overvie
 
 ## Cite Us
 
-If you found our work useful, please cite us:
+If you find Therapeutics Data Commons useful, consider citing our NeurIPS publication:
 
 ```
-@article{tdc,
-  title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Therapeutics},
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
-  journal={arXiv preprint arXiv:2102.09548},
+@article{Huang2021tdc,
+  title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development},
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
+          Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
+  journal={Proceedings of Neural Information Processing Systems, NeurIPS Datasets and Benchmarks},
   year={2021}
 }
 ```
 
 ## Contribute
 
-TDC is an open-source community-driven effort. If you want to get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw) and checkout the [contribution guide](CONTRIBUTE.md)!
+TDC is a community-driven and open-science initiative. If you want to get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw) and checkout the [contribution guide](CONTRIBUTE.md)!
 
 ## Contact
 
@@ -251,7 +253,7 @@ Send emails to [us](mailto:contact@tdcommons.ai) or open an issue.
 
 ## Data Server Maintenance Issues
 
-TDC is hosted in [Harvard Dataverse](https://dataverse.harvard.edu/). When dataverse is under maintenance, TDC will not able to retrieve datasets. Although rare, when it happens, please come back in couple of hours or check the status by visiting the [dataverse website](https://dataverse.harvard.edu/).
+TDC is hosted on [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/21LKWG) with the following persistent identifier [https://doi.org/10.7910/DVN/21LKWG](https://doi.org/10.7910/DVN/21LKWG). When Dataverse is under maintenance, TDC datasets cannot be retrieved. That happens rarely; please check the status on [the Dataverse website](https://dataverse.harvard.edu/).
 
 ## License
 TDC codebase is under MIT license. For individual dataset usage, please refer to the dataset license found in the website.
