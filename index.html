@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="http://localhost:4000/" />
-<meta property="og:url" content="http://localhost:4000/" />
+<link rel="canonical" href="https://tdcommons.ai/" />
+<meta property="og:url" content="https://tdcommons.ai/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/","headline":"Therapeutics Data Commons","name":"TDC","description":"Machine Learning Datasets for Therapeutics","@type":"WebSite","@context":"https://schema.org"}</script>
+{"url":"https://tdcommons.ai/","headline":"Therapeutics Data Commons","name":"TDC","description":"Machine Learning Datasets for Therapeutics","@type":"WebSite","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -257,7 +257,7 @@
                             
                             
                             <div class="content has-text-left">
-                                <p>TDC software is minimally dependent on external packages. Any TDC dataset can be retrieved using only 3 lines of code.<br />
+                                <p>TDC software is minimally dependent on external packages. Any TDC dataset can be retrieved with just 3 lines of code.<br />
 </p>
                             </div>
                             
@@ -322,29 +322,18 @@
     <div class="container">
         <div class="columns is-vcentered">
             <div class="column is-10 is-offset-1 has-text-centered">
-                <p class="is-size-4"> Loading a dataset in TDC: </p>
+                <p class="is-size-4"> Our <b><a href="https://openreview.net/pdf?id=8nvgnORnoWr">NeurIPS 2021 Datasets and Benchmarks Paper</a></b> </p>
             </div>
         </div>
 </div>
 
-<div class="container">
-    <div class="columns is-vcentered">
-        <div class="column is-12 is-size-2 has-text-centered">
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="columns is-vcentered">
-        <div class="column is-12 is-size-2 has-text-centered">
-        </div>
-    </div>
-</div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@article{Huang2021tdc,
+  title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development},
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
+          Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
+  journal={Proceedings of Neural Information Processing Systems, NeurIPS Datasets and Benchmarks},
+  year={2021}
+}
 </code></pre></div></div>
 
 <div class="container">

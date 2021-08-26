@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="http://localhost:4000/functions/data_process/" />
-<meta property="og:url" content="http://localhost:4000/functions/data_process/" />
+<link rel="canonical" href="https://tdcommons.ai/functions/data_process/" />
+<meta property="og:url" content="https://tdcommons.ai/functions/data_process/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/functions/data_process/","headline":"Data Processing","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"https://tdcommons.ai/functions/data_process/","headline":"Data Processing","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -199,9 +199,9 @@
   <li><a href="#basic-statistics">Basic Statistics</a></li>
   <li><a href="#data-balancing">Data Balancing</a></li>
   <li><a href="#graph-transformation-for-pair-data">Graph Transformation for Pair Data</a></li>
-  <li><a href="#negative-samples-for-pair-data">Negative Samples for Pair Data</a></li>
-  <li><a href="#from-pubchem-cid-to-smiles">From PubChem CID to SMILES</a></li>
-  <li><a href="#from-uniprot-id-to-amino-acid-sequence">From Uniprot ID to Amino Acid Sequence</a></li>
+  <li><a href="#negative-sampling">Negative Sampling</a></li>
+  <li><a href="#from-pubchem-cids-to-smiles">From PubChem CIDs to SMILES</a></li>
+  <li><a href="#from-uniprot-ids-to-amino-acid-sequences">From Uniprot IDs to Amino Acid Sequences</a></li>
 </ul>
     </div>
 </div>
@@ -240,6 +240,8 @@
 <span class="n">convert2d</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 </code></pre></div></div>
 
+<hr />
+
 <h3 id="molecule-filters">Molecule Filters</h3>
 
 <p class="is-size-6">  <strong> Function Description: </strong> This function identifies and removes typical not drug-like molecules (false positives) using various types of filters curated by Patrick Walters. This is a wrapper around his <a href="">rd_filters</a> GitHub package. Also checkout his <a href="http://practicalcheminformatics.blogspot.com/2018/08/filtering-chemical-libraries.html">blog post </a>for more info. </p>
@@ -256,6 +258,8 @@
 <span class="n">filters</span><span class="p">([</span><span class="s">'CCSc1ccccc1C(=O)Nc1onc2c1CCC2'</span><span class="p">])</span>
 </code></pre></div></div>
 
+<hr />
+
 <h3 id="label-distribution-visualization">Label Distribution Visualization</h3>
 
 <p class="is-size-6">  <strong> Function Description: </strong> This function visualizes the label distribution and prints the basic statistics such as mean and median. </p>
@@ -266,6 +270,8 @@
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">label_distribution</span><span class="p">()</span>
 </code></pre></div></div>
+
+<hr />
 
 <h3 id="label-binarization">Label Binarization</h3>
 
@@ -284,6 +290,8 @@
 </code></pre></div></div>
 
 <p class="is-size-6"> <strong>Note</strong>: you can use <code>data.label_distribution()</code> to visualize the label distribution and decide on the threshold. </p>
+
+<hr />
 
 <h3 id="label-units-conversion">Label Units Conversion</h3>
 
@@ -305,6 +313,8 @@
 <span class="c1"># convert back: data.convert_from_log(form = 'standard')
 </span></code></pre></div></div>
 
+<hr />
+
 <h3 id="label-meaning">Label Meaning</h3>
 
 <p class="is-size-6">  <strong> Function Description: </strong> This function maps each labels to meaningful texts explaining what the label represents. Only applies to certain datasets.  </p>
@@ -317,6 +327,8 @@
 <span class="n">get_label_map</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugBank'</span><span class="p">,</span> <span class="n">task</span> <span class="o">=</span> <span class="s">'DDI'</span><span class="p">)</span>
 </code></pre></div></div>
 
+<hr />
+
 <h3 id="basic-statistics">Basic Statistics</h3>
 
 <p class="is-size-6">  <strong> Function Description: </strong> This function prints the basic statistics of the dataset, such as number of data points. </p>
@@ -325,6 +337,8 @@
 <span class="n">data</span> <span class="o">=</span> <span class="n">GDA</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DisGeNET'</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
 </code></pre></div></div>
+
+<hr />
 
 <h3 id="data-balancing">Data Balancing</h3>
 
@@ -341,6 +355,8 @@
 <span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'SARSCoV2_3CLPro_Diamond'</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">balanced</span><span class="p">(</span><span class="n">oversample</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </code></pre></div></div>
+
+<hr />
 
 <h3 id="graph-transformation-for-pair-data">Graph Transformation for Pair Data</h3>
 
@@ -369,7 +385,9 @@
 <span class="c1"># output: {'pyg_graph': the PyG graph object, 'index_to_entities': a dict map from ID in the data to node ID in the PyG object, 'split': {'train': df, 'valid': df, 'test': df}}
 </span></code></pre></div></div>
 
-<h3 id="negative-samples-for-pair-data">Negative Samples for Pair Data</h3>
+<hr />
+
+<h3 id="negative-sampling">Negative Sampling</h3>
 
 <p class="is-size-6">  <strong> Function Description: </strong> For some interaction datasets, there are only positive samples provided. In order to do binary classification, we have to construct negative samples. One popular way is to consider the unobserved as negative samples. This is usually the case for biomedical data as a hit has way smaller chance than being negative. For some dataset with pairwise experimental assay (e.g. HuRI), sample from the unobserved pair are also true negatives. To do that, it takes in the following input: </p>
 
@@ -384,7 +402,9 @@
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h3 id="from-pubchem-cid-to-smiles">From PubChem CID to SMILES</h3>
+<hr />
+
+<h3 id="from-pubchem-cids-to-smiles">From PubChem CIDs to SMILES</h3>
 
 <p class="is-size-6">  <strong> Function Description: </strong> Retrieve SMILES string from the PubChem CID. To do that, it takes in the following input: </p>
 
@@ -399,7 +419,9 @@
 <span class="c1"># 'CCOC1=CC(=C(C=C1C=CC(=O)O)Br)OCC'
 </span></code></pre></div></div>
 
-<h3 id="from-uniprot-id-to-amino-acid-sequence">From Uniprot ID to Amino Acid Sequence</h3>
+<hr />
+
+<h3 id="from-uniprot-ids-to-amino-acid-sequences">From Uniprot IDs to Amino Acid Sequences</h3>
 
 <p class="is-size-6">  <strong> Function Description: </strong> Retrieve amino acid sequence from the Uniprot ID. To do that, it takes in the following input: </p>
 
@@ -413,6 +435,8 @@
 <span class="n">seq</span> <span class="o">=</span> <span class="n">uniprot2seq</span><span class="p">(</span><span class="s">'P49122'</span><span class="p">)</span>
 <span class="c1"># 'MKTLLLTLVVVTIVCLDLGYTLKCHNTQLPFIYNTCPEGKNLCFKATLKFPLKFPVKRGCAATCPRSSSLVKVVCCKTDKCN'
 </span></code></pre></div></div>
+
+<hr />
 
 </div>
                 </div>
