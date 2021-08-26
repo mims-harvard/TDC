@@ -180,9 +180,12 @@ class Oracle:
 		elif self.name == 'molecule_one_synthesis':
 			from .chem_utils import molecule_one_retro
 			self.evaluator_func = molecule_one_retro(**self.kwargs)
+		elif self.name == 'pyscreener':
+			from .chem_utils import PyScreener_meta
+			self.evaluator_func = PyScreener_meta(**self.kwargs)
 		elif self.name == 'docking_score':
-			from .chem_utils import docking_meta
-			self.evaluator_func = docking_meta(**self.kwargs)
+			from .chem_utils import Vina_smiles
+			self.evaluator_func = Vina_smiles(**self.kwargs)
 		elif self.name == 'uniqueness':
 			from .chem_utils import uniqueness
 			self.evaluator_func = uniqueness 

@@ -1295,7 +1295,7 @@ class molecule_one_retro:
       result = search.get_results(precision=5, only=["targetSmiles", "result"])
       return {i['targetSmiles']: i['result'] for i in result}
 
-class docking_meta:
+class PyScreener_meta:
     """Evaluate docking score 
 
     Args:
@@ -1332,37 +1332,106 @@ class docking_meta:
           return score_lst
 
 
-class docking_3d:
-    """Evaluate docking score for conformer 
-    
-
+class Score_3d:
+    """Evaluate Vina score (force field) for a conformer binding to a receptor
     """
-    def __init__(self, receptor_pdbqt_file, center, box_size):
+    def __init__(self, receptor_pdbqt_file, center, box_size, scorefunction='vina'):
       try:
         from vina import Vina
       except:
         raise ImportError("Please install vina following guidance in https://github.com/ccsb-scripps/AutoDock-Vina/tree/develop/build/python")
 
-      self.v = Vina(sf_name='vina') 
+      self.v = Vina(sf_name=scorefunction) 
       self.receptor_pdbqt_file = receptor_pdbqt_file 
       self.center = center 
       self.box_size = box_size 
       self.v.set_receptor(rigid_pdbqt_filename=receptor_pdbqt_file)
+      try:
+        self.v.compute_vina_maps(center=self.center, box_size=self.box_size)
+      except:
+        raise ValueError('Cannot compute the affinity map, please check center and box_size')
 
 
+    def __call__(self, ligand_pdbqt_file, minimize=True):
+      try:
+        self.v.set_ligand_from_file('1iep_ligand.pdbqt')
+        if minimize:
+          energy = self.v.optimize()[0]
+        else:
+          energy = self.v.score()[0]
+      except Exception as e:
+        print(e)
+        return np.inf 
+      return energy
 
-    def __call__(self, ligand_pdbqt_file):
+class Vina_3d:
+    """Perform docking search from a conformer.
+    """
+    def __init__(self, receptor_pdbqt_file, center, box_size, scorefunction='vina'):
+      try:
+        from vina import Vina
+      except:
+        raise ImportError("Please install vina following guidance in https://github.com/ccsb-scripps/AutoDock-Vina/tree/develop/build/python")
+
+      self.v = Vina(sf_name=scorefunction) 
+      self.receptor_pdbqt_file = receptor_pdbqt_file 
+      self.center = center 
+      self.box_size = box_size 
+      self.v.set_receptor(rigid_pdbqt_filename=receptor_pdbqt_file)
+      try:
+        self.v.compute_vina_maps(center=self.center, box_size=self.box_size)
+      except:
+        raise ValueError('Cannot compute the affinity map, please check center and box_size')
+
+
+    def __call__(self, ligand_pdbqt_file, output_file='out.pdbqt', exhaustiveness=8, n_poses=10):
       try:
         self.v.set_ligand_from_file(ligand_pdbqt_file)
-        self.v.compute_vina_maps(center=self.center, box_size=self.box_size)
-        energy = self.v.score()
-        energy_minimized = self.v.optimize()
-      except:
+        v.dock(exhaustiveness=exhaustiveness, n_poses=n_poses)
+        v.write_poses(output_file, n_poses=n_poses, overwrite=True)
+        energy = v.score()[0]
+      except Exception as e:
+        print(e)
         return np.inf 
-      return energy_minimized[0]
+      return energy
 
 
+class Vina_smiles:
+    """Perform docking search from a conformer.
+    """
+    def __init__(self, receptor_pdbqt_file, center, box_size, scorefunction='vina'):
+      try:
+        from vina import Vina
+      except:
+        raise ImportError("Please install vina following guidance in https://github.com/ccsb-scripps/AutoDock-Vina/tree/develop/build/python")
 
+      self.v = Vina(sf_name=scorefunction) 
+      self.receptor_pdbqt_file = receptor_pdbqt_file 
+      self.center = center 
+      self.box_size = box_size 
+      self.v.set_receptor(rigid_pdbqt_filename=receptor_pdbqt_file)
+      try:
+        self.v.compute_vina_maps(center=self.center, box_size=self.box_size)
+      except:
+        raise ValueError('Cannot compute the affinity map, please check center and box_size')
+
+
+    def __call__(self, ligand_smiles, output_file='out.pdbqt', exhaustiveness=8, n_poses=10):
+      try:
+        m = Chem.MolFromSmiles(smi)
+        m = Chem.AddHs(m)
+        AllChem.EmbedMolecule(m)
+        print(Chem.MolToMolBlock(m),file=open('__temp.mol','w+'))
+        os.system('mk_prepare_ligand.py -i __temp.mol -o __temp.pdbqt')
+        self.v.set_ligand_from_file("__temp.pdbqt")
+        v.dock(exhaustiveness=exhaustiveness, n_poses=n_poses)
+        v.write_poses(output_file, n_poses=n_poses, overwrite=True)
+        energy = v.score()[0]
+        os.system('rm __temp.mol __temp.pdbqt')
+      except Exception as e:
+        print(e)
+        return np.inf 
+      return energy
 
 
 
