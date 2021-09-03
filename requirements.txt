@@ -4,3 +4,4 @@ pandas
 tqdm
 scikit-learn
 seaborn
+furo
