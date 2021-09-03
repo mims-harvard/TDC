@@ -15,12 +15,13 @@ Alternatively, you could use **conda** for installation:
    conda install -c conda-forge pytdc
 
 
-**Required Dependencies**\ :
+**Core Required Dependencies**\ :
 
-
-* numpy>
+* numpy
 * pandas
 * tqdm
 * seaborn
 * scikit_learn
 * fuzzywuzzy
+
+For some TDC functionalities, they require additional dependencies. They will be either automatically installed or an error message with installation instruction will be available.

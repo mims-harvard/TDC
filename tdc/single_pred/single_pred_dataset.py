@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-"""Summary
-"""
 # Author: TDC Team
 # License: MIT
 

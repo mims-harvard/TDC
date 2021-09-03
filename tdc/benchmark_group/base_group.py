@@ -21,8 +21,6 @@ from ..evaluator import Evaluator
 class BenchmarkGroup:
 
 	"""Boilerplate of benchmark group class. It downloads, processes, and loads a set of benchmark classes along with their splits. It also provides evaluators and train/valid splitters.
-	
-	Attributes: TODO
 	"""
 	
 	def __init__(self, name, path = './data', file_format='csv'):		

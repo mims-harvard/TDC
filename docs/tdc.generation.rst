@@ -1,8 +1,5 @@
-tdc.generation package
+tdc.generation
 ======================
-
-Submodules
-----------
 
 tdc.generation.generation\_dataset module
 -----------------------------------------
@@ -32,14 +29,6 @@ tdc.generation.retrosyn module
 ------------------------------
 
 .. automodule:: tdc.generation.retrosyn
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: tdc.generation
    :members:
    :undoc-members:
    :show-inheritance:

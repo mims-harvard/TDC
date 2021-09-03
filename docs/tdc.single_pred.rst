@@ -1,8 +1,13 @@
-tdc.single\_pred package
+tdc.single\_pred
 ========================
 
-Submodules
-----------
+tdc.single\_pred.single\_pred\_dataset module
+---------------------------------------------
+
+.. automodule:: tdc.single_pred.single_pred_dataset
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 tdc.single\_pred.adme module
 ----------------------------
@@ -60,13 +65,6 @@ tdc.single\_pred.qm module
    :undoc-members:
    :show-inheritance:
 
-tdc.single\_pred.single\_pred\_dataset module
----------------------------------------------
-
-.. automodule:: tdc.single_pred.single_pred_dataset
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 tdc.single\_pred.test\_single\_pred module
 ------------------------------------------
@@ -88,14 +86,6 @@ tdc.single\_pred.yields module
 ------------------------------
 
 .. automodule:: tdc.single_pred.yields
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: tdc.single_pred
    :members:
    :undoc-members:
    :show-inheritance:

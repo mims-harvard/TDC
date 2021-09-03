@@ -1,8 +1,5 @@
-tdc.utils package
+tdc.utils
 =================
-
-Submodules
-----------
 
 tdc.utils.label module
 ----------------------
@@ -56,14 +53,6 @@ tdc.utils.split module
 ----------------------
 
 .. automodule:: tdc.utils.split
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: tdc.utils
    :members:
    :undoc-members:
    :show-inheritance:

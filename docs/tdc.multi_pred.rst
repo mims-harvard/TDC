@@ -1,21 +1,27 @@
-tdc.multi\_pred package
+tdc.multi\_pred
 =======================
-
-Submodules
-----------
-
-tdc.multi\_pred.antibodyaff module
-----------------------------------
-
-.. automodule:: tdc.multi_pred.antibodyaff
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 tdc.multi\_pred.bi\_pred\_dataset module
 ----------------------------------------
 
 .. automodule:: tdc.multi_pred.bi_pred_dataset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+tdc.multi\_pred.multi\_pred\_dataset module
+-------------------------------------------
+
+.. automodule:: tdc.multi_pred.multi_pred_dataset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tdc.multi\_pred.antibodyaff module
+----------------------------------
+
+.. automodule:: tdc.multi_pred.antibodyaff
    :members:
    :undoc-members:
    :show-inheritance:
@@ -76,14 +82,6 @@ tdc.multi\_pred.mti module
    :undoc-members:
    :show-inheritance:
 
-tdc.multi\_pred.multi\_pred\_dataset module
--------------------------------------------
-
-.. automodule:: tdc.multi_pred.multi_pred_dataset
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 tdc.multi\_pred.peptidemhc module
 ---------------------------------
 
@@ -104,14 +102,6 @@ tdc.multi\_pred.test\_multi\_pred module
 ----------------------------------------
 
 .. automodule:: tdc.multi_pred.test_multi_pred
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: tdc.multi_pred
    :members:
    :undoc-members:
    :show-inheritance:
