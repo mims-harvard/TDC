@@ -1,8 +1,72 @@
 # -*- coding: utf-8 -*-
 # Author: TDC Team
 # License: MIT
-"""
-This file contains the name of datasets within corresponding dataset list.
+
+
+"""This file contains all metadata of datasets in TDC.
+
+Attributes:
+    adme_dataset_names (list): all adme dataset names
+    admet_benchmark (dict): a dictionary with key the TDC task and value a list of dataset names
+    admet_metrics (dict): a dictionary with key the dataset name and value the recommended metric
+    admet_splits (dict): a dictionary with key the dataset name and value the recommended split
+    antibodyaff_dataset_names (list): all antibody_aff dataset names
+    benchmark2id (dict): benchmark names to dataverse download ID
+    benchmark2type (dict): benchmark names to file type in download format
+    benchmark_names (dict): a dictionary mapping benchmark group name to each benchmark group dataset names
+    bm_metric_names (dict): a dictionary mapping benchmark group name to each benchmark group metric names
+    bm_split_names (dict): a dictionary mapping benchmark group name to each benchmark group split names
+    catalyst_dataset_names (list): all catalyst dataset names
+    category_names (dict): mapping from ML problem (1st tier) to all tasks
+    crisproutcome_dataset_names (list): all crispr outcome dataset names
+    dataset_list (list): total list of dataset names in TDC
+    dataset_names (dict): mapping from task name to list of dataset names
+    ddi_dataset_names (list): all ddi dataset names
+    develop_dataset_names (list): all develop dataset names
+    distribution_oracles (list): all distribution learning oracles, i.e. molecule evaluators
+    docking_benchmark (dict): docking benchmark target names
+    docking_target_info (dict): docking benchmark target pockets info
+    download_oracle_names (list): oracle names that require downloading predictors
+    drugres_dataset_names (list): all drugres dataset names
+    drugsyn_benchmark (dict): drugcombo benchmark group targets
+    drugsyn_dataset_names (list): all drugsyn dataset names
+    drugsyn_metrics (dict): a dictionary with key the dataset name and value the recommended metric
+    drugsyn_splits (dict):  a dictionary with key the dataset name and value the recommended split
+    dti_dataset_names (list): all dti dataset names
+    dti_dg_benchmark (dict): dti_dg benchmark group dataset names
+    dti_dg_metrics (dict): a dictionary with key the dataset name and value the recommended metric
+    dti_dg_splits (dict):  a dictionary with key the dataset name and value the recommended split
+    epitope_dataset_names (list): all epitope dataset names
+    evaluator_name (list): list of evaluator names
+    forwardsyn_dataset_names (list): all reaction dataset names
+    gda_dataset_names (list): all gda dataset names
+    generation_datasets (list): all generation dataset names
+    guacamol_oracle (list): list of oracles from guacamol
+    hts_dataset_names (list): all hts dataset names
+    meta_oracle_name (list): list of all meta oracle names
+    molgenpaired_dataset_names (list): all molgenpaired dataset names
+    mti_dataset_names (list): all mti dataset names
+    name2id (dict): mapping from dataset names to dataverse id
+    name2stats (dict): mapping from dataset names to statistics
+    name2type (dict): mapping from dataset names to downloaded file format
+    oracle2id (dict): mapping from oracle names to dataverse id
+    oracle2type (dict): mapping from oracle names to downloaded file format
+    oracle_names (list): list of all oracle names
+    paired_dataset_names (list): all paired dataset names
+    paratope_dataset_names (list): all paratope dataset names
+    peptidemhc_dataset_names (list): all peptidemhc dataset names
+    ppi_dataset_names (list): all ppi dataset names
+    property_names (list): a list of oracles that correspond to some molecular properties
+    qm_dataset_names (list): all qm dataset names
+    retrosyn_dataset_names (list): all retrosyn dataset names
+    sdf_file_names (list): list of sdf file names
+    single_molecule_dataset_names (list): all molgen dataset names
+    synthetic_oracle_name (list): all oracle names for synthesis
+    test_multi_pred_dataset_names (list): test multi pred task name
+    test_single_pred_dataset_names (list): test single pred task name
+    toxicity_dataset_names (list): all toxicity dataset names
+    trivial_oracle_names (list): a list of oracle names for trivial oracles
+    yield_dataset_names (list): all yield dataset names
 """
 ####################################
 # test cases
