@@ -8,6 +8,7 @@
 [![Downloads](https://pepy.tech/badge/pytdc)](https://pepy.tech/project/pytdc)
 [![GitHub Repo stars](https://img.shields.io/github/stars/mims-harvard/TDC)](https://github.com/mims-harvard/TDC/stargazers)
 [![GitHub Repo stars](https://img.shields.io/github/forks/mims-harvard/TDC)](https://github.com/mims-harvard/TDC/network/members)
+
 [![Build Status](https://travis-ci.org/mims-harvard/TDC.svg?branch=master)](https://travis-ci.org/mims-harvard/TDC)
 [![TDC CircleCI](https://circleci.com/gh/mims-harvard/TDC.svg?style=svg)](https://app.circleci.com/pipelines/github/mims-harvard/TDC)
 [![Documentation Status](https://readthedocs.org/projects/tdc/badge/?version=latest)](http://tdc.readthedocs.io/?badge=latest)
