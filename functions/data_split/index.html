@@ -120,6 +120,7 @@
                     
                 
                 <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
                 <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
                 
             </div>
@@ -208,12 +209,12 @@
 <div class="content">
     <h2 id="overview-of-dataset-splits">Overview of Dataset Splits</h2>
 
-<p class="is-size-6"> The data splitting function splits data into training, validation and test set for machine learning practitioners to train, tune and evaluate their models. This function is called directly on the data loader class. It mainly takes in the following three inputs: </p>
+<p class="is-size-6"> Data split functions partition a dataset into training, validation, and test sets to support training of ML models, hyperparameter tuning, and fair evaluation and comparison of ML models. The function is called from within the data loader class. It accepts the following three inputs: </p>
 
 <ul>
-	<li><code>method</code> the spliting scheme. TDC provides various spliting schemes to reflect realistic evaluations (details in section below). Default is random split. </li>
-	<li><code>seed</code> the random seed. </li>
-	<li><code>frac</code> the fraction of train/validation/test set, in default, it is set to be [0.7, 0.1, 0.2].</li>
+	<li><code>method</code>: Type of dataset split. TDC provides several types dataset splits to support realistic evaluations. Default type is Random Split. </li>
+	<li><code>seed</code>: random seed. </li>
+	<li><code>frac</code>: proportional size of training, validation, and test sets. By default, the sizes are set to 70%, 10%, and 20%, respectively.</li>
 </ul>
 <p class="is-size-6"> 
 As the default TDC data format is Pandas DataFrame, it will return a dictionary with key 'train', 'valid', and 'test' and value of each set's data frame. 
@@ -230,7 +231,7 @@ As the default TDC data format is Pandas DataFrame, it will return a dictionary 
 </p>
 
 <p class="is-size-6"> 
-Below describes the various split schemes:
+We continue with brief description of different kinds of dataset splits provided in the TDC 
 </p>
 
 <h3 id="random-split">Random Split</h3>

@@ -120,6 +120,7 @@
                     
                 
                 <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
                 <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
                 
             </div>
@@ -190,7 +191,7 @@
     <div class="menu">
         <p class="menu-label">Function Index</p>
         <ul class="menu-list">
-  <li><a href="#regression-metric">Regression Metric</a>
+  <li><a href="#regression-metrics">Regression Metrics</a>
     <ul>
       <li><a href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
       <li><a href="#root-mean-squared-error-rmse">Root-Mean Squared Error (RMSE)</a></li>
@@ -200,11 +201,11 @@
       <li><a href="#spearman-correlation-coefficient">Spearman Correlation Coefficient</a></li>
     </ul>
   </li>
-  <li><a href="#binary-classification-metric">Binary Classification Metric</a>
+  <li><a href="#binary-classification-metrics">Binary Classification Metrics</a>
     <ul>
-      <li><a href="#area-under-the-receiver-operating-characteristic-curve-roc-auc">Area Under the Receiver Operating Characteristic Curve (ROC-AUC)</a></li>
+      <li><a href="#area-under-receiver-operating-characteristic-curve-roc-auc">Area Under Receiver Operating Characteristic Curve (ROC-AUC)</a></li>
       <li><a href="#area-under-the-precision-recall-curve-pr-auc">Area Under the Precision-Recall Curve (PR-AUC)</a></li>
-      <li><a href="#accuracy-metric">Accuracy Metric</a></li>
+      <li><a href="#accuracy-metrics">Accuracy Metrics</a></li>
       <li><a href="#precision">Precision</a></li>
       <li><a href="#recall">Recall</a></li>
       <li><a href="#f1-score">F1 Score</a></li>
@@ -212,14 +213,14 @@
       <li><a href="#recall-at-precision-of-k">Recall at Precision of K</a></li>
     </ul>
   </li>
-  <li><a href="#multi-class-classification-metric">Multi-class Classification Metric</a>
+  <li><a href="#multi-class-classification-metrics">Multi-class Classification Metrics</a>
     <ul>
       <li><a href="#micro-f1-micro-precision-micro-recall-accuracy">Micro-F1, Micro-Precision, Micro-Recall, Accuracy</a></li>
       <li><a href="#macro-f1">Macro-F1</a></li>
       <li><a href="#cohens-kappa-kappa">Cohen’s Kappa (Kappa)</a></li>
     </ul>
   </li>
-  <li><a href="#token-level-classification-metric">Token-level Classification Metric</a>
+  <li><a href="#token-level-classification-metrics">Token-level Classification Metrics</a>
     <ul>
       <li><a href="#average-roc-auc">Average ROC-AUC</a></li>
     </ul>
@@ -242,7 +243,7 @@
 
 
 <div class="content">
-    <h2 id="regression-metric">Regression Metric</h2>
+    <h2 id="regression-metrics">Regression Metrics</h2>
 
 <h3 id="mean-squared-error-mse">Mean Squared Error (MSE)</h3>
 
@@ -309,9 +310,11 @@
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
 
-<h2 id="binary-classification-metric">Binary Classification Metric</h2>
+<hr />
 
-<h3 id="area-under-the-receiver-operating-characteristic-curve-roc-auc">Area Under the Receiver Operating Characteristic Curve (ROC-AUC)</h3>
+<h2 id="binary-classification-metrics">Binary Classification Metrics</h2>
+
+<h3 id="area-under-receiver-operating-characteristic-curve-roc-auc">Area Under Receiver Operating Characteristic Curve (ROC-AUC)</h3>
 
 <p class="is-size-6">  <strong> Description: </strong> The ROC-AUC measures the area under the ROC curve which is plotting the true positive and false positive at various threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code>, and outputs the ROC-AUC score.</p>
 
@@ -333,7 +336,9 @@
 <span class="c1"># score: 0.88
 </span></code></pre></div></div>
 
-<h3 id="accuracy-metric">Accuracy Metric</h3>
+<hr />
+
+<h3 id="accuracy-metrics">Accuracy Metrics</h3>
 
 <p class="is-size-6">  <strong> Description: </strong> The accuracy calculates the fraction of correct prediction at a threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the accuracy score. The default of threshold value is 0.5. </p>
 
@@ -399,7 +404,9 @@
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
 
-<h2 id="multi-class-classification-metric">Multi-class Classification Metric</h2>
+<hr />
+
+<h2 id="multi-class-classification-metrics">Multi-class Classification Metrics</h2>
 
 <h3 id="micro-f1-micro-precision-micro-recall-accuracy">Micro-F1, Micro-Precision, Micro-Recall, Accuracy</h3>
 <p class="is-size-6">  <strong> Description: </strong> The micro-F1 in multi-class prediction is the same as micro-precision, micro-recall and accuracy. It calculates the fraction of correct prediction. It takes in a list/array of true integer label index <code>y_true</code> and a list/array of predicted integer label index <code>y_pred</code>, and outputs the score. </p>
@@ -432,7 +439,9 @@
 <span class="c1"># score: 0.5
 </span></code></pre></div></div>
 
-<h2 id="token-level-classification-metric">Token-level Classification Metric</h2>
+<hr />
+
+<h2 id="token-level-classification-metrics">Token-level Classification Metrics</h2>
 
 <h3 id="average-roc-auc">Average ROC-AUC</h3>
 
@@ -444,6 +453,8 @@
 </span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 <span class="c1"># score: 0.8
 </span></code></pre></div></div>
+
+<hr />
 
 <h2 id="molecule-generation-metrics">Molecule Generation Metrics</h2>
 

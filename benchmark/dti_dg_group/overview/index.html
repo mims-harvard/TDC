@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reaction Yields Prediction - TDC</title>
+    <title>Drug Target Domain Generalization Benchmark Group - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Reaction Yields Prediction | TDC</title>
+<title>Drug Target Domain Generalization Benchmark Group | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Reaction Yields Prediction" />
+<meta property="og:title" content="Drug Target Domain Generalization Benchmark Group" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="http://localhost:4000/single_pred_tasks/yields/" />
-<meta property="og:url" content="http://localhost:4000/single_pred_tasks/yields/" />
+<link rel="canonical" href="http://localhost:4000/benchmark/dti_dg_group/overview/" />
+<meta property="og:url" content="http://localhost:4000/benchmark/dti_dg_group/overview/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/single_pred_tasks/yields/","headline":"Reaction Yields Prediction","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/benchmark/dti_dg_group/overview/","headline":"Drug Target Domain Generalization Benchmark Group","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -146,44 +146,12 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/single_pred_tasks/overview/" class=""><strong>Single-instance Prediction Problem</strong></a>
+            <a href="/benchmark/drugcombo_group/overview" class=""><strong>DTI Domain Generalization Group Leaderboard</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/single_pred_tasks/adme/" class=""><code>ADME</code> Pharmaco-kinetics</a></li>
-                
-                
-                
-                <li><a href="/single_pred_tasks/tox/" class=""><code>Tox</code> Toxicity</a></li>
-                
-                
-                
-                <li><a href="/single_pred_tasks/hts/" class=""><code>HTS</code> High-Throughput Screening</a></li>
-                
-                
-                
-                <li><a href="/single_pred_tasks/qm/" class=""><code>QM</code> Quantum Mechanics</a></li>
-                
-                
-                
-                <li><a href="/single_pred_tasks/yields/" class="is-active"><code>Yields</code> Reaction Yields Prediction</a></li>
-                
-                
-                
-                <li><a href="/single_pred_tasks/paratope/" class=""><code>Paratope</code> Paratope Prediction</a></li>
-                
-                
-                
-                <li><a href="/single_pred_tasks/epitope/" class=""><code>Epitope</code> Epitope Prediction</a></li>
-                
-                
-                
-                <li><a href="/single_pred_tasks/develop/" class=""><code>Develop</code> Developability Prediction</a></li>
-                
-                
-                
-                <li><a href="/single_pred_tasks/CRISPROutcome/" class=""><code>CRISPROutcome</code> CRISPR Repair Prediction</a></li>
+                <li><a href="/benchmark/dti_dg_group/bindingdb_patent/" class=""><code>TDC.BindingDB_Patent</code> Leaderboard</a></li>
                 
                 
             </ul>
@@ -196,16 +164,20 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/overview/" class=""><strong>Others</strong></a>
+            <a href="" class=""><strong>References</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/multi_pred_tasks/overview/" class="">Multi-instance Prediction Problem</a></li>
+                <li><a href="/benchmark/overview/#step-by-step-instructions" class="">Submission Instructions</a></li>
                 
                 
                 
-                <li><a href="/generation_tasks/overview/" class="">Generation Problem</a></li>
+                <li><a href="/benchmark/overview/#further-details-about-benchmark-groups-in-tdc" class="">BenchmarkGroup Class Documentation</a></li>
+                
+                
+                
+                <li><a href="/benchmark/overview/" class="">Leaderboard Guidelines</a></li>
                 
                 
             </ul>
@@ -222,97 +194,39 @@
                     
                     
                     
-    
-    
-
-<div class="contents">
-    <div class="menu">
-        <p class="menu-label">Dataset Index</p>
-        <ul class="menu-list">
-  <li><a href="#buchwald-hartwig">Buchwald-Hartwig</a></li>
-  <li><a href="#uspto">USPTO</a></li>
-</ul>
-    </div>
-</div>
-
-
-
-
 <div class="content">
-    <h1 id="reaction-yields-prediction-task-overview">Reaction Yields Prediction Task Overview</h1>
+    <h2 id="drug-target-interaction-domain-generalization-benchmark-group">Drug-Target Interaction Domain Generalization Benchmark Group</h2>
 
-<div class="box">
-	
+<p class="is-size-5">Drug-target interactions (DTI) characterize the binding of compounds to disease targets. Identifying high-affinity compounds is the first crucial step for drug discovery. Recent ML models have shown strong performances in DTI prediction, but they adopt a random dataset splitting where testing sets contain unseen pair of compound-target, but both of the compounds and targets are seen. However, pharmaceutical companies develop compound screening campaigns for novel targets or screen a novel class of compounds for known targets. These novel compounds and targets shift over the years. Thus, it requires a DTI ML model to achieve consistent performances to the subtle domain shifts along the temporal dimension. </p>
 
-<p class="is-size-6">  <strong> Definition: </strong> 
-Vast majority of small-molecule drugs are synthesized through chemical reactions. Many factors during reactions could lead to suboptimal reactants-products conversion rate, i.e. yields. Formally, it is defined as the percentage of the reactants successfully converted to the target product. This learning task aims to predict the yield of a given single chemical reaction.
-</p>
+<p class="is-size-5">In this benchmark, we use DTIs in TDC.BindingDB that have patent infor178 mation. Specifically, we formulate each domain consisting of DTIs that are patented in a specific year. We test various domain generalization methods to predict out-of-distribution DTIs in 2019-2021 after training on 2013-2018 DTIs, simulating the realistic scenario. </p>
 
-<p class="is-size-6"> <strong> Impact: </strong>  
-To maximize the synthesis efficiency of interested products, an accurate prediction of the reaction yield could help chemists to plan ahead and switch to alternate reaction routes, by which avoiding investing hours and materials in wet-lab experiments and reducing the number of attempts.
-</p>
+<p class="is-size-5">To access a benchmark in the group, use the following code:</p>
 
-<p class="is-size-6"> <strong> Generalization: </strong> 
-The models are expected to extrapolate to unseen reactions with diverse chemical structures and reaction types. 
-</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DTI_DG_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'BindingDB_Patent'</span><span class="p">)</span>
 
-<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+<span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
 
-<p class="is-size-6"> <strong> Pipeline: </strong> Manufacturing - Synthesis planning. </p>
+<span class="c1">## --- train your model --- ##
+</span>
+<span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_test</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="s">'''
+'''</span>
+</code></pre></div></div>
 
+<p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard. </p>
+
+<p class="is-size-5"> The evaluation metric is pearson correlation coefficient (PCC). Validation set selection is crucial for a fair domain generalization methods comparison. Following the strategy of "Training-domain validation set" in DomainBed, from the 2013-2018 DTIs, we randomly set 20% of them as the validation set and use them as the in-distribution performance calculations as they follow the same as the training set and 2018-2021 are only used during testing, which we called out-of-distribution.</p>
+
+<div class="column is-12">
+    <hr />
 </div>
-
-<h3 id="buchwald-hartwig">Buchwald-Hartwig</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> Ahneman et al. performed high-throughput experiments on Pd-catalysed Buchwald–Hartwig C-N cross coupling reactions, measuring the yields for each reaction. </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong> Given reactant and product set X, predict the yields Y. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 55,370 reactions. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Yields</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">Yields</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Buchwald-Hartwig'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://www.sciencedirect.com/science/article/pii/S2451929420300851">[1] Sandfort et al. “A structure-based platform for predicting chemical reactivity.” Chem (2020). </a></p>
-
-<p><a href="https://science.sciencemag.org/content/360/6385/186.abstract?casa_token=Y1YYm8zLW4YAAAAA:U2B1Mqw-wjgZuqf2jd5eDUSmOCHm9dKMIqrMR5aGs4Js6eCwXV4gGPvA95wgqF-Gf6UjomO9FaAFeJQ"> [2] Ahneman et al. “Predicting reaction performance in C–N cross-coupling using machine learning.” Science 360.6385 (2018): 186-190.
-</a></p>
-
-<p><a href="https://chemrxiv.org/ndownloader/files/25011413"> [3] Schwaller, Philippe, et al. “Prediction of Chemical Reaction Yields using Deep Learning.” (2020). ChemRxiv.</a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
-
-<hr />
-
-<h3 id="uspto">USPTO</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> TDC parses the yields outcome from the full USPTO (United States Patent and Trademark Office) dataset. </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong> Given reactant and product set X, predict the yields Y. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 853,638 reactions. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Yields</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">Yields</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'USPTO_Yields'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://aspace.repository.cam.ac.uk/handle/1810/244727">[1] Lowe, Daniel Mark. Extraction of chemical structures and reactions from the literature. Diss. University of Cambridge, 2012. </a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/share-your-work/public-domain/cc0/">CC0</a>.</p>
-
-<hr />
-
 
 </div>
                 </div>

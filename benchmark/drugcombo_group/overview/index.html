@@ -120,6 +120,7 @@
                     
                 
                 <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
                 <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
                 
             </div>
@@ -232,8 +233,8 @@
 
 <p class="is-size-5">To access a benchmark in the group, use the following code:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
-<span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugCombo_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">,</span> <span class="n">file_format</span><span class="o">=</span><span class="s">'pkl'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">drugcombo_group</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">drugcombo_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
 
 <span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Drugcomb_CSS'</span><span class="p">)</span>
 
