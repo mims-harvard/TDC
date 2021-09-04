@@ -24,4 +24,4 @@ Alternatively, you could use **conda** for installation:
 * scikit_learn
 * fuzzywuzzy
 
-To use some of TDC features, your need to install additional packages. Those packages will be either automatically installed. Detailed installation instructions will be display in the terminal in case automatic installation fails.
+To use some of TDC features, you need to install additional packages. Those packages will be automatically installed. Detailed installation instructions will be displayed in the terminal in case automatic installation fails.
