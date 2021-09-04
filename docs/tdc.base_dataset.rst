@@ -1,4 +1,4 @@
-tdc.base\_dataset module
+tdc.base\_dataset
 =======================
 
 .. automodule:: tdc.base_dataset
