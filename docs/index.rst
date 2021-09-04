@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 
-.. figure:: https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/logo.png
+.. figure:: https://kexinhuang.com/s/tdc_logo_horizontal.jpg
     :alt: logo
 
 ----
@@ -12,7 +12,12 @@
 
 .. image:: https://img.shields.io/badge/website-live-brightgreen
    :target: https://tdcommons.ai
-   :alt: Documentation status
+   :alt: Website
+
+
+.. image:: https://badgen.net/badge/icon/github?icon=github&label
+   :target: https://github.com/mims-harvard/TDC
+   :alt: GitHub
 
 
 .. image:: https://badge.fury.io/py/PyTDC.svg
@@ -39,31 +44,47 @@
    :target: https://pepy.tech/project/pytdc
    :alt: Downloads
 
+
 .. image:: https://travis-ci.org/mims-harvard/TDC.svg?branch=master
    :target: https://travis-ci.org/github/mims-harvard/TDC
    :alt: Build Status
-
 
 .. image:: https://circleci.com/gh/mims-harvard/TDC.svg?style=svg
    :target: https://app.circleci.com/pipelines/github/mims-harvard/TDC
    :alt: Circle CI
 
+.. image:: https://readthedocs.org/projects/tdc/badge/?version=latest
+   :target: http://tdc.readthedocs.io/?badge=latest
+   :alt: Doc Status
+
+.. image:: https://img.shields.io/badge/License-MIT-green.svg
+   :target: https://opensource.org/licenses/MIT
+   :alt: license
+
+.. image:: https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC
+   :target: https://twitter.com/ProjectTDC
+   :alt: Twitter
+
+
+`Website <https://tdcommons.ai>`_ \| `GitHub <https://github.com/mims-harvard/TDC>`_ \| `NeurIPS 2021 Paper <https://openreview.net/pdf?id=8nvgnORnoWr>`_  \| `Long Paper <https://arxiv.org/abs/2102.09548>`_  \| `Slack <https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw>`_  \| `TDC Mailing List <https://groups.io/g/tdc>`_  
+
+
 -----
 
 
-This site hosts the documentation for **Therapeutics Data Commons (TDC)**, the first unifying framework to systematically access and evaluate machine learning across the entire range of therapeutics.
+**Therapeutics Data Commons** is an open-science platform with AI/ML-ready datasets and learning tasks for therapeutics, spanning the discovery and development of safe and effective medicines. TDC also provides an ecosystem of tools, libraries, leaderboards, and community resources, including data functions, strategies for systematic model evaluation, meaningful data splits, data processors, and molecule generation oracles. All resources are integrated and accessible via an open Python library.
 
-The collection of curated datasets, learning tasks, and benchmarks in TDC serves as a meeting point for domain and machine learning scientists. We envision that TDC can considerably accelerate machine-learning model development, validation and transition into biomedical and clinical implementation.
+**Our Vision**: Therapeutics machine learning is an exciting field with incredible opportunities for expansion, innovation, and impact. The collection of curated datasets, learning tasks, and benchmarks in Therapeutics Data Commons (TDC) serves as a meeting point for domain and machine learning scientists. TDC is the first unifying framework to systematically access and evaluate machine learning across the entire range of therapeutics. We envision that TDC can facilitate algorithmic and scientific advances and considerably accelerate machine-learning model development, validation and transition into biomedical and clinical implementation.
 
 ----
 
 
 .. note::
-   If you would like to know detailed descriptions about datasets, tasks, leaderboards, functions, please visit our `website <https://tdcommons.ai/>`_.
+   See the `TDC website <https://tdcommons.ai/>`_ to learn about machine learning for drug development and discovery and get more information on datasets, tasks, leaderboards, data functions, and other features available in Therapeutics Data Commons. 
 
 ----
 
-If you find TDC useful, please consider cite us!
+Cite our `NeurIPS 2021 Datasets and Benchmarks Paper: <https://openreview.net/pdf?id=8nvgnORnoWr>`_
 
 .. code-block:: latex
 
