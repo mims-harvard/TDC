@@ -1,0 +1,42 @@
+REMARK Flexibility Score: inf
+REMARK Active torsions [ 7 ] -> [ 7 ]
+ROOT
+ATOM      1  C1  LIG L   1       3.618   7.065  50.957  1.00  0.00     0.138 C 
+ENDROOT
+BRANCH    1    2
+ATOM      2  C2  LIG L   1       2.949   6.053  49.986  1.00  0.00     0.258 C 
+BRANCH    2    3
+ATOM      3  O1  LIG L   1       3.104   4.717  50.478  1.00  0.00    -0.489 OA
+BRANCH    3    4
+ATOM      4  C3  LIG L   1       2.215   3.658  50.090  1.00  0.00     0.124 A 
+ATOM      5  C4  LIG L   1       1.285   0.331  51.536  1.00  0.00     0.036 C 
+ATOM      6  C5  LIG L   1       1.830   1.052  52.740  1.00  0.00     0.009 C 
+ATOM      7  C6  LIG L   1       1.274   1.454  50.482  1.00  0.00    -0.038 A 
+ATOM      8  C7  LIG L   1       2.762   2.135  52.240  1.00  0.00     0.039 C 
+ATOM      9  C8  LIG L   1       2.123   2.498  50.876  1.00  0.00    -0.002 A 
+ATOM     10  C9  LIG L   1       0.545   1.565  49.305  1.00  0.00    -0.047 A 
+ATOM     11 C10  LIG L   1      -0.400   0.445  48.893  1.00  0.00     0.044 C 
+ATOM     12 C11  LIG L   1       0.659   2.695  48.503  1.00  0.00     0.007 A 
+ATOM     13 C12  LIG L   1       1.493   3.743  48.890  1.00  0.00     0.046 A 
+ENDBRANCH    3    4
+ENDBRANCH    2    3
+ENDBRANCH    1    2
+BRANCH    1   14
+ATOM     14  O2  LIG L   1       3.517   8.359  50.405  1.00  0.00    -0.390 OA
+ATOM     15  H1  LIG L   1       3.913   8.365  49.520  1.00  0.00     0.210 HD
+ENDBRANCH    1   14
+BRANCH    1   16
+ATOM     16 C13  LIG L   1       2.986   7.036  52.381  1.00  0.00    -0.042 C 
+ATOM     17 C14  LIG L   1       1.465   7.034  52.305  1.00  0.00    -0.011 C 
+BRANCH   16   18
+ATOM     18  N1  LIG L   1       3.401   8.236  53.102  1.00  0.00     0.384 N 
+ATOM     19  H2  LIG L   1       2.763   8.994  52.858  1.00  0.00    -0.085 HD
+ATOM     20  H3  LIG L   1       4.364   8.429  52.826  1.00  0.00    -0.085 HD
+BRANCH   18   21
+ATOM     21 C15  LIG L   1       3.400   8.086  54.546  1.00  0.00    -0.078 C 
+ATOM     22 C16  LIG L   1       4.607   8.814  55.119  1.00  0.00    -0.014 C 
+ATOM     23 C17  LIG L   1       2.143   8.723  55.130  1.00  0.00    -0.014 C 
+ENDBRANCH   18   21
+ENDBRANCH   16   18
+ENDBRANCH    1   16
+TORSDOF 7

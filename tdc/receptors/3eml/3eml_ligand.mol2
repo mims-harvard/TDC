@@ -1,0 +1,83 @@
+# Name: ZMA
+# Created by ModelServer 0.9.6
+
+# model_server_result.job_id: wr3DjXYFYMKew4INwqF0cn
+# model_server_result.datetime_utc: 2021-08-29 21:08:03
+# model_server_result.server_version: 0.9.6
+# model_server_result.query_name: ligand
+# model_server_result.source_id: pdb-bcif
+# model_server_result.entry_id: 3eml
+
+# model_server_params.name: atom_site
+# model_server_params.value: {"label_asym_id":"B","auth_seq_id":401}
+
+# model_server_stats.io_time_ms: 8
+# model_server_stats.parse_time_ms: 52
+# model_server_stats.create_model_time_ms: 15
+# model_server_stats.query_time_ms: 329
+# model_server_stats.encode_time_ms: 1
+# model_server_stats.element_count: 25
+
+@<TRIPOS>MOLECULE
+ZMA
+25 28 1
+****
+****
+
+@<TRIPOS>ATOM
+1 C1 -10.992 -8.796 60.617 C.ar 1 ZMA 0.000
+2 C2 -11.241 -8.297 61.889 C.ar 1 ZMA 0.000
+3 C3 -11.984 -7.133 62.045 C.ar 1 ZMA 0.000
+4 O4 -12.231 -6.638 63.286 O.3 1 ZMA 0.000
+5 C5 -12.476 -6.469 60.928 C.ar 1 ZMA 0.000
+6 C6 -12.230 -6.969 59.657 C.ar 1 ZMA 0.000
+7 C7 -11.492 -8.135 59.501 C.ar 1 ZMA 0.000
+8 C8 -11.208 -8.677 58.101 C.3 1 ZMA 0.000
+9 C9 -9.746 -9.104 58.006 C.3 1 ZMA 0.000
+10 N10 -9.420 -9.544 56.644 N.pl3 1 ZMA 0.000
+11 C11 -8.953 -8.593 55.842 C.cat 1 ZMA 0.000
+12 N12 -8.585 -8.857 54.578 N.ar 1 ZMA 0.000
+13 N13 -8.833 -7.359 56.358 N.ar 1 ZMA 0.000
+14 C14 -8.365 -6.342 55.626 C.cat 1 ZMA 0.000
+15 N15 -8.266 -5.125 56.156 N.pl3 1 ZMA 0.000
+16 N16 -7.981 -6.582 54.309 N.ar 1 ZMA 0.000
+17 N17 -7.525 -5.852 53.428 N.ar 1 ZMA 0.000
+18 C18 -8.104 -7.874 53.800 C.cat 1 ZMA 0.000
+19 N19 -7.676 -7.829 52.544 N.ar 1 ZMA 0.000
+20 C20 -7.313 -6.565 52.320 C.ar 1 ZMA 0.000
+21 C21 -6.809 -6.054 51.131 C.ar 1 ZMA 0.000
+22 C22 -6.554 -6.688 49.991 C.ar 1 ZMA 0.000
+23 C23 -6.081 -5.796 49.121 C.ar 1 ZMA 0.000
+24 C24 -6.034 -4.598 49.703 C.ar 1 ZMA 0.000
+25 O25 -6.492 -4.739 50.984 O.3 1 ZMA 0.000
+@<TRIPOS>BOND
+1 1 7 ar
+2 1 2 ar
+3 2 3 ar
+4 3 5 ar
+5 3 4 1
+6 5 6 ar
+7 6 7 ar
+8 7 8 1
+9 8 9 1
+10 9 10 1
+11 10 11 1
+12 11 12 ar
+13 11 13 ar
+14 12 18 ar
+15 13 14 ar
+16 14 16 ar
+17 14 15 1
+18 16 17 ar
+19 16 18 ar
+20 17 20 ar
+21 18 19 ar
+22 19 20 ar
+23 20 21 ar
+24 21 22 ar
+25 21 25 ar
+26 22 23 ar
+27 23 24 ar
+28 24 25 ar
+@<TRIPOS>SUBSTRUCTURE
+1 ZMA 1

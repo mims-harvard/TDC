@@ -1,0 +1,71 @@
+# Name: JRZ
+# Created by ModelServer 0.9.6
+
+# model_server_result.job_id: X8OFw5RrwrHCgMOwQsK7w6
+# model_server_result.datetime_utc: 2021-08-29 21:10:52
+# model_server_result.server_version: 0.9.6
+# model_server_result.query_name: ligand
+# model_server_result.source_id: pdb-bcif
+# model_server_result.entry_id: 3ny8
+
+# model_server_params.name: atom_site
+# model_server_params.value: {"label_asym_id":"D","auth_seq_id":1203}
+
+# model_server_stats.io_time_ms: 8
+# model_server_stats.parse_time_ms: 30
+# model_server_stats.create_model_time_ms: 9
+# model_server_stats.query_time_ms: 228
+# model_server_stats.encode_time_ms: 0
+# model_server_stats.element_count: 20
+
+@<TRIPOS>MOLECULE
+JRZ
+20 21 1
+****
+****
+
+@<TRIPOS>ATOM
+1 C1 1.285 0.331 51.536 C.3 1 JRZ 0.000
+2 N1 3.401 8.236 53.102 N.3 1 JRZ 0.000
+3 O1 3.104 4.717 50.478 O.3 1 JRZ 0.000
+4 C2 1.830 1.052 52.740 C.3 1 JRZ 0.000
+5 O2 3.517 8.359 50.405 O.3 1 JRZ 0.000
+6 C3 2.762 2.135 52.240 C.3 1 JRZ 0.000
+7 C4 2.123 2.498 50.876 C.ar 1 JRZ 0.000
+8 C5 1.274 1.454 50.482 C.ar 1 JRZ 0.000
+9 C6 0.545 1.565 49.305 C.ar 1 JRZ 0.000
+10 C7 -0.400 0.445 48.893 C.3 1 JRZ 0.000
+11 C8 0.659 2.695 48.503 C.ar 1 JRZ 0.000
+12 C9 1.493 3.743 48.890 C.ar 1 JRZ 0.000
+13 C10 2.215 3.658 50.090 C.ar 1 JRZ 0.000
+14 C11 2.949 6.053 49.986 C.3 1 JRZ 0.000
+15 C12 3.618 7.065 50.957 C.3 1 JRZ 0.000
+16 C13 2.986 7.036 52.381 C.3 1 JRZ 0.000
+17 C14 1.465 7.034 52.305 C.3 1 JRZ 0.000
+18 C15 3.400 8.086 54.546 C.3 1 JRZ 0.000
+19 C16 4.607 8.814 55.119 C.3 1 JRZ 0.000
+20 C17 2.143 8.723 55.130 C.3 1 JRZ 0.000
+@<TRIPOS>BOND
+1 1 4 1
+2 1 8 1
+3 2 16 1
+4 2 18 1
+5 3 13 1
+6 3 14 1
+7 4 6 1
+8 5 15 1
+9 6 7 1
+10 7 8 ar
+11 7 13 ar
+12 8 9 ar
+13 9 10 1
+14 9 11 ar
+15 11 12 ar
+16 12 13 ar
+17 14 15 1
+18 15 16 1
+19 16 17 1
+20 18 19 1
+21 18 20 1
+@<TRIPOS>SUBSTRUCTURE
+1 JRZ 1

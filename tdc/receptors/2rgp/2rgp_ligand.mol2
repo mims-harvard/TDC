@@ -1,0 +1,100 @@
+# Name: HYZ
+# Created by ModelServer 0.9.6
+
+# model_server_result.job_id: wro2cRLDkgnCkR3DmT1_FR
+# model_server_result.datetime_utc: 2021-08-29 21:04:59
+# model_server_result.server_version: 0.9.6
+# model_server_result.query_name: ligand
+# model_server_result.source_id: pdb-bcif
+# model_server_result.entry_id: 2rgp
+
+# model_server_params.name: atom_site
+# model_server_params.value: {"label_asym_id":"D","auth_seq_id":1}
+
+# model_server_stats.io_time_ms: 2
+# model_server_stats.parse_time_ms: 28
+# model_server_stats.create_model_time_ms: 8
+# model_server_stats.query_time_ms: 213
+# model_server_stats.encode_time_ms: 1
+# model_server_stats.element_count: 33
+
+@<TRIPOS>MOLECULE
+HYZ
+33 37 1
+****
+****
+
+@<TRIPOS>ATOM
+1 C1 14.718 40.116 97.099 C.ar 1 HYZ 0.000
+2 C2 16.031 40.222 97.632 C.ar 1 HYZ 0.000
+3 C3 16.878 39.076 97.686 C.ar 1 HYZ 0.000
+4 N6 13.967 33.258 86.949 N.pl3 1 HYZ 0.000
+5 C7 17.323 36.558 97.260 C.3 1 HYZ 0.000
+6 C8 15.585 33.760 95.994 C.ar 1 HYZ 0.000
+7 C9 16.075 34.221 94.756 C.ar 1 HYZ 0.000
+8 C10 16.840 35.358 95.070 C.ar 1 HYZ 0.000
+9 C11 17.514 36.129 94.076 C.ar 1 HYZ 0.000
+10 C12 17.390 35.712 92.735 C.ar 1 HYZ 0.000
+11 C13 16.625 34.574 92.382 C.ar 1 HYZ 0.000
+12 C14 15.965 33.817 93.403 C.ar 1 HYZ 0.000
+13 C15 14.124 33.645 88.264 C.ar 1 HYZ 0.000
+14 C16 15.391 33.719 88.896 C.ar 1 HYZ 0.000
+15 C19 16.644 33.395 88.186 C.3 1 HYZ 0.000
+16 C20 19.509 31.997 84.858 C.3 1 HYZ 0.000
+17 C21 18.127 31.934 85.537 C.3 1 HYZ 0.000
+18 C22 19.167 31.524 87.740 C.3 1 HYZ 0.000
+19 C24 20.554 31.190 85.635 C.3 1 HYZ 0.000
+20 C4 16.419 37.808 97.209 C.ar 1 HYZ 0.000
+21 C5 15.083 37.730 96.675 C.ar 1 HYZ 0.000
+22 C6 14.256 38.869 96.625 C.ar 1 HYZ 0.000
+23 F1 13.011 38.756 96.118 F 1 HYZ 0.000
+24 N1 16.731 35.493 96.434 N.ar 1 HYZ 0.000
+25 N2 15.971 34.519 97.019 N.ar 1 HYZ 0.000
+26 N3 16.525 34.248 91.037 N.pl3 1 HYZ 0.000
+27 N4 12.954 33.963 88.911 N.ar 1 HYZ 0.000
+28 C17 15.391 34.120 90.231 C.ar 1 HYZ 0.000
+29 N5 14.212 34.444 90.892 N.ar 1 HYZ 0.000
+30 C18 13.041 34.352 90.201 C.ar 1 HYZ 0.000
+31 N7 16.900 32.290 87.559 N.3 1 HYZ 0.000
+32 N8 18.146 32.344 86.984 N.3 1 HYZ 0.000
+33 C23 20.573 31.596 87.112 C.3 1 HYZ 0.000
+@<TRIPOS>BOND
+1 1 2 ar
+2 1 22 ar
+3 2 3 ar
+4 3 20 ar
+5 4 13 1
+6 5 24 1
+7 5 20 1
+8 6 7 ar
+9 6 25 ar
+10 7 12 ar
+11 7 8 ar
+12 8 9 ar
+13 8 24 ar
+14 9 10 ar
+15 10 11 ar
+16 11 26 1
+17 11 12 ar
+18 13 14 ar
+19 13 27 ar
+20 14 15 1
+21 14 28 ar
+22 15 31 1
+23 16 17 1
+24 16 19 1
+25 17 32 1
+26 18 32 1
+27 18 33 1
+28 19 33 1
+29 20 21 ar
+30 21 22 ar
+31 22 23 1
+32 24 25 ar
+33 26 28 1
+34 27 30 ar
+35 28 29 ar
+36 29 30 ar
+37 31 32 1
+@<TRIPOS>SUBSTRUCTURE
+1 HYZ 1

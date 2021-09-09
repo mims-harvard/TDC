@@ -1,0 +1,69 @@
+# Name: HCC
+# Created by ModelServer 0.9.6
+
+# model_server_result.job_id: H8Kiwpsqw7nDjMOsA2cfHM
+# model_server_result.datetime_utc: 2021-08-29 20:50:07
+# model_server_result.server_version: 0.9.6
+# model_server_result.query_name: ligand
+# model_server_result.source_id: pdb-bcif
+# model_server_result.entry_id: 4rlu
+
+# model_server_params.name: atom_site
+# model_server_params.value: {"label_asym_id":"C","auth_seq_id":201}
+
+# model_server_stats.io_time_ms: 10
+# model_server_stats.parse_time_ms: 46
+# model_server_stats.create_model_time_ms: 9
+# model_server_stats.query_time_ms: 200
+# model_server_stats.encode_time_ms: 0
+# model_server_stats.element_count: 19
+
+@<TRIPOS>MOLECULE
+HCC
+19 20 1
+****
+****
+
+@<TRIPOS>ATOM
+1 C1 -3.627 26.592 -30.214 C.ar 1 HCC 0.000
+2 C2 -2.781 26.251 -31.258 C.ar 1 HCC 0.000
+3 C3 -2.110 25.039 -31.251 C.ar 1 HCC 0.000
+4 C4 -2.285 24.173 -30.186 C.ar 1 HCC 0.000
+5 C5 -3.124 24.514 -29.140 C.ar 1 HCC 0.000
+6 C6 -3.798 25.722 -29.150 C.ar 1 HCC 0.000
+7 C7 -1.571 22.843 -30.126 C.2 1 HCC 0.000
+8 C8 -0.522 22.438 -31.139 C.2 1 HCC 0.000
+9 C9 -0.105 21.154 -31.131 C.2 1 HCC 0.000
+10 O10 -3.290 23.623 -28.065 O.3 1 HCC 0.000
+11 C11 0.948 20.640 -32.087 C.ar 1 HCC 0.000
+12 C12 1.251 21.333 -33.247 C.ar 1 HCC 0.000
+13 C13 2.222 20.847 -34.111 C.ar 1 HCC 0.000
+14 C14 2.889 19.669 -33.814 C.ar 1 HCC 0.000
+15 C15 2.586 18.976 -32.654 C.ar 1 HCC 0.000
+16 C16 1.616 19.462 -31.792 C.ar 1 HCC 0.000
+17 O17 -1.845 22.082 -29.222 O.2 1 HCC 0.000
+18 O18 3.874 19.174 -34.690 O.3 1 HCC 0.000
+19 O19 -4.312 27.822 -30.224 O.3 1 HCC 0.000
+@<TRIPOS>BOND
+1 1 2 ar
+2 1 6 ar
+3 1 19 1
+4 2 3 ar
+5 3 4 ar
+6 4 5 ar
+7 4 7 1
+8 5 6 ar
+9 5 10 1
+10 7 8 1
+11 7 17 2
+12 8 9 2
+13 9 11 1
+14 11 12 ar
+15 11 16 ar
+16 12 13 ar
+17 13 14 ar
+18 14 15 ar
+19 14 18 1
+20 15 16 ar
+@<TRIPOS>SUBSTRUCTURE
+1 HCC 1

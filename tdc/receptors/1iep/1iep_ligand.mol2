@@ -1,0 +1,108 @@
+# Name: STI
+# Created by ModelServer 0.9.6
+
+# model_server_result.job_id: w6A2eCMXwrXCrBQLbyZQw6
+# model_server_result.datetime_utc: 2021-08-29 21:22:12
+# model_server_result.server_version: 0.9.6
+# model_server_result.query_name: ligand
+# model_server_result.source_id: pdb-bcif
+# model_server_result.entry_id: 1iep
+
+# model_server_params.name: atom_site
+# model_server_params.value: {"label_asym_id":"G","auth_seq_id":201}
+
+# model_server_stats.io_time_ms: 4
+# model_server_stats.parse_time_ms: 40
+# model_server_stats.create_model_time_ms: 15
+# model_server_stats.query_time_ms: 197
+# model_server_stats.encode_time_ms: 0
+# model_server_stats.element_count: 37
+
+@<TRIPOS>MOLECULE
+STI
+37 41 1
+****
+****
+
+@<TRIPOS>ATOM
+1 C1 11.879 62.272 12.570 C.ar 1 STI 0.000
+2 C6 13.002 61.429 12.910 C.ar 1 STI 0.000
+3 C5 13.097 60.070 12.392 C.ar 1 STI 0.000
+4 C4 12.031 59.591 11.525 C.ar 1 STI 0.000
+5 N3 10.961 60.425 11.216 N.ar 1 STI 0.000
+6 C2 10.858 61.734 11.710 C.ar 1 STI 0.000
+7 C7 14.238 59.155 12.712 C.ar 1 STI 0.000
+8 C12 15.433 59.579 13.383 C.ar 1 STI 0.000
+9 C11 16.428 58.603 13.615 C.ar 1 STI 0.000
+10 N10 16.232 57.303 13.202 N.ar 1 STI 0.000
+11 C9 15.067 56.927 12.559 C.cat 1 STI 0.000
+12 N8 14.101 57.840 12.327 N.ar 1 STI 0.000
+13 N13 14.852 55.627 12.128 N.pl3 1 STI 0.000
+14 C14 15.822 54.641 12.322 C.ar 1 STI 0.000
+15 C19 16.950 54.502 11.393 C.ar 1 STI 0.000
+16 C18 17.915 53.471 11.648 C.ar 1 STI 0.000
+17 C17 17.774 52.597 12.786 C.ar 1 STI 0.000
+18 C16 16.678 52.727 13.688 C.ar 1 STI 0.000
+19 C15 15.698 53.772 13.436 C.ar 1 STI 0.000
+20 N21 16.600 51.810 14.798 N.am 1 STI 0.000
+21 C22 15.629 51.747 15.784 C.2 1 STI 0.000
+22 C23 15.595 50.558 16.689 C.ar 1 STI 0.000
+23 C25 14.423 50.268 17.519 C.ar 1 STI 0.000
+24 C26 14.423 49.124 18.396 C.ar 1 STI 0.000
+25 C27 15.600 48.260 18.446 C.ar 1 STI 0.000
+26 C28 16.747 48.568 17.608 C.ar 1 STI 0.000
+27 C29 16.751 49.689 16.748 C.ar 1 STI 0.000
+28 C46 15.696 47.030 19.368 C.3 1 STI 0.000
+29 N48 16.917 46.907 20.219 N.3 1 STI 0.000
+30 C53 17.097 48.140 21.070 C.3 1 STI 0.000
+31 C52 18.375 48.041 21.949 C.3 1 STI 0.000
+32 N51 18.337 46.794 22.821 N.3 1 STI 0.000
+33 C54 19.522 46.655 23.680 C.3 1 STI 0.000
+34 C50 18.172 45.533 21.971 C.3 1 STI 0.000
+35 C49 16.877 45.658 21.104 C.3 1 STI 0.000
+36 O29 14.789 52.612 15.983 O.2 1 STI 0.000
+37 C20 17.148 55.406 10.154 C.3 1 STI 0.000
+@<TRIPOS>BOND
+1 1 2 ar
+2 1 6 ar
+3 2 3 ar
+4 3 4 ar
+5 3 7 ar
+6 4 5 ar
+7 5 6 ar
+8 7 8 ar
+9 7 12 ar
+10 8 9 ar
+11 9 10 ar
+12 10 11 ar
+13 11 12 ar
+14 11 13 1
+15 13 14 1
+16 14 15 ar
+17 14 19 ar
+18 15 16 ar
+19 15 37 1
+20 16 17 ar
+21 17 18 ar
+22 18 19 ar
+23 18 20 1
+24 20 21 1
+25 21 22 1
+26 21 36 2
+27 22 23 ar
+28 22 27 ar
+29 23 24 ar
+30 24 25 ar
+31 25 26 ar
+32 25 28 1
+33 26 27 ar
+34 28 29 1
+35 29 30 1
+36 29 35 1
+37 30 31 1
+38 31 32 1
+39 32 33 1
+40 32 34 1
+41 34 35 1
+@<TRIPOS>SUBSTRUCTURE
+1 STI 1

@@ -1,0 +1,84 @@
+# Name: QZZ
+# Created by ModelServer 0.9.6
+
+# model_server_result.job_id: aQPCs1lYwqTCtyhQJBpSw4
+# model_server_result.datetime_utc: 2021-08-29 21:01:30
+# model_server_result.server_version: 0.9.6
+# model_server_result.query_name: ligand
+# model_server_result.source_id: pdb-bcif
+# model_server_result.entry_id: 4unn
+
+# model_server_params.name: atom_site
+# model_server_params.value: {"label_asym_id":"C","auth_seq_id":1210}
+
+# model_server_stats.io_time_ms: 9
+# model_server_stats.parse_time_ms: 37
+# model_server_stats.create_model_time_ms: 6
+# model_server_stats.query_time_ms: 219
+# model_server_stats.encode_time_ms: 0
+# model_server_stats.element_count: 26
+
+@<TRIPOS>MOLECULE
+QZZ
+26 28 1
+****
+****
+
+@<TRIPOS>ATOM
+1 C16 4.213 21.310 -8.296 C.1 1 QZZ 0.000
+2 C5 2.361 13.716 -7.914 C.ar 1 QZZ 0.000
+3 C6 2.611 15.050 -8.224 C.ar 1 QZZ 0.000
+4 C19 7.801 19.177 -7.869 C.ar 1 QZZ 0.000
+5 C23 6.743 20.911 -6.605 C.ar 1 QZZ 0.000
+6 C20 9.050 19.691 -7.567 C.ar 1 QZZ 0.000
+7 C22 8.013 21.433 -6.300 C.ar 1 QZZ 0.000
+8 C4 3.250 12.990 -7.152 C.ar 1 QZZ 0.000
+9 C8 4.670 14.920 -7.007 C.ar 1 QZZ 0.000
+10 C18 6.626 19.768 -7.402 C.ar 1 QZZ 0.000
+11 C7 3.775 15.662 -7.783 C.ar 1 QZZ 0.000
+12 C21 9.175 20.819 -6.784 C.ar 1 QZZ 0.000
+13 C3 4.410 13.593 -6.710 C.ar 1 QZZ 0.000
+14 C10 5.170 17.738 -7.633 C.2 1 QZZ 0.000
+15 C12 4.200 19.897 -8.199 C.2 1 QZZ 0.000
+16 C11 5.300 19.145 -7.729 C.2 1 QZZ 0.000
+17 C9 4.016 17.100 -7.990 C.2 1 QZZ 0.000
+18 C13 2.958 19.261 -8.560 C.2 1 QZZ 0.000
+19 C24 10.544 21.337 -6.461 C.2 1 QZZ 0.000
+20 C1 6.296 13.516 -5.163 C.3 1 QZZ 0.000
+21 N17 4.151 22.450 -8.313 N.1 1 QZZ 0.000
+22 N15 2.943 17.884 -8.429 N.am 1 QZZ 0.000
+23 O14 1.954 19.839 -8.975 O.2 1 QZZ 0.000
+24 O25 10.837 22.515 -6.393 O.2 1 QZZ 0.000
+25 O26 11.425 20.403 -6.259 O.3 1 QZZ 0.000
+26 O2 5.301 12.861 -5.944 O.3 1 QZZ 0.000
+@<TRIPOS>BOND
+1 1 15 1
+2 1 21 3
+3 2 3 ar
+4 2 8 ar
+5 3 11 ar
+6 4 6 ar
+7 4 10 ar
+8 5 7 ar
+9 5 10 ar
+10 6 12 ar
+11 7 12 ar
+12 8 13 ar
+13 9 11 ar
+14 9 13 ar
+15 10 16 1
+16 11 17 1
+17 12 19 1
+18 13 26 1
+19 14 16 1
+20 14 17 2
+21 15 16 2
+22 15 18 1
+23 17 22 1
+24 18 22 1
+25 18 23 2
+26 19 24 2
+27 19 25 1
+28 20 26 1
+@<TRIPOS>SUBSTRUCTURE
+1 QZZ 1

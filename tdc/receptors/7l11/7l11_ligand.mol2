@@ -1,0 +1,97 @@
+# Name: XF1
+# Created by ModelServer 0.9.6
+
+# model_server_result.job_id: w6JQwrVuwpR6wpbCkSnDuC
+# model_server_result.datetime_utc: 2021-08-29 21:13:35
+# model_server_result.server_version: 0.9.6
+# model_server_result.query_name: ligand
+# model_server_result.source_id: pdb-bcif
+# model_server_result.entry_id: 7l11
+
+# model_server_params.name: atom_site
+# model_server_params.value: {"label_asym_id":"C","auth_seq_id":400}
+
+# model_server_stats.io_time_ms: 4
+# model_server_stats.parse_time_ms: 49
+# model_server_stats.create_model_time_ms: 14
+# model_server_stats.query_time_ms: 215
+# model_server_stats.encode_time_ms: 0
+# model_server_stats.element_count: 32
+
+@<TRIPOS>MOLECULE
+XF1
+32 35 1
+****
+****
+
+@<TRIPOS>ATOM
+1 C7 -21.726 -4.561 -25.780 C.2 1 XF1 0.000
+2 C8 -23.052 -4.275 -26.239 C.2 1 XF1 0.000
+3 C9 -24.229 -4.346 -25.273 C.ar 1 XF1 0.000
+4 C10 -24.208 -3.817 -23.964 C.ar 1 XF1 0.000
+5 C11 -22.989 -3.079 -23.420 C.1 1 XF1 0.000
+6 C12 -25.333 -3.958 -23.134 C.ar 1 XF1 0.000
+7 O1 -19.764 -4.242 -28.902 O.2 1 XF1 0.000
+8 C1 -20.852 -4.242 -28.044 C.2 1 XF1 0.000
+9 C2 -19.282 -4.785 -26.211 C.ar 1 XF1 0.000
+10 C3 -18.328 -3.758 -26.261 C.ar 1 XF1 0.000
+11 C4 -16.689 -5.246 -25.266 C.ar 1 XF1 0.000
+12 C5 -17.645 -6.275 -25.218 C.ar 1 XF1 0.000
+13 C6 -18.949 -6.039 -25.682 C.ar 1 XF1 0.000
+14 O2 -21.307 -4.714 -33.394 O.3 1 XF1 0.000
+15 C13 -26.471 -4.634 -23.601 C.ar 1 XF1 0.000
+16 C14 -26.493 -5.166 -24.894 C.ar 1 XF1 0.000
+17 C15 -25.374 -5.024 -25.721 C.ar 1 XF1 0.000
+18 C16 -23.249 -4.008 -27.644 C.2 1 XF1 0.000
+19 C17 -22.143 -3.977 -28.517 C.2 1 XF1 0.000
+20 C18 -22.417 -3.670 -29.990 C.ar 1 XF1 0.000
+21 C19 -23.400 -2.714 -30.317 C.ar 1 XF1 0.000
+22 C20 -23.661 -2.438 -31.677 C.ar 1 XF1 0.000
+23 C21 -22.969 -3.115 -32.693 C.ar 1 XF1 0.000
+24 C22 -21.993 -4.070 -32.363 C.ar 1 XF1 0.000
+25 C23 -20.191 -5.464 -33.027 C.3 1 XF1 0.000
+26 C24 -19.551 -5.929 -34.330 C.3 1 XF1 0.000
+27 C25 -19.458 -4.722 -35.259 C.3 1 XF1 0.000
+28 C26 -21.715 -4.347 -31.013 C.ar 1 XF1 0.000
+29 N1 -20.628 -4.526 -26.700 N.am 1 XF1 0.000
+30 N2 -17.033 -3.984 -25.791 N.ar 1 XF1 0.000
+31 N3 -22.074 -2.535 -23.027 N.1 1 XF1 0.000
+32 CL1 -24.901 -1.254 -32.129 CL 1 XF1 0.000
+@<TRIPOS>BOND
+1 1 29 1
+2 1 2 2
+3 2 18 1
+4 2 3 1
+5 3 17 ar
+6 3 4 ar
+7 4 5 1
+8 4 6 ar
+9 5 31 3
+10 6 15 ar
+11 7 8 2
+12 8 19 1
+13 8 29 1
+14 9 29 1
+15 9 10 ar
+16 9 13 ar
+17 10 30 ar
+18 11 30 ar
+19 11 12 ar
+20 12 13 ar
+21 14 25 1
+22 14 24 1
+23 15 16 ar
+24 16 17 ar
+25 18 19 2
+26 19 20 1
+27 20 28 ar
+28 20 21 ar
+29 21 22 ar
+30 22 23 ar
+31 22 32 1
+32 23 24 ar
+33 24 28 ar
+34 25 26 1
+35 26 27 1
+@<TRIPOS>SUBSTRUCTURE
+1 XF1 1
