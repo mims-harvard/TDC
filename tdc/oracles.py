@@ -184,7 +184,7 @@ class Oracle:
 		elif self.name == 'docking_score':
 			from .chem_utils import Vina_smiles
 			self.evaluator_func = Vina_smiles(**self.kwargs)
-		elif self.name == 'DRD3_docking':
+		elif self.name == 'drd3_docking':
 			pass 
 		elif self.name == '1iep_docking':
 			pass 

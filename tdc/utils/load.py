@@ -10,8 +10,9 @@ from tqdm import tqdm
 from ..metadata import name2type, name2id, dataset_list, dataset_names, benchmark_names, benchmark2id, benchmark2type
 from ..metadata import property_names, paired_dataset_names, single_molecule_dataset_names
 from ..metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
-from ..metadata import oracle2id, download_oracle_names, trivial_oracle_names, oracle_names, oracle2type 
+from ..metadata import oracle2id, receptor2id, download_oracle_names, trivial_oracle_names, oracle_names, oracle2type 
 
+receptor_names = list(receptor2id.keys())
 sys.path.append('../')
 
 from .misc import fuzzy_search, print_sys
@@ -121,6 +122,36 @@ def oracle_download_wrapper(name, path, oracle_names):
 		dataverse_download(dataset_path, path, name, oracle2type) ## to-do to-check
 		print_sys("Done!")
 	return name
+
+
+def receptor_download_wrapper(name, path):
+	"""wrapper for downloading an receptor pdb file given the name and path
+	
+	Args:
+	    name (str): the rough pdbid
+	    path (str): the path to save the oracle
+	
+	Returns:
+	    str: the exact pdbid
+	"""
+	name = fuzzy_search(name, receptor_names)
+
+	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
+	dataset_path = server_path + str(receptor2id[name])
+
+	if not os.path.exists(path):
+		os.mkdir(path)
+
+	if os.path.exists(os.path.join(path, name + '.pdb')):
+		print_sys('Found local copy...')
+	else:
+		print_sys("Downloading receptor...")
+		dataverse_download(dataset_path, path, name, 'pdb') ## to-do to-check
+		print_sys("Done!")
+	return name
+
+
+
 
 def bm_download_wrapper(name, path):
 	"""wrapper for downloading a benchmark group given the name and path
@@ -355,6 +386,21 @@ def oracle_load(name, path = './oracle', oracle_names = oracle_names):
 	"""
 	name = oracle_download_wrapper(name, path, oracle_names)
 	return name
+
+
+def receptor_load(name, path = './oracle'):
+	"""a wrapper to download, process and load pdb file. 
+	
+	Args:
+	    name (str): the rough pdbid name
+	    path (str): the oracle path to save/retrieve, defaults to './oracle'
+	
+	Returns:
+	    str: exact pdbid name
+	"""
+	name = receptor_download_wrapper(name, path)
+	return name	
+
 
 def bm_group_load(name, path):
 	"""a wrapper to download, process and load benchmark group

@@ -51,6 +51,7 @@ Attributes:
     name2type (dict): mapping from dataset names to downloaded file format
     oracle2id (dict): mapping from oracle names to dataverse id
     oracle2type (dict): mapping from oracle names to downloaded file format
+    receptor2id (dict): mapping from receptor id to dataverse id 
     oracle_names (list): list of all oracle names
     paired_dataset_names (list): all paired dataset names
     paratope_dataset_names (list): all paratope dataset names
@@ -224,9 +225,9 @@ drugsyn_benchmark = {'Synergy': ['drugcomb_css',
 
 dti_dg_benchmark = {'DTI': ['bindingdb_patent']} 
 
-docking_benchmark = {'Targets': ['DRD3', '1iep', '2rgp', '3eml', '3ny8', '4rlu', '4unn', '5mo4', '7l11']}
+docking_benchmark = {'Targets': ['drd3', '1iep', '2rgp', '3eml', '3ny8', '4rlu', '4unn', '5mo4', '7l11']}
 
-docking_target_info = {'DRD3': {'center': (9, 22.5, 26), 'size': (15, 15, 15)},
+docking_target_info = {'drd3': {'center': (9, 22.5, 26), 'size': (15, 15, 15)},
 					   '1iep': {'center': (15.61389189189189, 53.38013513513513, 15.454837837837842), 'size': (15, 15, 15)},
 					   '2rgp': {'center': (16.292121212121213, 34.87081818181819, 92.0353030303030), 'size': (15, 15, 15)},
 					   '3eml': {'center': (-9.063639999999998, -7.1446, 55.86259999999999), 'size': (15, 15, 15)},
@@ -322,10 +323,13 @@ dti_dg_splits = {'bindingdb_patent': 'group'}
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
+download_receptor_oracle_name = ['1iep', '2rgp', '3eml', '3ny8', '4rlu', '4unn', '5mo4', '7l11', 'drd3']
+
+
 
 meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta', 'docking_score', 'molecule_one_synthesis']
 
-oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name 
+oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name + download_receptor_oracle_name 
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
@@ -598,6 +602,17 @@ benchmark2id = {'admet_group': 4426004,
                 'drugcombo_group':  4426002,
                 'docking_group': 4554082,
                 'dti_dg_group': 4742443}
+
+receptor2id = {'drd3': 5137901, 
+			   '1iep': 5137889, 
+			   '2rgp': 5137891, 
+			   '3eml': 5137884, 
+			   '3ny8': 5137892,
+			   '4rlu': 5137887, 
+			   '4unn': 5137885,
+			   '5mo4': 5137886, 
+			   '7l11': 5137890, }
+
 
 sdf_file_names = {
 	'grambow': ['Product', 'Reactant', 'TS']
