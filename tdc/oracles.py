@@ -184,6 +184,24 @@ class Oracle:
 		elif self.name == 'docking_score':
 			from .chem_utils import Vina_smiles
 			self.evaluator_func = Vina_smiles(**self.kwargs)
+		elif self.name == 'DRD3_docking':
+			pass 
+		elif self.name == '1iep_docking':
+			pass 
+		elif self.name == '2rgp_docking':
+			pass 
+		elif self.name == '3eml_docking':
+			pass 
+		elif self.name == '3ny8_docking':
+			pass 
+		elif self.name == '4rlu_docking':
+			pass 
+		elif self.name == '4unn_docking':
+			pass 
+		elif self.name == '5mo4_docking':
+			pass 
+		elif self.name == '7l11_docking':
+			pass 
 		elif self.name == 'uniqueness':
 			from .chem_utils import uniqueness
 			self.evaluator_func = uniqueness 

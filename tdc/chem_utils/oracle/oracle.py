@@ -1354,7 +1354,7 @@ class Score_3d:
 
     def __call__(self, ligand_pdbqt_file, minimize=True):
       try:
-        self.v.set_ligand_from_file('1iep_ligand.pdbqt')
+        self.v.set_ligand_from_file(ligand_pdbqt_file)
         if minimize:
           energy = self.v.optimize()[0]
         else:
@@ -1387,9 +1387,9 @@ class Vina_3d:
     def __call__(self, ligand_pdbqt_file, output_file='out.pdbqt', exhaustiveness=8, n_poses=10):
       try:
         self.v.set_ligand_from_file(ligand_pdbqt_file)
-        v.dock(exhaustiveness=exhaustiveness, n_poses=n_poses)
-        v.write_poses(output_file, n_poses=n_poses, overwrite=True)
-        energy = v.score()[0]
+        self.v.dock(exhaustiveness=exhaustiveness, n_poses=n_poses)
+        self.v.write_poses(output_file, n_poses=n_poses, overwrite=True)
+        energy = self.v.score()[0]
       except Exception as e:
         print(e)
         return np.inf 
@@ -1424,9 +1424,9 @@ class Vina_smiles:
         print(Chem.MolToMolBlock(m),file=open('__temp.mol','w+'))
         os.system('mk_prepare_ligand.py -i __temp.mol -o __temp.pdbqt')
         self.v.set_ligand_from_file("__temp.pdbqt")
-        v.dock(exhaustiveness=exhaustiveness, n_poses=n_poses)
-        v.write_poses(output_file, n_poses=n_poses, overwrite=True)
-        energy = v.score()[0]
+        self.v.dock(exhaustiveness=exhaustiveness, n_poses=n_poses)
+        self.v.write_poses(output_file, n_poses=n_poses, overwrite=True)
+        energy = self.v.score()[0]
         os.system('rm __temp.mol __temp.pdbqt')
       except Exception as e:
         print(e)
