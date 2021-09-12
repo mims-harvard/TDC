@@ -1410,6 +1410,7 @@ class Vina_smiles:
       self.center = center 
       self.box_size = box_size 
       self.v.set_receptor(rigid_pdbqt_filename=receptor_pdbqt_file)
+      # self.v.set_receptor(rigid_pdbqt_filename = "tdc/receptors/1iep/1iep_receptor.pdbqt")
       try:
         self.v.compute_vina_maps(center=self.center, box_size=self.box_size)
       except:

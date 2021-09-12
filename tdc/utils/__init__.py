@@ -5,6 +5,7 @@ from .load import distribution_dataset_load, \
 					multi_dataset_load,\
 					property_dataset_load, \
 					oracle_load,\
+					receptor_load,\
 					bm_group_load
 from .split import create_fold,\
 					create_fold_setting_cold,\

@@ -4,7 +4,7 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .utils import fuzzy_search, oracle_load
+from .utils import fuzzy_search, oracle_load, receptor_load
 from .metadata import download_oracle_names, oracle_names, distribution_oracles, download_receptor_oracle_name, docking_target_info 
 
 class Oracle:
@@ -27,8 +27,12 @@ class Oracle:
 		name = fuzzy_search(name, oracle_names)
 		if name in download_oracle_names:
 			self.name = oracle_load(name)
-		elif name in download_receptor_oracle_name:
-			self.name = receptor_load(name)
+		elif name in download_receptor_oracle_name:  
+			## '1iep_docking', '2rgp_docking',  
+			pdbid = name.split('_')[0]
+			self.name = receptor_load(pdbid)
+			self.pdbid = self.name 
+			self.name += '_docking' 
 		else:
 			self.name = name
 		self.evaluator_func = None
@@ -195,11 +199,29 @@ class Oracle:
 											  center = center, 
 											  box_size = boxsize)
 		elif self.name == '1iep_docking':
-			pass
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
 		elif self.name == '2rgp_docking':
-			pass
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
 		elif self.name == '3eml_docking':
-			pass
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
 		elif self.name == '3ny8_docking':
 			pass
 		elif self.name == '4rlu_docking':

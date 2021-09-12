@@ -11,6 +11,7 @@ from ..metadata import name2type, name2id, dataset_list, dataset_names, benchmar
 from ..metadata import property_names, paired_dataset_names, single_molecule_dataset_names
 from ..metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
 from ..metadata import oracle2id, receptor2id, download_oracle_names, trivial_oracle_names, oracle_names, oracle2type 
+from collections import defaultdict 
 
 receptor_names = list(receptor2id.keys())
 sys.path.append('../')
@@ -128,13 +129,12 @@ def receptor_download_wrapper(name, path):
 	"""wrapper for downloading an receptor pdb file given the name and path
 	
 	Args:
-	    name (str): the rough pdbid
+	    name (str): the exact pdbid
 	    path (str): the path to save the oracle
 	
 	Returns:
 	    str: the exact pdbid
 	"""
-	name = fuzzy_search(name, receptor_names)
 
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
 	dataset_path = server_path + str(receptor2id[name])
@@ -142,11 +142,12 @@ def receptor_download_wrapper(name, path):
 	if not os.path.exists(path):
 		os.mkdir(path)
 
-	if os.path.exists(os.path.join(path, name + '.pdb')):
+	if os.path.exists(os.path.join(path, name + '.pdbqt')):
 		print_sys('Found local copy...')
 	else:
 		print_sys("Downloading receptor...")
-		dataverse_download(dataset_path, path, name, 'pdb') ## to-do to-check
+		receptor2type = defaultdict(lambda:'pdbqt')
+		dataverse_download(dataset_path, path, name, receptor2type) ## to-do to-check
 		print_sys("Done!")
 	return name
 
