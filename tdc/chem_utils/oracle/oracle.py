@@ -1419,7 +1419,7 @@ class Vina_smiles:
 
     def __call__(self, ligand_smiles, output_file='out.pdbqt', exhaustiveness=8, n_poses=10):
       try:
-        m = Chem.MolFromSmiles(smi)
+        m = Chem.MolFromSmiles(ligand_smiles)
         m = Chem.AddHs(m)
         AllChem.EmbedMolecule(m)
         print(Chem.MolToMolBlock(m),file=open('__temp.mol','w+'))
