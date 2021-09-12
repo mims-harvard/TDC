@@ -323,7 +323,8 @@ dti_dg_splits = {'bindingdb_patent': 'group'}
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
-download_receptor_oracle_name = ['1iep', '2rgp', '3eml', '3ny8', '4rlu', '4unn', '5mo4', '7l11', 'drd3']
+download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking', '3ny8_docking', '4rlu_docking',
+								 '4unn_docking', '5mo4_docking', '7l11_docking', 'drd3_docking']
 
 
 
