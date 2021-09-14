@@ -223,15 +223,45 @@ class Oracle:
 											  center = center, 
 											  box_size = boxsize)
 		elif self.name == '3ny8_docking':
-			pass
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
 		elif self.name == '4rlu_docking':
 			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
 		elif self.name == '4unn_docking':
 			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
 		elif self.name == '5mo4_docking':
 			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
 		elif self.name == '7l11_docking':
 			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
 		elif self.name == 'uniqueness':
 			from .chem_utils import uniqueness
 			self.evaluator_func = uniqueness 
