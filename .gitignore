@@ -135,7 +135,7 @@ playground.ipynb
 test.ipynb
 file_structure.ipynb
 data/
-oracle/
+#oracle/
 
 # vim backup
 *~
