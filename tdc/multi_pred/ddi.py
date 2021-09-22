@@ -47,6 +47,7 @@ class DDI(bi_pred_dataset.DataLoader):
     def print_stats(self):
         """print the statistics of the dataset 
         """
+        import numpy as np
         print_sys('--- Dataset Statistics ---')
         print('There are ' + str(len(np.unique(
             self.entity1.tolist() + self.entity2.tolist()))) + ' unique drugs.',
