@@ -286,6 +286,7 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column):
 				import sys
 				sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 			else:
+				import sys
 				sys.exit("Please report this error to cosamhkx@gmail.com, thanks!")
 
 
