@@ -1435,6 +1435,12 @@ class Vina_smiles:
       return energy
 
 
+# os.system("python docking.py " + ligand_pdbqt_file + \
+#           " "+target_pdbqt_file + " " + output_file +' '+ \
+#           docking_center_string + ' ' + box_size_string)
+
+
+
 
 
 
