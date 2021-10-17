@@ -288,6 +288,14 @@ Models require extrapolation on unseen compounds, unseen proteins, and unseen co
 </span><span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
+<p class="is-size-6"><strong>Note:</strong> Many DTI pairs have same sequence information but different binding affinities due to different experimental assays. To harmonize them, you can use the below function to retrieve either the maximum affinity or the mean for the duplicated pair:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'BindingDB_Kd'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">harmonize_affinities</span><span class="p">(</span><span class="n">mode</span> <span class="o">=</span> <span class="s">'max_affinity'</span><span class="p">)</span>
+<span class="c1"># data.harmonize_affinities(mode = 'mean')
+</span></code></pre></div></div>
+
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://academic.oup.com/nar/article-abstract/35/suppl_1/D198/1119109">[1] Liu, Tiqing, et al. “BindingDB: a web-accessible database of experimentally determined protein–ligand binding affinities.” Nucleic acids research 35.suppl_1 (2007): D198-D201. </a></p>
@@ -304,7 +312,7 @@ Models require extrapolation on unseen compounds, unseen proteins, and unseen co
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the target amino acid sequence/compound SMILES string, predict their binding affinity. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 27,621 DTI pairs, 68 drugs, 379 proteins. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> <code>0.3.2</code> Update: 25,772 DTI pairs, 68 drugs, 379 proteins. Before: 27,621 DTI pairs, 68 drugs, 379 proteins. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Drug Split</span> <span class="tag is-info is-light">Cold Protein Split</span> </p>
 
@@ -331,7 +339,7 @@ Models require extrapolation on unseen compounds, unseen proteins, and unseen co
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given the target amino acid sequence/compound SMILES string, predict their binding affinity. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 118,036 DTI pairs, 2,068 drugs, 229 proteins. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> <code>0.3.2</code> Update: 117,657 DTI pairs, 2,068 drugs, 229 proteins. Before: 118,036 DTI pairs, 2,068 drugs, 229 proteins. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Cold Drug Split</span> <span class="tag is-info is-light">Cold Protein Split</span> </p>
 

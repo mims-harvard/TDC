@@ -313,6 +313,12 @@ As there is a very large space of possible drug-drug interactions that have not 
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
+<p class="is-size-6">  <strong> Note: </strong> To know what type of relation the label index corresponds to, use:  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">get_label_map</span>
+<span class="n">get_label_map</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'TWOSIDES'</span><span class="p">,</span> <span class="n">task</span> <span class="o">=</span> <span class="s">'DDI'</span><span class="p">,</span> <span class="n">name_column</span> <span class="o">=</span> <span class="s">'Side Effect Name'</span><span class="p">)</span>
+</code></pre></div></div>
+
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://stm.sciencemag.org/content/4/125/125ra31.short?casa_token=I307jEWdWskAAAAA:B4glz3iI1wW_lYc_bzfSs41xMaHiFHLxOhNhOhW_6Si3lHOKarRIe5s5tHz3S2pY7tcVWB41QP6-47c">[1] Tatonetti, Nicholas P., et al. “Data-driven prediction of drug effects and interactions.” Science translational medicine 4.125 (2012): 125ra31-125ra31. </a></p>
