@@ -7,6 +7,7 @@ warnings.filterwarnings("ignore")
 import sys
 
 from ..utils import print_sys
+from ..utils.load import download_wrapper, pd_load
 from . import bi_pred_dataset, multi_pred_dataset
 from ..metadata import dataset_names
 
@@ -37,8 +38,19 @@ class DrugRes(bi_pred_dataset.DataLoader):
         self.entity1_name = 'Drug'
         self.entity2_name = 'Cell Line'
         self.two_types = True
+        self.path = path
 
         if print_stats:
             self.print_stats()
 
         print('Done!', flush=True, file=sys.stderr)
+
+    def get_gene_symbols(self):
+        """
+        Retrieve the gene symbols for the cell line gene expression
+        """
+        path = self.path
+        name = download_wrapper('gdsc_gene_symbols', path, ['gdsc_gene_symbols'])
+        print_sys('Loading...')
+        df = pd_load(name, path)
+        return df.values.reshape(-1, )
