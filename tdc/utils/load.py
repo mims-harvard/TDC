@@ -244,7 +244,7 @@ def property_dataset_load(name, path, target, dataset_names):
 				import sys
 				sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 			else:
-				sys.exit("Please report this error to cosamhkx@gmail.com, thanks!")
+				sys.exit("Please report this error to contact@tdcommons.ai, thanks!")
 	try:
 		return df['X'], df[target], df['ID']
 	except:

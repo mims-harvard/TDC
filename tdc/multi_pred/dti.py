@@ -44,3 +44,22 @@ class DTI(bi_pred_dataset.DataLoader):
             self.print_stats()
 
         print('Done!', flush=True, file=sys.stderr)
+
+
+    def harmonize_affinities(self, mode = None):
+        """Removing duplicated drug-target pairs with different binding affinities.
+        """
+        if self.name not in ['bindingdb_ki', 'bindingdb_kd', 'bindingdb_ic50']:
+            raise ValueError('This function is not supported for ' + self.name + ' because they are already duplicates removed!')
+
+        if mode not in ['mean', 'max_affinity']:
+            raise ValueError("Please specify 'mode' of removal, currently supported 'mean'/'max_affinity'!")
+
+        if mode == 'max_affinity':
+            df_ = self.get_data()
+            return df_.groupby(['Drug_ID', 'Drug', 'Target_ID', 'Target']).Y.agg(min).reset_index()
+
+        elif mode == 'mean':
+            import numpy as np
+            df_ = self.get_data()
+            return df_.groupby(['Drug_ID', 'Drug', 'Target_ID', 'Target']).Y.agg(np.mean).reset_index()

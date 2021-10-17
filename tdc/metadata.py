@@ -495,7 +495,8 @@ name2type = {'toxcast': 'tab',
  'vdss_lombardo': 'tab',
  'leenay':'tab',
  'test_single_pred': 'tab',
- 'test_multi_pred': 'tab'}
+ 'test_multi_pred': 'tab',
+ 'gdsc_gene_symbols': 'tab'}
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -526,7 +527,7 @@ name2id = {'bbb_adenot': 4259565,
  'hiv': 4259593,
  'huri': 4139567,
  'hydrationfreeenergy_freesolv': 4259594,
- 'kiba': 4291561,
+ 'kiba': 5255037,
  'lipophilicity_astrazeneca': 4259595,
  'pgp_broccatelli': 4259597,
  'ppbr_edrug3d': 4259600,
@@ -578,7 +579,8 @@ name2id = {'bbb_adenot': 4259565,
  'vdss_lombardo': 4267387,
  'leenay':4279966,
  'test_single_pred': 4832455,
- 'test_multi_pred': 4832456}
+ 'test_multi_pred': 4832456,
+ 'gdsc_gene_symbols': 5255026}
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 
