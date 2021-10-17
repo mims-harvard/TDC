@@ -84,7 +84,12 @@ class docking_group(BenchmarkGroup):
 			self.index += 1
 
 			from ..oracles import Oracle
-			oracle = Oracle(name = "Docking_Score", software="vina",
+			# oracle = Oracle(name = "Docking_Score", software="vina",
+			# 	pyscreener_path = self.pyscreener_path,
+			# 	receptors=[target_pdb_file],
+			# 	center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
+			# 	buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = self.num_max_call)
+			oracle = Oracle(name = "Docking_Score", 
 				pyscreener_path = self.pyscreener_path,
 				receptors=[target_pdb_file],
 				center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
@@ -114,14 +119,19 @@ class docking_group(BenchmarkGroup):
 		"""
 		dataset = fuzzy_search(benchmark, self.dataset_names)
 		data_path = os.path.join(self.path, dataset)
-		target_pdb_file = os.path.join(self.path, dataset + '.pdb')
+		target_pdbqt_file = os.path.join(self.path, dataset + '.pdbqt')
 
 		from ..oracles import Oracle
-		oracle = Oracle(name = "Docking_Score", software="vina",
-			pyscreener_path = self.pyscreener_path,
-			receptors=[target_pdb_file],
-			center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
-			buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = num_max_call)
+		# oracle = Oracle(name = "Docking_Score", software="vina",
+		# 	pyscreener_path = self.pyscreener_path,
+		# 	receptors=[target_pdb_file],
+		# 	center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
+		# 	buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = num_max_call)
+		oracle = Oracle(name = "Docking_Score", 
+			receptor_pdbqt_file=target_pdbqt_file, 
+			center=docking_target_info[dataset]['center'], 
+			box_size=docking_target_info[dataset]['size'],
+			num_max_call = num_max_call)		
 		data = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
 		return {'oracle': oracle, 'data': data, 'name': dataset}
 
