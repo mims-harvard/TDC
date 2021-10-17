@@ -7,7 +7,7 @@ from .misc import fuzzy_search
 from .load import pd_load
 from ..metadata import dataset_names, benchmark_names, dataset_list
 
-def get_label_map(name, path = './data', target = None, file_format = 'csv', output_format = 'dict', task = 'DDI'):
+def get_label_map(name, path = './data', target = None, file_format = 'csv', output_format = 'dict', task = 'DDI', name_column = 'Map'):
 	"""to retrieve the biomedical meaning of labels
 	
 	Args:
@@ -17,6 +17,7 @@ def get_label_map(name, path = './data', target = None, file_format = 'csv', out
 	    file_format (str, optional): format of the file
 	    output_format (str, optional): return a dictionary or a dataframe or the raw array of mapped labels
 	    task (str, optional): the name of the task
+	    name_column (str, optional): the name of the column that stores the label name
 	
 	Returns:
 	    dict/pd.DataFrame/np.array: when output_format is dict/df/array
@@ -30,11 +31,11 @@ def get_label_map(name, path = './data', target = None, file_format = 'csv', out
 	df = pd_load(name, path)
 
 	if output_format == 'dict':
-		return dict(zip(df[target].values, df['Map'].values))
+		return dict(zip(df[target].values, df[name_column].values))
 	elif output_format == 'df':
 		return df
 	elif output_format == 'array':
-		return df['Map'].values
+		return df[name_column].values
 	else:
 		raise ValueError("Please use the correct output format, select from dict, df, array.")
 
