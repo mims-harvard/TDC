@@ -52,5 +52,5 @@ class DrugRes(bi_pred_dataset.DataLoader):
         path = self.path
         name = download_wrapper('gdsc_gene_symbols', path, ['gdsc_gene_symbols'])
         print_sys('Loading...')
-        df = pd_load(name, path)
+        df = pd.read_csv(os.path.join(path, name + '.tab'), sep = '\t')
         return df.values.reshape(-1, )
