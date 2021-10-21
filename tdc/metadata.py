@@ -225,9 +225,10 @@ drugsyn_benchmark = {'Synergy': ['drugcomb_css',
 
 dti_dg_benchmark = {'DTI': ['bindingdb_patent']} 
 
-docking_benchmark = {'Targets': ['drd3', '1iep', '2rgp', '3eml', '3ny8', '4rlu', '4unn', '5mo4', '7l11']}
+docking_benchmark = {'Targets': ['drd3', '1iep', '2rgp', '3eml', '3ny8', '4rlu', '4unn', '5mo4', '7l11', '3pbl',]}
 
 docking_target_info = {'drd3': {'center': (9, 22.5, 26), 'size': (15, 15, 15)},
+					   '3pbl': {'center': (9, 22.5, 26), 'size': (15, 15, 15)}, 
 					   '1iep': {'center': (15.61389189189189, 53.38013513513513, 15.454837837837842), 'size': (15, 15, 15)},
 					   '2rgp': {'center': (16.292121212121213, 34.87081818181819, 92.0353030303030), 'size': (15, 15, 15)},
 					   '3eml': {'center': (-9.063639999999998, -7.1446, 55.86259999999999), 'size': (15, 15, 15)},
@@ -324,7 +325,7 @@ download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
 download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking', '3ny8_docking', '4rlu_docking',
-								 '4unn_docking', '5mo4_docking', '7l11_docking', 'drd3_docking']
+								 '4unn_docking', '5mo4_docking', '7l11_docking', 'drd3_docking', '3pbl_docking', ]
 
 
 
@@ -612,7 +613,8 @@ receptor2id = {'drd3': 5137901,
 			   '4rlu': 5137918, 
 			   '4unn': 5137917, 
 			   '5mo4': 5137920, 
-			   '7l11': 5137921, }
+			   '7l11': 5137921, 
+			   '3pbl': 5257195, }
 
 
 sdf_file_names = {
