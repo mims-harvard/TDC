@@ -26,7 +26,7 @@ class docking_group(BenchmarkGroup):
 	
 	"""
 
-	def __init__(self, path = './data', pyscreener_path = None, num_workers = None, num_cpus = None, num_max_call = 5000):
+	def __init__(self, path = './data', num_workers = None, num_cpus = None, num_max_call = 5000):
 		"""Create a docking group benchmark loader.
 
 		Raises:
@@ -34,10 +34,10 @@ class docking_group(BenchmarkGroup):
 		"""
 		super().__init__(name = 'Docking_Group', path = path, file_format = 'oracle')
 
-		if pyscreener_path is not None:
-			self.pyscreener_path = pyscreener_path
-		else:
-			raise ValueError("Please specify pyscreener_path!")
+		# if pyscreener_path is not None:
+		# 	self.pyscreener_path = pyscreener_path
+		# else:
+		# 	raise ValueError("Please specify pyscreener_path!")
 		
 		if (num_workers is None) and (num_cpus is None):
 			## automatic selections
@@ -127,11 +127,12 @@ class docking_group(BenchmarkGroup):
 		# 	receptors=[target_pdb_file],
 		# 	center=docking_target_info[dataset]['center'], size=docking_target_info[dataset]['size'],
 		# 	buffer=10, path=data_path, num_worker=self.num_workers, ncpu=self.num_cpus, num_max_call = num_max_call)
-		oracle = Oracle(name = "Docking_Score", 
-			receptor_pdbqt_file=target_pdbqt_file, 
-			center=docking_target_info[dataset]['center'], 
-			box_size=docking_target_info[dataset]['size'],
-			num_max_call = num_max_call)		
+		# oracle = Oracle(name = "Docking_Score", 
+		# 	receptor_pdbqt_file=target_pdbqt_file, 
+		# 	center=docking_target_info[dataset]['center'], 
+		# 	box_size=docking_target_info[dataset]['size'],
+		# 	num_max_call = num_max_call)	
+		oracle = Oracle(name = "3pbl_docking")	
 		data = pd.read_csv(os.path.join(self.path, 'zinc.tab'), sep = '\t')
 		return {'oracle': oracle, 'data': data, 'name': dataset}
 
@@ -198,34 +199,42 @@ class docking_group(BenchmarkGroup):
 				results['top10'] = np.mean(sorted(values)[:10])
 				results['top1'] = min(values)
 
-				if m1_api is None: 
-					print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained via: https://tdcommons.ai/functions/oracles/#moleculeone')
-				else:
-					print_sys("---- Calculating molecule.one synthesizability score ----")
-					from ..oracles import Oracle
-					m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
-					import heapq
-					from operator import itemgetter
-					top10_docking_smiles = list(dict(heapq.nsmallest(10, docking_scores.items(), key=itemgetter(1))).keys())
-					m1_scores = m1(top10_docking_smiles)
-					scores_array = list(m1_scores.values())
-					scores_array = np.array([float(i) for i in scores_array])
-					scores_array[np.where(scores_array == -1.0)[0]] = 10 # m1 score errors are usually large complex molecules
-					if save_dict:
-						results['m1_dict'] = m1_scores
-					results['m1'] = np.mean(scores_array)
+				# if m1_api is None: 
+				# 	print_sys('Ignoring M1 Synthesizability Evaluations. You can still submit your results without m1 score. Although for the submission, we encourage inclusion of m1 scores. To opt-in, set the m1_api to the token obtained via: https://tdcommons.ai/functions/oracles/#moleculeone')
+				# else:
+				# 	print_sys("---- Calculating molecule.one synthesizability score ----")
+				# 	from ..oracles import Oracle
+				# 	m1 = Oracle(name = 'Molecule One Synthesis', api_token = m1_api)
+				# 	import heapq
+				# 	from operator import itemgetter
+				# 	top10_docking_smiles = list(dict(heapq.nsmallest(10, docking_scores.items(), key=itemgetter(1))).keys())
+				# 	m1_scores = m1(top10_docking_smiles)
+				# 	scores_array = list(m1_scores.values())
+				# 	scores_array = np.array([float(i) for i in scores_array])
+				# 	scores_array[np.where(scores_array == -1.0)[0]] = 10 # m1 score errors are usually large complex molecules
+				# 	if save_dict:
+				# 		results['m1_dict'] = m1_scores
+				# 	results['m1'] = np.mean(scores_array)
+
+				print_sys("---- Calculating synthetic accessibility score ----")
+				from ..oracles import Oracle
+				sa = Oracle(name = 'SA')
+				scores_array = sa(pred_)
+				if save_dict:
+					results['sa_dict'] = scores_array
+				results['sa'] = np.mean(scores_array)
                     
 				print_sys("---- Calculating molecular filters scores ----")
-				from .chem_utils import MolFilter
+				from ..chem_utils.oracle.filter import MolFilter
 				## follow guacamol
 				filters = MolFilter(filters = ['PAINS', 'SureChEMBL', 'Glaxo'], property_filters_flag = False)
 				pred_filter = filters(pred_)
 				if save_dict:
 					results['pass_list'] = pred_filter
 				results['%pass'] = float(len(pred_filter))/100
-				results['top1_%pass'] = max([docking_scores[i] for i in pred_filter])
+				results['top1_%pass'] = min([docking_scores[i] for i in pred_filter])
 				print_sys("---- Calculating diversity ----")
-				from .evaluator import Evaluator
+				from ..evaluator import Evaluator
 				evaluator = Evaluator(name = 'Diversity')
 				score = evaluator(pred_)
 				results['diversity'] = score
@@ -262,7 +271,7 @@ class docking_group(BenchmarkGroup):
 		else:
 			individual_results = results_individual
 
-		metrics = ['top100', 'top10', 'top1', 'diversity', 'novelty', '%pass', 'top1_%pass', 'm1', 'top smiles']
+		metrics = ['top100', 'top10', 'top1', 'diversity', 'novelty', '%pass', 'top1_%pass', 'sa', 'top smiles']
 		num_folds = len(preds) 
 
 		results_agg = {}
