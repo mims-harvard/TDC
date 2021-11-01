@@ -190,14 +190,19 @@ class Oracle:
 		elif self.name == 'docking_score':
 			from .chem_utils import Vina_smiles
 			self.evaluator_func = Vina_smiles(**self.kwargs)
-		elif self.name == 'drd3_docking':
+		elif self.name == 'drd3_docking' or self.name == '3pbl_docking':
+			# from .chem_utils import PyScreener_meta 
 			from .chem_utils import Vina_smiles 
-			pdbid = self.name.split('_')[0]
+			pdbid = '3pbl'
 			center = docking_target_info[pdbid]['center']
 			boxsize = docking_target_info[pdbid]['size']			
 			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
 											  center = center, 
 											  box_size = boxsize)
+			# self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+			# 									  box_center = center, 
+			# 									  box_size = boxsize)
+
 		elif self.name == '1iep_docking':
 			from .chem_utils import Vina_smiles 
 			pdbid = self.name.split('_')[0]

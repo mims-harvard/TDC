@@ -1304,19 +1304,27 @@ class PyScreener_meta:
       
 
     """
-    def __init__(self, software_class='vina', pyscreener_path = './pyscreener', **kwargs):
-        import sys
-        sys.path.append(pyscreener_path)
-        if software_class == 'vina':
-            from pyscreener.docking.vina import Vina as screener
-        elif software_class == 'dock6':
-            from pyscreener.docking.dock import DOCK as screener
-        else:
-            raise ValueError("The value of software_class is not implemented. Currently available:['vina', 'dock6']")
+    def __init__(self, receptor_pdb_file, box_center, box_size, software_class='vina', ncpu=4, **kwargs):
+        try:
+          import ray
+          try:
+            ray.init()
+          except:
+            ray.shutdown()
+            ray.init()
+          import pyscreener as ps
+        except:
+          raise ImportError("Please install PyScreener following guidance in https://github.com/coleygroup/pyscreener")
+        
+        try:
+            metadata = ps.build_metadata(software_class)
+        except:
+            raise ValueError('The value of software_class is not implemented. Currently available:["vina", "qvina", "smina", "psovina", "dock", "dock6", "ucsfdock"]')
 
-        self.scorer = screener(**kwargs)
+        self.scorer = ps.virtual_screen(software_class, [receptor_pdb_file], box_center, box_size, metadata, ncpu=ncpu)
 
-    def __call__(self, test_smiles):
+
+    def __call__(self, test_smiles, error_value=None):
         final_score = self.scorer(test_smiles)
         if type(test_smiles)==str:
           return list(final_score.values())[0]
@@ -1327,7 +1335,7 @@ class PyScreener_meta:
           for smiles in test_smiles:
             score = final_score[smiles]
             if score is None:
-              score = 0.0 
+              score = error_value
             score_lst.append(score)
           return score_lst
 
@@ -1422,6 +1430,7 @@ class Vina_smiles:
         m = Chem.MolFromSmiles(ligand_smiles)
         m = Chem.AddHs(m)
         AllChem.EmbedMolecule(m)
+        AllChem.MMFFOptimizeMolecule(m)
         print(Chem.MolToMolBlock(m),file=open('__temp.mol','w+'))
         os.system('mk_prepare_ligand.py -i __temp.mol -o __temp.pdbqt')
         self.v.set_ligand_from_file("__temp.pdbqt")
@@ -1438,10 +1447,6 @@ class Vina_smiles:
 # os.system("python docking.py " + ligand_pdbqt_file + \
 #           " "+target_pdbqt_file + " " + output_file +' '+ \
 #           docking_center_string + ' ' + box_size_string)
-
-
-
-
 
 
 
