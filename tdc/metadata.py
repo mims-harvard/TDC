@@ -606,7 +606,7 @@ benchmark2id = {'admet_group': 4426004,
                 'docking_group': 4554082,
                 'dti_dg_group': 4742443}
 
-receptor2id = {'drd3': 5137901, 
+receptor2id = { 
 			   '1iep': 5137914, 
 			   '2rgp': 5137916, 
 			   '3eml': 5137919, 
@@ -615,7 +615,7 @@ receptor2id = {'drd3': 5137901,
 			   '4unn': 5137917, 
 			   '5mo4': 5137920, 
 			   '7l11': 5137921, 
-			   '3pbl': 5257195, }
+			   '3pbl': 5257195, } ## 'drd3': 5137901,
 
 
 sdf_file_names = {
