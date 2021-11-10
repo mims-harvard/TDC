@@ -30,7 +30,7 @@ class Tox(single_pred_dataset.DataLoader):
         """Create a Tox (Toxicity Prediction) dataloader object.
         """
         super().__init__(name, path, label_name, print_stats,
-                         dataset_names=dataset_names["Toxicity"], convert_format = convert_format)
+                         dataset_names=dataset_names["Tox"], convert_format = convert_format)
         if print_stats:
             self.print_stats()
         print('Done!', flush = True, file = sys.stderr)

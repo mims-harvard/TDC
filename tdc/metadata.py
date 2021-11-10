@@ -370,7 +370,7 @@ def get_task2category():
 			task2category[x] = i
 	return task2category
 
-dataset_names = {"Toxicity": toxicity_dataset_names, 
+dataset_names = {"Tox": toxicity_dataset_names,
 				"ADME": adme_dataset_names, 
 				"HTS": hts_dataset_names, 
 				"DTI": dti_dataset_names, 
