@@ -53,6 +53,92 @@ def create_fold_setting_cold(df, fold_seed, frac, entity):
 			'valid': val.reset_index(drop = True),
 			'test': test.reset_index(drop = True)}
 
+
+def create_fold_setting_cold_multi(df, fold_seed, frac, entities):
+	"""create cold-split where given a column, it first split based on entities in the
+	column and then map all associated data points to each split
+
+	Args:
+	    df (pd.DataFrame): dataset dataframe
+	    fold_seed (int): the random seed
+	    frac (list): a list of train/valid/test fractions
+	    entities (list): a list of "cold" entities on which the split is done
+
+	Returns:
+	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
+	"""
+	train_frac, val_frac, test_frac = frac
+
+	# For each entity, sample the instances belonging to the test datasets
+	test_entity_instances = [
+		df[e].drop_duplicates().sample(
+			frac=test_frac, replace=False, random_state=fold_seed
+		).values
+		for e in entities
+	]
+
+	# Select samples where all entities are in the test set
+	test = df.copy()
+	for entity, instances in zip(entities, test_entity_instances):
+		test = test[test[entity].isin(instances)]
+
+	if len(test) == 0:
+		raise ValueError(
+			'No test samples found. Try increasing the test frac or a less stringent '
+			'splitting strategy.'
+		)
+
+	# Verify that the split was correct
+	for i,e in enumerate(entities):
+		assert all(test[e].isin(test_entity_instances[i])), f'Test samples contain incorrect entity in {e}'
+
+	# DEBUGGING
+	print(f'Assigned {len(test)} samples to testing')
+	for e in entities:
+		print(f'{e} has {len(test[e].unique())} entities')
+
+	# Proceed with validation data
+	train_val = df.copy()
+	for i,e in enumerate(entities):
+		train_val = train_val[~train_val[e].isin(test_entity_instances[i])]
+
+	val_entity_instances = [
+		train_val[e].drop_duplicates().sample(
+			frac=val_frac/(1-test_frac), replace=False, random_state=fold_seed
+		).values
+		for e in entities
+	]
+	val = train_val.copy()
+	for entity, instances in zip(entities, val_entity_instances):
+		val = val[val[entity].isin(instances)]
+
+	if len(val) == 0:
+		raise ValueError(
+			'No validation samples found. Try increasing the test frac or a less '
+			'stringent splitting strategy.'
+		)
+
+	# Verify that the split was correct
+	for i,e in enumerate(entities):
+		assert all(val[e].isin(val_entity_instances[i])), f'Val samples contain incorrect entity in {e}'
+
+	print(f'Assigned {len(val)} samples to validation')
+	for e in entities:
+		print(f'{e} has {len(val[e].unique())} entities')
+
+	train = train_val.copy()
+	for i,e in enumerate(entities):
+		train = train[~train[e].isin(val_entity_instances[i])]
+
+	print(f'Assigned {len(train)} samples to testing')
+	for e in entities:
+		print(f'{e} has {len(train[e].unique())} entities')
+
+	return {'train': train.reset_index(drop = True),
+			'valid': val.reset_index(drop = True),
+			'test': test.reset_index(drop = True)}
+
+
 def create_scaffold_split(df, seed, frac, entity):
 	"""create scaffold split. it first generates molecular scaffold for each molecule and then split based on scaffolds
 	reference: https://github.com/chemprop/chemprop/blob/master/chemprop/data/scaffold.py
