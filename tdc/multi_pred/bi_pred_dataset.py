@@ -17,6 +17,7 @@ from ..utils import dataset2target_lists, \
                     install,\
                     create_fold,\
                     create_fold_setting_cold,\
+                    create_fold_setting_cold_multi,\
                     create_combination_split,\
                     create_fold_time,\
                     print_sys
@@ -148,7 +149,8 @@ class DataLoader(base_dataset.DataLoader):
                 random seed, defaults to '42'
             frac (list, optional): 
                 train/val/test split fractions, defaults to '[0.7, 0.1, 0.2]'
-            column_name (None, optional): Description
+            column_name (Optional[Union[str, List[str]]]): Optional column name(s) to
+                split on for cold splits. Defaults to None.
             time_column (None, optional): Description
         
         Returns:
@@ -169,6 +171,8 @@ class DataLoader(base_dataset.DataLoader):
         elif (column_name is not None) and (column_name in df.columns.values):
             if method == 'cold_split':
                 return create_fold_setting_cold(df, seed, frac, column_name)
+        elif method == 'cold_split_multi':
+            return create_fold_setting_cold_multi(df, seed, frac, column_name)
         elif method == 'combination':
             return create_combination_split(df, seed, frac)
         elif method == 'time':
