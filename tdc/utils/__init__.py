@@ -9,7 +9,6 @@ from .load import distribution_dataset_load, \
 					bm_group_load
 from .split import create_fold,\
 					create_fold_setting_cold,\
-					create_fold_setting_cold_multi,\
 					create_combination_split,\
 					create_fold_time,\
 					create_scaffold_split,\

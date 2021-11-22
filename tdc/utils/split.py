@@ -26,47 +26,23 @@ def create_fold(df, fold_seed, frac):
 			'valid': val.reset_index(drop = True),
 			'test': test.reset_index(drop = True)}
 
-def create_fold_setting_cold(df, fold_seed, frac, entity):
-	"""create cold-split where given a column, it first split based on entities in the column and then map all associated data points to each split
-	
-	Args:
-	    df (pd.DataFrame): dataset dataframe
-	    fold_seed (int): the random seed
-	    frac (list): a list of train/valid/test fractions
-	    entity (str): the "cold" entity to first split on
-	
-	Returns:
-	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
-	"""
-	train_frac, val_frac, test_frac = frac
-	gene_drop = df[entity].drop_duplicates().sample(frac = test_frac, replace = False, random_state = fold_seed).values
-
-	test = df[df[entity].isin(gene_drop)]
-
-	train_val = df[~df[entity].isin(gene_drop)]
-
-	gene_drop_val = train_val[entity].drop_duplicates().sample(frac = val_frac/(1-test_frac), replace = False, random_state = fold_seed).values
-	val = train_val[train_val[entity].isin(gene_drop_val)]
-	train = train_val[~train_val[entity].isin(gene_drop_val)]
-
-	return {'train': train.reset_index(drop = True),
-			'valid': val.reset_index(drop = True),
-			'test': test.reset_index(drop = True)}
-
-
-def create_fold_setting_cold_multi(df, fold_seed, frac, entities):
-	"""create cold-split where given a column, it first split based on entities in the
-	column and then map all associated data points to each split
+def create_fold_setting_cold(df, fold_seed, frac, entities):
+	"""create cold-split where given one or multiple columns, it first split based on
+	entities in the columns and then map all associated data points to each split
 
 	Args:
-	    df (pd.DataFrame): dataset dataframe
-	    fold_seed (int): the random seed
-	    frac (list): a list of train/valid/test fractions
-	    entities (list): a list of "cold" entities on which the split is done
+		df (pd.DataFrame): dataset dataframe
+		fold_seed (int): the random seed
+		frac (list): a list of train/valid/test fractions
+		entities (Union[str, List[str]]): either a single "cold" entity or a list of
+			"cold" entities on which the split is done
 
 	Returns:
-	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
+		dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
 	"""
+	if isinstance(entities, str):
+		entities = [entities]
+
 	train_frac, val_frac, test_frac = frac
 
 	# For each entity, sample the instances belonging to the test datasets
@@ -84,22 +60,17 @@ def create_fold_setting_cold_multi(df, fold_seed, frac, entities):
 
 	if len(test) == 0:
 		raise ValueError(
-			'No test samples found. Try increasing the test frac or a less stringent '
-			'splitting strategy.'
+			'No test samples found. Try another seed, increasing the test frac or a '
+			'less stringent splitting strategy.'
 		)
 
 	# Verify that the split was correct
-	for i,e in enumerate(entities):
+	for i, e in enumerate(entities):
 		assert all(test[e].isin(test_entity_instances[i])), f'Test samples contain incorrect entity in {e}'
-
-	# DEBUGGING
-	print(f'Assigned {len(test)} samples to testing')
-	for e in entities:
-		print(f'{e} has {len(test[e].unique())} entities')
 
 	# Proceed with validation data
 	train_val = df.copy()
-	for i,e in enumerate(entities):
+	for i, e in enumerate(entities):
 		train_val = train_val[~train_val[e].isin(test_entity_instances[i])]
 
 	val_entity_instances = [
@@ -114,25 +85,17 @@ def create_fold_setting_cold_multi(df, fold_seed, frac, entities):
 
 	if len(val) == 0:
 		raise ValueError(
-			'No validation samples found. Try increasing the test frac or a less '
-			'stringent splitting strategy.'
+			'No validation samples found. Try another seed, increasing the test frac '
+			'or a less stringent splitting strategy.'
 		)
 
 	# Verify that the split was correct
 	for i,e in enumerate(entities):
 		assert all(val[e].isin(val_entity_instances[i])), f'Val samples contain incorrect entity in {e}'
 
-	print(f'Assigned {len(val)} samples to validation')
-	for e in entities:
-		print(f'{e} has {len(val[e].unique())} entities')
-
 	train = train_val.copy()
 	for i,e in enumerate(entities):
 		train = train[~train[e].isin(val_entity_instances[i])]
-
-	print(f'Assigned {len(train)} samples to testing')
-	for e in entities:
-		print(f'{e} has {len(train[e].unique())} entities')
 
 	return {'train': train.reset_index(drop = True),
 			'valid': val.reset_index(drop = True),
