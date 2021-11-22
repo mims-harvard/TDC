@@ -21,13 +21,11 @@ class TestFunctions(unittest.TestCase):
         pass
 
     def test_random_split(self):
-        print('started random')
         from tdc.single_pred import ADME
         data = ADME(name = 'Caco2_Wang')
         split = data.get_split(method = 'random')
 
     def test_scaffold_split(self):
-        print('started scaffold')
         ## requires RDKit
         from tdc.single_pred import ADME
         data = ADME(name='Caco2_Wang')
