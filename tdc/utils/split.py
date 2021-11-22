@@ -27,8 +27,8 @@ def create_fold(df, fold_seed, frac):
 			'test': test.reset_index(drop = True)}
 
 def create_fold_setting_cold(df, fold_seed, frac, entities):
-	"""create cold-split where given one or multiple columns, it first split based on
-	entities in the columns and then map all associated data points to each split
+	"""create cold-split where given one or multiple columns, it first splits based on
+	entities in the columns and then maps all associated data points to the partition
 
 	Args:
 		df (pd.DataFrame): dataset dataframe
@@ -49,8 +49,7 @@ def create_fold_setting_cold(df, fold_seed, frac, entities):
 	test_entity_instances = [
 		df[e].drop_duplicates().sample(
 			frac=test_frac, replace=False, random_state=fold_seed
-		).values
-		for e in entities
+		).values for e in entities
 	]
 
 	# Select samples where all entities are in the test set
@@ -64,10 +63,6 @@ def create_fold_setting_cold(df, fold_seed, frac, entities):
 			'less stringent splitting strategy.'
 		)
 
-	# Verify that the split was correct
-	for i, e in enumerate(entities):
-		assert all(test[e].isin(test_entity_instances[i])), f'Test samples contain incorrect entity in {e}'
-
 	# Proceed with validation data
 	train_val = df.copy()
 	for i, e in enumerate(entities):
@@ -76,8 +71,7 @@ def create_fold_setting_cold(df, fold_seed, frac, entities):
 	val_entity_instances = [
 		train_val[e].drop_duplicates().sample(
 			frac=val_frac/(1-test_frac), replace=False, random_state=fold_seed
-		).values
-		for e in entities
+		).values for e in entities
 	]
 	val = train_val.copy()
 	for entity, instances in zip(entities, val_entity_instances):
@@ -88,10 +82,6 @@ def create_fold_setting_cold(df, fold_seed, frac, entities):
 			'No validation samples found. Try another seed, increasing the test frac '
 			'or a less stringent splitting strategy.'
 		)
-
-	# Verify that the split was correct
-	for i,e in enumerate(entities):
-		assert all(val[e].isin(val_entity_instances[i])), f'Val samples contain incorrect entity in {e}'
 
 	train = train_val.copy()
 	for i,e in enumerate(entities):
