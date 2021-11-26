@@ -138,27 +138,32 @@ class DataLoader(base_dataset.DataLoader):
         print_sys('--------------------------')
     
     def get_split(self, method='random', seed=42,
-                  frac=[0.7, 0.1, 0.2], column_name=None, time_column = None):
+                  frac=[0.7, 0.1, 0.2], column_name=None, time_column=None):
         """split dataset into train/validation/test. 
-        
+
         Args:
-            method (str, optional): 
+            method (str, optional):
                 split method, the default value is 'random'
-            seed (int, optional): 
+            seed (int, optional):
                 random seed, defaults to '42'
-            frac (list, optional): 
+            frac (list, optional):
                 train/val/test split fractions, defaults to '[0.7, 0.1, 0.2]'
-            column_name (None, optional): Description
+            column_name (Optional[Union[str, List[str]]]): Optional column name(s) to
+                split on for cold splits. Defaults to None.
             time_column (None, optional): Description
-        
+
         Returns:
-            dict: a dictionary with three keys ('train', 'valid', 'test'), each value is a pandas dataframe object of the splitted dataset 
-        
+            dict: a dictionary with three keys ('train', 'valid', 'test'), each value
+            is a pandas dataframe object of the splitted dataset.
+
         Raises:
-            AttributeError: the input split method is not available. 
+            AttributeError: the input split method is not available.
 
         """
         df = self.get_data(format='df')
+
+        if isinstance(column_name, str):
+            column_name = [column_name]
 
         if method == 'random':
             return create_fold(df, seed, frac)
@@ -166,9 +171,16 @@ class DataLoader(base_dataset.DataLoader):
             return create_fold_setting_cold(df, seed, frac, self.entity1_name)
         elif method == 'cold_' + self.entity2_name.lower():
             return create_fold_setting_cold(df, seed, frac, self.entity2_name)
-        elif (column_name is not None) and (column_name in df.columns.values):
-            if method == 'cold_split':
-                return create_fold_setting_cold(df, seed, frac, column_name)
+        elif method == 'cold_split':
+            if (
+                column_name is None or
+                not all(list(map(lambda x: x in df.columns.values, column_name)))
+            ):
+                raise AttributeError(
+                    "For cold_split, please provide one or multiple column names "
+                    "that are contained in the dataframe."
+                )
+            return create_fold_setting_cold(df, seed, frac, column_name)
         elif method == 'combination':
             return create_combination_split(df, seed, frac)
         elif method == 'time':
@@ -177,9 +189,9 @@ class DataLoader(base_dataset.DataLoader):
             return create_fold_time(df, frac, time_column)
 
         else:
-            raise AttributeError("Please select from random_split, "
-                                 "or cold_split. If cold split, "
-                                 "please specify the column name!")
+            raise AttributeError(
+                "Please select method from random, time, combination or cold_split."
+            )
 
     def neg_sample(self, frac=1):
         """negative sampling 
