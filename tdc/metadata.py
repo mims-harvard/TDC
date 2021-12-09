@@ -324,7 +324,9 @@ download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
 download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking', '3ny8_docking', '4rlu_docking',
-								 '4unn_docking', '5mo4_docking', '7l11_docking', 'drd3_docking', '3pbl_docking', ]
+								 '4unn_docking', '5mo4_docking', '7l11_docking', 'drd3_docking', '3pbl_docking',
+								 '1iep_docking_vina', '2rgp_docking_vina', '3eml_docking_vina', '3ny8_docking_vina', '4rlu_docking_vina',
+								 '4unn_docking_vina', '5mo4_docking_vina', '7l11_docking_vina', 'drd3_docking_vina', '3pbl_docking_vina', ]
 
 
 
@@ -607,15 +609,15 @@ benchmark2id = {'admet_group': 4426004,
                 'dti_dg_group': 4742443}
 
 receptor2id = { 
-			   '1iep': 5137914, 
-			   '2rgp': 5137916, 
-			   '3eml': 5137919, 
-			   '3ny8': 5137915, 
-			   '4rlu': 5137918, 
-			   '4unn': 5137917, 
-			   '5mo4': 5137920, 
-			   '7l11': 5137921, 
-			   '3pbl': 5257195, } ## 'drd3': 5137901,
+			   '1iep': [5137914, 5617659], 
+			   '2rgp': [5137916, 5617662], 
+			   '3eml': [5137919, 5617663], 
+			   '3ny8': [5137915, 5617665], 
+			   '4rlu': [5137918, 5617658], 
+			   '4unn': [5137917, 5617661], 
+			   '5mo4': [5137920, 5617664], 
+			   '7l11': [5137921, 5617660], 
+			   '3pbl': [5257195, 5617666], } ## 'drd3': 5137901,
 
 
 sdf_file_names = {

@@ -137,17 +137,19 @@ def receptor_download_wrapper(name, path):
 	"""
 
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
-	dataset_path = server_path + str(receptor2id[name])
+	dataset_paths = [server_path + str(receptor2id[name][0]), server_path + str(receptor2id[name][1])] 
 
 	if not os.path.exists(path):
 		os.mkdir(path)
 
-	if os.path.exists(os.path.join(path, name + '.pdbqt')):
+	if os.path.exists(os.path.join(path, name + '.pdbqt')) and os.path.exists(os.path.join(path, name + '.pdb')):
 		print_sys('Found local copy...')
 	else:
 		print_sys("Downloading receptor...")
 		receptor2type = defaultdict(lambda:'pdbqt')
-		dataverse_download(dataset_path, path, name, receptor2type) ## to-do to-check
+		dataverse_download(dataset_paths[0], path, name, receptor2type) ## to-do to-check
+		receptor2type = defaultdict(lambda:'pdb')
+		dataverse_download(dataset_paths[1], path, name, receptor2type) ## to-do to-check
 		print_sys("Done!")
 	return name
 
