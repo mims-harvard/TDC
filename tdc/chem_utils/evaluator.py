@@ -301,7 +301,7 @@ def kl_divergence(generated_smiles_lst, training_smiles_lst):
   training_lst_mol = list(map(canonical, training_smiles_lst))
   filter_out_func = lambda x:x is not None 
   generated_lst_mol = list(filter(filter_out_func, generated_lst_mol))
-  training_lst_mol = list(filter(filter_out_func, generated_lst_mol))
+  training_lst_mol = list(filter(filter_out_func, training_lst_mol))
 
   d_sampled = calculate_pc_descriptors(generated_lst_mol, pc_descriptor_subset)
   d_chembl = calculate_pc_descriptors(training_lst_mol, pc_descriptor_subset)
