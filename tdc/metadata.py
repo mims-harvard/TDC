@@ -76,7 +76,7 @@ test_multi_pred_dataset_names = ['test_multi_pred']
 
 # single_pred prediction
 
-toxicity_dataset_names = ['tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
+toxicity_dataset_names = ['tox21', 'clintox', 'herg', 'herg_central', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
 
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
@@ -485,6 +485,7 @@ name2type = {'toxcast': 'tab',
  'buchwald-hartwig': 'pkl',
  'hetionet':'tab', 
  'herg': 'tab',
+ 'herg_central': 'tab',
  'dili': 'tab',
  'ppbr_az': 'tab',
  'ames': 'tab',
@@ -570,6 +571,7 @@ name2id = {'bbb_adenot': 4259565,
  'uspto': 4171642, 
  'hetionet': 4201734,
  'herg': 4259588,
+ 'herg_central': 5724875,
  'dili': 4259585,
  'ppbr_az': 4259599,
  'ames': 4259564,
