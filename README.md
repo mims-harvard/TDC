@@ -27,7 +27,12 @@ TDC is an open-source initiative. To get involved, check out the [Contribution G
 
 **Presented at [NeurIPS 2021](https://openreview.net/forum?id=8nvgnORnoWr)** [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing) / **Oral at [ELLIS ML4Molecules](https://moleculediscovery.github.io/workshop2021/)** [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing) / **Presented at [Baylearn](https://baylearn-org.github.io/www/)** [**\[Slides\]**](https://drive.google.com/file/d/1BNpk3dOdqE3ksgyVV-V3xySdBMq-8cXL/view?usp=sharing) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing)
 
-**!** The first TDC user group meeting will take place on Jan 25th 11AM-12:30PM EST! Find more info at this [newsletter](https://shoutout.wix.com/so/d1Nv1pC2d#/main) and register [here](https://tinyurl.com/tdc-meeting)!
+----
+
+**The first TDC user group meeting will take place on Jan 25th 11AM-12:30PM EST! Find more info [here](https://shoutout.wix.com/so/d1Nv1pC2d#/main)!**
+
+----
+
 
 ## Updates
 - `0.3.4`: Bug fixes on docking oracles, KL divergence measure, see commit [0f7121a](https://github.com/mims-harvard/TDC/commit/0f7121a3bd7cb833fb55441054d7d87ff3c4ebd6) and commit [6e46fbd](https://github.com/mims-harvard/TDC/commit/6e46fbd1a946b3a6b9f7ba456d60dc09480c68b9)!
