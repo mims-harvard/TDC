@@ -107,6 +107,8 @@
                             
                             <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
                             
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
                         </div>
                     </div>
                     
@@ -146,7 +148,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/benchmark/drugcombo_group/overview" class=""><strong>DTI Domain Generalization Group Leaderboard</strong></a>
+            <a href="/benchmark/dti_dg_group/overview" class=""><strong>DTI Domain Generalization Group Leaderboard</strong></a>
             
             <ul>
                 
@@ -199,7 +201,7 @@
 
 <p class="is-size-5">Drug-target interactions (DTI) characterize the binding of compounds to disease targets. Identifying high-affinity compounds is the first crucial step for drug discovery. Recent ML models have shown strong performances in DTI prediction, but they adopt a random dataset splitting where testing sets contain unseen pair of compound-target, but both of the compounds and targets are seen. However, pharmaceutical companies develop compound screening campaigns for novel targets or screen a novel class of compounds for known targets. These novel compounds and targets shift over the years. Thus, it requires a DTI ML model to achieve consistent performances to the subtle domain shifts along the temporal dimension. </p>
 
-<p class="is-size-5">In this benchmark, we use DTIs in TDC.BindingDB that have patent infor178 mation. Specifically, we formulate each domain consisting of DTIs that are patented in a specific year. We test various domain generalization methods to predict out-of-distribution DTIs in 2019-2021 after training on 2013-2018 DTIs, simulating the realistic scenario. </p>
+<p class="is-size-5">In this benchmark, we use DTIs in TDC.BindingDB that have patent information. Specifically, we formulate each domain consisting of DTIs that are patented in a specific year. We test various domain generalization methods to predict out-of-distribution DTIs in 2019-2021 after training on 2013-2018 DTIs, simulating the realistic scenario. </p>
 
 <p class="is-size-5">To access a benchmark in the group, use the following code:</p>
 
@@ -215,9 +217,6 @@
 </span>
 <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_test</span>
 <span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-<span class="s">'''
-'''</span>
 </code></pre></div></div>
 
 <p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard. </p>

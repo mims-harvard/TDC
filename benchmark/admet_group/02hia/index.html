@@ -107,6 +107,8 @@
                             
                             <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
                             
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
                         </div>
                     </div>
                     
@@ -322,8 +324,32 @@
     <th onclick="sortTable(5, 'A', 'asc')">AUROC <i class="fas fa-long-arrow-alt-up"></i> </th>
   </tr>
 </thead>
-  <tr> 
+ <tr> 
   <td> 1 </td> 
+  <td> AttrMasking </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://arxiv.org/abs/1905.12265">Paper </a></td> 
+  <td> 2,067,053 </td> 
+  <td>0.978 <span>&#177;</span> 0.006 </td> 
+</tr>
+<tr> 
+  <td> 2 </td> 
+  <td> ContextPred </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://arxiv.org/abs/1905.12265">Paper </a></td> 
+  <td> 2,067,053 </td> 
+  <td>0.975 <span>&#177;</span> 0.004 </td> 
+</tr>
+<tr> 
+  <td> 3 </td> 
+  <td> AttentiveFP </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/31408336/">Paper </a></td> 
+  <td> 300,806 </td> 
+  <td>0.974 <span>&#177;</span> 0.007 </td> 
+</tr>
+<tr> 
+  <td> 4 </td> 
   <td> RDKit2D + MLP (DeepPurpose) </td> 
   <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
   <td><a href="https://github.com/mims-harvard/TDC/tree/master/examples/single_pred/admet"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
@@ -331,7 +357,23 @@
   <td>0.972 <span>&#177;</span> 0.008 </td> 
 </tr>
 <tr> 
-  <td> 2 </td> 
+  <td> 5 </td> 
+  <td> NeuralFP </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://ieeexplore.ieee.org/document/9412489">Paper </a></td> 
+  <td> 480,193 </td> 
+  <td>0.943 <span>&#177;</span> 0.014 </td> 
+</tr>
+<tr> 
+  <td> 6 </td> 
+  <td> GCN </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://arxiv.org/abs/1609.02907">Paper </a></td> 
+  <td> 191,810 </td> 
+  <td>0.936 <span>&#177;</span> 0.024 </td> 
+</tr>
+<tr> 
+  <td> 7 </td> 
   <td> CNN (DeepPurpose) </td> 
   <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
   <td><a href="https://github.com/mims-harvard/TDC/tree/master/examples/single_pred/admet"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
@@ -339,7 +381,7 @@
   <td>0.869 <span>&#177;</span> 0.026 </td> 
 </tr>
 <tr> 
-  <td> 3 </td> 
+  <td> 8 </td> 
   <td> Morgan + MLP (DeepPurpose) </td> 
   <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
   <td><a href="https://github.com/mims-harvard/TDC/tree/master/examples/single_pred/admet"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 

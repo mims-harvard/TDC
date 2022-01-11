@@ -107,6 +107,8 @@
                             
                             <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
                             
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
                         </div>
                     </div>
                     
@@ -146,7 +148,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/benchmark/drugcombo_group/overview" class=""><strong>DTI Domain Generalization Group Leaderboard</strong></a>
+            <a href="/benchmark/dti_dg_group/overview" class=""><strong>DTI Domain Generalization Group Leaderboard</strong></a>
             
             <ul>
                 
@@ -197,31 +199,6 @@
 <div class="content">
     <p class="is-size-3"><b><code>TDC.BindingDB_Patent</code> Leaderboard</b></p>
 
-<h3 id="dataset-summary">Dataset Summary</h3>
-
-<table class="table is-striped is-hoverable">
-  <thead>
-  <tr>
-    <th>Label</th>
-    <th>Size</th>
-    <th>Task</th>
-    <th>Metric</th>
-    <th>Dataset Split</th>
-  </tr>
-  </thead>
-  <tr>
-    <td><code>TDC.DrugComb_Bliss</code></td>
-    <td>297,098</td>
-    <td>Regression</td>
-    <td>MAE</td>
-    <td>Combination</td>
-  </tr>
-</table>
-
-<div class="column is-12">
-    <hr />
-</div>
-
 <h3 id="leaderboard">Leaderboard</h3>
 
 <table class="table is-striped is-hoverable" id="A">
@@ -232,18 +209,64 @@
     <th>Model</th>
     <th>Contact</th>
     <th>Link</th>
-    <th>#Params</th>
     <th onclick="sortTable(8, 'A', 'asc')">MAE</th>
   </tr>
 </thead>
   <tr> 
   <td> 1 </td> 
-  <td> MLP </td> 
-  <td><a href="mailto:yroohani@stanford.edu">Yusuf Roohani</a></td> 
-  <td><a href="https://github.com/mims-harvard/TDC/tree/master/examples/multi_pred/drugcombo"> GitHub</a>, <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2509-3">Paper </a></td> 
-  <td> 7,141,297 </td> 
-  <td>4.560 <span>&#177;</span> 0.000 </td> 
+  <td> MMD </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/multi_pred/dti_dg"> GitHub</a>, <a href="https://arxiv.org/abs/2007.01434">Paper </a></td> 
+  <td>0.433 <span>&#177;</span> 0.010 </td> 
 </tr>
+<tr> 
+  <td> 2 </td> 
+  <td> CORAL </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/multi_pred/dti_dg"> GitHub</a>, <a href="https://arxiv.org/abs/2007.01434">Paper </a></td> 
+  <td>0.432 <span>&#177;</span> 0.010 </td> 
+</tr>
+
+<tr> 
+  <td> 3 </td> 
+  <td> ERM </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/multi_pred/dti_dg"> GitHub</a>, <a href="https://arxiv.org/abs/2007.01434">Paper </a></td> 
+  <td>0.427 <span>&#177;</span> 0.012 </td> 
+</tr>
+
+<tr> 
+  <td> 4 </td> 
+  <td> MTL </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/multi_pred/dti_dg"> GitHub</a>, <a href="https://arxiv.org/abs/2007.01434">Paper </a></td> 
+  <td>0.425 <span>&#177;</span> 0.010 </td> 
+</tr>
+
+<tr> 
+  <td> 5 </td> 
+  <td> GroupDRO </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/multi_pred/dti_dg"> GitHub</a>, <a href="https://arxiv.org/abs/2007.01434">Paper </a></td> 
+  <td>0.384 <span>&#177;</span> 0.006 </td> 
+</tr>
+
+<tr> 
+  <td> 6 </td> 
+  <td> AndMASK </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/multi_pred/dti_dg"> GitHub</a>, <a href="https://arxiv.org/abs/2007.01434">Paper </a></td> 
+  <td>0.288 <span>&#177;</span> 0.019 </td> 
+</tr>
+
+<tr> 
+  <td> 7 </td> 
+  <td> IRM </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/multi_pred/dti_dg"> GitHub</a>, <a href="https://arxiv.org/abs/2007.01434">Paper </a></td> 
+  <td>0.284 <span>&#177;</span> 0.021 </td> 
+</tr>
+
 </table>
 
 </div>
