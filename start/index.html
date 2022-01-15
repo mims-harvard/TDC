@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="http://localhost:4000/start/" />
-<meta property="og:url" content="http://localhost:4000/start/" />
+<link rel="canonical" href="https://tdcommons.ai/start/" />
+<meta property="og:url" content="https://tdcommons.ai/start/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/start/","headline":"Quick Start","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"https://tdcommons.ai/start/","headline":"Quick Start","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -149,18 +149,16 @@
 
 <p class="is-size-5"> 
 Developing therapeutics to cure diseases and improve human health is an overarching goal of biomedical
-research. With the advent of high-throughput techniques in genome sequencing, compound
-screening and the digitization of health records, large amounts of
-rich and diverse data have become available for research and analysis. The availability
-of large datasets call for the development of algorithmic and AI infrastructure and AI-ready datasets to facilitate discovery. 
+research. However, the lack of high-quality benchmarks impedes the advancement of artificial intelligence for drug discovery. 
+To this end, <b>TDC supports the development of novel ML theory and methods, with a strong bent towards developing the mathematical foundations of which ML algorithms are most suitable for drug discovery applications and why.</b>  
 </p>
 
 <p class="is-size-5">
-TDC is the first unifying framework to systematically access and evaluate ML across the entire range of
-therapeutics. At its core, TDC is a collection of curated datasets and learning tasks that can translate
+TDC is the first unifying resource to systematically access and evaluate ML theory and methods across the entire range of
+therapeutics. It contains curated AI/ML-ready datasets, ML tasks, and benchmarks ready to translate
 algorithmic innovation into biomedical and clinical implementation. Datasets in TDC cover a wide range of
-therapeutic products (e.g., small molecule, biologics, gene editing) across the entire discovery and development
-pipeline (i.e., target identification, hit discovery, lead optimization, manufacturing). 
+therapeutic products (e.g., small molecules, biologics, genome editing therapeutics) across the entire discovery and development
+pipeline (e.g., target identification, hit discovery, lead optimization, manufacturing). 
 </p>
 
 <div class="column is-8 is-offset-2">
@@ -169,7 +167,7 @@ pipeline (i.e., target identification, hit discovery, lead optimization, manufac
 
 <p class="is-size-5">
 Importantly, datasets in TDC are AI/ML-ready, where input features are processed into the most
-accessible format possible, such that ML researchers can use them directly as input to ML algorithms. Further,
+accessible format possible, such that scientists can use them directly as input to ML methods. Further,
 TDC provides numerous functions for model evaluation, meaningful data splits, data processors, and oracles
 for molecule generation, all accessible via an open source TDC package. All features of TDC are designed to easily
 integrate into any ML workflow. To this end, we develop an open-source software library that allows for efficient 
@@ -177,8 +175,7 @@ retrieval of any TDC dataset and implements supporting functions for learning ta
 </p>
 
 <p class="is-size-5">
-We also provide realistic leaderboards where we curate learning tasks into meaningful train, validation, and test splits to provide a systematic model development and evaluation framework and test the extent to which algorithmic advancements transfer to real-world settings.
-
+TDC also provides public benchmarks. Each benchmark has a carefully designed ML task, AI/ML-ready dataset, a public leaderboard, and performance metrics to support systematic model benchmarking and test how ML methods generalize to settings encountered in real-world drug discovery implementation.
 </p>
 
 <div class="container">
@@ -186,13 +183,11 @@ We also provide realistic leaderboards where we curate learning tasks into meani
                 <div class="column is-12 is-size-5">
                     <div class="box has-background-info has-text-white">
                         <b>Facilitating algorithmic and scientific advance in the broad area of therapeutics</b><br />
-                        We envision TDC
-                        to be the meeting point between domain scientists and ML scientists. Domain scientists can
-                        pose learning tasks and identify relevant datasets that are carefully processed and integrated into the TDC
-                        and formulated as scientifically valid learning tasks. ML scientists can then rapidly obtain these tasks
-                        and ML-ready datasets through the TDC programming framework and use them to design powerful ML
-                        methods. Predictions and other outputs produced by ML models can then facilitate algorithmic and scientific
-                        advances in therapeutics.
+                        We envision TDC to be the meeting point between domain scientists and ML scientists. Domain scientists can
+                        pose AI/ML tasks and identify relevant datasets that are carefully processed and integrated into the TDC
+                        and formulated as scientifically valid AI/ML tasks. ML scientists can then rapidly obtain these tasks
+                        and AI/ML-ready datasets in TDC and use them to design powerful ML methods. Predictions and other outputs produced by ML methods can facilitate algorithmic and scientific
+                        advances in the broad area of therapeutics.
                     </div>
                 </div>
             </div>
@@ -279,7 +274,7 @@ We also provide realistic leaderboards where we curate learning tasks into meani
 </code></pre></div></div>
 <p class="is-size-5"> The variable <code>df</code> is a Pandas object holding the entire dataset. By default, the variable <code>splits</code> is a dictionary with keys <code>train</code>, <code>val</code>, and <code>test</code> whose values are all Pandas DataFrames with Drug IDs, SMILES strings and labels. For detailed information about outputs, see <a href="/single_pred_tasks/adme/#caco-2-cell-effective-permeability-wang-et-al">Datasets documentation.</a> </p>
 
-<p class="is-size-5"> The user only needs to specify "Problem -- Learning Task -- Data Set." TDC then automatically retrieves the processed AI/ML-ready dataset from the TDC server and generates a <code>data</code> object, exposing numerous data functions that can be directly applied to the dataset. </p>
+<p class="is-size-5"> The user only needs to specify "Problem -- Machine Learning Task -- Data Set." TDC then automatically retrieves the processed AI/ML-ready dataset from the TDC server and generates a <code>data</code> object, exposing numerous data functions that can be directly applied to the dataset. </p>
 
 <div class="column is-12">
     <hr />
