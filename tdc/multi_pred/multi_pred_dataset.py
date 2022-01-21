@@ -93,10 +93,15 @@ class DataLoader(base_dataset.DataLoader):
 
 		if method == 'random':
 			return create_fold(df, seed, frac)
-		if (column_name is not None) and (column_name in df.columns.values): 
-			if method == 'cold_split':		
-				return create_fold_setting_cold(df, seed, frac, column_name)
+		
+		elif method == 'cold_split':
+			if isinstance(column_name, str):
+				column_name = [column_name]
+			if ((column_name is None) or (not all([x in df.columns.values for x in column_name]))):
+				raise AttributeError( "For cold_split, please provide one or multiple column names that are contained in the dataframe.")		
+			return create_fold_setting_cold(df, seed, frac, column_name)
+		
 		elif method == 'combination':
 			return create_combination_split(df, seed, frac)
 		else:
-			raise AttributeError("Please select from random_split, or cold_split, if cold split. please specify the column name!")
+			raise AttributeError("Please select a splitting strategy from random, cold_split, or combination.")
