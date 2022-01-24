@@ -76,7 +76,7 @@ test_multi_pred_dataset_names = ['test_multi_pred']
 
 # single_pred prediction
 
-toxicity_dataset_names = ['tox21', 'clintox', 'herg', 'herg_central', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
+toxicity_dataset_names = ['tox21', 'toxcast', 'clintox', 'herg', 'herg_central', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
 
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
