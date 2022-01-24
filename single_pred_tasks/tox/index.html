@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="https://tdcommons.ai/single_pred_tasks/tox/" />
-<meta property="og:url" content="https://tdcommons.ai/single_pred_tasks/tox/" />
+<link rel="canonical" href="http://localhost:4000/single_pred_tasks/tox/" />
+<meta property="og:url" content="http://localhost:4000/single_pred_tasks/tox/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"https://tdcommons.ai/single_pred_tasks/tox/","headline":"Toxicity","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/single_pred_tasks/tox/","headline":"Toxicity","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -233,6 +233,7 @@
         <ul class="menu-list">
   <li><a href="#acute-toxicity-ld50">Acute Toxicity LD50</a></li>
   <li><a href="#herg-blockers">hERG blockers</a></li>
+  <li><a href="#herg-central">hERG Central</a></li>
   <li><a href="#ames-mutagenicity">Ames Mutagenicity</a></li>
   <li><a href="#dili-drug-induced-liver-injury">DILI (Drug Induced Liver Injury)</a></li>
   <li><a href="#skin-reaction">Skin Reaction</a></li>
@@ -311,6 +312,42 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.molpharmaceut.6b00471?casa_token=YszQx1sl0QgAAAAA:lIztZjmLzi3CPjnYh4lVFe3FAjOKF12N9IwBxjV4wiGw6S6QbpnegfgHEjwPzbgmpW-Bk9VvY9RLAsVo">[1] Wang, Shuangquan, et al. “ADMET evaluation in drug discovery. 16. Predicting hERG blockers by combining multiple pharmacophores and machine learning approaches.” Molecular Pharmaceutics 13.8 (2016): 2855-2866.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="herg-central">hERG Central</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong>  Human ether-à-go-go related gene (hERG) is crucial for the coordination of the heart's beating. Thus, if a drug blocks the hERG, it could lead to severe adverse effects. Therefore, reliable prediction of hERG liability in the early stages of drug design is quite important to reduce the risk of cardiotoxicity-related attritions in the later development stages. There are three targets: hERG_at_1uM, hERG_at_10uM, and hERG_inhib. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> </p>
+
+<ul>
+  <li>hERG_at_1uM: Regression. Given a drug SMILES string, predict the percent inhibition at a 1µM concentration.</li>
+  <li>hERG_at_10uM: Regression. Given a drug SMILES string, predict the percent inhibition at a 10µM concentration.</li>
+  <li>hERG_inhib: Binary classification. Given a drug SMILES string, predict whether it blocks (1) or not blocks (0). This is equivalent to whether hERG_at_10uM &lt; -50, i.e. whether the compound has an IC50 of less than 10µM.</li>
+</ul>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 306,893 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<p class="is-size-6">  <strong> Note: </strong> Tox21 contains multiple assays data. To retrieve the specific labels for that assay, specify the label name in the <code>label_name</code> variable to the data loader. You can find all available label names by calling: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">retrieve_label_name_list</span>
+<span class="n">label_list</span> <span class="o">=</span> <span class="n">retrieve_label_name_list</span><span class="p">(</span><span class="s">'herg_central'</span><span class="p">)</span>
+</code></pre></div></div>
+<p class="is-size-6"> Then, go to the standard TDC data loader procedure with the label name specified. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'herg_central'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/22149888/">[1] Du F, Yu H, Zou B, Babcock J, Long S, Li M. hERGCentral: a large database to store, retrieve, and analyze compound-human Ether-à-go-go related gene channel interactions to facilitate cardiotoxicity assessment in drug development. Assay Drug Dev Technol. 2011 Dec;9(6):580-8. doi: 10.1089/adt.2011.0425.</a></p>
 
 <p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 

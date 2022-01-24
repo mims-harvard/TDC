@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="https://tdcommons.ai/generation_tasks/retrosyn/" />
-<meta property="og:url" content="https://tdcommons.ai/generation_tasks/retrosyn/" />
+<link rel="canonical" href="http://localhost:4000/generation_tasks/retrosyn/" />
+<meta property="og:url" content="http://localhost:4000/generation_tasks/retrosyn/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"https://tdcommons.ai/generation_tasks/retrosyn/","headline":"Retrosynthesis","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/generation_tasks/retrosyn/","headline":"Retrosynthesis","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -258,6 +258,10 @@ Retrosynthesis planning is useful for chemists to design synthetic routes to tar
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">get_reaction_type</span>
 <span class="n">get_reaction_type</span><span class="p">(</span><span class="s">'USPTO-50K'</span><span class="p">)</span>
+</code></pre></div></div>
+<p><strong> Note: </strong> Starting <code class="highlighter-rouge">0.3.5</code>, you can also get the reaction type in the dataframe file in each split by turning on</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">include_reaction_type</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>

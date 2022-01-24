@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="https://tdcommons.ai/news/" />
-<meta property="og:url" content="https://tdcommons.ai/news/" />
+<link rel="canonical" href="http://localhost:4000/news/" />
+<meta property="og:url" content="http://localhost:4000/news/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"https://tdcommons.ai/news/","headline":"News","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/news/","headline":"News","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -146,6 +146,26 @@
                     
 <div class="content">
     <h1 id="news">News</h1>
+
+<hr />
+
+<p class="is-size-5"><strong>2021.01.23</strong> TDC <code>0.3.5</code> is released! Here are the changes: </p>
+
+<ul class="is-medium">
+    <li> TDC has a new large hERG dataset in <code>Tox</code> (Thanks to <a href="https://github.com/benb111">Ben</a>)! Checkout <a href="/single_pred_tasks/tox/#herg-central">here</a> for more information.</li>
+</ul>
+
+<ul class="is-medium">
+    <li> TDC has an updated ChEMBL library (Version 29) in <code>MolGen</code>! The previous version is also still kept available. Checkout <a href="/generation_tasks/molgen/#chembl">here</a> for more information.</li>
+</ul>
+
+<ul class="is-medium">
+    <li> Reaction type information can be found within split by turning on the include_reaction_type flag for USPTO-50 in <code>RetroSyn</code>!  Checkout <a href="/generation_tasks/retrosyn/#uspto-50k">here</a> for more information.</li>
+</ul>
+
+<ul class="is-medium">
+    <li> Fixed bug on cold split for higher order (&gt;2) multi-instance prediction tasks! (Thanks to <a href="https://github.com/ZOE-V">Zoe</a> !)  Checkout <a href="https://github.com/mims-harvard/TDC/issues/136">here</a> for more information.</li>
+</ul>
 
 <hr />
 
