@@ -76,7 +76,7 @@ test_multi_pred_dataset_names = ['test_multi_pred']
 
 # single_pred prediction
 
-toxicity_dataset_names = ['tox21', 'clintox', 'herg', 'herg_central', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
+toxicity_dataset_names = ['tox21', 'toxcast', 'clintox', 'herg', 'herg_central', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
 
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
@@ -153,7 +153,7 @@ retrosyn_dataset_names = ['uspto50k', 'uspto']
 
 forwardsyn_dataset_names = ['uspto']
 
-single_molecule_dataset_names = ['zinc', 'moses', 'chembl']
+single_molecule_dataset_names = ['zinc', 'moses', 'chembl', 'chembl_v29']
 
 paired_dataset_names = ['uspto50k', 'uspto']
 
@@ -462,6 +462,7 @@ name2type = {'toxcast': 'tab',
  'zinc': 'tab', 
  'moses': 'tab',
  'chembl': 'tab',
+ 'chembl_v29': 'csv',
  'qed': 'tab', 
  'drd2': 'tab', 
  'logp': 'tab',
@@ -547,6 +548,7 @@ name2id = {'bbb_adenot': 4259565,
  'zinc': 4170963,
  'moses': 4170962,
  'chembl': 4170965,
+ 'chembl_v29': 5767979,
  'qed': 4170959, 
  'drd2': 4170957, 
  'logp': 4170961, 
