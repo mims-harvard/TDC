@@ -280,8 +280,6 @@ leenay_targets = ['Fraction_Insertions', 'Avg_Insertion_Length', 'Avg_Deletion_L
 
 herg_central_targets = ['hERG_at_1uM', 'hERG_at_10uM', 'hERG_inhib']
 
-weber_targets = ['epitope_aa', 'epitope_smi', 'tcr', 'tcr_full']
-
 dataset2target_lists = {'qm7b': QM7_targets,
                             'qm8': QM8_targets,
                             'qm9': QM9_targets,
@@ -289,5 +287,4 @@ dataset2target_lists = {'qm7b': QM7_targets,
                             'toxcast': ToxCast_targets,
                             'tox21': Tox21_targets,
                             'leenay': leenay_targets,
-                            'herg_central': herg_central_targets,
-                            'Weber': weber_targets}
+                            'herg_central': herg_central_targets}
