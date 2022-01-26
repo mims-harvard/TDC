@@ -17,22 +17,17 @@
 
 [**Website**](https://tdcommons.ai) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
-**Therapeutics Data Commons (TDC)** is the first unifying framework to systematically access and evaluate machine learning across the entire range of therapeutics.
+**Therapeutics Data Commons (TDC)** is the first unifying framework to systematically access, evaluate, and benchmark machine learning methods across the entire range of therapeutics. TDC supports the development of novel ML methods and theory, with a strong bent towards developing the foundations of which ML algorithms are most suitable for drug discovery applications and why.
 
-The collection of curated datasets, learning tasks, and benchmarks in TDC serves as a meeting point for domain and machine learning scientists. We envision that TDC can considerably accelerate machine-learning model development, validation and transition into biomedical and clinical implementation.
+The collection of curated AI/ML-ready datasets, AI/ML tasks, and benchmarks in TDC serves as a meeting point for domain and machine learning scientists. We envision that TDC can considerably accelerate ML model development, validation and transition into biomedical and clinical implementation.
 
-TDC is an open-source initiative. To get involved, check out the [Contribution Guide](CONTRIBUTE.md)!
+TDC is an open-source initiative. To get involved, check our [Contribution Guidelines](CONTRIBUTE.md)!
 
 **Invited talk at the [Harvard Symposium on Drugs for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
 
 **Presented at [NeurIPS 2021](https://openreview.net/forum?id=8nvgnORnoWr)** [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing) / **Oral at [ELLIS ML4Molecules](https://moleculediscovery.github.io/workshop2021/)** [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing) / **Presented at [Baylearn](https://baylearn-org.github.io/www/)** [**\[Slides\]**](https://drive.google.com/file/d/1BNpk3dOdqE3ksgyVV-V3xySdBMq-8cXL/view?usp=sharing) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing)
 
-----
-
-**The first TDC user group meeting will take place on Jan 25th 11AM-12:30PM EST! Find more info [here](https://shoutout.wix.com/so/d1Nv1pC2d#/main)!**
-
-----
-
+**[Recording of the first TDC User Group Meetup](https://harvard.zoom.us/rec/share/HO0TjRPs56YG-Fu3i033izaTwebB4KwUhPeNURkWSI-anrH9su03lCtUlHeZG-WP.67ZJmAIHsD7Q_2GQ) (Jan 25th, 2022). [Agenda](https://shoutout.wix.com/so/d1Nv1pC2d#/main)**
 
 ## Updates
 - `0.3.5`: 1. Add hERG central dataset 2. Add ChEMBL V29 3. Fixed reaction type issue for USPTO-50 4. Fix bug on higher order multi-instance prediction cold-split! More information, see [here](https://tdcommons.ai/news/)!
@@ -63,7 +58,7 @@ TDC is an open-source initiative. To get involved, check out the [Contribution G
 </details>
 
 
-## Features
+## Unique Features of TDC
 
 - *Diverse areas of therapeutics development*: TDC covers a wide range of learning tasks, including target discovery, activity screening, efficacy, safety, and manufacturing across biomedical products, including small molecules, antibodies, and vaccines.
 - *Ready-to-use datasets*: TDC is minimally dependent on external packages. Any TDC dataset can be retrieved using only 3 lines of code.
@@ -108,7 +103,7 @@ conda install -c conda-forge pytdc
 
 ## Tutorials
 
-We provide many tutorials to get started with TDC:
+We provide  tutorials to get started with TDC:
 
 | Name  | Description                                             |
 |-------|---------------------------------------------------------|
@@ -119,7 +114,9 @@ We provide many tutorials to get started with TDC:
 | [104](tutorials/TDC_104_ML_Model_DeepPurpose.ipynb)   | Generate 21 ADME ML Predictors with 15 Lines of Code |
 | [105](tutorials/TDC_105_Oracle.ipynb)   | Molecule Generation Oracles                             |
 | [106](tutorials/TDC_106_BenchmarkGroup_Submission_Demo.ipynb)   | Benchmark submission                             |
-| [DGL](tutorials/DGL_User_Group_Demo.ipynb)   | Demo for DGL GNN User Group Meeting                             |
+| [DGL](tutorials/DGL_User_Group_Demo.ipynb)   | Demo presented at DGL GNN User Group Meeting                             |
+| [U1.1](tutorials/User_Group/UserGroupMeeting_Tianfan.ipynb)   | Demo presented at first TDC User Group Meetup                             |
+| [U1.2](tutorials/User_Group/UserGroupMeeting_Wenhao.ipynb)   | Demo presented at first TDC User Group Meetup                             |
 
 
 ## Design of TDC
@@ -243,12 +240,12 @@ results = group.evaluate_many(predictions_list)
 # {'caco2_wang': [6.328, 0.101]}
 ```
 
-For more information, please visit [here](https://tdcommons.ai/benchmark/overview/).
+For more information, visit [here](https://tdcommons.ai/benchmark/overview/).
 
 
 ## Cite Us
 
-If you find Therapeutics Data Commons useful, consider citing our NeurIPS paper:
+If you find Therapeutics Data Commons useful, cite our NeurIPS paper:
 
 ```
 @article{Huang2021tdc,
@@ -262,13 +259,13 @@ If you find Therapeutics Data Commons useful, consider citing our NeurIPS paper:
 
 ## Contribute
 
-TDC is a community-driven and open-science initiative. If you want to get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) and checkout the [contribution guide](CONTRIBUTE.md)!
+TDC is a community-driven and open-science initiative. To get involved, join our [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) and checkout the [contribution guide](CONTRIBUTE.md)!
 
 ## Contact
 
-Send emails to [us](mailto:contact@tdcommons.ai) or open an issue.
+Reach us at [contact@tdcommons.ai](mailto:contact@tdcommons.ai) or open a GitHub issue.
 
-## Data Server Maintenance Issues
+## Data Server
 
 TDC is hosted on [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/21LKWG) with the following persistent identifier [https://doi.org/10.7910/DVN/21LKWG](https://doi.org/10.7910/DVN/21LKWG). When Dataverse is under maintenance, TDC datasets cannot be retrieved. That happens rarely; please check the status on [the Dataverse website](https://dataverse.harvard.edu/).
 
