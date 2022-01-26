@@ -11,7 +11,7 @@ from ..utils.load import download_wrapper, pd_load
 from . import bi_pred_dataset, multi_pred_dataset
 from ..metadata import dataset_names
 
-class TCR_Epitope_Binding(multi_pred_dataset.DataLoader):
+class TCREpitopeBinding(multi_pred_dataset.DataLoader):
 
     """Data loader class to load datasets in T cell receptor (TCR) Specificity Prediction Task. 
     More info: 
@@ -22,8 +22,6 @@ class TCR_Epitope_Binding(multi_pred_dataset.DataLoader):
         name (str): the dataset name.
         path (str, optional): 
             The path to save the data file, defaults to './data'
-        label_name (str, optional): 
-            For multi-label dataset, specify the label name, defaults to None
         print_stats (bool, optional): 
             Whether to print basic statistics of the dataset, defaults to False
 
@@ -33,7 +31,7 @@ class TCR_Epitope_Binding(multi_pred_dataset.DataLoader):
         """Create TCR Specificity Prediction dataloader object
         """
         super().__init__(name, path, print_stats,
-                         dataset_names=dataset_names["TCR_Epitope_Binding"])
+                         dataset_names=dataset_names["TCREpitopeBinding"])
         self.entity1_name = 'TCR'
         self.entity2_name = 'Epitope'
 

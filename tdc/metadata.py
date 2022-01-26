@@ -144,7 +144,7 @@ yield_dataset_names = ['uspto_yields', 'buchwald-hartwig']
 
 catalyst_dataset_names = ['uspto_catalyst']
 
-tcr_epi_dataset_names = ['Weber']
+tcr_epi_dataset_names = ['weber']
 
 ####################################
 # generation
@@ -398,7 +398,7 @@ dataset_names = {"Tox": toxicity_dataset_names,
 				"CRISPROutcome": crisproutcome_dataset_names,
 				"test_single_pred": test_single_pred_dataset_names,
 				"test_multi_pred": test_multi_pred_dataset_names,
-				"TCR_Epitope_Binding": tcr_epi_dataset_names
+				"TCREpitopeBinding": tcr_epi_dataset_names
 				}
 
 benchmark_names = {"admet_group": admet_benchmark,
@@ -504,7 +504,7 @@ name2type = {'toxcast': 'tab',
  'test_single_pred': 'tab',
  'test_multi_pred': 'tab',
  'gdsc_gene_symbols': 'tab',
- 'Weber': 'tab'}
+ 'weber': 'tab'}
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -591,7 +591,7 @@ name2id = {'bbb_adenot': 4259565,
  'test_single_pred': 4832455,
  'test_multi_pred': 4832456,
  'gdsc_gene_symbols': 5255026,
- 'Weber': 5790963}
+ 'weber': 5790963}
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 
