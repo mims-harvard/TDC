@@ -21,8 +21,11 @@ if drug_encoding not in ['RDKit2D', 'Morgan', 'CNN', 'NeuralFP', 'MPNN', 'Attent
 if drug_encoding == 'RDKit2D':
     drug_encoding = 'rdkit_2d_normalized'
     
-if drug_encoding in ['NeuralFP', 'AttentiveFP', 'AttrMasking', 'ContextPred']:
+if drug_encoding in ['NeuralFP', 'AttentiveFP']:
     drug_encoding = 'DGL_' + drug_encoding
+
+if drug_encoding in ['AttrMasking', 'ContextPred']:
+    drug_encoding = 'DGL_GIN_' + drug_encoding
 
 predictions_all_seeds = {}
 results_all_seeds = {}
