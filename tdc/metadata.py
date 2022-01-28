@@ -144,6 +144,7 @@ yield_dataset_names = ['uspto_yields', 'buchwald-hartwig']
 
 catalyst_dataset_names = ['uspto_catalyst']
 
+tcr_epi_dataset_names = ['weber']
 
 ####################################
 # generation
@@ -358,7 +359,8 @@ category_names = {'single_pred': ["Tox",
 								"DrugSyn",
 								"MTI",
 								"GDA",
-								"Catalyst"],
+								"Catalyst",
+								"TCR_Epitope_Binding"],
 				'generation': ["RetroSyn",
 								"Reaction",
 								"MolGen"
@@ -395,7 +397,8 @@ dataset_names = {"Tox": toxicity_dataset_names,
 				"Catalyst": catalyst_dataset_names, 
 				"CRISPROutcome": crisproutcome_dataset_names,
 				"test_single_pred": test_single_pred_dataset_names,
-				"test_multi_pred": test_multi_pred_dataset_names
+				"test_multi_pred": test_multi_pred_dataset_names,
+				"TCREpitopeBinding": tcr_epi_dataset_names
 				}
 
 benchmark_names = {"admet_group": admet_benchmark,
@@ -500,7 +503,8 @@ name2type = {'toxcast': 'tab',
  'leenay':'tab',
  'test_single_pred': 'tab',
  'test_multi_pred': 'tab',
- 'gdsc_gene_symbols': 'tab'}
+ 'gdsc_gene_symbols': 'tab',
+ 'weber': 'tab'}
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -586,7 +590,8 @@ name2id = {'bbb_adenot': 4259565,
  'leenay':4279966,
  'test_single_pred': 4832455,
  'test_multi_pred': 4832456,
- 'gdsc_gene_symbols': 5255026}
+ 'gdsc_gene_symbols': 5255026,
+ 'weber': 5790963}
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 
