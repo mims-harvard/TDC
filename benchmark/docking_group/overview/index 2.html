@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Docking Benchmark Group - TDC</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Docking Benchmark Group | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Docking Benchmark Group" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Machine Learning Datasets for Therapeutics" />
+<meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
+<link rel="canonical" href="http://localhost:4000/benchmark/docking_group/overview/" />
+<meta property="og:url" content="http://localhost:4000/benchmark/docking_group/overview/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/benchmark/docking_group/overview/","headline":"Docking Benchmark Group","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+            <span><img src="/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/start/" class="navbar-item ">Quick Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
+                            
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
+                            
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
+                            
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-4-desktop is-4-tablet">
+                    
+
+<aside class="menu">
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/benchmark/docking_group/overview" class=""><strong>Docking Group Leaderboard</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/benchmark/docking_group/drd3/" class=""><code>TDC.DRD3</code> Leaderboard</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="" class=""><strong>References</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/benchmark/overview/#step-by-step-instructions" class="">Submission Instructions</a></li>
+                
+                
+                
+                <li><a href="/benchmark/overview/#further-details-about-benchmark-groups-in-tdc" class="">BenchmarkGroup Class Documentation</a></li>
+                
+                
+                
+                <li><a href="/benchmark/overview/" class="">Leaderboard Guidelines</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+</aside>
+                </div>
+                
+                <div class="column is-8">
+                    
+                    
+                    
+                    
+<div class="content">
+    <h2 id="docking-molecule-generation-benchmark-group">Docking Molecule Generation Benchmark Group</h2>
+
+<h3 id="introduction">Introduction</h3>
+
+<p class="is-size-5"> AI-assisted molecule generation aims to generate novel molecular structures with desired properties. Current techniques for evaluating the quality of generated molecules focus on heuristic oracles, such as QED, LogP, and DRD2, and do not reflect the complexity of the real-world environment. This creates several key challenges.  Many properties, such as binding propensity towards a target protein, are incredibly resource-intensive to investigate through experiments or computational simulations. For this reason, techniques that require a large number of calls to oracles do not constitute a practical strategy to evaluate the generated molecules. Even in settings where generated molecules score highly by some oracles, the generated molecules may not have other necessary properties (e.g., low synthesizability) to constitute promising therapeutic candidates.
+</p>
+
+<p class="is-size-5"> To address these challenges, we designed a docking benchmark group [<a href="https://arxiv.org/abs/2006.16955">Cieplinski et al. 2020</a>, <a href="https://chemrxiv.org/articles/preprint/Using_a_Genetic_Algorithm_to_Find_Molecules_with_Good_Docking_Scores/13525589/2#:~:text=A%20graph%2Dbased%20genetic%20algorithm,2%2Dadrenergic%20G%20protein%2Dcoupled">Steinmann and Jensen, 2021</a>]. Docking is a theoretical evaluation of affinity between a ligand (a small molecular drug) and a target (a protein involved in the disease). As a molecule with higher affinity is more likely to have higher bioactivity, docking is widely used for virtual screening of compounds [<a href="https://www.nature.com/articles/s41586-019-0917-9?fbclid=IwAR1HDXx0kEsNlRQZXVtPkmX7hU_gDoT2aqVEiBZj04qhz_6x1WCbNkj75IE">Lyu et al. 2020</a>]. 
+</p>
+
+<p class="is-size-5">
+This benchmark evaluates generated molecules against their affinity to the target protein (i.e., quantified through docking scores). To this end, the benchmark is structured as follows:
+<ul class="is-size-5">
+<li> As docking scores are relatively costly to calculate, we <i>restrict the number of oracle calls</i> in this benchmark requiring the models to adapt quickly. This setup simulates a real-world environment with a limited number of wet-lab experiments that can be carried out.</li>
+<li>In addition to typical oracle scores, we provide <i>additional tests</i> to evaluate how realistic the generated molecules are.</li>
+</ul>
+</p>
+
+<p class="is-size-5">
+The training dataset originates from <a href="/generation_tasks/molgen/#zinc">ZINC 250K</a>.
+</p>
+
+<h3 id="accessing-the-dataset">Accessing the Dataset</h3>
+
+<p class="is-size-5"> To retrieve the names of benchmarks constitute this benchmark group, type the following: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'Docking_Group'</span><span class="p">)</span>
+<span class="c1"># ['DRD3', 'XXX', ...]
+</span></code></pre></div></div>
+
+<p class="is-size-5">To access a benchmark, use the following code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">docking_group</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">docking_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">,</span> 
+                <span class="n">file_format</span><span class="o">=</span><span class="s">'oracle'</span><span class="p">,</span> 
+                <span class="n">pyscreener_path</span> <span class="o">=</span> <span class="s">'PATH_TO_PyScreener'</span><span class="p">)</span>
+
+<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'DRD3'</span><span class="p">,</span> <span class="n">num_max_call</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">)</span> 
+<span class="c1"># specify the number of maximum calls your model plans to use 
+</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">oracle_fct</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'oracle'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'data'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> 
+
+<span class="c1"># --------------------------------------------- # 
+#  Train your model using oracle_fct and data   #
+#    Save SMILES generation in pred_smiles      #
+# --------------------------------------------- #
+</span>
+<span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_smiles</span> 
+<span class="s">'''
+pred_smiles format is a dictionary of the top 100 generated SMILES: 
+{5000: {
+  'C=C=C=C(C#CON(N=O)C(=NO)C(O)=NC#CC)C(N=CC)(ON=NO)C(=CNN=NNCC)OO': -6.0,
+  'CNN=CC(CC(O)(CCN(O)O)NC(=N)C(C)=COO)OC(=O)N=NON=C(O)CC=CNO': -7.2,
+  ...
+  '(O)OC#CNOC(N)C(=O)NOC(CN)C1=C=C=C=C1': -9.8
+ },
+ ### if you also evaluate on 1000/500/100 maximum calls
+ 1000: {
+  .....
+ }
+}
+
+Note: if no docking score is generated by the model for the final 
+100 SMILES, you can also input a list of 100 generated SMILES and 
+TDC will call the docking scores in the evaluate function.
+'''</span>
+
+<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">m1_api</span> <span class="o">=</span> <span class="s">'XXXXX'</span><span class="p">)</span>
+<span class="s">'''
+{'DRD3': {5000: {'top100': -10.2,
+          'top10': -11.3,
+          'top1': -12.3,
+          'diversity': 0.6,
+          'novelty': 0.7,
+          '</span><span class="si">%</span><span class="s">pass': 0.7,
+          'top1_</span><span class="si">%</span><span class="s">pass': -11.2,
+          'm1': 2.5,
+          'top smiles': ['XXX', 'XXX', ...]
+          },
+        1000: {....
+          }
+        }          
+}
+
+Note that if you put save_dict = True in evaluate function, it 
+would return more detailed evaluation outcomes, namely the list of 
+smiles pass the filter, a dictionary of smiles with m1 scores and docking scores.
+
+We ask users to submit at least three random runs of models for robustness. 
+You can use following functions to obtain submission ready format:
+'''</span>
+<span class="n">predictions_runs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pred_run1</span><span class="p">,</span> <span class="n">pred_run2</span><span class="p">,</span> <span class="n">pred_run3</span><span class="p">]</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_runs</span><span class="p">,</span> <span class="n">save_file_name</span> <span class="o">=</span> <span class="s">'result'</span><span class="p">,</span> <span class="n">m1_api</span> <span class="o">=</span> <span class="s">'XXXXX'</span><span class="p">)</span>
+<span class="s">'''
+{'DRD3': {5000: {'top100': [-10.2, 0.12],
+          'top10': [-11.3, 0.01],
+          'top1': [-12.3, 0.02],
+          'diversity': [0.6, 0.001],
+          'novelty': [0.7, 0.01],
+          '</span><span class="si">%</span><span class="s">pass': [0.7, 0.02],
+          'top1_</span><span class="si">%</span><span class="s">pass': [-11.2, 0.03],
+          'm1': [5.5, 0.04],
+          'top smiles': ['XXX', 'XXX', ...] # superset of runs
+          },
+        1000: {....
+          }
+        }          
+}
+
+In default, this evaluate_many function will call group.evaluate for each run. If you have the evaluate result for each fold, simply specify it with 'results_individual = XX' to skip the evaluation calls.
+'''</span>
+</code></pre></div></div>
+
+<h3 id="performance-evaluation">Performance Evaluation</h3>
+
+<p class="is-size-5"> To evaluate the quality of generated molecules, we report the following metrics (average and standard deviation across 3 or more independent runs): </p>
+
+<ul class="is-large is-size-5">
+  <li><code>top100</code>: Average docking score of top-100 generated molecules for a given target.</li>
+  <li><code>top10</code>: Average docking score of top-10 generated molecules for a given target.</li>
+  <li><code>top1</code>: The lowest docking score of generated molecules.</li>
+  <li><code>diversity</code>: Average pairwise Tanimoto distance of Morgan fingerprints for top-100 generated molecules.</li>
+  <li><code>novelty</code>: Fraction of generated molecules that are not present in the training set.</li>
+  <li><code>m1</code>: Synthesizability score of molecules obtained via molecule.one retrosynthesis model. </li>
+  <li><code>%pass</code>: Fraction of generated molecules that successfully pass through a-priori defined filters. These filters are rules compiled by medicinal chemists and test whether compounds are promising candidates for downstream analyses.</li>
+  <li><code>top1_%pass (top1-p)</code>: The lowest docking score for molecules molecules that are not filtered out.</li>
+  <li><code>molecules</code>: Visualizations of molecular structure of the superset of top-100 molecules across independent runs of the model.</li> 
+</ul>
+
+<p class="is-size-5">Note that all evaluations are automatically computed by <code>group.evaluate</code> function with the exception of <code>m1</code> evaluation metric.</p>
+
+<p class="is-size-5">To include <code>m1</code> in the evaluation, specify the <code>m1_api</code> token in the evaluation function. Note that this is a non-commercial service kindly provided to TDC by our partner organization <a href="http://molecule.one/">Molecule.one</a>. Please follow Molecule.one's terms of usage if you plan to calculate <code>m1</code> scores. You can opt-out of <code>m1</code> and submit your results without it, by not specifying the <code>m1_api</code> token. Check out this <a href="/functions/oracles/#moleculeone"> page </a> to get the API token and learn about terms of usage. </p>
+
+<h3 id="maximum-number-of-calls-to-oracles">Maximum Number of Calls to Oracles</h3>
+
+<p class="is-size-5">
+To simulate the resource-intensiveness in real-world molecule generation, we restrict the number of maximum calls to oracles in O(10<sup>3</sup>). To evaluate models in increasingly harder learning regimes, we provide four leaderboards, each allowing only a certain number of oracle calls. The smaller the number of allowed oracle calls, the harder is the learning task. You can specify the maximum number of oracle calls as follows: <code>group.get('DRD3', num_max_call = 5000)</code>. We currently support leaderboards with a maximum of 100 (toughest learning regime), 500, 1000, or 5000 (the least tough learning regime) calls to the oracles.
+</p>
+
+<h3 id="instructions">Instructions</h3>
+
+<p class="is-size-5">This benchmark requires the use of TDC oracle class. For docking score, it requires PyScreener. You can find the detailed installation steps <a href="/functions/oracles/#docking-scores">here</a>. </p>
+
+<p class="is-size-5"> To submit your result, please fill out <b><a href="https://forms.gle/HYupGaV7WDuutbr9A">THIS FORM</a></b>. The evaluation result file <code>result.pkl</code> will be automatically generated after calling <code>group.evaluate_many(predictions_runs, save_file_name = 'result', m1_api = 'XXXXX')</code>. </p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h3 id="leaderboard-data-summary">Leaderboard Data Summary</h3>
+
+<hr />
+
+<table class="table is-striped is-hoverable">
+  <thead>
+  <tr>
+    <th>Dataset</th>
+    <th>Diseases</th>
+    <th>Link to DRD3 target protein</th>
+  </tr>
+  </thead>
+  <tr>
+    <td><code>TDC.DRD3</code></td>
+    <td>Tremor, Schizophrenia</td>
+    <td><a href="https://www.uniprot.org/uniprot/P35462">Uniprot Page</a></td>
+  </tr>
+</table>
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+
