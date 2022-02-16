@@ -40,6 +40,41 @@ mean2func = {
   'arithmetic': np.mean, 
 }
 
+aa_vocab = ['K', 'G', 'W', 'P', 'N', 'E', 'T', 'F', 'H', 'V', 'D', 'Y', 'S', 'M', 'Q', 'C', 'R', 'A', 'I', 'L', ]
+
+
+def valid_aa_seq(aa_seq):
+  """ Evaluate the validity of amino acid sequence
+
+  Args:
+    aa_seq: str, amino acid sequence 
+
+  Returns:
+    boolean 
+
+  """
+  for aa in aa_seq:
+    if aa not in aa_vocab:
+      return False 
+  return True 
+
+
+def perplexity(aa_seq):
+  """Evaluate the perplexity of amino acid sequence. 
+
+  Args:
+    aa_seq: str, amino acid sequence
+
+  Returns:
+    ppl: float
+
+  """
+  if not valid_aa_seq(aa_seq):
+    return np.inf 
+  else:
+    return 20.0 ### todo 
+
+
 
 def smiles_to_rdkit_mol(smiles):
   """Convert smiles into rdkit's mol (molecule) format. 

@@ -321,6 +321,7 @@ dti_dg_splits = {'bindingdb_patent': 'group'}
 ####################################
 
 # evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
+bio_oracle_names = ['perplexity', ]
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
@@ -333,7 +334,8 @@ download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking',
 
 meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta', 'docking_score', 'molecule_one_synthesis']
 
-oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name + download_receptor_oracle_name 
+oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles \
+				+ synthetic_oracle_name + meta_oracle_name + download_receptor_oracle_name + bio_oracle_names 
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
@@ -397,12 +399,8 @@ dataset_names = {"Tox": toxicity_dataset_names,
 				"Catalyst": catalyst_dataset_names, 
 				"CRISPROutcome": crisproutcome_dataset_names,
 				"test_single_pred": test_single_pred_dataset_names,
-<<<<<<< HEAD
-				"test_multi_pred": test_multi_pred_dataset_names
-=======
 				"test_multi_pred": test_multi_pred_dataset_names,
-				"TCREpitopeBinding": tcr_epi_dataset_names
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
+				"TCREpitopeBinding": tcr_epi_dataset_names, 
 				}
 
 benchmark_names = {"admet_group": admet_benchmark,
@@ -506,13 +504,9 @@ name2type = {'toxcast': 'tab',
  'vdss_lombardo': 'tab',
  'leenay':'tab',
  'test_single_pred': 'tab',
-<<<<<<< HEAD
- 'test_multi_pred': 'tab'}
-=======
  'test_multi_pred': 'tab',
  'gdsc_gene_symbols': 'tab',
  'weber': 'tab'}
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -597,13 +591,9 @@ name2id = {'bbb_adenot': 4259565,
  'vdss_lombardo': 4267387,
  'leenay':4279966,
  'test_single_pred': 4832455,
-<<<<<<< HEAD
- 'test_multi_pred': 4832456}
-=======
  'test_multi_pred': 4832456,
  'gdsc_gene_symbols': 5255026,
- 'weber': 5790963}
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
+ 'weber': 5790963, }
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 

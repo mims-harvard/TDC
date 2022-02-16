@@ -50,6 +50,9 @@ class Oracle:
 		if self.name == 'logp':
 			from .chem_utils import penalized_logp
 			self.evaluator_func = penalized_logp 
+		elif self.name == 'perplexity':
+			from .chem_utils import perplexity
+			self.evaluator_func = perplexity 
 		elif self.name == 'qed':
 			from .chem_utils import qed
 			self.evaluator_func = qed  
