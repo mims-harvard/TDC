@@ -25,17 +25,11 @@ class TestFunctions(unittest.TestCase):
         data = PPI(name = 'HuRI')
         data = data.neg_sample(frac = 1)
 
-<<<<<<< HEAD
-    def test_label_distribution(self):
-        from tdc.single_pred import ADME
-        data = ADME(name='Caco2_Wang')
-        x = data.label_distribution()
-=======
+
     #def test_label_distribution(self):
     #    from tdc.single_pred import ADME
     #    data = ADME(name='Caco2_Wang')
     #    x = data.label_distribution()
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
     def test_get_label_map(self):
         from tdc.multi_pred import DDI

@@ -7,11 +7,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
                                              '../..')))
-<<<<<<< HEAD
-from tdc.benchmark import BenchmarkGroup
-=======
 from tdc.benchmark_group import admet_group
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 def is_classification(values):
     value_set = set(values)
