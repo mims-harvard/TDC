@@ -7,7 +7,11 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
                                              '../..')))
+<<<<<<< HEAD
 from tdc.benchmark import BenchmarkGroup
+=======
+from tdc.benchmark_group import admet_group
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 def is_classification(values):
     value_set = set(values)
@@ -19,7 +23,7 @@ def is_classification(values):
 class TestBenchmarkGroup(unittest.TestCase):
     
     def setUp(self):
-        self.group = BenchmarkGroup(name='ADMET_Group', path='data/')
+        self.group = admet_group(path='data/')
 
     def tearDown(self) -> None:
         shutil.rmtree('data', ignore_errors=True)

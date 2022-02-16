@@ -1,33 +1,47 @@
-import warnings
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
 
+import pandas as pd
+import numpy as np
+import os, sys, json 
+import warnings
 warnings.filterwarnings("ignore")
 
 from .. import base_dataset
-from ..utils import *
-
+from ..utils import dataset2target_lists, \
+                    fuzzy_search, \
+                    interaction_dataset_load, \
+                    label_transform, \
+                    NegSample, \
+                    install,\
+                    create_fold,\
+                    create_fold_setting_cold,\
+                    create_combination_split,\
+                    create_fold_time,\
+                    print_sys
 
 class DataLoader(base_dataset.DataLoader):
-    """Add a Class description here.
 
-    Parameters
-    ----------
-    name :
-        Add a variable description here.
-
-    path :
-        Add a variable description here.
-
-    label_name :
-        Add a variable description here.
-
-    print_stats :
-        Add a variable description here.
-
-    dataset_names :
-        Add a variable description here.
+    """A base data loader class that each bi-instance prediction task dataloader class can inherit from.
+    
+    Attributes: TODO
+        
     """
-
+    
     def __init__(self, name, path, label_name, print_stats, dataset_names):
+        """Create a base dataloader object that each multi-instance prediction task dataloader class can inherit from.
+           
+        Args:
+            name (str): name of dataloader 
+            path (str): the path where data is saved
+            label_name (str): name of label
+            print_stats (bool): whether to print statistics of dataset
+            dataset_names (str): A list of dataset names available for a task 
+
+        Raises:
+            ValueError: label name is not available
+        """
         if name.lower() in dataset2target_lists.keys():
             # print_sys("Tip: Use tdc.utils.retrieve_label_name_list(
             # '" + name.lower() + "') to retrieve all available label names.")
@@ -65,23 +79,17 @@ class DataLoader(base_dataset.DataLoader):
         self.two_types = False
 
     def get_data(self, format='df'):
-        """Add a method description here.
-
-        Parameters
-        ----------
-        format : str, optional (default="df")
-            If True, return Pandas DF; return numpy array otherwise.
-
-        Returns
-        -------
-        drugs : numpy array
-            Drug smiles strings.
-
-        targets : numpy array
-            Target Amino Acid Sequence.
-
-        y : numpy array
-            Interaction score.
+        """generate data in some format, e.g., pandas.DataFrame
+        
+        Args:
+            format (str, optional): 
+                format of data, the default value is 'df' (DataFrame)
+        
+        Returns:
+            pandas DataFrame/dict: a dataframe of a dataset/a dictionary for key information in the dataset
+        
+        Raises:
+            AttributeError: Use the correct format input (df, dict, DeepPurpose)
         """
         if format == 'df':
             if self.aux_column is None:
@@ -107,7 +115,7 @@ class DataLoader(base_dataset.DataLoader):
             raise AttributeError("Please use the correct format input")
 
     def print_stats(self):
-        """Add a method description here.
+        """print the statistics of the dataset
         """
         print_sys('--- Dataset Statistics ---')
         try:
@@ -130,29 +138,32 @@ class DataLoader(base_dataset.DataLoader):
         print_sys('--------------------------')
     
     def get_split(self, method='random', seed=42,
-                  frac=[0.7, 0.1, 0.2], column_name=None, time_column = None):
-        """Add a method description here.
+                  frac=[0.7, 0.1, 0.2], column_name=None, time_column=None):
+        """split dataset into train/validation/test. 
 
-        Parameters
-        ----------
-        method : splitting schemes
-            Splitting schemes: {"random", "cold_drug", "cold_target"}
+        Args:
+            method (str, optional):
+                split method, the default value is 'random'
+            seed (int, optional):
+                random seed, defaults to '42'
+            frac (list, optional):
+                train/val/test split fractions, defaults to '[0.7, 0.1, 0.2]'
+            column_name (Optional[Union[str, List[str]]]): Optional column name(s) to
+                split on for cold splits. Defaults to None.
+            time_column (None, optional): Description
 
-        seed : int
-            Add a variable description here.
+        Returns:
+            dict: a dictionary with three keys ('train', 'valid', 'test'), each value
+            is a pandas dataframe object of the splitted dataset.
 
-        frac : list, optional (default=[0.7, 0.1, 0.2])
-            Train/val/test split fractions.
-
-        column_name : str, optional (default=None)
-            Add a variable description here.
-
-        Returns
-        -------
+        Raises:
+            AttributeError: the input split method is not available.
 
         """
-
         df = self.get_data(format='df')
+
+        if isinstance(column_name, str):
+            column_name = [column_name]
 
         if method == 'random':
             return create_fold(df, seed, frac)
@@ -160,9 +171,16 @@ class DataLoader(base_dataset.DataLoader):
             return create_fold_setting_cold(df, seed, frac, self.entity1_name)
         elif method == 'cold_' + self.entity2_name.lower():
             return create_fold_setting_cold(df, seed, frac, self.entity2_name)
-        elif (column_name is not None) and (column_name in df.columns.values):
-            if method == 'cold_split':
-                return create_fold_setting_cold(df, seed, frac, column_name)
+        elif method == 'cold_split':
+            if (
+                column_name is None or
+                not all(list(map(lambda x: x in df.columns.values, column_name)))
+            ):
+                raise AttributeError(
+                    "For cold_split, please provide one or multiple column names "
+                    "that are contained in the dataframe."
+                )
+            return create_fold_setting_cold(df, seed, frac, column_name)
         elif method == 'combination':
             return create_combination_split(df, seed, frac)
         elif method == 'time':
@@ -171,17 +189,18 @@ class DataLoader(base_dataset.DataLoader):
             return create_fold_time(df, frac, time_column)
 
         else:
-            raise AttributeError("Please select from random_split, "
-                                 "or cold_split. If cold split, "
-                                 "please specify the column name!")
+            raise AttributeError(
+                "Please select method from random, time, combination or cold_split."
+            )
 
     def neg_sample(self, frac=1):
-        """Add a method description here.
-
-        Parameters
-        ----------
-        frac : int or float, optional (default=1)
-            Add a variable description here.
+        """negative sampling 
+        
+        Args:
+            frac (int, optional): the ratio between negative and positive samples. 
+        
+        Returns:
+            DataLoader, the class itself. 
         """
         df = NegSample(df=self.get_data(format='df'),
                        column_names=[self.entity1_name + '_ID',
@@ -198,37 +217,23 @@ class DataLoader(base_dataset.DataLoader):
 
     def to_graph(self, threshold=None, format='edge_list', split=True,
                  frac=[0.7, 0.1, 0.2], seed=42, order='descending'):
-        """Add a method description here.
+        """Summary TODO
+        
+        Args:
+            threshold (float, optional): threshold to binarize the data. 
+            format (str, optional): format of data, defaults to 'edge_list'
+            split (bool, optional): if we need to split data into train/valid/test. 
+            frac (list, optional):  train/val/test split fractions, defaults to '[0.7, 0.1, 0.2]'
+            seed (int, optional):  random seed, defaults to '42'
+            order (str, optional): order of label transform 
 
-        Parameters
-        ----------
-        threshold :
-            Add a variable description here.
-
-        format :
-            Add a variable description here.
-
-        split :
-            Add a variable description here.
-
-        frac : list, optional (default=frac=[0.7, 0.1, 0.2])
-            Train/val/test split fractions.
-
-        seed : int
-            Add a variable description here.
-
-        order :
-            Add a variable description here.
-
-        Returns
-        -------
-
+        Returns:
+            dict: a dictionary for key information in the dataset
+        
+        Raises:
+            AttributeError: the threshold is not available. 
+            ImportError: install the required package
         """
-        '''
-        Arguments:
-            format: edge_list / dgl / pyg df object
-        '''
-
         df = self.get_data(format='df')
 
         if len(np.unique(self.raw_y)) > 2:

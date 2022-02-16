@@ -1,3 +1,6 @@
+"""
+list of dataset names 
+"""
 Tox21_targets = [ 'NR-AR', 'NR-AR-LBD', 'NR-AhR', 'NR-Aromatase', 'NR-ER', 'NR-ER-LBD', 'NR-PPAR-gamma', 'SR-ARE', 'SR-ATAD5', 'SR-HSE', 'SR-MMP', 'SR-p53']
 
 ToxCast_targets = ['ACEA_T47D_80hr_Negative', 'ACEA_T47D_80hr_Positive',
@@ -275,10 +278,13 @@ drugcomb_targets = ['CSS', 'Synergy_ZIP', 'Synergy_Bliss',
 leenay_targets = ['Fraction_Insertions', 'Avg_Insertion_Length', 'Avg_Deletion_Length',
        'Indel_Diversity', 'Fraction_Frameshifts']
 
+herg_central_targets = ['hERG_at_1uM', 'hERG_at_10uM', 'hERG_inhib']
+
 dataset2target_lists = {'qm7b': QM7_targets,
                             'qm8': QM8_targets,
                             'qm9': QM9_targets,
                             'tap': TAP_targets,
                             'toxcast': ToxCast_targets,
                             'tox21': Tox21_targets,
-                            'leenay': leenay_targets}
+                            'leenay': leenay_targets,
+                            'herg_central': herg_central_targets}

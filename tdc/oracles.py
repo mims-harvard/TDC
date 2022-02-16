@@ -4,17 +4,35 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .utils import * 
-from .metadata import download_oracle_names, oracle_names, distribution_oracles
+from .utils import fuzzy_search, oracle_load, receptor_load
+from .metadata import download_oracle_names, oracle_names, distribution_oracles, download_receptor_oracle_name, docking_target_info 
 
 class Oracle:
+
+	"""the oracle class to retrieve any oracle given by query name
+	
+	Args:
+	    name (str): the name of the oracle
+	    target_smiles (None, optional): target smiles for some meta-oracles 
+	    num_max_call (None, optional): number of maximum calls for oracle, used by docking group
+	    **kwargs: additional parameters for some oracles
+	"""
+	
 	def __init__(self, name, target_smiles = None, num_max_call = None, **kwargs):
+		"""Summary
+		"""
 		self.target_smiles = target_smiles
 		self.kwargs = kwargs
 
 		name = fuzzy_search(name, oracle_names)
 		if name in download_oracle_names:
 			self.name = oracle_load(name)
+		elif name in download_receptor_oracle_name:  
+			## '1iep_docking', '2rgp_docking',  
+			pdbid = name.split('_')[0]
+			self.name = receptor_load(pdbid)
+			self.pdbid = self.name 
+			self.name += '_docking' 
 		else:
 			self.name = name
 		self.evaluator_func = None
@@ -27,7 +45,9 @@ class Oracle:
 			self.num_max_call = None
 
 	def assign_evaluator(self):		
-		if self.name == 'logp':			############################ molecular property 
+		"""assign the specific oracle function given by query oracle name
+		"""
+		if self.name == 'logp':
 			from .chem_utils import penalized_logp
 			self.evaluator_func = penalized_logp 
 		elif self.name == 'qed':
@@ -50,7 +70,7 @@ class Oracle:
 			from .chem_utils import jnk3
 			oracle_object = jnk3()
 			self.evaluator_func = oracle_object
-		elif self.name == 'similarity_meta':	############################ oracle meta
+		elif self.name == 'similarity_meta':
 			from .chem_utils import similarity_meta
 			self.evaluator_func = similarity_meta(target_smiles = self.target_smiles, **self.kwargs)
 		elif self.name == 'rediscovery_meta':
@@ -64,7 +84,7 @@ class Oracle:
 			self.evaluator_func = median_meta(target_smiles_1 = self.target_smiles[0], 
 											  target_smiles_2 = self.target_smiles[1], 
 											  **self.kwargs) 
-		elif self.name == 'rediscovery':	############################ guacamol 
+		elif self.name == 'rediscovery':
 			from .chem_utils import celecoxib_rediscovery, troglitazone_rediscovery, thiothixene_rediscovery
 			self.evaluator_func = {"Celecoxib": celecoxib_rediscovery, 
 								"Troglitazone": troglitazone_rediscovery, 
@@ -164,44 +184,205 @@ class Oracle:
 		elif self.name == 'molecule_one_synthesis':
 			from .chem_utils import molecule_one_retro
 			self.evaluator_func = molecule_one_retro(**self.kwargs)
+		elif self.name == 'pyscreener':
+			from .chem_utils import PyScreener_meta
+			self.evaluator_func = PyScreener_meta(**self.kwargs)
 		elif self.name == 'docking_score':
-			from .chem_utils import docking_meta
-			self.evaluator_func = docking_meta(**self.kwargs)
-		# distribution oracle 
-		# ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
+			from .chem_utils import Vina_smiles
+			self.evaluator_func = Vina_smiles(**self.kwargs)
+		elif self.name == 'drd3_docking_vina' or self.name == '3pbl_docking_vina':
+
+			from .chem_utils import Vina_smiles 
+			pdbid = '3pbl'
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
+
+		elif self.name == 'drd3_docking' or self.name == '3pbl_docking':
+
+			from .chem_utils import PyScreener_meta 
+			pdbid = '3pbl'
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+												  box_center = center, 
+												  box_size = boxsize)
+
+		elif self.name == '1iep_docking_vina':
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
+		elif self.name == '1iep_docking':
+			from .chem_utils import PyScreener_meta 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+												  box_center = center, 
+												  box_size = boxsize)
+		elif self.name == '2rgp_docking_vina':
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
+		elif self.name == '2rgp_docking':
+			from .chem_utils import PyScreener_meta 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+												  box_center = center, 
+												  box_size = boxsize)
+		elif self.name == '3eml_docking_vina':
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
+		elif self.name == '3eml_docking':
+			from .chem_utils import PyScreener_meta 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+												  box_center = center, 
+												  box_size = boxsize)
+		elif self.name == '3ny8_docking_vina':
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
+		elif self.name == '3ny8_docking':
+			from .chem_utils import PyScreener_meta 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+												  box_center = center, 
+												  box_size = boxsize)
+		elif self.name == '4rlu_docking_vina':
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
+		elif self.name == '4rlu_docking':
+			from .chem_utils import PyScreener_meta 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+												  box_center = center, 
+												  box_size = boxsize)
+		elif self.name == '4unn_docking_vina':
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
+		elif self.name == '4unn_docking':
+			from .chem_utils import PyScreener_meta 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+												  box_center = center, 
+												  box_size = boxsize)
+		elif self.name == '5mo4_docking_vina':
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
+		elif self.name == '5mo4_docking':
+			from .chem_utils import PyScreener_meta 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+												  box_center = center, 
+												  box_size = boxsize)
+		elif self.name == '7l11_docking_vina':
+			from .chem_utils import Vina_smiles 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+											  center = center, 
+											  box_size = boxsize)
+		elif self.name == '7l11_docking':
+			from .chem_utils import PyScreener_meta 
+			pdbid = self.name.split('_')[0]
+			center = docking_target_info[pdbid]['center']
+			boxsize = docking_target_info[pdbid]['size']			
+			self.evaluator_func = PyScreener_meta(receptor_pdb_file='./oracle/'+pdbid+'.pdb', 
+												  box_center = center, 
+												  box_size = boxsize)
+		# elif self.name == '3pbl_docking':
+		# 	from .chem_utils import Vina_smiles 
+		# 	pdbid = self.name.split('_')[0]
+		# 	center = docking_target_info[pdbid]['center']
+		# 	boxsize = docking_target_info[pdbid]['size']			
+		# 	self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
+		# 									  center = center, 
+		# 									  box_size = boxsize)
 		elif self.name == 'uniqueness':
 			from .chem_utils import uniqueness
 			self.evaluator_func = uniqueness 
-			# uniqueness(list_of_smiles)
 		elif self.name == 'validity':
 			from .chem_utils import validity 
 			self.evaluator_func = validity
-			# def validity(list_of_smiles):
 		elif self.name == 'diversity':
 			from .chem_utils import diversity 
 			self.evaluator_func = diversity 
-			# diversity(list_of_smiles) 
 		elif self.name == 'novelty':
 			from .chem_utils import novelty
 			self.evaluator_func = novelty
-			# novelty(generated_smiles_lst, training_smiles_lst)
 		elif self.name == 'fcd_distance':
 			from .chem_utils import fcd_distance 
 			self.evaluator_func = fcd_distance 
-			# def fcd_distance(generated_smiles_lst, training_smiles_lst):
 		elif self.name == 'kl_divergence':
 			from .chem_utils import kl_divergence 
 			self.evaluator_func = kl_divergence 
-			# def kl_divergence(generated_smiles_lst, training_smiles_lst):
 
 		else:
 			return 
 
 	def __call__(self, *args, **kwargs):
-
+		"""call the oracle function on SMILES to genenerate scores
+		
+		Args:
+		    *args: a list of SMILES/a string of SMILES
+		    **kwargs: additional parameters for some oracles
+		
+		Returns:
+		    float/list: the oracle score(s) for a single/list of SMILES
+		
+		Raises:
+		    ValueError: reached number of maximum calls if set and has queries the oracle more than the internal call counters
+		"""
 		if self.name in distribution_oracles:  
 			return self.evaluator_func(*args, **kwargs)
-			#### evaluator for distribution learning, e.g., diversity, validity   
 
 
 		smiles_lst = args[0]
@@ -249,7 +430,3 @@ class Oracle:
 				return all_
 			else:
 				return self.evaluator_func(*args, **kwargs)
-
-
-
-

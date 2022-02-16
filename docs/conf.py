@@ -49,8 +49,13 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.imgmath',
     'sphinx.ext.viewcode',
+<<<<<<< HEAD
     'sphinxcontrib.bibtex',
     'sphinx.ext.napoleon',
+=======
+ #   'sphinxcontrib.bibtex',
+    'sphinx.ext.napoleon'
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -76,7 +81,11 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
+<<<<<<< HEAD
 html_theme = 'alabaster'
+=======
+html_theme = "furo"
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -92,8 +101,13 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+<<<<<<< HEAD
 html_sidebars = {'**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
                         'searchbox.html']}
+=======
+#html_sidebars = {'**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
+#                        'searchbox.html']}
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 # -- Options for HTMLHelp output ---------------------------------------------
 

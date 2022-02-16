@@ -4,7 +4,7 @@ import os, sys, json
 import warnings
 warnings.filterwarnings("ignore")
 
-from .utils import * 
+from .utils import fuzzy_search 
 from .metadata import evaluator_name, distribution_oracles
 
 try:
@@ -40,11 +40,22 @@ def pcc(y_true, y_pred):
 	return np.corrcoef(y_true, y_pred)[1,0]
 
 class Evaluator:
+
+	"""evaluator to evaluate predictions
+	
+	Args:
+		name (str): the name of the evaluator function
+	"""
+	
 	def __init__(self, name):
+		"""create an evaluate object
+		"""
 		self.name = fuzzy_search(name, evaluator_name)
 		self.assign_evaluator()
 
 	def assign_evaluator(self):
+		"""obtain evaluator function given the evaluator name
+		"""
 		if self.name == 'roc-auc':
 			self.evaluator_func = roc_auc_score 
 		elif self.name == 'f1':
@@ -105,6 +116,15 @@ class Evaluator:
 			self.evaluator_func = fcd_distance
 
 	def __call__(self, *args, **kwargs):
+		"""call the evaluator function on targets and predictions
+		
+		Args:
+		    *args: targets, predictions, and other information
+		    **kwargs: other auxilliary inputs for some evaluators
+		
+		Returns:
+		    float: the evaluator output
+		"""
 		if self.name in distribution_oracles:  
 			return self.evaluator_func(*args, **kwargs)	
 		# 	#### evaluator for distribution learning, e.g., diversity, validity   

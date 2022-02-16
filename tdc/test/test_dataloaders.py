@@ -30,6 +30,14 @@ class TestDataloader(unittest.TestCase):
         data = TestMultiPred(name='Test_Multi_Pred')
         split = data.get_split()
 
+<<<<<<< HEAD
+=======
+    def test_generation(self):
+        from tdc.generation import MolGen
+        data = MolGen(name='ZINC')
+        split = data.get_split()
+
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
     def tearDown(self):
         print(os.getcwd())
         shutil.rmtree(os.path.join(os.getcwd(), "data"))

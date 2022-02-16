@@ -1,0 +1,9 @@
+furo
+rdkit-pypi
+networkx
+setuptools
+DeepPurpose
+rxn4chemistry
+pandas_flavor
+descriptastorus @ git+https://github.com/bp-kelley/descriptastorus.git@2.4.0
+rd_filters @ git+https://github.com/PatWalters/rd_filters.git

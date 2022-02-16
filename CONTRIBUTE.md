@@ -12,8 +12,13 @@ conda activate tdc_env
 conda install -c conda-forge rdkit
 conda install -c conda-forge notebook
 
+<<<<<<< HEAD
 # for visualization
 pip install seaborn scikit-learn scipy networkx
+=======
+# for visualization and testing
+pip install seaborn scikit-learn scipy networkx pytest fuzzywuzzy
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 # for graph transformation
 # DGL installation page: https://www.dgl.ai/pages/start.html
 # PyG installation page: https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html

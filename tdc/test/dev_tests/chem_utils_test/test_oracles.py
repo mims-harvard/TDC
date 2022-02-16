@@ -22,8 +22,11 @@ class TestOracle(unittest.TestCase):
 
     def test_Oracle(self):
         from tdc import Oracle
+<<<<<<< HEAD
 
         from tdc import Oracle
+=======
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
         oracle = Oracle(name = 'SA')
         x = oracle(['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
                 'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1', \

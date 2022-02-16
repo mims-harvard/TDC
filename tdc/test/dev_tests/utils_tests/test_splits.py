@@ -31,22 +31,51 @@ class TestFunctions(unittest.TestCase):
         data = ADME(name='Caco2_Wang')
         split = data.get_split(method='scaffold')
 
+<<<<<<< HEAD
     def cold_start_split(self):
+=======
+    def test_cold_start_split(self):
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
         from tdc.multi_pred import DTI
         data = DTI(name = 'DAVIS')
         split = data.get_split(method = 'cold_split', column_name = 'Drug')
 
+<<<<<<< HEAD
     def combination_split(self):
+=======
+        self.assertEqual(0, len(set(split['train']['Drug']).intersection(set(split['test']['Drug']))))
+        self.assertEqual(0, len(set(split['valid']['Drug']).intersection(set(split['test']['Drug']))))
+        self.assertEqual(0, len(set(split['train']['Drug']).intersection(set(split['valid']['Drug']))))
+
+        multi_split = data.get_split(method='cold_split', column_name=['Drug_ID', 'Target_ID'])
+        for entity in ['Drug_ID', 'Target_ID']:
+            train_entity = set(multi_split['train'][entity])
+            valid_entity = set(multi_split['valid'][entity])
+            test_entity = set(multi_split['test'][entity])
+            self.assertEqual(0, len(train_entity.intersection(valid_entity)))
+            self.assertEqual(0, len(train_entity.intersection(test_entity)))
+            self.assertEqual(0, len(valid_entity.intersection(test_entity)))
+
+    def test_combination_split(self):
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
         from tdc.multi_pred import DrugSyn
         data = DrugSyn(name = 'DrugComb')
         split = data.get_split(method = 'combination')
 
+<<<<<<< HEAD
     def time_split(self):
+=======
+    def test_time_split(self):
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
         from tdc.multi_pred import DTI
         data = DTI(name = 'BindingDB_Patent')
         split = data.get_split(method = 'time', time_column = 'Year')
 
+<<<<<<< HEAD
     def tearDown(self):
+=======
+    def test_tearDown(self):
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
         print(os.getcwd())
 
         if os.path.exists(os.path.join(os.getcwd(), "data")):

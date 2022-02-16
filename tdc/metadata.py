@@ -1,3 +1,74 @@
+# -*- coding: utf-8 -*-
+# Author: TDC Team
+# License: MIT
+
+
+"""This file contains all metadata of datasets in TDC.
+
+Attributes:
+    adme_dataset_names (list): all adme dataset names
+    admet_benchmark (dict): a dictionary with key the TDC task and value a list of dataset names
+    admet_metrics (dict): a dictionary with key the dataset name and value the recommended metric
+    admet_splits (dict): a dictionary with key the dataset name and value the recommended split
+    antibodyaff_dataset_names (list): all antibody_aff dataset names
+    benchmark2id (dict): benchmark names to dataverse download ID
+    benchmark2type (dict): benchmark names to file type in download format
+    benchmark_names (dict): a dictionary mapping benchmark group name to each benchmark group dataset names
+    bm_metric_names (dict): a dictionary mapping benchmark group name to each benchmark group metric names
+    bm_split_names (dict): a dictionary mapping benchmark group name to each benchmark group split names
+    catalyst_dataset_names (list): all catalyst dataset names
+    category_names (dict): mapping from ML problem (1st tier) to all tasks
+    crisproutcome_dataset_names (list): all crispr outcome dataset names
+    dataset_list (list): total list of dataset names in TDC
+    dataset_names (dict): mapping from task name to list of dataset names
+    ddi_dataset_names (list): all ddi dataset names
+    develop_dataset_names (list): all develop dataset names
+    distribution_oracles (list): all distribution learning oracles, i.e. molecule evaluators
+    docking_benchmark (dict): docking benchmark target names
+    docking_target_info (dict): docking benchmark target pockets info
+    download_oracle_names (list): oracle names that require downloading predictors
+    drugres_dataset_names (list): all drugres dataset names
+    drugsyn_benchmark (dict): drugcombo benchmark group targets
+    drugsyn_dataset_names (list): all drugsyn dataset names
+    drugsyn_metrics (dict): a dictionary with key the dataset name and value the recommended metric
+    drugsyn_splits (dict):  a dictionary with key the dataset name and value the recommended split
+    dti_dataset_names (list): all dti dataset names
+    dti_dg_benchmark (dict): dti_dg benchmark group dataset names
+    dti_dg_metrics (dict): a dictionary with key the dataset name and value the recommended metric
+    dti_dg_splits (dict):  a dictionary with key the dataset name and value the recommended split
+    epitope_dataset_names (list): all epitope dataset names
+    evaluator_name (list): list of evaluator names
+    forwardsyn_dataset_names (list): all reaction dataset names
+    gda_dataset_names (list): all gda dataset names
+    generation_datasets (list): all generation dataset names
+    guacamol_oracle (list): list of oracles from guacamol
+    hts_dataset_names (list): all hts dataset names
+    meta_oracle_name (list): list of all meta oracle names
+    molgenpaired_dataset_names (list): all molgenpaired dataset names
+    mti_dataset_names (list): all mti dataset names
+    name2id (dict): mapping from dataset names to dataverse id
+    name2stats (dict): mapping from dataset names to statistics
+    name2type (dict): mapping from dataset names to downloaded file format
+    oracle2id (dict): mapping from oracle names to dataverse id
+    oracle2type (dict): mapping from oracle names to downloaded file format
+    receptor2id (dict): mapping from receptor id to dataverse id 
+    oracle_names (list): list of all oracle names
+    paired_dataset_names (list): all paired dataset names
+    paratope_dataset_names (list): all paratope dataset names
+    peptidemhc_dataset_names (list): all peptidemhc dataset names
+    ppi_dataset_names (list): all ppi dataset names
+    property_names (list): a list of oracles that correspond to some molecular properties
+    qm_dataset_names (list): all qm dataset names
+    retrosyn_dataset_names (list): all retrosyn dataset names
+    sdf_file_names (list): list of sdf file names
+    single_molecule_dataset_names (list): all molgen dataset names
+    synthetic_oracle_name (list): all oracle names for synthesis
+    test_multi_pred_dataset_names (list): test multi pred task name
+    test_single_pred_dataset_names (list): test single pred task name
+    toxicity_dataset_names (list): all toxicity dataset names
+    trivial_oracle_names (list): a list of oracle names for trivial oracles
+    yield_dataset_names (list): all yield dataset names
+"""
 ####################################
 # test cases
 test_single_pred_dataset_names = ['test_single_pred']
@@ -5,7 +76,7 @@ test_multi_pred_dataset_names = ['test_multi_pred']
 
 # single_pred prediction
 
-toxicity_dataset_names = ['tox21', 'clintox', 'herg', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
+toxicity_dataset_names = ['tox21', 'toxcast', 'clintox', 'herg', 'herg_central', 'dili', 'skin_reaction', 'ames', 'carcinogens_lagunin', 'ld50_zhu']
 
 adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
@@ -73,6 +144,7 @@ yield_dataset_names = ['uspto_yields', 'buchwald-hartwig']
 
 catalyst_dataset_names = ['uspto_catalyst']
 
+tcr_epi_dataset_names = ['weber']
 
 ####################################
 # generation
@@ -82,7 +154,7 @@ retrosyn_dataset_names = ['uspto50k', 'uspto']
 
 forwardsyn_dataset_names = ['uspto']
 
-single_molecule_dataset_names = ['zinc', 'moses', 'chembl']
+single_molecule_dataset_names = ['zinc', 'moses', 'chembl', 'chembl_v29']
 
 paired_dataset_names = ['uspto50k', 'uspto']
 
@@ -154,9 +226,17 @@ drugsyn_benchmark = {'Synergy': ['drugcomb_css',
 
 dti_dg_benchmark = {'DTI': ['bindingdb_patent']} 
 
-docking_benchmark = {'Targets': ['DRD3']}
+docking_benchmark = {'Targets': ['1iep', '2rgp', '3eml', '3ny8', '4rlu', '4unn', '5mo4', '7l11', '3pbl',]}
 
-docking_target_info = {'DRD3': {'center': (9, 22.5, 26), 'size': (15, 15, 15)}
+docking_target_info = {'3pbl': {'center': (9, 22.5, 26), 'size': (15, 15, 15)}, 
+					   '1iep': {'center': (15.61389189189189, 53.38013513513513, 15.454837837837842), 'size': (15, 15, 15)},
+					   '2rgp': {'center': (16.292121212121213, 34.87081818181819, 92.0353030303030), 'size': (15, 15, 15)},
+					   '3eml': {'center': (-9.063639999999998, -7.1446, 55.86259999999999), 'size': (15, 15, 15)},
+					   '3ny8': {'center': (2.2488, 4.68495, 51.39820000000001), 'size': (15, 15, 15)},
+					   '4rlu': {'center': (-0.7359999999999999, 22.75547368421052, -31.2368947368421), 'size': (15, 15, 15)},
+					   '4unn': {'center': (5.684346153846153, 18.191769230769232, -7.37157692307692), 'size': (15, 15, 15)},
+					   '5mo4': {'center': (-44.901709677419355, 20.490354838709674, 8.483354838709678), 'size': (15, 15, 15)},
+					   '7l11': {'center': (-21.814812500000006, -4.216062499999999, -27.983781250000), 'size': (15, 15, 15)}
 						}
 
 ####################################
@@ -244,10 +324,16 @@ dti_dg_splits = {'bindingdb_patent': 'group'}
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
+download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking', '3ny8_docking', '4rlu_docking',
+								 '4unn_docking', '5mo4_docking', '7l11_docking', 'drd3_docking', '3pbl_docking',
+								 '1iep_docking_vina', '2rgp_docking_vina', '3eml_docking_vina', '3ny8_docking_vina', '4rlu_docking_vina',
+								 '4unn_docking_vina', '5mo4_docking_vina', '7l11_docking_vina', 'drd3_docking_vina', '3pbl_docking_vina', ]
+
+
 
 meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta', 'docking_score', 'molecule_one_synthesis']
 
-oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name 
+oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name + download_receptor_oracle_name 
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
@@ -273,7 +359,8 @@ category_names = {'single_pred': ["Tox",
 								"DrugSyn",
 								"MTI",
 								"GDA",
-								"Catalyst"],
+								"Catalyst",
+								"TCR_Epitope_Binding"],
 				'generation': ["RetroSyn",
 								"Reaction",
 								"MolGen"
@@ -287,7 +374,7 @@ def get_task2category():
 			task2category[x] = i
 	return task2category
 
-dataset_names = {"Toxicity": toxicity_dataset_names, 
+dataset_names = {"Tox": toxicity_dataset_names,
 				"ADME": adme_dataset_names, 
 				"HTS": hts_dataset_names, 
 				"DTI": dti_dataset_names, 
@@ -310,7 +397,12 @@ dataset_names = {"Toxicity": toxicity_dataset_names,
 				"Catalyst": catalyst_dataset_names, 
 				"CRISPROutcome": crisproutcome_dataset_names,
 				"test_single_pred": test_single_pred_dataset_names,
+<<<<<<< HEAD
 				"test_multi_pred": test_multi_pred_dataset_names
+=======
+				"test_multi_pred": test_multi_pred_dataset_names,
+				"TCREpitopeBinding": tcr_epi_dataset_names
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 				}
 
 benchmark_names = {"admet_group": admet_benchmark,
@@ -377,6 +469,7 @@ name2type = {'toxcast': 'tab',
  'zinc': 'tab', 
  'moses': 'tab',
  'chembl': 'tab',
+ 'chembl_v29': 'csv',
  'qed': 'tab', 
  'drd2': 'tab', 
  'logp': 'tab',
@@ -400,6 +493,7 @@ name2type = {'toxcast': 'tab',
  'buchwald-hartwig': 'pkl',
  'hetionet':'tab', 
  'herg': 'tab',
+ 'herg_central': 'tab',
  'dili': 'tab',
  'ppbr_az': 'tab',
  'ames': 'tab',
@@ -412,7 +506,13 @@ name2type = {'toxcast': 'tab',
  'vdss_lombardo': 'tab',
  'leenay':'tab',
  'test_single_pred': 'tab',
+<<<<<<< HEAD
  'test_multi_pred': 'tab'}
+=======
+ 'test_multi_pred': 'tab',
+ 'gdsc_gene_symbols': 'tab',
+ 'weber': 'tab'}
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -433,7 +533,7 @@ name2id = {'bbb_adenot': 4259565,
  'cyp2d6_substrate_carbonmangels': 4259578,
  'cyp3a4_substrate_carbonmangels': 4259581, 
  'carcinogens_lagunin': 4259570,
- 'davis': 4291557,
+ 'davis': 5219748,
  'drugbank': 4139573,
  'drugcomb': 4215720,
  'f20_edrug3d': 4259586,
@@ -443,7 +543,7 @@ name2id = {'bbb_adenot': 4259565,
  'hiv': 4259593,
  'huri': 4139567,
  'hydrationfreeenergy_freesolv': 4259594,
- 'kiba': 4291561,
+ 'kiba': 5255037,
  'lipophilicity_astrazeneca': 4259595,
  'pgp_broccatelli': 4259597,
  'ppbr_edrug3d': 4259600,
@@ -460,6 +560,7 @@ name2id = {'bbb_adenot': 4259565,
  'zinc': 4170963,
  'moses': 4170962,
  'chembl': 4170965,
+ 'chembl_v29': 5767979,
  'qed': 4170959, 
  'drd2': 4170957, 
  'logp': 4170961, 
@@ -484,6 +585,7 @@ name2id = {'bbb_adenot': 4259565,
  'uspto': 4171642, 
  'hetionet': 4201734,
  'herg': 4259588,
+ 'herg_central': 5740618,
  'dili': 4259585,
  'ppbr_az': 4259599,
  'ames': 4259564,
@@ -495,7 +597,13 @@ name2id = {'bbb_adenot': 4259565,
  'vdss_lombardo': 4267387,
  'leenay':4279966,
  'test_single_pred': 4832455,
+<<<<<<< HEAD
  'test_multi_pred': 4832456}
+=======
+ 'test_multi_pred': 4832456,
+ 'gdsc_gene_symbols': 5255026,
+ 'weber': 5790963}
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 
@@ -520,6 +628,18 @@ benchmark2id = {'admet_group': 4426004,
                 'drugcombo_group':  4426002,
                 'docking_group': 4554082,
                 'dti_dg_group': 4742443}
+
+receptor2id = { 
+			   '1iep': [5137914, 5617659], 
+			   '2rgp': [5137916, 5617662], 
+			   '3eml': [5137919, 5617663], 
+			   '3ny8': [5137915, 5617665], 
+			   '4rlu': [5137918, 5617658], 
+			   '4unn': [5137917, 5617661], 
+			   '5mo4': [5137920, 5617664], 
+			   '7l11': [5137921, 5617660], 
+			   '3pbl': [5257195, 5617666], } ## 'drd3': 5137901,
+
 
 sdf_file_names = {
 	'grambow': ['Product', 'Reactant', 'TS']

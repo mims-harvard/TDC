@@ -30,4 +30,8 @@ If applicable, add screenshots to help explain your problem.
 - Any other relevant information:
 
 **Additional context**
+<<<<<<< HEAD
 Add any other context about the problem here.
+=======
+Add any other context about the problem here.
+>>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
