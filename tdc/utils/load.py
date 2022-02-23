@@ -238,14 +238,25 @@ def property_dataset_load(name, path, target, dataset_names):
 	try:
 		if target is not None:
 			target = fuzzy_search(target, df.columns.values)
+		# df = df.T.drop_duplicates().T ### does not work
+		# df2 = df.loc[:,~df.T.duplicated(keep='first')]  ### does not work 
+		df2 = df.loc[:,~df.columns.duplicated()] ### remove the duplicate columns 
+		df = df2 
 		df = df[df[target].notnull()].reset_index(drop = True)
 	except:
 		with open(os.path.join(path, name + '.' + name2type[name]), 'r') as f:
-			flag = 'Service Unavailable' in ' '.join(f.readlines())
+			if name2type[name] == 'pkl':
+				import pickle 
+				file_content = pickle.load(open(os.path.join(path, name + '.' + name2type[name]), 'rb'))
+			else:
+				file_content = ' '.join(f.readlines())
+			flag = 'Service Unavailable' in ' '.join(file_content)
+			# flag = 'Service Unavailable' in ' '.join(f.readlines())
 			if flag:
 				import sys
 				sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 			else:
+				import sys 
 				sys.exit("Please report this error to contact@tdcommons.ai, thanks!")
 	try:
 		return df['X'], df[target], df['ID']
