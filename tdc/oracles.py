@@ -7,7 +7,6 @@ warnings.filterwarnings("ignore")
 from .utils import fuzzy_search, oracle_load, receptor_load
 from .metadata import download_oracle_names, oracle_names, distribution_oracles, download_receptor_oracle_name, docking_target_info 
 
-from rdkit import Chem 
 
 class Oracle:
 
@@ -175,8 +174,8 @@ class Oracle:
 			from .chem_utils import isomers_c9h10n2o2pf2cl
 			self.evaluator_func = isomers_c9h10n2o2pf2cl  
 		elif self.name == 'isomers_c11h24':
-			from .chem_utils import isomoers_c11h24 
-			self.evaluator_func = isomoers_c11h24 
+			from .chem_utils import isomers_c11h24 
+			self.evaluator_func = isomers_c11h24 
 		elif self.name == 'isomers':
 			from .chem_utils import isomers_c7h8n2o2, isomers_c9h10n2o2pf2cl
 			self.evaluator_func = {'c7h8n2o2': isomers_c7h8n2o2,
@@ -436,7 +435,7 @@ class Oracle:
 				return all_results_lst 
 
 		else:  ### a string of SMILES 
-
+			from rdkit import Chem 
 			if Chem.MolFromSmiles(smiles_lst) == None:
 				return self.default_property 
 
