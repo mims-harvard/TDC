@@ -182,8 +182,8 @@ evaluator_name.extend(distribution_oracles)
 
 guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop', \
 				   'celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
-				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
-				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', \
+				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', \
+				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', 'isomers_c11h24', \
 				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
 				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
 				   'median1', 'median2', \

@@ -7,6 +7,8 @@ warnings.filterwarnings("ignore")
 from .utils import fuzzy_search, oracle_load, receptor_load
 from .metadata import download_oracle_names, oracle_names, distribution_oracles, download_receptor_oracle_name, docking_target_info 
 
+from rdkit import Chem 
+
 class Oracle:
 
 	"""the oracle class to retrieve any oracle given by query name
@@ -47,6 +49,7 @@ class Oracle:
 	def assign_evaluator(self):		
 		"""assign the specific oracle function given by query oracle name
 		"""
+		self.default_property = 0.0 
 		if self.name == 'logp':
 			from .chem_utils import penalized_logp
 			self.evaluator_func = penalized_logp 
@@ -171,6 +174,9 @@ class Oracle:
 		elif self.name == 'isomers_c9h10n2o2pf2cl':
 			from .chem_utils import isomers_c9h10n2o2pf2cl
 			self.evaluator_func = isomers_c9h10n2o2pf2cl  
+		elif self.name == 'isomers_c11h24':
+			from .chem_utils import isomoers_c11h24 
+			self.evaluator_func = isomoers_c11h24 
 		elif self.name == 'isomers':
 			from .chem_utils import isomers_c7h8n2o2, isomers_c9h10n2o2pf2cl
 			self.evaluator_func = {'c7h8n2o2': isomers_c7h8n2o2,
@@ -390,6 +396,16 @@ class Oracle:
 			return self.evaluator_func(*args, **kwargs)
 
 		if type(smiles_lst) == list:
+			nonvalid_smiles_idx_lst, valid_smiles_lst, valid_smiles_idx_lst = [], [], []
+			NN = len(smiles_lst)
+			for idx, smiles in enumerate(smiles_lst): 
+				if Chem.MolFromSmiles(smiles) == None:
+					nonvalid_smiles_idx_lst.append(idx)
+				else:
+					valid_smiles_idx_lst.append(idx)
+					valid_smiles_lst.append(smiles)
+			smiles_lst = valid_smiles_lst
+
 			self.num_called += len(smiles_lst)
 			if self.num_max_call is not None:
 				if self.num_max_call < self.num_called:
@@ -412,10 +428,18 @@ class Oracle:
 				if not self.name == 'docking_score':
 					for smiles in smiles_lst:
 						results_lst.append(self.evaluator_func(smiles, *(args[1:]), **kwargs))
-					return results_lst
 				else:
-					return self.evaluator_func(smiles_lst, *(args[1:]), **kwargs)
-		else:
+					results_lst = self.evaluator_func(smiles_lst, *(args[1:]), **kwargs)
+				all_results_lst = [self.default_property for i in range(NN)]
+				for idx,result in zip(valid_smiles_idx_lst, results_lst):
+					all_results_lst[idx] = result 
+				return all_results_lst 
+
+		else:  ### a string of SMILES 
+
+			if Chem.MolFromSmiles(smiles_lst) == None:
+				return self.default_property 
+
 			self.num_called += 1
 			if self.num_max_call is not None:
 				if self.num_max_call < self.num_called:
