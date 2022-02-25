@@ -389,7 +389,7 @@ class Oracle:
 		if self.name in distribution_oracles:  
 			return self.evaluator_func(*args, **kwargs)
 
-
+		from rdkit import Chem 
 		smiles_lst = args[0]
 		if self.name == 'molecule_one_synthesis':
 			return self.evaluator_func(*args, **kwargs)
@@ -435,7 +435,6 @@ class Oracle:
 				return all_results_lst 
 
 		else:  ### a string of SMILES 
-			from rdkit import Chem 
 			if Chem.MolFromSmiles(smiles_lst) == None:
 				return self.default_property 
 
