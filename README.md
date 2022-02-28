@@ -15,11 +15,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 
-<<<<<<< HEAD
-[**Website**](https://tdcommons.ai) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
-=======
 [**Website**](https://tdcommons.ai) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 **Therapeutics Data Commons (TDC)** is the first unifying framework to systematically access, evaluate, and benchmark machine learning methods across the entire range of therapeutics. TDC supports the development of novel ML methods and theory, with a strong bent towards developing the foundations of which ML algorithms are most suitable for drug discovery applications and why.
 
@@ -34,14 +30,12 @@ TDC is an open-source initiative. To get involved, check our [Contribution Guide
 **[Recording of the first TDC User Group Meetup](https://harvard.zoom.us/rec/share/HO0TjRPs56YG-Fu3i033izaTwebB4KwUhPeNURkWSI-anrH9su03lCtUlHeZG-WP.67ZJmAIHsD7Q_2GQ) (Jan 25th, 2022). [Agenda](https://shoutout.wix.com/so/d1Nv1pC2d#/main)**
 
 ## Updates
-<<<<<<< HEAD
-=======
+- `0.3.6`: Add a new task on TCR-Epitope Binding! See [here](https://tdcommons.ai/multi_pred_tasks/tcrepitope/)!
 - `0.3.5`: 1. Add hERG central dataset 2. Add ChEMBL V29 3. Fixed reaction type issue for USPTO-50 4. Fix bug on higher order multi-instance prediction cold-split! More information, see [here](https://tdcommons.ai/news/)!
 - `0.3.4`: Bug fixes on docking oracles, KL divergence measure, see commit [0f7121a](https://github.com/mims-harvard/TDC/commit/0f7121a3bd7cb833fb55441054d7d87ff3c4ebd6) and commit [6e46fbd](https://github.com/mims-harvard/TDC/commit/6e46fbd1a946b3a6b9f7ba456d60dc09480c68b9)!
 - `0.3.3`: Extended support on cold split - now you can split based on multiple entities, see [#127](https://github.com/mims-harvard/TDC/pull/127)!
 - `0.3.2`: Bug fixes - Adding support for harmonizing same DTIs with different affinities (KIBA, DAVIS Updated accordingly, see [#98](https://github.com/mims-harvard/TDC/issues/98)). Support label name retrieval for TWOSIDES ([#121](https://github.com/mims-harvard/TDC/issues/121)), and add gene symbol info to GDSC ([#122](https://github.com/mims-harvard/TDC/issues/122)). 
 - `0.3.1`: We have restructured the codebase to be contributor-friendly! Checkout the TDC documentation at [https://tdc.readthedocs.io](https://tdc.readthedocs.io/)!
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 - TDC paper is accepted to [NeurIPS 2021 Datasets and Benchmarks](https://openreview.net/pdf?id=8nvgnORnoWr)
 - `0.2.0`: Release docking molecule generation benchmark! Checkout [here](https://tdcommons.ai/benchmark/docking_group/overview/)!
 - `0.1.9`: Support molecule filters! Checkout [here](https://tdcommons.ai//functions/data_process/#molecule-filters)!
@@ -110,11 +104,7 @@ conda install -c conda-forge pytdc
 
 ## Tutorials
 
-<<<<<<< HEAD
-We provide many tutorials to get started with TDC:
-=======
 We provide  tutorials to get started with TDC:
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 | Name  | Description                                             |
 |-------|---------------------------------------------------------|
@@ -256,11 +246,7 @@ For more information, visit [here](https://tdcommons.ai/benchmark/overview/).
 
 ## Cite Us
 
-<<<<<<< HEAD
-If you find Therapeutics Data Commons useful, consider citing our NeurIPS publication:
-=======
 If you find Therapeutics Data Commons useful, cite our NeurIPS paper:
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 ```
 @article{Huang2021tdc,
@@ -274,11 +260,7 @@ If you find Therapeutics Data Commons useful, cite our NeurIPS paper:
 
 ## Contribute
 
-<<<<<<< HEAD
-TDC is a community-driven and open-science initiative. If you want to get involved, join the [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw) and checkout the [contribution guide](CONTRIBUTE.md)!
-=======
 TDC is a community-driven and open-science initiative. To get involved, join our [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) and checkout the [contribution guide](CONTRIBUTE.md)!
->>>>>>> 3ebda027e09694a68c0ac627f44948cab7a80193
 
 ## Contact
 
