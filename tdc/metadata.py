@@ -120,7 +120,12 @@ dti_dataset_names = ['davis',
  'bindingdb_kd',
  'bindingdb_ic50',
  'bindingdb_ki',
- 'bindingdb_patent']
+ 'bindingdb_patent',
+ 'dtc_ec50',
+ 'dtc_ic50',
+ 'dtc_ki',
+ 'dtc_kd',
+                     ]
 
 ppi_dataset_names = ['huri']
 
@@ -182,8 +187,8 @@ evaluator_name.extend(distribution_oracles)
 
 guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop', \
 				   'celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
-				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', \
-				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', 'isomers_c11h24', \
+				   'aripiprazole_similarity', 'albuterol_similarity', 'mestranol_similarity', 
+				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', \
 				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
 				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
 				   'median1', 'median2', \
@@ -457,6 +462,10 @@ name2type = {'toxcast': 'tab',
  'bindingdb_patent': 'csv',
  'huri': 'tab',
  'drugbank': 'tab',
+'dtc_ec50': 'tab',
+'dtc_ic50': 'tab',
+'dtc_ki': 'tab',
+'dtc_kd': 'tab',
  'twosides': 'csv',
  'mhc1_iedb-imgt_nielsen': 'tab',
  'mhc2_iedb_jensen': 'tab',
@@ -526,6 +535,10 @@ name2id = {'bbb_adenot': 4259565,
  'cyp3a4_substrate_carbonmangels': 4259581, 
  'carcinogens_lagunin': 4259570,
  'davis': 5219748,
+ 'dtc_ic50':00000,
+'dtc_ec50':00000,
+'dtc_kd':00000,
+'dtc_ki':00000,
  'drugbank': 4139573,
  'drugcomb': 4215720,
  'f20_edrug3d': 4259586,
@@ -701,3 +714,4 @@ name2stats = {
 	'uspto50k': 50036,
 	'uspto': 1939253
 }
+
