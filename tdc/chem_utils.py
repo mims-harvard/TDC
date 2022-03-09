@@ -1015,7 +1015,7 @@ class Isomer_scoring:
 def isomer_meta(target_smiles, means = 'geometric'):
   return Isomer_scoring(target_smiles, means = means)
 
-
+isomers_c11h24 = isomer_meta(target_smiles = 'C11H24', means = 'geometric')
 isomers_c7h8n2o2 = isomer_meta(target_smiles = 'C7H8N2O2', means = 'geometric')
 isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
 
