@@ -26,10 +26,13 @@ class Oracle:
 		self.kwargs = kwargs
 
 		name = fuzzy_search(name, oracle_names)
+		if name == 'drd3_docking':
+			name = '3pbl_docking'
 		if name in download_oracle_names:
+			##### e.g., jnk, gsk, drd2, ... 
 			self.name = oracle_load(name)
 		elif name in download_receptor_oracle_name:  
-			## '1iep_docking', '2rgp_docking',  
+			## '1iep_docking', '2rgp_docking', '7l11_docking', 'drd3_docking', '3pbl_docking',
 			pdbid = name.split('_')[0]
 			self.name = receptor_load(pdbid)
 			self.pdbid = self.name 
