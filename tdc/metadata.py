@@ -331,7 +331,7 @@ download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking',
 
 
 
-meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta', 'docking_score', 'molecule_one_synthesis']
+meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta', 'docking_score', 'molecule_one_synthesis', 'pyscreener']
 
 oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name + download_receptor_oracle_name 
 
