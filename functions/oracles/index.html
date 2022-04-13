@@ -233,14 +233,18 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">tdc_env</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">tdc_env</span>
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">pytdc</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">pdbfixer</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">openbabel</span>
 </code></pre></div></div>
 <ul>
-    <li> 1. Install ADFR. The detailed instruction for different OS can be found in <a href="https://ccsb.scripps.edu/adfr/downloads/">https://ccsb.scripps.edu/adfr/downloads/</a>. </li><li> 2. Install Vina. The detailed instruction can be found in <a href="http://vina.scripps.edu/">http://vina.scripps.edu/</a>.  </li>
-    <li> 3. Git clone <a href="https://github.com/coleygroup/pyscreener"> https://github.com/coleygroup/pyscreener </a> and use <code>python setup.py install </code> to install. </li> 
-    <li> 4. Add the ADFR/Vina bin path to the PATH variable in your .bashrc / .bash_profile. For example, </li>
-
+    <li>1. Install PyScreener following <a href="https://github.com/coleygroup/pyscreener#installation"> https://github.com/coleygroup/pyscreener#installation</a></li>
+<li>
+      2. Install external docking software as you need, we use AutoDock Vina as an example:  
+</li>
+<ul>
+        <li>1) Install ADFR. The detailed instruction for different OS can be found in <a href="https://ccsb.scripps.edu/adfr/downloads/">https://ccsb.scripps.edu/adfr/downloads/</a>. 
+        </li>
+        <li>2) Install Vina. The detailed instruction can be found in <a href="http://vina.scripps.edu/">http://vina.scripps.edu/</a>. </li>
+        <li>3) Add the ADFR/Vina bin path to the PATH variable in your .bashrc / .bash_profile. For example,</li>
+        </ul>
 </ul>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># in .bashrc or .bash_profile
@@ -250,30 +254,22 @@
 </span></code></pre></div></div>
 
 <p class="is-size-6">
- It should take approximately 15 minutes to install locally. Please open an <a href="https://github.com/mims-harvard/TDC/issues">issue</a> if you meet any problem. <b>Checkout this GitHub <a href="https://github.com/mims-harvard/TDC/issues/63">issue</a> for FAQ.</b>
+Please open an <a href="https://github.com/mims-harvard/TDC/issues">issue</a> if you meet any problem. <b>Checkout this GitHub <a href="https://github.com/mims-harvard/TDC/issues/63">issue</a> for FAQ.</b>
  </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Oracle</span>
-<span class="c1"># 1. One can specify the binding pocket by a docked pdb file
-</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Docking_Score'</span><span class="p">,</span> <span class="n">software</span><span class="o">=</span><span class="s">'vina'</span><span class="p">,</span> 
-                <span class="n">pyscreener_path</span> <span class="o">=</span> <span class="s">'path/to/pyscreener'</span><span class="p">,</span> 
-                <span class="n">receptors</span><span class="o">=</span><span class="p">[</span><span class="s">'examples/docking/5WIU.pdb'</span><span class="p">],</span> 
-                <span class="n">docked_ligand_file</span><span class="o">=</span><span class="s">'examples/docking/5WIU_with_ligand.pdb'</span><span class="p">,</span>
-                <span class="nb">buffer</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">'./my_test/'</span><span class="p">,</span> <span class="n">num_worker</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncpu</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1"># 1. If you want to use the pdb file we prepared, directly use "{PDB_ID}_docking" as naming tag. Here is the list of prepared PDBs: https://github.com/mims-harvard/TDC/blob/428f7905374a4dfc6a3cb50cf8653be99afcd56f/tdc/metadata.py#L327
+</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'3pbl_docking'</span><span class="p">)</span>
 
 <span class="n">oracle</span><span class="p">(</span><span class="s">'c1ccccc1'</span><span class="p">)</span>
 
-<span class="c1"># Docking: 100%|██████████| 1/1 [00:02&lt;00:00,  2.69s/ligand]
-# {'c1ccccc1': -4.4}
+<span class="c1"># Docking: 100%|██████████| 1/1 [00:02&lt;00:00,  1.22s/ligand]
+# -4.1
 </span>
-<span class="c1"># 2. One can also specify the target and binding pocket with PDB ID and coordinates
-</span><span class="n">oracle2</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Docking_Score'</span><span class="p">,</span> <span class="n">software</span><span class="o">=</span><span class="s">'vina'</span><span class="p">,</span>
-                <span class="n">pyscreener_path</span> <span class="o">=</span> <span class="s">'path/to/pyscreener'</span><span class="p">,</span> <span class="n">pdbids</span><span class="o">=</span><span class="p">[</span><span class="s">'5WIU'</span><span class="p">],</span> 
-                <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">18.2</span><span class="p">,</span> <span class="mf">14.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">16.1</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mf">15.4</span><span class="p">,</span> <span class="mf">13.9</span><span class="p">,</span> <span class="mf">14.5</span><span class="p">),</span>
-                <span class="nb">buffer</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">'./my_test/'</span><span class="p">,</span> <span class="n">num_worker</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncpu</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-
-<span class="c1"># Note: the binding pocket can also be sepcified by residue indices, one can check the Pyscreener for more detail
-</span></code></pre></div></div>
+<span class="c1"># 2. One can also specify the target and binding pocket with a cleaned PDB ID and a box coordinates
+</span><span class="n">oracle2</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'pyscreener'</span><span class="p">,</span> <span class="n">receptor_pdb_file</span><span class="o">=</span><span class="s">'./oracle/'</span><span class="o">+</span><span class="n">pdbid</span><span class="o">+</span><span class="s">'.pdb'</span><span class="p">,</span> <span class="n">box_center</span> <span class="o">=</span> <span class="n">center</span><span class="p">,</span> <span class="n">box_size</span> <span class="o">=</span> <span class="n">boxsize</span><span class="p">)</span>
+</code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
