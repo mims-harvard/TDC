@@ -20,6 +20,8 @@ from ...utils import print_sys
 
 
 ############## begin xyz2mol ################
+# from https://github.com/jensengroup/xyz2mol/blob/master/xyz2mol.py
+
 global __ATOM_LIST__
 __ATOM_LIST__ = \
     ['h',  'he',
@@ -492,6 +494,7 @@ def get_proto_mol(atoms):
 
 def read_xyz_file(filename, look_for_charge=True):
     """
+    from https://github.com/jensengroup/xyz2mol/blob/master/xyz2mol.py 
     """
 
     atomic_symbols = []
