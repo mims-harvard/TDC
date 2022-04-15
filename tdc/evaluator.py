@@ -48,7 +48,7 @@ def range_logAUC(true_y, predicted_score, FPR_range=(0.001, 0.1)):
     This was used by previous methods [1] and the reason is that only a
     small percentage of samples can be selected for experimental tests in
     consideration of cost. This means only molecules with very high
-    predicted activity values can be worth testing, i.e., the decision
+    predicted score can be worth testing, i.e., the decision
     threshold is high. And the high decision threshold corresponds to the
     left side of the ROC curve, i.e., those FPRs with small values. Also,
     because the threshold cannot be predetermined, the area under the curve
