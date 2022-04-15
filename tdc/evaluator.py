@@ -193,7 +193,7 @@ class Evaluator:
 			from .chem_utils import fcd_distance
 			self.evaluator_func = fcd_distance
 		elif self.name == 'range_logAUC':
-			self.evaluator_func == range_logAUC()
+			self.evaluator_func = range_logAUC
 
 	def __call__(self, *args, **kwargs):
 		"""call the evaluator function on targets and predictions
