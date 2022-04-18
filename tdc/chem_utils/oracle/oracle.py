@@ -966,9 +966,11 @@ def sitagliptin_mpo(test_smiles):
   molecule = Chem.MolFromSmiles(test_smiles)
   fp_ecfp4 = smiles_2_fingerprint_ECFP4(test_smiles)
   logp_score = Descriptors.MolLogP(molecule)
+  logp_score = sitagliptin_logp_modifier(logp_score)
   tpsa_score = Descriptors.TPSA(molecule)
+  tpsa_score = sitagliptin_tpsa_modifier(tpsa_score)
   isomer_score = isomers_scoring_C16H15F6N5O(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(fp_ecfp4, sitagliptin_fp_ecfp4)
+  similarity_value = sitagliptin_similar_modifier(DataStructs.TanimotoSimilarity(fp_ecfp4, sitagliptin_fp_ecfp4))
   return gmean([similarity_value, logp_score, tpsa_score, isomer_score])
 
 def get_PHCO_fingerprint(mol):
