@@ -41,7 +41,7 @@ class DataLoader(base_dataset.DataLoader):
 	    y (Pandas Series): a list of the single entities label 
 	"""
 	
-	def __init__(self, name, path, label_name, print_stats, dataset_names, convert_format):
+	def __init__(self, name, path, label_name, print_stats, dataset_names, convert_format, raw_format = 'SMILES'):
 		"""Create a base dataloader object that each single instance prediction task dataloader class can inherit from.
 		
 		Raises:
@@ -64,6 +64,7 @@ class DataLoader(base_dataset.DataLoader):
 		self.label_name = label_name
 		self.convert_format = convert_format
 		self.convert_result = None
+		self.raw_format = raw_format ### 'SMILES' for most data, 'Raw3D' for QM9, ...
 
 	def get_data(self, format = 'df'):
 		'''
@@ -79,7 +80,7 @@ class DataLoader(base_dataset.DataLoader):
 
 		if (self.convert_format is not None) and (self.convert_result is None):
 			from ..chem_utils import MolConvert
-			converter = MolConvert(src = 'SMILES', dst = self.convert_format)
+			converter = MolConvert(src = self.raw_format, dst = self.convert_format)
 			convert_result = converter(self.entity1.values)
 			self.convert_result = [i for i in convert_result]
 

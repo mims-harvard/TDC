@@ -264,10 +264,11 @@ QM8_targets =[
       "f1-CAM", "f2-CAM"
   ]
 
-QM9_targets = [
-      "mu", "alpha", "homo", "lumo", "gap", "r2", "zpve", "cv", "u0", "u298",
-      "h298", "g298"
-  ]
+# QM9_targets = [
+#       "mu", "alpha", "homo", "lumo", "gap", "r2", "zpve", "cv", "u0", "u298",
+#       "h298", "g298"
+#   ]
+QM9_targets = ['A', 'B', 'C', 'mu', 'alpha', 'homo', 'lumo', 'gap', 'r2', 'zpve', 'U0', 'U', 'H', 'G', 'Cv', ]
 
 TAP_targets = ['CDR_Length', 'PSH', 'PPC', 'PNC', 'SFvCSP']
 
