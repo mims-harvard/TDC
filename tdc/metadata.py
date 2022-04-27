@@ -176,7 +176,7 @@ property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
 evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', \
 				  'accuracy', 'mse', 'rmse', 'mae', 'r2', 'micro-f1', 'macro-f1', \
-				  'kappa', 'avg-roc-auc', 'rp@k', 'pr@k', 'pcc', 'spearman']
+				  'kappa', 'avg-roc-auc', 'rp@k', 'pr@k', 'pcc', 'spearman', 'range_logAUC']
 
 evaluator_name.extend(distribution_oracles)
 
