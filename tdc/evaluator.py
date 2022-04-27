@@ -2,8 +2,6 @@ import pandas as pd
 import numpy as np
 import os, sys, json 
 import warnings
-from sklearn.metrics import auc, roc_curve
-import matplotlib.pyplot as plt
 warnings.filterwarnings("ignore")
 
 from .utils import fuzzy_search 
@@ -11,7 +9,7 @@ from .metadata import evaluator_name, distribution_oracles
 
 try:
 	from sklearn.metrics import roc_auc_score, f1_score, average_precision_score, precision_score, recall_score, accuracy_score, precision_recall_curve
-	from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, cohen_kappa_score
+	from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, cohen_kappa_score, auc, roc_curve
 except:
 	ImportError("Please install sklearn by 'conda install -c anaconda scikit-learn' or 'pip install scikit-learn '! ")
 
