@@ -176,6 +176,26 @@ def create_scaffold_split(df, seed, frac, entity):
 			'valid': df.iloc[val].reset_index(drop = True),
 			'test': df.iloc[test].reset_index(drop = True)}
 
+def create_combination_generation_split(df1, df2, seed, frac):
+	"""create random split
+	
+	Args:
+	    df (pd.DataFrame): dataset dataframe
+	    fold_seed (int): the random seed
+	    frac (list): a list of train/valid/test fractions
+	
+	Returns:
+	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
+	"""
+	train_frac, val_frac, test_frac = frac
+	length = len(df1)
+	indices = np.random.permutation(length)
+	train_idx, val_idx, test_idx = indices[:int(length*train_frac)], indices[int(length*train_frac):int(length*(train_frac+val_frac))], indices[int(length*(train_frac+val_frac)):]
+
+	return {'train': {"pocket": [df1[i] for i in train_idx], "ligand": [df2[i] for i in train_idx]},
+			'valid': {"pocket": [df1[i] for i in val_idx], "ligand": [df2[i] for i in val_idx]},
+			'test': {"pocket": [df1[i] for i in test_idx], "ligand": [df2[i] for i in test_idx]}}
+
 def create_combination_split(df, seed, frac):
 	"""
 	Function for splitting drug combination dataset such that no combinations are shared across the split

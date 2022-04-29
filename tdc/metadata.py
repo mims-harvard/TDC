@@ -62,6 +62,7 @@ Attributes:
     retrosyn_dataset_names (list): all retrosyn dataset names
     sdf_file_names (list): list of sdf file names
     single_molecule_dataset_names (list): all molgen dataset names
+	multiple_molecule_dataset_names (list): all ligandmolgen dataset names
     synthetic_oracle_name (list): all oracle names for synthesis
     test_multi_pred_dataset_names (list): test multi pred task name
     test_single_pred_dataset_names (list): test single pred task name
@@ -155,6 +156,8 @@ retrosyn_dataset_names = ['uspto50k', 'uspto']
 forwardsyn_dataset_names = ['uspto']
 
 single_molecule_dataset_names = ['zinc', 'moses', 'chembl', 'chembl_v29']
+
+multiple_molecule_dataset_names = ['scpdb']
 
 paired_dataset_names = ['uspto50k', 'uspto']
 
@@ -337,7 +340,7 @@ oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracl
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
-generation_datasets = retrosyn_dataset_names + forwardsyn_dataset_names + molgenpaired_dataset_names 
+generation_datasets = retrosyn_dataset_names + forwardsyn_dataset_names + molgenpaired_dataset_names + multiple_molecule_dataset_names
 # generation
 ####################################
 
@@ -383,6 +386,7 @@ dataset_names = {"Tox": toxicity_dataset_names,
 				"RetroSyn": retrosyn_dataset_names,
 				"Reaction": forwardsyn_dataset_names, 
 				"MolGen": single_molecule_dataset_names,
+				"LigandMolGen": multiple_molecule_dataset_names,
 				"PeptideMHC": peptidemhc_dataset_names,
 				"Epitope": epitope_dataset_names,
 				"Develop": develop_dataset_names,
@@ -477,6 +481,7 @@ name2type = {'toxcast': 'tab',
  'qm7b': 'pkl',
  'qm8': 'pkl',
  'qm9': 'pkl',
+ 'scpdb': 'pkl',
  'tap': 'tab',
  'sabdab_chen': 'tab',
  'protein_sabdab': 'csv',
@@ -563,6 +568,7 @@ name2id = {'bbb_adenot': 4259565,
  'qm7b': 4167096,
  'qm8': 4167110,
  'qm9': 6179310, ### 4167112, 6175612
+ 'scpdb': 6190916,
  'tap': 4167113,
  'sabdab_chen': 4167164,
  'protein_sabdab': 4167357,

@@ -4,6 +4,7 @@ import requests
 from zipfile import ZipFile 
 import os, sys
 import pandas as pd
+import pickle
 from pandas.errors import EmptyDataError
 from tqdm import tqdm
 
@@ -184,6 +185,27 @@ def bm_download_wrapper(name, path):
 			zip.extractall(path = os.path.join(path))
 		print_sys("Done!")
 	return name
+
+def bi_pd_load(name, path):
+	"""load a pandas dataframe from local file.
+	
+	Args:
+	    name (str): dataset name
+	    path (str): the path where the dataset is saved
+	
+	Returns:
+	    pandas.DataFrame: loaded dataset in dataframe
+	
+	Raises:
+	    ValueError: the file format is not supported. currently only support tab/csv/pkl/zip
+	"""
+	try:
+		if name2type[name] == 'pkl':
+			df = pickle.load(open(os.path.join(path, name + '.' + name2type[name]), 'rb'))
+		return df["pocket"], df["ligand"]
+	except (EmptyDataError, EOFError) as e:
+		import sys
+		sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 
 def pd_load(name, path):
 	"""load a pandas dataframe from local file.
@@ -371,6 +393,22 @@ def distribution_dataset_load(name, path, dataset_names, column_name):
 	print_sys('Loading...')
 	df = pd_load(name, path)
 	return df[column_name]
+
+def bi_distribution_dataset_load(name, path, dataset_names):
+	"""a wrapper to download, process and load protein-ligand conditional generation task datasets. assume the downloaded file is already processed
+	
+	Args:
+	    name (str): the rough dataset name
+	    path (str): the dataset path to save/retrieve
+	    dataset_names (list): a list of availabel exact dataset names
+	
+	Returns:
+	    pandas.Series: the input list of molecules representation
+	"""
+	name = download_wrapper(name, path, dataset_names)
+	print_sys('Loading...')
+	pocket, ligand = bi_pd_load(name, path)
+	return pocket, ligand
 
 def generation_dataset_load(name, path, dataset_names):
 	"""a wrapper to download, process and load generation task datasets. assume the downloaded file is already processed
