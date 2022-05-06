@@ -171,11 +171,13 @@ def smiles2ECFP6(smiles):
   Returns:
     fp: rdkit.DataStructs.cDataStructs.UIntSparseIntVect
 
+  refer: https://github.com/rdkit/benchmarking_platform/blob/master/scoring/fingerprint_lib.py
+
   """
   nbits = 2048
   smiles = canonicalize(smiles)
   molecule = smiles_to_rdkit_mol(smiles)
-  fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 1, nBits=nbits)
+  fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 3, nBits=nbits)
   arr = np.zeros((0,), dtype=np.float64)
   DataStructs.ConvertToNumpyArray(fp,arr)
   return arr 
@@ -804,7 +806,9 @@ class MolConvert:
             elif dst == "ECFP2":
                 f2 = smiles2ECFP2 
             elif dst == "ECFP4":
-                f2 = smiles2ECFP4 
+                f2 = smiles2ECFP4
+            elif dst == "ECFP6":
+                f2 = smiles2ECFP6  
             elif dst == "MACCS":
                 f2 = smiles2maccs 
             elif dst == "Daylight":
