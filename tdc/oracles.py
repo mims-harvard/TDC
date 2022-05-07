@@ -8,6 +8,9 @@ from .utils import fuzzy_search, oracle_load, receptor_load
 from .metadata import download_oracle_names, oracle_names, distribution_oracles, download_receptor_oracle_name, docking_target_info 
 
 
+def _normalize_docking_score(raw_score):
+	return 1/(1+np.exp((raw_score+7.5)))
+
 class Oracle:
 
 	"""the oracle class to retrieve any oracle given by query name
@@ -24,10 +27,12 @@ class Oracle:
 		"""
 		self.target_smiles = target_smiles
 		self.kwargs = kwargs
-
+		self.normalize = lambda x:x
 		name = fuzzy_search(name, oracle_names)
 		if name == 'drd3_docking':
 			name = '3pbl_docking'
+		if name == 'drd3_docking_normalize':
+			name = '3pbl_docking_normalize'
 		if name in download_oracle_names:
 			##### e.g., jnk, gsk, drd2, ... 
 			self.name = oracle_load(name)
@@ -36,7 +41,10 @@ class Oracle:
 			pdbid = name.split('_')[0]
 			self.name = receptor_load(pdbid)
 			self.pdbid = self.name 
-			self.name += '_docking' 
+			self.name += '_docking'
+			if 'normalize' in name:
+				self.name += '_normalize' 
+				self.normalize = _normalize_docking_score
 		else:
 			self.name = name
 		self.evaluator_func = None
@@ -208,7 +216,8 @@ class Oracle:
 											  center = center, 
 											  box_size = boxsize)
 
-		elif self.name == 'drd3_docking' or self.name == '3pbl_docking':
+		elif self.name == 'drd3_docking' or self.name == '3pbl_docking' \
+			or self.name == 'drd3_docking_normalize' or self.name == '3pbl_docking_normalize':
 
 			from .chem_utils import PyScreener_meta 
 			pdbid = '3pbl'
@@ -226,7 +235,7 @@ class Oracle:
 			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
 											  center = center, 
 											  box_size = boxsize)
-		elif self.name == '1iep_docking':
+		elif self.name == '1iep_docking' or self.name == '1iep_docking_normalize':
 			from .chem_utils import PyScreener_meta 
 			pdbid = self.name.split('_')[0]
 			center = docking_target_info[pdbid]['center']
@@ -242,7 +251,7 @@ class Oracle:
 			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
 											  center = center, 
 											  box_size = boxsize)
-		elif self.name == '2rgp_docking':
+		elif self.name == '2rgp_docking' or self.name == '2rgp_docking_normalize':
 			from .chem_utils import PyScreener_meta 
 			pdbid = self.name.split('_')[0]
 			center = docking_target_info[pdbid]['center']
@@ -258,7 +267,7 @@ class Oracle:
 			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
 											  center = center, 
 											  box_size = boxsize)
-		elif self.name == '3eml_docking':
+		elif self.name == '3eml_docking' or self.name == '3eml_docking_normalize':
 			from .chem_utils import PyScreener_meta 
 			pdbid = self.name.split('_')[0]
 			center = docking_target_info[pdbid]['center']
@@ -274,7 +283,7 @@ class Oracle:
 			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
 											  center = center, 
 											  box_size = boxsize)
-		elif self.name == '3ny8_docking':
+		elif self.name == '3ny8_docking' or self.name == '3ny8_docking_normalize':
 			from .chem_utils import PyScreener_meta 
 			pdbid = self.name.split('_')[0]
 			center = docking_target_info[pdbid]['center']
@@ -290,7 +299,7 @@ class Oracle:
 			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
 											  center = center, 
 											  box_size = boxsize)
-		elif self.name == '4rlu_docking':
+		elif self.name == '4rlu_docking' or self.name == '4rlu_docking_normalize':
 			from .chem_utils import PyScreener_meta 
 			pdbid = self.name.split('_')[0]
 			center = docking_target_info[pdbid]['center']
@@ -306,7 +315,7 @@ class Oracle:
 			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
 											  center = center, 
 											  box_size = boxsize)
-		elif self.name == '4unn_docking':
+		elif self.name == '4unn_docking' or self.name == '4unn_docking_normalize':
 			from .chem_utils import PyScreener_meta 
 			pdbid = self.name.split('_')[0]
 			center = docking_target_info[pdbid]['center']
@@ -322,7 +331,7 @@ class Oracle:
 			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
 											  center = center, 
 											  box_size = boxsize)
-		elif self.name == '5mo4_docking':
+		elif self.name == '5mo4_docking' or self.name == '5mo4_docking_normalize':
 			from .chem_utils import PyScreener_meta 
 			pdbid = self.name.split('_')[0]
 			center = docking_target_info[pdbid]['center']
@@ -338,7 +347,7 @@ class Oracle:
 			self.evaluator_func = Vina_smiles(receptor_pdbqt_file='./oracle/'+pdbid+'.pdbqt', 
 											  center = center, 
 											  box_size = boxsize)
-		elif self.name == '7l11_docking':
+		elif self.name == '7l11_docking' or self.name == '7l11_docking_normalize':
 			from .chem_utils import PyScreener_meta 
 			pdbid = self.name.split('_')[0]
 			center = docking_target_info[pdbid]['center']
@@ -390,6 +399,7 @@ class Oracle:
 		    ValueError: reached number of maximum calls if set and has queries the oracle more than the internal call counters
 		"""
 		if self.name in distribution_oracles:  
+			## 'novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence' 
 			return self.evaluator_func(*args, **kwargs)
 
 		from rdkit import Chem 
@@ -429,9 +439,10 @@ class Oracle:
 
 				if not self.name == 'docking_score':
 					for smiles in smiles_lst:
-						results_lst.append(self.evaluator_func(smiles, *(args[1:]), **kwargs))
+						results_lst.append(self.normalize(self.evaluator_func(smiles, *(args[1:]), **kwargs)))
 				else:
 					results_lst = self.evaluator_func(smiles_lst, *(args[1:]), **kwargs)
+					results_lst = [self.normalize(i) for i in results_lst]
 				all_results_lst = [self.default_property for i in range(NN)]
 				for idx,result in zip(valid_smiles_idx_lst, results_lst):
 					all_results_lst[idx] = result 
@@ -454,4 +465,4 @@ class Oracle:
 					all_[i] = fct(*args, **kwargs)
 				return all_
 			else:
-				return self.evaluator_func(*args, **kwargs)
+				return self.normalize(self.evaluator_func(*args, **kwargs))

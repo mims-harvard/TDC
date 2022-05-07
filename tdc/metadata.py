@@ -329,6 +329,8 @@ trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
 download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking', '3ny8_docking', '4rlu_docking',
 								 '4unn_docking', '5mo4_docking', '7l11_docking', 'drd3_docking', '3pbl_docking',
+								 '1iep_docking_normalize', '2rgp_docking_normalize', '3eml_docking_normalize', '3ny8_docking_normalize', '4rlu_docking_normalize',
+								 '4unn_docking_normalize', '5mo4_docking_normalize', '7l11_docking_normalize', 'drd3_docking_normalize', '3pbl_docking_normalize',
 								 '1iep_docking_vina', '2rgp_docking_vina', '3eml_docking_vina', '3ny8_docking_vina', '4rlu_docking_vina',
 								 '4unn_docking_vina', '5mo4_docking_vina', '7l11_docking_vina', 'drd3_docking_vina', '3pbl_docking_vina', ]
 
