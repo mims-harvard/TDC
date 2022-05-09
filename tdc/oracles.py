@@ -441,7 +441,15 @@ class Oracle:
 					for smiles in smiles_lst:
 						results_lst.append(self.normalize(self.evaluator_func(smiles, *(args[1:]), **kwargs)))
 				else:
-					results_lst = self.evaluator_func(smiles_lst, *(args[1:]), **kwargs)
+					results_lst = []
+					for smiles in smiles_lst:
+						try:
+							results = self.evaluator_func([smiles], *(args[1:]), **kwargs)
+							results = results[0]
+						except: 
+							results = self.default_property
+						results_lst.append(results)
+					# results_lst = self.evaluator_func(smiles_lst, *(args[1:]), **kwargs)
 					results_lst = [self.normalize(i) for i in results_lst]
 				all_results_lst = [self.default_property for i in range(NN)]
 				for idx,result in zip(valid_smiles_idx_lst, results_lst):
@@ -465,4 +473,9 @@ class Oracle:
 					all_[i] = fct(*args, **kwargs)
 				return all_
 			else:
-				return self.normalize(self.evaluator_func(*args, **kwargs))
+				try: 
+					score = self.evaluator_func(*args, **kwargs)
+				except:
+					score = self.default_property
+				return self.normalize(score)
+				# return self.normalize(self.evaluator_func(*args, **kwargs))
