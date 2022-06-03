@@ -63,7 +63,19 @@ class MolFilter:
     if self.property_filters_flag:
         self.rule_dict['HBA'], self.rule_dict['HBD'], self.rule_dict['LogP'], self.rule_dict['MW'], self.rule_dict['Rot'], self.rule_dict['TPSA'] = HBA, HBD, LogP, MW, Rot, TPSA
     else:
-        del self.rule_dict['HBA'], self.rule_dict['HBD'], self.rule_dict['LogP'], self.rule_dict['MW'], self.rule_dict['Rot'], self.rule_dict['TPSA']
+        if 'HBA' in self.rule_dict:
+          del self.rule_dict['HBA']
+        if 'HBD' in self.rule_dict:
+          del self.rule_dict['HBD']
+        if 'LogP' in self.rule_dict:
+          del self.rule_dict['LogP']
+        if 'MW' in self.rule_dict:
+          del self.rule_dict['MW']
+        if 'Rot' in self.rule_dict:
+          del self.rule_dict['Rot']
+        if 'TPSA' in self.rule_dict:
+          del self.rule_dict['TPSA']
+        # del self.rule_dict['HBA'], self.rule_dict['HBD'], self.rule_dict['LogP'], self.rule_dict['MW'], self.rule_dict['Rot'], self.rule_dict['TPSA']
     print_sys("MolFilter is using the following filters:")
 
     for i,j in self.rule_dict.items():
