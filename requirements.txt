@@ -1,3 +1,4 @@
+rdkit
 fuzzywuzzy
 numpy
 pandas
