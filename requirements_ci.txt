@@ -1,4 +1,4 @@
-rdkit
+rdkit-pypi
 fuzzywuzzy
 networkx
 numpy
