@@ -265,9 +265,7 @@ QM7_targets = ['Y']
 
 
 #### qm7b: 14 labels 
-QM7b_targets = ['ae_pbe0', 'p_pbe0', 'p_scs', 'homo_gw', 'homo_pbe0', 'homo_zindo', 'lumo_gw', 'lumo_pbe0',\
-                        'lumo_zindo', 'ip_zindo', 'ea_zindo', 'e1_zindo', 'emax_zindo', 'imax_zindo']
-
+QM7b_targets = ['AE_PBE0', 'P_PBE0', 'P_SCS', 'HOMO_GW', 'HOMO_PBE0', 'HOMO_ZINDO', 'LUMO_GW', 'LUMO_PBE0', 'LUMO_ZINDO', 'IP_ZINDO', 'EA_ZINDO', 'E1_ZINDO', 'EMAX_ZINDO', 'IMAX_ZINDO']
 
 # QM8_targets =[
 #       "E1-CC2", "E2-CC2", "f1-CC2", "f2-CC2", "E1-PBE0", "E2-PBE0", "f1-PBE0", "f2-PBE0", "E1-CAM", "E2-CAM",
