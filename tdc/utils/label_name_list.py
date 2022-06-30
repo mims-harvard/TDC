@@ -295,7 +295,7 @@ leenay_targets = ['Fraction_Insertions', 'Avg_Insertion_Length', 'Avg_Deletion_L
 
 herg_central_targets = ['hERG_at_1uM', 'hERG_at_10uM', 'hERG_inhib']
 
-dataset2target_lists = {'qmb': QM7_targets,
+dataset2target_lists = {'qm7': QM7_targets,
                             'qm7b': QM7b_targets, 
                             'qm8': QM8_targets,
                             'qm9': QM9_targets,
