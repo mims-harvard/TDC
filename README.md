@@ -18,21 +18,21 @@
 
 [**Website**](https://tdcommons.ai) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [**TDC Documentation**](https://tdc.readthedocs.io/) | [**Contribution Guidelines**](CONTRIBUTE.md)
 
-Artificial intelligence holds promise in enabling breakthroughs and discoveries in therapeutic science. **Therapeutics Data Commons** is a coordinated initiative to access and evaluate artificial intelligence capability across therapeutic modalities and stages of discovery, supporting the development of AI methods, with a strong bent towards establishing the foundation of which AI methods are most suitable for drug discovery applications and why.
+Artificial intelligence is poised to reshape therapeutic science. **Therapeutics Data Commons** is a coordinated initiative to access and evaluate artificial intelligence capability across therapeutic modalities and stages of discovery, supporting the development of AI methods, with a strong bent towards establishing the foundation of which AI methods are most suitable for drug discovery applications and why.
 
 Researchers across disciplines can use TDC for numerous applications. AI-solvable tasks, AI-ready datasets, and curated benchmarks in TDC serve as a meeting point between biochemical and AI scientists. TDC facilitates algorithmic and scientific advances and accelerate machine learning method development, validation and transition into biomedical and clinical implementation.
 
-TDC is an open-science initiative. We welcome [contributions from the community.](CONTRIBUTE.md)!
+TDC is an open-science initiative. We welcome [contributions from the community.](CONTRIBUTE.md)
 
 ## Key TDC Presentations and Publications
 
-[1] Huang, Fu, Gao, et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, NeurIPS 2021 [**\[Paper\]**](https://openreview.net/forum?id=8nvgnORnoWr)** [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing) 
+[1] Huang, Fu, Gao, et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, NeurIPS 2021 [**\[Paper\]**](https://openreview.net/forum?id=8nvgnORnoWr) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing) 
 
-[2] Huang et al., Benchmarking Molecular Machine Learning in Therapeutics Data Commons, ELLIS ML4Molecules 2021 [**\[Paper\]**](https://cloud.ml.jku.at/s/54pB5Eqf6ftX7qA)** [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing) 
+[2] Huang et al., Benchmarking Molecular Machine Learning in Therapeutics Data Commons, ELLIS ML4Molecules 2021 [**\[Paper\]**](https://cloud.ml.jku.at/s/54pB5Eqf6ftX7qA) [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing) 
 
 [3] Huang et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, Baylearn 2021 [**\[Slides\]**](https://drive.google.com/file/d/1BNpk3dOdqE3ksgyVV-V3xySdBMq-8cXL/view?usp=sharing) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing)
 
-[4] Huang, Fu, Gao et al., Therapeutics Data Commons, NSF-Harvard Symposium on Drugs for Future Pandemics 2020 [**\[#futuretx20\]**](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
+[4] Huang, Fu, Gao et al., Therapeutics Data Commons, NSF-Harvard Symposium on Drugs for Future Pandemics 2020 [**\[#futuretx20\]**](https://www.drugsymposium.org/) [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
 
 [5] [TDC User Group Meetup, Jan 2022](https://harvard.zoom.us/rec/share/HO0TjRPs56YG-Fu3i033izaTwebB4KwUhPeNURkWSI-anrH9su03lCtUlHeZG-WP.67ZJmAIHsD7Q_2GQ) [**\[Agenda\]**](https://shoutout.wix.com/so/d1Nv1pC2d#/main)
 
