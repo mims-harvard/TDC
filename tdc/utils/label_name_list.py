@@ -258,16 +258,29 @@ ToxCast_targets = ['ACEA_T47D_80hr_Negative', 'ACEA_T47D_80hr_Positive',
        'Tanguay_ZF_120hpf_TRUN_up', 'Tanguay_ZF_120hpf_TR_up',
        'Tanguay_ZF_120hpf_YSE_up']
 
-QM7_targets = ["E_PBE0", "E_max_EINDO", "I_max_ZINDO", "HOMO_ZINDO", "LUMO_ZINDO", "E_1st_ZINDO", "IP_ZINDO", "EA_ZINDO", "HOMO_PBE0", "LUMO_PBE0", "HOMO_GW", "LUMO_GW", "alpha_PBE0", "alpha_SCS"]
-QM8_targets =[
-      "E1-CC2", "E2-CC2", "f1-CC2", "f2-CC2", "E1-PBE0", "E2-PBE0", "f1-PBE0", "f2-PBE0", "E1-CAM", "E2-CAM",
-      "f1-CAM", "f2-CAM"
-  ]
+
+
+QM7_targets = ['Y']
+# QM7_targets = ["E_PBE0", "E_max_EINDO", "I_max_ZINDO", "HOMO_ZINDO", "LUMO_ZINDO", "E_1st_ZINDO", "IP_ZINDO", "EA_ZINDO", "HOMO_PBE0", "LUMO_PBE0", "HOMO_GW", "LUMO_GW", "alpha_PBE0", "alpha_SCS"]
+
+
+#### qm7b: 14 labels 
+QM7b_targets = ['AE_PBE0', 'P_PBE0', 'P_SCS', 'HOMO_GW', 'HOMO_PBE0', 'HOMO_ZINDO', 'LUMO_GW', 'LUMO_PBE0', 'LUMO_ZINDO', 'IP_ZINDO', 'EA_ZINDO', 'E1_ZINDO', 'EMAX_ZINDO', 'IMAX_ZINDO']
+
+# QM8_targets =[
+#       "E1-CC2", "E2-CC2", "f1-CC2", "f2-CC2", "E1-PBE0", "E2-PBE0", "f1-PBE0", "f2-PBE0", "E1-CAM", "E2-CAM",
+#       "f1-CAM", "f2-CAM"
+#   ]
+
+#### qm8: 15 labels 
+QM8_targets = ['E1-CC2', 'E2-CC2', 'f1-CC2', 'f2-CC2', 'E1-PBE0', 'E2-PBE0', 'f1-PBE0', 'f2-PBE0', 'E1-PBE0', 'E2-PBE0', 'f1-PBE0', 'f2-PBE0', 'E1-CAM', 'E2-CAM', 'f1-CAM',]
+
 
 # QM9_targets = [
 #       "mu", "alpha", "homo", "lumo", "gap", "r2", "zpve", "cv", "u0", "u298",
 #       "h298", "g298"
 #   ]
+#### qm9: 15 labels 
 QM9_targets = ['A', 'B', 'C', 'mu', 'alpha', 'homo', 'lumo', 'gap', 'r2', 'zpve', 'U0', 'U', 'H', 'G', 'Cv', ]
 
 TAP_targets = ['CDR_Length', 'PSH', 'PPC', 'PNC', 'SFvCSP']
@@ -280,7 +293,8 @@ leenay_targets = ['Fraction_Insertions', 'Avg_Insertion_Length', 'Avg_Deletion_L
 
 herg_central_targets = ['hERG_at_1uM', 'hERG_at_10uM', 'hERG_inhib']
 
-dataset2target_lists = {'qm7b': QM7_targets,
+dataset2target_lists = {'qm7': QM7_targets,
+                            'qm7b': QM7b_targets, 
                             'qm8': QM8_targets,
                             'qm9': QM9_targets,
                             'tap': TAP_targets,

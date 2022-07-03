@@ -105,7 +105,7 @@ hts_dataset_names = ['hiv',
 'sarscov2_3clpro_diamond', 
 'sarscov2_vitro_touret']
 
-qm_dataset_names = ['qm7b', 'qm8', 'qm9']
+qm_dataset_names = ['qm7', 'qm7b', 'qm8', 'qm9']
 
 epitope_dataset_names = ['iedb_jespersen', 'pdb_jespersen']
 
@@ -480,6 +480,7 @@ name2type = {'toxcast': 'tab',
  'gdsc2': 'pkl',
  'iedb_jespersen': 'pkl',
  'pdb_jespersen': 'pkl',
+ 'qm7': 'pkl',
  'qm7b': 'pkl',
  'qm8': 'pkl',
  'qm9': 'pkl',
@@ -567,8 +568,9 @@ name2id = {'bbb_adenot': 4259565,
  'gdsc2': 4165727,
  'iedb_jespersen': 4165725, 
  'pdb_jespersen': 4165724,
- 'qm7b': 4167096,
- 'qm8': 4167110,
+ 'qm7': 6358510, 
+ 'qm7b': 6358512, 
+ 'qm8': 6358513,  
  'qm9': 6179310, ### 4167112, 6175612
  'scpdb': 6190916,
  'tap': 4167113,
@@ -673,8 +675,9 @@ name2stats = {
 	'sarscov2_vitro_touret': 1480,
 	'sarscov2_3clpro_diamond': 879,
 	'hiv': 41127,
+	'qm7': 7165,
 	'qm7b': 7211,
-	'qm8': 21786,
+	'qm8': 21747,
 	'qm9': 133885,
 	'uspto_yields': 853638,
 	'buchwald-hartwig': 55370,
