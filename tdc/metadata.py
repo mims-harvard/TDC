@@ -24,6 +24,7 @@ Attributes:
     ddi_dataset_names (list): all ddi dataset names
     develop_dataset_names (list): all develop dataset names
     distribution_oracles (list): all distribution learning oracles, i.e. molecule evaluators
+	docking_oracles (list): all docking oracles, i.e. RMSD
     docking_benchmark (dict): docking benchmark target names
     docking_target_info (dict): docking benchmark target pockets info
     download_oracle_names (list): oracle names that require downloading predictors
@@ -157,7 +158,7 @@ forwardsyn_dataset_names = ['uspto']
 
 single_molecule_dataset_names = ['zinc', 'moses', 'chembl', 'chembl_v29']
 
-multiple_molecule_dataset_names = ['scpdb']
+multiple_molecule_dataset_names = ['dude', 'pdbbind', 'crossdock', 'scpdb']
 
 paired_dataset_names = ['uspto50k', 'uspto']
 
@@ -174,6 +175,7 @@ biokg_library_names = ['hetionet']
 #### evaluator for distribution learning, the input of __call__ is list of smiles
 distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
 
+docking_oracles = ['rmsd', 'kabsch_rmsd', 'smina']
 
 property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
@@ -182,6 +184,7 @@ evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', \
 				  'kappa', 'avg-roc-auc', 'rp@k', 'pr@k', 'pcc', 'spearman', 'range_logAUC']
 
 evaluator_name.extend(distribution_oracles)
+evaluator_name.extend(docking_oracles)
 
 guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop', \
 				   'celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
@@ -324,7 +327,7 @@ dti_dg_splits = {'bindingdb_patent': 'group'}
 ####################################
 
 # evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
-download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
+download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith', 'smina']
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
 download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking', '3ny8_docking', '4rlu_docking',
@@ -338,7 +341,7 @@ download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking',
 
 meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta', 'docking_score', 'molecule_one_synthesis', 'pyscreener']
 
-oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name + download_receptor_oracle_name 
+oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name + docking_oracles + download_receptor_oracle_name 
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
@@ -483,7 +486,9 @@ name2type = {'toxcast': 'tab',
  'qm7b': 'pkl',
  'qm8': 'pkl',
  'qm9': 'pkl',
- 'scpdb': 'pkl',
+ 'scpdb': 'zip',
+ 'dude': 'zip',
+ 'crossdock': 'zip',
  'tap': 'tab',
  'sabdab_chen': 'tab',
  'protein_sabdab': 'csv',
@@ -571,6 +576,8 @@ name2id = {'bbb_adenot': 4259565,
  'qm8': 4167110,
  'qm9': 6179310, ### 4167112, 6175612
  'scpdb': 6190916,
+ 'dude': 6332180,
+ 'crossdock': 6332180,
  'tap': 4167113,
  'sabdab_chen': 4167164,
  'protein_sabdab': 4167357,
@@ -606,13 +613,15 @@ oracle2type = {'drd2': 'pkl',
 			   'gsk3b': 'pkl',
 			   'fpscores': 'pkl', 
 			   'cyp3a4_veith': 'pkl', 
+			   'smina': 'static', 
 			   }
 
 oracle2id = {'drd2': 4178625,
 			 'gsk3b': 4170295,
 			 'jnk3': 4170293,
 			 'fpscores': 4170416, 
-			 'cyp3a4_veith': 4411249, 
+			 'cyp3a4_veith': 4411249,
+			 'smina': 4411249, #TODO 
 			}
 
 benchmark2type = {'admet_group': 'zip',

@@ -10,5 +10,5 @@ from .oracle.oracle import PyScreener_meta, Vina_3d, Score_3d, Vina_smiles, mole
 					mestranol_similarity, celecoxib_rediscovery, \
 					troglitazone_rediscovery, thiothixene_rediscovery, \
 					median_meta, isomer_meta, rediscovery_meta, similarity_meta, \
-					jnk3, gsk3b, SA, cyp3a4_veith, drd2, qed, penalized_logp
+					jnk3, gsk3b, SA, cyp3a4_veith, drd2, qed, penalized_logp, rmsd, kabsch_rmsd, smina
 from .oracle.filter import MolFilter

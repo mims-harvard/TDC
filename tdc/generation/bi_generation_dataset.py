@@ -23,7 +23,7 @@ class DataLoader(base_dataset.DataLoader):
 	    smiles_lst (list): a list of smiles strings as training data for distribution learning.
 	"""
 	
-	def __init__(self, name, path, print_stats):
+	def __init__(self, name, path, print_stats, return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
 		"""To create a base dataloader object that each generation task can inherit from.
 		
 		Args:
@@ -33,15 +33,19 @@ class DataLoader(base_dataset.DataLoader):
 		    column_name (str): The name of the column containing smiles strings.
 		"""
 		from ..metadata import multiple_molecule_dataset_names 
-		pocket, ligand = bi_distribution_dataset_load(name, path, multiple_molecule_dataset_names)
+		protein, ligand = bi_distribution_dataset_load(name, path, multiple_molecule_dataset_names, return_pocket, threshold, remove_Hs, keep_het, allowed_atom_list)
 		
-		self.pocket = pocket
 		self.ligand = ligand
+		self.protein = protein
 
 		### including fuzzy-search 
 		self.name = name 
 		self.path = path 
 		self.dataset_names = multiple_molecule_dataset_names
+		self.return_pocket = return_pocket
+		self.remove_Hs = remove_Hs
+		self.keep_het = keep_het
+		self.allowed_atom_list = allowed_atom_list
 		if print_stats: 
 			self.print_stats() 
 		print_sys('Done!')
@@ -63,10 +67,8 @@ class DataLoader(base_dataset.DataLoader):
 		Raises:
 		    AttributeError: Use the correct format as input (df, dict)
 		"""
-		if format == 'df':
-			return self.pocket, self.ligand
-		elif format == 'dict':
-			return {'pocket': self.pocket, 'ligand': self.ligand} 
+		if format == 'dict':
+			return {'protein': self.protein, 'ligand': self.ligand} 
 		else:
 			raise AttributeError("Please use the correct format input")
 
@@ -84,9 +86,10 @@ class DataLoader(base_dataset.DataLoader):
 		Raises:
 		    AttributeError: Use the correct split method as input (random, scaffold)
 		'''
-		pocket, ligand = self.get_data(format = 'df')
+		data = self.get_data(format = 'dict')
+		protein, ligand = data['protein'], data['ligand']
 
 		if method == 'random':
-			return create_combination_generation_split(pocket, ligand, seed, frac)
+			return create_combination_generation_split(protein, ligand, seed, frac)
 		else:
 			raise AttributeError("Please use the correct split method")
