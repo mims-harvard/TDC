@@ -135,6 +135,7 @@ class DataLoader:
             form (str, optional): standard log-transformation or binding nM <-> p transformation.
         """
         print('To log space...', flush=True, file=sys.stderr)
+        self.log_flag = True
         if form == 'binding':
             self.y = utils.convert_to_log(self.y)
         elif form == 'standard':
@@ -152,6 +153,8 @@ class DataLoader:
             self.y = utils.convert_back_log(self.y)
         elif form == 'standard':
             self.y = self.sign * (np.exp(self.sign * self.y) - 1e-10)
+        self.log_flag = False
+
 
     def get_label_meaning(self, output_format='dict'):
         """get the biomedical meaning of label
