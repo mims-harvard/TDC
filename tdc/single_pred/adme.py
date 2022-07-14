@@ -38,3 +38,27 @@ class ADME(single_pred_dataset.DataLoader):
         if print_stats:
             self.print_stats()
         print('Done!', flush = True, file = sys.stderr)
+
+    def harmonize(self, mode = None):
+        """Removing duplicated experimental readouts.
+        """
+
+        if mode not in ['max', 'min', 'remove_all']:
+            raise ValueError("Please specify 'mode' of removal, currently supported 'max'/'min'/'remove_all'!")
+
+        if mode == 'max':
+            df_ = self.get_data()
+            df = df_.sort_values('Y', ascending=True).drop_duplicates('Drug').reset_index(drop = True)
+
+        elif mode == 'min':
+            df_ = self.get_data()
+            df = df_.sort_values('Y', ascending=False).drop_duplicates('Drug').reset_index(drop = True)
+
+        elif mode == 'remove_all':
+            df_ = self.get_data()
+            df = df_.drop_duplicates('Drug', keep = False).reset_index(drop = True)
+
+        self.entity1 = df.Drug.values
+        self.y = df.Y.values
+        self.entity1_idx = df.Drug_ID.values
+        return df

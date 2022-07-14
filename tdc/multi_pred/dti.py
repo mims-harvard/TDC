@@ -49,17 +49,29 @@ class DTI(bi_pred_dataset.DataLoader):
     def harmonize_affinities(self, mode = None):
         """Removing duplicated drug-target pairs with different binding affinities.
         """
-        if self.name not in ['bindingdb_ki', 'bindingdb_kd', 'bindingdb_ic50']:
-            raise ValueError('This function is not supported for ' + self.name + ' because they are already duplicates removed!')
 
         if mode not in ['mean', 'max_affinity']:
             raise ValueError("Please specify 'mode' of removal, currently supported 'mean'/'max_affinity'!")
 
         if mode == 'max_affinity':
             df_ = self.get_data()
-            return df_.groupby(['Drug_ID', 'Drug', 'Target_ID', 'Target']).Y.agg(min).reset_index()
+            if self.log_flag:
+                print_sys('The scale is converted to log scale, so we will take the maximum!')
+                df = df_.groupby(['Drug_ID', 'Drug', 'Target_ID', 'Target']).Y.agg(max).reset_index()
+            else:
+                print_sys('The scale is in original affinity scale, so we will take the minimum!')               
+                df = df_.groupby(['Drug_ID', 'Drug', 'Target_ID', 'Target']).Y.agg(min).reset_index()
 
         elif mode == 'mean':
             import numpy as np
             df_ = self.get_data()
-            return df_.groupby(['Drug_ID', 'Drug', 'Target_ID', 'Target']).Y.agg(np.mean).reset_index()
+            df = df_.groupby(['Drug_ID', 'Drug', 'Target_ID', 'Target']).Y.agg(np.mean).reset_index()
+
+        self.entity1_idx = df.Drug_ID.values
+        self.entity2_idx = df.Target_ID.values
+
+        self.entity1 = df.Drug.values
+        self.entity2 = df.Target.values
+        self.y = df.Y.values
+        print_sys('The original data has been updated!')
+        return df
