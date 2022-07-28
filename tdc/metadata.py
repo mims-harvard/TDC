@@ -512,7 +512,10 @@ name2type = {'toxcast': 'tab',
  'test_single_pred': 'tab',
  'test_multi_pred': 'tab',
  'gdsc_gene_symbols': 'tab',
- 'weber': 'tab'}
+ 'weber': 'tab',
+ 'primekg': 'tab',
+ 'primekg_drug_feature': 'tab',
+ 'primekg_disease_feature': 'tab'}
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -601,7 +604,10 @@ name2id = {'bbb_adenot': 4259565,
  'test_single_pred': 4832455,
  'test_multi_pred': 4832456,
  'gdsc_gene_symbols': 5255026,
- 'weber': 5790963}
+ 'weber': 5790963,
+ 'primekg': 6180626,
+ 'primekg_drug_feature': 6180619,
+ 'primekg_disease_feature': 6180618}
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 

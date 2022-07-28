@@ -467,3 +467,18 @@ def bm_group_load(name, path):
 	"""
 	name = bm_download_wrapper(name, path)
 	return name
+
+def general_load(name, path, sep):
+	"""a wrapper to download, process and load any pandas dataframe files
+	
+	Args:
+	    name (str): the dataset name
+	    path (str): the data save path
+	
+	Returns:
+	    pandas.DataFrame: data frame
+	"""
+	name = download_wrapper(name, path, name)
+	print_sys('Loading...')
+	df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]), sep = sep)
+	return df
