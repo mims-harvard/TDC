@@ -623,6 +623,15 @@ oracle2id = {'drd2': 4178625,
 			 'cyp3a4_veith': 4411249, 
 			}
 
+import sklearn
+sklearn_version = sklearn.__version__
+if not (sklearn_version[0]=='0' and int(sklearn_version.split('.')[1]) <= 22):
+	oracle2id['drd2'] = 6405398
+	oracle2id['jnk3'] = 6405399
+	oracle2id['gsk3b'] = 6405400 
+
+
+
 benchmark2type = {'admet_group': 'zip',
                   'drugcombo_group': 'zip',
                   'docking_group': 'zip',

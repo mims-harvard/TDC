@@ -101,7 +101,7 @@ def oracle_download_wrapper(name, path, oracle_names):
 	
 	Args:
 	    name (str): the rough oracle query name
-	    path (str): the path to save the oracle
+	    path (str): the path to save the oracle, default is './oracle'
 	    dataset_names (list): the list of available exact oracle names
 	
 	Returns:
@@ -416,7 +416,7 @@ def generation_dataset_load(name, path, dataset_names):
 	Args:
 	    name (str): the rough dataset name
 	    path (str): the dataset path to save/retrieve
-	    dataset_names (list): a list of availabel exact dataset names
+	    dataset_names (list): a list of available exact dataset names
 	
 	Returns:
 	    pandas.Series: the data series
@@ -432,7 +432,7 @@ def oracle_load(name, path = './oracle', oracle_names = oracle_names):
 	Args:
 	    name (str): the rough oracle name
 	    path (str): the oracle path to save/retrieve, defaults to './oracle'
-	    dataset_names (list): a list of availabel exact oracle names
+	    oracle_names (list): a list of available exact oracle names
 	
 	Returns:
 	    str: exact oracle name
