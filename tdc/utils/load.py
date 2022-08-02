@@ -9,7 +9,7 @@ import pickle
 from pandas.errors import EmptyDataError
 from tqdm import tqdm
 
-from ..metadata import name2type, name2id, dataset_list, dataset_names, benchmark_names, benchmark2id, benchmark2type
+from ..metadata import name2type, name2id, temp2id, dataset_list, dataset_names, benchmark_names, benchmark2id, benchmark2type
 from ..metadata import property_names, paired_dataset_names, single_molecule_dataset_names
 from ..metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
 from ..metadata import oracle2id, receptor2id, download_oracle_names, trivial_oracle_names, oracle_names, oracle2type 
@@ -59,6 +59,7 @@ def extract_atom_from_protein(data_frame, data_frame_het, remove_Hs, keep_het, a
 def process_pdbbind(path, name='pdbbind', return_pocket=False, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
 	from biopandas.pdb import PandasPdb
 	from rdkit import Chem
+	path = os.path.join(path, name)
 	if os.path.exists(path):
 		print_sys("Processing...")	
 		protein_coords, protein_atom_types = [], []
@@ -101,8 +102,10 @@ def process_crossdock(path, name='crossdock', return_pocket=False, threshold=15,
 	protein_coords, protein_atom_types = [], []
 	ligand_coords, ligand_atom_types = [], []
 	failure = 0
+	path = os.path.join(path, name)
 	index_path = os.path.join(path, 'index.pkl')
 	index = pickle.load(open(index_path, 'rb'))
+	path = os.path.join(path, 'crossdocked_pocket10')
 	for idx, (pocket_fn, ligand_fn, _, rmsd) in enumerate(tqdm(index)):
 		if pocket_fn is None or ligand_fn is None:
 			continue
@@ -136,6 +139,7 @@ def process_dude(path, name='dude', return_pocket=False, threshold=15, remove_Hs
 	from rdkit import Chem
 	protein_coords, protein_atom_types = [], []
 	ligand_coords, ligand_atom_types = [], []
+	path = os.path.join(path, name)
 	files = os.listdir(path)
 	failure = 0
 	for idx, file in enumerate(tqdm(files)):
@@ -179,11 +183,12 @@ def process_dude(path, name='dude', return_pocket=False, threshold=15, remove_Hs
 	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
 	return protein, ligand
 
-def process_scpdb(path, name='scpdb', return_pocket=False, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+def process_scpdb(path, name='scPDB', return_pocket=False, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
 	from biopandas.mol2 import PandasMol2
 	from rdkit import Chem
 	protein_coords, protein_atom_types = [], []
 	ligand_coords, ligand_atom_types = [], []
+	path = os.path.join(path, name)
 	files = os.listdir(path)
 	failure = 0
 	for idx, file in enumerate(tqdm(files)):
@@ -212,6 +217,36 @@ def process_scpdb(path, name='scpdb', return_pocket=False, remove_Hs=True, keep_
 	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
 	return protein, ligand
 
+def temp_data_download_wrapper(name, path, dataset_names):
+	"""wrapper for downloading a dataset given the name and path - zip file, automatically unzipping
+	
+	Args:
+	    name (str): the rough dataset query name
+	    path (str): the path to save the dataset
+	    dataset_names (list): the list of available dataset names to search the query dataset
+	
+	Returns:
+	    str: the exact dataset query name
+	"""
+	name = fuzzy_search(name, dataset_names)
+	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
+
+	dataset_path = temp2id[name]
+
+	if not os.path.exists(path):
+		os.mkdir(path)
+
+	if os.path.exists(os.path.join(path, name)):
+		print_sys('Found local copy...')
+	else:
+		print_sys('Downloading...')
+		googledrive_download(dataset_path, path, name, name2type)
+		print_sys('Extracting zip file...')
+		with ZipFile(os.path.join(path, name + '.zip'), 'r') as zip:
+			zip.extractall(path = os.path.join(path))
+		print_sys("Done!")
+	return name
+
 def download_wrapper(name, path, dataset_names):
 	"""wrapper for downloading a dataset given the name and path, for csv,pkl,tsv files
 	
@@ -236,6 +271,7 @@ def download_wrapper(name, path, dataset_names):
 	else:
 		print_sys("Downloading...")
 		dataverse_download(dataset_path, path, name, name2type)
+
 	return name
 
 def zip_data_download_wrapper(name, path, dataset_names):
@@ -267,6 +303,9 @@ def zip_data_download_wrapper(name, path, dataset_names):
 			zip.extractall(path = os.path.join(path))
 		print_sys("Done!")
 	return name
+
+def googledrive_download(url, path, name, types):
+	os.system(f'wget --load-cookies /tmp/cookies.txt \"https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate \'https://docs.google.com/uc?export=download&id={url}\' -O- | sed -rn \'s/.*confirm=([0-9A-Za-z_]+).*/\\1\\n/p\')&id={url}\" -O {name}.{types[name]} && rm -rf /tmp/cookies.txt && mv {name}.{types[name]} {path}')
 
 def dataverse_download(url, path, name, types):
 	"""dataverse download helper with progress bar
@@ -581,11 +620,11 @@ def bi_distribution_dataset_load(name, path, dataset_names, return_pocket=False,
 		print_sys('Loading...')
 		protein, ligand = process_pdbbind(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
 	else:
-		name = download_wrapper(name, path, dataset_names)
+		name = temp_data_download_wrapper(name, path, dataset_names)
 		if name == 'dude':
 			print_sys('Loading...')
 			protein, ligand = process_dude(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
-		elif name == 'scpdb':
+		elif name == 'scPDB':
 			print_sys('Loading...')
 			protein, ligand = process_scpdb(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
 		elif name == 'crossdock':

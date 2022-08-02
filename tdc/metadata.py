@@ -158,7 +158,7 @@ forwardsyn_dataset_names = ['uspto']
 
 single_molecule_dataset_names = ['zinc', 'moses', 'chembl', 'chembl_v29']
 
-multiple_molecule_dataset_names = ['dude', 'pdbbind', 'crossdock', 'scpdb']
+multiple_molecule_dataset_names = ['dude', 'pdbbind', 'crossdock', 'scPDB']
 
 paired_dataset_names = ['uspto50k', 'uspto']
 
@@ -486,7 +486,7 @@ name2type = {'toxcast': 'tab',
  'qm7b': 'pkl',
  'qm8': 'pkl',
  'qm9': 'pkl',
- 'scpdb': 'zip',
+ 'scPDB': 'zip',
  'dude': 'zip',
  'crossdock': 'zip',
  'tap': 'tab',
@@ -575,9 +575,9 @@ name2id = {'bbb_adenot': 4259565,
  'qm7b': 4167096,
  'qm8': 4167110,
  'qm9': 6179310, ### 4167112, 6175612
- 'scpdb': 6190916,
- 'dude': 6332180,
- 'crossdock': 6332180,
+ 'scPDB': None,
+ 'dude': None,
+ 'crossdock': None,
  'tap': 4167113,
  'sabdab_chen': 4167164,
  'protein_sabdab': 4167357,
@@ -621,7 +621,7 @@ oracle2id = {'drd2': 4178625,
 			 'jnk3': 4170293,
 			 'fpscores': 4170416, 
 			 'cyp3a4_veith': 4411249,
-			 'smina': 4411249, #TODO 
+			 'smina': 6361665, 
 			}
 
 benchmark2type = {'admet_group': 'zip',
@@ -717,4 +717,10 @@ name2stats = {
 	'chembl': 1961462,
 	'uspto50k': 50036,
 	'uspto': 1939253
+}
+
+temp2id = {
+	'dude': '1VV54vRq-1Ssdr-baTUAVheDkbPIHMZT-',
+	'crossdock': '1CaTpMqetDJAcadAwHUL4UeA1V2Fl8A3I',
+	'scPDB': '1shyyGXfplW1gqk7vuObL6smT-LgcFs52',
 }
