@@ -9,8 +9,6 @@ from abc import abstractmethod
 from functools import partial
 from typing import List
 import time, os, math, re
-from packaging import version
-import pkg_resources
 
 try: 
   import rdkit
@@ -41,8 +39,6 @@ mean2func = {
   'geometric': gmean, 
   'arithmetic': np.mean, 
 }
-SCIKIT_LEARN_VERSION = version.parse(pkg_resources.get_distribution("scikit-learn").version)
-
 
 def smiles_to_rdkit_mol(smiles):
   """Convert smiles into rdkit's mol (molecule) format. 
@@ -404,10 +400,10 @@ def calculateScore(m):
 
 """Scores based on an ECFP classifier for activity."""
 
-def dynamic_sklearn_model_loader(name: str):
+def load_pickled_model(name: str):
   """
-  Loading a model trained with SKLearn dynamically dependent on the version.
-  Necessary due to changes in package structure in sklearn 0.24.
+  Loading a pretrained model serialized with pickle.
+  Usually for sklearn models.
 
   Args:
     name: Name of the model to load.
@@ -416,8 +412,6 @@ def dynamic_sklearn_model_loader(name: str):
     The model.
   """
 
-  if SCIKIT_LEARN_VERSION >= version.parse("0.24.0"):
-    name = name.replace('.pkl', '_sklearn>024.pkl')
   try:
     with open(name, "rb") as f:
       model = pickle.load(f)
@@ -429,7 +423,7 @@ def dynamic_sklearn_model_loader(name: str):
 # clf_model = None
 def load_drd2_model():
     name = 'oracle/drd2.pkl'
-    return dynamic_sklearn_model_loader(name)
+    return load_pickled_model(name)
 
 def fingerprints_from_mol(mol):
     fp = AllChem.GetMorganFingerprint(mol, 3, useCounts=True, useFeatures=True)
@@ -465,7 +459,7 @@ def drd2(smile):
 
 def load_cyp3a4_veith():
   oracle_file = "oracle/cyp3a4_veith.pkl"
-  return dynamic_sklearn_model_loader(oracle_file)
+  return load_pickled_model(oracle_file)
 
 def cyp3a4_veith(smiles):
   try:
@@ -595,7 +589,7 @@ def SA(s):
 
 def load_gsk3b_model():
     gsk3_model_path = 'oracle/gsk3b.pkl'
-    return dynamic_sklearn_model_loader(gsk3_model_path)
+    return load_pickled_model(gsk3_model_path)
 
 def gsk3b(smiles):
     """Evaluate GSK3B score of a SMILES string
@@ -631,7 +625,7 @@ class jnk3:
   """  
   def __init__(self):
     jnk3_model_path = 'oracle/jnk3.pkl'
-    self.jnk3_model = dynamic_sklearn_model_loader(jnk3_model_path)
+    self.jnk3_model = load_pickled_model(jnk3_model_path)
 
   def __call__(self, smiles):
     molecule = smiles_to_rdkit_mol(smiles)

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Author: TDC Team
 # License: MIT
-
+from packaging import version
+import pkg_resources
 
 """This file contains all metadata of datasets in TDC.
 
@@ -622,6 +623,13 @@ oracle2id = {'drd2': 4178625,
 			 'fpscores': 4170416, 
 			 'cyp3a4_veith': 4411249, 
 			}
+# Newer scikit-learn versions have an updated model restoring logic and thus require
+# a different source file.
+scikit_learn_version = version.parse(pkg_resources.get_distribution("scikit-learn").version)
+if scikit_learn_version >= version.parse("0.24.0"):
+	oracle2id['drd2'] = 6405398
+	oracle2id['jnk3'] = 6405399
+	oracle2id['gsk3b'] = 6405400
 
 benchmark2type = {'admet_group': 'zip',
                   'drugcombo_group': 'zip',
