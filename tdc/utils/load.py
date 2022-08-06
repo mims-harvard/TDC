@@ -20,203 +20,6 @@ sys.path.append('../')
 
 from .misc import fuzzy_search, print_sys
 
-def atom_to_one_hot(atom, allowed_atom_list):
-    length = len(allowed_atom_list)
-    atom = allowed_atom_list.index(atom)
-    new_atom = np.zeros(shape=(length,))
-    new_atom[atom] = 1
-    return new_atom
-
-def extract_atom_from_mol(rdmol, allowed_atom_list):
-    # if contains unallowed atom, skip this ligand
-    for atom in rdmol.GetAtoms():
-    	if atom.GetSymbol() not in allowed_atom_list:
-        	return None
-    coord = [list(rdmol.GetConformer(0).GetAtomPosition(idx)) for idx in range(rdmol.GetNumAtoms())]
-    atom_type = [atom_to_one_hot(atom.GetSymbol(), allowed_atom_list) for atom in rdmol.GetAtoms()]
-    return np.array(coord), np.array(atom_type)
-
-def extract_atom_from_protein(data_frame, data_frame_het, remove_Hs, keep_het, allowed_atom_list):
-    if keep_het:
-        data_frame = pd.concat([data_frame, data_frame_het])
-    if remove_Hs:
-	    data_frame = data_frame[data_frame["atom_name"].str.startswith("H") == False]
-	    data_frame.reset_index(inplace=True, drop=True)
-    x = data_frame['x_coord'].to_numpy() if 'x_coord' in data_frame else data_frame['x'].to_numpy()
-    y = data_frame['y_coord'].to_numpy() if 'y_coord' in data_frame else data_frame['y'].to_numpy()
-    z = data_frame['z_coord'].to_numpy() if 'z_coord' in data_frame else data_frame['z'].to_numpy()
-    x = np.expand_dims(x, axis=1)
-    y = np.expand_dims(y, axis=1)
-    z = np.expand_dims(z, axis=1)
-    coord = np.concatenate((x,y,z), axis=1)
-    atom_type = data_frame['atom_name'].to_numpy()
-    atom_type = [
-                atom_to_one_hot(atom[0], allowed_atom_list)
-                for atom in atom_type if atom in allowed_atom_list
-            ]
-    return coord, np.array(atom_type)
-
-def process_pdbbind(path, name='pdbbind', return_pocket=False, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
-	from biopandas.pdb import PandasPdb
-	from rdkit import Chem
-	path = os.path.join(path, name)
-	if os.path.exists(path):
-		print_sys("Processing...")	
-		protein_coords, protein_atom_types = [], []
-		ligand_coords, ligand_atom_types = [], []
-		files = os.listdir(path)
-		failure = 0
-		for idx, file in enumerate(tqdm(files)):
-			if file == 'readme' or file == 'index':
-				continue
-			try:
-				if return_pocket:
-					protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/{file}_pocket.pdb"))
-				else:
-					protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/{file}_protein.pdb"))
-				ligand = Chem.SDMolSupplier(os.path.join(path, f"{file}/{file}_ligand.sdf"), sanitize=False)[0]
-				ligand = extract_atom_from_mol(ligand, allowed_atom_list)
-                # if ligand contains unallowed atoms
-				if ligand is None:
-					continue
-				else:
-					ligand_coord, ligand_atom_type = ligand 
-				protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_Hs, keep_het, allowed_atom_list)
-				protein_coords.append(protein_coord)
-				ligand_coords.append(ligand_coord)
-				protein_atom_types.append(protein_atom_type)
-				ligand_atom_types.append(ligand_atom_type)
-			except:
-				failure += 1
-				print ('failure', failure)
-				continue
-		protein = {"coord": protein_coords, "atom_type": protein_atom_types}
-		ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
-	else:
-		sys.exit("Wrong path!")
-	return protein, ligand
-
-def process_crossdock(path, name='crossdock', return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
-	from biopandas.pdb import PandasPdb
-	from rdkit import Chem
-	protein_coords, protein_atom_types = [], []
-	ligand_coords, ligand_atom_types = [], []
-	failure = 0
-	path = os.path.join(path, name)
-	index_path = os.path.join(path, 'index.pkl')
-	index = pickle.load(open(index_path, 'rb'))
-	path = os.path.join(path, 'crossdocked_pocket10')
-	for idx, (pocket_fn, ligand_fn, _, rmsd) in enumerate(tqdm(index)):
-		if pocket_fn is None or ligand_fn is None:
-			continue
-		if return_pocket:
-			protein = PandasPdb().read_pdb(os.path.join(path, pocket_fn))
-		else:
-			# full protein not stored in the preprocessed crossdock by Luo et al 2021
-			protein = PandasPdb().read_pdb(os.path.join(path, pocket_fn))
-		try:
-			ligand = Chem.SDMolSupplier(os.path.join(path, ligand_fn), sanitize=False)[0]
-			ligand = extract_atom_from_mol(ligand, allowed_atom_list)
-			if ligand is None:
-				continue
-			else:
-				ligand_coord, ligand_atom_type = ligand 
-			protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_Hs, keep_het, allowed_atom_list)
-			protein_coords.append(protein_coord)
-			ligand_coords.append(ligand_coord)
-			protein_atom_types.append(protein_atom_type)
-			ligand_atom_types.append(ligand_atom_type)
-		except:
-			failure += 1
-			print ('failure', failure)
-			continue
-	protein = {"coord": protein_coords, "atom_type": protein_atom_types}
-	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
-	return protein, ligand
-
-def process_dude(path, name='dude', return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
-	from biopandas.pdb import PandasPdb
-	from rdkit import Chem
-	protein_coords, protein_atom_types = [], []
-	ligand_coords, ligand_atom_types = [], []
-	path = os.path.join(path, name)
-	files = os.listdir(path)
-	failure = 0
-	for idx, file in enumerate(tqdm(files)):
-		protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/receptor.pdb"))
-		if not os.path.exists(os.path.join(path, f"{file}/actives_final.sdf")):
-			os.system(f'gzip -d {path}/{file}/actives_final.sdf.gz')
-		crystal_ligand = Chem.MolFromMol2File(os.path.join(path, f"{file}/crystal_ligand.mol2"), sanitize=False)
-		crystal_ligand = extract_atom_from_mol(crystal_ligand, allowed_atom_list)
-		if crystal_ligand is None:
-			continue
-		else:
-			crystal_ligand_coord, crystal_ligand_atom_type = crystal_ligand 
-		ligands = Chem.SDMolSupplier(os.path.join(path, f"{file}/actives_final.sdf"), sanitize=False)
-		protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_Hs, keep_het, allowed_atom_list)
-		if return_pocket:
-			lig_center = crystal_ligand_coord.mean(axis=0)
-			protein_atom_dist_to_lig = np.sqrt(np.sum(np.square(protein_coord-lig_center),axis=-1))
-			protein_mask = protein_atom_dist_to_lig <= threshold 
-			protein_coord = protein_coord[protein_mask]
-		protein_coords.append(protein_coord)
-		ligand_coords.append(crystal_ligand_coord)
-		protein_atom_types.append(protein_atom_type)
-		ligand_atom_types.append(crystal_ligand_atom_type)
-		for ligand in ligands:
-			try:
-				ligand = extract_atom_from_mol(ligand, allowed_atom_list)
-				# if ligand contains unallowed atoms
-				if ligand is None:
-					continue
-				else:
-					ligand_coord, ligand_atom_type = ligand 
-				protein_coords.append(protein_coord)
-				ligand_coords.append(ligand_coord)
-				protein_atom_types.append(protein_atom_type)
-				ligand_atom_types.append(ligand_atom_type)
-			except:
-				failure += 1
-				print ('failure', failure)
-				continue
-	protein = {"coord": protein_coords, "atom_type": protein_atom_types}
-	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
-	return protein, ligand
-
-def process_scpdb(path, name='scPDB', return_pocket=False, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
-	from biopandas.mol2 import PandasMol2
-	from rdkit import Chem
-	protein_coords, protein_atom_types = [], []
-	ligand_coords, ligand_atom_types = [], []
-	path = os.path.join(path, name)
-	files = os.listdir(path)
-	failure = 0
-	for idx, file in enumerate(tqdm(files)):
-		if return_pocket:
-			protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/site.mol2"))
-		else:
-			protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/protein.mol2"))
-		try:
-			ligand = Chem.SDMolSupplier(os.path.join(path, f"{file}/ligand.sdf"), sanitize=False)[0]
-			ligand = extract_atom_from_mol(ligand, allowed_atom_list)
-			# if ligand contains unallowed atoms
-			if ligand is None:
-				continue
-			else:
-				ligand_coord, ligand_atom_type = ligand 
-			protein_coord, protein_atom_type = extract_atom_from_protein(protein.df, None, remove_Hs=remove_Hs, keep_het=False, allowed_atom_list=allowed_atom_list)
-			protein_coords.append(protein_coord)
-			ligand_coords.append(ligand_coord)
-			protein_atom_types.append(protein_atom_type)
-			ligand_atom_types.append(ligand_atom_type)
-		except:
-			failure += 1
-			print ('failure', failure)
-			continue
-	protein = {"coord": protein_coords, "atom_type": protein_atom_types}
-	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
-	return protein, ligand
-
 def temp_data_download_wrapper(name, path, dataset_names):
 	"""wrapper for downloading a dataset given the name and path - zip file, automatically unzipping
 	
@@ -385,8 +188,6 @@ def receptor_download_wrapper(name, path):
 		dataverse_download(dataset_paths[1], path, name, receptor2type) ## to-do to-check
 		print_sys("Done!")
 	return name
-
-
 
 
 def bm_download_wrapper(name, path):
@@ -690,3 +491,299 @@ def bm_group_load(name, path):
 	"""
 	name = bm_download_wrapper(name, path)
 	return name
+
+
+def process_pdbbind(path, name='pdbbind', return_pocket=False, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+	"""a processor to process pdbbind dataset
+		
+		Args:
+		    name (str): the name of the dataset
+		    path (str): the path to save the data file
+		    print_stats (bool): whether to print the basic statistics of the dataset
+		    return_pocket (bool): whether to return only protein pocket or full protein
+			threshold (int): only enabled when return_pocket is to True, if pockets are not provided in the raw data,
+			 				 the threshold is used as a radius for a sphere around the ligand center to consider protein pocket
+			remove_Hs (int): whether to remove H atoms from protein or not
+			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
+			allowed_atom_list (list(str)): atom types allowed to include
+		
+		Returns:
+			protein (dict): a dict of protein features
+			ligand (dict): a dict of ligand features
+	"""
+	from biopandas.pdb import PandasPdb
+	from rdkit import Chem
+	if os.path.exists(path):
+		print_sys("Processing...")	
+		protein_coords, protein_atom_types = [], []
+		ligand_coords, ligand_atom_types = [], []
+		files = os.listdir(path)
+		failure = 0
+		for idx, file in enumerate(tqdm(files)):
+			if file == 'readme' or file == 'index':
+				continue
+			try:
+				if return_pocket:
+					protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/{file}_pocket.pdb"))
+				else:
+					protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/{file}_protein.pdb"))
+				ligand = Chem.SDMolSupplier(os.path.join(path, f"{file}/{file}_ligand.sdf"), sanitize=False)[0]
+				ligand = extract_atom_from_mol(ligand, allowed_atom_list)
+                # if ligand contains unallowed atoms
+				if ligand is None:
+					continue
+				else:
+					ligand_coord, ligand_atom_type = ligand 
+				protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_Hs, keep_het, allowed_atom_list)
+				protein_coords.append(protein_coord)
+				ligand_coords.append(ligand_coord)
+				protein_atom_types.append(protein_atom_type)
+				ligand_atom_types.append(ligand_atom_type)
+			except:
+				failure += 1
+				print ('failure', failure)
+				continue
+		protein = {"coord": protein_coords, "atom_type": protein_atom_types}
+		ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
+	else:
+		sys.exit("Wrong path!")
+	return protein, ligand
+
+def process_crossdock(path, name='crossdock', return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+	"""a processor to process crossdock dataset
+		
+		Args:
+		    name (str): the name of the dataset
+		    path (str): the path to save the data file
+		    print_stats (bool): whether to print the basic statistics of the dataset
+		    return_pocket (bool): whether to return only protein pocket or full protein
+			threshold (int): only enabled when return_pocket is to True, if pockets are not provided in the raw data,
+			 				 the threshold is used as a radius for a sphere around the ligand center to consider protein pocket
+			remove_Hs (int): whether to remove H atoms from protein or not
+			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
+			allowed_atom_list (list(str)): atom types allowed to include
+		
+		Returns:
+			protein (dict): a dict of protein features
+			ligand (dict): a dict of ligand features
+	"""
+	from biopandas.pdb import PandasPdb
+	from rdkit import Chem
+	protein_coords, protein_atom_types = [], []
+	ligand_coords, ligand_atom_types = [], []
+	failure = 0
+	path = os.path.join(path, name)
+	index_path = os.path.join(path, 'index.pkl')
+	index = pickle.load(open(index_path, 'rb'))
+	path = os.path.join(path, 'crossdocked_pocket10')
+	for idx, (pocket_fn, ligand_fn, _, rmsd) in enumerate(tqdm(index)):
+		if pocket_fn is None or ligand_fn is None:
+			continue
+		if return_pocket:
+			protein = PandasPdb().read_pdb(os.path.join(path, pocket_fn))
+		else:
+			# full protein not stored in the preprocessed crossdock by Luo et al 2021
+			protein = PandasPdb().read_pdb(os.path.join(path, pocket_fn))
+		try:
+			ligand = Chem.SDMolSupplier(os.path.join(path, ligand_fn), sanitize=False)[0]
+			ligand = extract_atom_from_mol(ligand, allowed_atom_list)
+			if ligand is None:
+				continue
+			else:
+				ligand_coord, ligand_atom_type = ligand 
+			protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_Hs, keep_het, allowed_atom_list)
+			protein_coords.append(protein_coord)
+			ligand_coords.append(ligand_coord)
+			protein_atom_types.append(protein_atom_type)
+			ligand_atom_types.append(ligand_atom_type)
+		except:
+			failure += 1
+			print ('failure', failure)
+			continue
+	protein = {"coord": protein_coords, "atom_type": protein_atom_types}
+	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
+	return protein, ligand
+
+def process_dude(path, name='dude', return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+	"""a processor to process DUD-E dataset
+		
+		Args:
+		    name (str): the name of the dataset
+		    path (str): the path to save the data file
+		    print_stats (bool): whether to print the basic statistics of the dataset
+		    return_pocket (bool): whether to return only protein pocket or full protein
+			threshold (int): only enabled when return_pocket is to True, if pockets are not provided in the raw data,
+			 				 the threshold is used as a radius for a sphere around the ligand center to consider protein pocket
+			remove_Hs (int): whether to remove H atoms from protein or not
+			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
+			allowed_atom_list (list(str)): atom types allowed to include
+		
+		Returns:
+			protein (dict): a dict of protein features
+			ligand (dict): a dict of ligand features
+	"""
+	from biopandas.pdb import PandasPdb
+	from rdkit import Chem
+	protein_coords, protein_atom_types = [], []
+	ligand_coords, ligand_atom_types = [], []
+	path = os.path.join(path, name)
+	files = os.listdir(path)
+	failure = 0
+	for idx, file in enumerate(tqdm(files)):
+		protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/receptor.pdb"))
+		if not os.path.exists(os.path.join(path, f"{file}/actives_final.sdf")):
+			os.system(f'gzip -d {path}/{file}/actives_final.sdf.gz')
+		crystal_ligand = Chem.MolFromMol2File(os.path.join(path, f"{file}/crystal_ligand.mol2"), sanitize=False)
+		crystal_ligand = extract_atom_from_mol(crystal_ligand, allowed_atom_list)
+		if crystal_ligand is None:
+			continue
+		else:
+			crystal_ligand_coord, crystal_ligand_atom_type = crystal_ligand 
+		ligands = Chem.SDMolSupplier(os.path.join(path, f"{file}/actives_final.sdf"), sanitize=False)
+		protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_Hs, keep_het, allowed_atom_list)
+		if return_pocket:
+			lig_center = crystal_ligand_coord.mean(axis=0)
+			protein_atom_dist_to_lig = np.sqrt(np.sum(np.square(protein_coord-lig_center),axis=-1))
+			protein_mask = protein_atom_dist_to_lig <= threshold 
+			protein_coord = protein_coord[protein_mask]
+		protein_coords.append(protein_coord)
+		ligand_coords.append(crystal_ligand_coord)
+		protein_atom_types.append(protein_atom_type)
+		ligand_atom_types.append(crystal_ligand_atom_type)
+		for ligand in ligands:
+			try:
+				ligand = extract_atom_from_mol(ligand, allowed_atom_list)
+				# if ligand contains unallowed atoms
+				if ligand is None:
+					continue
+				else:
+					ligand_coord, ligand_atom_type = ligand 
+				protein_coords.append(protein_coord)
+				ligand_coords.append(ligand_coord)
+				protein_atom_types.append(protein_atom_type)
+				ligand_atom_types.append(ligand_atom_type)
+			except:
+				failure += 1
+				print ('failure', failure)
+				continue
+	protein = {"coord": protein_coords, "atom_type": protein_atom_types}
+	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
+	return protein, ligand
+
+def process_scpdb(path, name='scPDB', return_pocket=False, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+	"""a processor to process scpdb dataset
+		
+		Args:
+		    name (str): the name of the dataset
+		    path (str): the path to save the data file
+		    print_stats (bool): whether to print the basic statistics of the dataset
+		    return_pocket (bool): whether to return only protein pocket or full protein
+			threshold (int): only enabled when return_pocket is to True, if pockets are not provided in the raw data,
+			 				 the threshold is used as a radius for a sphere around the ligand center to consider protein pocket
+			remove_Hs (int): whether to remove H atoms from protein or not
+			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
+			allowed_atom_list (list(str)): atom types allowed to include
+		
+		Returns:
+			protein (dict): a dict of protein features
+			ligand (dict): a dict of ligand features
+	"""
+	from biopandas.mol2 import PandasMol2
+	from rdkit import Chem
+	protein_coords, protein_atom_types = [], []
+	ligand_coords, ligand_atom_types = [], []
+	path = os.path.join(path, name)
+	files = os.listdir(path)
+	failure = 0
+	for idx, file in enumerate(tqdm(files)):
+		if return_pocket:
+			protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/site.mol2"))
+		else:
+			protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/protein.mol2"))
+		try:
+			ligand = Chem.SDMolSupplier(os.path.join(path, f"{file}/ligand.sdf"), sanitize=False)[0]
+			ligand = extract_atom_from_mol(ligand, allowed_atom_list)
+			# if ligand contains unallowed atoms
+			if ligand is None:
+				continue
+			else:
+				ligand_coord, ligand_atom_type = ligand 
+			protein_coord, protein_atom_type = extract_atom_from_protein(protein.df, None, remove_Hs=remove_Hs, keep_het=False, allowed_atom_list=allowed_atom_list)
+			protein_coords.append(protein_coord)
+			ligand_coords.append(ligand_coord)
+			protein_atom_types.append(protein_atom_type)
+			ligand_atom_types.append(ligand_atom_type)
+		except:
+			failure += 1
+			print ('failure', failure)
+			continue
+	protein = {"coord": protein_coords, "atom_type": protein_atom_types}
+	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
+	return protein, ligand
+
+def atom_to_one_hot(atom, allowed_atom_list):
+	"""a helper to convert atom to one-hot encoding
+
+		Args:
+			atom (str): the atom to convert
+			allowed_atom_list (list(str)): atom types allowed to include
+
+		Returns:
+			new_atom (numpy.array): atom one-hot encoding vector
+	"""
+	length = len(allowed_atom_list)
+	atom = allowed_atom_list.index(atom)
+	new_atom = np.zeros(shape=(length,))
+	new_atom[atom] = 1
+	return new_atom
+
+def extract_atom_from_mol(rdmol, allowed_atom_list):
+	"""a helper to extract molecule atom information 
+
+		Args:
+			rdmol (rdkit.rdmol): rdkit molecule
+			allowed_atom_list (list(str)): atom types allowed to include
+
+		Returns:
+			coord (numpy.array): atom types
+			atom_type (numpy.array): atom coordinates
+	"""
+	for atom in rdmol.GetAtoms():
+		if atom.GetSymbol() not in allowed_atom_list:
+			return None
+	coord = [list(rdmol.GetConformer(0).GetAtomPosition(idx)) for idx in range(rdmol.GetNumAtoms())]
+	atom_type = [atom_to_one_hot(atom.GetSymbol(), allowed_atom_list) for atom in rdmol.GetAtoms()]
+	return np.array(coord), np.array(atom_type)
+
+def extract_atom_from_protein(data_frame, data_frame_het, remove_Hs, keep_het, allowed_atom_list):
+	"""a helper to extract protein atom information
+
+		Args:
+			data_frame (pandas.dataframe): protein atom 
+			data_frame_het (pandas.dataframe): protein het atom
+			remove_Hs (int): whether to remove H atoms from protein or not
+			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
+			allowed_atom_list (list(str)): atom types allowed to include
+
+		Returns:
+			coord (numpy.array): atom types
+			atom_type (numpy.array): atom coordinates
+	"""
+	if keep_het:
+		data_frame = pd.concat([data_frame, data_frame_het])
+	if remove_Hs:
+		data_frame = data_frame[data_frame["atom_name"].str.startswith("H") == False]
+		data_frame.reset_index(inplace=True, drop=True)
+	x = data_frame['x_coord'].to_numpy() if 'x_coord' in data_frame else data_frame['x'].to_numpy()
+	y = data_frame['y_coord'].to_numpy() if 'y_coord' in data_frame else data_frame['y'].to_numpy()
+	z = data_frame['z_coord'].to_numpy() if 'z_coord' in data_frame else data_frame['z'].to_numpy()
+	x = np.expand_dims(x, axis=1)
+	y = np.expand_dims(y, axis=1)
+	z = np.expand_dims(z, axis=1)
+	coord = np.concatenate((x,y,z), axis=1)
+	atom_type = data_frame['atom_name'].to_numpy()
+	atom_type = [
+                atom_to_one_hot(atom[0], allowed_atom_list)
+                for atom in atom_type if atom in allowed_atom_list
+            ]
+	return coord, np.array(atom_type)
