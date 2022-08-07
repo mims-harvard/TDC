@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="https://tdcommons.ai/single_pred_tasks/adme/" />
-<meta property="og:url" content="https://tdcommons.ai/single_pred_tasks/adme/" />
+<link rel="canonical" href="http://localhost:4000/single_pred_tasks/adme/" />
+<meta property="og:url" content="http://localhost:4000/single_pred_tasks/adme/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"https://tdcommons.ai/single_pred_tasks/adme/","headline":"ADME","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/single_pred_tasks/adme/","headline":"ADME","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -495,7 +495,7 @@ A small-molecule drug is a chemical and it needs to travel from the site of admi
 
 <p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the rate of PPBR.  </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,797 drugs. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,614 drugs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
 
@@ -503,6 +503,12 @@ A small-molecule drug is a chemical and it needs to travel from the site of admi
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PPBR_AZ'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
+
+<p class="is-size-6">  <strong> Note </strong>: [Started from 0.3.7] this dataset contains assay across five species. Across species, the PPBR would behave rather differently even for the same drug. Thus, in default, it only returns the homo sapiens subset. If you would like to retrieve other species, you can use the following code:  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="o">.</span><span class="n">get_other_species</span><span class="p">(</span><span class="s">'Rattus norvegicus'</span><span class="p">)</span>
+<span class="c1"># select from 'Canis lupus familiaris', 'Cavia porcellus', 'Homo sapiens', 'Mus musculus', 'Rattus norvegicus', 'all'
+</span></code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
