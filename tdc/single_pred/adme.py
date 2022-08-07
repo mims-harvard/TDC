@@ -7,7 +7,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from . import single_pred_dataset
-from ..utils import print_sys
+from ..utils import print_sys, fuzzy_search
 from ..metadata import dataset_names
 
 
@@ -35,9 +35,34 @@ class ADME(single_pred_dataset.DataLoader):
         """
         super().__init__(name, path, label_name, print_stats,
                          dataset_names=dataset_names["ADME"], convert_format = convert_format)
+        
+        self.name = fuzzy_search(self.name, dataset_names["ADME"])
+        if self.name == 'ppbr_az':
+            import pandas as pd
+            import os
+            self.ppbr_df = pd.read_csv(os.path.join(self.path, self.name + '.tab'), sep = '\t')
+            df = self.ppbr_df[self.ppbr_df.Species == 'Homo sapiens']
+            self.entity1 = df.Drug.values
+            self.y = df.Y.values
+            self.entity1_idx = df.Drug_ID.values
+
         if print_stats:
             self.print_stats()
         print('Done!', flush = True, file = sys.stderr)
+
+
+    def get_other_species(self, species = None):
+        
+        if self.name not in ['ppbr_az']:
+            raise ValueError('This function is only available for assays with species label, including PPBR')
+        
+        if species == 'all':
+            return self.ppbr_df
+
+        if species in self.ppbr_df.Species.unique():
+            return self.ppbr_df[self.ppbr_df.Species == species].reset_index(drop = True)
+        else:
+            raise ValueError("You can only specify the following set of species name: 'Canis lupus familiaris', 'Cavia porcellus', 'Homo sapiens', 'Mus musculus', 'Rattus norvegicus', 'all'")
 
     def harmonize(self, mode = None):
         """Removing duplicated experimental readouts.
