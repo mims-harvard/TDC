@@ -403,7 +403,14 @@ def calculateScore(m):
 
 # clf_model = None
 def load_drd2_model():
-    name = 'oracle/drd2.pkl'
+    import sklearn
+    sklearn_version = sklearn.__version__
+    if sklearn_version[0]=='0' and int(sklearn_version.split('.')[1]) <= 22:
+      ### old  <=0.22.x
+      name = 'oracle/drd2.pkl'
+    else: 
+      ### new 
+      name = 'oracle/drd2_current.pkl'
     try:
       with open(name, "rb") as f:
           clf_model = pickle.load(f)
@@ -582,7 +589,14 @@ def SA(s):
   return SAscore 	
 
 def load_gsk3b_model():
-    gsk3_model_path = 'oracle/gsk3b.pkl'
+    import sklearn
+    sklearn_version = sklearn.__version__
+    if sklearn_version[0]=='0' and int(sklearn_version.split('.')[1]) <= 22:  
+      ### old <=0.22.x
+      gsk3_model_path = 'oracle/gsk3b.pkl'
+    else:
+      ### new 
+      gsk3_model_path = 'oracle/gsk3b_current.pkl'
     #print_sys('==== load gsk3b oracle =====')
     try:
       with open(gsk3_model_path, 'rb') as f:
@@ -625,7 +639,14 @@ class jnk3:
 
   """  
   def __init__(self):
-    jnk3_model_path = 'oracle/jnk3.pkl'
+    import sklearn
+    sklearn_version = sklearn.__version__
+    if sklearn_version[0]=='0' and int(sklearn_version.split('.')[1]) <= 22: 
+      #### old version  <=0.22.x
+      jnk3_model_path = 'oracle/jnk3.pkl'
+    else:
+      #### new version 
+      jnk3_model_path = 'oracle/jnk3_current.pkl'
     try:
       with open(jnk3_model_path, 'rb') as f:
         self.jnk3_model = pickle.load(f)

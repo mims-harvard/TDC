@@ -34,8 +34,19 @@ class Oracle:
 		if name == 'drd3_docking_normalize':
 			name = '3pbl_docking_normalize'
 		if name in download_oracle_names:
+
 			##### e.g., jnk, gsk, drd2, ... 
+			if name in ['jnk3', 'gsk3b', 'drd2']:
+				import sklearn
+				sklearn_version = sklearn.__version__
+				if not (sklearn_version[0]=='0' and int(sklearn_version.split('.')[1]) <= 22):
+					#### >=0.23.x 
+					name += '_current'  
+
+			### download 
 			self.name = oracle_load(name)
+
+
 		elif name in download_receptor_oracle_name:  
 			## '1iep_docking', '2rgp_docking', '7l11_docking', 'drd3_docking', '3pbl_docking',
 			pdbid = name.split('_')[0]
@@ -66,7 +77,7 @@ class Oracle:
 		elif self.name == 'qed':
 			from .chem_utils import qed
 			self.evaluator_func = qed  
-		elif self.name == 'drd2':
+		elif 'drd2' in self.name:
 			from .chem_utils import drd2
 			self.evaluator_func = drd2 
 		elif self.name == 'cyp3a4_veith':
@@ -75,11 +86,11 @@ class Oracle:
 		elif self.name == 'sa':
 			from .chem_utils import SA
 			self.evaluator_func = SA 
-		elif self.name == 'gsk3b':
+		elif 'gsk3b' in self.name:
 			from .chem_utils import gsk3b
 			oracle_object = gsk3b
 			self.evaluator_func = oracle_object
-		elif self.name == 'jnk3':
+		elif 'jnk3' in self.name:
 			from .chem_utils import jnk3
 			oracle_object = jnk3()
 			self.evaluator_func = oracle_object
