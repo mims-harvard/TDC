@@ -511,7 +511,10 @@ def process_pdbbind(path, name='pdbbind', return_pocket=False, remove_Hs=True, k
 			protein (dict): a dict of protein features
 			ligand (dict): a dict of ligand features
 	"""
-	from biopandas.pdb import PandasPdb
+	try:
+		from biopandas.pdb import PandasPdb
+	except:
+		raise ImportError("Please install biopandas by 'pip install biopandas'! ")
 	from rdkit import Chem
 	if os.path.exists(path):
 		print_sys("Processing...")	
@@ -567,7 +570,10 @@ def process_crossdock(path, name='crossdock', return_pocket=False, threshold=15,
 			protein (dict): a dict of protein features
 			ligand (dict): a dict of ligand features
 	"""
-	from biopandas.pdb import PandasPdb
+	try:
+		from biopandas.pdb import PandasPdb
+	except:
+		raise ImportError("Please install biopandas by 'pip install biopandas'! ")
 	from rdkit import Chem
 	protein_coords, protein_atom_types = [], []
 	ligand_coords, ligand_atom_types = [], []
@@ -622,7 +628,10 @@ def process_dude(path, name='dude', return_pocket=False, threshold=15, remove_Hs
 			protein (dict): a dict of protein features
 			ligand (dict): a dict of ligand features
 	"""
-	from biopandas.pdb import PandasPdb
+	try:
+		from biopandas.pdb import PandasPdb
+	except:
+		raise ImportError("Please install biopandas by 'pip install biopandas'! ")
 	from rdkit import Chem
 	protein_coords, protein_atom_types = [], []
 	ligand_coords, ligand_atom_types = [], []
@@ -688,7 +697,10 @@ def process_scpdb(path, name='scPDB', return_pocket=False, remove_Hs=True, keep_
 			protein (dict): a dict of protein features
 			ligand (dict): a dict of ligand features
 	"""
-	from biopandas.mol2 import PandasMol2
+	try:
+		from biopandas.pdb import PandasPdb
+	except:
+		raise ImportError("Please install biopandas by 'pip install biopandas'! ")
 	from rdkit import Chem
 	protein_coords, protein_atom_types = [], []
 	ligand_coords, ligand_atom_types = [], []

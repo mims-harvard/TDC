@@ -1680,6 +1680,27 @@ def kabsch_weighted(P, Q, W=None):
     return U, V, rmsd_
 
 def smina(ligand, protein, score_only=False):
+  """
+    Sima is a docking algorithm that docks a ligand to a protein pocket.
+    
+    Koes, D.R., Baumgartner, M.P. and Camacho, C.J., 2013. 
+    Lessons learned in empirical scoring with smina from the CSAR 2011 benchmarking exercise. 
+    Journal of chemical information and modeling, 53(8), pp.1893-1904.
+
+    Parameters
+    ----------
+    ligand : array
+        (N_1,3) matrix, where N_1 is ligand size.
+    protein : array
+        (N_2,3) matrix, where N_2 is protein size.
+    score_only: boolean
+        whether to only return docking score.
+    Returns
+    -------
+    docking_info: str
+        docking result 
+
+    """
     smina_model_path = 'oracle/smina.static'
     os.system(f'chmod +x ./{smina_model_path}')
     if score_only:
