@@ -1679,8 +1679,8 @@ def kabsch_weighted(P, Q, W=None):
     V = V * iw
     return U, V, rmsd_
 
-def smina(ligand, protein, score_only=False):
-  """
+def smina(ligand, protein, score_only=False, raw_input=False):
+    """
     Sima is a docking algorithm that docks a ligand to a protein pocket.
     
     Koes, D.R., Baumgartner, M.P. and Camacho, C.J., 2013. 
@@ -1695,18 +1695,40 @@ def smina(ligand, protein, score_only=False):
         (N_2,3) matrix, where N_2 is protein size.
     score_only: boolean
         whether to only return docking score.
+    raw_input: boolean
+        whether to input raw ML input or sdf file input
     Returns
     -------
-    docking_info: str
+    docking_info: str or float
         docking result 
 
     """
     smina_model_path = 'oracle/smina.static'
     os.system(f'chmod +x ./{smina_model_path}')
+    # if machine learning raw input:
+    # 1. write out to xyz file
+    # 2. convert to sdf file by openbabel
+    if raw_input:
+        mol_coord, mol_atom = ligand
+        # 1. write out to xyz file
+        f = open(f'temp_ligand.xyz', "w")
+        n_atoms = len(mol_atom)
+        f.write("%d\n\n" % n_atoms)
+        for atom_i in range(n_atoms):
+            atom = mol_atom[atom_i]
+            f.write("%s %.9f %.9f %.9f\n" % (atom, mol_coord[atom_i, 0], mol_coord[atom_i, 1], mol_coord[atom_i, 2]))
+        f.close()
+        # 2. convert to sdf file 
+        try:
+            os.system(f'obabel temp_ligand.xyz -O temp_ligand.sdf')
+        except:
+            raise ImportError("Please install openbabel by 'conda install -c conda-forge openbabel'!")
+        ligand = "temp_ligand.sdf"
     if score_only:
-        os.system(f'./{smina_model_path} -l {ligand} -r {protein} --score_only')
+        msg = os.popen(f'./{smina_model_path} -l {ligand} -r {protein} --score_only').read()
+        return float(msg.split('\n')[-7].split(' ')[-2])
     else:
-        os.system(f'./{smina_model_path} -l {ligand} -r {protein} --autobox_ligand {ligand}')
+        os.system(f'./{smina_model_path} -l {ligand} -r {protein} --score_only')
 
 # os.system("python docking.py " + ligand_pdbqt_file + \
 #           " "+target_pdbqt_file + " " + output_file +' '+ \
