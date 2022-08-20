@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Author: TDC Team
 # License: MIT
-
+from packaging import version
+import pkg_resources
 
 """This file contains all metadata of datasets in TDC.
 
@@ -324,7 +325,9 @@ dti_dg_splits = {'bindingdb_patent': 'group'}
 ####################################
 
 # evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
+# download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith'] + ['drd2_current', 'gsk3b_current', 'jnk3_current']
+
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
 download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking', '3ny8_docking', '4rlu_docking',
@@ -616,7 +619,7 @@ oracle2type = {'drd2': 'pkl',
 			   'cyp3a4_veith': 'pkl', 
 			   'drd2_current': 'pkl', 
 			   'jnk3_current': 'pkl', 
-			   'gsk3b_current': 'pkl', 
+			   'gsk3b_current': 'pkl', 			   
 			   }
 
 oracle2id = {'drd2': 4178625,
@@ -626,16 +629,16 @@ oracle2id = {'drd2': 4178625,
 			 'cyp3a4_veith': 4411249, 
 			 'drd2_current': 6413411, 
 			 'jnk3_current': 6413420, 
-			 'gsk3b_current': 6413412, 
+			 'gsk3b_current': 6413412,			 
 			}
-
-# import sklearn
-# sklearn_version = sklearn.__version__
-# if not (sklearn_version[0]=='0' and int(sklearn_version.split('.')[1]) <= 22):
+# Newer scikit-learn versions have an updated model restoring logic and thus require
+# a different source file.
+# scikit_learn_version = version.parse(pkg_resources.get_distribution("scikit-learn").version)
+# if scikit_learn_version >= version.parse("0.24.0"):
 # 	oracle2id['drd2'] = 6405398
 # 	oracle2id['jnk3'] = 6405399
-# 	oracle2id['gsk3b'] = 6405400 
-
+# 	oracle2id['gsk3b'] = 6405400
+#### use jnk3_current instead 
 
 
 benchmark2type = {'admet_group': 'zip',
