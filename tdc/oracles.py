@@ -2,11 +2,14 @@ import pandas as pd
 import numpy as np
 import os, sys, json 
 import warnings
+from packaging import version
+import pkg_resources
 warnings.filterwarnings("ignore")
 
 from .utils import fuzzy_search, oracle_load, receptor_load
 from .metadata import download_oracle_names, oracle_names, distribution_oracles, download_receptor_oracle_name, docking_target_info 
 
+SKLEARN_VERSION = version.parse(pkg_resources.get_distribution("scikit-learn").version)
 
 def _normalize_docking_score(raw_score):
 	return 1/(1+np.exp((raw_score+7.5)))
@@ -34,6 +37,10 @@ class Oracle:
 		if name == 'drd3_docking_normalize':
 			name = '3pbl_docking_normalize'
 		if name in download_oracle_names:
+			if name in ['jnk3', 'gsk3b', 'drd2']:
+				if SKLEARN_VERSION >= version.parse("0.24.0"):
+					name += '_current'
+			### download
 			##### e.g., jnk, gsk, drd2, ... 
 			self.name = oracle_load(name)
 		elif name in download_receptor_oracle_name:  
@@ -66,7 +73,8 @@ class Oracle:
 		elif self.name == 'qed':
 			from .chem_utils import qed
 			self.evaluator_func = qed  
-		elif self.name == 'drd2':
+		# elif self.name == 'drd2':
+		elif 'drd2' in self.name:			
 			from .chem_utils import drd2
 			self.evaluator_func = drd2 
 		elif self.name == 'cyp3a4_veith':
@@ -75,11 +83,13 @@ class Oracle:
 		elif self.name == 'sa':
 			from .chem_utils import SA
 			self.evaluator_func = SA 
-		elif self.name == 'gsk3b':
+		# elif self.name == 'gsk3b':
+		elif 'gsk3b' in self.name:			
 			from .chem_utils import gsk3b
 			oracle_object = gsk3b
 			self.evaluator_func = oracle_object
-		elif self.name == 'jnk3':
+		# elif self.name == 'jnk3':
+		elif 'jnk3' in self.name:			
 			from .chem_utils import jnk3
 			oracle_object = jnk3()
 			self.evaluator_func = oracle_object

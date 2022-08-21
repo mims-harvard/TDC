@@ -9,6 +9,8 @@ from abc import abstractmethod
 from functools import partial
 from typing import List
 import time, os, math, re
+from packaging import version
+import pkg_resources
 
 try: 
   import rdkit
@@ -39,6 +41,8 @@ mean2func = {
   'geometric': gmean, 
   'arithmetic': np.mean, 
 }
+SKLEARN_VERSION = version.parse(pkg_resources.get_distribution("scikit-learn").version)
+
 
 def smiles_to_rdkit_mol(smiles):
   """Convert smiles into rdkit's mol (molecule) format. 
@@ -423,6 +427,14 @@ def load_pickled_model(name: str):
 # clf_model = None
 def load_drd2_model():
     name = 'oracle/drd2.pkl'
+
+    if SKLEARN_VERSION >= version.parse("0.24.0"):
+      name = 'oracle/drd2_current.pkl' 
+    else: 
+      name = 'oracle/drd2.pkl'
+         
+
+
     return load_pickled_model(name)
 
 def fingerprints_from_mol(mol):
@@ -589,6 +601,8 @@ def SA(s):
 
 def load_gsk3b_model():
     gsk3_model_path = 'oracle/gsk3b.pkl'
+    if SKLEARN_VERSION >= version.parse("0.24.0"):
+      gsk3_model_path = 'oracle/gsk3b_current.pkl'
     return load_pickled_model(gsk3_model_path)
 
 def gsk3b(smiles):
@@ -624,7 +638,10 @@ class jnk3:
 
   """  
   def __init__(self):
+    
     jnk3_model_path = 'oracle/jnk3.pkl'
+    if SKLEARN_VERSION >= version.parse("0.24.0"):
+      jnk3_model_path = 'oracle/jnk3_current.pkl'
     self.jnk3_model = load_pickled_model(jnk3_model_path)
 
   def __call__(self, smiles):
