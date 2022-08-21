@@ -9,6 +9,8 @@ from abc import abstractmethod
 from functools import partial
 from typing import List
 import time, os, math, re
+from packaging import version
+import pkg_resources
 
 try: 
   import rdkit
@@ -39,6 +41,7 @@ mean2func = {
   'geometric': gmean, 
   'arithmetic': np.mean, 
 }
+SKLEARN_VERSION = version.parse(pkg_resources.get_distribution("scikit-learn").version)
 
 
 def smiles_to_rdkit_mol(smiles):
@@ -401,17 +404,38 @@ def calculateScore(m):
 
 """Scores based on an ECFP classifier for activity."""
 
+def load_pickled_model(name: str):
+  """
+  Loading a pretrained model serialized with pickle.
+  Usually for sklearn models.
+
+  Args:
+    name: Name of the model to load.
+
+  Returns:
+    The model.
+  """
+
+  try:
+    with open(name, "rb") as f:
+      model = pickle.load(f)
+  except EOFError:
+    import sys
+    sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+  return model
+
 # clf_model = None
 def load_drd2_model():
     name = 'oracle/drd2.pkl'
-    try:
-      with open(name, "rb") as f:
-          clf_model = pickle.load(f)
-    except EOFError:
-      import sys
-      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 
-    return clf_model
+    if SKLEARN_VERSION >= version.parse("0.24.0"):
+      name = 'oracle/drd2_current.pkl' 
+    else: 
+      name = 'oracle/drd2.pkl'
+         
+
+
+    return load_pickled_model(name)
 
 def fingerprints_from_mol(mol):
     fp = AllChem.GetMorganFingerprint(mol, 3, useCounts=True, useFeatures=True)
@@ -447,13 +471,7 @@ def drd2(smile):
 
 def load_cyp3a4_veith():
   oracle_file = "oracle/cyp3a4_veith.pkl"
-  try:
-    with open(oracle_file, "rb") as f:
-      cyp3a4_veith_model = pickle.load(f)
-  except EOFError:
-    import sys
-    sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
-  return cyp3a4_veith_model
+  return load_pickled_model(oracle_file)
 
 def cyp3a4_veith(smiles):
   try:
@@ -583,14 +601,9 @@ def SA(s):
 
 def load_gsk3b_model():
     gsk3_model_path = 'oracle/gsk3b.pkl'
-    #print_sys('==== load gsk3b oracle =====')
-    try:
-      with open(gsk3_model_path, 'rb') as f:
-          gsk3_model = pickle.load(f)
-    except EOFError:
-      import sys
-      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
-    return gsk3_model 
+    if SKLEARN_VERSION >= version.parse("0.24.0"):
+      gsk3_model_path = 'oracle/gsk3b_current.pkl'
+    return load_pickled_model(gsk3_model_path)
 
 def gsk3b(smiles):
     """Evaluate GSK3B score of a SMILES string
@@ -625,14 +638,12 @@ class jnk3:
 
   """  
   def __init__(self):
+    
     jnk3_model_path = 'oracle/jnk3.pkl'
-    try:
-      with open(jnk3_model_path, 'rb') as f:
-        self.jnk3_model = pickle.load(f)
-    except EOFError:
-      import sys
-      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
-  
+    if SKLEARN_VERSION >= version.parse("0.24.0"):
+      jnk3_model_path = 'oracle/jnk3_current.pkl'
+    self.jnk3_model = load_pickled_model(jnk3_model_path)
+
   def __call__(self, smiles):
     molecule = smiles_to_rdkit_mol(smiles)
     fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
