@@ -699,7 +699,7 @@ def process_scpdb(path, name='scPDB', return_pocket=False, remove_Hs=True, keep_
 			ligand (dict): a dict of ligand features
 	"""
 	try:
-		from biopandas.pdb import PandasPdb
+		from biopandas.mol2 import PandasMol2
 	except:
 		raise ImportError("Please install biopandas by 'pip install biopandas'! ")
 	from rdkit import Chem
