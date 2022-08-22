@@ -417,6 +417,7 @@ def bi_distribution_dataset_load(name, path, dataset_names, return_pocket=False,
 	Returns:
 	    pandas.Series: the input list of molecules representation
 	"""
+	name = fuzzy_search(name, dataset_names)
 	if name == 'pdbbind':
 		print_sys('Loading...')
 		protein, ligand = process_pdbbind(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
