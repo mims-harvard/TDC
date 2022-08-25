@@ -67,6 +67,7 @@ class Develop(single_pred_dataset.DataLoader):
         
         split["train"] = split["train"].loc[~split["train"]["Antibody_ID"].isin(train_obs)]
         split["test"] = split["test"].loc[~split["test"]["Antibody_ID"].isin(test_obs)]
+        split["valid"] = split["valid"].loc[~split["valid"]["Antibody_ID"].isin(valid_obs)]
         
         self.split = split
         
