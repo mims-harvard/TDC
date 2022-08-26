@@ -169,9 +169,15 @@ class Oracle:
 		elif self.name == 'amlodipine_mpo':
 			from .chem_utils import amlodipine_mpo
 			self.evaluator_func = amlodipine_mpo
+		elif self.name == 'sitagliptin_mpo_prev':
+			from .chem_utils import sitagliptin_mpo_prev
+			self.evaluator_func = sitagliptin_mpo_prev 
 		elif self.name == 'sitagliptin_mpo':
 			from .chem_utils import sitagliptin_mpo
 			self.evaluator_func = sitagliptin_mpo
+		elif self.name == 'zaleplon_mpo_prev':
+			from .chem_utils import zaleplon_mpo_prev
+			self.evaluator_func = zaleplon_mpo_prev 
 		elif self.name == 'zaleplon_mpo':
 			from .chem_utils import zaleplon_mpo
 			self.evaluator_func = zaleplon_mpo

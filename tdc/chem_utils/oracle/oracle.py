@@ -700,7 +700,38 @@ def parse_molecular_formula(formula):
 
     return results
 
-class Isomer_scoring:
+
+def smiles2formula(smiles):
+
+    from rdkit.Chem.rdMolDescriptors import CalcMolFormula
+    mol = Chem.MolFromSmiles(smiles)
+    formula = CalcMolFormula(mol)   
+    return formula  
+
+
+def canonicalize(smiles: str, include_stereocenters=True):
+    """
+    Canonicalize the SMILES strings with RDKit.
+
+    The algorithm is detailed under https://pubs.acs.org/doi/full/10.1021/acs.jcim.5b00543
+
+    Args:
+        smiles: SMILES string to canonicalize
+        include_stereocenters: whether to keep the stereochemical information in the canonical SMILES string
+
+    Returns:
+        Canonicalized SMILES string, None if the molecule is invalid.
+    """
+
+    mol = Chem.MolFromSmiles(smiles)
+
+    if mol is not None:
+        return Chem.MolToSmiles(mol, isomericSmiles=include_stereocenters)
+    else:
+        return None
+
+
+class Isomer_scoring_prev:
   def __init__(self, target_smiles, means = 'geometric'):
     assert means in ['geometric', 'arithmetic']
     if means == 'geometric':
@@ -718,15 +749,59 @@ class Isomer_scoring:
     for atom_counter, modifier_func in self.AtomCounter_Modifier_lst:
       all_scores.append(modifier_func(atom_counter(molecule)))
 
-    ### total atom number
+    ### total atom number 
     atom2cnt_lst = parse_molecular_formula(test_smiles)
-    ## todo add Hs 
+    # ## todo add Hs 
     total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst])
     all_scores.append(self.total_atom_modifier(total_atom_num))
     return self.mean_func(all_scores)
 
+
+class Isomer_scoring:
+  def __init__(self, target_smiles, means = 'geometric'):
+    assert means in ['geometric', 'arithmetic']
+    if means == 'geometric':
+      self.mean_func = gmean 
+    else: 
+      self.mean_func = np.mean 
+    atom2cnt_lst = parse_molecular_formula(target_smiles)
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst]) 
+    self.total_atom_modifier = GaussianModifier(mu=total_atom_num, sigma=2.0)
+    self.AtomCounter_Modifier_lst = [((AtomCounter(atom)), GaussianModifier(mu=cnt,sigma=1.0)) for atom,cnt in atom2cnt_lst]
+
+  def __call__(self, test_smiles):
+    #### difference 1
+    #### add hydrogen atoms 
+    test_smiles = canonicalize(test_smiles)
+    test_mol = Chem.MolFromSmiles(test_smiles)
+    test_mol2 = Chem.AddHs(test_mol) 
+    test_smiles = Chem.MolToSmiles(test_mol2)
+
+
+    molecule = smiles_to_rdkit_mol(test_smiles)
+    all_scores = []
+    for atom_counter, modifier_func in self.AtomCounter_Modifier_lst:
+      all_scores.append(modifier_func(atom_counter(molecule)))
+
+    #### difference 2 
+    ### total atom number
+    test_formula = smiles2formula(test_smiles)
+    atom2cnt_lst = parse_molecular_formula(test_formula)
+    # atom2cnt_lst = parse_molecular_formula(test_smiles)
+    # ## todo add Hs 
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst])
+    all_scores.append(self.total_atom_modifier(total_atom_num))
+    return self.mean_func(all_scores)
+
+def isomer_meta_prev(target_smiles, means = 'geometric'):
+  return Isomer_scoring_prev(target_smiles, means = means)
+
 def isomer_meta(target_smiles, means = 'geometric'):
   return Isomer_scoring(target_smiles, means = means)
+
+isomers_c7h8n2o2_prev = isomer_meta_prev(target_smiles = 'C7H8N2O2', means = 'geometric')
+isomers_c9h10n2o2pf2cl_prev = isomer_meta_prev(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
+isomers_c11h24_prev = isomer_meta_prev(target_smiles = 'C11H24', means = 'geometric')
 
 isomers_c7h8n2o2 = isomer_meta(target_smiles = 'C7H8N2O2', means = 'geometric')
 isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
@@ -948,6 +1023,19 @@ def amlodipine_mpo(test_smiles):
   amlodipine_gmean = gmean([similarity_value, num_rings_value])
   return amlodipine_gmean
 
+def zaleplon_mpo_prev(test_smiles):
+  if 'zaleplon_fp' not in globals().keys():
+    global zaleplon_fp, isomer_scoring_C19H17N3O2
+    zaleplon_smiles = 'O=C(C)N(CC)C1=CC=CC(C2=CC=NC3=C(C=NN23)C#N)=C1'
+    zaleplon_fp = smiles_2_fingerprint_ECFP4(zaleplon_smiles)
+    isomer_scoring_C19H17N3O2 = Isomer_scoring_prev(target_smiles = 'C19H17N3O2')
+
+  fp = smiles_2_fingerprint_ECFP4(test_smiles)
+  similarity_value = DataStructs.TanimotoSimilarity(fp, zaleplon_fp)
+  isomer_value = isomer_scoring_C19H17N3O2(test_smiles)
+  return gmean([similarity_value, isomer_value])
+
+
 def zaleplon_mpo(test_smiles):
   if 'zaleplon_fp' not in globals().keys():
     global zaleplon_fp, isomer_scoring_C19H17N3O2
@@ -959,6 +1047,32 @@ def zaleplon_mpo(test_smiles):
   similarity_value = DataStructs.TanimotoSimilarity(fp, zaleplon_fp)
   isomer_value = isomer_scoring_C19H17N3O2(test_smiles)
   return gmean([similarity_value, isomer_value])
+
+
+def sitagliptin_mpo_prev(test_smiles):
+  if 'sitagliptin_fp_ecfp4' not in globals().keys():
+    global sitagliptin_fp_ecfp4, sitagliptin_logp_modifier, sitagliptin_tpsa_modifier, \
+           isomers_scoring_C16H15F6N5O, sitagliptin_similar_modifier
+    sitagliptin_smiles = 'Fc1cc(c(F)cc1F)CC(N)CC(=O)N3Cc2nnc(n2CC3)C(F)(F)F'
+    sitagliptin_fp_ecfp4 = smiles_2_fingerprint_ECFP4(sitagliptin_smiles)
+    sitagliptin_mol = Chem.MolFromSmiles(sitagliptin_smiles)
+    sitagliptin_logp = Descriptors.MolLogP(sitagliptin_mol)
+    sitagliptin_tpsa = Descriptors.TPSA(sitagliptin_mol)
+    sitagliptin_logp_modifier = GaussianModifier(mu=sitagliptin_logp, sigma=0.2)
+    sitagliptin_tpsa_modifier = GaussianModifier(mu=sitagliptin_tpsa, sigma=5)
+    isomers_scoring_C16H15F6N5O = Isomer_scoring_prev('C16H15F6N5O')
+    sitagliptin_similar_modifier = GaussianModifier(mu=0, sigma=0.1)
+
+  molecule = Chem.MolFromSmiles(test_smiles)
+  fp_ecfp4 = smiles_2_fingerprint_ECFP4(test_smiles)
+  logp_score = Descriptors.MolLogP(molecule)
+  logp_score = sitagliptin_logp_modifier(logp_score)
+  tpsa_score = Descriptors.TPSA(molecule)
+  tpsa_score = sitagliptin_tpsa_modifier(tpsa_score)
+  isomer_score = isomers_scoring_C16H15F6N5O(test_smiles)
+  similarity_value = sitagliptin_similar_modifier(DataStructs.TanimotoSimilarity(fp_ecfp4, sitagliptin_fp_ecfp4))
+  return gmean([similarity_value, logp_score, tpsa_score, isomer_score])
+
 
 def sitagliptin_mpo(test_smiles):
   if 'sitagliptin_fp_ecfp4' not in globals().keys():
