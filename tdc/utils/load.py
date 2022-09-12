@@ -9,7 +9,7 @@ import pickle
 from pandas.errors import EmptyDataError
 from tqdm import tqdm
 
-from ..metadata import name2type, name2id, temp2id, dataset_list, dataset_names, benchmark_names, benchmark2id, benchmark2type
+from ..metadata import name2type, name2id, name2idlist, dataset_list, dataset_names, benchmark_names, benchmark2id, benchmark2type
 from ..metadata import property_names, paired_dataset_names, single_molecule_dataset_names
 from ..metadata import retrosyn_dataset_names, forwardsyn_dataset_names, molgenpaired_dataset_names, generation_datasets
 from ..metadata import oracle2id, receptor2id, download_oracle_names, trivial_oracle_names, oracle_names, oracle2type 
@@ -20,35 +20,6 @@ sys.path.append('../')
 
 from .misc import fuzzy_search, print_sys
 
-def temp_data_download_wrapper(name, path, dataset_names):
-	"""wrapper for downloading a dataset given the name and path - zip file, automatically unzipping
-	
-	Args:
-	    name (str): the rough dataset query name
-	    path (str): the path to save the dataset
-	    dataset_names (list): the list of available dataset names to search the query dataset
-	
-	Returns:
-	    str: the exact dataset query name
-	"""
-	name = fuzzy_search(name, dataset_names)
-	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
-
-	dataset_path = temp2id[name]
-
-	if not os.path.exists(path):
-		os.mkdir(path)
-
-	if os.path.exists(os.path.join(path, name)):
-		print_sys('Found local copy...')
-	else:
-		print_sys('Downloading...')
-		googledrive_download(dataset_path, path, name, name2type)
-		print_sys('Extracting zip file...')
-		with ZipFile(os.path.join(path, name + '.zip'), 'r') as zip:
-			zip.extractall(path = os.path.join(path))
-		print_sys("Done!")
-	return name
 
 def download_wrapper(name, path, dataset_names):
 	"""wrapper for downloading a dataset given the name and path, for csv,pkl,tsv files
@@ -64,18 +35,33 @@ def download_wrapper(name, path, dataset_names):
 	name = fuzzy_search(name, dataset_names)
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
 
-	dataset_path = server_path + str(name2id[name])
+	if name in name2idlist:
+		for i, id in enumerate(name2idlist[name]):
+			dataset_path = server_path + str(id)
 
-	if not os.path.exists(path):
-		os.mkdir(path)
+			if not os.path.exists(path):
+				os.mkdir(path)
 
-	if os.path.exists(os.path.join(path, name + '.' + name2type[name])):
-		print_sys('Found local copy...')
+			if os.path.exists(os.path.join(path, name + '-' + str(i+1) + '.' + name2type[name])):
+				print_sys('Found local copy...')
+			else:
+				print_sys("Downloading...")
+				dataverse_download(dataset_path, path, name, name2type, id=i+1)
+		
+		return name
 	else:
-		print_sys("Downloading...")
-		dataverse_download(dataset_path, path, name, name2type)
+		dataset_path = server_path + str(name2id[name])
 
-	return name
+		if not os.path.exists(path):
+			os.mkdir(path)
+
+		if os.path.exists(os.path.join(path, name + '.' + name2type[name])):
+			print_sys('Found local copy...')
+		else:
+			print_sys("Downloading...")
+			dataverse_download(dataset_path, path, name, name2type)
+
+		return name
 
 def zip_data_download_wrapper(name, path, dataset_names):
 	"""wrapper for downloading a dataset given the name and path - zip file, automatically unzipping
@@ -91,26 +77,45 @@ def zip_data_download_wrapper(name, path, dataset_names):
 	name = fuzzy_search(name, dataset_names)
 	server_path = 'https://dataverse.harvard.edu/api/access/datafile/'
 
-	dataset_path = server_path + str(name2id[name])
+	if name in name2idlist:
+		for i, id in enumerate(name2idlist[name]):
+			dataset_path = server_path + str(id)
 
-	if not os.path.exists(path):
-		os.mkdir(path)
+			if not os.path.exists(path):
+				os.mkdir(path)
 
-	if os.path.exists(os.path.join(path, name)):
-		print_sys('Found local copy...')
-	else:
-		print_sys('Downloading...')
-		dataverse_download(dataset_path, path, name, name2type)
-		print_sys('Extracting zip file...')
-		with ZipFile(os.path.join(path, name + '.zip'), 'r') as zip:
-			zip.extractall(path = os.path.join(path))
+			if os.path.exists(os.path.join(path, name + '-' + str(i+1))):
+				print_sys('Found local copy...')
+			else:
+				print_sys('Downloading...')
+				dataverse_download(dataset_path, path, name, name2type, id=i+1)
+				print_sys('Extracting zip file...')
+				with ZipFile(os.path.join(path, name + '-' + str(i+1) + '.zip'), 'r') as zip:
+					zip.extractall(path = os.path.join(path))
+		if not os.path.exists(os.path.join(path, name)):
+			os.mkdir(os.path.join(path, name))
+		for i in range(len(name2idlist[name])):
+			print (f"mv {path}/{name}-{i+1}/* {path}/{name}")
+			os.system(f"mv {path}/{name}-{i+1}/* {path}/{name}")
 		print_sys("Done!")
+	else:
+		dataset_path = server_path + str(name2id[name])
+
+		if not os.path.exists(path):
+			os.mkdir(path)
+
+		if os.path.exists(os.path.join(path, name)):
+			print_sys('Found local copy...')
+		else:
+			print_sys('Downloading...')
+			dataverse_download(dataset_path, path, name, name2type)
+			print_sys('Extracting zip file...')
+			with ZipFile(os.path.join(path, name + '.zip'), 'r') as zip:
+				zip.extractall(path = os.path.join(path))
+			print_sys("Done!")
 	return name
 
-def googledrive_download(url, path, name, types):
-	os.system(f'wget --load-cookies /tmp/cookies.txt \"https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate \'https://docs.google.com/uc?export=download&id={url}\' -O- | sed -rn \'s/.*confirm=([0-9A-Za-z_]+).*/\\1\\n/p\')&id={url}\" -O {name}.{types[name]} && rm -rf /tmp/cookies.txt && mv {name}.{types[name]} {path}')
-
-def dataverse_download(url, path, name, types):
+def dataverse_download(url, path, name, types, id=None):
 	"""dataverse download helper with progress bar
 	
 	Args:
@@ -119,7 +124,10 @@ def dataverse_download(url, path, name, types):
 	    name (str): the dataset name
 	    types (dict): a dictionary mapping from the dataset name to the file format
 	"""
-	save_path = os.path.join(path, name + '.' + types[name])
+	if id is None:
+		save_path = os.path.join(path, name + '.' + types[name])
+	else:
+		save_path = os.path.join(path, name + '-' + str(id) + '.' + types[name])
 	response = requests.get(url, stream=True)
 	total_size_in_bytes= int(response.headers.get('content-length', 0))
 	block_size = 1024
@@ -417,21 +425,20 @@ def bi_distribution_dataset_load(name, path, dataset_names, return_pocket=False,
 	Returns:
 	    pandas.Series: the input list of molecules representation
 	"""
-	name = fuzzy_search(name, dataset_names)
+	name = zip_data_download_wrapper(name, path, dataset_names)
+
 	if name == 'pdbbind':
 		print_sys('Loading...')
 		protein, ligand = process_pdbbind(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
-	else:
-		name = temp_data_download_wrapper(name, path, dataset_names)
-		if name == 'dude':
-			print_sys('Loading...')
-			protein, ligand = process_dude(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
-		elif name == 'scPDB':
-			print_sys('Loading...')
-			protein, ligand = process_scpdb(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
-		elif name == 'crossdock':
-			print_sys('Loading...')
-			protein, ligand = process_crossdock(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
+	elif name == 'dude':
+		print_sys('Loading...')
+		protein, ligand = process_dude(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
+	elif name == 'scpdb':
+		print_sys('Loading...')
+		protein, ligand = process_scpdb(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
+	elif name == 'crossdock':
+		print_sys('Loading...')
+		protein, ligand = process_crossdock(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
 	
 	return protein, ligand
 
@@ -586,12 +593,12 @@ def process_crossdock(path, name='crossdock', return_pocket=False, threshold=15,
 	for idx, (pocket_fn, ligand_fn, _, rmsd) in enumerate(tqdm(index)):
 		if pocket_fn is None or ligand_fn is None:
 			continue
-		if return_pocket:
-			protein = PandasPdb().read_pdb(os.path.join(path, pocket_fn))
-		else:
-			# full protein not stored in the preprocessed crossdock by Luo et al 2021
-			protein = PandasPdb().read_pdb(os.path.join(path, pocket_fn))
 		try:
+			if return_pocket:
+				protein = PandasPdb().read_pdb(os.path.join(path, pocket_fn))
+			else:
+				# full protein not stored in the preprocessed crossdock by Luo et al 2021
+				protein = PandasPdb().read_pdb(os.path.join(path, pocket_fn))
 			ligand = Chem.SDMolSupplier(os.path.join(path, ligand_fn), sanitize=False)[0]
 			ligand = extract_atom_from_mol(ligand, allowed_atom_list)
 			if ligand is None:
@@ -709,11 +716,11 @@ def process_scpdb(path, name='scPDB', return_pocket=False, remove_Hs=True, keep_
 	files = os.listdir(path)
 	failure = 0
 	for idx, file in enumerate(tqdm(files)):
-		if return_pocket:
-			protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/site.mol2"))
-		else:
-			protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/protein.mol2"))
 		try:
+			if return_pocket:
+				protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/site.mol2"))
+			else:
+				protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/protein.mol2"))
 			ligand = Chem.SDMolSupplier(os.path.join(path, f"{file}/ligand.sdf"), sanitize=False)[0]
 			ligand = extract_atom_from_mol(ligand, allowed_atom_list)
 			# if ligand contains unallowed atoms

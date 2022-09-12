@@ -18,7 +18,7 @@ class SBDD(base_dataset.DataLoader):
 	"""Data loader class accessing to structure-based drug design task.
 	"""
 	
-	def __init__(self, name, path='./data', print_stats=False, return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+	def __init__(self, name, path='./data', print_stats=False, return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F'], save=True):
 		"""To create a base dataloader object for structure-based drug design task.
 		
 		Args:
@@ -34,7 +34,13 @@ class SBDD(base_dataset.DataLoader):
 		"""
 		from ..metadata import multiple_molecule_dataset_names 
 		protein, ligand = bi_distribution_dataset_load(name, path, multiple_molecule_dataset_names, return_pocket, threshold, remove_Hs, keep_het, allowed_atom_list)
-		
+		if save:
+			np.savez(os.path.join(path, name + '.npz'),
+				protein=protein,
+				ligand=ligand,
+    			)
+		self.save = save
+
 		self.ligand = ligand
 		self.protein = protein
 
@@ -89,7 +95,16 @@ class SBDD(base_dataset.DataLoader):
 		data = self.get_data(format = 'dict')
 		protein, ligand = data['protein'], data['ligand']
 
+		splitted_data = create_combination_generation_split(protein, ligand, seed, frac)
+
+		if self.save:
+			np.savez(os.path.join(self.path, self.name + '_split.npz'),
+				train=splitted_data['train'],
+				valid=splitted_data['valid'],
+				test=splitted_data['test']
+    			)
+
 		if method == 'random':
-			return create_combination_generation_split(protein, ligand, seed, frac)
+			return splitted_data
 		else:
 			raise AttributeError("Please use the correct split method")
