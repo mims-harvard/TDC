@@ -117,14 +117,16 @@ class DataLoader(base_dataset.DataLoader):
 		df = self.get_data(format = 'df')
 
 		if method == 'random':
-			return create_fold(df, seed, frac)
+			split = create_fold(df, seed, frac)
 		elif method == 'cold_' + self.entity1_name.lower():
-			return create_fold_setting_cold(df, seed, frac, self.entity1_name)
+			split = create_fold_setting_cold(df, seed, frac, self.entity1_name)
 		elif method == 'scaffold':
-			return create_scaffold_split(df, seed, frac, self.entity1_name)
+			split = create_scaffold_split(df, seed, frac, self.entity1_name)
 		else:
 			raise AttributeError("Please specify the correct splitting method")
-
+		self.split = split            
+		return split
+    
 	def print_stats(self):
 		"""Print basic data statistics.
 		"""

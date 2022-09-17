@@ -75,7 +75,7 @@ class DataLoader(base_dataset.DataLoader):
         self.entity2_name = 'Entity2'
         self.aux_column = aux_column
         self.aux_column_val = aux_column_val
-
+        self.log_flag = False
         self.two_types = False
 
     def get_data(self, format='df'):

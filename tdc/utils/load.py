@@ -807,3 +807,17 @@ def extract_atom_from_protein(data_frame, data_frame_het, remove_Hs, keep_het, a
                 for atom in atom_type if atom in allowed_atom_list
             ]
 	return coord, np.array(atom_type)
+def general_load(name, path, sep):
+	"""a wrapper to download, process and load any pandas dataframe files
+	
+	Args:
+	    name (str): the dataset name
+	    path (str): the data save path
+	
+	Returns:
+	    pandas.DataFrame: data frame
+	"""
+	name = download_wrapper(name, path, name)
+	print_sys('Loading...')
+	df = pd.read_csv(os.path.join(path, name + '.' + name2type[name]), sep = sep)
+	return df

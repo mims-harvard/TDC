@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Author: TDC Team
 # License: MIT
-
+from packaging import version
+import pkg_resources
 
 """This file contains all metadata of datasets in TDC.
 
@@ -106,7 +107,7 @@ hts_dataset_names = ['hiv',
 'sarscov2_3clpro_diamond', 
 'sarscov2_vitro_touret']
 
-qm_dataset_names = ['qm7b', 'qm8', 'qm9']
+qm_dataset_names = ['qm7', 'qm7b', 'qm8', 'qm9']
 
 epitope_dataset_names = ['iedb_jespersen', 'pdb_jespersen']
 
@@ -192,6 +193,7 @@ guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop
 				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', 'isomers_c11h24', \
 				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
 				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
+				   'sitagliptin_mpo_prev', 'zaleplon_mpo_prev', \
 				   'median1', 'median2', \
 				   'valsartan_smarts', 'deco_hop', 'scaffold_hop']
 
@@ -328,6 +330,9 @@ dti_dg_splits = {'bindingdb_patent': 'group'}
 
 # evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
 download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith', 'smina']
+# download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
+download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith'] + ['drd2_current', 'gsk3b_current', 'jnk3_current']
+
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
 download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking', '3ny8_docking', '4rlu_docking',
@@ -483,6 +488,7 @@ name2type = {'toxcast': 'tab',
  'gdsc2': 'pkl',
  'iedb_jespersen': 'pkl',
  'pdb_jespersen': 'pkl',
+ 'qm7': 'pkl',
  'qm7b': 'pkl',
  'qm8': 'pkl',
  'qm9': 'pkl',
@@ -516,7 +522,10 @@ name2type = {'toxcast': 'tab',
  'test_single_pred': 'tab',
  'test_multi_pred': 'tab',
  'gdsc_gene_symbols': 'tab',
- 'weber': 'tab'}
+ 'weber': 'tab',
+ 'primekg': 'tab',
+ 'primekg_drug_feature': 'tab',
+ 'primekg_disease_feature': 'tab'}
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -572,8 +581,9 @@ name2id = {'bbb_adenot': 4259565,
  'gdsc2': 4165727,
  'iedb_jespersen': 4165725, 
  'pdb_jespersen': 4165724,
- 'qm7b': 4167096,
- 'qm8': 4167110,
+ 'qm7': 6358510, 
+ 'qm7b': 6358512, 
+ 'qm8': 6358513,  
  'qm9': 6179310, ### 4167112, 6175612
 #  'scpdb': None,
 #  'dude': None,
@@ -594,7 +604,7 @@ name2id = {'bbb_adenot': 4259565,
  'herg': 4259588,
  'herg_central': 5740618,
  'dili': 4259585,
- 'ppbr_az': 4259599,
+ 'ppbr_az': 6413140,
  'ames': 4259564,
  'skin_reaction': 4259609,
  'clearance_microsome_az': 4266186,
@@ -606,7 +616,10 @@ name2id = {'bbb_adenot': 4259565,
  'test_single_pred': 4832455,
  'test_multi_pred': 4832456,
  'gdsc_gene_symbols': 5255026,
- 'weber': 5790963}
+ 'weber': 5790963,
+ 'primekg': 6180626,
+ 'primekg_drug_feature': 6180619,
+ 'primekg_disease_feature': 6180618}
 
 oracle2type = {'drd2': 'pkl', 
 			   'jnk3': 'pkl', 
@@ -614,6 +627,9 @@ oracle2type = {'drd2': 'pkl',
 			   'fpscores': 'pkl', 
 			   'cyp3a4_veith': 'pkl', 
 			   'smina': 'static', 
+			   'drd2_current': 'pkl', 
+			   'jnk3_current': 'pkl', 
+			   'gsk3b_current': 'pkl', 			   
 			   }
 
 oracle2id = {'drd2': 4178625,
@@ -622,7 +638,12 @@ oracle2id = {'drd2': 4178625,
 			 'fpscores': 4170416, 
 			 'cyp3a4_veith': 4411249,
 			 'smina': 6361665, 
+			 'cyp3a4_veith': 4411249, 
+			 'drd2_current': 6413411, 
+			 'jnk3_current': 6413420, 
+			 'gsk3b_current': 6413412,			 
 			}
+
 
 benchmark2type = {'admet_group': 'zip',
                   'drugcombo_group': 'zip',
@@ -682,8 +703,9 @@ name2stats = {
 	'sarscov2_vitro_touret': 1480,
 	'sarscov2_3clpro_diamond': 879,
 	'hiv': 41127,
+	'qm7': 7165,
 	'qm7b': 7211,
-	'qm8': 21786,
+	'qm8': 21747,
 	'qm9': 133885,
 	'uspto_yields': 853638,
 	'buchwald-hartwig': 55370,

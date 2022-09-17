@@ -7,7 +7,8 @@ from .load import distribution_dataset_load, \
 					bi_distribution_dataset_load,\
 					oracle_load,\
 					receptor_load,\
-					bm_group_load
+					bm_group_load,\
+					general_load
 from .split import create_fold,\
 					create_fold_setting_cold,\
 					create_combination_split,\
