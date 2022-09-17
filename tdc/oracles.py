@@ -7,7 +7,7 @@ import pkg_resources
 warnings.filterwarnings("ignore")
 
 from .utils import fuzzy_search, oracle_load, receptor_load
-from .metadata import download_oracle_names, oracle_names, distribution_oracles, download_receptor_oracle_name, docking_target_info 
+from .metadata import download_oracle_names, oracle_names, distribution_oracles, docking_oracles, download_receptor_oracle_name, docking_target_info 
 
 SKLEARN_VERSION = version.parse(pkg_resources.get_distribution("scikit-learn").version)
 
@@ -398,6 +398,17 @@ class Oracle:
 			from .chem_utils import kl_divergence 
 			self.evaluator_func = kl_divergence 
 
+		elif self.name == 'rmsd':
+			from .chem_utils import rmsd 
+			self.evaluator_func = rmsd
+		elif self.name == 'kabsch_rmsd':
+			from .chem_utils import kabsch_rmsd 
+			self.evaluator_func = kabsch_rmsd
+		
+		elif self.name == 'smina':
+			from .chem_utils import smina 
+			self.evaluator_func = smina
+
 		else:
 			return 
 
@@ -416,6 +427,9 @@ class Oracle:
 		"""
 		if self.name in distribution_oracles:  
 			## 'novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence' 
+			return self.evaluator_func(*args, **kwargs)
+
+		if self.name in docking_oracles:
 			return self.evaluator_func(*args, **kwargs)
 
 		from rdkit import Chem 
