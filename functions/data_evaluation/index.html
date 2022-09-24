@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="https://tdcommons.ai/functions/data_evaluation/" />
-<meta property="og:url" content="https://tdcommons.ai/functions/data_evaluation/" />
+<link rel="canonical" href="http://localhost:4000/functions/data_evaluation/" />
+<meta property="og:url" content="http://localhost:4000/functions/data_evaluation/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"https://tdcommons.ai/functions/data_evaluation/","headline":"Model Evaluation","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/functions/data_evaluation/","headline":"Model Evaluation","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -208,6 +208,7 @@
     <ul>
       <li><a href="#area-under-receiver-operating-characteristic-curve-roc-auc">Area Under Receiver Operating Characteristic Curve (ROC-AUC)</a></li>
       <li><a href="#area-under-the-precision-recall-curve-pr-auc">Area Under the Precision-Recall Curve (PR-AUC)</a></li>
+      <li><a href="#range-logauc">Range LogAUC</a></li>
       <li><a href="#accuracy-metrics">Accuracy Metrics</a></li>
       <li><a href="#precision">Precision</a></li>
       <li><a href="#recall">Recall</a></li>
@@ -338,6 +339,26 @@
 </span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 <span class="c1"># score: 0.88
 </span></code></pre></div></div>
+
+<h3 id="range-logauc">Range LogAUC</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> In a realistic setting, only a small percentage of samples can be selected for experimental tests in consideration of cost. This means only molecules with very high predicted score can be worth testing, i.e., the decision threshold is high. And the high decision threshold corresponds to the left side of the ROC curve, i.e., those FPRs with small values. Also, because the threshold cannot be predetermined, the area under the curve is used to consolidate all possible thresholds within a certain FPR range. Finally, the logarithm is used to bias smaller FPRs. See [1] for reference.</p>
+
+<p class="is-size-6">Default range: [0.001, 0.1]. The higher the logAUC[0.001, 0.1], the better the performance. A perfect classifer gets a logAUC[0.001, 0.1] ) of 1, while a random classifer gets a logAUC[0.001, 0.1] ) of around 0.0215 (See [2]) </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'range_logAUC'</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.0215
+</span></code></pre></div></div>
+
+<p class="is-size-6"> <strong> References: </strong> </p>
+
+<p>[1] Mysinger, M.M. and B.K. Shoichet, Rapid Context-Dependent Ligand Desolvation in Molecular Docking. Journal of Chemical Information and Modeling, 2010. 50(9): p. 1561-1573.</p>
+
+<p>[2] Mendenhall, J. and J. Meiler, Improving quantitative structure–activity relationship models using Artificial Neural Networks trained with dropout. Journal of computer-aided molecular design, 2016. 30(2): p. 177-189.</p>
+
+<p class="is-size-6"> <strong> Contributed by Yunchao Liu.</strong> </p>
 
 <hr />
 

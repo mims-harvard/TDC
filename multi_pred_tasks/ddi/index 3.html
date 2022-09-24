@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Drug-Drug Interaction - TDC</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Drug-Drug Interaction | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Drug-Drug Interaction" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Machine Learning Datasets for Therapeutics" />
+<meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
+<link rel="canonical" href="https://tdcommons.ai/multi_pred_tasks/ddi/" />
+<meta property="og:url" content="https://tdcommons.ai/multi_pred_tasks/ddi/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"url":"https://tdcommons.ai/multi_pred_tasks/ddi/","headline":"Drug-Drug Interaction","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+            <span><img src="/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/start/" class="navbar-item ">Quick Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
+                            
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
+                            
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
+                            
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-4-desktop is-4-tablet">
+                    
+
+<aside class="menu">
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/multi_pred_tasks/overview/" class=""><strong>Multi-instance Prediction Problem</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/multi_pred_tasks/dti/" class=""><code>DTI</code> Drug-Target Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/ddi/" class="is-active"><code>DDI</code> Drug-Drug Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/ppi/" class=""><code>PPI</code> Protein-Protein Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/gdi/" class=""><code>GDA</code> Gene-Disease Association</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/drugres/" class=""><code>DrugRes</code> Drug Response Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/drugsyn/" class=""><code>DrugSyn</code> Drug Synergy Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/peptidemhc/" class=""><code>PeptideMHC</code> Peptide-MHC Binding</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/antibodyaff/" class=""><code>AntibodyAff</code> Antibody-Antigen Affinity</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/mti/" class=""><code>MTI</code> miRNA-Target Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/catalyst/" class=""><code>Catalyst</code> Catalyst Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/tcrepitope" class=""><code>TCREpitopeBinding</code> TCR-Epitope Binding</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/overview/" class=""><strong>Others</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/single_pred_tasks/overview/" class="">Single-instance Prediction Problem</a></li>
+                
+                
+                
+                <li><a href="/generation_tasks/overview/" class="">Generation Problem</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+</aside>
+                </div>
+                
+                <div class="column is-8">
+                    
+                    
+                    
+                    
+    
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#drugbank-multi-typed-ddi">DrugBank Multi-Typed DDI</a></li>
+  <li><a href="#twosides-polypharmacy-side-effects">TWOSIDES Polypharmacy Side Effects</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h1 id="drug-drug-interaction-prediction-task-overview">Drug-Drug Interaction Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+	Drug-drug interactions occur when two or more drugs interact with each other. These could result in a range of outcomes from reducing the efficacy of one or both drugs to dangerous side effects such as increased blood pressure or drowsiness. Polypharmacy side-effects are associated with drug pairs (or higher-order drug combinations) and cannot be attributed to either individual drug in the pair. This task is to predict the interaction between two drugs.
+
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+Increasing co-morbidities with age often results in the prescription of multiple drugs simultaneously. Meta analyses of patient records showed that drug-drug interactions were the cause of admission for prolonged hospital stays in 7% of the cases. Predicting possible drug-drug interactions before they are prescribed is thus an important step in preventing these adverse outcomes. In addition, as the number of combinations or even higher-order drugs is astronomical, wet-lab experiments or real-world evidence are insufficient. Machine learning can provide an alternative way to inform drug interactions.
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+As there is a very large space of possible drug-drug interactions that have not been explored, the model needs to extrapolate from known interactions to new drug combinations that have not been prescribed together in the past. Models should also taken into account dosage as that can have a significant impact on the effect of the drugs.
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Efficacy and safety - adverse event detection. </p>
+
+</div>
+
+<h3 id="drugbank-multi-typed-ddi">DrugBank Multi-Typed DDI</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> DrugBank drug-drug interaction dataset is manually sourced from FDA/Health Canada drug labels as well as primary literature. It has 86 interaction types. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Multi-class classification. Given the SMILES strings of two drugs, predict their interaction type. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 191,808 DDI pairs with 1,706 drugs.  </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DDI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DDI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugBank'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> Note: </strong> To know what type of relation the label index corresponds to, use:  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">get_label_map</span>
+<span class="n">get_label_map</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugBank'</span><span class="p">,</span> <span class="n">task</span> <span class="o">=</span> <span class="s">'DDI'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://academic.oup.com/nar/article/46/D1/D1074/4602867">[1] Wishart DS, et al. (2017) DrugBank 5.0: A major update to the DrugBank database for 2018. Nucleic Acids Res 46:D1074–D1082. </a></p>
+
+<p><a href="https://www.pnas.org/content/115/18/E4304.short"> [2] Ryu, Jae Yong, Hyun Uk Kim, and Sang Yup Lee. “Deep learning improves prediction of drug–drug and drug–food interactions.” Proceedings of the National Academy of Sciences 115.18 (2018): E4304-E4311.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> DrugBank Online is offered to the public as a free-to-access resource. Use and re-distribution of the content of DrugBank Online or the DrugBank Data, in whole or in part, for any purpose requires a license. Academic users may apply for a free license for certain use cases and all other users require a paid license. </p>
+
+<hr />
+
+<h3 id="twosides-polypharmacy-side-effects">TWOSIDES Polypharmacy Side Effects</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Polypharmacy side-effects are associated with drug pairs (or higher-order drug combinations) and cannot be attributed to either individual drug in the pair (in a drug combination). </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Multi-label classification. Given the SMILES strings of two drugs, predict all side effects. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 4,649,441 DDI pairs with 645 drugs.  </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DDI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DDI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'TWOSIDES'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> Note: </strong> To know what type of relation the label index corresponds to, use:  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">get_label_map</span>
+<span class="n">get_label_map</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'TWOSIDES'</span><span class="p">,</span> <span class="n">task</span> <span class="o">=</span> <span class="s">'DDI'</span><span class="p">,</span> <span class="n">name_column</span> <span class="o">=</span> <span class="s">'Side Effect Name'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://stm.sciencemag.org/content/4/125/125ra31.short?casa_token=I307jEWdWskAAAAA:B4glz3iI1wW_lYc_bzfSs41xMaHiFHLxOhNhOhW_6Si3lHOKarRIe5s5tHz3S2pY7tcVWB41QP6-47c">[1] Tatonetti, Nicholas P., et al. “Data-driven prediction of drug effects and interactions.” Science translational medicine 4.125 (2012): 125ra31-125ra31. </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+

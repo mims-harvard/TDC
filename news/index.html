@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="https://tdcommons.ai/news/" />
-<meta property="og:url" content="https://tdcommons.ai/news/" />
+<link rel="canonical" href="http://localhost:4000/news/" />
+<meta property="og:url" content="http://localhost:4000/news/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"https://tdcommons.ai/news/","headline":"News","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/news/","headline":"News","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -148,11 +148,28 @@
 <div class="content">
     <h1 id="news">News</h1>
 
-<p class="is-size-5"><strong>2021.02.19</strong> TDC <code>0.3.6</code> is released! TDC has a new task on TCR-Epitope Binding prediction  (Thanks to Anna and Jannis)! Checkout <a href="/multi_pred_tasks/tcrepitope/">here</a> for more information.</p>
+<hr />
+
+<p class="is-size-5"><strong>2022.09.06</strong> TDC <code>0.3.7</code> is released! Here are the changes: </p>
+
+<ul class="is-medium">
+    <li> TDC has a new evaluation metric on logAUC. See <a href="/functions/data_evaluation/#range-logauc"> here </a> and the <a href="https://github.com/mims-harvard/TDC/pull/152">PR</a>.</li>
+    <li> TDC now supports graphein protein 3D representation for antibody develop-ability prediction. See <a href="https://github.com/mims-harvard/TDC/blob/main/tutorials/graphein_demo_developability.ipynb">tutorial</a> and the <a href="https://github.com/mims-harvard/TDC/pull/159">PR</a>.</li>
+    <li> <code>QM</code> task are now in 3D format. See <a href="https://github.com/mims-harvard/TDC/pull/160">here</a>.</li>
+    <li> TDC has a harmonize function to deal with duplicated experimental entries in DTI. See <a href="https://github.com/mims-harvard/TDC/pull/162">here</a>.</li>
+    <li> TDC now has a dataloader for PrimeKG as an auxilliary resource. See how to access PrimeKG <a href="/resources/overview/#precision-medicine-knowledge-graph-primekg">here</a>.</li>
+    <li> TDC fixed static scikit-learn version issue for gsk3b, jnk3, drd2 oracles. See <a href="https://github.com/mims-harvard/TDC/pull/168">here</a> for more info.</li>
+    <li> The PPBR dataset in ADME task now has additional species information and the default is now only containing homo sapiens while you can retrieve other species via a TDC function. See <a href="/single_pred_tasks/adme/#ppbr-plasma-protein-binding-rate-astrazeneca">here</a> for more info.</li>
+    
+</ul>
 
 <hr />
 
-<p class="is-size-5"><strong>2021.01.23</strong> TDC <code>0.3.5</code> is released! Here are the changes: </p>
+<p class="is-size-5"><strong>2022.02.19</strong> TDC <code>0.3.6</code> is released! TDC has a new task on TCR-Epitope Binding prediction  (Thanks to Anna and Jannis)! Checkout <a href="/multi_pred_tasks/tcrepitope/">here</a> for more information.</p>
+
+<hr />
+
+<p class="is-size-5"><strong>2022.01.23</strong> TDC <code>0.3.5</code> is released! Here are the changes: </p>
 
 <ul class="is-medium">
     <li> TDC has a new large hERG dataset in <code>Tox</code> (Thanks to <a href="https://github.com/benb111">Ben</a>)! Checkout <a href="/single_pred_tasks/tox/#herg-central">here</a> for more information.</li>

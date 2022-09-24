@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reaction Yields Prediction - TDC</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Reaction Yields Prediction | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Reaction Yields Prediction" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Machine Learning Datasets for Therapeutics" />
+<meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
+<link rel="canonical" href="https://tdcommons.ai/single_pred_tasks/yields/" />
+<meta property="og:url" content="https://tdcommons.ai/single_pred_tasks/yields/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"url":"https://tdcommons.ai/single_pred_tasks/yields/","headline":"Reaction Yields Prediction","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+            <span><img src="/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/start/" class="navbar-item ">Quick Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
+                            
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
+                            
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
+                            
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-4-desktop is-4-tablet">
+                    
+
+<aside class="menu">
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/single_pred_tasks/overview/" class=""><strong>Single-instance Prediction Problem</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/single_pred_tasks/adme/" class=""><code>ADME</code> Pharmaco-kinetics</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/tox/" class=""><code>Tox</code> Toxicity</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/hts/" class=""><code>HTS</code> High-Throughput Screening</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/qm/" class=""><code>QM</code> Quantum Mechanics</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/yields/" class="is-active"><code>Yields</code> Reaction Yields Prediction</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/epitope/" class=""><code>Epitope</code> Epitope Prediction</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/develop/" class=""><code>Develop</code> Developability Prediction</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/CRISPROutcome/" class=""><code>CRISPROutcome</code> CRISPR Repair Prediction</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/overview/" class=""><strong>Others</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/multi_pred_tasks/overview/" class="">Multi-instance Prediction Problem</a></li>
+                
+                
+                
+                <li><a href="/generation_tasks/overview/" class="">Generation Problem</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+</aside>
+                </div>
+                
+                <div class="column is-8">
+                    
+                    
+                    
+                    
+    
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#buchwald-hartwig">Buchwald-Hartwig</a></li>
+  <li><a href="#uspto">USPTO</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h1 id="reaction-yields-prediction-task-overview">Reaction Yields Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+Vast majority of small-molecule drugs are synthesized through chemical reactions. Many factors during reactions could lead to suboptimal reactants-products conversion rate, i.e. yields. Formally, it is defined as the percentage of the reactants successfully converted to the target product. This learning task aims to predict the yield of a given single chemical reaction.
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+To maximize the synthesis efficiency of interested products, an accurate prediction of the reaction yield could help chemists to plan ahead and switch to alternate reaction routes, by which avoiding investing hours and materials in wet-lab experiments and reducing the number of attempts.
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+The models are expected to extrapolate to unseen reactions with diverse chemical structures and reaction types. 
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Manufacturing - Synthesis planning. </p>
+
+</div>
+
+<h3 id="buchwald-hartwig">Buchwald-Hartwig</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Ahneman et al. performed high-throughput experiments on Pd-catalysed Buchwald–Hartwig C-N cross coupling reactions, measuring the yields for each reaction. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Given reactant and product set X, predict the yields Y. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 55,370 reactions. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Yields</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Yields</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Buchwald-Hartwig'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.sciencedirect.com/science/article/pii/S2451929420300851">[1] Sandfort et al. “A structure-based platform for predicting chemical reactivity.” Chem (2020). </a></p>
+
+<p><a href="https://science.sciencemag.org/content/360/6385/186.abstract?casa_token=Y1YYm8zLW4YAAAAA:U2B1Mqw-wjgZuqf2jd5eDUSmOCHm9dKMIqrMR5aGs4Js6eCwXV4gGPvA95wgqF-Gf6UjomO9FaAFeJQ"> [2] Ahneman et al. “Predicting reaction performance in C–N cross-coupling using machine learning.” Science 360.6385 (2018): 186-190.
+</a></p>
+
+<p><a href="https://chemrxiv.org/ndownloader/files/25011413"> [3] Schwaller, Philippe, et al. “Prediction of Chemical Reaction Yields using Deep Learning.” (2020). ChemRxiv.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="uspto">USPTO</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> TDC parses the yields outcome from the full USPTO (United States Patent and Trademark Office) dataset. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Given reactant and product set X, predict the yields Y. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 853,638 reactions. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Yields</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Yields</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'USPTO_Yields'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://aspace.repository.cam.ac.uk/handle/1810/244727">[1] Lowe, Daniel Mark. Extraction of chemical structures and reactions from the literature. Diss. University of Cambridge, 2012. </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/share-your-work/public-domain/cc0/">CC0</a>.</p>
+
+<hr />
+
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+

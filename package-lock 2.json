@@ -1,0 +1,18 @@
+{
+  "name": "bulma-clean-theme",
+  "version": "1.0.0",
+  "lockfileVersion": 1,
+  "requires": true,
+  "dependencies": {
+    "bulma": {
+      "version": "0.8.0",
+      "resolved": "https://registry.npmjs.org/bulma/-/bulma-0.8.0.tgz",
+      "integrity": "sha512-nhf3rGyiZh/VM7FrSJ/5KeLlfaFkXz0nYcXriynfPH4vVpnxnqyEwaNGdNCVzHyyCA3cHgkQAMpdF/SFbFGZfA=="
+    },
+    "bulma-block-list": {
+      "version": "0.1.1",
+      "resolved": "https://registry.npmjs.org/bulma-block-list/-/bulma-block-list-0.1.1.tgz",
+      "integrity": "sha512-ebtC0vbsn+MNQWmL7RFf9YElZzy365uBjiHN85op5F9YHITvDmysCf69FyV6emOu0R57Nq7kZHDjC620ntC2ZQ=="
+    }
+  }
+}

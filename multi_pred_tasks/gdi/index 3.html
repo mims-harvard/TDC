@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gene-Disease Association - TDC</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Gene-Disease Association | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Gene-Disease Association" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Machine Learning Datasets for Therapeutics" />
+<meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
+<link rel="canonical" href="https://tdcommons.ai/multi_pred_tasks/gdi/" />
+<meta property="og:url" content="https://tdcommons.ai/multi_pred_tasks/gdi/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"url":"https://tdcommons.ai/multi_pred_tasks/gdi/","headline":"Gene-Disease Association","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+            <span><img src="/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/start/" class="navbar-item ">Quick Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
+                            
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
+                            
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
+                            
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-4-desktop is-4-tablet">
+                    
+
+<aside class="menu">
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/multi_pred_tasks/overview/" class=""><strong>Multi-instance Prediction Problem</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/multi_pred_tasks/dti/" class=""><code>DTI</code> Drug-Target Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/ddi/" class=""><code>DDI</code> Drug-Drug Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/ppi/" class=""><code>PPI</code> Protein-Protein Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/gdi/" class="is-active"><code>GDA</code> Gene-Disease Association</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/drugres/" class=""><code>DrugRes</code> Drug Response Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/drugsyn/" class=""><code>DrugSyn</code> Drug Synergy Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/peptidemhc/" class=""><code>PeptideMHC</code> Peptide-MHC Binding</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/antibodyaff/" class=""><code>AntibodyAff</code> Antibody-Antigen Affinity</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/mti/" class=""><code>MTI</code> miRNA-Target Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/catalyst/" class=""><code>Catalyst</code> Catalyst Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/tcrepitope" class=""><code>TCREpitopeBinding</code> TCR-Epitope Binding</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/overview/" class=""><strong>Others</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/single_pred_tasks/overview/" class="">Single-instance Prediction Problem</a></li>
+                
+                
+                
+                <li><a href="/generation_tasks/overview/" class="">Generation Problem</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+</aside>
+                </div>
+                
+                <div class="column is-8">
+                    
+                    
+                    
+                    
+    
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#disgenet">DisGeNET</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h1 id="gene-disease-association-prediction-task-overview">Gene-Disease Association Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+
+Many diseases are driven by genes aberrations. Gene-disease associations (GDA) quantify the relation among a pair of gene and disease. The GDA is usually constructed as a network where we can probe the gene-disease mechanisms by taking into account multiple genes and diseases factors. This task is to predict the association of any gene and disease from both a biochemical modeling and network edge classification perspectives.
+
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+A high association between a gene and disease could hint at a potential therapeutics target for the disease. Thus, to fill in the vastly incomplete GDA using machine learning accurately could bring numerous therapeutic opportunities. 
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+Extrapolating to unseen gene and disease pairs with accurate association prediction.
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong>  Any therapeutics. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Basic biomedical research, target discovery.  </p>
+
+</div>
+
+<h3 id="disgenet">DisGeNET</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> DisGeNET is a discovery platform containing one of the largest publicly available collections of genes and variants associated to human diseases. DisGeNET integrates data from expert curated repositories, GWAS catalogues, animal models and the scientific literature. DisGeNET data are homogeneously annotated with controlled vocabularies and community-driven ontologies. TDC uses the curated subset from UNIPROT, CGI, ClinGen, Genomics England, CTD (human subset), PsyGeNET, and Orphanet. TDC maps disease ID to disease definition through MedGen and maps GeneID to uniprot amino acid sequence. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Regression. Given the disease description and the amino acid sequence of the gene, predict their association. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 52,476 gene-disease pairs, 7,399 genes, 7,095 diseases </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">GDA</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">GDA</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DisGeNET'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://academic.oup.com/nar/article-abstract/48/D1/D845/5611674">[1] Piñero, Janet, et al. “The DisGeNET knowledge platform for disease genomics: 2019 update.” Nucleic acids research 48.D1 (2020): D845-D855.
+</a></p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/books/NBK159970/?report=printable">[2] Halavi, Maryam, et al. “MedGen.” The NCBI Handbook [Internet]. 2nd edition. National Center for Biotechnology Information (US), 2018.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</p>
+
+<hr />
+
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+
