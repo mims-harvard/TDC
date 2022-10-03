@@ -18,7 +18,7 @@ class SBDD(base_dataset.DataLoader):
 	"""Data loader class accessing to structure-based drug design task.
 	"""
 	
-	def __init__(self, name, path='./data', print_stats=False, return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F'], save=True):
+	def __init__(self, name, path='./data', print_stats=False, return_pocket=False, threshold=15, remove_protein_Hs=True, remove_ligand_Hs=True, keep_het=False, save=True):
 		"""To create a base dataloader object for structure-based drug design task.
 		
 		Args:
@@ -28,16 +28,24 @@ class SBDD(base_dataset.DataLoader):
 		    return_pocket (bool): whether to return only protein pocket or full protein.
 			threshold (int): only enabled when return_pocket is to True, if pockets are not provided in the raw data, 
 			 				 the threshold is used as a radius for a sphere around the ligand center to consider protein pocket.
-			remove_Hs (int): whether to remove H atoms from protein or not.
+			remove_protein_Hs (bool): whether to remove H atoms from proteins or not.
+			remove_ligand_Hs (bool): whether to remove H atoms from ligands or not.
 			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein.
 			allowed_atom_list (list(str)): atom types allowed to include.
+			save (bool): whether to save preprocessed data and splits.
 		"""
 		from ..metadata import multiple_molecule_dataset_names 
-		protein, ligand = bi_distribution_dataset_load(name, path, multiple_molecule_dataset_names, return_pocket, threshold, remove_Hs, keep_het, allowed_atom_list)
+		try:
+			import biopandas
+		except:
+			raise ImportError("Please install biopandas by 'pip install biopandas'! ")
+		protein, ligand = bi_distribution_dataset_load(name, path, multiple_molecule_dataset_names, return_pocket, threshold, remove_protein_Hs, remove_ligand_Hs, keep_het)
 		if save:
 			np.savez(os.path.join(path, name + '.npz'),
-				protein=protein,
-				ligand=ligand,
+				protein_coord=protein['coord'],
+				protein_atom=protein['atom_type'],
+				ligand_coord=ligand['coord'],
+				ligand_atom=ligand['atom_type'],
     			)
 		self.save = save
 
@@ -49,9 +57,6 @@ class SBDD(base_dataset.DataLoader):
 		self.path = path 
 		self.dataset_names = multiple_molecule_dataset_names
 		self.return_pocket = return_pocket
-		self.remove_Hs = remove_Hs
-		self.keep_het = keep_het
-		self.allowed_atom_list = allowed_atom_list
 		if print_stats: 
 			self.print_stats() 
 		print_sys('Done!')
@@ -98,10 +103,23 @@ class SBDD(base_dataset.DataLoader):
 		splitted_data = create_combination_generation_split(protein, ligand, seed, frac)
 
 		if self.save:
-			np.savez(os.path.join(self.path, self.name + '_split.npz'),
-				train=splitted_data['train'],
-				valid=splitted_data['valid'],
-				test=splitted_data['test']
+			np.savez(os.path.join(self.path, self.name + '_train.npz'),
+				protein_coord=splitted_data['train']['protein_coord'],
+				protein_atom=splitted_data['train']['protein_atom_type'],
+				ligand_coord=splitted_data['train']['ligand_coord'],
+				ligand_atom=splitted_data['train']['ligand_atom_type'],
+    			)
+			np.savez(os.path.join(self.path, self.name + '_valid.npz'),
+				protein_coord=splitted_data['valid']['protein_coord'],
+				protein_atom=splitted_data['valid']['protein_atom_type'],
+				ligand_coord=splitted_data['valid']['ligand_coord'],
+				ligand_atom=splitted_data['valid']['ligand_atom_type'],
+    			)
+			np.savez(os.path.join(self.path, self.name + '_test.npz'),
+				protein_coord=splitted_data['test']['protein_coord'],
+				protein_atom=splitted_data['test']['protein_atom_type'],
+				ligand_coord=splitted_data['test']['ligand_coord'],
+				ligand_atom=splitted_data['test']['ligand_atom_type'],
     			)
 
 		if method == 'random':
