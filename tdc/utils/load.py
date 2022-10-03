@@ -543,7 +543,6 @@ def process_pdbbind(path, name='pdbbind', return_pocket=False, threshold=15, rem
 				else:
 					protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/{file}_protein.pdb"))
 				ligand = Chem.SDMolSupplier(os.path.join(path, f"{file}/{file}_ligand.sdf"), sanitize=False)[0]
-				print (os.path.join(path, f"{file}/{file}_ligand.sdf"))
 				ligand = extract_atom_from_mol(ligand, remove_ligand_Hs)
 				# if ligand contains unallowed atoms
 				if ligand is None:
