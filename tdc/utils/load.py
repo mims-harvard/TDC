@@ -85,18 +85,17 @@ def zip_data_download_wrapper(name, path, dataset_names):
 				os.mkdir(path)
 
 			if os.path.exists(os.path.join(path, name + '-' + str(i+1))):
-				print_sys('Found local copy...')
+				print_sys(f'Found local copy for {i}/{len(name2idlist[name])} file...')
 			else:
-				print_sys('Downloading...')
+				print_sys(f'Downloading {i}/{len(name2idlist[name])} file...')
 				dataverse_download(dataset_path, path, name, name2type, id=i+1)
-				print_sys('Extracting zip file...')
+				print_sys(f'Extracting zip {i}/{len(name2idlist[name])} file...')
 				with ZipFile(os.path.join(path, name + '-' + str(i+1) + '.zip'), 'r') as zip:
 					zip.extractall(path = os.path.join(path))
 		if not os.path.exists(os.path.join(path, name)):
 			os.mkdir(os.path.join(path, name))
 		for i in range(len(name2idlist[name])):
-			print (f"mv {path}/{name}-{i+1}/* {path}/{name}")
-			os.system(f"mv {path}/{name}-{i+1}/* {path}/{name}")
+			os.system(f"mv {path}/{name}-{i+1}/* {path}/{name} 2>/dev/null")
 		print_sys("Done!")
 	else:
 		dataset_path = server_path + str(name2id[name])
@@ -414,7 +413,7 @@ def distribution_dataset_load(name, path, dataset_names, column_name):
 	df = pd_load(name, path)
 	return df[column_name]
 
-def bi_distribution_dataset_load(name, path, dataset_names, return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+def bi_distribution_dataset_load(name, path, dataset_names, return_pocket=False, threshold=15, remove_protein_Hs=True, remove_ligand_Hs=True, keep_het=False):
 	"""a wrapper to download, process and load protein-ligand conditional generation task datasets. assume the downloaded file is already processed
 	
 	Args:
@@ -425,20 +424,24 @@ def bi_distribution_dataset_load(name, path, dataset_names, return_pocket=False,
 	Returns:
 	    pandas.Series: the input list of molecules representation
 	"""
-	name = zip_data_download_wrapper(name, path, dataset_names)
+	name = fuzzy_search(name, dataset_names)
+	if name in name2id or name in name2idlist:
+		name = zip_data_download_wrapper(name, path, dataset_names)
 
 	if name == 'pdbbind':
-		print_sys('Loading...')
-		protein, ligand = process_pdbbind(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
+		print_sys('Processing (this may take long)...')
+		protein, ligand = process_pdbbind(path, name, return_pocket, remove_protein_Hs, remove_ligand_Hs, keep_het)
 	elif name == 'dude':
-		print_sys('Loading...')
-		protein, ligand = process_dude(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
+		print_sys('Processing (this may take long)...')
+		if return_pocket:
+			raise ImportError("DUD-E does not support pocket extraction yet")
+		protein, ligand = process_dude(path, name, return_pocket, remove_protein_Hs, remove_ligand_Hs, keep_het)
 	elif name == 'scpdb':
-		print_sys('Loading...')
-		protein, ligand = process_scpdb(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
+		print_sys('Processing (this may take long)...')
+		protein, ligand = process_scpdb(path, name, return_pocket, remove_protein_Hs, remove_ligand_Hs, keep_het)
 	elif name == 'crossdock':
-		print_sys('Loading...')
-		protein, ligand = process_crossdock(path, name, return_pocket, remove_Hs, keep_het, allowed_atom_list)
+		print_sys('Processing (this may take long)...')
+		protein, ligand = process_crossdock(path, name, return_pocket, remove_protein_Hs, remove_ligand_Hs, keep_het)
 	
 	return protein, ligand
 
@@ -501,7 +504,7 @@ def bm_group_load(name, path):
 	return name
 
 
-def process_pdbbind(path, name='pdbbind', return_pocket=False, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+def process_pdbbind(path, name='pdbbind', return_pocket=False, threshold=15, remove_protein_Hs=True, remove_ligand_Hs=True, keep_het=False):
 	"""a processor to process pdbbind dataset
 		
 		Args:
@@ -511,56 +514,57 @@ def process_pdbbind(path, name='pdbbind', return_pocket=False, remove_Hs=True, k
 		    return_pocket (bool): whether to return only protein pocket or full protein
 			threshold (int): only enabled when return_pocket is to True, if pockets are not provided in the raw data,
 			 				 the threshold is used as a radius for a sphere around the ligand center to consider protein pocket
-			remove_Hs (int): whether to remove H atoms from protein or not
+			remove_protein_Hs (bool): whether to remove H atoms from proteins or not
+			remove_ligand_Hs (bool): whether to remove H atoms from ligands or not
 			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
-			allowed_atom_list (list(str)): atom types allowed to include
 		
 		Returns:
 			protein (dict): a dict of protein features
 			ligand (dict): a dict of ligand features
 	"""
-	try:
-		from biopandas.pdb import PandasPdb
-	except:
-		raise ImportError("Please install biopandas by 'pip install biopandas'! ")
-	from rdkit import Chem
+	from rdkit import Chem, RDLogger
+	RDLogger.DisableLog('rdApp.*') 
+	from biopandas.pdb import PandasPdb
+	
 	if os.path.exists(path):
 		print_sys("Processing...")	
 		protein_coords, protein_atom_types = [], []
 		ligand_coords, ligand_atom_types = [], []
 		files = os.listdir(path)
 		failure = 0
+		total_ct = 0
 		for idx, file in enumerate(tqdm(files)):
 			if file == 'readme' or file == 'index':
 				continue
+			total_ct += 1
 			try:
 				if return_pocket:
 					protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/{file}_pocket.pdb"))
 				else:
 					protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/{file}_protein.pdb"))
 				ligand = Chem.SDMolSupplier(os.path.join(path, f"{file}/{file}_ligand.sdf"), sanitize=False)[0]
-				ligand = extract_atom_from_mol(ligand, allowed_atom_list)
-                # if ligand contains unallowed atoms
+				ligand = extract_atom_from_mol(ligand, remove_ligand_Hs)
+				# if ligand contains unallowed atoms
 				if ligand is None:
 					continue
 				else:
 					ligand_coord, ligand_atom_type = ligand 
-				protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_Hs, keep_het, allowed_atom_list)
+				protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_protein_Hs, keep_het)
 				protein_coords.append(protein_coord)
 				ligand_coords.append(ligand_coord)
 				protein_atom_types.append(protein_atom_type)
 				ligand_atom_types.append(ligand_atom_type)
 			except:
 				failure += 1
-				print ('failure', failure)
 				continue
+		print_sys(f"processing done, {failure}/{total_ct} fails")
 		protein = {"coord": protein_coords, "atom_type": protein_atom_types}
 		ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
 	else:
 		sys.exit("Wrong path!")
 	return protein, ligand
 
-def process_crossdock(path, name='crossdock', return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+def process_crossdock(path, name='crossdock', return_pocket=False, threshold=15, remove_protein_Hs=True, remove_ligand_Hs=True, keep_het=False):
 	"""a processor to process crossdock dataset
 		
 		Args:
@@ -570,27 +574,28 @@ def process_crossdock(path, name='crossdock', return_pocket=False, threshold=15,
 		    return_pocket (bool): whether to return only protein pocket or full protein
 			threshold (int): only enabled when return_pocket is to True, if pockets are not provided in the raw data,
 			 				 the threshold is used as a radius for a sphere around the ligand center to consider protein pocket
-			remove_Hs (int): whether to remove H atoms from protein or not
+			remove_protein_Hs (bool): whether to remove H atoms from proteins or not
+			remove_ligand_Hs (bool): whether to remove H atoms from ligands or not
 			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
-			allowed_atom_list (list(str)): atom types allowed to include
 		
 		Returns:
 			protein (dict): a dict of protein features
 			ligand (dict): a dict of ligand features
 	"""
-	try:
-		from biopandas.pdb import PandasPdb
-	except:
-		raise ImportError("Please install biopandas by 'pip install biopandas'! ")
-	from rdkit import Chem
+	from rdkit import Chem, RDLogger
+	RDLogger.DisableLog('rdApp.*') 
+	from biopandas.pdb import PandasPdb
+
 	protein_coords, protein_atom_types = [], []
 	ligand_coords, ligand_atom_types = [], []
 	failure = 0
+	total_ct = 0
 	path = os.path.join(path, name)
 	index_path = os.path.join(path, 'index.pkl')
 	index = pickle.load(open(index_path, 'rb'))
 	path = os.path.join(path, 'crossdocked_pocket10')
 	for idx, (pocket_fn, ligand_fn, _, rmsd) in enumerate(tqdm(index)):
+		total_ct += 1
 		if pocket_fn is None or ligand_fn is None:
 			continue
 		try:
@@ -600,25 +605,25 @@ def process_crossdock(path, name='crossdock', return_pocket=False, threshold=15,
 				# full protein not stored in the preprocessed crossdock by Luo et al 2021
 				protein = PandasPdb().read_pdb(os.path.join(path, pocket_fn))
 			ligand = Chem.SDMolSupplier(os.path.join(path, ligand_fn), sanitize=False)[0]
-			ligand = extract_atom_from_mol(ligand, allowed_atom_list)
+			ligand = extract_atom_from_mol(ligand, remove_ligand_Hs)
 			if ligand is None:
 				continue
 			else:
 				ligand_coord, ligand_atom_type = ligand 
-			protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_Hs, keep_het, allowed_atom_list)
+			protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_protein_Hs, keep_het)
 			protein_coords.append(protein_coord)
 			ligand_coords.append(ligand_coord)
 			protein_atom_types.append(protein_atom_type)
 			ligand_atom_types.append(ligand_atom_type)
 		except:
 			failure += 1
-			print ('failure', failure)
 			continue
+	print_sys(f"processing done, {failure}/{total_ct} fails")
 	protein = {"coord": protein_coords, "atom_type": protein_atom_types}
 	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
 	return protein, ligand
 
-def process_dude(path, name='dude', return_pocket=False, threshold=15, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+def process_dude(path, name='dude', return_pocket=False, threshold=15, remove_protein_Hs=True, remove_ligand_Hs=True, keep_het=False):
 	"""a processor to process DUD-E dataset
 		
 		Args:
@@ -628,48 +633,44 @@ def process_dude(path, name='dude', return_pocket=False, threshold=15, remove_Hs
 		    return_pocket (bool): whether to return only protein pocket or full protein
 			threshold (int): only enabled when return_pocket is to True, if pockets are not provided in the raw data,
 			 				 the threshold is used as a radius for a sphere around the ligand center to consider protein pocket
-			remove_Hs (int): whether to remove H atoms from protein or not
+			remove_protein_Hs (bool): whether to remove H atoms from proteins or not
+			remove_ligand_Hs (bool): whether to remove H atoms from ligands or not
 			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
-			allowed_atom_list (list(str)): atom types allowed to include
 		
 		Returns:
 			protein (dict): a dict of protein features
 			ligand (dict): a dict of ligand features
 	"""
-	try:
-		from biopandas.pdb import PandasPdb
-	except:
-		raise ImportError("Please install biopandas by 'pip install biopandas'! ")
-	from rdkit import Chem
+	from rdkit import Chem, RDLogger
+	RDLogger.DisableLog('rdApp.*') 
+	from biopandas.pdb import PandasPdb
+
 	protein_coords, protein_atom_types = [], []
 	ligand_coords, ligand_atom_types = [], []
 	path = os.path.join(path, name)
 	files = os.listdir(path)
 	failure = 0
+	total_ct = 0
 	for idx, file in enumerate(tqdm(files)):
 		protein = PandasPdb().read_pdb(os.path.join(path, f"{file}/receptor.pdb"))
 		if not os.path.exists(os.path.join(path, f"{file}/actives_final.sdf")):
 			os.system(f'gzip -d {path}/{file}/actives_final.sdf.gz')
 		crystal_ligand = Chem.MolFromMol2File(os.path.join(path, f"{file}/crystal_ligand.mol2"), sanitize=False)
-		crystal_ligand = extract_atom_from_mol(crystal_ligand, allowed_atom_list)
+		crystal_ligand = extract_atom_from_mol(crystal_ligand, remove_ligand_Hs)
 		if crystal_ligand is None:
 			continue
 		else:
 			crystal_ligand_coord, crystal_ligand_atom_type = crystal_ligand 
 		ligands = Chem.SDMolSupplier(os.path.join(path, f"{file}/actives_final.sdf"), sanitize=False)
-		protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_Hs, keep_het, allowed_atom_list)
-		if return_pocket:
-			lig_center = crystal_ligand_coord.mean(axis=0)
-			protein_atom_dist_to_lig = np.sqrt(np.sum(np.square(protein_coord-lig_center),axis=-1))
-			protein_mask = protein_atom_dist_to_lig <= threshold 
-			protein_coord = protein_coord[protein_mask]
+		protein_coord, protein_atom_type = extract_atom_from_protein(protein.df["ATOM"], protein.df["HETATM"], remove_protein_Hs, keep_het)
 		protein_coords.append(protein_coord)
 		ligand_coords.append(crystal_ligand_coord)
 		protein_atom_types.append(protein_atom_type)
 		ligand_atom_types.append(crystal_ligand_atom_type)
 		for ligand in ligands:
+			total_ct += 1
 			try:
-				ligand = extract_atom_from_mol(ligand, allowed_atom_list)
+				ligand = extract_atom_from_mol(ligand, remove_ligand_Hs)
 				# if ligand contains unallowed atoms
 				if ligand is None:
 					continue
@@ -681,13 +682,13 @@ def process_dude(path, name='dude', return_pocket=False, threshold=15, remove_Hs
 				ligand_atom_types.append(ligand_atom_type)
 			except:
 				failure += 1
-				print ('failure', failure)
 				continue
+	print_sys(f"processing done, {failure}/{total_ct} fails")
 	protein = {"coord": protein_coords, "atom_type": protein_atom_types}
 	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
 	return protein, ligand
 
-def process_scpdb(path, name='scPDB', return_pocket=False, remove_Hs=True, keep_het=False, allowed_atom_list = ['C', 'N', 'O', 'S', 'H', 'B', 'Br', 'Cl', 'P', 'I', 'F']):
+def process_scpdb(path, name='scPDB', return_pocket=False, threshold=15, remove_protein_Hs=True, remove_ligand_Hs=True, keep_het=False):
 	"""a processor to process scpdb dataset
 		
 		Args:
@@ -697,46 +698,47 @@ def process_scpdb(path, name='scPDB', return_pocket=False, remove_Hs=True, keep_
 		    return_pocket (bool): whether to return only protein pocket or full protein
 			threshold (int): only enabled when return_pocket is to True, if pockets are not provided in the raw data,
 			 				 the threshold is used as a radius for a sphere around the ligand center to consider protein pocket
-			remove_Hs (int): whether to remove H atoms from protein or not
+			remove_protein_Hs (bool): whether to remove H atoms from proteins or not
+			remove_ligand_Hs (bool): whether to remove H atoms from ligands or not
 			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
-			allowed_atom_list (list(str)): atom types allowed to include
 		
 		Returns:
 			protein (dict): a dict of protein features
 			ligand (dict): a dict of ligand features
 	"""
-	try:
-		from biopandas.mol2 import PandasMol2
-	except:
-		raise ImportError("Please install biopandas by 'pip install biopandas'! ")
-	from rdkit import Chem
+	from rdkit import Chem, RDLogger
+	RDLogger.DisableLog('rdApp.*') 
+	from biopandas.mol2 import PandasMol2
+
 	protein_coords, protein_atom_types = [], []
 	ligand_coords, ligand_atom_types = [], []
 	path = os.path.join(path, name)
 	files = os.listdir(path)
 	failure = 0
+	total_ct = 0
 	for idx, file in enumerate(tqdm(files)):
+		total_ct += 1
 		try:
 			if return_pocket:
 				protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/site.mol2"))
 			else:
 				protein = PandasMol2().read_mol2(os.path.join(path, f"{file}/protein.mol2"))
 			ligand = Chem.SDMolSupplier(os.path.join(path, f"{file}/ligand.sdf"), sanitize=False)[0]
-			ligand = extract_atom_from_mol(ligand, allowed_atom_list)
+			ligand = extract_atom_from_mol(ligand, remove_Hs=remove_ligand_Hs)
 			# if ligand contains unallowed atoms
 			if ligand is None:
 				continue
 			else:
 				ligand_coord, ligand_atom_type = ligand 
-			protein_coord, protein_atom_type = extract_atom_from_protein(protein.df, None, remove_Hs=remove_Hs, keep_het=False, allowed_atom_list=allowed_atom_list)
+			protein_coord, protein_atom_type = extract_atom_from_protein(protein.df, None, remove_Hs=remove_protein_Hs, keep_het=False)
 			protein_coords.append(protein_coord)
 			ligand_coords.append(ligand_coord)
 			protein_atom_types.append(protein_atom_type)
 			ligand_atom_types.append(ligand_atom_type)
 		except:
 			failure += 1
-			print ('failure', failure)
 			continue
+	print_sys(f"processing done, {failure}/{total_ct} fails")
 	protein = {"coord": protein_coords, "atom_type": protein_atom_types}
 	ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
 	return protein, ligand
@@ -757,39 +759,40 @@ def atom_to_one_hot(atom, allowed_atom_list):
 	new_atom[atom] = 1
 	return new_atom
 
-def extract_atom_from_mol(rdmol, allowed_atom_list):
+def extract_atom_from_mol(rdmol, remove_Hs):
 	"""a helper to extract molecule atom information 
 
 		Args:
 			rdmol (rdkit.rdmol): rdkit molecule
-			allowed_atom_list (list(str)): atom types allowed to include
+			remove_Hs (bool): whether to remove H atoms from ligands or not
 
 		Returns:
 			coord (numpy.array): atom types
 			atom_type (numpy.array): atom coordinates
 	"""
-	for atom in rdmol.GetAtoms():
-		if atom.GetSymbol() not in allowed_atom_list:
-			return None
-	coord = [list(rdmol.GetConformer(0).GetAtomPosition(idx)) for idx in range(rdmol.GetNumAtoms())]
-	atom_type = [atom_to_one_hot(atom.GetSymbol(), allowed_atom_list) for atom in rdmol.GetAtoms()]
+	coord = [list(rdmol.GetConformer(0).GetAtomPosition(idx)) for idx in range(rdmol.GetNumAtoms()) if not remove_Hs or rdmol.GetAtomWithIdx(idx).GetAtomicNum() != 1]
+	atom_type = [atom.GetAtomicNum() for atom in rdmol.GetAtoms() if not remove_Hs or atom.GetAtomicNum() != 1]
 	return np.array(coord), np.array(atom_type)
 
-def extract_atom_from_protein(data_frame, data_frame_het, remove_Hs, keep_het, allowed_atom_list):
+def extract_atom_from_protein(data_frame, data_frame_het, remove_Hs, keep_het):
 	"""a helper to extract protein atom information
 
 		Args:
 			data_frame (pandas.dataframe): protein atom 
 			data_frame_het (pandas.dataframe): protein het atom
-			remove_Hs (int): whether to remove H atoms from protein or not
+			remove_Hs (bool): whether to remove H atoms from proteins or not
 			keep_het (bool): whether to keep het atoms (e.g. cofactors) in protein
-			allowed_atom_list (list(str)): atom types allowed to include
 
 		Returns:
 			coord (numpy.array): atom types
 			atom_type (numpy.array): atom coordinates
 	"""
-	if keep_het:
+	from rdkit import RDLogger
+	from rdkit.Chem import GetPeriodicTable
+	RDLogger.DisableLog('rdApp.*')   
+
+	periodic_table = GetPeriodicTable()
+	if keep_het and data_frame_het is not None:
 		data_frame = pd.concat([data_frame, data_frame_het])
 	if remove_Hs:
 		data_frame = data_frame[data_frame["atom_name"].str.startswith("H") == False]
@@ -802,11 +805,15 @@ def extract_atom_from_protein(data_frame, data_frame_het, remove_Hs, keep_het, a
 	z = np.expand_dims(z, axis=1)
 	coord = np.concatenate((x,y,z), axis=1)
 	atom_type = data_frame['atom_name'].to_numpy()
-	atom_type = [
-                atom_to_one_hot(atom[0], allowed_atom_list)
-                for atom in atom_type if atom in allowed_atom_list
-            ]
-	return coord, np.array(atom_type)
+	ret_atom_type, ret_coord = [], []
+	for i, atom in enumerate(atom_type):
+		try:
+			ret_atom_type.append(periodic_table.GetAtomicNumber(atom[0]))
+			ret_coord.append(coord[i])
+		except:
+			continue
+	return np.array(ret_coord), np.array(ret_atom_type)
+
 def general_load(name, path, sep):
 	"""a wrapper to download, process and load any pandas dataframe files
 	
