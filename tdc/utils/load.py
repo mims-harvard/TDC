@@ -85,11 +85,11 @@ def zip_data_download_wrapper(name, path, dataset_names):
 				os.mkdir(path)
 
 			if os.path.exists(os.path.join(path, name + '-' + str(i+1))):
-				print_sys(f'Found local copy for {i}/{len(name2idlist[name])} file...')
+				print_sys(f'Found local copy for {i+1}/{len(name2idlist[name])} file...')
 			else:
-				print_sys(f'Downloading {i}/{len(name2idlist[name])} file...')
+				print_sys(f'Downloading {i+1}/{len(name2idlist[name])} file...')
 				dataverse_download(dataset_path, path, name, name2type, id=i+1)
-				print_sys(f'Extracting zip {i}/{len(name2idlist[name])} file...')
+				print_sys(f'Extracting zip {i+1}/{len(name2idlist[name])} file...')
 				with ZipFile(os.path.join(path, name + '-' + str(i+1) + '.zip'), 'r') as zip:
 					zip.extractall(path = os.path.join(path))
 		if not os.path.exists(os.path.join(path, name)):
