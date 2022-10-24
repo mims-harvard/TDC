@@ -237,6 +237,8 @@
       <li><a href="#novelty">Novelty</a></li>
       <li><a href="#validity">Validity</a></li>
       <li><a href="#uniqueness">Uniqueness</a></li>
+      <li><a href="#rmsd">RMSD</a></li>
+      <li><a href="#kabsch-rmsd">Kabsch-RMSD</a></li>
     </ul>
   </li>
 </ul>
@@ -593,6 +595,32 @@
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
+
+<hr />
+
+<h3 id="rmsd">RMSD</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> RMSD measures the average distance between the atoms of two structures. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'rmsd'</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">structure1</span><span class="p">,</span> <span class="n">structure2</span><span class="p">)</span> <span class="c1"># structures of shape [N particles, 3]
+</span></code></pre></div></div>
+<hr />
+
+<h3 id="kabsch-rmsd">Kabsch-RMSD</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> Kabsch-RMSD measures the average distance between the atoms of two structures after superimposing by the Kabsch algorithm [1]. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'kabsch_rmsd'</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">structure1</span><span class="p">,</span> <span class="n">structure2</span><span class="p">)</span> <span class="c1"># structures of shape [N particles, 3]
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="http://scripts.iucr.org/cgi-bin/paper?S0567739476001873">[1]  Kabsch, W., 1976. A solution for the best rotation to relate two sets of vectors. Acta Crystallographica Section A: Crystal Physics, Diffraction, Theoretical and General Crystallography, 32(5), pp.922-923
+ </a></p>
 
 <hr />
 

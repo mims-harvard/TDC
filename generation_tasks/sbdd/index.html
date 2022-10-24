@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Molecule Generation - TDC</title>
+    <title>Structure-based Drug Design - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Molecule Generation | TDC</title>
+<title>Structure-based Drug Design | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Molecule Generation" />
+<meta property="og:title" content="Structure-based Drug Design" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Machine Learning Datasets for Therapeutics" />
 <meta property="og:description" content="Machine Learning Datasets for Therapeutics" />
-<link rel="canonical" href="http://localhost:4000/generation_tasks/molgen/" />
-<meta property="og:url" content="http://localhost:4000/generation_tasks/molgen/" />
+<link rel="canonical" href="http://localhost:4000/generation_tasks/sbdd/" />
+<meta property="og:url" content="http://localhost:4000/generation_tasks/sbdd/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/generation_tasks/molgen/","headline":"Molecule Generation","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/generation_tasks/sbdd/","headline":"Structure-based Drug Design","description":"Machine Learning Datasets for Therapeutics","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -154,7 +154,7 @@
             <ul>
                 
                 
-                <li><a href="/generation_tasks/molgen/" class="is-active"><code>MolGen</code> Molecule Generation</a></li>
+                <li><a href="/generation_tasks/molgen/" class=""><code>MolGen</code> Molecule Generation</a></li>
                 
                 
                 
@@ -166,7 +166,7 @@
                 
                 
                 
-                <li><a href="/generation_tasks/sbdd/" class=""><code>SBDD</code> Structure-based Drug Design</a></li>
+                <li><a href="/generation_tasks/sbdd/" class="is-active"><code>SBDD</code> Structure-based Drug Design</a></li>
                 
                 
             </ul>
@@ -212,9 +212,10 @@
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
-  <li><a href="#moses">MOSES</a></li>
-  <li><a href="#zinc">ZINC</a></li>
-  <li><a href="#chembl">ChEMBL</a></li>
+  <li><a href="#pdbbind">PDBBind</a></li>
+  <li><a href="#dud-e">DUD-E</a></li>
+  <li><a href="#scpdb">scPDB</a></li>
+  <li><a href="#crossdock">CrossDock</a></li>
 </ul>
     </div>
 </div>
@@ -223,22 +224,20 @@
 
 
 <div class="content">
-    <h1 id="molecule-generation-task-overview">Molecule Generation Task Overview</h1>
+    <h1 id="structure-based-drug-design-task-overview">Structure-based Drug Design Task Overview</h1>
 
 <div class="box">
 	
 
 <p class="is-size-6">  <strong> Definition: </strong> 
- Molecule Generation is to generate diverse, novel molecules that has desirable chemical properties. These properties are measured by oracle functions. A machine learning task first learns the molecular characteristics from a large set of molecules where each is evaluated through the oracles. Then, from the learned distribution, we can obtain novel candidates.
-</p>
+ Structure-based Drug Design is to generate diverse, novel molecules that have high binding affinity to protein pockets (3D structures) and desirable chemical properties. These properties are measured by oracle functions. A machine learning task first learns the molecular characteristics given specific protein pockets from a large set of protein-ligand pair data. Then, from the learned conditional distribution, we can sample novel candidates.</p>
 
 <p class="is-size-6"> <strong> Impact: </strong>  
-As the entire chemical space is far too large to screen for each target, high through screening can only be restricted to a set of existing molecule library. Many novel drug candidates are thus usually omitted. A machine learning that can generate novel molecule obeying some pre-defined optimal properties can circumvent this problem and obtain novel class of candidates.
-
+ Designing a new drug candidate taking account into its structure and potential interaction with biological targets is of great importance to drug design (often referred as to structure-based drug design). Recent advances in machine learning, especially geometric deep learning have brought a new set of tools and a new wave for modeling highly structural data (including 3D biomolecular structures). Thus, structure-based drug design task is potentially of interest to both ML methodological advancements and applications in drug design.
 </p>
 
 <p class="is-size-6"> <strong> Generalization: </strong> 
-The generated molecules have to obtain superior properties given a range of structurally diverse drugs. Besides, the generated molecules have to suffice other basic properties, such as synthesizablility and low off-target effects.
+The generated molecules have to obtain superior properties given a range of high binding affinity, and structurally diverse drugs. Besides, the generated molecules have to suffice other basic properties, such as synthesizablility and drug-likeness. 
 </p>
 
 <p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
@@ -247,96 +246,106 @@ The generated molecules have to obtain superior properties given a range of stru
 
 </div>
 
-<h3 id="moses">MOSES</h3>
+<h3 id="pdbbind">PDBBind</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> Molecular Sets (MOSES) is a benchmark platform for distribution learning based molecule generation. Within this benchmark, MOSES provides a cleaned dataset of molecules that are ideal of optimization. It is processed from the ZINC Clean Leads dataset. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> PDBBind is a comprehensive database extracted from PDB with experimentally measured binding affinity data for protein-ligand complexes. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> For both distribution learning-based and goal-oriented molecule generation. That is to generate new molecules that has desirable properties measured by some oracles. </p>
+<p class="is-size-6">  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
 
-<p class="is-size-6">  <strong> Note: </strong> Please visit the <a href="/TDC/functions/oracles"> this page </a> for various goal-oriented learning oracles calculations and <a href="/TDC/functions/data_evaluation/#molecule-generation-metrics">this page</a> for distribution learning metrics. </p>
+<p class="is-size-6">  <strong> Note: </strong> : PDBBind does not allow re-distribution of the dataset in any format, thus, we could not host it in TDC server. However, since it requires significant processing to make the dataset ML ready, we provide an alternative route to do it. The user only needs to register in <a href="http://www.pdbbind.org.cn/"> http://www.pdbbind.org.cn/ </a> and download the raw dataset, and then provide the local path, TDC will then automatically detect the path and transform it to ML-ready format into the TDC dataloader.
+ </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,936,962 molecules. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 19,445 protein-ligand pairs. </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">MolGen</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">MolGen</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MOSES'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">SBDD</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">SBDD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'PDBBind'</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">'./pdbbind'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
+<p><a href="http://pubs.acs.org/doi/abs/10.1021/jm030580l">[1] Wang, Renxiao, Xueliang Fang, Yipin Lu, and Shaomeng Wang. “The PDBbind database: Collection of binding affinities for protein−ligand complexes with known three-dimensional structures.” Journal of medicinal chemistry 47, no. 12 (2004): 2977-2980.  </a></p>
 
-<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.5b00559"> [2] Sterling, Teague, and John J. Irwin. “ZINC 15–ligand discovery for everyone.” Journal of chemical information and modeling 55.11 (2015): 2324-2337.
-</a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</p>
+<p class="is-size-6"> <strong> Dataset License: </strong> See note above.</p>
 
 <hr />
 
-<h3 id="zinc">ZINC</h3>
+<h3 id="dud-e">DUD-E</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> ZINC is a free database of commercially-available compounds for virtual screening. It contains over 230 million purchasable compounds in ready-to-dock, 3D formats. TDC uses a 250,000 sampled version from the original Mol-VAE paper. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> DUD-E provides a directory of useful decoys for protein-ligand docking. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> For both distribution learning-based and goal-oriented molecule generation. That is to generate new molecules that has desirable properties measured by some oracles. </p>
+<p class="is-size-6">  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
 
-<p class="is-size-6">  <strong> Note: </strong> Please visit the <a href="/TDC/functions/oracles"> this page </a> for various goal-oriented learning oracles calculations and <a href="/TDC/functions/data_evaluation/#molecule-generation-metrics">this page</a> for distribution learning metrics. </p>
+<p class="is-size-6">  <strong> Note: </strong> : DUD-E does not support pocket extraction as protein and ligand are not aligned.</p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 249,455 molecules. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 22,886 active compounds and affinities against 102 targets </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">MolGen</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">MolGen</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ZINC'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">SBDD</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">SBDD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'dude'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.5b00559"> [1] Sterling, Teague, and John J. Irwin. “ZINC 15–ligand discovery for everyone.” Journal of chemical information and modeling 55.11 (2015): 2324-2337.
-</a></p>
+<p><a href="https://pubs.acs.org/doi/10.1021/jm300687e">[1] Mysinger, M.M., Carchia, M., Irwin, J.J. and Shoichet, B.K., 2012. Directory of useful decoys, enhanced (DUD-E): better ligands and decoys for better benchmarking. Journal of medicinal chemistry, 55(14), pp.6582-6594.  </a></p>
 
-<p><a href="https://pubs.acs.org/doi/abs/10.1021/acscentsci.7b00572">[2] Gómez-Bombarelli, Rafael, et al. “Automatic chemical design using a data-driven continuous representation of molecules.” ACS central science 4.2 (2018): 268-276.
- </a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> ZINC is free to use for everyone. Redistribution of significant subsets requires written permission from the authors.</p>
+<p class="is-size-6"> <strong> Dataset License: </strong> Not specified.</p>
 
 <hr />
 
-<h3 id="chembl">ChEMBL</h3>
+<h3 id="scpdb">scPDB</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> ChEMBL is a manually curated database of bioactive molecules with drug-like properties. It brings together chemical, bioactivity and genomic data to aid the translation of genomic information into effective new drugs. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong>  scPDB is processed from PDB for structure-based drug design that identifies suitable binding site for protein-ligand docking. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> For both distribution learning-based and goal-oriented molecule generation. That is to generate new molecules that has desirable properties measured by some oracles. </p>
+<p class="is-size-6">  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
 
-<p class="is-size-6">  <strong> Note: </strong> Please visit the <a href="/TDC/functions/oracles"> this page </a> for various goal-oriented learning oracles calculations and <a href="/TDC/functions/data_evaluation/#molecule-generation-metrics">this page</a> for distribution learning metrics. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,961,462 molecules. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 16,034 protein-ligand pairs over 4,782 proteins and 6,326 ligands </p>
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">MolGen</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">MolGen</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ChEMBL'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> Note: </strong> Starting <code>0.3.5</code>, ChEMBL-29 version is also available. It has 2084723 compounds. You can retrieve it by calling: </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">MolGen</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">MolGen</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ChEMBL_V29'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">SBDD</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">SBDD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'scPDB'</span><span class="p">)</span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://academic.oup.com/nar/article-abstract/47/D1/D930/5162468"> [1] Mendez, David, et al. “ChEMBL: towards direct deposition of bioassay data.” Nucleic acids research 47.D1 (2019): D930-D940.
-</a></p>
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/21398668/">[1]Meslamani, J., Rognan, D. and Kellenberger, E., 2011. sc-PDB: a database for identifying variations and multiplicity of ‘druggable’ binding sites in proteins. Bioinformatics, 27(9), pp.1324-1326.  </a></p>
 
-<p><a href="https://academic.oup.com/nar/article-abstract/43/W1/W612/2467881">[2] Davies, Mark, et al. “ChEMBL web services: streamlining access to drug discovery data and utilities.” Nucleic acids research 43.W1 (2015): W612-W620.
+<p class="is-size-6"> <strong> Dataset License: </strong> Not specified.</p>
+
+<hr />
+
+<h3 id="crossdock">CrossDock</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong>   CrossDock provides binding poses of ligands docked into binding pockets across PDB. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
+
+<p class="is-size-6">  <strong> Note: </strong> : The subset of crossdock [1] is provided by [2]. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 184,057 protein-ligand pairs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">SBDD</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">SBDD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'crossdock'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/32865404/">[1]Francoeur, P.G., Masuda, T., Sunseri, J., Jia, A., Iovanisci, R.B., Snyder, I. and Koes, D.R., 2020. Three-dimensional convolutional neural networks and a cross-docked data set for structure-based drug design. Journal of chemical information and modeling, 60(9), pp.4200-4215. </a></p>
+
+<p><a href="https://openreview.net/forum?id=yDwfVD_odRo">[2] Luo, S., Guan, J., Ma, J. and Peng, J., 2022. A 3D Molecule Generative Model for Structure-Based Drug Design. arXiv preprint arXiv:2203.10446.
+License: Not specified.
  </a></p>
 
-<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.</p>
+<p class="is-size-6"> <strong> Dataset License: </strong> Not specified.</p>
 
 <hr />
 
