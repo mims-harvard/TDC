@@ -48,36 +48,6 @@ TDC is an open-science initiative. We welcome [contributions from the community.
 
 [11] Zitnik, Graph Neural Networks for Identifying COVID-19 Drug Repurposing Opportunities, [MIT AI Cures, 2020](https://www.aicures.mit.edu/drugdiscoveryconference)
 
-## Updates
-- `0.3.7`: New evaluation metrics, data loaders, support for graphein protein 3D representations to enable antibody develop-ability prediction. Check out [TDC News](https://tdcommons.ai/news/) for more information!
-- `0.3.6`: Add a new task on TCR-Epitope Binding! See [here](https://tdcommons.ai/multi_pred_tasks/tcrepitope/)!
-- `0.3.5`: 1. Add hERG central dataset 2. Add ChEMBL V29 3. Fixed reaction type issue for USPTO-50 4. Fix bug on higher order multi-instance prediction cold-split! More information, see [here](https://tdcommons.ai/news/)!
-- `0.3.4`: Bug fixes on docking oracles, KL divergence measure, see commit [0f7121a](https://github.com/mims-harvard/TDC/commit/0f7121a3bd7cb833fb55441054d7d87ff3c4ebd6) and commit [6e46fbd](https://github.com/mims-harvard/TDC/commit/6e46fbd1a946b3a6b9f7ba456d60dc09480c68b9)!
-- `0.3.3`: Extended support on cold split - now you can split based on multiple entities, see [#127](https://github.com/mims-harvard/TDC/pull/127)!
-- `0.3.2`: Bug fixes - Adding support for harmonizing same DTIs with different affinities (KIBA, DAVIS Updated accordingly, see [#98](https://github.com/mims-harvard/TDC/issues/98)). Support label name retrieval for TWOSIDES ([#121](https://github.com/mims-harvard/TDC/issues/121)), and add gene symbol info to GDSC ([#122](https://github.com/mims-harvard/TDC/issues/122)). 
-- `0.3.1`: We have restructured the codebase to be contributor-friendly! Checkout the TDC documentation at [https://tdc.readthedocs.io](https://tdc.readthedocs.io/)!
-- TDC paper is accepted to [NeurIPS 2021 Datasets and Benchmarks](https://openreview.net/pdf?id=8nvgnORnoWr)
-- `0.2.0`: Release docking molecule generation benchmark! Checkout [here](https://tdcommons.ai/benchmark/docking_group/overview/)!
-- `0.1.9`: Support molecule filters! Checkout [here](https://tdcommons.ai//functions/data_process/#molecule-filters)!
-- `0.1.8`: Streamlined and simplified the leaderboard programming frameworks! Now, you can submit a result for a single dataset! Checkout [here](https://tdcommons.ai/benchmark/overview/)!
-- TDC white paper is alive on [arXiv](https://arxiv.org/abs/2102.09548)!
-
-<details>
-  <summary>Click here for older updates!</summary>
-
-- `0.1.6`: Released the second leaderboard on drug combination screening prediction! Checkout [here](https://tdcommons.ai/benchmark/drugcombo_group/)!
-- `0.1.5`: Added four realistic oracles from docking scores and synthetic accessibility! Checkout [here](https://tdcommons.ai/functions/oracles/)!
-- `0.1.4`: Added the 1st version of [`MolConvert`](https://tdcommons.ai/functions/data_process/#molecule-conversion) class that can map among ~15 molecular formats in 2 lines of code (For 2D: from SMILES/SEFLIES and convert to SELFIES/SMILES, Graph2D, PyG, DGL, ECFP2-6, MACCS, Daylight, RDKit2D, Morgan, PubChem; For 3D: from XYZ, SDF files to Graph3D, Columb Matrix); Also a quality check on DTI datasets with IDs added.
-- Checkout **[Contribution Guide](CONTRIBUTE.md)** to add new dataset, task, function!
-- `0.1.3`: Added new therapeutics task on CRISPR Repair Outcome Prediction! Added a data function to map molecule to popular cheminformatics fingerprint.
-- `0.1.2`: The first TDC Leaderboard is released! Checkout the leaderboard guide [here](https://tdcommons.ai/benchmark/overview/) and the ADMET Leaderboard [here](https://tdcommons.ai/benchmark/admet_group/).
-- `0.1.1`: Replaced VD, Half Life and Clearance datasets from new sources that have higher qualities. Added LD50 to Tox.
-- `0.1.0`: Molecule quality check for ADME, Toxicity and HTS (canonicalized, and remove error mols).
-- `0.0.9`: Added DrugComb NCI-60, CYP2C9/2D6/3A4 substrates, Carcinogens toxicity! 
-- `0.0.8`: Added hREG, DILI, Skin Reaction, Ames Mutagenicity, PPBR from AstraZeneca; added meta oracles!
-
-</details>
-
 
 ## Unique Features of TDC
 
@@ -88,6 +58,8 @@ TDC is an open-science initiative. We welcome [contributions from the community.
 - *Open-source initiative*: TDC is an open-source initiative. If you want to get involved, let us know. 
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
+
+See [here](https://tdcommons.ai/news/) for the latest updates in TDC!
 
 ## Installation
 
