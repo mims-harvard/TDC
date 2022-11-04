@@ -7,7 +7,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from . import single_pred_dataset
-from ..utils import print_sys, fuzzy_search
+from ..utils import print_sys, fuzzy_search, property_dataset_load
 from ..metadata import dataset_names
 
 
@@ -50,6 +50,13 @@ class ADME(single_pred_dataset.DataLoader):
             self.print_stats()
         print('Done!', flush = True, file = sys.stderr)
 
+    def get_approved_set(self):
+        import pandas as pd
+        if self.name not in ['pampa_ncats']:
+             raise ValueError('This function is only available for PAMPA_NCATS dataset')
+        entity1, y, entity1_idx = property_dataset_load('approved_pampa_ncats', self.path, None, dataset_names["ADME"])
+        return pd.DataFrame({'Drug_ID': entity1_idx, 'Drug': entity1, 'Y': y})
+           
 
     def get_other_species(self, species = None):
         
