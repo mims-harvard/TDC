@@ -397,13 +397,6 @@ class Oracle:
 		elif self.name == 'kl_divergence':
 			from .chem_utils import kl_divergence 
 			self.evaluator_func = kl_divergence 
-
-		elif self.name == 'rmsd':
-			from .chem_utils import rmsd 
-			self.evaluator_func = rmsd
-		elif self.name == 'kabsch_rmsd':
-			from .chem_utils import kabsch_rmsd 
-			self.evaluator_func = kabsch_rmsd
 		
 		elif self.name == 'smina':
 			from .chem_utils import smina 
