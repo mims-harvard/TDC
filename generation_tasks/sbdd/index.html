@@ -215,7 +215,6 @@
   <li><a href="#pdbbind">PDBBind</a></li>
   <li><a href="#dud-e">DUD-E</a></li>
   <li><a href="#scpdb">scPDB</a></li>
-  <li><a href="#crossdock">CrossDock</a></li>
 </ul>
     </div>
 </div>
@@ -320,35 +319,40 @@ The generated molecules have to obtain superior properties given a range of high
 
 <hr />
 
-<h3 id="crossdock">CrossDock</h3>
+<!--
+### CrossDock
 
-<p class="is-size-6">  <strong> Dataset Description: </strong>   CrossDock provides binding poses of ligands docked into binding pockets across PDB. </p>
+<p class='is-size-6'>  <strong> Dataset Description: </strong>   CrossDock provides binding poses of ligands docked into binding pockets across PDB. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
+<p class='is-size-6'>  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
 
-<p class="is-size-6">  <strong> Note: </strong> : The subset of crossdock [1] is provided by [2]. </p>
+<p class='is-size-6'>  <strong> Note: </strong> : The subset of crossdock [1] is provided by [2]. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 184,057 protein-ligand pairs. </p>
 
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+<p class='is-size-6'>  <strong> Dataset Statistics: </strong> 184,057 protein-ligand pairs. </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">SBDD</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">SBDD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'crossdock'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
+<p class='is-size-6'>  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
 
-<p class="is-size-6">  <strong> References: </strong>  </p>
+``` python
+from tdc.generation import SBDD
+data = SBDD(name='crossdock')
+split = data.get_split()
+```
 
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/32865404/">[1]Francoeur, P.G., Masuda, T., Sunseri, J., Jia, A., Iovanisci, R.B., Snyder, I. and Koes, D.R., 2020. Three-dimensional convolutional neural networks and a cross-docked data set for structure-based drug design. Journal of chemical information and modeling, 60(9), pp.4200-4215. </a></p>
+<p class='is-size-6'>  <strong> References: </strong>  </p>
 
-<p><a href="https://openreview.net/forum?id=yDwfVD_odRo">[2] Luo, S., Guan, J., Ma, J. and Peng, J., 2022. A 3D Molecule Generative Model for Structure-Based Drug Design. arXiv preprint arXiv:2203.10446.
+<a href="https://pubmed.ncbi.nlm.nih.gov/32865404/">[1]Francoeur, P.G., Masuda, T., Sunseri, J., Jia, A., Iovanisci, R.B., Snyder, I. and Koes, D.R., 2020. Three-dimensional convolutional neural networks and a cross-docked data set for structure-based drug design. Journal of chemical information and modeling, 60(9), pp.4200-4215. </a> 
+
+<a href="https://openreview.net/forum?id=yDwfVD_odRo">[2] Luo, S., Guan, J., Ma, J. and Peng, J., 2022. A 3D Molecule Generative Model for Structure-Based Drug Design. arXiv preprint arXiv:2203.10446.
 License: Not specified.
- </a></p>
+ </a> 
 
-<p class="is-size-6"> <strong> Dataset License: </strong> Not specified.</p>
+
+<p class='is-size-6'> <strong> Dataset License: </strong> Not specified.</p>
 
 <hr />
 
+-->
 
 </div>
                 </div>
