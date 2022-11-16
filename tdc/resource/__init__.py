@@ -1,0 +1,1 @@
+from .primekg import PrimeKG

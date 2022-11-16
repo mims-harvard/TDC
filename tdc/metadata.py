@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Author: TDC Team
 # License: MIT
-
+from packaging import version
+import pkg_resources
 
 """This file contains all metadata of datasets in TDC.
 
@@ -24,6 +25,7 @@ Attributes:
     ddi_dataset_names (list): all ddi dataset names
     develop_dataset_names (list): all develop dataset names
     distribution_oracles (list): all distribution learning oracles, i.e. molecule evaluators
+	docking_oracles (list): all docking oracles, i.e. RMSD
     docking_benchmark (dict): docking benchmark target names
     docking_target_info (dict): docking benchmark target pockets info
     download_oracle_names (list): oracle names that require downloading predictors
@@ -51,7 +53,7 @@ Attributes:
     name2type (dict): mapping from dataset names to downloaded file format
     oracle2id (dict): mapping from oracle names to dataverse id
     oracle2type (dict): mapping from oracle names to downloaded file format
-    receptor2id (dict): mapping from receptor id to dataverse id 
+    receptor2id (dict): mapping from receptor id to dataverse id
     oracle_names (list): list of all oracle names
     paired_dataset_names (list): all paired dataset names
     paratope_dataset_names (list): all paratope dataset names
@@ -62,6 +64,7 @@ Attributes:
     retrosyn_dataset_names (list): all retrosyn dataset names
     sdf_file_names (list): list of sdf file names
     single_molecule_dataset_names (list): all molgen dataset names
+	multiple_molecule_dataset_names (list): all ligandmolgen dataset names
     synthetic_oracle_name (list): all oracle names for synthesis
     test_multi_pred_dataset_names (list): test multi pred task name
     test_single_pred_dataset_names (list): test single pred task name
@@ -82,6 +85,8 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'solubility_aqsoldb',
  'hydrationfreeenergy_freesolv',
  'caco2_wang',
+ 'pampa_ncats',
+ 'approved_pampa_ncats',                     
  'hia_hou',
  'pgp_broccatelli',
  'bioavailability_ma',
@@ -91,20 +96,20 @@ adme_dataset_names = ['lipophilicity_astrazeneca',
  'cyp3a4_veith',
  'cyp1a2_veith',
  'cyp2c9_veith',
- 'cyp2c9_substrate_carbonmangels', 
+ 'cyp2c9_substrate_carbonmangels',
  'cyp2d6_substrate_carbonmangels',
- 'cyp3a4_substrate_carbonmangels', 
+ 'cyp3a4_substrate_carbonmangels',
  'bbb_martins',
  'ppbr_az',
  'half_life_obach',
  'clearance_hepatocyte_az',
  'clearance_microsome_az']
 
-hts_dataset_names = ['hiv', 
-'sarscov2_3clpro_diamond', 
+hts_dataset_names = ['hiv',
+'sarscov2_3clpro_diamond',
 'sarscov2_vitro_touret']
 
-qm_dataset_names = ['qm7b', 'qm8', 'qm9']
+qm_dataset_names = ['qm7', 'qm7b', 'qm8', 'qm9']
 
 epitope_dataset_names = ['iedb_jespersen', 'pdb_jespersen']
 
@@ -156,6 +161,8 @@ forwardsyn_dataset_names = ['uspto']
 
 single_molecule_dataset_names = ['zinc', 'moses', 'chembl', 'chembl_v29']
 
+multiple_molecule_dataset_names = ['dude', 'pdbbind', 'scpdb'] #'crossdock',
+
 paired_dataset_names = ['uspto50k', 'uspto']
 
 
@@ -169,8 +176,9 @@ biokg_library_names = ['hetionet']
 # oracles
 
 #### evaluator for distribution learning, the input of __call__ is list of smiles
-distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']  
+distribution_oracles = ['novelty', 'diversity', 'uniqueness', 'validity', 'fcd_distance', 'kl_divergence']
 
+docking_oracles = ['rmsd', 'kabsch_rmsd', 'smina']
 
 property_names = ['drd2', 'qed', 'logp', 'sa', 'gsk3b', 'jnk3',]
 
@@ -179,6 +187,7 @@ evaluator_name = ['roc-auc', 'f1', 'pr-auc', 'precision', 'recall', \
 				  'kappa', 'avg-roc-auc', 'rp@k', 'pr@k', 'pcc', 'spearman', 'range_logAUC']
 
 evaluator_name.extend(distribution_oracles)
+evaluator_name.extend(docking_oracles)
 
 guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop', \
 				   'celecoxib_rediscovery', 'troglitazone_rediscovery', 'thiothixene_rediscovery', \
@@ -186,6 +195,7 @@ guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop
 				   'isomers_c7h8n2o2', 'isomers_c9h10n2o2pf2cl', 'isomers_c11h24', \
 				   'osimertinib_mpo', 'fexofenadine_mpo', 'ranolazine_mpo', 'perindopril_mpo', \
 				   'amlodipine_mpo', 'sitagliptin_mpo', 'zaleplon_mpo', \
+				   'sitagliptin_mpo_prev', 'zaleplon_mpo_prev', \
 				   'median1', 'median2', \
 				   'valsartan_smarts', 'deco_hop', 'scaffold_hop']
 
@@ -193,9 +203,9 @@ guacamol_oracle = ['rediscovery', 'similarity', 'median', 'isomers', 'mpo', 'hop
 ####################################
 # Benchmark Datasets
 
-admet_benchmark = {'ADME': ['caco2_wang', 
+admet_benchmark = {'ADME': ['caco2_wang',
 							'hia_hou',
-							'pgp_broccatelli', 
+							'pgp_broccatelli',
 							'bioavailability_ma',
 							'lipophilicity_astrazeneca',
 							'solubility_aqsoldb',
@@ -224,11 +234,11 @@ drugsyn_benchmark = {'Synergy': ['drugcomb_css',
                                  'drugcomb_zip'
                                  ]}
 
-dti_dg_benchmark = {'DTI': ['bindingdb_patent']} 
+dti_dg_benchmark = {'DTI': ['bindingdb_patent']}
 
 docking_benchmark = {'Targets': ['1iep', '2rgp', '3eml', '3ny8', '4rlu', '4unn', '5mo4', '7l11', '3pbl',]}
 
-docking_target_info = {'3pbl': {'center': (9, 22.5, 26), 'size': (15, 15, 15)}, 
+docking_target_info = {'3pbl': {'center': (9, 22.5, 26), 'size': (15, 15, 15)},
 					   '1iep': {'center': (15.61389189189189, 53.38013513513513, 15.454837837837842), 'size': (15, 15, 15)},
 					   '2rgp': {'center': (16.292121212121213, 34.87081818181819, 92.0353030303030), 'size': (15, 15, 15)},
 					   '3eml': {'center': (-9.063639999999998, -7.1446, 55.86259999999999), 'size': (15, 15, 15)},
@@ -244,7 +254,7 @@ docking_target_info = {'3pbl': {'center': (9, 22.5, 26), 'size': (15, 15, 15)},
 #### Benchmark Metrics
 admet_metrics = {'caco2_wang': 'mae',
 				'hia_hou': 'roc-auc',
-				'pgp_broccatelli': 'roc-auc', 
+				'pgp_broccatelli': 'roc-auc',
 				'bioavailability_ma': 'roc-auc',
 				'lipophilicity_astrazeneca': 'mae',
 				'solubility_aqsoldb': 'mae',
@@ -287,7 +297,7 @@ dti_dg_metrics = {'bindingdb_patent': 'pcc'}
 #### Benchmark Splits
 admet_splits = {'caco2_wang': 'scaffold',
 				'hia_hou': 'scaffold',
-				'pgp_broccatelli': 'scaffold', 
+				'pgp_broccatelli': 'scaffold',
 				'bioavailability_ma': 'scaffold',
 				'lipophilicity_astrazeneca': 'scaffold',
 				'solubility_aqsoldb': 'scaffold',
@@ -321,11 +331,16 @@ dti_dg_splits = {'bindingdb_patent': 'group'}
 ####################################
 
 # evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
-download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
+download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith', 'smina']
+# download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
+download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith'] + ['drd2_current', 'gsk3b_current', 'jnk3_current']
+
 trivial_oracle_names = ['qed', 'logp', 'sa'] + guacamol_oracle
 synthetic_oracle_name = ['askcos', 'ibm_rxn']
 download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking', '3ny8_docking', '4rlu_docking',
 								 '4unn_docking', '5mo4_docking', '7l11_docking', 'drd3_docking', '3pbl_docking',
+								 '1iep_docking_normalize', '2rgp_docking_normalize', '3eml_docking_normalize', '3ny8_docking_normalize', '4rlu_docking_normalize',
+								 '4unn_docking_normalize', '5mo4_docking_normalize', '7l11_docking_normalize', 'drd3_docking_normalize', '3pbl_docking_normalize',
 								 '1iep_docking_vina', '2rgp_docking_vina', '3eml_docking_vina', '3ny8_docking_vina', '4rlu_docking_vina',
 								 '4unn_docking_vina', '5mo4_docking_vina', '7l11_docking_vina', 'drd3_docking_vina', '3pbl_docking_vina', ]
 
@@ -333,11 +348,11 @@ download_receptor_oracle_name = ['1iep_docking', '2rgp_docking', '3eml_docking',
 
 meta_oracle_name = ['isomer_meta', 'rediscovery_meta', 'similarity_meta', 'median_meta', 'docking_score', 'molecule_one_synthesis', 'pyscreener']
 
-oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name + download_receptor_oracle_name 
+oracle_names = download_oracle_names + trivial_oracle_names + distribution_oracles + synthetic_oracle_name + meta_oracle_name + docking_oracles + download_receptor_oracle_name
 
 molgenpaired_dataset_names = ['qed', 'drd2', 'logp']
 
-generation_datasets = retrosyn_dataset_names + forwardsyn_dataset_names + molgenpaired_dataset_names 
+generation_datasets = retrosyn_dataset_names + forwardsyn_dataset_names + molgenpaired_dataset_names + multiple_molecule_dataset_names
 # generation
 ####################################
 
@@ -375,14 +390,15 @@ def get_task2category():
 	return task2category
 
 dataset_names = {"Tox": toxicity_dataset_names,
-				"ADME": adme_dataset_names, 
-				"HTS": hts_dataset_names, 
-				"DTI": dti_dataset_names, 
-				"PPI": ppi_dataset_names, 
+				"ADME": adme_dataset_names,
+				"HTS": hts_dataset_names,
+				"DTI": dti_dataset_names,
+				"PPI": ppi_dataset_names,
 				"DDI": ddi_dataset_names,
 				"RetroSyn": retrosyn_dataset_names,
-				"Reaction": forwardsyn_dataset_names, 
+				"Reaction": forwardsyn_dataset_names,
 				"MolGen": single_molecule_dataset_names,
+				"sbdd": multiple_molecule_dataset_names,
 				"PeptideMHC": peptidemhc_dataset_names,
 				"Epitope": epitope_dataset_names,
 				"Develop": develop_dataset_names,
@@ -392,9 +408,9 @@ dataset_names = {"Tox": toxicity_dataset_names,
 				"DrugSyn": drugsyn_dataset_names,
 				"MTI": mti_dataset_names,
 				"GDA": gda_dataset_names,
-				"Paratope": paratope_dataset_names, 
-				"Yields": yield_dataset_names, 
-				"Catalyst": catalyst_dataset_names, 
+				"Paratope": paratope_dataset_names,
+				"Yields": yield_dataset_names,
+				"Catalyst": catalyst_dataset_names,
 				"CRISPROutcome": crisproutcome_dataset_names,
 				"test_single_pred": test_single_pred_dataset_names,
 				"test_multi_pred": test_multi_pred_dataset_names,
@@ -425,6 +441,8 @@ name2type = {'toxcast': 'tab',
  'solubility_aqsoldb': 'tab',
  'hydrationfreeenergy_freesolv': 'tab',
  'caco2_wang': 'tab',
+ 'pampa_ncats': 'tab',
+ 'approved_pampa_ncats': 'tab',
  'hia_hou': 'tab',
  'pgp_broccatelli': 'tab',
  'f20_edrug3d': 'tab',
@@ -436,10 +454,10 @@ name2type = {'toxcast': 'tab',
  'cyp3a4_veith': 'tab',
  'cyp1a2_veith': 'tab',
  'cyp2c9_veith': 'tab',
- 'cyp2c9_substrate_carbonmangels': 'tab', 
+ 'cyp2c9_substrate_carbonmangels': 'tab',
  'cyp2d6_substrate_carbonmangels': 'tab',
- 'cyp3a4_substrate_carbonmangels': 'tab', 
- 'carcinogens_lagunin': 'tab', 
+ 'cyp3a4_substrate_carbonmangels': 'tab',
+ 'carcinogens_lagunin': 'tab',
  'halflife_edrug3d': 'tab',
  'clearance_edrug3d': 'tab',
  'bbb_adenot': 'tab',
@@ -462,21 +480,25 @@ name2type = {'toxcast': 'tab',
  'mhc2_iedb_jensen': 'tab',
  'uspto': 'csv',
  'uspto50k': 'tab',
- 'zinc': 'tab', 
+ 'zinc': 'tab',
  'moses': 'tab',
  'chembl': 'tab',
  'chembl_v29': 'csv',
- 'qed': 'tab', 
- 'drd2': 'tab', 
+ 'qed': 'tab',
+ 'drd2': 'tab',
  'logp': 'tab',
  'drugcomb':'pkl',
  'gdsc1': 'pkl',
  'gdsc2': 'pkl',
  'iedb_jespersen': 'pkl',
  'pdb_jespersen': 'pkl',
+ 'qm7': 'pkl',
  'qm7b': 'pkl',
  'qm8': 'pkl',
  'qm9': 'pkl',
+ 'scpdb': 'zip',
+ 'dude': 'zip',
+#  'crossdock': 'zip',
  'tap': 'tab',
  'sabdab_chen': 'tab',
  'protein_sabdab': 'csv',
@@ -484,17 +506,17 @@ name2type = {'toxcast': 'tab',
  'mirtarbase': 'csv',
  'disgenet': 'csv',
  'sabdab_liberis': 'pkl',
- 'uspto_yields': 'pkl', 
+ 'uspto_yields': 'pkl',
  'uspto_catalyst': 'csv',
  'buchwald-hartwig': 'pkl',
- 'hetionet':'tab', 
+ 'hetionet':'tab',
  'herg': 'tab',
  'herg_central': 'tab',
  'dili': 'tab',
  'ppbr_az': 'tab',
  'ames': 'tab',
  'skin_reaction': 'tab',
- 'drugbank_drugs': 'csv', 
+ 'drugbank_drugs': 'csv',
  'clearance_microsome_az': 'tab',
  'clearance_hepatocyte_az': 'tab',
  'half_life_obach': 'tab',
@@ -504,7 +526,10 @@ name2type = {'toxcast': 'tab',
  'test_single_pred': 'tab',
  'test_multi_pred': 'tab',
  'gdsc_gene_symbols': 'tab',
- 'weber': 'tab'}
+ 'weber': 'tab',
+ 'primekg': 'tab',
+ 'primekg_drug_feature': 'tab',
+ 'primekg_disease_feature': 'tab'}
 
 name2id = {'bbb_adenot': 4259565,
  'bbb_martins': 4259566,
@@ -514,6 +539,8 @@ name2id = {'bbb_adenot': 4259565,
  'bindingdb_patent': 4724851,
  'bioavailability_ma': 4259567,
  'caco2_wang': 4259569,
+ 'pampa_ncats': 6695858,
+ 'approved_pampa_ncats': 6695857,
  'clearance_edrug3d': 4259571,
  'clintox': 4259572,
  'cyp1a2_veith': 4259573,
@@ -523,7 +550,7 @@ name2id = {'bbb_adenot': 4259565,
  'cyp3a4_veith': 4259582,
  'cyp2c9_substrate_carbonmangels': 4259584,
  'cyp2d6_substrate_carbonmangels': 4259578,
- 'cyp3a4_substrate_carbonmangels': 4259581, 
+ 'cyp3a4_substrate_carbonmangels': 4259581,
  'carcinogens_lagunin': 4259570,
  'davis': 5219748,
  'drugbank': 4139573,
@@ -553,16 +580,20 @@ name2id = {'bbb_adenot': 4259565,
  'moses': 4170962,
  'chembl': 4170965,
  'chembl_v29': 5767979,
- 'qed': 4170959, 
- 'drd2': 4170957, 
- 'logp': 4170961, 
+ 'qed': 4170959,
+ 'drd2': 4170957,
+ 'logp': 4170961,
  'gdsc1': 4165726,
  'gdsc2': 4165727,
- 'iedb_jespersen': 4165725, 
+ 'iedb_jespersen': 4165725,
  'pdb_jespersen': 4165724,
- 'qm7b': 4167096,
- 'qm8': 4167110,
- 'qm9': 6175612, ### 4167112,
+ 'qm7': 6358510,
+ 'qm7b': 6358512,
+ 'qm8': 6358513,
+ 'qm9': 6179310, ### 4167112, 6175612
+#  'scpdb': None,
+#  'dude': None,
+#  'crossdock': None,
  'tap': 4167113,
  'sabdab_chen': 4167164,
  'protein_sabdab': 4167357,
@@ -572,14 +603,14 @@ name2id = {'bbb_adenot': 4259565,
  'sabdab_liberis': 4168425,
  'uspto50k': 4171823,
  'buchwald-hartwig': 6175640,
- 'uspto_yields': 4186956, 
+ 'uspto_yields': 4186956,
  'uspto_catalyst': 4171574,
- 'uspto': 4171642, 
+ 'uspto': 4171642,
  'hetionet': 4201734,
  'herg': 4259588,
  'herg_central': 5740618,
  'dili': 4259585,
- 'ppbr_az': 4259599,
+ 'ppbr_az': 6413140,
  'ames': 4259564,
  'skin_reaction': 4259609,
  'clearance_microsome_az': 4266186,
@@ -591,21 +622,34 @@ name2id = {'bbb_adenot': 4259565,
  'test_single_pred': 4832455,
  'test_multi_pred': 4832456,
  'gdsc_gene_symbols': 5255026,
- 'weber': 5790963}
+ 'weber': 5790963,
+ 'primekg': 6180626,
+ 'primekg_drug_feature': 6180619,
+ 'primekg_disease_feature': 6180618}
 
-oracle2type = {'drd2': 'pkl', 
-			   'jnk3': 'pkl', 
+oracle2type = {'drd2': 'pkl',
+			   'jnk3': 'pkl',
 			   'gsk3b': 'pkl',
-			   'fpscores': 'pkl', 
-			   'cyp3a4_veith': 'pkl', 
+			   'fpscores': 'pkl',
+			   'cyp3a4_veith': 'pkl',
+			   'smina': 'static',
+			   'drd2_current': 'pkl',
+			   'jnk3_current': 'pkl',
+			   'gsk3b_current': 'pkl',
 			   }
 
 oracle2id = {'drd2': 4178625,
 			 'gsk3b': 4170295,
 			 'jnk3': 4170293,
-			 'fpscores': 4170416, 
-			 'cyp3a4_veith': 4411249, 
+			 'fpscores': 4170416,
+			 'cyp3a4_veith': 4411249,
+			 'smina': 6361665,
+			 'cyp3a4_veith': 4411249,
+			 'drd2_current': 6413411,
+			 'jnk3_current': 6413420,
+			 'gsk3b_current': 6413412,
 			}
+
 
 benchmark2type = {'admet_group': 'zip',
                   'drugcombo_group': 'zip',
@@ -617,15 +661,15 @@ benchmark2id = {'admet_group': 4426004,
                 'docking_group': 4554082,
                 'dti_dg_group': 4742443}
 
-receptor2id = { 
-			   '1iep': [5137914, 5617659], 
-			   '2rgp': [5137916, 5617662], 
-			   '3eml': [5137919, 5617663], 
-			   '3ny8': [5137915, 5617665], 
-			   '4rlu': [5137918, 5617658], 
-			   '4unn': [5137917, 5617661], 
-			   '5mo4': [5137920, 5617664], 
-			   '7l11': [5137921, 5617660], 
+receptor2id = {
+			   '1iep': [5137914, 5617659],
+			   '2rgp': [5137916, 5617662],
+			   '3eml': [5137919, 5617663],
+			   '3ny8': [5137915, 5617665],
+			   '4rlu': [5137918, 5617658],
+			   '4unn': [5137917, 5617661],
+			   '5mo4': [5137920, 5617664],
+			   '7l11': [5137921, 5617660],
 			   '3pbl': [5257195, 5617666], } ## 'drd3': 5137901,
 
 
@@ -665,8 +709,9 @@ name2stats = {
 	'sarscov2_vitro_touret': 1480,
 	'sarscov2_3clpro_diamond': 879,
 	'hiv': 41127,
+	'qm7': 7165,
 	'qm7b': 7211,
-	'qm8': 21786,
+	'qm8': 21747,
 	'qm9': 133885,
 	'uspto_yields': 853638,
 	'buchwald-hartwig': 55370,
@@ -700,4 +745,9 @@ name2stats = {
 	'chembl': 1961462,
 	'uspto50k': 50036,
 	'uspto': 1939253
+}
+
+name2idlist = {
+	'dude': [6429245, 6429251],
+	'scpdb': [6431629, 6431631],
 }

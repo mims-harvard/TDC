@@ -13,50 +13,40 @@
 [![TDC CircleCI](https://circleci.com/gh/mims-harvard/TDC.svg?style=svg)](https://app.circleci.com/pipelines/github/mims-harvard/TDC)
 [![Documentation Status](https://readthedocs.org/projects/tdc/badge/?version=latest)](http://tdc.readthedocs.io/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
 
-[**Website**](https://tdcommons.ai) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
+[**Website**](https://tdcommons.ai) | [**Nature Chemical Biology 2022 Paper**](https://www.nature.com/articles/s41589-022-01131-2) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [**TDC Documentation**](https://tdc.readthedocs.io/) | [**Contribution Guidelines**](CONTRIBUTE.md)
 
-**Therapeutics Data Commons (TDC)** is the first unifying framework to systematically access, evaluate, and benchmark machine learning methods across the entire range of therapeutics. TDC supports the development of novel ML methods and theory, with a strong bent towards developing the foundations of which ML algorithms are most suitable for drug discovery applications and why.
+Artificial intelligence is poised to reshape therapeutic science. **Therapeutics Data Commons** is a coordinated initiative to access and evaluate artificial intelligence capability across therapeutic modalities and stages of discovery, supporting the development of AI methods, with a strong bent towards establishing the foundation of which AI methods are most suitable for drug discovery applications and why.
 
-The collection of curated AI/ML-ready datasets, AI/ML tasks, and benchmarks in TDC serves as a meeting point for domain and machine learning scientists. We envision that TDC can considerably accelerate ML model development, validation and transition into biomedical and clinical implementation.
+Researchers across disciplines can use TDC for numerous applications. AI-solvable tasks, AI-ready datasets, and curated benchmarks in TDC serve as a meeting point between biochemical and AI scientists. TDC facilitates algorithmic and scientific advances and accelerate machine learning method development, validation and transition into biomedical and clinical implementation.
 
-TDC is an open-source initiative. To get involved, check our [Contribution Guidelines](CONTRIBUTE.md)!
+TDC is an open-science initiative. We welcome [contributions from the community.](CONTRIBUTE.md)
 
-**Invited talk at the [Harvard Symposium on Drugs for Future Pandemics (#futuretx20)](https://www.drugsymposium.org/)** [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
+## Key TDC Presentations and Publications
 
-**Presented at [NeurIPS 2021](https://openreview.net/forum?id=8nvgnORnoWr)** [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing) / **Oral at [ELLIS ML4Molecules](https://moleculediscovery.github.io/workshop2021/)** [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing) / **Presented at [Baylearn](https://baylearn-org.github.io/www/)** [**\[Slides\]**](https://drive.google.com/file/d/1BNpk3dOdqE3ksgyVV-V3xySdBMq-8cXL/view?usp=sharing) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing)
+[1] Huang, Fu, Gao, et al., Artificial Intelligence Foundation for Therapeutic Science, Nature Chemical Biology, 2022 [**\[Paper\]**](https://www.nature.com/articles/s41589-022-01131-2)
 
-**[Recording of the first TDC User Group Meetup](https://harvard.zoom.us/rec/share/HO0TjRPs56YG-Fu3i033izaTwebB4KwUhPeNURkWSI-anrH9su03lCtUlHeZG-WP.67ZJmAIHsD7Q_2GQ) (Jan 25th, 2022). [Agenda](https://shoutout.wix.com/so/d1Nv1pC2d#/main)**
+[2] Huang, Fu, Gao, et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, NeurIPS 2021 [**\[Paper\]**](https://openreview.net/forum?id=8nvgnORnoWr) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing) 
 
-## Updates
-- `0.3.6`: Add a new task on TCR-Epitope Binding! See [here](https://tdcommons.ai/multi_pred_tasks/tcrepitope/)!
-- `0.3.5`: 1. Add hERG central dataset 2. Add ChEMBL V29 3. Fixed reaction type issue for USPTO-50 4. Fix bug on higher order multi-instance prediction cold-split! More information, see [here](https://tdcommons.ai/news/)!
-- `0.3.4`: Bug fixes on docking oracles, KL divergence measure, see commit [0f7121a](https://github.com/mims-harvard/TDC/commit/0f7121a3bd7cb833fb55441054d7d87ff3c4ebd6) and commit [6e46fbd](https://github.com/mims-harvard/TDC/commit/6e46fbd1a946b3a6b9f7ba456d60dc09480c68b9)!
-- `0.3.3`: Extended support on cold split - now you can split based on multiple entities, see [#127](https://github.com/mims-harvard/TDC/pull/127)!
-- `0.3.2`: Bug fixes - Adding support for harmonizing same DTIs with different affinities (KIBA, DAVIS Updated accordingly, see [#98](https://github.com/mims-harvard/TDC/issues/98)). Support label name retrieval for TWOSIDES ([#121](https://github.com/mims-harvard/TDC/issues/121)), and add gene symbol info to GDSC ([#122](https://github.com/mims-harvard/TDC/issues/122)). 
-- `0.3.1`: We have restructured the codebase to be contributor-friendly! Checkout the TDC documentation at [https://tdc.readthedocs.io](https://tdc.readthedocs.io/)!
-- TDC paper is accepted to [NeurIPS 2021 Datasets and Benchmarks](https://openreview.net/pdf?id=8nvgnORnoWr)
-- `0.2.0`: Release docking molecule generation benchmark! Checkout [here](https://tdcommons.ai/benchmark/docking_group/overview/)!
-- `0.1.9`: Support molecule filters! Checkout [here](https://tdcommons.ai//functions/data_process/#molecule-filters)!
-- `0.1.8`: Streamlined and simplified the leaderboard programming frameworks! Now, you can submit a result for a single dataset! Checkout [here](https://tdcommons.ai/benchmark/overview/)!
-- TDC white paper is alive on [arXiv](https://arxiv.org/abs/2102.09548)!
+[3] Huang et al., Benchmarking Molecular Machine Learning in Therapeutics Data Commons, ELLIS ML4Molecules 2021 [**\[Paper\]**](https://cloud.ml.jku.at/s/54pB5Eqf6ftX7qA) [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing) 
 
-<details>
-  <summary>Click here for older updates!</summary>
+[4] Huang et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, Baylearn 2021 [**\[Slides\]**](https://drive.google.com/file/d/1BNpk3dOdqE3ksgyVV-V3xySdBMq-8cXL/view?usp=sharing) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing)
 
-- `0.1.6`: Released the second leaderboard on drug combination screening prediction! Checkout [here](https://tdcommons.ai/benchmark/drugcombo_group/)!
-- `0.1.5`: Added four realistic oracles from docking scores and synthetic accessibility! Checkout [here](https://tdcommons.ai/functions/oracles/)!
-- `0.1.4`: Added the 1st version of [`MolConvert`](https://tdcommons.ai/functions/data_process/#molecule-conversion) class that can map among ~15 molecular formats in 2 lines of code (For 2D: from SMILES/SEFLIES and convert to SELFIES/SMILES, Graph2D, PyG, DGL, ECFP2-6, MACCS, Daylight, RDKit2D, Morgan, PubChem; For 3D: from XYZ, SDF files to Graph3D, Columb Matrix); Also a quality check on DTI datasets with IDs added.
-- Checkout **[Contribution Guide](CONTRIBUTE.md)** to add new dataset, task, function!
-- `0.1.3`: Added new therapeutics task on CRISPR Repair Outcome Prediction! Added a data function to map molecule to popular cheminformatics fingerprint.
-- `0.1.2`: The first TDC Leaderboard is released! Checkout the leaderboard guide [here](https://tdcommons.ai/benchmark/overview/) and the ADMET Leaderboard [here](https://tdcommons.ai/benchmark/admet_group/).
-- `0.1.1`: Replaced VD, Half Life and Clearance datasets from new sources that have higher qualities. Added LD50 to Tox.
-- `0.1.0`: Molecule quality check for ADME, Toxicity and HTS (canonicalized, and remove error mols).
-- `0.0.9`: Added DrugComb NCI-60, CYP2C9/2D6/3A4 substrates, Carcinogens toxicity! 
-- `0.0.8`: Added hREG, DILI, Skin Reaction, Ames Mutagenicity, PPBR from AstraZeneca; added meta oracles!
+[5] Huang, Fu, Gao et al., Therapeutics Data Commons, NSF-Harvard Symposium on Drugs for Future Pandemics 2020 [**\[#futuretx20\]**](https://www.drugsymposium.org/) [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
 
-</details>
+[6] [TDC User Group Meetup, Jan 2022](https://harvard.zoom.us/rec/share/HO0TjRPs56YG-Fu3i033izaTwebB4KwUhPeNURkWSI-anrH9su03lCtUlHeZG-WP.67ZJmAIHsD7Q_2GQ) [**\[Agenda\]**](https://shoutout.wix.com/so/d1Nv1pC2d#/main)
+
+[7] Zitnik, Machine Learning to Translate the Cancer Genome and Epigenome Session, [AACR Annual Meeting 2022, Apr 2022](https://www.aacr.org/meeting/aacr-annual-meeting-2022/)
+
+[8] Zitnik, Few-Shot Learning for Network Biology, [Keynote at KDD Workshop on Data Mining in Bioinformatics](https://biokdd.org/biokdd21/keynote.html)
+
+[9] Zitnik, Actionable machine learning for drug discovery and development, [Broad Institute, Models, Inference & Algorithms Seminar, 2021](https://www.broadinstitute.org/talks/actionable-machine-learning-drug-discovery-and-development)
+
+[10] Zitnik, Graph Neural Networks for Biomedical Data, [Machine Learning in Computational Biology, 2020](https://sites.google.com/cs.washington.edu/mlcb2020/schedule?authuser=0)
+
+[11] Zitnik, Graph Neural Networks for Identifying COVID-19 Drug Repurposing Opportunities, [MIT AI Cures, 2020](https://www.aicures.mit.edu/drugdiscoveryconference)
 
 
 ## Unique Features of TDC
@@ -68,6 +58,8 @@ TDC is an open-source initiative. To get involved, check our [Contribution Guide
 - *Open-source initiative*: TDC is an open-source initiative. If you want to get involved, let us know. 
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
+
+See [here](https://tdcommons.ai/news/) for the latest updates in TDC!
 
 ## Installation
 
@@ -246,7 +238,7 @@ For more information, visit [here](https://tdcommons.ai/benchmark/overview/).
 
 ## Cite Us
 
-If you find Therapeutics Data Commons useful, cite our NeurIPS paper:
+If you find Therapeutics Data Commons useful, cite our [NeurIPS paper](https://openreview.net/pdf?id=8nvgnORnoWr) and [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2):
 
 ```
 @article{Huang2021tdc,
@@ -255,6 +247,16 @@ If you find Therapeutics Data Commons useful, cite our NeurIPS paper:
           Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
   journal={Proceedings of Neural Information Processing Systems, NeurIPS Datasets and Benchmarks},
   year={2021}
+}
+```
+
+```
+@article{Huang2022artificial,
+  title={Artificial intelligence foundation for therapeutic science},
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
+          Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
+  journal={Nature Chemical Biology},
+  year={2022}
 }
 ```
 

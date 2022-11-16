@@ -9,6 +9,9 @@ from abc import abstractmethod
 from functools import partial
 from typing import List
 import time, os, math, re
+from packaging import version
+import pkg_resources
+
 
 try: 
   import rdkit
@@ -39,6 +42,7 @@ mean2func = {
   'geometric': gmean, 
   'arithmetic': np.mean, 
 }
+SKLEARN_VERSION = version.parse(pkg_resources.get_distribution("scikit-learn").version)
 
 
 def smiles_to_rdkit_mol(smiles):
@@ -401,17 +405,38 @@ def calculateScore(m):
 
 """Scores based on an ECFP classifier for activity."""
 
+def load_pickled_model(name: str):
+  """
+  Loading a pretrained model serialized with pickle.
+  Usually for sklearn models.
+
+  Args:
+    name: Name of the model to load.
+
+  Returns:
+    The model.
+  """
+
+  try:
+    with open(name, "rb") as f:
+      model = pickle.load(f)
+  except EOFError:
+    import sys
+    sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
+  return model
+
 # clf_model = None
 def load_drd2_model():
     name = 'oracle/drd2.pkl'
-    try:
-      with open(name, "rb") as f:
-          clf_model = pickle.load(f)
-    except EOFError:
-      import sys
-      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
 
-    return clf_model
+    if SKLEARN_VERSION >= version.parse("0.24.0"):
+      name = 'oracle/drd2_current.pkl' 
+    else: 
+      name = 'oracle/drd2.pkl'
+         
+
+
+    return load_pickled_model(name)
 
 def fingerprints_from_mol(mol):
     fp = AllChem.GetMorganFingerprint(mol, 3, useCounts=True, useFeatures=True)
@@ -447,13 +472,7 @@ def drd2(smile):
 
 def load_cyp3a4_veith():
   oracle_file = "oracle/cyp3a4_veith.pkl"
-  try:
-    with open(oracle_file, "rb") as f:
-      cyp3a4_veith_model = pickle.load(f)
-  except EOFError:
-    import sys
-    sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
-  return cyp3a4_veith_model
+  return load_pickled_model(oracle_file)
 
 def cyp3a4_veith(smiles):
   try:
@@ -583,14 +602,9 @@ def SA(s):
 
 def load_gsk3b_model():
     gsk3_model_path = 'oracle/gsk3b.pkl'
-    #print_sys('==== load gsk3b oracle =====')
-    try:
-      with open(gsk3_model_path, 'rb') as f:
-          gsk3_model = pickle.load(f)
-    except EOFError:
-      import sys
-      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
-    return gsk3_model 
+    if SKLEARN_VERSION >= version.parse("0.24.0"):
+      gsk3_model_path = 'oracle/gsk3b_current.pkl'
+    return load_pickled_model(gsk3_model_path)
 
 def gsk3b(smiles):
     """Evaluate GSK3B score of a SMILES string
@@ -625,14 +639,12 @@ class jnk3:
 
   """  
   def __init__(self):
+    
     jnk3_model_path = 'oracle/jnk3.pkl'
-    try:
-      with open(jnk3_model_path, 'rb') as f:
-        self.jnk3_model = pickle.load(f)
-    except EOFError:
-      import sys
-      sys.exit("TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/.")
-  
+    if SKLEARN_VERSION >= version.parse("0.24.0"):
+      jnk3_model_path = 'oracle/jnk3_current.pkl'
+    self.jnk3_model = load_pickled_model(jnk3_model_path)
+
   def __call__(self, smiles):
     molecule = smiles_to_rdkit_mol(smiles)
     fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 2, nBits=2048)
@@ -689,7 +701,38 @@ def parse_molecular_formula(formula):
 
     return results
 
-class Isomer_scoring:
+
+def smiles2formula(smiles):
+
+    from rdkit.Chem.rdMolDescriptors import CalcMolFormula
+    mol = Chem.MolFromSmiles(smiles)
+    formula = CalcMolFormula(mol)   
+    return formula  
+
+
+def canonicalize(smiles: str, include_stereocenters=True):
+    """
+    Canonicalize the SMILES strings with RDKit.
+
+    The algorithm is detailed under https://pubs.acs.org/doi/full/10.1021/acs.jcim.5b00543
+
+    Args:
+        smiles: SMILES string to canonicalize
+        include_stereocenters: whether to keep the stereochemical information in the canonical SMILES string
+
+    Returns:
+        Canonicalized SMILES string, None if the molecule is invalid.
+    """
+
+    mol = Chem.MolFromSmiles(smiles)
+
+    if mol is not None:
+        return Chem.MolToSmiles(mol, isomericSmiles=include_stereocenters)
+    else:
+        return None
+
+
+class Isomer_scoring_prev:
   def __init__(self, target_smiles, means = 'geometric'):
     assert means in ['geometric', 'arithmetic']
     if means == 'geometric':
@@ -707,15 +750,59 @@ class Isomer_scoring:
     for atom_counter, modifier_func in self.AtomCounter_Modifier_lst:
       all_scores.append(modifier_func(atom_counter(molecule)))
 
-    ### total atom number
+    ### total atom number 
     atom2cnt_lst = parse_molecular_formula(test_smiles)
-    ## todo add Hs 
+    # ## todo add Hs 
     total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst])
     all_scores.append(self.total_atom_modifier(total_atom_num))
     return self.mean_func(all_scores)
 
+
+class Isomer_scoring:
+  def __init__(self, target_smiles, means = 'geometric'):
+    assert means in ['geometric', 'arithmetic']
+    if means == 'geometric':
+      self.mean_func = gmean 
+    else: 
+      self.mean_func = np.mean 
+    atom2cnt_lst = parse_molecular_formula(target_smiles)
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst]) 
+    self.total_atom_modifier = GaussianModifier(mu=total_atom_num, sigma=2.0)
+    self.AtomCounter_Modifier_lst = [((AtomCounter(atom)), GaussianModifier(mu=cnt,sigma=1.0)) for atom,cnt in atom2cnt_lst]
+
+  def __call__(self, test_smiles):
+    #### difference 1
+    #### add hydrogen atoms 
+    test_smiles = canonicalize(test_smiles)
+    test_mol = Chem.MolFromSmiles(test_smiles)
+    test_mol2 = Chem.AddHs(test_mol) 
+    test_smiles = Chem.MolToSmiles(test_mol2)
+
+
+    molecule = smiles_to_rdkit_mol(test_smiles)
+    all_scores = []
+    for atom_counter, modifier_func in self.AtomCounter_Modifier_lst:
+      all_scores.append(modifier_func(atom_counter(molecule)))
+
+    #### difference 2 
+    ### total atom number
+    test_formula = smiles2formula(test_smiles)
+    atom2cnt_lst = parse_molecular_formula(test_formula)
+    # atom2cnt_lst = parse_molecular_formula(test_smiles)
+    # ## todo add Hs 
+    total_atom_num = sum([cnt for atom,cnt in atom2cnt_lst])
+    all_scores.append(self.total_atom_modifier(total_atom_num))
+    return self.mean_func(all_scores)
+
+def isomer_meta_prev(target_smiles, means = 'geometric'):
+  return Isomer_scoring_prev(target_smiles, means = means)
+
 def isomer_meta(target_smiles, means = 'geometric'):
   return Isomer_scoring(target_smiles, means = means)
+
+isomers_c7h8n2o2_prev = isomer_meta_prev(target_smiles = 'C7H8N2O2', means = 'geometric')
+isomers_c9h10n2o2pf2cl_prev = isomer_meta_prev(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
+isomers_c11h24_prev = isomer_meta_prev(target_smiles = 'C11H24', means = 'geometric')
 
 isomers_c7h8n2o2 = isomer_meta(target_smiles = 'C7H8N2O2', means = 'geometric')
 isomers_c9h10n2o2pf2cl = isomer_meta(target_smiles = 'C9H10N2O2PF2Cl', means = 'geometric')
@@ -937,6 +1024,19 @@ def amlodipine_mpo(test_smiles):
   amlodipine_gmean = gmean([similarity_value, num_rings_value])
   return amlodipine_gmean
 
+def zaleplon_mpo_prev(test_smiles):
+  if 'zaleplon_fp' not in globals().keys():
+    global zaleplon_fp, isomer_scoring_C19H17N3O2
+    zaleplon_smiles = 'O=C(C)N(CC)C1=CC=CC(C2=CC=NC3=C(C=NN23)C#N)=C1'
+    zaleplon_fp = smiles_2_fingerprint_ECFP4(zaleplon_smiles)
+    isomer_scoring_C19H17N3O2 = Isomer_scoring_prev(target_smiles = 'C19H17N3O2')
+
+  fp = smiles_2_fingerprint_ECFP4(test_smiles)
+  similarity_value = DataStructs.TanimotoSimilarity(fp, zaleplon_fp)
+  isomer_value = isomer_scoring_C19H17N3O2(test_smiles)
+  return gmean([similarity_value, isomer_value])
+
+
 def zaleplon_mpo(test_smiles):
   if 'zaleplon_fp' not in globals().keys():
     global zaleplon_fp, isomer_scoring_C19H17N3O2
@@ -948,6 +1048,32 @@ def zaleplon_mpo(test_smiles):
   similarity_value = DataStructs.TanimotoSimilarity(fp, zaleplon_fp)
   isomer_value = isomer_scoring_C19H17N3O2(test_smiles)
   return gmean([similarity_value, isomer_value])
+
+
+def sitagliptin_mpo_prev(test_smiles):
+  if 'sitagliptin_fp_ecfp4' not in globals().keys():
+    global sitagliptin_fp_ecfp4, sitagliptin_logp_modifier, sitagliptin_tpsa_modifier, \
+           isomers_scoring_C16H15F6N5O, sitagliptin_similar_modifier
+    sitagliptin_smiles = 'Fc1cc(c(F)cc1F)CC(N)CC(=O)N3Cc2nnc(n2CC3)C(F)(F)F'
+    sitagliptin_fp_ecfp4 = smiles_2_fingerprint_ECFP4(sitagliptin_smiles)
+    sitagliptin_mol = Chem.MolFromSmiles(sitagliptin_smiles)
+    sitagliptin_logp = Descriptors.MolLogP(sitagliptin_mol)
+    sitagliptin_tpsa = Descriptors.TPSA(sitagliptin_mol)
+    sitagliptin_logp_modifier = GaussianModifier(mu=sitagliptin_logp, sigma=0.2)
+    sitagliptin_tpsa_modifier = GaussianModifier(mu=sitagliptin_tpsa, sigma=5)
+    isomers_scoring_C16H15F6N5O = Isomer_scoring_prev('C16H15F6N5O')
+    sitagliptin_similar_modifier = GaussianModifier(mu=0, sigma=0.1)
+
+  molecule = Chem.MolFromSmiles(test_smiles)
+  fp_ecfp4 = smiles_2_fingerprint_ECFP4(test_smiles)
+  logp_score = Descriptors.MolLogP(molecule)
+  logp_score = sitagliptin_logp_modifier(logp_score)
+  tpsa_score = Descriptors.TPSA(molecule)
+  tpsa_score = sitagliptin_tpsa_modifier(tpsa_score)
+  isomer_score = isomers_scoring_C16H15F6N5O(test_smiles)
+  similarity_value = sitagliptin_similar_modifier(DataStructs.TanimotoSimilarity(fp_ecfp4, sitagliptin_fp_ecfp4))
+  return gmean([similarity_value, logp_score, tpsa_score, isomer_score])
+
 
 def sitagliptin_mpo(test_smiles):
   if 'sitagliptin_fp_ecfp4' not in globals().keys():
@@ -966,9 +1092,11 @@ def sitagliptin_mpo(test_smiles):
   molecule = Chem.MolFromSmiles(test_smiles)
   fp_ecfp4 = smiles_2_fingerprint_ECFP4(test_smiles)
   logp_score = Descriptors.MolLogP(molecule)
+  logp_score = sitagliptin_logp_modifier(logp_score)
   tpsa_score = Descriptors.TPSA(molecule)
+  tpsa_score = sitagliptin_tpsa_modifier(tpsa_score)
   isomer_score = isomers_scoring_C16H15F6N5O(test_smiles)
-  similarity_value = DataStructs.TanimotoSimilarity(fp_ecfp4, sitagliptin_fp_ecfp4)
+  similarity_value = sitagliptin_similar_modifier(DataStructs.TanimotoSimilarity(fp_ecfp4, sitagliptin_fp_ecfp4))
   return gmean([similarity_value, logp_score, tpsa_score, isomer_score])
 
 def get_PHCO_fingerprint(mol):
@@ -1263,10 +1391,10 @@ class molecule_one_retro:
           from m1wrapper import MoleculeOneWrapper
       except:
           try:
-              install('git+https://github.com/molecule-one/m1wrapper-python')
+              install('git+https://github.com/molecule-one/m1wrapper-python@v1')
               from m1wrapper import MoleculeOneWrapper
           except:
-              raise ImportError("Install Molecule.One Wrapper via pip install git+https://github.com/molecule-one/m1wrapper-python") 
+              raise ImportError("Install Molecule.One Wrapper via pip install git+https://github.com/molecule-one/m1wrapper-python@v1") 
               
       self.m1wrapper = MoleculeOneWrapper(api_token, 'https://tdc.molecule.one')
     
@@ -1445,6 +1573,56 @@ class Vina_smiles:
         return np.inf 
       return energy
 
+def smina(ligand, protein, score_only=False, raw_input=False):
+    """
+    Sima is a docking algorithm that docks a ligand to a protein pocket.
+    
+    Koes, D.R., Baumgartner, M.P. and Camacho, C.J., 2013. 
+    Lessons learned in empirical scoring with smina from the CSAR 2011 benchmarking exercise. 
+    Journal of chemical information and modeling, 53(8), pp.1893-1904.
+
+    Parameters
+    ----------
+    ligand : array
+        (N_1,3) matrix, where N_1 is ligand size.
+    protein : array
+        (N_2,3) matrix, where N_2 is protein size.
+    score_only: boolean
+        whether to only return docking score.
+    raw_input: boolean
+        whether to input raw ML input or sdf file input
+    Returns
+    -------
+    docking_info: str or float
+        docking result 
+
+    """
+    smina_model_path = 'oracle/smina.static'
+    os.system(f'chmod +x ./{smina_model_path}')
+    # if machine learning raw input:
+    # 1. write out to xyz file
+    # 2. convert to sdf file by openbabel
+    if raw_input:
+        mol_coord, mol_atom = ligand
+        # 1. write out to xyz file
+        f = open(f'temp_ligand.xyz', "w")
+        n_atoms = len(mol_atom)
+        f.write("%d\n\n" % n_atoms)
+        for atom_i in range(n_atoms):
+            atom = mol_atom[atom_i]
+            f.write("%s %.9f %.9f %.9f\n" % (atom, mol_coord[atom_i, 0], mol_coord[atom_i, 1], mol_coord[atom_i, 2]))
+        f.close()
+        # 2. convert to sdf file 
+        try:
+            os.system(f'obabel temp_ligand.xyz -O temp_ligand.sdf')
+        except:
+            raise ImportError("Please install openbabel by 'conda install -c conda-forge openbabel'!")
+        ligand = "temp_ligand.sdf"
+    if score_only:
+        msg = os.popen(f'./{smina_model_path} -l {ligand} -r {protein} --score_only').read()
+        return float(msg.split('\n')[-7].split(' ')[-2])
+    else:
+        os.system(f'./{smina_model_path} -l {ligand} -r {protein} --score_only')
 
 # os.system("python docking.py " + ligand_pdbqt_file + \
 #           " "+target_pdbqt_file + " " + output_file +' '+ \

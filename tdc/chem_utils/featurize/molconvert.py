@@ -171,11 +171,13 @@ def smiles2ECFP6(smiles):
   Returns:
     fp: rdkit.DataStructs.cDataStructs.UIntSparseIntVect
 
+  refer: https://github.com/rdkit/benchmarking_platform/blob/master/scoring/fingerprint_lib.py
+
   """
   nbits = 2048
   smiles = canonicalize(smiles)
   molecule = smiles_to_rdkit_mol(smiles)
-  fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 1, nBits=nbits)
+  fp = AllChem.GetMorganFingerprintAsBitVect(molecule, 3, nBits=nbits)
   arr = np.zeros((0,), dtype=np.float64)
   DataStructs.ConvertToNumpyArray(fp,arr)
   return arr 
@@ -642,8 +644,56 @@ def mol2file2smiles(molfile):
   smiles = canonicalize(smiles)
   return smiles 
 
-
 ## smiles2xxx 
+
+
+atom_types = ['C', 'N', 'O', 'H', 'F', 'unknown'] ### Cl, S? 
+def atom2onehot(atom):
+  """ convert atom to one-hot feature vector
+  
+  Args: 
+    'C'
+
+  Returns:
+    [1, 0, 0, 0, 0, ..]
+
+  """
+  onehot = np.zeros((1,len(atom_types)))
+  idx = atom_types.index(atom)
+  onehot[0,idx] = 1 
+  return onehot 
+
+def atomstring2atomfeature(atom_string_list):
+  atom_features = [atom2onehot(atom) for atom in atom_string_list]
+  atom_features = np.concatenate(atom_features, 0)
+  return atom_features 
+
+def raw3D2pyg(raw3d_feature):
+  """convert raw3d feature to pyg (torch-geometric) feature
+
+  Args:
+    raw3d_feature: (atom_string_list, positions, y)
+      - atom_string_list: list, each element is an atom, length is N
+      - positions: np.array, shape: (N,3)
+      - y: float 
+
+  Returns:
+    data = Data(x=x, pos=pos, y=y)
+
+  """
+  import torch 
+  from torch_geometric.data import Data ### global 
+  # atom_string_list, positions, y = raw3d_feature 
+  atom_string_list, positions = raw3d_feature 
+  atom_features = atomstring2atomfeature(atom_string_list)
+  atom_features = torch.from_numpy(atom_features)
+  positions = torch.from_numpy(positions)
+  # y = torch.FloatTensor(y)
+  # data = Data(x = atom_features, pos = positions, y = y)
+  data = Data(x = atom_features, pos = positions)
+  return data 
+
+  
 
 convert_dict = {
           'SMILES': ['SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'],
@@ -652,12 +702,13 @@ convert_dict = {
           'mol2': ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'], 
           'SDF': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],
           'XYZ': ['SMILES', 'SELFIES', 'Graph3D', 'Coulumb'],  
+          'Raw3D': ['PyG3D'],
         }
 
 fingerprints_list = ['ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
 
 twoD_format = ['SMILES', 'SELFIES', 'mol', 'mol2', ]
-threeD_format = ['SDF', 'XYZ', ]
+threeD_format = ['SDF', 'XYZ', 'PyG3D', 'Raw3D', 'distance', 'Coulumb', 'shape', ] ### shape:mesh
 
 
 class MolConvert:
@@ -755,7 +806,9 @@ class MolConvert:
             elif dst == "ECFP2":
                 f2 = smiles2ECFP2 
             elif dst == "ECFP4":
-                f2 = smiles2ECFP4 
+                f2 = smiles2ECFP4
+            elif dst == "ECFP6":
+                f2 = smiles2ECFP6  
             elif dst == "MACCS":
                 f2 = smiles2maccs 
             elif dst == "Daylight":
@@ -790,6 +843,8 @@ class MolConvert:
           self.func = sdffile2selfies_lst 
         elif src == 'SDF' and dst == 'Coulumb':
           self.func = sdffile2coulomb
+        elif src == 'Raw3D' and dst == 'PyG3D':
+          self.func = raw3D2pyg
 
 
 

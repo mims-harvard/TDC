@@ -176,6 +176,26 @@ def create_scaffold_split(df, seed, frac, entity):
 			'valid': df.iloc[val].reset_index(drop = True),
 			'test': df.iloc[test].reset_index(drop = True)}
 
+def create_combination_generation_split(dict1, dict2, seed, frac):
+	"""create random split
+	
+	Args:
+	    dict: data dict
+	    fold_seed (int): the random seed
+	    frac (list): a list of train/valid/test fractions
+	
+	Returns:
+	    dict: a dictionary of splitted dataframes, where keys are train/valid/test and values correspond to each dataframe
+	"""
+	train_frac, val_frac, test_frac = frac
+	length = len(dict1['coord'])
+	indices = np.random.permutation(length)
+	train_idx, val_idx, test_idx = indices[:int(length*train_frac)], indices[int(length*train_frac):int(length*(train_frac+val_frac))], indices[int(length*(train_frac+val_frac)):]
+
+	return {'train': {"protein_coord": [dict1['coord'][i] for i in train_idx], "protein_atom_type": [dict1['atom_type'][i] for i in train_idx], "ligand_coord": [dict2['coord'][i] for i in train_idx], "ligand_atom_type": [dict2['atom_type'][i] for i in train_idx]},
+			'valid': {"protein_coord": [dict1['coord'][i] for i in val_idx], "protein_atom_type": [dict1['atom_type'][i] for i in val_idx], "ligand_coord": [dict2['coord'][i] for i in val_idx], "ligand_atom_type": [dict2['atom_type'][i] for i in val_idx]},
+			'test': {"protein_coord": [dict1['coord'][i] for i in test_idx], "protein_atom_type": [dict1['atom_type'][i] for i in test_idx], "ligand_coord": [dict2['coord'][i] for i in test_idx], "ligand_atom_type": [dict2['atom_type'][i] for i in test_idx]}}
+
 def create_combination_split(df, seed, frac):
 	"""
 	Function for splitting drug combination dataset such that no combinations are shared across the split

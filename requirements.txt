@@ -1,6 +1,8 @@
+rdkit-pypi
 fuzzywuzzy
 numpy
 pandas
 tqdm
 scikit-learn
 seaborn
+requests
