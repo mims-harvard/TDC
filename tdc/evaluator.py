@@ -61,12 +61,11 @@ def range_logAUC(true_y, predicted_score, FPR_range=(0.001, 0.1)):
     [1] Mysinger, M.M. and B.K. Shoichet, Rapid Context-Dependent Ligand
     Desolvation in Molecular Docking. Journal of Chemical Information and
     Modeling, 2010. 50(9): p. 1561-1573.
-    [2] Mendenhall, J. and J. Meiler, Improving quantitative
-    structure–activity relationship models using Artificial Neural Networks
-    trained with dropout. Journal of computer-aided molecular design,
-    2016. 30(2): p. 177-189.
-    :param true_y: numpy array of the ground truth. Values are either 0 (
-    inactive) or 1(active).
+    [2] Liu, Yunchao, et al. "Interpretable Chirality-Aware Graph Neural 
+    Network for Quantitative Structure Activity Relationship Modeling in 
+    Drug Discovery." bioRxiv (2022).
+    :param true_y: numpy array of the ground truth. Values are either 0 
+    (inactive) or 1(active).
     :param predicted_score: numpy array of the predicted score (The
     score does not have to be between 0 and 1)
     :param FPR_range: the range for calculating the logAUC formated in
@@ -77,31 +76,26 @@ def range_logAUC(true_y, predicted_score, FPR_range=(0.001, 0.1)):
     # FPR range validity check
     if FPR_range == None:
         raise Exception('FPR range cannot be None')
-    lower_bound = np.log10(FPR_range[0])
-    upper_bound = np.log10(FPR_range[1])
+    lower_bound = FPR_range[0]
+    upper_bound = FPR_range[1]
     if (lower_bound >= upper_bound):
         raise Exception('FPR upper_bound must be greater than lower_bound')
 
-    # Get the data points' coordinates. log_fpr is the x coordinate, tpr is
-    # the y coordinate.
     fpr, tpr, thresholds = roc_curve(true_y, predicted_score, pos_label=1)
-    log_fpr = np.log10(fpr)
 
-    # Intecept the curve at the two ends of the region, i.e., lower_bound,
-    # and upper_bound
-    tpr = np.append(tpr, np.interp([lower_bound, upper_bound], log_fpr, tpr))
-    log_fpr = np.append(log_fpr, [lower_bound, upper_bound])
+    tpr = np.append(tpr, np.interp([lower_bound, upper_bound], fpr, tpr))
+    fpr = np.append(fpr, [lower_bound, upper_bound])
 
     # Sort both x-, y-coordinates array
-    x = np.sort(log_fpr)
-    y = np.sort(tpr)
+    tpr = np.sort(tpr)
+    fpr = np.sort(fpr)
 
-    # For visulization of the plot before trimming, uncomment the following
-    # line, with proper libray imported
-    # plt.plot(x, y)
-    # For visulization of the plot in the trimmed area, uncomment the
-    # following line
-    # plt.xlim(lower_bound, upper_bound)
+    # Get the data points' coordinates. log_fpr is the x coordinate, tpr is the y coordinate.
+    log_fpr = np.log10(fpr)
+    x = log_fpr
+    y = tpr
+    lower_bound = np.log10(lower_bound)
+    upper_bound = np.log10(upper_bound)
 
     # Get the index of the lower and upper bounds
     lower_bound_idx = np.where(x == lower_bound)[-1][-1]
@@ -111,8 +105,7 @@ def range_logAUC(true_y, predicted_score, FPR_range=(0.001, 0.1)):
     trim_x = x[lower_bound_idx:upper_bound_idx + 1]
     trim_y = y[lower_bound_idx:upper_bound_idx + 1]
 
-    area = auc(trim_x, trim_y) / 2
-
+    area = auc(trim_x, trim_y) / (upper_bound-lower_bound)
     return area
 
 ## code source check here https://github.com/charnley/rmsd
