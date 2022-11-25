@@ -13,7 +13,7 @@ conda install -c conda-forge rdkit
 conda install -c conda-forge notebook
 
 # for visualization and testing
-pip install seaborn scikit-learn scipy networkx pytest fuzzywuzzy
+pip install seaborn scikit-learn scipy networkx pytest fuzzywuzzy requests tdqm
 # for graph transformation
 # DGL installation page: https://www.dgl.ai/pages/start.html
 # PyG installation page: https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html
