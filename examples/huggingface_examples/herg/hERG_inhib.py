@@ -105,6 +105,10 @@ def train_fn(hparams):
 from ray import tune
 from ray.tune.search.bayesopt import BayesOptSearch
 
+from ray import air
+from ray.air import session
+from ray.air.callbacks.mlflow import MLflowLoggerCallback
+
 
 search_space = {
     "drug_encoding": "MPNN",
@@ -122,11 +126,23 @@ tuner = tune.Tuner(
         search_alg=bayesopt,
         num_samples=3
     ),
+    run_config=air.RunConfig(
+        name="mlflow",
+        callbacks=[
+            MLflowLoggerCallback(
+                tracking_uri="./mlruns",
+                experiment_name="test",
+                save_artifact=True,
+            )
+        ],
+    ),
     param_space=search_space,
 )
 
 analysis = tuner.fit()
 
+
+# Explore the tuning results on mlflow dashboard as well. It can be started by running `mlflow ui --backend-store-uri examples/huggingface_examples/herg/mlruns/` in terminal. Any files saved to local disk during training will be 
 
 # ## Export to Huggingface Hub
 
