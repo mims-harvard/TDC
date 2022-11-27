@@ -26,7 +26,7 @@ X, y = X[:100], y[:100]
 pd.Series(y).value_counts()
 
 
-# ## Train & Tune
+# ## Train
 
 import io
 from contextlib import redirect_stdout
@@ -44,7 +44,7 @@ def parse_train_log(log_lines:List[str]):
     """
     train_stats, val_stats = [], []
 
-    for i, l in enumerate(lines):
+    for i, l in enumerate(log_lines):
         m = re.match(r"Training at Epoch (?P<epoch>\d+) iteration (?P<iter>\d+) with loss (?P<loss>\d+\.\d+). Total time 0.0 hours", l)
         if m:
             train_stats.append({"epoch": int(m.group("epoch")), "train_iter": int(m.group("iter")), "train_loss": float(m.group("loss"))})
@@ -65,17 +65,7 @@ def parse_train_log(log_lines:List[str]):
     return { "train_val": train_val_stats_df, "test": test_stats }
 
 
-hparams = {
-    "drug_encoding": "MPNN",
-    "lr": 0.001,
-    "batch_size": 128,
-    "mpnn_hidden_size": 32,
-    "mpnn_depth": 2,
-    "train_epochs": 3,
-}
-
-
-@lru_cache()
+# @lru_cache()
 def prepare_data(drug_encoding):
     return dp_utils.data_process(X_drug=X, y=y, drug_encoding=drug_encoding, random_seed=RANDOM_SEED)
 
@@ -86,11 +76,11 @@ def train_fn(hparams):
 
     config = dp_utils.generate_config(
         drug_encoding=hparams["drug_encoding"], 
-        train_epoch=hparams['train_epochs'], 
+        train_epoch=int(hparams['train_epochs']) ,
         LR=hparams['lr'], 
-        batch_size=hparams['batch_size'],
-        mpnn_hidden_size=hparams['mpnn_hidden_size'],
-        mpnn_depth=hparams['mpnn_depth']
+        batch_size=int(hparams['batch_size']),
+        mpnn_hidden_size=int(hparams['mpnn_hidden_size']),
+        mpnn_depth=int(hparams['mpnn_depth'])
     )
 
     model = CompoundPred.model_initialize(**config)
@@ -110,10 +100,50 @@ def train_fn(hparams):
     }
 
 
-train_fn(hparams)
+# ## Tune
+
+from ray import tune
+from ray.tune.search.bayesopt import BayesOptSearch
+
+
+search_space = {
+    "drug_encoding": "MPNN",
+    "lr": 0.001,
+    "batch_size": 128,
+    "mpnn_hidden_size": tune.uniform(8, 32),
+    "mpnn_depth": 2,
+    "train_epochs": 3,
+}
+
+bayesopt = BayesOptSearch(metric="train_loss", mode="min")
+tuner = tune.Tuner(
+    train_fn,
+    tune_config=tune.TuneConfig(
+        search_alg=bayesopt,
+        num_samples=3
+    ),
+    param_space=search_space,
+)
+
+analysis = tuner.fit()
 
 
 # ## Export to Huggingface Hub
+
+
+
+
+# ## Appendix
+
+# train_fn({
+#     "drug_encoding": "MPNN",
+#     "lr": 0.001,
+#     "batch_size": 128,
+#     "mpnn_hidden_size": 32,
+#     "mpnn_depth": 2,
+#     "train_epochs": 3,
+# })
+
 
 
 
