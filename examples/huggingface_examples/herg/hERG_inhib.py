@@ -65,7 +65,7 @@ def parse_train_log(log_lines:List[str]):
     return { "train_val": train_val_stats_df, "test": test_stats }
 
 
-# @lru_cache()
+# @lru_cache() # doesn't work with Ray Tune
 def prepare_data(drug_encoding):
     return dp_utils.data_process(X_drug=X, y=y, drug_encoding=drug_encoding, random_seed=RANDOM_SEED)
 
@@ -142,7 +142,7 @@ tuner = tune.Tuner(
 analysis = tuner.fit()
 
 
-# Explore the tuning results on mlflow dashboard as well. It can be started by running `mlflow ui --backend-store-uri examples/huggingface_examples/herg/mlruns/` in terminal. Any files saved to local disk during training will be 
+# Explore the tuning results on mlflow dashboard as well. It can be started by running `mlflow ui --backend-store-uri examples/huggingface_examples/herg/mlruns/` in terminal. Any files saved to local disk during training can be found in the corresponding run in the `examples/huggingface_examples/herg/mlruns/` directory.
 
 # ## Export to Huggingface Hub
 
