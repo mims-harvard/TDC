@@ -11,8 +11,7 @@ import shutil
 
 # temporary solution for relative imports in case TDC is not installed
 # if TDC is installed, no need to use the following line
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                             '../../../')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
 
 
 class TestMolFilter(unittest.TestCase):
@@ -22,8 +21,9 @@ class TestMolFilter(unittest.TestCase):
 
     def test_MolConvert(self):
         from tdc.chem_utils import MolFilter
-        filters = MolFilter(filters = ['PAINS'], HBD = [0, 6])
-        filters(['CCSc1ccccc1C(=O)Nc1onc2c1CCC2'])
+
+        filters = MolFilter(filters=["PAINS"], HBD=[0, 6])
+        filters(["CCSc1ccccc1C(=O)Nc1onc2c1CCC2"])
 
     def tearDown(self):
         print(os.getcwd())

@@ -6,27 +6,113 @@ class SmilesCharDictionary(object):
     With a space:0 for padding, Q:1 as the start token and end_of_line \n:2 as the stop token.
     """
 
-    PAD = ' '
-    BEGIN = 'Q'
-    END = '\n'
+    PAD = " "
+    BEGIN = "Q"
+    END = "\n"
 
     def __init__(self) -> None:
-        self.forbidden_symbols = {'Ag', 'Al', 'Am', 'Ar', 'At', 'Au', 'D', 'E', 'Fe', 'G', 'K', 'L', 'M', 'Ra', 'Re',
-                                  'Rf', 'Rg', 'Rh', 'Ru', 'T', 'U', 'V', 'W', 'Xe',
-                                  'Y', 'Zr', 'a', 'd', 'f', 'g', 'h', 'k', 'm', 'si', 't', 'te', 'u', 'v', 'y'}
+        self.forbidden_symbols = {
+            "Ag",
+            "Al",
+            "Am",
+            "Ar",
+            "At",
+            "Au",
+            "D",
+            "E",
+            "Fe",
+            "G",
+            "K",
+            "L",
+            "M",
+            "Ra",
+            "Re",
+            "Rf",
+            "Rg",
+            "Rh",
+            "Ru",
+            "T",
+            "U",
+            "V",
+            "W",
+            "Xe",
+            "Y",
+            "Zr",
+            "a",
+            "d",
+            "f",
+            "g",
+            "h",
+            "k",
+            "m",
+            "si",
+            "t",
+            "te",
+            "u",
+            "v",
+            "y",
+        }
 
-        self.char_idx = {self.PAD: 0, self.BEGIN: 1, self.END: 2, '#': 20, '%': 22, '(': 25, ')': 24, '+': 26, '-': 27,
-                         '.': 30,
-                         '0': 32, '1': 31, '2': 34, '3': 33, '4': 36, '5': 35, '6': 38, '7': 37, '8': 40,
-                         '9': 39, '=': 41, 'A': 7, 'B': 11, 'C': 19, 'F': 4, 'H': 6, 'I': 5, 'N': 10,
-                         'O': 9, 'P': 12, 'S': 13, 'X': 15, 'Y': 14, 'Z': 3, '[': 16, ']': 18,
-                         'b': 21, 'c': 8, 'n': 17, 'o': 29, 'p': 23, 's': 28,
-                         "@": 42, "R": 43, '/': 44, "\\": 45, 'E': 46
-                         }
+        self.char_idx = {
+            self.PAD: 0,
+            self.BEGIN: 1,
+            self.END: 2,
+            "#": 20,
+            "%": 22,
+            "(": 25,
+            ")": 24,
+            "+": 26,
+            "-": 27,
+            ".": 30,
+            "0": 32,
+            "1": 31,
+            "2": 34,
+            "3": 33,
+            "4": 36,
+            "5": 35,
+            "6": 38,
+            "7": 37,
+            "8": 40,
+            "9": 39,
+            "=": 41,
+            "A": 7,
+            "B": 11,
+            "C": 19,
+            "F": 4,
+            "H": 6,
+            "I": 5,
+            "N": 10,
+            "O": 9,
+            "P": 12,
+            "S": 13,
+            "X": 15,
+            "Y": 14,
+            "Z": 3,
+            "[": 16,
+            "]": 18,
+            "b": 21,
+            "c": 8,
+            "n": 17,
+            "o": 29,
+            "p": 23,
+            "s": 28,
+            "@": 42,
+            "R": 43,
+            "/": 44,
+            "\\": 45,
+            "E": 46,
+        }
 
         self.idx_char = {v: k for k, v in self.char_idx.items()}
 
-        self.encode_dict = {"Br": 'Y', "Cl": 'X', "Si": 'A', 'Se': 'Z', '@@': 'R', 'se': 'E'}
+        self.encode_dict = {
+            "Br": "Y",
+            "Cl": "X",
+            "Si": "A",
+            "Se": "Z",
+            "@@": "R",
+            "se": "E",
+        }
         self.decode_dict = {v: k for k, v in self.encode_dict.items()}
 
     def allowed(self, smiles) -> bool:
@@ -41,7 +127,7 @@ class SmilesCharDictionary(object):
         """
         for symbol in self.forbidden_symbols:
             if symbol in smiles:
-                print('Forbidden symbol {:<2}  in  {}'.format(symbol, smiles))
+                print("Forbidden symbol {:<2}  in  {}".format(symbol, smiles))
                 return False
         return True
 
@@ -115,7 +201,7 @@ class SmilesCharDictionary(object):
                     break
                 predicted_chars.append(next_char)
 
-            smi = ''.join(predicted_chars)
+            smi = "".join(predicted_chars)
             smi = self.decode(smi)
             smiles_strings.append(smi)
 

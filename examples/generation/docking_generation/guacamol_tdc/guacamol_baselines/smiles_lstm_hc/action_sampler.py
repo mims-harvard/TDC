@@ -19,8 +19,13 @@ class ActionSampler:
     maximal allowed batch size.
     """
 
-    def __init__(self, max_batch_size, max_seq_length, device,
-                 distribution_cls: Type[Distribution] = None) -> None:
+    def __init__(
+        self,
+        max_batch_size,
+        max_seq_length,
+        device,
+        distribution_cls: Type[Distribution] = None,
+    ) -> None:
         """
         Args:
             max_batch_size: maximal batch size for the RNN model
@@ -32,7 +37,9 @@ class ActionSampler:
         self.max_seq_length = max_seq_length
         self.device = device
 
-        self.distribution_cls = Categorical if distribution_cls is None else distribution_cls
+        self.distribution_cls = (
+            Categorical if distribution_cls is None else distribution_cls
+        )
 
     def sample(self, model: SmilesRnn, num_samples: int) -> torch.Tensor:
         """
@@ -80,7 +87,9 @@ class ActionSampler:
 
         inp = rnn_start_token_vector(batch_size, self.device)
 
-        actions = torch.zeros((batch_size, self.max_seq_length), dtype=torch.long).to(self.device)
+        actions = torch.zeros((batch_size, self.max_seq_length), dtype=torch.long).to(
+            self.device
+        )
 
         for char in range(self.max_seq_length):
             output, hidden = model(inp, hidden)

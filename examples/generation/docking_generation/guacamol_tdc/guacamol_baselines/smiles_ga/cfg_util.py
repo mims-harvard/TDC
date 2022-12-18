@@ -10,7 +10,7 @@ def get_smiles_tokenizer(cfg):
     # there are currently 6 double letter entities in the grammar
     # these are their replacement, with no particular meaning
     # they need to be ascii and not part of the SMILES symbol vocabulary
-    replacements = ['!', '?', '.', ',', ';', '$']
+    replacements = ["!", "?", ".", ",", ";", "$"]
     assert len(long_tokens) == len(replacements)
     for token in replacements:
         assert token not in cfg._lexical_index
@@ -26,6 +26,7 @@ def get_smiles_tokenizer(cfg):
             except Exception:
                 tokens.append(token)
         return tokens
+
     return tokenize
 
 
@@ -47,16 +48,16 @@ def encode(smiles):
 def prods_to_eq(prods):
     seq = [prods[0].lhs()]
     for prod in prods:
-        if str(prod.lhs()) == 'Nothing':
+        if str(prod.lhs()) == "Nothing":
             break
         for ix, s in enumerate(seq):
             if s == prod.lhs():
-                seq = seq[:ix] + list(prod.rhs()) + seq[ix + 1:]
+                seq = seq[:ix] + list(prod.rhs()) + seq[ix + 1 :]
                 break
     try:
-        return ''.join(seq)
+        return "".join(seq)
     except Exception:
-        return ''
+        return ""
 
 
 def decode(rule):

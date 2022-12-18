@@ -14,6 +14,10 @@ class RandomSamplingOptimizer(GoalDirectedGenerator):
     def __init__(self, sampler: RandomSmilesSampler) -> None:
         self.sampler = sampler
 
-    def generate_optimized_molecules(self, scoring_function: ScoringFunction, number_molecules: int,
-                                     starting_population: Optional[List[str]] = None) -> List[str]:
+    def generate_optimized_molecules(
+        self,
+        scoring_function: ScoringFunction,
+        number_molecules: int,
+        starting_population: Optional[List[str]] = None,
+    ) -> List[str]:
         return self.sampler.generate(number_samples=number_molecules)

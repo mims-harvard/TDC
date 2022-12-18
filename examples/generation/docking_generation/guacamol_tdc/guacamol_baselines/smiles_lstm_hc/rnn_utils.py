@@ -52,24 +52,28 @@ def get_tensor_dataset_on_device(numpy_array, device):
 def load_model(model_class, model_definition, model_weights, device, copy_to_cpu=True):
     """
 
-        Args:
-            model_class: what class of model?
-            model_definition: path to model json
-            model_weights: path to model weights
-            device: cuda or cpu
-            copy_to_cpu: bool
+    Args:
+        model_class: what class of model?
+        model_definition: path to model json
+        model_weights: path to model weights
+        device: cuda or cpu
+        copy_to_cpu: bool
 
-        Returns: an RNN model
+    Returns: an RNN model
 
-        """
-    # import gzip 
+    """
+    # import gzip
     # json_in = gzip.open(model_definition).read()
-    json_in = open("/project/molecular_data/graphnn/pyscreener/smiles_lstm_hc/pretrained_model/model_final_0.473.json").read()
+    json_in = open(
+        "/project/molecular_data/graphnn/pyscreener/smiles_lstm_hc/pretrained_model/model_final_0.473.json"
+    ).read()
     raw_dict = json.loads(json_in)
     model = model_class(**raw_dict)
     map_location = lambda storage, loc: storage if copy_to_cpu else None
     # weight = torch.load(model_weights)
-    weight = torch.load("/project/molecular_data/graphnn/pyscreener/smiles_lstm_hc/pretrained_model/model_final_0.473.pt")
+    weight = torch.load(
+        "/project/molecular_data/graphnn/pyscreener/smiles_lstm_hc/pretrained_model/model_final_0.473.pt"
+    )
     model.load_state_dict(weight)
     # model.load_state_dict(torch.load(model_weights, map_location))
     return model.to(device)
@@ -80,15 +84,17 @@ def load_rnn_model(model_definition, model_weights, device, copy_to_cpu=True):
 
 
 def save_model(model, base_dir, base_name):
-    model_params = os.path.join(base_dir, base_name + '.pt')
+    model_params = os.path.join(base_dir, base_name + ".pt")
     torch.save(model.state_dict(), model_params)
 
-    model_config = os.path.join(base_dir, base_name + '.json')
-    with open(model_config, 'w') as mc:
+    model_config = os.path.join(base_dir, base_name + ".json")
+    with open(model_config, "w") as mc:
         mc.write(json.dumps(model.config))
 
 
-def load_smiles_from_file(smiles_path, rm_invalid=True, rm_duplicates=True, max_len=100):
+def load_smiles_from_file(
+    smiles_path, rm_invalid=True, rm_duplicates=True, max_len=100
+):
     """
     Given a list of SMILES strings, provides a zero padded NumPy array
     with their index representation. Sequences longer than `max_len` are
@@ -104,10 +110,14 @@ def load_smiles_from_file(smiles_path, rm_invalid=True, rm_duplicates=True, max_
         valid_mask: list of len(smiles_list) - a boolean mask vector indicating if each index maps to a valid smiles
     """
     smiles_list = open(smiles_path).readlines()
-    return load_smiles_from_list(smiles_list, rm_invalid=rm_invalid, rm_duplicates=rm_duplicates, max_len=max_len)
+    return load_smiles_from_list(
+        smiles_list, rm_invalid=rm_invalid, rm_duplicates=rm_duplicates, max_len=max_len
+    )
 
 
-def load_smiles_from_list(smiles_list, rm_invalid=True, rm_duplicates=True, max_len=100):
+def load_smiles_from_list(
+    smiles_list, rm_invalid=True, rm_duplicates=True, max_len=100
+):
     """
     Given a list of SMILES strings, provides a zero padded NumPy array
     with their index representation. Sequences longer than `max_len` are
@@ -139,7 +149,7 @@ def load_smiles_from_list(smiles_list, rm_invalid=True, rm_duplicates=True, max_
             valid_mask[i] = True
         else:
             if not rm_invalid:
-                valid_smiles.append('C')  # default placeholder
+                valid_smiles.append("C")  # default placeholder
 
     if rm_duplicates:
         unique_smiles = remove_duplicates(valid_smiles)
@@ -160,7 +170,7 @@ def load_smiles_from_list(smiles_list, rm_invalid=True, rm_duplicates=True, max_
     return sequences, valid_mask
 
 
-def rnn_start_token_vector(batch_size, device='cpu'):
+def rnn_start_token_vector(batch_size, device="cpu"):
     """
     Returns a vector of start tokens for SmilesRnn.
     This vector can be used to start sampling a batch of SMILES strings.
@@ -190,5 +200,5 @@ def set_random_seed(seed, device):
     """
     np.random.seed(seed)
     torch.manual_seed(seed)
-    if device == 'cuda':
+    if device == "cuda":
         torch.cuda.manual_seed(seed)

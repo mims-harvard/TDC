@@ -32,7 +32,11 @@ class SmilesRnnSampler:
         Returns: a list of SMILES string, with no beginning nor end symbols
 
         """
-        sampler = ActionSampler(max_batch_size=self.batch_size, max_seq_length=max_seq_len, device=self.device)
+        sampler = ActionSampler(
+            max_batch_size=self.batch_size,
+            max_seq_length=max_seq_len,
+            device=self.device,
+        )
 
         model.eval()
         with torch.no_grad():

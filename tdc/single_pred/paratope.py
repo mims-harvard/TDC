@@ -4,11 +4,13 @@
 
 import sys
 import warnings
+
 warnings.filterwarnings("ignore")
 
 from . import single_pred_dataset
 from ..utils import print_sys
 from ..metadata import dataset_names
+
 
 class Paratope(single_pred_dataset.DataLoader):
 
@@ -26,12 +28,24 @@ class Paratope(single_pred_dataset.DataLoader):
             Automatic conversion of SMILES to other molecular formats in MolConvert class. Stored as separate column in dataframe, defaults to None
     """
 
-    def __init__(self, name, path='./data', label_name=None, print_stats=False, convert_format=None):
-        """Create a paratope prediction dataloader object.
-        """
-        super().__init__(name, path, label_name, print_stats,
-                         dataset_names=dataset_names["Paratope"], convert_format = convert_format)
-        self.entity1_name = 'Antibody'
+    def __init__(
+        self,
+        name,
+        path="./data",
+        label_name=None,
+        print_stats=False,
+        convert_format=None,
+    ):
+        """Create a paratope prediction dataloader object."""
+        super().__init__(
+            name,
+            path,
+            label_name,
+            print_stats,
+            dataset_names=dataset_names["Paratope"],
+            convert_format=convert_format,
+        )
+        self.entity1_name = "Antibody"
         if print_stats:
             self.print_stats()
-        print('Done!', flush = True, file = sys.stderr)
+        print("Done!", flush=True, file=sys.stderr)

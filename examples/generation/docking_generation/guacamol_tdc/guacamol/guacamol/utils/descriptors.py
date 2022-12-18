@@ -51,7 +51,6 @@ def num_atoms(mol: Mol) -> int:
 
 
 class AtomCounter:
-
     def __init__(self, element: str) -> None:
         """
         Args:
@@ -70,7 +69,7 @@ class AtomCounter:
             The number of atoms of the given type.
         """
         # if the molecule contains H atoms, they may be implicit, so add them
-        if self.element == 'H':
+        if self.element == "H":
             mol = Chem.AddHs(mol)
 
         return sum(1 for a in mol.GetAtoms() if a.GetSymbol() == self.element)

@@ -2,6 +2,7 @@ class ChemblFileReader:
     """
     This class can repeatedly generate an iterator for iterating over the content of a file containing SMILES strings.
     """
+
     def __init__(self, smiles_file_path: str):
         """
         Args:
