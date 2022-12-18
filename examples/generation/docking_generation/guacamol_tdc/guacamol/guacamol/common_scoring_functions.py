@@ -3,22 +3,37 @@ from typing import Callable, List
 from rdkit import Chem
 from rdkit.DataStructs.cDataStructs import TanimotoSimilarity
 
-from guacamol.utils.descriptors import mol_weight, logP, num_H_donors, tpsa, num_atoms, AtomCounter
+from guacamol.utils.descriptors import (
+    mol_weight,
+    logP,
+    num_H_donors,
+    tpsa,
+    num_atoms,
+    AtomCounter,
+)
 from guacamol.utils.fingerprints import get_fingerprint
-from guacamol.score_modifier import ScoreModifier, MinGaussianModifier, MaxGaussianModifier, GaussianModifier
-from guacamol.scoring_function import ScoringFunctionBasedOnRdkitMol, MoleculewiseScoringFunction
+from guacamol.score_modifier import (
+    ScoreModifier,
+    MinGaussianModifier,
+    MaxGaussianModifier,
+    GaussianModifier,
+)
+from guacamol.scoring_function import (
+    ScoringFunctionBasedOnRdkitMol,
+    MoleculewiseScoringFunction,
+)
 from guacamol.utils.chemistry import smiles_to_rdkit_mol, parse_molecular_formula
 from guacamol.utils.math import arithmetic_mean, geometric_mean
 
-import numpy as np 
+import numpy as np
 
 # class TDCScoring(ScoringFunctionBasedOnRdkitMol):
 
-#     def __init__(self, name = 'DRD2'): 
-#         ## DRD2  GSK3B  JNK3  cyp3a4_benchmark 
+#     def __init__(self, name = 'DRD2'):
+#         ## DRD2  GSK3B  JNK3  cyp3a4_benchmark
 #         super().__init__(score_modifier=None)
 #         from tdc import Oracle
-#         self.name = name 
+#         self.name = name
 #         self.oracle = Oracle(name = name)
 
 #     def score_mol(self, mol: Chem.Mol) -> float:
@@ -32,76 +47,95 @@ import numpy as np
 #         0  ->  0
 #     '''
 #     if x is None:
-#         return 0 
+#         return 0
 #     return min(max(-1/12*x, 0), 1)
 
 
 def read_in_num(filename):
-    with open(filename, 'r') as fin:
-        line = fin.readline() 
+    with open(filename, "r") as fin:
+        line = fin.readline()
     return int(line)
 
+
 def write_num(filename, num):
-    with open(filename, 'w') as fout:
+    with open(filename, "w") as fout:
         fout.write(str(num))
 
+
 def docking_modify(x):
-    return min(max(-x/14.0, 0), 1)
+    return min(max(-x / 14.0, 0), 1)
+
 
 # def docking_modify(x):
-#     return -x 
+#     return -x
+
 
 class TDCScoring(ScoringFunctionBasedOnRdkitMol):
-
-    def __init__(self, name): 
-        ## DRD2  GSK3B  JNK3  cyp3a4_benchmark 
+    def __init__(self, name):
+        ## DRD2  GSK3B  JNK3  cyp3a4_benchmark
         from tdc import Oracle
+
         self.name = name
         super().__init__(score_modifier=None)
-        if 'docking' not in self.name.lower():  ### drd2 gsk3 JNK3
-            self.oracle = Oracle(name = self.name)
-            
-        elif self.name.lower() == 'docking_5wiu':
-            self.oracle = Oracle(name = 'Docking_Score', software='vina', 
-                                 pyscreener_path = '/project/molecular_data/graphnn/pyscreener', 
-                                 receptors=['/project/molecular_data/graphnn/pyscreener/testing_inputs/5WIU.pdb'], 
-                                 docked_ligand_file='/project/molecular_data/graphnn/pyscreener/testing_inputs/5WIU_with_ligand.pdb',
-                                 buffer=10, path='/project/molecular_data/graphnn/pyscreener/my_test/', 
-                                 num_worker=1, 
-                                 ncpu=4
-                                )
+        if "docking" not in self.name.lower():  ### drd2 gsk3 JNK3
+            self.oracle = Oracle(name=self.name)
 
-        elif self.name.lower() == 'docking_drd3':
-            self.oracle = Oracle(name = 'Docking_Score', software='vina', 
-                pyscreener_path = '/project/molecular_data/graphnn/pyscreener', 
-                receptors=['/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb'], 
-                center=(9, 22.5, 26), size=(15, 15, 15),
-                buffer=10, path='/project/molecular_data/graphnn/pyscreener/my_test/', num_worker=1, ncpu=10)
+        elif self.name.lower() == "docking_5wiu":
+            self.oracle = Oracle(
+                name="Docking_Score",
+                software="vina",
+                pyscreener_path="/project/molecular_data/graphnn/pyscreener",
+                receptors=[
+                    "/project/molecular_data/graphnn/pyscreener/testing_inputs/5WIU.pdb"
+                ],
+                docked_ligand_file="/project/molecular_data/graphnn/pyscreener/testing_inputs/5WIU_with_ligand.pdb",
+                buffer=10,
+                path="/project/molecular_data/graphnn/pyscreener/my_test/",
+                num_worker=1,
+                ncpu=4,
+            )
 
-        self.docking_num_file = "/project/molecular_data/graphnn/pyscreener/docking_num.txt"
+        elif self.name.lower() == "docking_drd3":
+            self.oracle = Oracle(
+                name="Docking_Score",
+                software="vina",
+                pyscreener_path="/project/molecular_data/graphnn/pyscreener",
+                receptors=[
+                    "/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"
+                ],
+                center=(9, 22.5, 26),
+                size=(15, 15, 15),
+                buffer=10,
+                path="/project/molecular_data/graphnn/pyscreener/my_test/",
+                num_worker=1,
+                ncpu=10,
+            )
+
+        self.docking_num_file = (
+            "/project/molecular_data/graphnn/pyscreener/docking_num.txt"
+        )
         write_num(self.docking_num_file, 0)
-        print('----------initialize docking_num_file-------------')
+        print("----------initialize docking_num_file-------------")
 
     def score_mol(self, mol: Chem.Mol) -> float:
         smiles = Chem.MolToSmiles(mol, isomericSmiles=True)
-        if 'docking' in self.name.lower():
+        if "docking" in self.name.lower():
             score = self.oracle(smiles)
-            print('--------------------------------')
-            print('smiles', smiles)
+            print("--------------------------------")
+            print("smiles", smiles)
             print("----docking score:", score)
             score = list(score.values())[0]
             score = docking_modify(score)
-            print("====docking score:", score)            
-            print('--------------------------------')
+            print("====docking score:", score)
+            print("--------------------------------")
             ### count docking num
             # num = read_in_num(self.docking_num_file)
-            # num+=1 
+            # num+=1
             # write_num(self.docking_num_file, num)
 
-            return score 
-        else: ## not docking
+            return score
+        else:  ## not docking
             return self.oracle(smiles)
-
 
 
 class RdkitScoringFunction(ScoringFunctionBasedOnRdkitMol):
@@ -109,7 +143,11 @@ class RdkitScoringFunction(ScoringFunctionBasedOnRdkitMol):
     Scoring function wrapping RDKit descriptors.
     """
 
-    def __init__(self, descriptor: Callable[[Chem.Mol], float], score_modifier: ScoreModifier = None) -> None:
+    def __init__(
+        self,
+        descriptor: Callable[[Chem.Mol], float],
+        score_modifier: ScoreModifier = None,
+    ) -> None:
         """
         Args:
             descriptor: molecular descriptors, such as the ones in descriptors.py
@@ -140,7 +178,9 @@ class TanimotoScoringFunction(ScoringFunctionBasedOnRdkitMol):
         self.fp_type = fp_type
         target_mol = smiles_to_rdkit_mol(target)
         if target_mol is None:
-            raise RuntimeError(f'The similarity target {target} is not a valid molecule.')
+            raise RuntimeError(
+                f"The similarity target {target} is not a valid molecule."
+            )
 
         self.ref_fp = get_fingerprint(target_mol, self.fp_type)
 
@@ -154,7 +194,9 @@ class CNS_MPO_ScoringFunction(ScoringFunctionBasedOnRdkitMol):
     CNS MPO scoring function
     """
 
-    def __init__(self, max_logP=5.0, maxMW=360, min_tpsa=40, max_tpsa=90, max_hbd=0) -> None:
+    def __init__(
+        self, max_logP=5.0, maxMW=360, min_tpsa=40, max_tpsa=90, max_hbd=0
+    ) -> None:
         super().__init__()
 
         self.logP_gauss = MinGaussianModifier(max_logP, 1)
@@ -191,7 +233,7 @@ class IsomerScoringFunction(MoleculewiseScoringFunction):
     - total number of atoms with a Gaussian modifier with mu=6, sigma=2
     """
 
-    def __init__(self, molecular_formula: str, mean_function='geometric') -> None:
+    def __init__(self, molecular_formula: str, mean_function="geometric") -> None:
         """
         Args:
             molecular_formula: target molecular formula
@@ -204,26 +246,38 @@ class IsomerScoringFunction(MoleculewiseScoringFunction):
 
     @staticmethod
     def determine_mean_function(mean_function: str) -> Callable[[List[float]], float]:
-        if mean_function == 'arithmetic':
+        if mean_function == "arithmetic":
             return arithmetic_mean
-        if mean_function == 'geometric':
+        if mean_function == "geometric":
             return geometric_mean
         raise ValueError(f'Invalid mean function: "{mean_function}"')
 
     @staticmethod
-    def determine_scoring_functions(molecular_formula: str) -> List[RdkitScoringFunction]:
+    def determine_scoring_functions(
+        molecular_formula: str,
+    ) -> List[RdkitScoringFunction]:
         element_occurrences = parse_molecular_formula(molecular_formula)
 
-        total_number_atoms = sum(element_tuple[1] for element_tuple in element_occurrences)
+        total_number_atoms = sum(
+            element_tuple[1] for element_tuple in element_occurrences
+        )
 
         # scoring functions for each element
-        functions = [RdkitScoringFunction(descriptor=AtomCounter(element),
-                                          score_modifier=GaussianModifier(mu=n_atoms, sigma=1.0))
-                     for element, n_atoms in element_occurrences]
+        functions = [
+            RdkitScoringFunction(
+                descriptor=AtomCounter(element),
+                score_modifier=GaussianModifier(mu=n_atoms, sigma=1.0),
+            )
+            for element, n_atoms in element_occurrences
+        ]
 
         # scoring functions for the total number of atoms
-        functions.append(RdkitScoringFunction(descriptor=num_atoms,
-                                              score_modifier=GaussianModifier(mu=total_number_atoms, sigma=2.0)))
+        functions.append(
+            RdkitScoringFunction(
+                descriptor=num_atoms,
+                score_modifier=GaussianModifier(mu=total_number_atoms, sigma=2.0),
+            )
+        )
 
         return functions
 

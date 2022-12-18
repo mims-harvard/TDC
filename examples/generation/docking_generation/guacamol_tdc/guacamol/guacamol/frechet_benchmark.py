@@ -8,7 +8,10 @@ from typing import List
 import fcd
 import numpy as np
 
-from guacamol.distribution_learning_benchmark import DistributionLearningBenchmark, DistributionLearningBenchmarkResult
+from guacamol.distribution_learning_benchmark import (
+    DistributionLearningBenchmark,
+    DistributionLearningBenchmarkResult,
+)
 from guacamol.distribution_matching_generator import DistributionMatchingGenerator
 from guacamol.utils.data import get_random_subset
 from guacamol.utils.sampling_helpers import sample_valid_molecules
@@ -24,9 +27,12 @@ class FrechetBenchmark(DistributionLearningBenchmark):
     See http://dx.doi.org/10.1021/acs.jcim.8b00234 for the publication.
     """
 
-    def __init__(self, training_set: List[str],
-                 chemnet_model_filename='ChemNet_v0.13_pretrained.h5',
-                 sample_size=10000) -> None:
+    def __init__(
+        self,
+        training_set: List[str],
+        chemnet_model_filename="ChemNet_v0.13_pretrained.h5",
+        sample_size=10000,
+    ) -> None:
         """
         Args:
             training_set: molecules from the training set
@@ -36,37 +42,50 @@ class FrechetBenchmark(DistributionLearningBenchmark):
         """
         self.chemnet_model_filename = chemnet_model_filename
         self.sample_size = sample_size
-        super().__init__(name='Frechet ChemNet Distance', number_samples=self.sample_size)
+        super().__init__(
+            name="Frechet ChemNet Distance", number_samples=self.sample_size
+        )
 
-        self.reference_molecules = get_random_subset(training_set, self.sample_size, seed=42)
+        self.reference_molecules = get_random_subset(
+            training_set, self.sample_size, seed=42
+        )
 
-    def assess_model(self, model: DistributionMatchingGenerator) -> DistributionLearningBenchmarkResult:
+    def assess_model(
+        self, model: DistributionMatchingGenerator
+    ) -> DistributionLearningBenchmarkResult:
         chemnet = self._load_chemnet()
 
         start_time = time.time()
-        generated_molecules = sample_valid_molecules(model=model, number_molecules=self.number_samples)
+        generated_molecules = sample_valid_molecules(
+            model=model, number_molecules=self.number_samples
+        )
         end_time = time.time()
 
         if len(generated_molecules) != self.number_samples:
-            logger.warning('The model could not generate enough valid molecules.')
+            logger.warning("The model could not generate enough valid molecules.")
 
-        mu_ref, cov_ref = self._calculate_distribution_statistics(chemnet, self.reference_molecules)
+        mu_ref, cov_ref = self._calculate_distribution_statistics(
+            chemnet, self.reference_molecules
+        )
         mu, cov = self._calculate_distribution_statistics(chemnet, generated_molecules)
 
-        FCD = fcd.calculate_frechet_distance(mu1=mu_ref, mu2=mu,
-                                             sigma1=cov_ref, sigma2=cov)
+        FCD = fcd.calculate_frechet_distance(
+            mu1=mu_ref, mu2=mu, sigma1=cov_ref, sigma2=cov
+        )
         score = np.exp(-0.2 * FCD)
 
         metadata = {
-            'number_reference_molecules': len(self.reference_molecules),
-            'number_generated_molecules': len(generated_molecules),
-            'FCD': FCD
+            "number_reference_molecules": len(self.reference_molecules),
+            "number_generated_molecules": len(generated_molecules),
+            "FCD": FCD,
         }
 
-        return DistributionLearningBenchmarkResult(benchmark_name=self.name,
-                                                   score=score,
-                                                   sampling_time=end_time - start_time,
-                                                   metadata=metadata)
+        return DistributionLearningBenchmarkResult(
+            benchmark_name=self.name,
+            score=score,
+            sampling_time=end_time - start_time,
+            metadata=metadata,
+        )
 
     def _load_chemnet(self):
         """
@@ -78,14 +97,14 @@ class FrechetBenchmark(DistributionLearningBenchmark):
         2. save it to a temporary file
         3. load the model from the temporary file
         """
-        model_bytes = pkgutil.get_data('fcd', self.chemnet_model_filename)
+        model_bytes = pkgutil.get_data("fcd", self.chemnet_model_filename)
         tmpdir = tempfile.gettempdir()
         model_path = os.path.join(tmpdir, self.chemnet_model_filename)
 
-        with open(model_path, 'wb') as f:
+        with open(model_path, "wb") as f:
             f.write(model_bytes)
 
-        logger.info(f'Saved ChemNet model to \'{model_path}\'')
+        logger.info(f"Saved ChemNet model to '{model_path}'")
 
         return fcd.load_ref_model(model_path)
 

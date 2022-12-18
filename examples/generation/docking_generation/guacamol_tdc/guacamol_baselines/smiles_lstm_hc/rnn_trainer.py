@@ -16,8 +16,9 @@ logger.addHandler(logging.NullHandler())
 
 
 class SmilesRnnTrainer:
-
-    def __init__(self, model, criteria, optimizer, device, log_dir=None, clip_gradients=True) -> None:
+    def __init__(
+        self, model, criteria, optimizer, device, log_dir=None, clip_gradients=True
+    ) -> None:
         self.model = model.to(device)
         self.criteria = [c.to(device) for c in criteria]
         self.optimizer = optimizer
@@ -82,10 +83,26 @@ class SmilesRnnTrainer:
     def valid_extra_log(self, n_molecules):
         pass
 
-    def fit(self, training_data, test_data, n_epochs, batch_size, print_every,
-            valid_every, num_workers=0):
-        training_round = _ModelTrainingRound(self, training_data, test_data, n_epochs, batch_size, print_every,
-                                             valid_every, num_workers)
+    def fit(
+        self,
+        training_data,
+        test_data,
+        n_epochs,
+        batch_size,
+        print_every,
+        valid_every,
+        num_workers=0,
+    ):
+        training_round = _ModelTrainingRound(
+            self,
+            training_data,
+            test_data,
+            n_epochs,
+            batch_size,
+            print_every,
+            valid_every,
+            num_workers,
+        )
         return training_round.run()
 
 
@@ -96,11 +113,21 @@ class _ModelTrainingRound:
     Is a separate class from ModelTrainer to allow for more modular functions without too many parameters.
     This class is not to be used outside of ModelTrainer.
     """
+
     class EarlyStopNecessary(Exception):
         pass
 
-    def __init__(self, model_trainer: SmilesRnnTrainer, training_data, test_data, n_epochs, batch_size, print_every,
-                 valid_every, num_workers=0) -> None:
+    def __init__(
+        self,
+        model_trainer: SmilesRnnTrainer,
+        training_data,
+        test_data,
+        n_epochs,
+        batch_size,
+        print_every,
+        valid_every,
+        num_workers=0,
+    ) -> None:
         self.model_trainer = model_trainer
         self.training_data = training_data
         self.test_data = test_data
@@ -121,7 +148,7 @@ class _ModelTrainingRound:
 
     def run(self):
         if self.has_run:
-            raise Exception('_ModelTrainingRound.train() can be called only once.')
+            raise Exception("_ModelTrainingRound.train() can be called only once.")
 
         try:
             for epoch_index in range(1, self.n_epochs + 1):
@@ -129,20 +156,22 @@ class _ModelTrainingRound:
 
             self._validation_on_final_model()
         except _ModelTrainingRound.EarlyStopNecessary:
-            logger.error('Probable explosion during training. Stopping now.')
+            logger.error("Probable explosion during training. Stopping now.")
 
         self.has_run = True
         return self.all_train_losses, self.all_valid_losses
 
     def _train_one_epoch(self, epoch_index: int):
-        logger.info(f'EPOCH {epoch_index}')
+        logger.info(f"EPOCH {epoch_index}")
 
         # shuffle at every epoch
-        data_loader = DataLoader(self.training_data,
-                                 batch_size=self.batch_size,
-                                 shuffle=True,
-                                 num_workers=self.num_workers,
-                                 pin_memory=True)
+        data_loader = DataLoader(
+            self.training_data,
+            batch_size=self.batch_size,
+            shuffle=True,
+            num_workers=self.num_workers,
+            pin_memory=True,
+        )
 
         epoch_t0 = time()
         self.unprocessed_train_losses.clear()
@@ -158,7 +187,9 @@ class _ModelTrainingRound:
 
         # report training progress?
         if batch_index > 0 and batch_index % self.print_every == 0:
-            self._report_training_progress(batch_index, epoch_index, epoch_start=train_t0)
+            self._report_training_progress(
+                batch_index, epoch_index, epoch_start=train_t0
+            )
 
         # report validation progress?
         if batch_index >= 0 and batch_index % self.valid_every == 0:
@@ -173,12 +204,13 @@ class _ModelTrainingRound:
         self.unprocessed_train_losses.clear()
 
         logger.info(
-            'TRAIN | '
-            f'elapsed: {time_since(self.start_time)} | '
-            f'epoch|batch : {epoch_index}|{batch_index} ({self._get_overall_progress():.1f}%) | '
-            f'molecules: {self.n_molecules_so_far} | '
-            f'mols/sec: {mols_sec:.2f} | '
-            f'train_loss: {avg_train_loss:.4f}')
+            "TRAIN | "
+            f"elapsed: {time_since(self.start_time)} | "
+            f"epoch|batch : {epoch_index}|{batch_index} ({self._get_overall_progress():.1f}%) | "
+            f"molecules: {self.n_molecules_so_far} | "
+            f"mols/sec: {mols_sec:.2f} | "
+            f"train_loss: {avg_train_loss:.4f}"
+        )
         self.model_trainer.train_extra_log(self.n_molecules_so_far)
 
         self._check_early_stopping_train_loss(avg_train_loss)
@@ -201,7 +233,9 @@ class _ModelTrainingRound:
         # save model?
         if self.model_trainer.log_dir:
             if avg_valid_loss <= min(self.all_valid_losses):
-                self._save_current_model(self.model_trainer.log_dir, epoch_index, avg_valid_loss)
+                self._save_current_model(
+                    self.model_trainer.log_dir, epoch_index, avg_valid_loss
+                )
 
     def _validate_current_model(self):
         """
@@ -209,12 +243,16 @@ class _ModelTrainingRound:
 
         Returns: Validation loss.
         """
-        test_loader = DataLoader(self.test_data,
-                                 batch_size=self.batch_size,
-                                 shuffle=False,
-                                 num_workers=self.num_workers,
-                                 pin_memory=True)
-        avg_valid_loss = self.model_trainer.validate(test_loader, self.n_molecules_so_far)
+        test_loader = DataLoader(
+            self.test_data,
+            batch_size=self.batch_size,
+            shuffle=False,
+            num_workers=self.num_workers,
+            pin_memory=True,
+        )
+        avg_valid_loss = self.model_trainer.validate(
+            test_loader, self.n_molecules_so_far
+        )
         self.all_valid_losses += [avg_valid_loss]
         return avg_valid_loss
 
@@ -223,17 +261,18 @@ class _ModelTrainingRound:
         Log the information about the validation step.
         """
         logger.info(
-            'VALID | '
-            f'elapsed: {time_since(self.start_time)} | '
-            f'epoch: {epoch_index}/{self.n_epochs} ({self._get_overall_progress():.1f}%) | '
-            f'molecules: {self.n_molecules_so_far} | '
-            f'valid_loss: {avg_valid_loss:.4f}')
+            "VALID | "
+            f"elapsed: {time_since(self.start_time)} | "
+            f"epoch: {epoch_index}/{self.n_epochs} ({self._get_overall_progress():.1f}%) | "
+            f"molecules: {self.n_molecules_so_far} | "
+            f"valid_loss: {avg_valid_loss:.4f}"
+        )
         self.model_trainer.valid_extra_log(self.n_molecules_so_far)
-        logger.info('')
+        logger.info("")
 
     def _get_overall_progress(self):
         total_mols = self.n_epochs * len(self.training_data)
-        return 100. * self.n_molecules_so_far / total_mols
+        return 100.0 * self.n_molecules_so_far / total_mols
 
     def _validation_on_final_model(self):
         """
@@ -241,19 +280,20 @@ class _ModelTrainingRound:
         """
         valid_loss = self._validate_current_model()
         logger.info(
-            'VALID | FINAL_MODEL | '
-            f'elapsed: {time_since(self.start_time)} | '
-            f'molecules: {self.n_molecules_so_far} | '
-            f'valid_loss: {valid_loss:.4f}')
+            "VALID | FINAL_MODEL | "
+            f"elapsed: {time_since(self.start_time)} | "
+            f"molecules: {self.n_molecules_so_far} | "
+            f"valid_loss: {valid_loss:.4f}"
+        )
 
         if self.model_trainer.log_dir:
-            self._save_model(self.model_trainer.log_dir, 'final', valid_loss)
+            self._save_model(self.model_trainer.log_dir, "final", valid_loss)
 
     def _save_current_model(self, base_dir, epoch, valid_loss):
         """
         Delete previous versions of the model and save the current one.
         """
-        for f in glob(os.path.join(base_dir, 'model_*')):
+        for f in glob(os.path.join(base_dir, "model_*")):
             os.remove(f)
 
         self._save_model(base_dir, epoch, valid_loss)
@@ -263,7 +303,7 @@ class _ModelTrainingRound:
         Save a copy of the model with format:
                 model_{info}_{valid_loss}
         """
-        base_name = f'model_{info}_{valid_loss:.3f}'
+        base_name = f"model_{info}_{valid_loss:.3f}"
         logger.info(base_name)
         save_model(self.model_trainer.model, base_dir, base_name)
 

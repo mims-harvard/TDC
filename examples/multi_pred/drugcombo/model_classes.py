@@ -9,7 +9,7 @@ class FC2(nn.Module):
     def __init__(self, in_features, out_features):
         super(FC2, self).__init__()
 
-        dropout=0
+        dropout = 0
         self.bn = nn.BatchNorm1d(in_features)
         self.fc1 = nn.Linear(in_features, int(in_features / 2))
         self.fc2 = nn.Linear(int(in_features / 2), out_features)
@@ -38,28 +38,25 @@ class DrugCombDataset(Dataset):
         cell = self.df.iloc[idx, 2]
 
         # external features
-        d1_fp = np.array(self.drug_features.loc[d1, 'fps'])
-        d2_fp = np.array(self.drug_features.loc[d2, 'fps'])
-        c_gn = \
-        self.cell_features[self.cell_features['Cell_Line_ID'] == cell][
-            'CellLine'].values[
-            0]
-        out_metric = torch.tensor(self.df.loc[idx, 'Y'], dtype=torch.float)
+        d1_fp = np.array(self.drug_features.loc[d1, "fps"])
+        d2_fp = np.array(self.drug_features.loc[d2, "fps"])
+        c_gn = self.cell_features[self.cell_features["Cell_Line_ID"] == cell][
+            "CellLine"
+        ].values[0]
+        out_metric = torch.tensor(self.df.loc[idx, "Y"], dtype=torch.float)
 
         sample = {
-            'd1_fp': d1_fp,
-            'd2_fp': d2_fp,
-            'c_gn': c_gn,
-            'out_metric': out_metric
+            "d1_fp": d1_fp,
+            "d2_fp": d2_fp,
+            "c_gn": c_gn,
+            "out_metric": out_metric,
         }
 
         return sample
 
 
 class DrugEncoder(nn.Module):
-    def __init__(self, num_drug_fp=167,
-                 fp_embed_size=32,
-                 out_size=64):
+    def __init__(self, num_drug_fp=167, fp_embed_size=32, out_size=64):
         super(DrugEncoder, self).__init__()
 
         # fingerprint
@@ -76,8 +73,7 @@ class DrugEncoder(nn.Module):
 
 
 class CellEncoder(nn.Module):
-    def __init__(self, gene_embed_size=256, num_genes=0,
-                 out_size=64):
+    def __init__(self, gene_embed_size=256, num_genes=0, out_size=64):
         super(CellEncoder, self).__init__()
         self.dense_gene = nn.Linear(num_genes, gene_embed_size)
         self.FC2 = FC2(gene_embed_size, out_size)
@@ -106,4 +102,3 @@ class Comb(nn.Module):
         out = self.fc_2(x)
 
         return out
-

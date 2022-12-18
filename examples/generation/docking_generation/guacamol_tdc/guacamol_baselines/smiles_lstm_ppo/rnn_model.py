@@ -28,4 +28,3 @@ class SmilesRnnActorCritic(nn.Module):
         actor_output = self.smiles_rnn.decoder(output)
         critic_output = self.critic_decoder(output)
         return actor_output, critic_output, hidden
-

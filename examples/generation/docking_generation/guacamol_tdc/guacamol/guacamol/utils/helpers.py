@@ -9,4 +9,4 @@ def setup_default_logger():
 
     If you don't initialize any logger, log entries from the guacamol package will not appear anywhere.
     """
-    logging.basicConfig(format='%(levelname)s : %(message)s', level=logging.INFO)
+    logging.basicConfig(format="%(levelname)s : %(message)s", level=logging.INFO)

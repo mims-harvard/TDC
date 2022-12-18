@@ -12,10 +12,10 @@ class _FingerprintCalculator:
     """
 
     def get_fingerprint(self, mol: Mol, fp_type: str):
-        method_name = 'get_' + fp_type
+        method_name = "get_" + fp_type
         method = getattr(self, method_name)
         if method is None:
-            raise Exception(f'{fp_type} is not a supported fingerprint type.')
+            raise Exception(f"{fp_type} is not a supported fingerprint type.")
         return method(mol)
 
     def get_AP(self, mol: Mol):

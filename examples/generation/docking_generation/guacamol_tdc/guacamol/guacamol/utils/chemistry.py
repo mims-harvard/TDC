@@ -32,7 +32,7 @@ def is_valid(smiles: str):
 
     mol = Chem.MolFromSmiles(smiles)
 
-    return smiles != '' and mol is not None and mol.GetNumAtoms() > 0
+    return smiles != "" and mol is not None and mol.GetNumAtoms() > 0
 
 
 def canonicalize(smiles: str, include_stereocenters=True) -> Optional[str]:
@@ -57,7 +57,9 @@ def canonicalize(smiles: str, include_stereocenters=True) -> Optional[str]:
         return None
 
 
-def canonicalize_list(smiles_list: Iterable[str], include_stereocenters=True) -> List[str]:
+def canonicalize_list(
+    smiles_list: Iterable[str], include_stereocenters=True
+) -> List[str]:
     """
     Canonicalize a list of smiles. Filters out repetitions and removes corrupted molecules.
 
@@ -69,7 +71,9 @@ def canonicalize_list(smiles_list: Iterable[str], include_stereocenters=True) ->
         The canonicalized and filtered input smiles.
     """
 
-    canonicalized_smiles = [canonicalize(smiles, include_stereocenters) for smiles in smiles_list]
+    canonicalized_smiles = [
+        canonicalize(smiles, include_stereocenters) for smiles in smiles_list
+    ]
 
     # Remove None elements
     canonicalized_smiles = [s for s in canonicalized_smiles if s is not None]
@@ -100,10 +104,10 @@ def smiles_to_rdkit_mol(smiles: str) -> Optional[Chem.Mol]:
 
 
 def split_charged_mol(smiles: str) -> str:
-    if smiles.count('.') > 0:
-        largest = ''
+    if smiles.count(".") > 0:
+        largest = ""
         largest_len = -1
-        split = smiles.split('.')
+        split = smiles.split(".")
         for i in split:
             if len(i) > largest_len:
                 largest = i
@@ -117,23 +121,23 @@ def split_charged_mol(smiles: str) -> str:
 def initialise_neutralisation_reactions():
     patts = (
         # Imidazoles
-        ('[n+;H]', 'n'),
+        ("[n+;H]", "n"),
         # Amines
-        ('[N+;!H0]', 'N'),
+        ("[N+;!H0]", "N"),
         # Carboxylic acids and alcohols
-        ('[$([O-]);!$([O-][#7])]', 'O'),
+        ("[$([O-]);!$([O-][#7])]", "O"),
         # Thiols
-        ('[S-;X1]', 'S'),
+        ("[S-;X1]", "S"),
         # Sulfonamides
-        ('[$([N-;X2]S(=O)=O)]', 'N'),
+        ("[$([N-;X2]S(=O)=O)]", "N"),
         # Enamines
-        ('[$([N-;X2][C,N]=C)]', 'N'),
+        ("[$([N-;X2][C,N]=C)]", "N"),
         # Tetrazoles
-        ('[n-]', '[nH]'),
+        ("[n-]", "[nH]"),
         # Sulfoxides
-        ('[$([S-]=O)]', 'S'),
+        ("[$([S-]=O)]", "S"),
         # Amides
-        ('[$([N-]C=O)]', 'N'),
+        ("[$([N-]C=O)]", "N"),
     )
     return [(Chem.MolFromSmarts(x), Chem.MolFromSmiles(y, False)) for x, y in patts]
 
@@ -153,8 +157,14 @@ def neutralise_charges(mol, reactions=None):
         return mol, False
 
 
-def filter_and_canonicalize(smiles: str, holdout_set, holdout_fps, neutralization_rxns, tanimoto_cutoff=0.5,
-                            include_stereocenters=False):
+def filter_and_canonicalize(
+    smiles: str,
+    holdout_set,
+    holdout_fps,
+    neutralization_rxns,
+    tanimoto_cutoff=0.5,
+    include_stereocenters=False,
+):
     """
     Args:
         smiles: the molecule to process
@@ -178,13 +188,15 @@ def filter_and_canonicalize(smiles: str, holdout_set, holdout_fps, neutralizatio
         mol = Chem.RemoveHs(mol)
 
         # We only accept molecules consisting of H, B, C, N, O, F, Si, P, S, Cl, aliphatic Se, Br, I.
-        metal_smarts = Chem.MolFromSmarts('[!#1!#5!#6!#7!#8!#9!#14!#15!#16!#17!#34!#35!#53]')
+        metal_smarts = Chem.MolFromSmarts(
+            "[!#1!#5!#6!#7!#8!#9!#14!#15!#16!#17!#34!#35!#53]"
+        )
 
         has_metal = mol.HasSubstructMatch(metal_smarts)
 
         # Exclude molecules containing the forbidden elements.
         if has_metal:
-            print(f'metal {smiles}')
+            print(f"metal {smiles}")
             return []
 
         canon_smi = Chem.MolToSmiles(mol, isomericSmiles=include_stereocenters)
@@ -193,7 +205,7 @@ def filter_and_canonicalize(smiles: str, holdout_set, holdout_fps, neutralizatio
         if len(canon_smi) > 100:
             return []
         # Balance charges if unbalanced
-        if canon_smi.count('+') - canon_smi.count('-') != 0:
+        if canon_smi.count("+") - canon_smi.count("-") != 0:
             new_mol, changed = neutralise_charges(mol, reactions=neutralization_rxns)
             if changed:
                 mol = new_mol
@@ -218,8 +230,10 @@ def calculate_internal_pairwise_similarities(smiles_list: Collection[str]) -> np
         Symmetric matrix of pairwise similarities. Diagonal is set to zero.
     """
     if len(smiles_list) > 10000:
-        logger.warning(f'Calculating internal similarity on large set of '
-                       f'SMILES strings ({len(smiles_list)})')
+        logger.warning(
+            f"Calculating internal similarity on large set of "
+            f"SMILES strings ({len(smiles_list)})"
+        )
 
     mols = get_mols(smiles_list)
     fps = get_fingerprints(mols)
@@ -235,7 +249,9 @@ def calculate_internal_pairwise_similarities(smiles_list: Collection[str]) -> np
     return similarities
 
 
-def calculate_pairwise_similarities(smiles_list1: List[str], smiles_list2: List[str]) -> np.array:
+def calculate_pairwise_similarities(
+    smiles_list1: List[str], smiles_list2: List[str]
+) -> np.array:
     """
     Computes the pairwise ECFP4 tanimoto similarity of the two smiles containers.
 
@@ -243,8 +259,10 @@ def calculate_pairwise_similarities(smiles_list1: List[str], smiles_list2: List[
         Pairwise similarity matrix as np.array
     """
     if len(smiles_list1) > 10000 or len(smiles_list2) > 10000:
-        logger.warning(f'Calculating similarity between large sets of '
-                       f'SMILES strings ({len(smiles_list1)} x {len(smiles_list2)})')
+        logger.warning(
+            f"Calculating similarity between large sets of "
+            f"SMILES strings ({len(smiles_list1)} x {len(smiles_list2)})"
+        )
 
     mols1 = get_mols(smiles_list1)
     fps1 = get_fingerprints(mols1)
@@ -324,7 +342,11 @@ def highest_tanimoto_precalc_fps(mol, fps):
 def continuous_kldiv(X_baseline: np.array, X_sampled: np.array) -> float:
     kde_P = gaussian_kde(X_baseline)
     kde_Q = gaussian_kde(X_sampled)
-    x_eval = np.linspace(np.hstack([X_baseline, X_sampled]).min(), np.hstack([X_baseline, X_sampled]).max(), num=1000)
+    x_eval = np.linspace(
+        np.hstack([X_baseline, X_sampled]).min(),
+        np.hstack([X_baseline, X_sampled]).max(),
+        num=1000,
+    )
     P = kde_P(x_eval) + 1e-10
     Q = kde_Q(x_eval) + 1e-10
 
@@ -340,7 +362,9 @@ def discrete_kldiv(X_baseline: np.array, X_sampled: np.array) -> float:
     return entropy(P, Q)
 
 
-def calculate_pc_descriptors(smiles: Iterable[str], pc_descriptors: List[str]) -> np.array:
+def calculate_pc_descriptors(
+    smiles: Iterable[str], pc_descriptors: List[str]
+) -> np.array:
     output = []
 
     for i in smiles:
@@ -361,7 +385,7 @@ def _calculate_pc_descriptors(smiles: str, pc_descriptors: List[str]) -> np.arra
     _fp = np.array(_fp)
     mask = np.isfinite(_fp)
     if (mask == 0).sum() > 0:
-        logger.warning(f'{smiles} contains an NAN physchem descriptor')
+        logger.warning(f"{smiles} contains an NAN physchem descriptor")
         _fp[~mask] = 0
 
     return _fp
@@ -377,7 +401,7 @@ def parse_molecular_formula(formula: str) -> List[Tuple[str, int]]:
     Returns:
         A list of tuples containing element types and number of occurrences.
     """
-    matches = re.findall(r'([A-Z][a-z]*)(\d*)', formula)
+    matches = re.findall(r"([A-Z][a-z]*)(\d*)", formula)
 
     # Convert matches to the required format
     results = []

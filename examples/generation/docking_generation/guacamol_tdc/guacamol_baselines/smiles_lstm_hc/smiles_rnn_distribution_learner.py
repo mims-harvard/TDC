@@ -14,8 +14,18 @@ logger.addHandler(logging.NullHandler())
 
 
 class SmilesRnnDistributionLearner:
-    def __init__(self, output_dir: str, n_epochs=10, hidden_size=512, n_layers=3,
-                 max_len=100, batch_size=64, rnn_dropout=0.2, lr=1e-3, valid_every=100) -> None:
+    def __init__(
+        self,
+        output_dir: str,
+        n_epochs=10,
+        hidden_size=512,
+        n_layers=3,
+        max_len=100,
+        batch_size=64,
+        rnn_dropout=0.2,
+        lr=1e-3,
+        valid_every=100,
+    ) -> None:
         self.n_epochs = n_epochs
         self.output_dir = output_dir
         self.hidden_size = hidden_size
@@ -28,12 +38,14 @@ class SmilesRnnDistributionLearner:
         self.print_every = 10
         self.seed = 42
 
-    def train(self, training_set: List[str], validation_set: List[str]) -> DistributionMatchingGenerator:
+    def train(
+        self, training_set: List[str], validation_set: List[str]
+    ) -> DistributionMatchingGenerator:
         # GPU if available
         cuda_available = torch.cuda.is_available()
-        device_str = 'cuda' if cuda_available else 'cpu'
+        device_str = "cuda" if cuda_available else "cpu"
         device = torch.device(device_str)
-        logger.info(f'CUDA enabled:\t{cuda_available}')
+        logger.info(f"CUDA enabled:\t{cuda_available}")
 
         set_random_seed(self.seed, device)
 
@@ -48,24 +60,31 @@ class SmilesRnnDistributionLearner:
         n_characters = sd.get_char_num()
 
         # build network
-        smiles_model = SmilesRnn(input_size=n_characters,
-                                 hidden_size=self.hidden_size,
-                                 output_size=n_characters,
-                                 n_layers=self.n_layers,
-                                 rnn_dropout=self.rnn_dropout)
+        smiles_model = SmilesRnn(
+            input_size=n_characters,
+            hidden_size=self.hidden_size,
+            output_size=n_characters,
+            n_layers=self.n_layers,
+            rnn_dropout=self.rnn_dropout,
+        )
 
         # wire network for training
         optimizer = torch.optim.Adam(smiles_model.parameters(), lr=self.lr)
         criterion = torch.nn.CrossEntropyLoss(ignore_index=sd.pad_idx)
 
-        trainer = SmilesRnnTrainer(model=smiles_model,
-                                   criteria=[criterion],
-                                   optimizer=optimizer,
-                                   device=device,
-                                   log_dir=self.output_dir)
+        trainer = SmilesRnnTrainer(
+            model=smiles_model,
+            criteria=[criterion],
+            optimizer=optimizer,
+            device=device,
+            log_dir=self.output_dir,
+        )
 
-        trainer.fit(train_set, test_set,
-                    batch_size=self.batch_size,
-                    print_every=self.print_every,
-                    valid_every=self.valid_every,
-                    n_epochs=self.n_epochs)
+        trainer.fit(
+            train_set,
+            test_set,
+            batch_size=self.batch_size,
+            print_every=self.print_every,
+            valid_every=self.valid_every,
+            n_epochs=self.n_epochs,
+        )

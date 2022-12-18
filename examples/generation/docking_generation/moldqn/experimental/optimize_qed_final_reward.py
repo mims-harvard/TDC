@@ -36,59 +36,60 @@ from mol_dqn.chemgraph.mcts import molecules as molecules_mdp
 from mol_dqn.chemgraph.mcts import run_dqn
 from mol_dqn.chemgraph.tensorflow import core
 
-flags.DEFINE_float('gamma', 0.999, 'discount')
+flags.DEFINE_float("gamma", 0.999, "discount")
 FLAGS = flags.FLAGS
 
 
 class Molecule(molecules_mdp.Molecule):
-  """QED reward Molecule."""
+    """QED reward Molecule."""
 
-  def _reward(self):
-    if self.num_steps_taken != self.max_steps:
-      return 0.0
-    molecule = Chem.MolFromSmiles(self._state)
-    if molecule is None:
-      return 0.0
-    try:
-      qed = QED.qed(molecule)
-    except ValueError:
-      qed = 0.0
-    return qed * FLAGS.gamma**(self.max_steps - self._counter)
+    def _reward(self):
+        if self.num_steps_taken != self.max_steps:
+            return 0.0
+        molecule = Chem.MolFromSmiles(self._state)
+        if molecule is None:
+            return 0.0
+        try:
+            qed = QED.qed(molecule)
+        except ValueError:
+            qed = 0.0
+        return qed * FLAGS.gamma ** (self.max_steps - self._counter)
 
 
 def main(argv):
-  del argv
-  if FLAGS.hparams is not None:
-    with gfile.Open(FLAGS.hparams, 'r') as f:
-      hparams = deep_q_networks.get_hparams(**json.load(f))
-  else:
-    hparams = deep_q_networks.get_hparams()
+    del argv
+    if FLAGS.hparams is not None:
+        with gfile.Open(FLAGS.hparams, "r") as f:
+            hparams = deep_q_networks.get_hparams(**json.load(f))
+    else:
+        hparams = deep_q_networks.get_hparams()
 
-  environment = Molecule(
-      atom_types=set(hparams.atom_types),
-      init_mol=None,
-      allow_removal=hparams.allow_removal,
-      allow_no_modification=hparams.allow_no_modification,
-      max_steps=hparams.max_steps_per_episode)
+    environment = Molecule(
+        atom_types=set(hparams.atom_types),
+        init_mol=None,
+        allow_removal=hparams.allow_removal,
+        allow_no_modification=hparams.allow_no_modification,
+        max_steps=hparams.max_steps_per_episode,
+    )
 
-  dqn = deep_q_networks.DeepQNetwork(
-      input_shape=(hparams.batch_size, hparams.fingerprint_length),
-      q_fn=functools.partial(
-          deep_q_networks.multi_layer_model, hparams=hparams),
-      optimizer=hparams.optimizer,
-      grad_clipping=hparams.grad_clipping,
-      num_bootstrap_heads=hparams.num_bootstrap_heads,
-      gamma=hparams.gamma,
-      epsilon=1.0)
+    dqn = deep_q_networks.DeepQNetwork(
+        input_shape=(hparams.batch_size, hparams.fingerprint_length),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        optimizer=hparams.optimizer,
+        grad_clipping=hparams.grad_clipping,
+        num_bootstrap_heads=hparams.num_bootstrap_heads,
+        gamma=hparams.gamma,
+        epsilon=1.0,
+    )
 
-  run_dqn.run_training(
-      hparams=hparams,
-      environment=environment,
-      dqn=dqn,
-  )
+    run_dqn.run_training(
+        hparams=hparams,
+        environment=environment,
+        dqn=dqn,
+    )
 
-  core.write_hparams(hparams, os.path.join(FLAGS.model_dir, 'config.json'))
+    core.write_hparams(hparams, os.path.join(FLAGS.model_dir, "config.json"))
 
 
-if __name__ == '__main__':
-  app.run(main)
+if __name__ == "__main__":
+    app.run(main)
