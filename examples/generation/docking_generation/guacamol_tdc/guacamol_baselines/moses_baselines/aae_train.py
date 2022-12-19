@@ -33,11 +33,11 @@ def main(config):
     trainer = AAETrainer(config)
     trainer.fit(model, train)
 
-    model.to('cpu')
+    model.to("cpu")
     torch.save(model.state_dict(), config.model_save)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = get_parser()
     config = parser.parse_known_args()[0]
     main(config)

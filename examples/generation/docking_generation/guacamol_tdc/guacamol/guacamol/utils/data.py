@@ -30,7 +30,9 @@ def remove_duplicates(list_with_duplicates):
     return unique_list
 
 
-def get_random_subset(dataset: List[Any], subset_size: int, seed: Optional[int] = None) -> List[Any]:
+def get_random_subset(
+    dataset: List[Any], subset_size: int, seed: Optional[int] = None
+) -> List[Any]:
     """
     Get a random subset of some dataset.
 
@@ -46,8 +48,10 @@ def get_random_subset(dataset: List[Any], subset_size: int, seed: Optional[int] 
         subset of the original dataset as a list
     """
     if len(dataset) < subset_size:
-        raise Exception(f'The dataset to extract a subset from is too small: '
-                        f'{len(dataset)} < {subset_size}')
+        raise Exception(
+            f"The dataset to extract a subset from is too small: "
+            f"{len(dataset)} < {subset_size}"
+        )
 
     # save random number generator state
     rng_state = np.random.get_state()
@@ -73,10 +77,12 @@ def download_if_not_present(filename, uri):
         print("{} already downloaded, reusing.".format(filename))
     else:
         with open(filename, "wb") as fd:
-            print('Starting {} download from {}...'.format(filename, uri))
-            with ProgressBarUpTo(unit='B', unit_scale=True, unit_divisor=1024, miniters=1) as t:
+            print("Starting {} download from {}...".format(filename, uri))
+            with ProgressBarUpTo(
+                unit="B", unit_scale=True, unit_divisor=1024, miniters=1
+            ) as t:
                 urlretrieve(uri, fd.name, reporthook=t.update_to)
-            print('Finished {} download.'.format(filename))
+            print("Finished {} download.".format(filename))
 
 
 class ProgressBar(tqdm):
@@ -85,12 +91,11 @@ class ProgressBar(tqdm):
     """
 
     def __init__(self, *args, **kwargs) -> None:
-        """Overwrite TQDM and detect if output is a file or not.
-        """
+        """Overwrite TQDM and detect if output is a file or not."""
         # See if output is a terminal, set to updates every 30 seconds
         if not sys.stdout.isatty():
-            kwargs['mininterval'] = 30.0
-            kwargs['maxinterval'] = 30.0
+            kwargs["mininterval"] = 30.0
+            kwargs["maxinterval"] = 30.0
         super(ProgressBar, self).__init__(*args, **kwargs)
 
 
@@ -101,7 +106,7 @@ class ProgressBarUpTo(ProgressBar):
 
     def update_to(self, b=1, bsize=1, tsize=None):
         """
-            Update to a specified position.
+        Update to a specified position.
         """
         if tsize is not None:
             self.total = tsize
@@ -110,4 +115,10 @@ class ProgressBarUpTo(ProgressBar):
 
 def get_time_string():
     lt = time.localtime()
-    return "%04d%02d%02d-%02d%02d" % (lt.tm_year, lt.tm_mon, lt.tm_mday, lt.tm_hour, lt.tm_min)
+    return "%04d%02d%02d-%02d%02d" % (
+        lt.tm_year,
+        lt.tm_mon,
+        lt.tm_mday,
+        lt.tm_hour,
+        lt.tm_min,
+    )

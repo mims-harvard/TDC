@@ -80,7 +80,7 @@ class AbsoluteScoreModifier(ScoreModifier):
         self.target_value = target_value
 
     def __call__(self, x):
-        return 1. - np.abs(self.target_value - x)
+        return 1.0 - np.abs(self.target_value - x)
 
 
 class GaussianModifier(ScoreModifier):
@@ -93,7 +93,7 @@ class GaussianModifier(ScoreModifier):
         self.sigma = sigma
 
     def __call__(self, x):
-        return np.exp(-0.5 * np.power((x - self.mu) / self.sigma, 2.))
+        return np.exp(-0.5 * np.power((x - self.mu) / self.sigma, 2.0))
 
 
 class MinMaxGaussianModifier(ScoreModifier):
@@ -138,7 +138,9 @@ class ClippedScoreModifier(ScoreModifier):
     Then the generated values are clipped between low and high scores.
     """
 
-    def __init__(self, upper_x: float, lower_x=0.0, high_score=1.0, low_score=0.0) -> None:
+    def __init__(
+        self, upper_x: float, lower_x=0.0, high_score=1.0, low_score=0.0
+    ) -> None:
         """
         Args:
             upper_x: x-value from which (or until which if smaller than lower_x) the score is maximal
@@ -169,7 +171,9 @@ class SmoothClippedScoreModifier(ScoreModifier):
     center of the logistic function.
     """
 
-    def __init__(self, upper_x: float, lower_x=0.0, high_score=1.0, low_score=0.0) -> None:
+    def __init__(
+        self, upper_x: float, lower_x=0.0, high_score=1.0, low_score=0.0
+    ) -> None:
         """
         Args:
             upper_x: x-value from which (or until which if smaller than lower_x) the score approaches high_score

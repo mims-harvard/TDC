@@ -36,84 +36,87 @@ from mol_dqn.chemgraph.mcts import molecules as molecules_mdp
 from mol_dqn.chemgraph.mcts import run_dqn
 from mol_dqn.chemgraph.tensorflow import core
 
-flags.DEFINE_string('error_type', 'robust', 'error_type.')
-flags.DEFINE_float('noise_std', 0.1, 'std dev of noise.')
-flags.DEFINE_float('gamma', 0.999, 'discount')
+flags.DEFINE_string("error_type", "robust", "error_type.")
+flags.DEFINE_float("noise_std", 0.1, "std dev of noise.")
+flags.DEFINE_float("gamma", 0.999, "discount")
 FLAGS = flags.FLAGS
 
 
 class Molecule(molecules_mdp.Molecule):
-  """Defines the subclass of a molecule MDP with a target molecular weight."""
+    """Defines the subclass of a molecule MDP with a target molecular weight."""
 
-  def __init__(self, target_weight, **kwargs):
-    """Initializes the class.
+    def __init__(self, target_weight, **kwargs):
+        """Initializes the class.
 
-    Args:
-      target_weight: Float. the target molecular weight.
-      **kwargs: The keyword arguments passed to the parent class.
-    """
-    super(Molecule, self).__init__(**kwargs)
-    self.target_weight = target_weight
+        Args:
+          target_weight: Float. the target molecular weight.
+          **kwargs: The keyword arguments passed to the parent class.
+        """
+        super(Molecule, self).__init__(**kwargs)
+        self.target_weight = target_weight
 
-  def _reward(self):
-    """Calculates the reward of the current state.
+    def _reward(self):
+        """Calculates the reward of the current state.
 
-    The reward is defined as the negative l2 distance between the current
-    molecular weight and target molecular weight.
+        The reward is defined as the negative l2 distance between the current
+        molecular weight and target molecular weight.
 
-    Returns:
-      Float. The negative distance.
-    """
-    factor = 1.0 + np.random.normal(0, FLAGS.noise_std)
-    if self._counter == self.max_steps:
-      factor = 1.0
-    factor *= FLAGS.gamma**(self.max_steps - self._counter)
-    molecule = Chem.MolFromSmiles(self._state)
-    if molecule is None:
-      return -self.target_weight**2 * factor
-    return -(Descriptors.MolWt(molecule) - self.target_weight)**2 * factor
+        Returns:
+          Float. The negative distance.
+        """
+        factor = 1.0 + np.random.normal(0, FLAGS.noise_std)
+        if self._counter == self.max_steps:
+            factor = 1.0
+        factor *= FLAGS.gamma ** (self.max_steps - self._counter)
+        molecule = Chem.MolFromSmiles(self._state)
+        if molecule is None:
+            return -self.target_weight**2 * factor
+        return -((Descriptors.MolWt(molecule) - self.target_weight) ** 2) * factor
 
 
 def main(argv):
-  del argv
-  if FLAGS.hparams is not None:
-    with gfile.Open(FLAGS.hparams, 'r') as f:
-      hparams = run_dqn.get_hparams(**json.load(f))
-  else:
-    hparams = run_dqn.get_hparams()
+    del argv
+    if FLAGS.hparams is not None:
+        with gfile.Open(FLAGS.hparams, "r") as f:
+            hparams = run_dqn.get_hparams(**json.load(f))
+    else:
+        hparams = run_dqn.get_hparams()
 
-  environment = Molecule(
-      target_weight=FLAGS.target_weight,
-      atom_types=set(hparams.atom_types),
-      init_mol=FLAGS.start_molecule,
-      allow_removal=hparams.allow_removal,
-      allow_no_modification=hparams.allow_no_modification,
-      max_steps=hparams.max_steps_per_episode)
+    environment = Molecule(
+        target_weight=FLAGS.target_weight,
+        atom_types=set(hparams.atom_types),
+        init_mol=FLAGS.start_molecule,
+        allow_removal=hparams.allow_removal,
+        allow_no_modification=hparams.allow_no_modification,
+        max_steps=hparams.max_steps_per_episode,
+    )
 
-  if FLAGS.error_type.lower() == 'l2':
-    klass = deep_q_networks_noise.DeepQNetworkL2
-  else:
-    klass = deep_q_networks_noise.DeepQNetwork
-  dqn = klass(
-      input_shape=(hparams.batch_size, hparams.fingerprint_length),
-      q_fn=functools.partial(
-          deep_q_networks_noise.multi_layer_model, hparams=hparams),
-      optimizer=hparams.optimizer,
-      grad_clipping=hparams.grad_clipping,
-      num_bootstrap_heads=hparams.num_bootstrap_heads,
-      gamma=hparams.gamma,
-      epsilon=1.0)
+    if FLAGS.error_type.lower() == "l2":
+        klass = deep_q_networks_noise.DeepQNetworkL2
+    else:
+        klass = deep_q_networks_noise.DeepQNetwork
+    dqn = klass(
+        input_shape=(hparams.batch_size, hparams.fingerprint_length),
+        q_fn=functools.partial(
+            deep_q_networks_noise.multi_layer_model, hparams=hparams
+        ),
+        optimizer=hparams.optimizer,
+        grad_clipping=hparams.grad_clipping,
+        num_bootstrap_heads=hparams.num_bootstrap_heads,
+        gamma=hparams.gamma,
+        epsilon=1.0,
+    )
 
-  run_dqn.run_training(
-      hparams=hparams,
-      environment=environment,
-      dqn=dqn,
-  )
+    run_dqn.run_training(
+        hparams=hparams,
+        environment=environment,
+        dqn=dqn,
+    )
 
-  hparams.add_hparam('noise_std', FLAGS.noise_std)
-  hparams.add_hparam('error_type', FLAGS.error_type)
-  core.write_hparams(hparams, os.path.join(FLAGS.model_dir, 'config.json'))
+    hparams.add_hparam("noise_std", FLAGS.noise_std)
+    hparams.add_hparam("error_type", FLAGS.error_type)
+    core.write_hparams(hparams, os.path.join(FLAGS.model_dir, "config.json"))
 
 
-if __name__ == '__main__':
-  app.run(main)
+if __name__ == "__main__":
+    app.run(main)

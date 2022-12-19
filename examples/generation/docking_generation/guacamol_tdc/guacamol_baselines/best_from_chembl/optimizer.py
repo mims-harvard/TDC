@@ -21,8 +21,9 @@ class BestFromChemblOptimizer(GoalDirectedGenerator):
         # get a list of all the smiles
         self.smiles = [s for s in smiles_reader]
 
-        ### limit oracle calls. 
-        from random import shuffle 
+        ### limit oracle calls.
+        from random import shuffle
+
         shuffle(self.smiles)
         self.smiles = self.smiles[:max_oracle_num]
 
@@ -33,8 +34,12 @@ class BestFromChemblOptimizer(GoalDirectedGenerator):
         scored_smiles = sorted(scored_smiles, key=lambda x: x[0], reverse=True)
         return [smile for score, smile in scored_smiles][:k]
 
-    def generate_optimized_molecules(self, scoring_function: ScoringFunction, number_molecules: int,
-                                     starting_population: Optional[List[str]] = None) -> List[str]:
+    def generate_optimized_molecules(
+        self,
+        scoring_function: ScoringFunction,
+        number_molecules: int,
+        starting_population: Optional[List[str]] = None,
+    ) -> List[str]:
         """
         Will iterate through the reference set of SMILES strings and select the best molecules.
         """
