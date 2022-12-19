@@ -788,7 +788,7 @@ name2id = {
     "hetionet": 4201734,
     "herg": 4259588,
     "herg_central": 5740618,
-    "herg_karim": 6749376,
+    "herg_karim": 6822246,
     "dili": 4259585,
     "ppbr_az": 6413140,
     "ames": 4259564,
