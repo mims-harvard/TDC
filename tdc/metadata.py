@@ -83,6 +83,7 @@ toxicity_dataset_names = [
     "tox21",
     "toxcast",
     "clintox",
+    "herg_karim",
     "herg",
     "herg_central",
     "dili",
@@ -128,7 +129,7 @@ paratope_dataset_names = ["sabdab_liberis"]
 
 develop_dataset_names = ["tap", "sabdab_chen"]
 
-####################################
+
 # multi_pred prediction
 
 dti_dataset_names = [
@@ -687,6 +688,7 @@ name2type = {
     "hetionet": "tab",
     "herg": "tab",
     "herg_central": "tab",
+    "herg_karim": "tab",
     "dili": "tab",
     "ppbr_az": "tab",
     "ames": "tab",
@@ -786,6 +788,7 @@ name2id = {
     "hetionet": 4201734,
     "herg": 4259588,
     "herg_central": 5740618,
+    "herg_karim": 6822246,
     "dili": 4259585,
     "ppbr_az": 6413140,
     "ames": 4259564,
