@@ -119,7 +119,7 @@ adme_dataset_names = [
     "clearance_microsome_az",
 ]
 
-hts_dataset_names = ["hiv", "sarscov2_3clpro_diamond", "sarscov2_vitro_touret"]
+hts_dataset_names = ["hiv", "sarscov2_3clpro_diamond", "sarscov2_vitro_touret", "orexin1_receptor", "m1_muscarinic_receptor_agonists", "m1_muscarinic_receptor_antagonists", "potassium_ion_channel_kir2.1", "kcnq2_potassium_channel", "cav3_t-type_calcium_channels", "choline_transporter", "serine_threonine_kinase_33", "tyrosyl-dna_phosphodiesterase"]
 
 qm_dataset_names = ["qm7", "qm7b", "qm8", "qm9"]
 
@@ -643,6 +643,15 @@ name2type = {
     "hiv": "tab",
     "sarscov2_3clpro_diamond": "tab",
     "sarscov2_vitro_touret": "tab",
+    "orexin1_receptor": "tab", 
+    "m1_muscarinic_receptor_agonists": "tab", 
+    "m1_muscarinic_receptor_antagonists": "tab",
+    "potassium_ion_channel_kir2.1": "tab", 
+    "kcnq2_potassium_channel": "tab", 
+    "cav3_t-type_calcium_channels": "tab", 
+    "choline_transporter": "tab", 
+    "serine_threonine_kinase_33": "tab", 
+    "tyrosyl-dna_phosphodiesterase": "tab",
     "davis": "tab",
     "kiba": "tab",
     "bindingdb_kd": "tab",
@@ -748,6 +757,15 @@ name2id = {
     "ppbr_ma": 4259603,
     "sarscov2_3clpro_diamond": 4259606,
     "sarscov2_vitro_touret": 4259607,
+    "orexin1_receptor": 6882724, 
+    "m1_muscarinic_receptor_agonists": 6882720, 
+    "m1_muscarinic_receptor_antagonists": 6882721,
+    "potassium_ion_channel_kir2.1": 6882717, 
+    "kcnq2_potassium_channel": 6882716, 
+    "cav3_t-type_calcium_channels": 6882722, 
+    "choline_transporter": 6882723, 
+    "serine_threonine_kinase_33": 6882718, 
+    "tyrosyl-dna_phosphodiesterase": 6882719,
     "solubility_aqsoldb": 4259610,
     "tox21": 4259612,
     "toxcast": 4259613,
