@@ -45,13 +45,13 @@ pytest tdc/test/
 	- 2.2 The data output should be the expected format of TDC for each task. You can download the similar files in the same task and imitate the column names and data structure. Detailed format is also provided in the bottom of this file. **Note**: if you use pandas to process the dataset, remember to do `pd.to_csv('XXX.csv', index = False)`.
 	- 2.3 Name the dataset file as the `dataset_name.XXX`. The name must be in lower case and follows the naming convention described in the bottom of this file. Ideally, it should be a csv file. Use pkl file to store tables with values in list/array etc.
 	- 2.4 Write text dataset description, task description, dataset statistics, data split methods, and references for the website.
-	- **The easiest way is to imitate the existing data files in the same task! Load a dataset and find the data copy in the local folder**
+	- **The easiest way is to imitate the existing data files in the same task! Load a dataset and find the data copy in the local `data' folder**
 
 - Step 3: Upload to Harvard Dataverse.
 
 	- 3.1 Create an account in [Harvard Dataverse](https://dataverse.harvard.edu/). 
 	- 3.2 For the first time, click "Add a dataset" bottom and filled in the form.
-	- 3.3 Upload the generated dataset to the dataverse dataset space. In the uploaded dataset page, clicked the metadata buttom and in the Download URL section, copy pasted the last several ID numbers.
+	- 3.3 Upload and publish the generated dataset to the dataverse dataset space. In the published dataset page, scroll to the bottom, click the eye icon that says `View Data' to go into the detailed page of the uploaded data. Then click the metadata tab and in the Download URL section, copy the last several ID numbers, which will be used in Step4.
 	- 3.4 If the uploaded file is a csv file. Then, dataverse would process it to a tab file. This is expected. 
 
 - Step 4: Fork the TDC master branch and make changes to the *metadata.py* file.
