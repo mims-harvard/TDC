@@ -119,7 +119,18 @@ adme_dataset_names = [
     "clearance_microsome_az",
 ]
 
-hts_dataset_names = ["hiv", "sarscov2_3clpro_diamond", "sarscov2_vitro_touret"]
+hts_dataset_names = ["hiv", 
+    "sarscov2_3clpro_diamond", 
+    "sarscov2_vitro_touret", 
+    "orexin1_receptor_butkiewicz", 
+    "m1_muscarinic_receptor_agonists_butkiewicz", 
+    "m1_muscarinic_receptor_antagonists_butkiewicz", 
+    "potassium_ion_channel_kir2.1_butkiewicz", 
+    "kcnq2_potassium_channel_butkiewicz", 
+    "cav3_t-type_calcium_channels_butkiewicz", 
+    "choline_transporter_butkiewicz", 
+    "serine_threonine_kinase_33_butkiewicz", 
+    "tyrosyl-dna_phosphodiesterase_butkiewicz"]
 
 qm_dataset_names = ["qm7", "qm7b", "qm8", "qm9"]
 
@@ -643,6 +654,15 @@ name2type = {
     "hiv": "tab",
     "sarscov2_3clpro_diamond": "tab",
     "sarscov2_vitro_touret": "tab",
+    "orexin1_receptor_butkiewicz": "tab", 
+    "m1_muscarinic_receptor_agonists_butkiewicz": "tab", 
+    "m1_muscarinic_receptor_antagonists_butkiewicz": "tab",
+    "potassium_ion_channel_kir2.1_butkiewicz": "tab", 
+    "kcnq2_potassium_channel_butkiewicz": "tab", 
+    "cav3_t-type_calcium_channels_butkiewicz": "tab", 
+    "choline_transporter_butkiewicz": "tab", 
+    "serine_threonine_kinase_33_butkiewicz": "tab", 
+    "tyrosyl-dna_phosphodiesterase_butkiewicz": "tab",
     "davis": "tab",
     "kiba": "tab",
     "bindingdb_kd": "tab",
@@ -748,6 +768,15 @@ name2id = {
     "ppbr_ma": 4259603,
     "sarscov2_3clpro_diamond": 4259606,
     "sarscov2_vitro_touret": 4259607,
+    "orexin1_receptor_butkiewicz": 6894447, 
+    "m1_muscarinic_receptor_agonists_butkiewicz": 6894443, 
+    "m1_muscarinic_receptor_antagonists_butkiewicz": 6894446,
+    "potassium_ion_channel_kir2.1_butkiewicz": 6894442, 
+    "kcnq2_potassium_channel_butkiewicz": 6894444, 
+    "cav3_t-type_calcium_channels_butkiewicz": 6894445, 
+    "choline_transporter_butkiewicz": 6894441, 
+    "serine_threonine_kinase_33_butkiewicz": 6894448, 
+    "tyrosyl-dna_phosphodiesterase_butkiewicz": 6894440,
     "solubility_aqsoldb": 4259610,
     "tox21": 4259612,
     "toxcast": 4259613,
