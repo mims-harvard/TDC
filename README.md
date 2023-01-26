@@ -260,6 +260,8 @@ If you find Therapeutics Data Commons useful, cite our [NeurIPS paper](https://o
 }
 ```
 
+TDC is built on top of other open-sourced projects. If you used these datasets/functions in your research, please cite the original work as well. You can find the original paper in the website to the function/dataset.
+
 ## Contribute
 
 TDC is a community-driven and open-science initiative. To get involved, join our [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) and checkout the [contribution guide](CONTRIBUTE.md)!
