@@ -225,6 +225,9 @@
 
 <p class="is-size-6"> De novo molecular generation has been focusing on simple heuristic oracles, such as QED, LogP. Those oracles are either too easy to optimize or can produce unrealistic molecules. This is aptly summarized in Coley et al. (2019) [1] as: “The current evaluations for generative models do not reflect the complexity of real discovery problems.” Recent work by Cieplinski et al. (2020) [2] also titled: "We Should At Least Be Able To Design Molecules That Dock Well." Thus, we decided to include a meta oracle of the molecular docking method. We adopted the python wrapper from pyscreener [3] that allows easy access to various docking software, including vina, smina, qvina2, psovina and DOCK6. Users can specify the target based on their own interests while providing several typical oracle functions for the leaderboard. </p>
 
+<p class="is-size-8">  <strong> Important Note: if you use the docking score oracle function, please cite <a href="https://arxiv.org/abs/2012.07127"> Graff et al. "Accelerating high-throughput virtual screening through molecular pool-based active learning."!</a> </strong>
+</p>
+
 <p class="is-size-6">  <strong> Installation instruction: </strong> 
 </p>
 <ul>
