@@ -936,6 +936,12 @@ def calcPubChemFingerAll(s):
             AllBits[index3 + 115] = 1
     return np.array(AllBits)
 
+def canonicalize(smiles):
+    mol = Chem.MolFromSmiles(smiles)
+    if mol is not None:
+        return Chem.MolToSmiles(mol, isomericSmiles=True)
+    else:
+        return None
 
 def smiles2pubchem(s):
     s = canonicalize(s)
