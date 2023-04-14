@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
 <meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
-<link rel="canonical" href="http://localhost:4000/functions/oracles/" />
-<meta property="og:url" content="http://localhost:4000/functions/oracles/" />
+<link rel="canonical" href="https://tdcommons.ai/functions/oracles/" />
+<meta property="og:url" content="https://tdcommons.ai/functions/oracles/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"headline":"Oracles","url":"http://localhost:4000/functions/oracles/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"headline":"Oracles","url":"https://tdcommons.ai/functions/oracles/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -224,9 +224,6 @@
 <p class="is-size-6">  <strong> Description: </strong> Docking is a theoretical evaluation of affinity (free energy change of the binding process) between a ligand (a small molecule) and a target (a protein involved in a disease pathway). A docking evaluation usually includes conformational sampling of ligand and free energy change calculation. A molecule with higher affinity usually has a higher potential to poses higher bioactivity. </p>
 
 <p class="is-size-6"> De novo molecular generation has been focusing on simple heuristic oracles, such as QED, LogP. Those oracles are either too easy to optimize or can produce unrealistic molecules. This is aptly summarized in Coley et al. (2019) [1] as: “The current evaluations for generative models do not reflect the complexity of real discovery problems.” Recent work by Cieplinski et al. (2020) [2] also titled: "We Should At Least Be Able To Design Molecules That Dock Well." Thus, we decided to include a meta oracle of the molecular docking method. We adopted the python wrapper from pyscreener [3] that allows easy access to various docking software, including vina, smina, qvina2, psovina and DOCK6. Users can specify the target based on their own interests while providing several typical oracle functions for the leaderboard. </p>
-
-<p class="is-size-8">  <strong> Important Note: if you use the docking score oracle function, please cite <a href="https://arxiv.org/abs/2012.07127"> Graff et al. "Accelerating high-throughput virtual screening through molecular pool-based active learning."!</a> </strong>
-</p>
 
 <p class="is-size-6">  <strong> Installation instruction: </strong> 
 </p>

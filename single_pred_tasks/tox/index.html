@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
 <meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
-<link rel="canonical" href="http://localhost:4000/single_pred_tasks/tox/" />
-<meta property="og:url" content="http://localhost:4000/single_pred_tasks/tox/" />
+<link rel="canonical" href="https://tdcommons.ai/single_pred_tasks/tox/" />
+<meta property="og:url" content="https://tdcommons.ai/single_pred_tasks/tox/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"headline":"Toxicity","url":"http://localhost:4000/single_pred_tasks/tox/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"headline":"Toxicity","url":"https://tdcommons.ai/single_pred_tasks/tox/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -231,7 +231,6 @@
   <li><a href="#acute-toxicity-ld50">Acute Toxicity LD50</a></li>
   <li><a href="#herg-blockers">hERG blockers</a></li>
   <li><a href="#herg-central">hERG Central</a></li>
-  <li><a href="#herg-karim-et-al">hERG Karim et al.</a></li>
   <li><a href="#ames-mutagenicity">Ames Mutagenicity</a></li>
   <li><a href="#dili-drug-induced-liver-injury">DILI (Drug Induced Liver Injury)</a></li>
   <li><a href="#skin-reaction">Skin Reaction</a></li>
@@ -350,29 +349,6 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 <p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
 <p class="is-size-6"> <strong> Contributed by: </strong> <a href="https://bbirnbaum.com">Ben Birnbaum</a>.</p>
-
-<hr />
-
-<h3 id="herg-karim-et-al">hERG Karim et al.</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong>  A integrated Ether-a-go-go-related gene (hERG) dataset consisting of molecular structures labelled as hERG (&lt;10uM) and non-hERG (&gt;=10uM) blockers in the form of SMILES strings was obtained from the DeepHIT, the BindingDB database, ChEMBL bioactivity database, and other literature.</p>
-
-<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict whether it blocks (1, &lt;10uM) or not blocks (0, &gt;=10uM).</p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 13,445 drugs. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'hERG_Karim'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://doi.org/10.1186/s13321-021-00541-z">[1] Karim, A., et al. CardioTox net: a robust predictor for hERG channel blockade based on deep learning meta-feature ensembles. J Cheminform 13, 60 (2021).</a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
 <hr />
 

@@ -17,11 +17,11 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
 <meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
-<link rel="canonical" href="http://localhost:4000/single_pred_tasks/hts/" />
-<meta property="og:url" content="http://localhost:4000/single_pred_tasks/hts/" />
+<link rel="canonical" href="https://tdcommons.ai/single_pred_tasks/hts/" />
+<meta property="og:url" content="https://tdcommons.ai/single_pred_tasks/hts/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"headline":"High-throughput Screening","url":"http://localhost:4000/single_pred_tasks/hts/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"headline":"High-throughput Screening","url":"https://tdcommons.ai/single_pred_tasks/hts/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -231,7 +231,6 @@
   <li><a href="#sars-cov-2-in-vitro-touret-et-al">SARS-CoV-2 In Vitro, Touret et al.</a></li>
   <li><a href="#sars-cov-2-3cl-protease-diamond">SARS-CoV-2 3CL Protease, Diamond.</a></li>
   <li><a href="#hiv">HIV</a></li>
-  <li><a href="#butkiewicz-et-al">Butkiewicz et al.</a></li>
 </ul>
     </div>
 </div>
@@ -331,157 +330,6 @@ High throughput screening is a critical component of small-molecule drug discove
 <p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
 
 <p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
-
-<hr />
-
-<h3 id="butkiewicz-et-al">Butkiewicz et al.</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> These are nine high-quality high-throughput screening (HTS) datasets from [1]. These datasets were curated from HTS data at the PubChem database [2]. Typically, HTS categorizes small molecules into hit, inactive, or unspecified against a certain therapeutic target. However, a compound may be falsely classified as a hit due to experimental artifacts such as optical interference. Moreover, because the screening is performed without duplicates, and the cutoff is often set loose to minimize the false negative rates, the results from the primary screens often contain high false positive rates [3]. Hence the result from the primary screen is only used as the first iteration to reduce the compound library to a smaller set of further confirmatory tests.
-
-Here each dataset is carefully collated through confirmation screens to validate active compounds. The curation process is documented in [1]. Each dataset is identified by the PubChem Assay ID (AID).
-
-Features of the datasets: (1) At least 150 confirmed active compounds present; (2) Diverse target classes; (3) Realistic (large number and highly imbalanced label).
- </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a compound SMILES string, predict its activity against a diverse set of targets. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> </p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Protein Target Class</th>
-      <th>PubChem AID</th>
-      <th>Protein Target</th>
-      <th>Total # of Molecules</th>
-      <th># of Active Molecules</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>GPCR</td>
-      <td>435008</td>
-      <td>Orexin1 Receptor</td>
-      <td>218,158</td>
-      <td>233</td>
-    </tr>
-    <tr>
-      <td>GPCR</td>
-      <td>1798</td>
-      <td>M1 Muscarinic Receptor Agonists</td>
-      <td>61,833</td>
-      <td>187</td>
-    </tr>
-    <tr>
-      <td>GPCR</td>
-      <td>435034</td>
-      <td>M1 Muscarinic Receptor Antagonists</td>
-      <td>61,756</td>
-      <td>362</td>
-    </tr>
-    <tr>
-      <td>Ion Channel</td>
-      <td>1843</td>
-      <td>Potassium Ion Channel Kir2.1</td>
-      <td>301,493</td>
-      <td>172</td>
-    </tr>
-    <tr>
-      <td>Ion Channel</td>
-      <td>2258</td>
-      <td>KCNQ2 Potassium Channel</td>
-      <td>302,405</td>
-      <td>213</td>
-    </tr>
-    <tr>
-      <td>Ion Channel</td>
-      <td>463087</td>
-      <td>Cav3 T-type Calcium Channels</td>
-      <td>100,875</td>
-      <td>703</td>
-    </tr>
-    <tr>
-      <td>Transporter</td>
-      <td>488997</td>
-      <td>Choline Transporter</td>
-      <td>302,306</td>
-      <td>252</td>
-    </tr>
-    <tr>
-      <td>Kinase</td>
-      <td>2689</td>
-      <td>Serine/Threonine Kinase 33</td>
-      <td>319,792</td>
-      <td>172</td>
-    </tr>
-    <tr>
-      <td>Enzyme</td>
-      <td>485290</td>
-      <td>Tyrosyl-DNA Phosphodiesterase</td>
-      <td>341,365</td>
-      <td>281</td>
-    </tr>
-  </tbody>
-</table>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">HTS</span>
-<span class="c1"># Orexin1 Receptor
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'orexin1_receptor_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-
-<span class="c1"># M1 Muscarinic Receptor Agonists
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'m1_muscarinic_receptor_agonists_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-
-<span class="c1"># M1 Muscarinic Receptor Antagonists
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'m1_muscarinic_receptor_antagonists_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-
-<span class="c1"># Potassium Ion Channel Kir2.1 
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'potassium_ion_channel_kir2.1_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-
-<span class="c1"># KCNQ2 Potassium Channel
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'kcnq2_potassium_channel_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-
-<span class="c1"># Cav3 T-type Calcium Channels
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'cav3_t-type_calcium_channels_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-
-<span class="c1"># Choline Transporter
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'choline_transporter_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-
-<span class="c1"># Serine/Threonine Kinase 33
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'serine_threonine_kinase_33_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-
-<span class="c1"># Tyrosyl-DNA Phosphodiesterase
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'tyrosyl-dna_phosphodiesterase_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://www.mdpi.com/1420-3049/18/1/735">[1] Butkiewicz, Mariusz, et al. “Benchmarking ligand-based virtual High-Throughput Screening with the PubChem database.” Molecules 18.1 (2013): 735-756.</a></p>
-
-<p><a href="https://academic.oup.com/nar/article/47/D1/D1102/5146201">[2] Kim, Sunghwan, et al. “PubChem 2019 update: improved access to chemical data.” Nucleic acids research 47.D1 (2019): D1102-D1109.</a></p>
-
-<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5962024/">[3] Butkiewicz, Mariusz, et al. “High-throughput screening assay datasets from the pubchem database.” Chemical informatics (Wilmington, Del.) 3.1 (2017).</a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
 <hr />
 
