@@ -3,14 +3,15 @@ from huggingface_hub import HfApi, snapshot_download, hf_hub_download
 import os
 
 deeppurpose_repo = [
-    'hERG_Karim_Morgan'
+    'hERG_Karim_Morgan',
+    'BBB_Martins-AttentiveFP'
 ]
 
 class tdc_hf_interface:
     '''
     Example use cases:
     # initialize an interface object with HF repo name
-    tdc_hf_herg = tdc_hf_interface("hERG_Karim_Morgan")
+    tdc_hf_herg = tdc_hf_interface("hERG_Karim-Morgan")
     # upload folder/files to this repo
     tdc_hf_herg.upload('./Morgan_herg_karim_optimal')
     # load deeppurpose model from this repo
@@ -20,6 +21,7 @@ class tdc_hf_interface:
     
     def __init__(self, repo_name):
         self.repo_id = "tdc/" + repo_name
+        self.model_name = repo_name.split('-')[1]
         
     def upload(self, folder_path):
         create_repo(repo_id=self.repo_id)
@@ -60,9 +62,24 @@ class tdc_hf_interface:
 
             os.rename(model_file, save_path + 'model.pt')
             os.rename(config_file, save_path + 'config.pkl')            
+            try:
+                from DeepPurpose import CompoundPred
+            except:
+                raise ValueError("Please install DeepPurpose package following https://github.com/kexinhuang12345/DeepPurpose#installation")
             
-            from DeepPurpose import CompoundPred
             net = CompoundPred.model_pretrained(path_dir = save_path)
             return net
         else:
             raise ValueError("This repo does not host a DeepPurpose model!")
+    def predict_deeppurpose(self, model, drugs):
+        try:
+            from DeepPurpose import utils
+        except:
+            raise ValueError("Please install DeepPurpose package following https://github.com/kexinhuang12345/DeepPurpose#installation")
+        if self.model_name == 'AttentiveFP':
+            self.model_name = 'DGL_' + self.model_name
+        X_pred = utils.data_process(X_drug = drugs, y = [0]*len(drugs),
+                                drug_encoding = self.model_name, 
+                                split_method='no_split')
+        y_pred = model.predict(X_pred)[0]
+        return y_pred
