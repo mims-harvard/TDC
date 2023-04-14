@@ -6,3 +6,4 @@ tqdm
 scikit-learn
 seaborn
 requests
+huggingface_hub
