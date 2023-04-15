@@ -7,3 +7,4 @@ scikit-learn
 seaborn
 requests
 huggingface_hub
+dataclasses
