@@ -8,3 +8,4 @@ scikit-learn
 torch
 tqdm
 huggingface_hub
+dataclasses
