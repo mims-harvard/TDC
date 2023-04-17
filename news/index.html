@@ -114,6 +114,10 @@
                     
                 
                     
+                    <a href="https://huggingface.co/tdc" class="navbar-item ">HF Models</a>
+                    
+                
+                    
                     <a href="/news/" class="navbar-item is-active">News</a>
                     
                 
@@ -147,6 +151,19 @@
                     
 <div class="content">
     <h1 id="news">News</h1>
+<hr />
+
+<p class="is-size-5"><strong>2023.04.17</strong> TDC <code>0.4.0</code> is released! We're excited to announce the release of a new interface <code>tdc_hf_interface</code> that allows users to easily access and leverage pre-trained machine learning models hosted at HuggingFace on TDC datasets and tasks. In this first batch, we've uploaded nine pre-trained models in <a href="https://github.com/kexinhuang12345/DeepPurpose">DeepPurpose</a> that cover three popular TDC ADMET datasets. To load the pretrainend model, simply do:
+ </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">tdc_hf_interface</span>
+<span class="n">tdc_hf</span> <span class="o">=</span> <span class="n">tdc_hf_interface</span><span class="p">(</span><span class="s">"BBB_Martins-AttentiveFP"</span><span class="p">)</span>
+<span class="n">dp_model</span> <span class="o">=</span> <span class="n">tdc_hf</span><span class="o">.</span><span class="n">load_deeppurpose</span><span class="p">(</span><span class="s">'./data'</span><span class="p">)</span>
+<span class="n">tdc_hf</span><span class="o">.</span><span class="n">predict_deeppurpose</span><span class="p">(</span><span class="n">dp_model</span><span class="p">,</span> <span class="p">[</span><span class="s">'CC(=O)NC1=CC=C(O)C=C1'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p class="is-size-5">The TDC-HF space is located at <a href="https://huggingface.co/tdc">here</a>. Stay tuned for more exciting pre-trained models, tasks &amp; demos!</p>
+
 <hr />
 
 <p class="is-size-5"><strong>2023.01.26</strong> TDC <code>0.3.9</code> is released! Here are the changes: </p>
