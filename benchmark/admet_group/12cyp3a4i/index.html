@@ -331,22 +331,30 @@
 </thead>
  <tr> 
   <td> 1 </td> 
-  <td> BaseBoosting </td> 
-  <td><a href="mailto:andrew@oloren.ai">Andrew Li</a></td> 
-  <td><a href="https://github.com/Oloren-AI/OCE-TDC/blob/main/submission.ipynb"> GitHub</a>, <a href="https://github.com/Oloren-AI/OCE-TDC/blob/main/Report.pdf">Paper </a></td> 
-  <td> 40 </td> 
-  <td>0.882 <span>&#177;</span> 0.001 </td> 
+  <td> ContextPred </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://arxiv.org/abs/1905.12265">Paper </a></td> 
+  <td> 2,067,053 </td> 
+  <td>0.904 <span>&#177;</span> 0.002 </td> 
 </tr>
 <tr> 
   <td> 2 </td> 
-  <td> XGBoost </td> 
-  <td><a href="mailto:haot@smu.edu">Hao Tian</a></td> 
-  <td><a href="https://github.com/smu-tao-group/ADMET_XGBoost"> GitHub</a>, <a href="https://arxiv.org/abs/2204.07532v2">Paper </a></td> 
-  <td> 29 </td> 
-  <td>0.877 <span>&#177;</span> 0.002 </td> 
+  <td> AttrMasking </td> 
+  <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
+  <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://arxiv.org/abs/1905.12265">Paper </a></td> 
+  <td> 2,067,053 </td> 
+  <td>0.902 <span>&#177;</span> 0.002 </td> 
 </tr>
 <tr> 
   <td> 3 </td> 
+  <td> ZairaChem </td> 
+  <td><a href="mailto:gemma@ersilia.io">Gemma Turon </a></td> 
+  <td><a href="https://github.com/ersilia-os/zaira-chem-tdc-benchmark"> GitHub</a>, <a href="https://www.biorxiv.org/content/10.1101/2022.12.13.520154v1">Paper </a></td> 
+  <td> N/A </td> 
+  <td>0.875 <span>&#177;</span> 0.002 </td> 
+</tr>
+<tr> 
+  <td> 4 </td> 
   <td> AttentiveFP </td> 
   <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
   <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/31408336/">Paper </a></td> 
@@ -354,7 +362,7 @@
   <td>0.851 <span>&#177;</span> 0.006 </td> 
 </tr>
 <tr> 
-  <td> 4 </td> 
+  <td> 5 </td> 
   <td> NeuralFP </td> 
   <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
   <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://ieeexplore.ieee.org/document/9412489">Paper </a></td> 
@@ -362,7 +370,7 @@
   <td>0.849 <span>&#177;</span> 0.004 </td> 
 </tr>
 <tr> 
-  <td> 5 </td> 
+  <td> 6 </td> 
   <td> GCN </td> 
   <td><a href="mailto:kexinh@stanford.edu">Kexin Huang</a></td> 
   <td><a href="https://github.com/mims-harvard/TDC/tree/main/examples/single_pred/admet"> GitHub</a>, <a href="https://arxiv.org/abs/1609.02907">Paper </a></td> 
@@ -370,7 +378,7 @@
   <td>0.840 <span>&#177;</span> 0.010 </td> 
 </tr>
 <tr> 
-  <td> 6 </td> 
+  <td> 7 </td> 
   <td> RDKit2D + MLP (DeepPurpose) </td> 
   <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
   <td><a href="https://github.com/mims-harvard/TDC/tree/master/examples/single_pred/admet"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
@@ -378,7 +386,7 @@
   <td>0.829 <span>&#177;</span> 0.007 </td> 
 </tr>
 <tr> 
-  <td> 7 </td> 
+  <td> 8 </td> 
   <td> Morgan + MLP (DeepPurpose) </td> 
   <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
   <td><a href="https://github.com/mims-harvard/TDC/tree/master/examples/single_pred/admet"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
@@ -386,12 +394,28 @@
   <td>0.827 <span>&#177;</span> 0.009 </td> 
 </tr>
 <tr> 
-  <td> 8 </td> 
+  <td> 9 </td> 
   <td> CNN (DeepPurpose) </td> 
   <td><a href="mailto:kexinhuang@hsph.harvard.edu">Kexin Huang</a></td> 
   <td><a href="https://github.com/mims-harvard/TDC/tree/master/examples/single_pred/admet"> GitHub</a>, <a href="https://doi.org/10.1093/bioinformatics/btaa1005">Paper </a></td> 
   <td> 226,625 </td> 
   <td>0.821 <span>&#177;</span> 0.003 </td> 
+</tr>
+<tr> 
+  <td> 10 </td> 
+  <td> Euclia ML model </td> 
+  <td><a href="mailto:euclia@euclia.io">Euclia</a></td> 
+  <td><a href="https://github.com/euclia/public-models"> GitHub</a>, <a href="https://github.com/euclia/public-models">Paper </a></td> 
+  <td> 50 </td> 
+  <td>0.696 <span>&#177;</span> 0.004 </td> 
+</tr>
+<tr> 
+  <td> 11 </td> 
+  <td> Basic ML </td> 
+  <td><a href="mailto:nilavoboral@gmail.com">Nilavo Boral</a></td> 
+  <td><a href="https://github.com/NilavoBoral/Therapeutics-Data-Commons"> GitHub</a>, <a href="https://www.biorxiv.org/content/10.1101/2022.06.29.115436v1">Paper </a></td> 
+  <td> N/A </td> 
+  <td>0.654 <span>&#177;</span> 0.000 </td> 
 </tr>
 </table>
 
