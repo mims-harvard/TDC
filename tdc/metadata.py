@@ -140,6 +140,7 @@ paratope_dataset_names = ["sabdab_liberis"]
 
 develop_dataset_names = ["tap", "sabdab_chen"]
 
+structure_based_protein_dataset_names = ["enzyme_catalysis"]
 
 # multi_pred prediction
 
@@ -579,6 +580,7 @@ dataset_names = {
     "Reaction": forwardsyn_dataset_names,
     "MolGen": single_molecule_dataset_names,
     "sbdd": multiple_molecule_dataset_names,
+    "sbpp": structure_based_protein_dataset_names,
     "PeptideMHC": peptidemhc_dataset_names,
     "Epitope": epitope_dataset_names,
     "Develop": develop_dataset_names,

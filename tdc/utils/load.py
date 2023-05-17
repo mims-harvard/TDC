@@ -500,6 +500,9 @@ def bi_distribution_dataset_load(
     if name in name2id or name in name2idlist:
         name = zip_data_download_wrapper(name, path, dataset_names)
 
+    print(name)
+    asdsd
+
     if name == "pdbbind":
         print_sys("Processing (this may take long)...")
         protein, ligand = process_pdbbind(
@@ -524,6 +527,41 @@ def bi_distribution_dataset_load(
         )
 
     return protein, ligand
+
+
+def structure_based_protein_dataset_load(
+    name,
+    path,
+    dataset_names,
+    return_pocket=False,
+    threshold=15,
+    remove_protein_Hs=True,
+    remove_ligand_Hs=True,
+    keep_het=False,
+):
+    """a wrapper to download, process and load structure-based protein property prediction task datasets. assume the downloaded file is already processed
+
+    Args:
+        name (str): the rough dataset name
+        path (str): the dataset path to save/retrieve
+        dataset_names (list): a list of availabel exact dataset names
+
+    Returns:
+        pandas.Series: the input list of molecules representation
+    """
+    # print(name, dataset_names)
+    name = fuzzy_search(name, dataset_names)
+    if name in name2id or name in name2idlist:
+        name = zip_data_download_wrapper(name, path, dataset_names)
+    
+    if name == "enzyme_catalysis":
+        print_sys("Processing Enzyme Reaction dataset...")
+        protein, protein_property = process_ec(path, name)
+
+    return protein, protein_property
+
+
+
 
 
 def generation_dataset_load(name, path, dataset_names):
@@ -892,6 +930,98 @@ def process_scpdb(
     protein = {"coord": protein_coords, "atom_type": protein_atom_types}
     ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
     return protein, ligand
+
+
+def process_ec(
+    path
+):
+    """a processor to process enzyme catalysis dataset
+
+    Args:
+        name (str): the name of the dataset
+        path (str): the path to save the data file
+
+    Returns:
+            protein (dict): a dict of protein features
+            protein property (dict): a dict of the protein labels
+    """
+    from rdkit import RDLogger
+    import h5py
+    RDLogger.DisableLog("rdApp.*")
+
+    print(path)
+    if os.path.exists(path):
+        print_sys("Processing...")
+
+        # load proteins from train/validation/test files
+        protein_names = []
+        protein_files = []
+        protein_custom_splits = []
+
+        total_ct = 0
+        with open(path+"/training.txt", 'r') as train_file:
+            for line in train_file:
+                protein_names.append(line.rstrip())
+                protein_files.append(path+"/data/"+line.rstrip())
+                protein_custom_splits.append('Train')
+                total_ct += 1
+
+
+        total_ct = 0
+        with open(path+"/validation.txt", 'r') as val_file:
+            for line in val_file:
+                protein_names.append(line.rstrip())
+                protein_files.append(path+"/data/"+line.rstrip())
+                protein_custom_splits.append('Val')
+                total_ct += 1
+
+        total_ct = 0
+        with open(path+"/testing.txt", 'r') as test_file:
+            for line in test_file:
+                protein_names.append(line.rstrip())
+                protein_files.append(path+"/data/"+line.rstrip())
+                protein_custom_splits.append('Test')
+                total_ct += 1
+
+        # Load protein function labels
+        protein_prop_dict = {}
+        with open(path+"/chain_functions.txt", 'r') as prop_file:
+            for line in prop_file:
+                splitLine = line.rstrip().split(',')
+                if splitLine[0] in protein_names: 
+                    protein_prop_dict[splitLine[0]] = int(splitLine[1])
+
+        
+        protein_prop = [protein_prop_dict[i] for i in protein_names]
+
+        protein_amino_types, protein_coords, protein_atom_names, protein_atom_amino_id = [], [], [], []
+        
+        total_ct = 0
+        for idx, file in enumerate(tqdm(protein_files)):
+
+            if file == "readme" or file == "index":
+                continue
+            total_ct += 1
+            h5File = h5py.File(file + '.hdf5', "r")            
+            amino_types = h5File['amino_types'][()]
+            atom_amino_id = h5File['atom_amino_id'][()] 
+            atom_names = h5File['atom_names'][()]
+            atom_pos = h5File['atom_pos'][()][0]
+
+            protein_amino_types.append(amino_types)
+            protein_coords.append(atom_pos)
+            protein_atom_names.append(atom_names)
+            protein_atom_amino_id.append(atom_amino_id)
+                       
+                
+        print_sys(f"Done processing")
+        protein = {"name": protein_names,  "amino_type": protein_amino_types, "coord": protein_coords, "atom_name": protein_atom_names, "atom_amino_id": protein_atom_amino_id, "custom_split": protein_custom_splits}
+        protein_property = {"prop": protein_prop}
+    else:
+        sys.exit("Wrong path!")
+    return protein, protein_property
+
+
 
 
 def atom_to_one_hot(atom, allowed_atom_list):

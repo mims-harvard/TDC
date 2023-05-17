@@ -360,3 +360,49 @@ def create_group_split(train_val, seed, holdout_frac, group_column):
         "train": train_df.reset_index(drop=True),
         "valid": val_df.reset_index(drop=True),
     }
+
+
+
+def create_custom_split(name, dict):
+    """split within each stratification defined by the group column for training/validation split
+
+    Args:
+        train_val (pd.DataFrame): the train+valid dataframe to split on
+        seed (int): the random seed
+        holdout_frac (float): the fraction of validation
+        group_column (str): the name of the group column
+
+    Returns:
+        dict: a dictionary of splitted data structures, where keys are train/valid/test and values correspond to each data structure
+    """
+    if name == 'enzyme_catalysis':        
+        train_idx = np.squeeze(np.where(np.array(dict['protein']['custom_split']) == 'Train'))
+        val_idx = np.squeeze(np.where(np.array(dict['protein']['custom_split']) == 'Val'))
+        test_idx = np.squeeze(np.where(np.array(dict['protein']['custom_split']) == 'Test'))
+
+        return {
+            "train": {
+                "protein_name": [dict['protein']["name"][i] for i in train_idx],
+                "protein_coord": [dict['protein']["coord"][i] for i in train_idx],
+                "protein_amino_type": [dict['protein']["amino_type"][i] for i in train_idx],
+                "protein_atom_name": [dict['protein']["atom_name"][i] for i in train_idx],
+                "protein_atom_amino_id": [dict['protein']["atom_amino_id"][i] for i in train_idx],
+                "protein_property": [dict['protein_property']["prop"][i] for i in train_idx]
+            },
+            "val": {
+                "protein_name": [dict['protein']["name"][i] for i in val_idx],
+                "protein_coord": [dict['protein']["coord"][i] for i in val_idx],
+                "protein_amino_type": [dict['protein']["amino_type"][i] for i in val_idx],
+                "protein_atom_name": [dict['protein']["atom_name"][i] for i in val_idx],
+                "protein_atom_amino_id": [dict['protein']["atom_amino_id"][i] for i in val_idx],
+                "protein_property": [dict['protein_property']["prop"][i] for i in val_idx]
+            },
+            "test": {
+                "protein_name": [dict['protein']["name"][i] for i in test_idx],
+                "protein_coord": [dict['protein']["coord"][i] for i in test_idx],
+                "protein_amino_type": [dict['protein']["amino_type"][i] for i in test_idx],
+                "protein_atom_name": [dict['protein']["atom_name"][i] for i in test_idx],
+                "protein_atom_amino_id": [dict['protein']["atom_amino_id"][i] for i in test_idx],
+                "protein_property": [dict['protein_property']["prop"][i] for i in test_idx]
+            }
+        }
