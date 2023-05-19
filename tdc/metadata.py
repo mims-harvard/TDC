@@ -727,6 +727,7 @@ name2type = {
     "primekg": "tab",
     "primekg_drug_feature": "tab",
     "primekg_disease_feature": "tab",
+    "drug_comb_meta_data": "pkl"
 }
 
 name2id = {
@@ -835,6 +836,7 @@ name2id = {
     "primekg": 6180626,
     "primekg_drug_feature": 6180619,
     "primekg_disease_feature": 6180618,
+    "drug_comb_meta_data": 7104245
 }
 
 oracle2type = {
