@@ -12,15 +12,15 @@ from . import bi_pred_dataset, multi_pred_dataset
 from ..metadata import dataset_names
 
 
-class TrialOutcome(bi_pred_dataset.DataLoader):
+class TrialOutcome(multi_pred_dataset.DataLoader):
 
-    """Data loader class to load datasets in MicroRNA-Target Interaction Prediction task.
-    More info: https://tdcommons.ai/multi_pred_tasks/mti/
+    """Data loader class to load datasets in clinical trial outcome Prediction task.
+    More info: https://tdcommons.ai/multi_pred_tasks/trialoutcome/
 
 
     Task Description: Binary Classification.
-                      Given the miRNA mature sequence and target amino acid sequence,
-                      predict their likelihood of interaction.
+                      Given the drug molecule, disease code (ICD) and trial protocol (eligibility criteria),
+                      predict their trial approval rate.
 
     Args:
         name (str): the dataset name.
@@ -34,13 +34,13 @@ class TrialOutcome(bi_pred_dataset.DataLoader):
     """
 
     def __init__(self, name, path="./data", label_name=None, print_stats=False):
-        """Create MicroRNA-Target Interaction Prediction dataloader object"""
+        """Create Clinical Trial Outcome Prediction dataloader object"""
         super().__init__(
-            name, path, label_name, print_stats, dataset_names=dataset_names["TrialOutcome"]
+            name, path, print_stats, dataset_names=dataset_names["TrialOutcome"]
         )
-        self.entity1_name = "drug"
-        self.entity2_name = "disease"
-        self.two_types = True
+        self.entity1_name = "drug_molecule"
+        self.entity2_name = "disease_code"
+        # self.entity3_name = "eligibility_criteria"
 
         if print_stats:
             self.print_stats()

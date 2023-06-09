@@ -732,9 +732,9 @@ name2type = {
     "primekg_drug_feature": "tab",
     "primekg_disease_feature": "tab",
     "drug_comb_meta_data": "pkl", 
-    "phase1": "csv",
-    "phase2": "csv", 
-    "phase3": "csv",  
+    "phase1": "tab",
+    "phase2": "tab", 
+    "phase3": "tab",  
 }
 
 name2id = {
@@ -844,9 +844,9 @@ name2id = {
     "primekg_drug_feature": 6180619,
     "primekg_disease_feature": 6180618,
     "drug_comb_meta_data": 7104245, 
-    "phase1": 7162312, 
-    "phase2": 7162313, 
-    "phase3": 7162314, 
+    "phase1": 7163779, 
+    "phase2": 7163778, 
+    "phase3": 7163780, 
 }
 
 oracle2type = {
