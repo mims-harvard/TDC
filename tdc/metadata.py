@@ -176,6 +176,8 @@ catalyst_dataset_names = ["uspto_catalyst"]
 
 tcr_epi_dataset_names = ["weber"]
 
+trial_outcome_dataset_names = ['phase1', 'phase2', 'phase3']
+
 ####################################
 # generation
 
@@ -555,6 +557,7 @@ category_names = {
         "GDA",
         "Catalyst",
         "TCR_Epitope_Binding",
+        "TrialOutcome", 
     ],
     "generation": ["RetroSyn", "Reaction", "MolGen"],
 }
@@ -594,7 +597,8 @@ dataset_names = {
     "CRISPROutcome": crisproutcome_dataset_names,
     "test_single_pred": test_single_pred_dataset_names,
     "test_multi_pred": test_multi_pred_dataset_names,
-    "TCREpitopeBinding": tcr_epi_dataset_names,
+    "TCREpitopeBinding": tcr_epi_dataset_names, 
+    "TrialOutcome": trial_outcome_dataset_names, 
 }
 
 benchmark_names = {
@@ -727,7 +731,10 @@ name2type = {
     "primekg": "tab",
     "primekg_drug_feature": "tab",
     "primekg_disease_feature": "tab",
-    "drug_comb_meta_data": "pkl"
+    "drug_comb_meta_data": "pkl", 
+    "phase1": "csv",
+    "phase2": "csv", 
+    "phase3": "csv",  
 }
 
 name2id = {
@@ -836,7 +843,10 @@ name2id = {
     "primekg": 6180626,
     "primekg_drug_feature": 6180619,
     "primekg_disease_feature": 6180618,
-    "drug_comb_meta_data": 7104245
+    "drug_comb_meta_data": 7104245, 
+    "phase1": 7162312, 
+    "phase2": 7162313, 
+    "phase3": 7162314, 
 }
 
 oracle2type = {
@@ -962,6 +972,9 @@ name2stats = {
     "chembl": 1961462,
     "uspto50k": 50036,
     "uspto": 1939253,
+    "phase1": 1787,
+    "phase2": 6102,
+    "phase3": 4576,
 }
 
 name2idlist = {
