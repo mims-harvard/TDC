@@ -63,6 +63,55 @@ def pcc(y_true, y_pred):
     return np.corrcoef(y_true, y_pred)[1, 0]
 
 
+def f1_max_score(y_true, y_pred):
+
+    """
+    This function evaluates the maximum F1-score over all possiple 
+    thresholds. Specifically, it enumerates the possible thresholds 
+    for the definition of positive and negative thresholds. It has been 
+    proposed in [1] for multi-label classification, and used by various 
+    methods [2,3]. Implementation based on: 
+    https://github.com/DeepGraphLearning/torchdrug/blob/master/torchdrug/metrics/metric.py
+
+    References: 
+    [1] Vladimir Gligorijević et al, 2021. Structure-based protein function 
+    prediction using graph convolutional networks. Nature Communications, 
+    12, Article number 3168, 2021.
+    [2] Zuobai Zhang et al, 2023. Protein Representation Learning by Geometric 
+    Structure Pretraining. ICLR 2023.
+    [3] Hehe Fan et al, 2023. Continuous-Discrete Convolution for Geometry-Sequence 
+    Modeling in Proteins, ICLR 2023.
+    """
+
+    eps = 1e-10
+
+    order = np.argsort(y_pred, axis=1)[::-1]        # descending order
+    y_true =  y_true[:,order]
+    precision = np.cumsum(y_true, axis=1) / np.cumsum(np.ones_like(y_true), axis=1)
+    recall = np.cumsum(y_true, axis=1) / (np.sum(y_true,axis=1, keepdims=True) + eps)
+    is_start = np.zeros_like(y_true).astype(bool)
+    is_start[:, 0] = 1
+    is_start = np.put_along_axis(is_start, order, is_start,axis=1)
+
+    all_order = np.argsort(y_true.flatten())[::-1]
+    order = order + np.expand_dims(np.arange(order.shape[0]),axis=1) * order.shape[1]
+    order = order.flatten()
+    inv_order = np.zeros_like(order)
+    inv_order[order] = np.arange(order.shape[0])
+    is_start = is_start.flatten()[all_order]
+    all_order = inv_order[all_order]
+    precision = precision.flatten()
+    recall = recall.flatten()
+    all_precision = precision[all_order] - np.where(is_start, np.zeros_like(precision), precision[all_order - 1])
+    all_precision = np.cumsum(all_precision, axis=0) / np.cumsum(is_start,axis=0)
+    all_recall = recall[all_order] - np.where(is_start, np.zeros_like(recall), recall[all_order - 1])
+    all_recall = np.cumsum(all_recall,axis=0) / y_pred.shape[0]
+    final_f1 = 2 * all_precision * all_recall / (all_precision + all_recall + eps)
+
+    return final_f1
+
+
+
 def range_logAUC(true_y, predicted_score, FPR_range=(0.001, 0.1)):
     """
     Author: Yunchao "Lance" Liu (lanceknight26@gmail.com)
@@ -389,6 +438,8 @@ class Evaluator:
             self.evaluator_func = roc_auc_score
         elif self.name == "f1":
             self.evaluator_func = f1_score
+        elif self.name == "f1_max":
+            self.evaluator_func = f1_max_score
         elif self.name == "pr-auc":
             self.evaluator_func = average_precision_score
         elif self.name == "rp@k":
