@@ -556,7 +556,12 @@ def structure_based_protein_dataset_load(
     
     if name == "enzyme_catalysis":
         print_sys("Processing Enzyme Reaction dataset...")
-        protein, protein_property = process_ec(path, name)
+        protein, protein_property = process_ec(path)
+
+    if name == "fold":
+        print_sys("Processing Fold Classification dataset...")
+        protein, protein_property = process_fold(path)
+
 
     return protein, protein_property
 
@@ -930,6 +935,104 @@ def process_scpdb(
     protein = {"coord": protein_coords, "atom_type": protein_atom_types}
     ligand = {"coord": ligand_coords, "atom_type": ligand_atom_types}
     return protein, ligand
+
+
+def process_fold(
+        path
+):
+    
+    from rdkit import RDLogger
+    import h5py
+    RDLogger.DisableLog("rdApp.*")
+    
+    print(path)
+    if os.path.exists(path):
+        print_sys("Processing...")
+
+        # Get the file list.
+        files_list = []
+        names_list = []
+        categories_list = []
+        class_dict = {}
+        protein_custom_splits = []
+
+        with open(path+"/class_map.txt", 'r') as class_map_file:
+            for line in class_map_file:
+                line_list = line.rstrip().split('\t')
+                class_dict[line_list[0]] = int(line_list[1])
+
+        with open(path+"/training.txt", 'r') as train_file:
+            for line in train_file:
+                line_list = line.rstrip().split('\t')
+                curClass = class_dict[line_list[-1]]
+                names_list.append(line_list[0])
+                files_list.append(path+"/training/"+line_list[0])
+                categories_list.append(curClass)
+                protein_custom_splits.append('Train')
+
+        with open(path+"/validation.txt", 'r') as train_file:
+            for line in train_file:
+                line_list = line.rstrip().split('\t')
+                curClass = class_dict[line_list[-1]]
+                names_list.append(line_list[0])
+                files_list.append(path+"/validation/"+line_list[0])
+                categories_list.append(curClass)
+                protein_custom_splits.append('Val')
+
+                
+        with open(path+"/test_family.txt", 'r') as train_file:
+            for line in train_file:
+                line_list = line.rstrip().split('\t')
+                curClass = class_dict[line_list[-1]]
+                names_list.append(line_list[0])
+                files_list.append(path+"/test_family/"+line_list[0])
+                categories_list.append(curClass)
+                protein_custom_splits.append('Test_family')
+
+
+
+        with open(path+"/test_superfamily.txt", 'r') as train_file:
+            for line in train_file:
+                line_list = line.rstrip().split('\t')
+                curClass = class_dict[line_list[-1]]
+                names_list.append(line_list[0])
+                files_list.append(path+"/test_superfamily/"+line_list[0])
+                categories_list.append(curClass)
+                protein_custom_splits.append('Test_superfamily')
+
+        with open(path+"/test_fold.txt", 'r') as train_file:
+            for line in train_file:
+                line_list = line.rstrip().split('\t')
+                curClass = class_dict[line_list[-1]]
+                names_list.append(line_list[0])
+                files_list.append(path+"/test_fold/"+line_list[0])
+                categories_list.append(curClass)
+                protein_custom_splits.append('Test_fold')
+
+        
+        protein_amino_types, protein_coords, protein_atom_names, protein_atom_amino_id = [], [], [], []
+
+        for _, file in tqdm(enumerate(files_list)):
+            
+            if file == "readme" or file == "index":
+                continue
+            
+            h5File = h5py.File(file + '.hdf5', "r")
+            amino_types = h5File['amino_types'][()]
+            atom_amino_id = h5File['atom_amino_id'][()] 
+            atom_names = h5File['atom_names'][()]
+            atom_pos = h5File['atom_pos'][()][0]
+
+            protein_amino_types.append(amino_types)
+            protein_coords.append(atom_pos)
+            protein_atom_names.append(atom_names)
+            protein_atom_amino_id.append(atom_amino_id)
+            
+
+        protein = {"name": names_list,  "amino_type": protein_amino_types, "coord": protein_coords, "atom_name": protein_atom_names, "atom_amino_id": protein_atom_amino_id, "custom_split": protein_custom_splits}
+        protein_property = {"prop": categories_list}
+
+        return protein, protein_property 
 
 
 def process_ec(

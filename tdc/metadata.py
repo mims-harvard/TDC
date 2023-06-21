@@ -140,7 +140,7 @@ paratope_dataset_names = ["sabdab_liberis"]
 
 develop_dataset_names = ["tap", "sabdab_chen"]
 
-structure_based_protein_dataset_names = ["enzyme_catalysis"]
+structure_based_protein_dataset_names = ["enzyme_catalysis", "fold"]
 
 # multi_pred prediction
 

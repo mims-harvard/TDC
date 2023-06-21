@@ -137,6 +137,7 @@ class SBPP(base_dataset.DataLoader):
 
 
 if __name__ == "__main__":
-    dataset = SBPP(name='enzyme_catalysis', path='./data')
-    a = dataset.get_split()
+    # dataset = SBPP(name='enzyme_catalysis', path='/Users/george/Downloads/ProtFunct')
+    dataset = SBPP(name='fold', path='/Users/george/Downloads/HomologyTAPE')
+    # a = dataset.get_split()
   
