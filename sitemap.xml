@@ -244,6 +244,9 @@
 <loc>http://localhost:4000/single_pred_tasks/tox/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/multi_pred_tasks/trialoutcome/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/single_pred_tasks/xtalval/</loc>
 </url>
 <url>

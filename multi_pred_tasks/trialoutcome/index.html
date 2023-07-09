@@ -4,24 +4,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>miRNA-Target Interaction - TDC</title>
+    <title>Clinical Trial Outcome Prediction - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>miRNA-Target Interaction | TDC</title>
+<title>Clinical Trial Outcome Prediction | TDC</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="miRNA-Target Interaction" />
+<meta property="og:title" content="Clinical Trial Outcome Prediction" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
 <meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
-<link rel="canonical" href="http://localhost:4000/multi_pred_tasks/mti/" />
-<meta property="og:url" content="http://localhost:4000/multi_pred_tasks/mti/" />
+<link rel="canonical" href="http://localhost:4000/multi_pred_tasks/trialoutcome/" />
+<meta property="og:url" content="http://localhost:4000/multi_pred_tasks/trialoutcome/" />
 <meta property="og:site_name" content="TDC" />
 <script type="application/ld+json">
-{"headline":"miRNA-Target Interaction","url":"http://localhost:4000/multi_pred_tasks/mti/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"headline":"Clinical Trial Outcome Prediction","url":"http://localhost:4000/multi_pred_tasks/trialoutcome/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -190,7 +190,7 @@
                 
                 
                 
-                <li><a href="/multi_pred_tasks/mti/" class="is-active"><code>MTI</code> miRNA-Target Interaction</a></li>
+                <li><a href="/multi_pred_tasks/mti/" class=""><code>MTI</code> miRNA-Target Interaction</a></li>
                 
                 
                 
@@ -248,7 +248,7 @@
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
-  <li><a href="#mirtarbase">miRTarBase</a></li>
+  <li><a href="#trial-outcome-prediction-top">Trial Outcome Prediction (TOP)</a></li>
 </ul>
     </div>
 </div>
@@ -257,57 +257,50 @@
 
 
 <div class="content">
-    <h1 id="microrna-target-interaction-prediction-task-overview">MicroRNA-Target Interaction Prediction Task Overview</h1>
+    <h1 id="clinical-trial-outcome-prediction-task-overview">Clinical Trial Outcome Prediction Task Overview</h1>
 
 <div class="box">
 	
 
 <p class="is-size-6">  <strong> Definition: </strong> 
-MicroRNA (miRNA) is small noncoding RNA that plays an important role in regulating biological processes such as cell proliferation, cell differentiation and so on. They usually function to downregulate gene targets. This task is to predict the interaction activity between miRNA and the gene target.
+Clinical trial outcome prediction is a machine learning task that aims to forecast the outcome of clinical trials, such as the approval rate of a drug or treatment. It utilizes various clinical trial features, including the drug's molecular structure, disease code representing the medical condition, and eligibility criteria that specify participant selection criteria. This task is formulated as a binary classification problem, where the machine learning model predicts whether a clinical trial will have a positive or negative outcome.
 </p>
 
 <p class="is-size-6"> <strong> Impact: </strong>  
-Accurately predicting the unknown interaction between miRNA and target can lead to a more complete knowledge about disease mechanism and also could result in potential disease target biomarkers. They can also help identify miRNA hits for miRNA therapeutics candidates.
+Clinical trial is the most time and cost-consuming step in the drug discovery process. Optimizing and designing trials with machine learning could drastically lead to the speedup of delivery of life-saving therapeutics to patients. Particularly, they can effectively alert potential fallouts of trials to practitioners by pointing out potential risks, optimizing safety monitoring protocols and ensuring participant well-being. They can also assist in identifying suitable patient populations, optimizing sample sizes, refining inclusion and exclusion criteria, and selecting appropriate endpoints and outcome measures.
 </p>
 
 <p class="is-size-6"> <strong> Generalization: </strong> 
-The model needs to learn the biochemicals of miRNA and target proteins so that it can extrapolate to new set of novel miRNAs and targets in various disease groups and tissues.
+Machine learning models for clinical trial outcome prediction are expected to demonstrate robust generalization to novel drug molecular structures and rare diseases. This capability enhances the versatility and applicability of machine learning in clinical research, supporting advancements in personalized medicine and treatment discovery. The ability to generalize well to diverse and evolving conditions is crucial for the models to be adaptable and effectively contribute to the field of clinical trials.
+
 </p>
 
-<p class="is-size-6"> <strong> Product: </strong> Small-molecule, miRNA therapeutic. </p>
+<p class="is-size-6"> <strong> Product: </strong> All pipelines require clinical trials. </p>
 
-<p class="is-size-6"> <strong> Pipeline: </strong> Basic biomedical research, target discovery, activity. </p>
+<p class="is-size-6"> <strong> Pipeline: </strong> Clinical trial.</p>
 
 </div>
 
-<h3 id="mirtarbase">miRTarBase</h3>
+<h3 id="trial-outcome-prediction-top">Trial Outcome Prediction (TOP)</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> miRTarBase has accumulated more than three hundred and sixty thousand miRNA-target interactions (MTIs), which are collected by manually surveying pertinent literature after NLP of the text systematically to filter research articles related to functional studies of miRNAs. Generally, the collected MTIs are validated experimentally by reporter assay, western blot, microarray and next-generation sequencing experiments. TDC uses miRBase to obtain miRNA mature sequence. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> TOP [1]consists of 17,538 clinical trials with 13,880 small-molecule drugs and 5,335 diseases. Out of these trials, 9,999 (57.0%) succeeded (i.e., meeting primary endpoints) and 7,539 (43.0%) failed. For each clinical trial, we produce the following four data items: (1) drug molecule information including Simplified Molecular Input Line Entry System (SMILES) strings and molecular graphs for the drug candidates used in the trials; (2) disease information including ICD-10 codes (disease code), disease description, and disease hierarchy in terms of CCS codes (https://www.hcup-us.ahrq.gov/toolssoftware/ccs10/ccs10.jsp); (3) trial eligibility criteria are in unstructured natural language and contain inclusion and exclusion criteria; and (4) trial outcome information includes a binary indicator of trial success (1) or failure (0), trial phase, start and end date, sponsor, and trial size (i.e., number of participants).</p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given the miRNA mature sequence and target amino acid sequence, predict their likelihood of interaction. </p>
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given clinical trial features including drug molecular structure, disease code, and eligibility criteria (inclusion and exclusion criteria), predict if it would be approved. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 400,082 MTI pairs, 3,465 miRNAs, 21,242 targets </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> Phase I: 3373 trials / Phase II: 8225 trials / Phase III: 9433 trials. </p>
 
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Temporal split</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">MTI</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">MTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'miRTarBase'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6"> <strong>Note:</strong> The dataset contains only positive pairs. To get the negative samples, you can call: </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">TrialOutcome</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">TrialOutcome</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'phase1'</span><span class="p">)</span> <span class="c1"># 'phase2' / 'phase3'
+</span><span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://academic.oup.com/nar/article-abstract/46/D1/D296/4595852">[1] Chou, Chih-Hung, et al. “miRTarBase update 2018: a resource for experimentally validated microRNA-target interactions.” Nucleic acids research 46.D1 (2018): D296-D302.</a></p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S2666389922000186">[1] Fu, Tianfan, et al. “Hint: Hierarchical interaction network for clinical-trial-outcome predictions.” Patterns 3.4 (2022). </a></p>
 
-<p><a href="https://academic.oup.com/nar/article-abstract/47/D1/D155/5179337">[2] Kozomara, Ana, Maria Birgaoanu, and Sam Griffiths-Jones. “miRBase: from microRNA sequences to function.” Nucleic acids research 47.D1 (2019): D155-D162.</a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
-
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://github.com/futianfan/clinical-trial-outcome-prediction">This dataset and code (including data collection and preprocessing, model construction, learning process, evaluation), referred as the Works, are publicly available for Non-Commercial Use only at https://github.com/futianfan/clinical-trial-outcome-prediction. Non-Commercial Use is defined as for academic research or other non-profit educational use which is: (1) not-for-profit; (2) not conducted or funded (unless such funding confers no commercial rights to the funding entity) by an entity engaged in the commercial use, application or exploitation of works similar to the Works; and (3) not intended to produce works for commercial use.</a>.</p>
 <hr />
 
 
