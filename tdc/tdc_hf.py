@@ -3,8 +3,15 @@ from huggingface_hub import HfApi, snapshot_download, hf_hub_download
 import os
 
 deeppurpose_repo = [
-    'hERG_Karim_Morgan',
-    'BBB_Martins-AttentiveFP'
+    'hERG_Karim-Morgan',
+    'hERG_Karim-CNN', 
+    'hERG_Karim-AttentiveFP', 
+    'BBB_Martins-AttentiveFP',
+    'BBB_Martins-Morgan', 
+    'BBB_Martins-CNN', 
+    'CYP3A4_Veith-Morgan', 
+    'CYP3A4_Veith-CNN', 
+    'CYP3A4_Veith-AttentiveFP', 
 ]
 
 class tdc_hf_interface:
