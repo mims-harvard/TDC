@@ -37,6 +37,23 @@ class PrimeKG:
             )
         return G
 
+    def get_nodes_by_source(self, source):
+        out = pd.concat([
+            self.df.query(
+                f"x_source == '{source}' | y_source == '{source}'"
+            )[['x_index', 'x_id', 'x_type', 'x_name', 'x_source']].rename(
+                columns={'x_index': 'index', 'x_id': 'id', 'x_type': 'type', 'x_name': 'name',
+                         'x_source': 'source'}),
+
+            self.df.query(
+                f"x_source == '{source}' | y_source == '{source}'"
+            )[['y_index', 'y_id', 'y_type', 'y_name', 'y_source']].rename(
+                columns={'y_index': 'index', 'y_id': 'id', 'y_type': 'type', 'y_name': 'name',
+                         'y_source': 'source'})
+        ]).query(f'source == "{source}"').drop_duplicates().reset_index(drop=True).sort_values('index')
+
+        return out
+
     def get_features(self, feature_type):
         if feature_type not in ["drug", "disease"]:
             raise ValueError("feature_type only supports drug/disease!")
