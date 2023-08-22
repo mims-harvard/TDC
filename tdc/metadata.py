@@ -844,9 +844,9 @@ name2id = {
     "primekg_drug_feature": 6180619,
     "primekg_disease_feature": 6180618,
     "drug_comb_meta_data": 7104245, 
-    "phase1": 7163779, 
-    "phase2": 7163778, 
-    "phase3": 7163780, 
+    "phase1": 7331305, 
+    "phase2": 7331306, 
+    "phase3": 7331307, 
 }
 
 oracle2type = {
