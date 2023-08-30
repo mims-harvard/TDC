@@ -51,8 +51,7 @@ class PrimeKG:
             f"x_source == '{source}' | y_source == '{source}'"
         )[[col for col in self.df.columns if col.startswith("y_")]]
         for col in y_df.columns:
-            if col.startswith("y_"):
-                x_df = x_df.rename(columns={col: col[2:]})
+            y_df = y_df.rename(columns={col: col[2:]})
         # merge x and y nodes and keep only unique nodes
         out = pd.concat([x_df, y_df], axis=1).query(f'source == "{source}"').drop_duplicates().reset_index(drop=True)
 
