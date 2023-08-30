@@ -53,7 +53,7 @@ class PrimeKG:
         for col in y_df.columns:
             y_df = y_df.rename(columns={col: col[2:]})
         # merge x and y nodes and keep only unique nodes
-        out = pd.concat([x_df, y_df], axis=1).query(f'source == "{source}"').drop_duplicates().reset_index(drop=True)
+        out = pd.concat([x_df, y_df], axis=0).query(f'source == "{source}"').drop_duplicates().reset_index(drop=True)
 
         return out
 
