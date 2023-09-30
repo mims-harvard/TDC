@@ -34,7 +34,7 @@ class PrimeKG:
             )
         return G
 
-    def get_KG(self):
+    def to_KG(self):
         return KnowledgeGraph(self.df)
 
     def get_features(self, feature_type):
