@@ -10,7 +10,7 @@ kg_columns = [
     'relation', 'display_relation',
     'x_id', 'x_type', 'x_name', 'x_source',
     'y_id', 'y_type', 'y_name', 'y_source'
-],
+]
 
 
 class KnowledgeGraph:
