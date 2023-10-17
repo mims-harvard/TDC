@@ -26,7 +26,7 @@ class KnowledgeGraph:
     def run_query(self, query):
         """build subgraph using given query"""
         self.df_raw = self.df
-        self.df = self.df.query(query)
+        self.df = self.df.query(query).reset_index(drop=True)
 
     def get_nodes_by_source(self, source):
         # extract x nodes
