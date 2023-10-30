@@ -9,7 +9,7 @@ import numpy as np
 import warnings
 
 from ..utils import general_load
-from ..knowledge_graph import KnowledgeGraph
+from ..utils.knowledge_graph import KnowledgeGraph
 
 warnings.filterwarnings("ignore")
 

@@ -1,9 +1,7 @@
 """A python module to build, handle, explore, and manipulate knowledge graphs.
-This is mimicking __PrimeKG__'s pandas dataframe format
 """
 
 import pandas as pd
-
 from copy import copy
 
 kg_columns = [
