@@ -14,11 +14,12 @@ from ..utils.knowledge_graph import KnowledgeGraph
 warnings.filterwarnings("ignore")
 
 class PrimeKG:
-    """PrimeKG data loader class to load the knowledge graph with additional support functions."""
+    """PrimeKG data loader class to load the knowledge graph with additional support functions.
+    """
 
     def __init__(self, path="./data"):
         """load the KG to the specified path"""
-        self.df = general_load("primekg", path, ",")
+        self.KG = KnowledgeGraph(df=general_load("primekg", path, ","))
         self.path = path
 
     def get_data(self):
@@ -28,14 +29,11 @@ class PrimeKG:
         import networkx as nx
 
         G = nx.Graph()
-        for i in self.df.relation.unique():
+        for i in self.KG.df.relation.unique():
             G.add_edges_from(
-                self.df[self.df.relation == i][["x_id", "y_id"]].values, relation=i
+                self.KG.df[self.df.relation == i][["x_id", "y_id"]].values, relation=i
             )
         return G
-
-    def to_KG(self):
-        return KnowledgeGraph(self.df)
 
     def get_features(self, feature_type):
         if feature_type not in ["drug", "disease"]:
@@ -43,7 +41,7 @@ class PrimeKG:
         return general_load("primekg_" + feature_type + "_feature", self.path, "\t")
 
     def get_node_list(self, node_type):
-        df = self.df
+        df = self.KG.df
         return np.unique(
             df[(df.x_type == node_type)].x_id.unique().tolist()
             + df[(df.y_type == node_type)].y_id.unique().tolist()
