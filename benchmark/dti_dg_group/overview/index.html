@@ -10,9 +10,9 @@
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Drug Target Domain Generalization Benchmark Group | TDC</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.3" />
 <meta property="og:title" content="Drug Target Domain Generalization Benchmark Group" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
@@ -20,8 +20,11 @@
 <link rel="canonical" href="http://localhost:4000/benchmark/dti_dg_group/overview/" />
 <meta property="og:url" content="http://localhost:4000/benchmark/dti_dg_group/overview/" />
 <meta property="og:site_name" content="TDC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Drug Target Domain Generalization Benchmark Group" />
 <script type="application/ld+json">
-{"headline":"Drug Target Domain Generalization Benchmark Group","url":"http://localhost:4000/benchmark/dti_dg_group/overview/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Drug Target Domain Generalization Benchmark Group","url":"http://localhost:4000/benchmark/dti_dg_group/overview/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -212,7 +215,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">BenchmarkGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">BenchmarkGroup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DTI_DG_Group'</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
-<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'BindingDB_Patent'</span><span class="p">)</span>
+<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'BindingDB_Patent'</span><span class="p">)</span>
 
 <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
@@ -221,7 +224,7 @@
 <span class="c1">## --- train your model --- ##
 </span>
 <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_test</span>
-<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard. </p>

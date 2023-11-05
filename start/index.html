@@ -10,9 +10,9 @@
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Quick Start | TDC</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.3" />
 <meta property="og:title" content="Quick Start" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
@@ -20,8 +20,11 @@
 <link rel="canonical" href="http://localhost:4000/start/" />
 <meta property="og:url" content="http://localhost:4000/start/" />
 <meta property="og:site_name" content="TDC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Quick Start" />
 <script type="application/ld+json">
-{"headline":"Quick Start","url":"http://localhost:4000/start/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Quick Start","url":"http://localhost:4000/start/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -260,8 +263,8 @@ The Commons curates benchmarks for key therapeutic tasks. Every benchmark has a 
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 <p class="is-size-5"> The variable <code>df</code> is a Pandas object holding the entire dataset. By default, the variable <code>splits</code> is a dictionary with keys <code>train</code>, <code>val</code>, and <code>test</code> whose values are all Pandas DataFrames with Drug IDs, SMILES strings and labels. For detailed information about outputs, see <a href="/single_pred_tasks/adme/#caco-2-cell-effective-permeability-wang-et-al">Datasets documentation.</a> </p>
 

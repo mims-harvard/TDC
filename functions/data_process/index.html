@@ -10,9 +10,9 @@
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Data Processing | TDC</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.3" />
 <meta property="og:title" content="Data Processing" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
@@ -20,8 +20,11 @@
 <link rel="canonical" href="http://localhost:4000/functions/data_process/" />
 <meta property="og:url" content="http://localhost:4000/functions/data_process/" />
 <meta property="og:site_name" content="TDC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Data Processing" />
 <script type="application/ld+json">
-{"headline":"Data Processing","url":"http://localhost:4000/functions/data_process/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Data Processing","url":"http://localhost:4000/functions/data_process/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -229,14 +232,14 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolConvert</span>
 <span class="n">converter</span> <span class="o">=</span> <span class="n">MolConvert</span><span class="p">(</span><span class="n">src</span> <span class="o">=</span> <span class="s">'SMILES'</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="s">'Graph2D'</span><span class="p">)</span>
-<span class="n">converter</span><span class="p">([</span><span class="s">'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)</span><span class="err">\</span><span class="s">C(=O)OC'</span><span class="p">,</span>
+<span class="n">converter</span><span class="p">([</span><span class="s">'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC'</span><span class="p">,</span>
        <span class="s">'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'</span><span class="p">])</span>
 </code></pre></div></div>
 
 <p class="is-size-6"> <strong>Note</strong>: to check the eligible destination format for each source type, you can type: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolConvert</span>
-<span class="n">MolConvert</span><span class="o">.</span><span class="n">eligible_format</span><span class="p">()</span>
+<span class="n">MolConvert</span><span class="p">.</span><span class="n">eligible_format</span><span class="p">()</span>
 <span class="c1"># MolConvert.eligible_format(src = 'SDF') for specific source type
 </span></code></pre></div></div>
 <p class="is-size-6"> While for 3D the destination format does not include most of 2D ones, you can also easily convert to any 2D format by: </p>
@@ -276,7 +279,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">label_distribution</span><span class="p">()</span>
+<span class="n">data</span><span class="p">.</span><span class="n">label_distribution</span><span class="p">()</span>
 </code></pre></div></div>
 
 <hr />
@@ -294,7 +297,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">binarize</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="n">binarize</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p class="is-size-6"> <strong>Note</strong>: you can use <code>data.label_distribution()</code> to visualize the label distribution and decide on the threshold. </p>
@@ -309,7 +312,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">convert_to_log</span><span class="p">(</span><span class="n">form</span> <span class="o">=</span> <span class="s">'binding'</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="n">convert_to_log</span><span class="p">(</span><span class="n">form</span> <span class="o">=</span> <span class="s">'binding'</span><span class="p">)</span>
 <span class="c1"># convert back: data.convert_from_log(form = 'binding')
 </span></code></pre></div></div>
 
@@ -317,7 +320,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">convert_to_log</span><span class="p">(</span><span class="n">form</span> <span class="o">=</span> <span class="s">'standard'</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="n">convert_to_log</span><span class="p">(</span><span class="n">form</span> <span class="o">=</span> <span class="s">'standard'</span><span class="p">)</span>
 <span class="c1"># convert back: data.convert_from_log(form = 'standard')
 </span></code></pre></div></div>
 
@@ -343,7 +346,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">GDA</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">GDA</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DisGeNET'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+<span class="n">data</span><span class="p">.</span><span class="n">print_stats</span><span class="p">()</span>
 </code></pre></div></div>
 
 <hr />
@@ -361,7 +364,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">HTS</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'SARSCoV2_3CLPro_Diamond'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">balanced</span><span class="p">(</span><span class="n">oversample</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="n">balanced</span><span class="p">(</span><span class="n">oversample</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </code></pre></div></div>
 
 <hr />
@@ -383,13 +386,13 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'edge_list'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'edge_list'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
 <span class="c1"># output: {'edge_list': array of shape (X, 2), 'neg_edges': array of shape (X, 2), 'split': {'train': df, 'valid': df, 'test': df}}
 </span>
-<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'dgl'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'dgl'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
 <span class="c1"># output: {'dgl_graph': the DGL graph object, 'index_to_entities': a dict map from ID in the data to node ID in the DGL object, 'split': {'train': df, 'valid': df, 'test': df}}
 </span>
-<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'pyg'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'pyg'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
 <span class="c1"># output: {'pyg_graph': the PyG graph object, 'index_to_entities': a dict map from ID in the data to node ID in the PyG object, 'split': {'train': df, 'valid': df, 'test': df}}
 </span></code></pre></div></div>
 
@@ -407,7 +410,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">PPI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">PPI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HuRI'</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 
 <hr />

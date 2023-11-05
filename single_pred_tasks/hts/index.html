@@ -10,9 +10,9 @@
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>High-throughput Screening | TDC</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.3" />
 <meta property="og:title" content="High-throughput Screening" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
@@ -20,8 +20,11 @@
 <link rel="canonical" href="http://localhost:4000/single_pred_tasks/hts/" />
 <meta property="og:url" content="http://localhost:4000/single_pred_tasks/hts/" />
 <meta property="og:site_name" content="TDC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="High-throughput Screening" />
 <script type="application/ld+json">
-{"headline":"High-throughput Screening","url":"http://localhost:4000/single_pred_tasks/hts/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"High-throughput Screening","url":"http://localhost:4000/single_pred_tasks/hts/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -275,7 +278,7 @@ High throughput screening is a critical component of small-molecule drug discove
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">HTS</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'SARSCoV2_Vitro_Touret'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -300,7 +303,7 @@ High throughput screening is a critical component of small-molecule drug discove
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">HTS</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'SARSCoV2_3CLPro_Diamond'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -325,7 +328,7 @@ High throughput screening is a critical component of small-molecule drug discove
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">HTS</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HIV'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -433,48 +436,48 @@ Features of the datasets: (1) At least 150 confirmed active compounds present; (
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">HTS</span>
 <span class="c1"># Orexin1 Receptor
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'orexin1_receptor_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 
 <span class="c1"># M1 Muscarinic Receptor Agonists
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'m1_muscarinic_receptor_agonists_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 
 <span class="c1"># M1 Muscarinic Receptor Antagonists
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'m1_muscarinic_receptor_antagonists_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 
 <span class="c1"># Potassium Ion Channel Kir2.1 
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'potassium_ion_channel_kir2.1_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 
 <span class="c1"># KCNQ2 Potassium Channel
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'kcnq2_potassium_channel_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 
 <span class="c1"># Cav3 T-type Calcium Channels
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'cav3_t-type_calcium_channels_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 
 <span class="c1"># Choline Transporter
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'choline_transporter_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 
 <span class="c1"># Serine/Threonine Kinase 33
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'serine_threonine_kinase_33_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 
 <span class="c1"># Tyrosyl-DNA Phosphodiesterase
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'tyrosyl-dna_phosphodiesterase_butkiewicz'</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>

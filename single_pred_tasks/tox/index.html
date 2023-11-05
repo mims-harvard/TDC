@@ -10,9 +10,9 @@
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Toxicity | TDC</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.3" />
 <meta property="og:title" content="Toxicity" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
@@ -20,8 +20,11 @@
 <link rel="canonical" href="http://localhost:4000/single_pred_tasks/tox/" />
 <meta property="og:url" content="http://localhost:4000/single_pred_tasks/tox/" />
 <meta property="og:site_name" content="TDC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Toxicity" />
 <script type="application/ld+json">
-{"headline":"Toxicity","url":"http://localhost:4000/single_pred_tasks/tox/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Toxicity","url":"http://localhost:4000/single_pred_tasks/tox/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -284,7 +287,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'LD50_Zhu'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -308,7 +311,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'hERG'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -344,7 +347,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'herg_central'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -369,7 +372,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'hERG_Karim'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -392,7 +395,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'AMES'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -415,7 +418,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DILI'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -439,7 +442,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Skin Reaction'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -465,7 +468,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Carcinogens_Lagunin'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -499,7 +502,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Tox21'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -530,7 +533,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ToxCast'</span><span class="p">,</span> <span class="n">label_name</span> <span class="o">=</span> <span class="n">label_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
@@ -553,7 +556,7 @@ Toxicity is one of the primary causes of compound attrition. Study shows that ap
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Tox</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Tox</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ClinTox'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>

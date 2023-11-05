@@ -10,9 +10,9 @@
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Dataset Splits | TDC</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.3" />
 <meta property="og:title" content="Dataset Splits" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
@@ -20,8 +20,11 @@
 <link rel="canonical" href="http://localhost:4000/functions/data_split/" />
 <meta property="og:url" content="http://localhost:4000/functions/data_split/" />
 <meta property="og:site_name" content="TDC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Dataset Splits" />
 <script type="application/ld+json">
-{"headline":"Dataset Splits","url":"http://localhost:4000/functions/data_split/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Dataset Splits","url":"http://localhost:4000/functions/data_split/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -229,7 +232,7 @@ As the default TDC data format is Pandas DataFrame, it will return a dictionary 
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.X</span> <span class="kn">import</span> <span class="n">Y</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">Y</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="n">Z</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'random'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'random'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
 <span class="c1"># split: {'train': train dataframe, 'valid': valid dataframe, 'test': test dataframe}
 </span></code></pre></div></div>
 
@@ -247,7 +250,7 @@ We continue with brief description of different kinds of dataset splits provided
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'random'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'random'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h3 id="scaffold-split">Scaffold Split</h3>
@@ -258,7 +261,7 @@ We continue with brief description of different kinds of dataset splits provided
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'scaffold'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'scaffold'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h3 id="cold-start-split">Cold-Start Split</h3>
@@ -266,14 +269,14 @@ We continue with brief description of different kinds of dataset splits provided
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'cold_split'</span><span class="p">,</span> <span class="n">column_name</span> <span class="o">=</span> <span class="s">'Drug'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'cold_split'</span><span class="p">,</span> <span class="n">column_name</span> <span class="o">=</span> <span class="s">'Drug'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p class="is-size-6"> From <code>0.3.3</code>, you can now pass a list of columns such that training/validation/testing would have distinct entities for all entities in the column list. For example, if you want to split on both drug and cell line, you can now do: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DrugRes</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DrugRes</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'GDSC1'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'cold_split'</span><span class="p">,</span> <span class="n">column_name</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Drug_ID'</span><span class="p">,</span> <span class="s">'Cell Line_ID'</span><span class="p">])</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'cold_split'</span><span class="p">,</span> <span class="n">column_name</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Drug_ID'</span><span class="p">,</span> <span class="s">'Cell Line_ID'</span><span class="p">])</span>
 </code></pre></div></div>
 
 <h3 id="combination-split">Combination Split</h3>
@@ -284,7 +287,7 @@ We continue with brief description of different kinds of dataset splits provided
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DrugSyn</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">DrugSyn</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugComb'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'combination'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'combination'</span><span class="p">)</span>
 </code></pre></div></div>
 
 </div>

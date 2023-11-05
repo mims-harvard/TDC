@@ -10,9 +10,9 @@
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Leaderboard Guide | TDC</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.3" />
 <meta property="og:title" content="Leaderboard Guide" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
@@ -20,8 +20,11 @@
 <link rel="canonical" href="http://localhost:4000/benchmark/overview/" />
 <meta property="og:url" content="http://localhost:4000/benchmark/overview/" />
 <meta property="og:site_name" content="TDC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Leaderboard Guide" />
 <script type="application/ld+json">
-{"headline":"Leaderboard Guide","url":"http://localhost:4000/benchmark/overview/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Leaderboard Guide","url":"http://localhost:4000/benchmark/overview/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -183,12 +186,12 @@
 <span class="n">predictions_list</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
-    <span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span> 
+    <span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span> 
     <span class="c1"># all benchmark names in a benchmark group are stored in group.dataset_names
 </span>    <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
     <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
-    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
     
         <span class="c1"># --------------------------------------------- # 
 </span>        <span class="c1">#  Train your model using train, valid, test    #
@@ -196,9 +199,9 @@
 </span>        <span class="c1"># --------------------------------------------- #
 </span>        
     <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
-    <span class="n">predictions_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+    <span class="n">predictions_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 
-<span class="n">results</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
 <span class="c1"># {'caco2_wang': [6.328, 0.101]}
 </span></code></pre></div></div>
 
@@ -218,7 +221,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">admet_group</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">admet_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
-<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
 
 <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
@@ -227,13 +230,13 @@
 <span class="c1">## --- train your model --- ##
 </span>
 <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred</span>
-<span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<span class="n">group</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 <span class="c1"># {'caco2_wang': {'mae': 0.234}}
 </span></code></pre></div></div>
 
 <p class="is-size-5"> You can use <code>train_val</code> to construct training and validation sets as you see best fit. For example, you can (1) construct a customized training and validation set using the <code>train_val</code> or (2) use a <a href="https://tdcommons.ai/functions/data_split/">TDC utility function</a> to get data splits for different random seeds: </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p class="is-size-5"> Importantly, you must evaluate your model on the test set as specified by TDC to ensure fair comparison of models. To promote robust measurement of model performance, TDC requires at minimum five independent runs of the model to calculate average performance and standard deviation. Following is an example showing how to obtain five different train and validation splits: </p>
@@ -244,33 +247,33 @@
 
 <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
 
-    <span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
+    <span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
     
     <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
     <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
-    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
     
     <span class="c1">## --- train your model --- ##
 </span>        
     <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
-    <span class="n">predictions_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+    <span class="n">predictions_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 
-<span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
+<span class="n">group</span><span class="p">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
 <span class="c1"># {'caco2_wang': [6.328, 0.101]}
 </span></code></pre></div></div>
 
 <p class="is-size-5"> You can get a list of benchmarks included in the benchmark group as follows: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
-<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
 <span class="c1"># ['caco2_wang', 'hia_hou', ....]
 </span></code></pre></div></div>
 <p class="is-size-5"> Alternatively, the same can be achieved via: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">admet_group</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">admet_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
-<span class="n">group</span><span class="o">.</span><span class="n">dataset_names</span>
+<span class="n">group</span><span class="p">.</span><span class="n">dataset_names</span>
 <span class="c1"># ['caco2_wang', 'hia_hou', ....]
 </span></code></pre></div></div>
 
@@ -285,12 +288,12 @@
     <span class="k">for</span> <span class="n">benchmark</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
         <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
-        <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+        <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
         <span class="c1">## --- train your model --- ##
 </span>        <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
-    <span class="n">predictions_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+    <span class="n">predictions_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 
-<span class="n">group</span><span class="o">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
+<span class="n">group</span><span class="p">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
 <span class="c1"># {'caco2_wang': [6.328, 0.101], 'hia_hou': [0.5, 0.01], ...}
 </span></code></pre></div></div>
 <div class="column is-12">

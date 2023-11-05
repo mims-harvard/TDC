@@ -10,9 +10,9 @@
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Drug Combination Benchmark Group | TDC</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.9.3" />
 <meta property="og:title" content="Drug Combination Benchmark Group" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
@@ -20,8 +20,11 @@
 <link rel="canonical" href="http://localhost:4000/benchmark/drugcombo_group/overview/" />
 <meta property="og:url" content="http://localhost:4000/benchmark/drugcombo_group/overview/" />
 <meta property="og:site_name" content="TDC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Drug Combination Benchmark Group" />
 <script type="application/ld+json">
-{"headline":"Drug Combination Benchmark Group","url":"http://localhost:4000/benchmark/drugcombo_group/overview/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Drug Combination Benchmark Group","url":"http://localhost:4000/benchmark/drugcombo_group/overview/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -234,7 +237,7 @@
 <p class="is-size-5">To retrieve names of all benchmarks in this group, type the following:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
-<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'DrugCombo_Group'</span><span class="p">)</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'DrugCombo_Group'</span><span class="p">)</span>
 <span class="c1"># ['drugcomb_css', 'drugcomb_hsa', ...]
 </span></code></pre></div></div>
 
@@ -243,7 +246,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">drugcombo_group</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">drugcombo_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
 
-<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Drugcomb_CSS'</span><span class="p">)</span>
+<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Drugcomb_CSS'</span><span class="p">)</span>
 
 <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
@@ -252,7 +255,7 @@
 <span class="c1">## --- train your model --- ##
 </span>
 <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_test</span>
-<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 <span class="s">'''
 Note that the output includes the automatic evaluations across tissues:
