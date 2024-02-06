@@ -1,4 +1,4 @@
-rdkit-pypi
+rdkit
 fuzzywuzzy
 numpy
 pandas
