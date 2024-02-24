@@ -57,3 +57,6 @@ class TestBenchmarkGroup(unittest.TestCase):
 
         for my_group in self.group:
             self.assertTrue(my_group["name"] in results)
+
+if __name__ == "__main__":
+    unittest.main()
