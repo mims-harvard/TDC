@@ -17,4 +17,4 @@ dependencies:
   - pip:
     - cellxgene-census==1.10.2 
     - PyTDC==0.4.1
-    - rdkit=2023.9.5
+    - rdkit==2023.9.5
