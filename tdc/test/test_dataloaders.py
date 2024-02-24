@@ -41,3 +41,6 @@ class TestDataloader(unittest.TestCase):
     def tearDown(self):
         print(os.getcwd())
         shutil.rmtree(os.path.join(os.getcwd(), "data"))
+
+if __name__ == "__main__":
+    unittest.main()

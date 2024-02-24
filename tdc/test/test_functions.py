@@ -50,3 +50,6 @@ class TestFunctions(unittest.TestCase):
             shutil.rmtree(os.path.join(os.getcwd(), "data"))
         if os.path.exists(os.path.join(os.getcwd(), "oracle")):
             shutil.rmtree(os.path.join(os.getcwd(), "oracle"))
+
+if __name__ == "__main__":
+    unittest.main()

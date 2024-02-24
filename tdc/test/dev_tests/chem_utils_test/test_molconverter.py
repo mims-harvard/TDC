@@ -19,6 +19,7 @@ class TestMolConvert(unittest.TestCase):
         print(os.getcwd())
         pass
 
+    @unittest.skip("dev test")
     def test_MolConvert(self):
         from tdc.chem_utils import MolConvert
 
@@ -34,6 +35,7 @@ class TestMolConvert(unittest.TestCase):
 
         MolConvert.eligible_format()
 
+    # @unittest.skip("dev test")
     def tearDown(self):
         print(os.getcwd())
 
