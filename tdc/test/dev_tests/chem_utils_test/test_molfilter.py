@@ -26,7 +26,7 @@ class TestMolFilter(unittest.TestCase):
         filters = MolFilter(filters=["PAINS"], HBD=[0, 6])
         filters(["CCSc1ccccc1C(=O)Nc1onc2c1CCC2"])
 
-    @unittest.skip("dev test")
+    # @unittest.skip("dev test")
     def tearDown(self):
         print(os.getcwd())
 
