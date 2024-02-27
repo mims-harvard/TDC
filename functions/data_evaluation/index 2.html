@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Model Evaluation - TDC</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Model Evaluation | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Model Evaluation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Artificial intelligence foundation for therapeutic science" />
+<meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
+<link rel="canonical" href="http://localhost:4000/functions/data_evaluation/" />
+<meta property="og:url" content="http://localhost:4000/functions/data_evaluation/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"headline":"Model Evaluation","url":"http://localhost:4000/functions/data_evaluation/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+            <span><img src="/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/start/" class="navbar-item ">Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/functions/data_evaluation/" class="navbar-item is-active">Model Evaluation</a>
+                            
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
+                            
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
+                            
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
+                            
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">NeurIPS Paper</a>
+                <a href="https://www.nature.com/articles/s41589-022-01131-2" class="navbar-item">Nat Chem Bio Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-4-desktop is-4-tablet">
+                    
+
+<aside class="menu">
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/#" class=""><strong>Data Functions</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/fct_overview/" class="">Overview</a></li>
+                
+                
+                
+                <li><a href="/functions/data_evaluation/" class="is-active">Model Evaluation</a></li>
+                
+                
+                
+                <li><a href="/functions/data_split/" class="">Dataset Splits</a></li>
+                
+                
+                
+                <li><a href="/functions/data_process/" class="">Data Processing</a></li>
+                
+                
+                
+                <li><a href="/functions/oracles/" class="">Molecule Generation Oracles</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+</aside>
+                </div>
+                
+                <div class="column is-8">
+                    
+                    
+                    
+                    
+    
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Function Index</p>
+        <ul class="menu-list">
+  <li><a href="#regression-metrics">Regression Metrics</a>
+    <ul>
+      <li><a href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
+      <li><a href="#root-mean-squared-error-rmse">Root-Mean Squared Error (RMSE)</a></li>
+      <li><a href="#mean-absolute-error-mae">Mean Absolute Error (MAE)</a></li>
+      <li><a href="#coefficient-of-determination-r">Coefficient of Determination (R²)</a></li>
+      <li><a href="#pearson-correlation-coefficient-pcc">Pearson Correlation Coefficient (PCC)</a></li>
+      <li><a href="#spearman-correlation-coefficient">Spearman Correlation Coefficient</a></li>
+    </ul>
+  </li>
+  <li><a href="#binary-classification-metrics">Binary Classification Metrics</a>
+    <ul>
+      <li><a href="#area-under-receiver-operating-characteristic-curve-roc-auc">Area Under Receiver Operating Characteristic Curve (ROC-AUC)</a></li>
+      <li><a href="#area-under-the-precision-recall-curve-pr-auc">Area Under the Precision-Recall Curve (PR-AUC)</a></li>
+      <li><a href="#range-logauc">Range LogAUC</a></li>
+      <li><a href="#accuracy-metrics">Accuracy Metrics</a></li>
+      <li><a href="#precision">Precision</a></li>
+      <li><a href="#recall">Recall</a></li>
+      <li><a href="#f1-score">F1 Score</a></li>
+      <li><a href="#precision-at-recall-of-k">Precision at Recall of K</a></li>
+      <li><a href="#recall-at-precision-of-k">Recall at Precision of K</a></li>
+    </ul>
+  </li>
+  <li><a href="#multi-class-classification-metrics">Multi-class Classification Metrics</a>
+    <ul>
+      <li><a href="#micro-f1-micro-precision-micro-recall-accuracy">Micro-F1, Micro-Precision, Micro-Recall, Accuracy</a></li>
+      <li><a href="#macro-f1">Macro-F1</a></li>
+      <li><a href="#cohens-kappa-kappa">Cohen’s Kappa (Kappa)</a></li>
+    </ul>
+  </li>
+  <li><a href="#token-level-classification-metrics">Token-level Classification Metrics</a>
+    <ul>
+      <li><a href="#average-roc-auc">Average ROC-AUC</a></li>
+    </ul>
+  </li>
+  <li><a href="#molecule-generation-metrics">Molecule Generation Metrics</a>
+    <ul>
+      <li><a href="#diversity">Diversity</a></li>
+      <li><a href="#kl-divergence">KL divergence</a></li>
+      <li><a href="#frechet-chemnet-distance-fcd">Frechet ChemNet Distance (FCD)</a></li>
+      <li><a href="#novelty">Novelty</a></li>
+      <li><a href="#validity">Validity</a></li>
+      <li><a href="#uniqueness">Uniqueness</a></li>
+      <li><a href="#rmsd">RMSD</a></li>
+      <li><a href="#kabsch-rmsd">Kabsch-RMSD</a></li>
+    </ul>
+  </li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h2 id="regression-metrics">Regression Metrics</h2>
+
+<h3 id="mean-squared-error-mse">Mean Squared Error (MSE)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The mean square error measures the averages of the squares of the errors between the true value and the predicted value. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the MSE value.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MSE'</span><span class="p">)</span>
+<span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.1
+</span></code></pre></div></div>
+
+<h3 id="root-mean-squared-error-rmse">Root-Mean Squared Error (RMSE)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The root mean square error measures the square root of MSE. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the RMSE value.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'RMSE'</span><span class="p">)</span>
+<span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.31
+</span></code></pre></div></div>
+
+<h3 id="mean-absolute-error-mae">Mean Absolute Error (MAE)</h3>
+<p class="is-size-6">  <strong> Description: </strong> The mean absolute error measures the averages of the absolute value of the errors between the true value and the predicted value. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the MAE value.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MAE'</span><span class="p">)</span>
+<span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.1
+</span></code></pre></div></div>
+
+<h3 id="coefficient-of-determination-r">Coefficient of Determination (R²)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The R² measures the amount of associations between the true values and the predicted values. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the R² score.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'R2'</span><span class="p">)</span>
+<span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="pearson-correlation-coefficient-pcc">Pearson Correlation Coefficient (PCC)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The PCC measures the amount of linear correlations between the true values and the predicted values. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the PCC score.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PCC'</span><span class="p">)</span>
+<span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="spearman-correlation-coefficient">Spearman Correlation Coefficient</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The Spearman Correlation Coefficient is a nonparametric measure of monotonicity of relationship between the true values and the predicted values. It takes in a list/array of true values <code>y_true</code> and a list/array of predicted values <code>y_pred</code>, and outputs the spearman score.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Spearman'</span><span class="p">)</span>
+<span class="c1"># y_true: [0.8, 0.7, ...]; y_pred: [0.75, 0.73, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="binary-classification-metrics">Binary Classification Metrics</h2>
+
+<h3 id="area-under-receiver-operating-characteristic-curve-roc-auc">Area Under Receiver Operating Characteristic Curve (ROC-AUC)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The ROC-AUC measures the area under the ROC curve which is plotting the true positive and false positive at various threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code>, and outputs the ROC-AUC score.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ROC-AUC'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.88
+</span></code></pre></div></div>
+
+<h3 id="area-under-the-precision-recall-curve-pr-auc">Area Under the Precision-Recall Curve (PR-AUC)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The PR-AUC measures the area under the precision-recall curve which is plotting the precision and recall at various threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code>, and outputs the PR-AUC score.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PR-AUC'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.88
+</span></code></pre></div></div>
+
+<h3 id="range-logauc">Range LogAUC</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> In a realistic setting, only a small percentage of samples can be selected for experimental tests in consideration of cost. This means only molecules with very high predicted score can be worth testing, i.e., the decision threshold is high. And the high decision threshold corresponds to the left side of the ROC curve, i.e., those FPRs with small values. Also, because the threshold cannot be predetermined, the area under the curve is used to consolidate all possible thresholds within a certain FPR range. Finally, the logarithm is used to bias smaller FPRs. See [1] for reference.</p>
+
+<p class="is-size-6">Default range: [0.001, 0.1]. The higher the logAUC[0.001, 0.1], the better the performance. A perfect classifer gets a logAUC[0.001, 0.1] ) of 1, while a random classifer gets a logAUC[0.001, 0.1] ) of around 0.0215 (See [2]) </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'range_logAUC'</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.0215
+</span></code></pre></div></div>
+
+<p class="is-size-6"> <strong> References: </strong> </p>
+
+<p>[1] Mysinger, M.M. and B.K. Shoichet, Rapid Context-Dependent Ligand Desolvation in Molecular Docking. Journal of Chemical Information and Modeling, 2010. 50(9): p. 1561-1573.</p>
+
+<p>[2] Mendenhall, J. and J. Meiler, Improving quantitative structure–activity relationship models using Artificial Neural Networks trained with dropout. Journal of computer-aided molecular design, 2016. 30(2): p. 177-189.</p>
+
+<p class="is-size-6"> <strong> Contributed by Yunchao Liu.</strong> </p>
+
+<hr />
+
+<h3 id="accuracy-metrics">Accuracy Metrics</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The accuracy calculates the fraction of correct prediction at a threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the accuracy score. The default of threshold value is 0.5. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Accuracy'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="precision">Precision</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The precision calculates the fraction of correctly predicted positive instance out of the total predicted positive values at a threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the precision score. The default of threshold value is 0.5. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Precision'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="recall">Recall</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The recall calculates the fraction of correctly predicted positive instance out of all the positive instances at a threshold. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the recall score. The default of threshold value is 0.5. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Recall'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="f1-score">F1 Score</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The F1 is the harmonic mean of recall and precision. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the recall score. The default of threshold value is 0.5. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'F1'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="precision-at-recall-of-k">Precision at Recall of K</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> At some realistic settings for retrieval tasks, it is important to have high precision given a high recall rate for increasing the precision in the retrieved positive set while retrieve large proportions of positive data. This metric calculates the precision value at the minimum threshold where recall has K. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the PR@K score. The default of threshold value is 0.9. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PR@K'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="recall-at-precision-of-k">Recall at Precision of K</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> At some realistic settings for retrieval tasks, it is important to have high recall given a high precision rate to prevent false alarms. This metric calculates the recall value at the minimum threshold where precision has K. It takes in a list/array of binary true values <code>y_true</code> and a list/array of real-valued predicted scores <code>y_pred</code> and a threshold value <code>thr</code>, and outputs the RP@K score. The default of threshold value is 0.9. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'RP@K'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 0, ...]; y_pred: [0.75, 0.23, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="multi-class-classification-metrics">Multi-class Classification Metrics</h2>
+
+<h3 id="micro-f1-micro-precision-micro-recall-accuracy">Micro-F1, Micro-Precision, Micro-Recall, Accuracy</h3>
+<p class="is-size-6">  <strong> Description: </strong> The micro-F1 in multi-class prediction is the same as micro-precision, micro-recall and accuracy. It calculates the fraction of correct prediction. It takes in a list/array of true integer label index <code>y_true</code> and a list/array of predicted integer label index <code>y_pred</code>, and outputs the score. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MicroF1'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 3, ...]; y_pred: [1, 2, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<h3 id="macro-f1">Macro-F1</h3>
+<p class="is-size-6">  <strong> Description: </strong> The macro-F1 calculates the fraction of correct prediction for each label and then takes the unweighted average. This is useful when the label distribution is highly imbalanced and one wants to test the performance on low-data labels. It takes in a list/array of true integer label index <code>y_true</code> and a list/array of predicted integer label index <code>y_pred</code>, and outputs the score. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'MacroF1'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 3, ...]; y_pred: [1, 2, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.5
+</span></code></pre></div></div>
+
+<h3 id="cohens-kappa-kappa">Cohen’s Kappa (Kappa)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The Kappa score calculates the level of agreement between the prediction and the true labels. It takes in a list/array of true integer label index <code>y_true</code> and a list/array of predicted integer label index <code>y_pred</code>, and outputs the Kappa score. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Kappa'</span><span class="p">)</span>
+<span class="c1"># y_true: [1, 3, ...]; y_pred: [1, 2, ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.5
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="token-level-classification-metrics">Token-level Classification Metrics</h2>
+
+<h3 id="average-roc-auc">Average ROC-AUC</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> The averages ROC-AUC first calculates ROC-AUC score between the sequence of 1/0 true labels and the sequence of prediction labels for every instance. Then, it takes the average of all the instances' ROC-AUC scores. It takes in a list of list/array of true integer label index for every instance <code>y_true</code> and a list of list/array of predicted integer label index for every instance <code>y_pred</code>, and outputs the average ROC-AUC score. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Avg-ROC-AUC'</span><span class="p">)</span>
+<span class="c1"># y_true: [[0, 1, ...], [1, 1, ...], ...]; y_pred: [[0.1, 0.8, ...], [0.9, 0.89, ...], ...]
+</span><span class="n">score</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="c1"># score: 0.8
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="molecule-generation-metrics">Molecule Generation Metrics</h2>
+
+<h3 id="diversity">Diversity</h3>
+
+<p class="is-size-6">  <strong> Description: </strong>The diversity of a set of molecules is defined as the average pairwise Tanimoto distance between the Morgan fingerprints.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Diversity'</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="p">([</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCc2c(sc(NC(=O)c3ccco3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://arxiv.org/abs/1708.08227"> Benhenda, Mostapha. “ChemGAN challenge for drug discovery: can AI reproduce natural chemical diversity?.” arXiv preprint arXiv:1708.08227 (2017).</a></p>
+
+<hr />
+
+<h3 id="kl-divergence">KL divergence</h3>
+
+<p class="is-size-6">  <strong> Description: </strong>  KL divergence between the probability distributions of a variety of physicochemical descriptors for the training set and a set of generated molecules. Models able to capture the distributions of molecules in the training set will lead to small KL divergence values. To increase diversity, we want high KL.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'KL_Divergence'</span><span class="p">)</span>
+<span class="n">generated</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">]</span>
+<span class="n">training</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCc2c(sc(NC(=O)c3ccco3)c2C(N)=O)C1'</span><span class="p">]</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">training</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
+<h3 id="frechet-chemnet-distance-fcd">Frechet ChemNet Distance (FCD)</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> FCD first takes the means and covariances of the activations of the penultimate layer of ChemNet are calculated for the reference set and for the set of generated molecules. The FCD is then calculated as the Frechet distance for both pairs of values. Similar molecule distributions are characterized by low FCD values.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'FCD_Distance'</span><span class="p">)</span>
+<span class="n">generated</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">]</span>
+<span class="n">training</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCc2c(sc(NC(=O)c3ccco3)c2C(N)=O)C1'</span><span class="p">]</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">training</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.8b00839"> Brown, Nathan, et al. “GuacaMol: benchmarking models for de novo molecular design.” Journal of chemical information and modeling 59.3 (2019): 1096-1108. </a></p>
+
+<hr />
+
+<h3 id="novelty">Novelty</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> Novelty is the fraction of the generated molecules that are not present in the training set.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Novelty'</span><span class="p">)</span>
+<span class="n">generated</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">]</span>
+<span class="n">training</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCc2c(sc(NC(=O)c3ccco3)c2C(N)=O)C1'</span><span class="p">]</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">training</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
+
+<hr />
+
+<h3 id="validity">Validity</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> Validity is calculated using RDKit’s molecular structure parser that checks atoms’ valency and consistency of bonds in aromatic rings.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Validity'</span><span class="p">)</span>
+<span class="n">generated</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">]</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
+
+<hr />
+
+<h3 id="uniqueness">Uniqueness</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> Uniqueness measures how often a model is able to generate duplicated molecules. If that is the case, the uniqueness is low and vice versa. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Uniqueness'</span><span class="p">)</span>
+<span class="n">generated</span> <span class="o">=</span> <span class="p">[</span><span class="s">'CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1'</span><span class="p">,</span> \
+            <span class="s">'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1'</span><span class="p">,</span> \
+            <span class="s">'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'</span><span class="p">]</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://arxiv.org/abs/1811.12823">[1] Polykovskiy et al. “Molecular Sets (MOSES): A Benchmarking Platform for Molecular Generation Models.”, Frontiers in Pharmacology. (2020). </a></p>
+
+<hr />
+
+<h3 id="rmsd">RMSD</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> RMSD measures the average distance between the atoms of two structures. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'rmsd'</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">structure1</span><span class="p">,</span> <span class="n">structure2</span><span class="p">)</span> <span class="c1"># structures of shape [N particles, 3]
+</span></code></pre></div></div>
+<hr />
+
+<h3 id="kabsch-rmsd">Kabsch-RMSD</h3>
+
+<p class="is-size-6">  <strong> Description: </strong> Kabsch-RMSD measures the average distance between the atoms of two structures after superimposing by the Kabsch algorithm [1]. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'kabsch_rmsd'</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">structure1</span><span class="p">,</span> <span class="n">structure2</span><span class="p">)</span> <span class="c1"># structures of shape [N particles, 3]
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="http://scripts.iucr.org/cgi-bin/paper?S0567739476001873">[1]  Kabsch, W., 1976. A solution for the best rotation to relate two sets of vectors. Acta Crystallographica Section A: Crystal Physics, Diffraction, Theoretical and General Crystallography, 32(5), pp.922-923
+ </a></p>
+
+<hr />
+
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+

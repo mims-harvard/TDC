@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DRD3 Generated SMILES - TDC</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>DRD3 Generated SMILES | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="DRD3 Generated SMILES" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Artificial intelligence foundation for therapeutic science" />
+<meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
+<link rel="canonical" href="http://localhost:4000/benchmark/docking_group/smiles/drd3/gcpn_smiles/" />
+<meta property="og:url" content="http://localhost:4000/benchmark/docking_group/smiles/drd3/gcpn_smiles/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"headline":"DRD3 Generated SMILES","url":"http://localhost:4000/benchmark/docking_group/smiles/drd3/gcpn_smiles/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+            <span><img src="/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/start/" class="navbar-item ">Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
+                            
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
+                            
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
+                            
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">NeurIPS Paper</a>
+                <a href="https://www.nature.com/articles/s41589-022-01131-2" class="navbar-item">Nat Chem Bio Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-12">
+                    
+                    
+                    
+                    
+    
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Number of Maximum Calls</p>
+        <ul class="menu-list">
+  <li><a href="#gcpn-100-maximum-calls-top-generated-molecules">GCPN 100 Maximum Calls Top Generated Molecules</a></li>
+  <li><a href="#gcpn-500-maximum-calls-top-generated-molecules">GCPN 500 Maximum Calls Top Generated Molecules</a></li>
+  <li><a href="#gcpn-1000-maximum-calls-top-generated-molecules">GCPN 1000 Maximum Calls Top Generated Molecules</a></li>
+  <li><a href="#gcpn-5000-maximum-calls-top-generated-molecules">GCPN 5000 Maximum Calls Top Generated Molecules</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h1 id="generated-molecules-for-drd3-docking-leaderboard---gcpn">Generated Molecules for DRD3 Docking Leaderboard - GCPN</h1>
+<h3 id="gcpn-100-maximum-calls-top-generated-molecules">GCPN 100 Maximum Calls Top Generated Molecules</h3>
+
+<p><b> <i class="fas fa-long-arrow-alt-left"></i> <a href="/benchmark/docking_group/drd3"> Go Back To Leaderboard</a> </b>
+<img src="/benchmark/docking_group/smiles/drd3/img/GCPN_100.png" /></p>
+
+<h3 id="gcpn-500-maximum-calls-top-generated-molecules">GCPN 500 Maximum Calls Top Generated Molecules</h3>
+
+<p><b> <i class="fas fa-long-arrow-alt-left"></i> <a href="/benchmark/docking_group/drd3"> Go Back To Leaderboard</a> </b>
+<img src="/benchmark/docking_group/smiles/drd3/img/GCPN_500.png" /></p>
+
+<h3 id="gcpn-1000-maximum-calls-top-generated-molecules">GCPN 1000 Maximum Calls Top Generated Molecules</h3>
+
+<p><b> <i class="fas fa-long-arrow-alt-left"></i> <a href="/benchmark/docking_group/drd3"> Go Back To Leaderboard</a> </b>
+<img src="/benchmark/docking_group/smiles/drd3/img/GCPN_1000.png" /></p>
+
+<h3 id="gcpn-5000-maximum-calls-top-generated-molecules">GCPN 5000 Maximum Calls Top Generated Molecules</h3>
+
+<p><b> <i class="fas fa-long-arrow-alt-left"></i> <a href="/benchmark/docking_group/drd3"> Go Back To Leaderboard</a> </b>
+<img src="/benchmark/docking_group/smiles/drd3/img/GCPN_5000.png" /></p>
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+

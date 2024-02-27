@@ -1,0 +1,869 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ADME - TDC</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ADME | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="ADME" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Artificial intelligence foundation for therapeutic science" />
+<meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
+<link rel="canonical" href="http://localhost:4000/single_pred_tasks/adme/" />
+<meta property="og:url" content="http://localhost:4000/single_pred_tasks/adme/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"headline":"ADME","url":"http://localhost:4000/single_pred_tasks/adme/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+            <span><img src="/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/start/" class="navbar-item ">Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
+                            
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
+                            
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
+                            
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">NeurIPS Paper</a>
+                <a href="https://www.nature.com/articles/s41589-022-01131-2" class="navbar-item">Nat Chem Bio Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-4-desktop is-4-tablet">
+                    
+
+<aside class="menu">
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/single_pred_tasks/overview/" class=""><strong>Single-instance Prediction Problem</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/single_pred_tasks/adme/" class="is-active"><code>ADME</code> Pharmaco-kinetics</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/tox/" class=""><code>Tox</code> Toxicity</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/hts/" class=""><code>HTS</code> High-Throughput Screening</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/qm/" class=""><code>QM</code> Quantum Mechanics</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/yields/" class=""><code>Yields</code> Reaction Yields Prediction</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/epitope/" class=""><code>Epitope</code> Epitope Prediction</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/develop/" class=""><code>Develop</code> Developability Prediction</a></li>
+                
+                
+                
+                <li><a href="/single_pred_tasks/CRISPROutcome/" class=""><code>CRISPROutcome</code> CRISPR Repair Prediction</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/overview/" class=""><strong>Others</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/multi_pred_tasks/overview/" class="">Multi-instance Prediction Problem</a></li>
+                
+                
+                
+                <li><a href="/generation_tasks/overview/" class="">Generation Problem</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+</aside>
+                </div>
+                
+                <div class="column is-8">
+                    
+                    
+                    
+                    
+    
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#absorption">Absorption</a>
+    <ul>
+      <li><a href="#caco-2-cell-effective-permeability-wang-et-al">Caco-2 (Cell Effective Permeability), Wang et al.</a></li>
+      <li><a href="#pampa-permeability-ncats">PAMPA Permeability, NCATS</a></li>
+      <li><a href="#hia-human-intestinal-absorption-hou-et-al">HIA (Human Intestinal Absorption), Hou et al.</a></li>
+      <li><a href="#pgp-p-glycoprotein-inhibition-broccatelli-et-al">Pgp (P-glycoprotein) Inhibition, Broccatelli et al.</a></li>
+      <li><a href="#bioavailability-ma-et-al">Bioavailability, Ma et al.</a></li>
+      <li><a href="#lipophilicity-astrazeneca">Lipophilicity, AstraZeneca</a></li>
+      <li><a href="#solubility-aqsoldb">Solubility, AqSolDB</a></li>
+      <li><a href="#hydration-free-energy-freesolv">Hydration Free Energy, FreeSolv</a></li>
+    </ul>
+  </li>
+  <li><a href="#distribution">Distribution</a>
+    <ul>
+      <li><a href="#bbb-blood-brain-barrier-martins-et-al">BBB (Blood-Brain Barrier), Martins et al.</a></li>
+      <li><a href="#ppbr-plasma-protein-binding-rate-astrazeneca">PPBR (Plasma Protein Binding Rate), AstraZeneca</a></li>
+      <li><a href="#vdss-volumn-of-distribution-at-steady-state-lombardo-et-al">VDss (Volumn of Distribution at steady state), Lombardo et al.</a></li>
+    </ul>
+  </li>
+  <li><a href="#metabolism">Metabolism</a>
+    <ul>
+      <li><a href="#cyp-p450-2c19-inhibition-veith-et-al">CYP P450 2C19 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp-p450-2d6-inhibition-veith-et-al">CYP P450 2D6 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp-p450-3a4-inhibition-veith-et-al">CYP P450 3A4 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp-p450-1a2-inhibition-veith-et-al">CYP P450 1A2 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp-p450-2c9-inhibition-veith-et-al">CYP P450 2C9 Inhibition, Veith et al.</a></li>
+      <li><a href="#cyp2c9-substrate-carbon-mangels-et-al">CYP2C9 Substrate, Carbon-Mangels et al.</a></li>
+      <li><a href="#cyp2d6-substrate-carbon-mangels-et-al">CYP2D6 Substrate, Carbon-Mangels et al.</a></li>
+      <li><a href="#cyp3a4-substrate-carbon-mangels-et-al">CYP3A4 Substrate, Carbon-Mangels et al.</a></li>
+    </ul>
+  </li>
+  <li><a href="#excretion">Excretion</a>
+    <ul>
+      <li><a href="#half-life-obach-et-al">Half Life, Obach et al.</a></li>
+      <li><a href="#clearance-astrazeneca">Clearance, AstraZeneca</a></li>
+    </ul>
+  </li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h1 id="adme-property-prediction-task-overview">ADME Property Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+A small-molecule drug is a chemical and it needs to travel from the site of administration (e.g., oral) to the site of action (e.g., a tissue) and then decomposes, exits the body. To do that safely and efficaciously, the chemical is required to have numerous ideal absorption, distribution, metabolism, and excretion (ADME) properties. This task aims to predict various kinds of ADME properties accurately given a drug candidate's structural information. </p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  Poor ADME profile is the most prominent reason of failure in clinical trials. Thus, an early and accurate ADME profiling during the discovery stage is a necessary condition for successful development of small-molecule candidate. </p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> In real-world discovery, the drug structures of interest evolve over time. Thus, ADME prediction requires a model to generalize to a set of unseen drugs that are structurally distant to the known drug set. While time information is usually unavailable for many datasets, one way to approximate the similar effect is via scaffold split, where it forces training and test set have distant molecular structures. </p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong>Efficacy and safety - lead development and optimization. </p>
+
+</div>
+
+<h2 id="absorption">Absorption</h2>
+
+<p class="is-size-4"> Absorption measures how a drug travels from the site of administration to site of action.  </p>
+<hr />
+
+<h3 id="caco-2-cell-effective-permeability-wang-et-al">Caco-2 (Cell Effective Permeability), Wang et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The human colon epithelial cancer cell line, Caco-2, is used as an in vitro model to simulate the human intestinal tissue. The experimental result on the rate of drug passing through the Caco-2 cells can approximate the rate at which the drug permeates through the human intestinal tissue. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the Caco-2 cell effective permeability. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 906 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/27018227/">[1] Wang, NN et al, ADME Properties Evaluation in Drug Discovery: Prediction of Caco-2 Cell Permeability Using a Combination of NSGA-II and Boosting, Journal of Chemical Information and Modeling 2016 56 (4), 763-773</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="pampa-permeability-ncats">PAMPA Permeability, NCATS</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> PAMPA (parallel artificial membrane permeability assay) is a commonly employed assay to evaluate drug permeability across the cellular membrane. PAMPA is a non-cell-based, low-cost and high-throughput alternative to cellular models. Although PAMPA does not model active and efflux transporters, it still provides permeability values that are useful for absorption prediction because the majority of drugs are absorbed by passive diffusion through the membrane. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a compound's SMILES string, predict whether it is has high permeability (1) or low-to-moderate permeability (0) in PAMPA assay. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong>  NCATS set - 2035 compounds; Approved drugs set - 142 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PAMPA_NCATS'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> Note: </strong> If you want to obtain an independent validation set with market approved drugs, you can do: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_approved_set</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://journals.sagepub.com/doi/abs/10.1177/24725552211017520">[1] Siramshetty, V.B., Shah, P., et al. “Validating ADME QSAR Models Using Marketed Drugs.” SLAS Discovery 2021 Dec;26(10):1326-1336. doi: 10.1177/24725552211017520.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="hia-human-intestinal-absorption-hou-et-al">HIA (Human Intestinal Absorption), Hou et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> When a drug is orally administered, it needs to be absorbed from the human gastrointestinal system into the bloodstream of the human body. This ability of absorption is called human intestinal absorption (HIA) and it is crucial for a drug to be delivered to the target. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary classification. Given a drug SMILES string, predict the activity of HIA. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 578 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HIA_Hou'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/17238266/">[1] Hou T et al. ADME evaluation in drug discovery. 7. Prediction of oral absorption by correlation and classification. J Chem Inf Model. 2007;47(1):208-218. </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="pgp-p-glycoprotein-inhibition-broccatelli-et-al">Pgp (P-glycoprotein) Inhibition, Broccatelli et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> P-glycoprotein (Pgp) is an ABC transporter protein involved in intestinal absorption, drug metabolism, and brain penetration, and its inhibition can seriously alter a drug's bioavailability and safety. In addition, inhibitors of Pgp can be used to overcome multidrug resistance. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>  Binary classification. Given a drug SMILES string, predict the activity of Pgp inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,212 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Pgp_Broccatelli'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/jm101421d">[1] Broccatelli et al., A Novel Approach for Predicting P-Glycoprotein (ABCB1) Inhibition Using Molecular Interaction Fields. Journal of Medicinal Chemistry, 2011 54 (6), 1740-1751 </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="bioavailability-ma-et-al">Bioavailability, Ma et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Oral bioavailability is defined as “the rate and extent to which the active ingredient or active moiety is absorbed from a drug product and becomes available at the site of action”. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of bioavailability. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 640 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Bioavailability_Ma'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.1016/j.jpba.2008.03.023">[1] Ma, Chang-Ying, et al. “Prediction models of human plasma protein binding rate and oral bioavailability derived by using GA–CG–SVM method.” Journal of pharmaceutical and biomedical analysis 47.4-5 (2008): 677-682. </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="lipophilicity-astrazeneca">Lipophilicity, AstraZeneca</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Lipophilicity measures the ability of a drug to dissolve in a lipid (e.g. fats, oils) environment. High lipophilicity often leads to high rate of metabolism, poor solubility, high turn-over, and low absorption. From MoleculeNet. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of lipophilicity. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 4,200 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Lipophilicity_AstraZeneca'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.6019/chembl3301361">[1] AstraZeneca. Experimental in vitro Dmpk and physicochemical data on a set of publicly disclosed compounds (2016) </a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="solubility-aqsoldb">Solubility, AqSolDB</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Aqeuous solubility measures a drug's ability to dissolve in water. Poor water solubility could lead to slow drug absorptions, inadequate bioavailablity and even induce toxicity. More than 40% of new chemical entities are not soluble. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of solubility. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 9,982 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Solubility_AqSolDB'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.1038/s41597-019-0151-1">[1] Sorkun, M.C., Khetan, A. &amp; Er, S. AqSolDB, a curated reference set of aqueous solubility and 2D descriptors for a diverse set of compounds. Sci Data 6, 143 (2019). </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="hydration-free-energy-freesolv">Hydration Free Energy, FreeSolv</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The Free Solvation Database, FreeSolv(SAMPL), provides experimental and calculated hydration free energy of small molecules in water. The calculated values are derived from alchemical free energy calculations using molecular dynamics simulations. From MoleculeNet. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the activity of hydration free energy.   </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 642 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HydrationFreeEnergy_FreeSolv'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/24928188/">[1] Mobley, David L., and J. Peter Guthrie. “FreeSolv: a database of experimental and calculated hydration free energies, with input files.” Journal of computer-aided molecular design 28.7 (2014): 711-720.</a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</p>
+
+<hr />
+
+<h2 id="distribution">Distribution</h2>
+
+<p class="is-size-4">Drug distribution refers to how drug moves to and from the various tissues of the body and the amount of drugs in the tissues.
+</p>
+
+<h3 id="bbb-blood-brain-barrier-martins-et-al">BBB (Blood-Brain Barrier), Martins et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> As a membrane separating circulating blood and brain extracellular fluid, the blood-brain barrier (BBB) is the protection layer that blocks most foreign drugs. Thus the ability of a drug to penetrate the barrier to deliver to the site of action forms a crucial challenge in development of drugs for central nervous system From MoleculeNet.</p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Binary classification. Given a drug SMILES string, predict the activity of BBB. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,975 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'BBB_Martins'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/22612593/">[1] Martins, Ines Filipa, et al. “A Bayesian approach to in silico blood-brain barrier penetration modeling.” Journal of chemical information and modeling 52.6 (2012): 1686-1697. </a></p>
+
+<p><a href="https://pubs.rsc.org/--/content/articlehtml/2018/sc/c7sc02664a">[2] Wu, Zhenqin, et al. “MoleculeNet: a benchmark for molecular machine learning.” Chemical science 9.2 (2018): 513-530.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="ppbr-plasma-protein-binding-rate-astrazeneca">PPBR (Plasma Protein Binding Rate), AstraZeneca</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The human plasma protein binding rate (PPBR) is expressed as the percentage of a drug bound to plasma proteins in the blood. This rate strongly affect a drug's efficiency of delivery. The less bound a drug is, the more efficiently it can traverse and diffuse to the site of actions. From a ChEMBL assay deposited by AstraZeneca.  </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the rate of PPBR.  </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,614 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PPBR_AZ'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> Note </strong>: [Started from 0.3.7] this dataset contains assay across five species. Across species, the PPBR would behave rather differently even for the same drug. Thus, in default, it only returns the homo sapiens subset. If you would like to retrieve other species, you can use the following code:  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="o">.</span><span class="n">get_other_species</span><span class="p">(</span><span class="s">'Rattus norvegicus'</span><span class="p">)</span>
+<span class="c1"># select from 'Canis lupus familiaris', 'Cavia porcellus', 'Homo sapiens', 'Mus musculus', 'Rattus norvegicus', 'all'
+</span></code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.6019/chembl3301361">[1] AstraZeneca. Experimental in vitro Dmpk and physicochemical data on a set of publicly disclosed compounds (2016) </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="vdss-volumn-of-distribution-at-steady-state-lombardo-et-al">VDss (Volumn of Distribution at steady state), Lombardo et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The volume of distribution at steady state (VDss) measures the degree of a drug's concentration in body tissue compared to concentration in blood. Higher VD indicates a higher distribution in the tissue and usually indicates the drug with high lipid solubility, low plasma protein binidng rate. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the volume of distributon. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,130 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'VDss_Lombardo'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.6b00044?casa_token=SQhDZjizB08AAAAA:zrP4aW5361rH880nm_vVroPqBxjZU8wy0Yb6a0cM7Qvap1aeLQSo0KS3n79wIW0xa64n3Z3V1-lBaQpN">[1] Lombardo, Franco, and Yankang Jing. “In silico prediction of volume of distribution in humans. Extensive data set and the exploration of linear and nonlinear methods coupled with molecular interaction fields descriptors.” Journal of Chemical Information and Modeling 56.10 (2016): 2042-2052. </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h2 id="metabolism">Metabolism</h2>
+<p class="is-size-4">Drug metabolism measures how specialized enzymatic systems breakdown the drugs and it determines the duration and intensity of a drug's action.
+ </p>
+
+<h3 id="cyp-p450-2c19-inhibition-veith-et-al">CYP P450 2C19 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are essential in the breakdown (metabolism) of various molecules and chemicals within cells. A drug that can inhibit these enzymes would mean poor metabolism to this drug and other drugs, which could lead to drug-drug interactions and adverse effects. Specifically, the CYP2C19 gene provides instructions for making an enzyme called the endoplasmic reticulum, which is involved in protein processing and transport.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP2C19 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 12,665 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2C19_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+<hr />
+
+<h3 id="cyp-p450-2d6-inhibition-veith-et-al">CYP P450 2D6 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, CYP2D6 is primarily expressed in the liver. It is also highly expressed in areas of the central nervous system, including the substantia nigra.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP2D6 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 13,130 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2D6_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="cyp-p450-3a4-inhibition-veith-et-al">CYP P450 3A4 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, CYP3A4 is an important enzyme in the body, mainly found in the liver and in the intestine. It oxidizes small foreign organic molecules (xenobiotics), such as toxins or drugs, so that they can be removed from the body.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP3A4 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 12,328 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP3A4_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="cyp-p450-1a2-inhibition-veith-et-al">CYP P450 1A2 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, CYP1A2 localizes to the endoplasmic reticulum and its expression is induced by some polycyclic aromatic hydrocarbons (PAHs), some of which are found in cigarette smoke. It is able to metabolize some PAHs to carcinogenic intermediates. Other xenobiotic substrates for this enzyme include caffeine, aflatoxin B1, and acetaminophen.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP1A2 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 12,579 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP1A2_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="cyp-p450-2c9-inhibition-veith-et-al">CYP P450 2C9 Inhibition, Veith et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> The CYP P450 genes are involved in the formation and breakdown (metabolism) of various molecules and chemicals within cells. Specifically, the CYP P450 2C9 plays a major role in the oxidation of both xenobiotic and endogenous compounds.	 </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict CYP2C9 inhibition. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 12,092 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2C9_Veith'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2783980/">[1] Veith, Henrike et al. “Comprehensive characterization of cytochrome P450 isozyme selectivity across chemical libraries.” Nature biotechnology vol. 27,11 (2009): 1050-5.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="cyp2c9-substrate-carbon-mangels-et-al">CYP2C9 Substrate, Carbon-Mangels et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> CYP P450 2C9 plays a major role in the oxidation of both xenobiotic and endogenous compounds. Substrates are drugs that are metabolized by the enzyme. TDC used a dataset from [1], which merged information on substrates and nonsubstrates from six publications. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict if it is a substrate to the enzyme. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 666 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2C9_Substrate_CarbonMangels'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/minf.201100069?casa_token=an2_FKO2WnMAAAAA:d-W7F_Ukq1ArtZoSaqh96zcwyAQlVtzc9IR12M9WltU8U0iJJW_BLINGNbC9qN7dk7mFmsNIy1bVcZdt">[1] Carbon‐Mangels, Miriam, and Michael C. Hutter. “Selecting relevant descriptors for classification by bayesian estimates: a comparison with decision trees and support vector machines approaches for disparate data sets.” Molecular informatics 30.10 (2011): 885-895.</a></p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci300367a?casa_token=9fEKYcMw5zoAAAAA:ZDPZ-e-M9RulemgBjAPNkSnWXlVCcPzkxNK9bX40Abz9o24NpitsXY0tizgDL5ekPiNtEPFSeOwwUTHG">[2] Cheng, Feixiong, et al. “admetSAR: a comprehensive source and free tool for assessment of chemical ADMET properties.” (2012): 3099-3105.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="cyp2d6-substrate-carbon-mangels-et-al">CYP2D6 Substrate, Carbon-Mangels et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> CYP2D6 is primarily expressed in the liver. It is also highly expressed in areas of the central nervous system, including the substantia nigra. TDC used a dataset from [1], which merged information on substrates and nonsubstrates from six publications. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict if it is a substrate to the enzyme. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 664 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP2D6_Substrate_CarbonMangels'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/minf.201100069?casa_token=an2_FKO2WnMAAAAA:d-W7F_Ukq1ArtZoSaqh96zcwyAQlVtzc9IR12M9WltU8U0iJJW_BLINGNbC9qN7dk7mFmsNIy1bVcZdt">[1] Carbon‐Mangels, Miriam, and Michael C. Hutter. “Selecting relevant descriptors for classification by bayesian estimates: a comparison with decision trees and support vector machines approaches for disparate data sets.” Molecular informatics 30.10 (2011): 885-895.</a></p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci300367a?casa_token=9fEKYcMw5zoAAAAA:ZDPZ-e-M9RulemgBjAPNkSnWXlVCcPzkxNK9bX40Abz9o24NpitsXY0tizgDL5ekPiNtEPFSeOwwUTHG">[2] Cheng, Feixiong, et al. “admetSAR: a comprehensive source and free tool for assessment of chemical ADMET properties.” (2012): 3099-3105.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="cyp3a4-substrate-carbon-mangels-et-al">CYP3A4 Substrate, Carbon-Mangels et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> CYP3A4 is an important enzyme in the body, mainly found in the liver and in the intestine. It oxidizes small foreign organic molecules (xenobiotics), such as toxins or drugs, so that they can be removed from the body. TDC used a dataset from [1], which merged information on substrates and nonsubstrates from six publications. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Binary Classification. Given a drug SMILES string, predict if it is a substrate to the enzyme. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 667 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'CYP3A4_Substrate_CarbonMangels'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/minf.201100069?casa_token=an2_FKO2WnMAAAAA:d-W7F_Ukq1ArtZoSaqh96zcwyAQlVtzc9IR12M9WltU8U0iJJW_BLINGNbC9qN7dk7mFmsNIy1bVcZdt">[1] Carbon‐Mangels, Miriam, and Michael C. Hutter. “Selecting relevant descriptors for classification by bayesian estimates: a comparison with decision trees and support vector machines approaches for disparate data sets.” Molecular informatics 30.10 (2011): 885-895.</a></p>
+
+<p><a href="https://pubs.acs.org/doi/abs/10.1021/ci300367a?casa_token=9fEKYcMw5zoAAAAA:ZDPZ-e-M9RulemgBjAPNkSnWXlVCcPzkxNK9bX40Abz9o24NpitsXY0tizgDL5ekPiNtEPFSeOwwUTHG">[2] Cheng, Feixiong, et al. “admetSAR: a comprehensive source and free tool for assessment of chemical ADMET properties.” (2012): 3099-3105.</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h2 id="excretion">Excretion</h2>
+<p class="is-size-4">Drug excretion is the removal of drugs from the body using various different routes of excretion, including urine, bile, sweat, saliva, tears, milk, and stool.
+ </p>
+
+<h3 id="half-life-obach-et-al">Half Life, Obach et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Half life of a drug is the duration for the concentration of the drug in the body to be reduced by half. It measures the duration of actions of a drug. This dataset is from [1] and we obtain the deposited version under CHEMBL assay 1614674. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong> Regression. Given a drug SMILES string, predict the half life duration. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 667 drugs. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Half_Life_Obach'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="http://dmd.aspetjournals.org/content/36/7/1385.short?casa_token=9RLY3ZV5uqwAAAAA:j6LPQLnRLDOdzsVkew-nT5eIk9i_6LfkRf6FaBkIS1UKDe7oqP2NmymGeSRsGYigtTQXVHgXyoek">[1] Obach, R. Scott, Franco Lombardo, and Nigel J. Waters. “Trend analysis of a database of intravenous pharmacokinetic parameters in humans for 670 drug compounds.” Drug Metabolism and Disposition 36.7 (2008): 1385-1405. </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+<h3 id="clearance-astrazeneca">Clearance, AstraZeneca</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Drug clearance is defined as the volume of plasma cleared of a drug over a specified time period and it measures the rate at which the active drug is removed from the body. This is a dataset curated from ChEMBL database containing experimental results on intrinsic clearance, deposited from AstraZeneca. It contains clearance measures from two experiments types, hepatocyte and microsomes. As many studies [2] have shown various clearance outcomes given these two different types, we separate them. </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a drug SMILES string, predict the activity of clearance. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 1,102/1,020 drugs for microsome/hepatocyte clearance. </p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span>  </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Clearance_Hepatocyte_AZ'</span><span class="p">)</span>
+<span class="c1"># data = ADME(name = 'Clearance_Microsome_AZ')
+</span><span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.6019/chembl3301361">[1] AstraZeneca. Experimental in vitro Dmpk and physicochemical data on a set of publicly disclosed compounds (2016) </a></p>
+
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0223523412003959?casa_token=MNBb1xkUT_YAAAAA:3s1kw30Nlv_tSrXYURqsz4j7it5wswWolxgkAPOg_Ts-FqVv3jLnyUFRQu9rNEdyV2FyyXL0VxI">[2] Di, Li, et al. “Mechanistic insights from comparing intrinsic clearance values between human liver microsomes and hepatocytes to guide drug design.” European journal of medicinal chemistry 57 (2012): 441-448. </a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong> Not Specified. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+

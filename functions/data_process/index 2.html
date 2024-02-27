@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Data Processing - TDC</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Data Processing | TDC</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Data Processing" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Artificial intelligence foundation for therapeutic science" />
+<meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
+<link rel="canonical" href="http://localhost:4000/functions/data_process/" />
+<meta property="og:url" content="http://localhost:4000/functions/data_process/" />
+<meta property="og:site_name" content="TDC" />
+<script type="application/ld+json">
+{"headline":"Data Processing","url":"http://localhost:4000/functions/data_process/","description":"Artificial intelligence foundation for therapeutic science","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+            <span><img src="/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/start/" class="navbar-item ">Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
+                            
+                            <a href="/functions/data_process/" class="navbar-item is-active">Data Processing</a>
+                            
+                            <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
+                            
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
+                            
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">NeurIPS Paper</a>
+                <a href="https://www.nature.com/articles/s41589-022-01131-2" class="navbar-item">Nat Chem Bio Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-4-desktop is-4-tablet">
+                    
+
+<aside class="menu">
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/#" class=""><strong>Data Functions</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/fct_overview/" class="">Overview</a></li>
+                
+                
+                
+                <li><a href="/functions/data_evaluation/" class="">Model Evaluation</a></li>
+                
+                
+                
+                <li><a href="/functions/data_split/" class="">Dataset Splits</a></li>
+                
+                
+                
+                <li><a href="/functions/data_process/" class="is-active">Data Processing</a></li>
+                
+                
+                
+                <li><a href="/functions/oracles/" class="">Molecule Generation Oracles</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+</aside>
+                </div>
+                
+                <div class="column is-8">
+                    
+                    
+                    
+                    
+    
+    
+
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Function Index</p>
+        <ul class="menu-list">
+  <li><a href="#molecule-conversion">Molecule Conversion</a></li>
+  <li><a href="#molecule-filters">Molecule Filters</a></li>
+  <li><a href="#label-distribution-visualization">Label Distribution Visualization</a></li>
+  <li><a href="#label-binarization">Label Binarization</a></li>
+  <li><a href="#label-units-conversion">Label Units Conversion</a></li>
+  <li><a href="#label-meaning">Label Meaning</a></li>
+  <li><a href="#basic-statistics">Basic Statistics</a></li>
+  <li><a href="#data-balancing">Data Balancing</a></li>
+  <li><a href="#graph-transformation-for-pair-data">Graph Transformation for Pair Data</a></li>
+  <li><a href="#negative-sampling">Negative Sampling</a></li>
+  <li><a href="#from-pubchem-cids-to-smiles">From PubChem CIDs to SMILES</a></li>
+  <li><a href="#from-uniprot-ids-to-amino-acid-sequences">From Uniprot IDs to Amino Acid Sequences</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h3 id="molecule-conversion">Molecule Conversion</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Map among ~15 molecular formats. For 2D: currently, we support to map from SMILES/SEFLIES and convert to SELFIES/SMILES, Graph2D, PyG, DGL, ECFP2-6, MACCS, Daylight, RDKit2D, Morgan, PubChem; For 3D: we support to map from XYZ, SDF files to Graph3D, Columb Matrix. To do that, first initialize a convert class and then feed in the input format. The conversion class takes in the following input: </p>
+
+<ul>
+	<li><code>src</code>: source molecule format. Choose from SMILES/SELFIES for 2D and SDF/XYZ for 3D. </li>
+	<li><code>dst</code>: destination molecule format. For 2D, choose from SMILES/SELFIES/Graph2D/PyG/DGL/ECFP2/ECFP4/ECFP6/MACCS/Daylight/RDKit2D/Morgan/PubChem. For 3D, choose from SMILES/SELFIES/Graph3D/Columb.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolConvert</span>
+<span class="n">converter</span> <span class="o">=</span> <span class="n">MolConvert</span><span class="p">(</span><span class="n">src</span> <span class="o">=</span> <span class="s">'SMILES'</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="s">'Graph2D'</span><span class="p">)</span>
+<span class="n">converter</span><span class="p">([</span><span class="s">'Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)</span><span class="err">\</span><span class="s">C(=O)OC'</span><span class="p">,</span>
+       <span class="s">'CCCOc1cc2ncnc(Nc3ccc4ncsc4c3)c2cc1S(=O)(=O)C(C)(C)C'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> <strong>Note</strong>: to check the eligible destination format for each source type, you can type: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolConvert</span>
+<span class="n">MolConvert</span><span class="o">.</span><span class="n">eligible_format</span><span class="p">()</span>
+<span class="c1"># MolConvert.eligible_format(src = 'SDF') for specific source type
+</span></code></pre></div></div>
+<p class="is-size-6"> While for 3D the destination format does not include most of 2D ones, you can also easily convert to any 2D format by: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolConvert</span>
+<span class="n">convert</span> <span class="o">=</span> <span class="n">MolConvert</span><span class="p">(</span><span class="n">src</span> <span class="o">=</span> <span class="s">'SDF'</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="s">'SMILES'</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="s">'XXX/.sdf'</span><span class="p">)</span>
+<span class="n">convert2d</span> <span class="o">=</span> <span class="n">MolConvert</span><span class="p">(</span><span class="n">src</span> <span class="o">=</span> <span class="s">'SMILES'</span><span class="p">,</span> <span class="n">dst</span> <span class="o">=</span> <span class="s">'ECFP4'</span><span class="p">)</span>
+<span class="n">convert2d</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="molecule-filters">Molecule Filters</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> This function identifies and removes typical not drug-like molecules (false positives) using various types of filters curated by Patrick Walters. This is a wrapper around his <a href="">rd_filters</a> GitHub package. Also checkout his <a href="http://practicalcheminformatics.blogspot.com/2018/08/filtering-chemical-libraries.html">blog post </a>for more info. </p>
+
+<p class="is-size-6"> You can specify the rules for the filters. For example, specify what kinds of structure alerts to use and also the range for some properties: </p>
+
+<ul>
+	<li><code>filters</code>: a list of curated rules to use. Choose from any combinations of 'BMS', 'Dundee', 'Glaxo', 'Inpharmatica', 'LINT', 'MLSMR', 'PAINS', 'SureChEMBL'. Default use all rules. </li>
+	<li><code>HBA, HBD, LogP, MW, Rot, TPSA</code>: A set of real valued property filters. Default is HBA = [0, 10], HBD = [0, 5], LogP = [-5, 5], MW = [0, 500], Rot = [0, 10], TPSA = [0, 200]. </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.chem_utils</span> <span class="kn">import</span> <span class="n">MolFilter</span>
+<span class="n">filters</span> <span class="o">=</span> <span class="n">MolFilter</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="p">[</span><span class="s">'PAINS'</span><span class="p">],</span> <span class="n">HBD</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">filters</span><span class="p">([</span><span class="s">'CCSc1ccccc1C(=O)Nc1onc2c1CCC2'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="label-distribution-visualization">Label Distribution Visualization</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> This function visualizes the label distribution and prints the basic statistics such as mean and median. </p>
+
+<p class="is-size-6"> For example, to visualize the Caco-2 label distribution: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">label_distribution</span><span class="p">()</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="label-binarization">Label Binarization</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> For labels with real value, it binarizes the label given a threshold. It takes in the following two inputs: </p>
+
+<ul>
+	<li><code>threshold</code>: a real value where below/above it is set to be 0/1 depending on the order. This is a required parameter. </li>
+	<li><code>order</code>: choose from 'descending' (the larger is 0) or 'ascending' (the smaller is 0). Default is 'descending'. </li>
+</ul>
+
+<p class="is-size-6"> For example, we show how to binarize the DAVIS dataset in the DTI task. Since the binding affinity is the lower the better, we want to set values that are below 30 to be 1 and others 0: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">binarize</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> <strong>Note</strong>: you can use <code>data.label_distribution()</code> to visualize the label distribution and decide on the threshold. </p>
+
+<hr />
+
+<h3 id="label-units-conversion">Label Units Conversion</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> This function converts the labels to different units. Currently, it supports to transform between nM and p (log scale) for binding affinity and also regular natural log the label.  </p>
+
+<p class="is-size-6"> For example, to convert from nM to p: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">convert_to_log</span><span class="p">(</span><span class="n">form</span> <span class="o">=</span> <span class="s">'binding'</span><span class="p">)</span>
+<span class="c1"># convert back: data.convert_from_log(form = 'binding')
+</span></code></pre></div></div>
+
+<p class="is-size-6">To convert to natural log scale:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">ADME</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ADME</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">convert_to_log</span><span class="p">(</span><span class="n">form</span> <span class="o">=</span> <span class="s">'standard'</span><span class="p">)</span>
+<span class="c1"># convert back: data.convert_from_log(form = 'standard')
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="label-meaning">Label Meaning</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> This function maps each labels to meaningful texts explaining what the label represents. Only applies to certain datasets.  </p>
+
+<p class="is-size-6"> For example, to obtain what interaction type between DDIs: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DDI</span>
+<span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">get_label_map</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DDI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugBank'</span><span class="p">)</span>
+<span class="n">get_label_map</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DrugBank'</span><span class="p">,</span> <span class="n">task</span> <span class="o">=</span> <span class="s">'DDI'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="basic-statistics">Basic Statistics</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> This function prints the basic statistics of the dataset, such as number of data points. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">GDA</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">GDA</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DisGeNET'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="data-balancing">Data Balancing</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> For binary classification, many therapeutics datasets are highly imbalanced. This function either oversamples the minority class or subsample the majority class to create a balanced dataset. It takes in the following two inputs: </p>
+
+<ul>
+	<li><code>oversample</code>: this is set to be either true (oversample) or false (subsample). In default, it is set to be false. </li>
+	<li><code>seed</code>: the random seed for oversample/subsample. The default is seed 42. </li>
+</ul>
+
+<p class="is-size-6"> For example, SARS-CoV2 3CL Protease screening data is highly imbalanced, we want to oversample the positive class: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">HTS</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">HTS</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'SARSCoV2_3CLPro_Diamond'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">balanced</span><span class="p">(</span><span class="n">oversample</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="graph-transformation-for-pair-data">Graph Transformation for Pair Data</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Many bi-entities prediction task can be formulated as a graph link prediction task. This function constructs the graph from the paired data. </p>
+
+<ul>
+	<li><code>threshold</code>: a real value where below/above it is set to be 0/1 depending on the order. Default is None. </li>
+	<li><code>format</code>: choose from 'edge_list', 'dgl' (return a DGL graph object), or 'pyg' (return a Pytorch Geometric object). Default is 'edge_list'. </li>
+	<li><code>split</code>: choose from True or False. If set to true, also return the random train/val/test edge split as in the data frame format. </li>
+	<li><code>frac</code>: if split is True, this specifies the fraction of train/val/test splits. Default is [0.7, 0.1, 0.2]. </li>
+	<li><code>seed</code>: the random seed for splitting. The default is 42. </li>
+	<li><code>order</code>: choose from 'descending' (the larger is 0) or 'ascending' (the smaller is 0). Default is 'descending'. </li>
+</ul>
+
+<p class="is-size-6"> For example, to construct a graph for DTI DAVIS dataset with threshold 30, split set to true, fraction 70%/10%/20%, seed 42, and descending order: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">DTI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DTI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'DAVIS'</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'edge_list'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="c1"># output: {'edge_list': array of shape (X, 2), 'neg_edges': array of shape (X, 2), 'split': {'train': df, 'valid': df, 'test': df}}
+</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'dgl'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="c1"># output: {'dgl_graph': the DGL graph object, 'index_to_entities': a dict map from ID in the data to node ID in the DGL object, 'split': {'train': df, 'valid': df, 'test': df}}
+</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_graph</span><span class="p">(</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s">'pyg'</span><span class="p">,</span> <span class="n">split</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">'descending'</span><span class="p">)</span>
+<span class="c1"># output: {'pyg_graph': the PyG graph object, 'index_to_entities': a dict map from ID in the data to node ID in the PyG object, 'split': {'train': df, 'valid': df, 'test': df}}
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="negative-sampling">Negative Sampling</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> For some interaction datasets, there are only positive samples provided. In order to do binary classification, we have to construct negative samples. One popular way is to consider the unobserved as negative samples. This is usually the case for biomedical data as a hit has way smaller chance than being negative. For some dataset with pairwise experimental assay (e.g. HuRI), sample from the unobserved pair are also true negatives. To do that, it takes in the following input: </p>
+
+<ul>
+	<li><code>frac</code>: the percentage of negative samples compared to existing positive ones. In default, it is set to be 1, i.e. balanced. </li>
+</ul>
+
+<p class="is-size-6"> For example, HuRI dataset from PPI only consists of positive data points. We can obtain a new dataset with negative samples by: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred</span> <span class="kn">import</span> <span class="n">PPI</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">PPI</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'HuRI'</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">neg_sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="from-pubchem-cids-to-smiles">From PubChem CIDs to SMILES</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Retrieve SMILES string from the PubChem CID. To do that, it takes in the following input: </p>
+
+<ul>
+	<li><code>cid</code>: the PubChem CID. </li>
+</ul>
+
+<p class="is-size-6">  <strong> Note: </strong> For large batch of queries, please use the <a href="https://pubchem.ncbi.nlm.nih.gov/idexchange/idexchange.cgi">PubChem ID exchange service</a>. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">cid2smiles</span>
+<span class="n">smiles</span> <span class="o">=</span> <span class="n">cid2smiles</span><span class="p">(</span><span class="mi">2248631</span><span class="p">)</span>
+<span class="c1"># 'CCOC1=CC(=C(C=C1C=CC(=O)O)Br)OCC'
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="from-uniprot-ids-to-amino-acid-sequences">From Uniprot IDs to Amino Acid Sequences</h3>
+
+<p class="is-size-6">  <strong> Function Description: </strong> Retrieve amino acid sequence from the Uniprot ID. To do that, it takes in the following input: </p>
+
+<ul>
+	<li><code>id</code>: the Uniprot ID. </li>
+</ul>
+
+<p class="is-size-6">  <strong> Note: </strong> For large batch of queries, please use the <a href="https://www.uniprot.org/uploadlists/">Uniprot ID mapping service</a>. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.utils</span> <span class="kn">import</span> <span class="n">uniprot2seq</span>
+<span class="n">seq</span> <span class="o">=</span> <span class="n">uniprot2seq</span><span class="p">(</span><span class="s">'P49122'</span><span class="p">)</span>
+<span class="c1"># 'MKTLLLTLVVVTIVCLDLGYTLKCHNTQLPFIYNTCPEGKNLCFKATLKFPLKFPVKRGCAATCPRSSSLVKVVCCKTDKCN'
+</span></code></pre></div></div>
+
+<hr />
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+
