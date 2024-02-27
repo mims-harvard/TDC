@@ -18,3 +18,5 @@ dependencies:
     - cellxgene-census==1.10.2 
     - PyTDC==0.4.1
     - rdkit==2023.9.5
+    - tiledbsoma==1.7.2
+    - yapf==0.40.2
