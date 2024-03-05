@@ -9,7 +9,8 @@ try:
 
     rdBase.DisableLog("rdApp.error")
 except:
-    raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")
+    raise ImportError(
+        "Please install rdkit by 'conda install -c conda-forge rdkit'! ")
 
 from ...utils import print_sys, install
 
@@ -73,16 +74,14 @@ class MolFilter:
                 for i in filters:
                     if i not in all_filters:
                         raise ValueError(
-                            i
-                            + " not found; Please choose from a list of available filters from 'BMS', 'Dundee', 'Glaxo', 'Inpharmatica', 'LINT', 'MLSMR', 'PAINS', 'SureChEMBL'"
+                            i +
+                            " not found; Please choose from a list of available filters from 'BMS', 'Dundee', 'Glaxo', 'Inpharmatica', 'LINT', 'MLSMR', 'PAINS', 'SureChEMBL'"
                         )
 
         alert_file_name = pkg_resources.resource_filename(
-            "rd_filters", "data/alert_collection.csv"
-        )
+            "rd_filters", "data/alert_collection.csv")
         rules_file_path = pkg_resources.resource_filename(
-            "rd_filters", "data/rules.json"
-        )
+            "rd_filters", "data/rules.json")
         self.rf = RDFilters(alert_file_name)
         self.rule_dict = read_rules(rules_file_path)
         self.rule_dict["Rule_Inpharmatica"] = False
@@ -163,15 +162,13 @@ class MolFilter:
                     "Rot",
                 ],
             )
-            df_ok = df[
-                (df.FILTER == "OK")
-                & df.MW.between(*self.rule_dict["MW"])
-                & df.LogP.between(*self.rule_dict["LogP"])
-                & df.HBD.between(*self.rule_dict["HBD"])
-                & df.HBA.between(*self.rule_dict["HBA"])
-                & df.TPSA.between(*self.rule_dict["TPSA"])
-                & df.Rot.between(*self.rule_dict["Rot"])
-            ]
+            df_ok = df[(df.FILTER == "OK") &
+                       df.MW.between(*self.rule_dict["MW"]) &
+                       df.LogP.between(*self.rule_dict["LogP"]) &
+                       df.HBD.between(*self.rule_dict["HBD"]) &
+                       df.HBA.between(*self.rule_dict["HBA"]) &
+                       df.TPSA.between(*self.rule_dict["TPSA"]) &
+                       df.Rot.between(*self.rule_dict["Rot"])]
 
         else:
             df = pd.DataFrame(

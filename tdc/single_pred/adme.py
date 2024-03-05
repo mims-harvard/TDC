@@ -50,9 +50,9 @@ class ADME(single_pred_dataset.DataLoader):
             import pandas as pd
             import os
 
-            self.ppbr_df = pd.read_csv(
-                os.path.join(self.path, self.name + ".tab"), sep="\t"
-            )
+            self.ppbr_df = pd.read_csv(os.path.join(self.path,
+                                                    self.name + ".tab"),
+                                       sep="\t")
             df = self.ppbr_df[self.ppbr_df.Species == "Homo sapiens"]
             self.entity1 = df.Drug.values
             self.y = df.Y.values
@@ -66,10 +66,11 @@ class ADME(single_pred_dataset.DataLoader):
         import pandas as pd
 
         if self.name not in ["pampa_ncats"]:
-            raise ValueError("This function is only available for PAMPA_NCATS dataset")
-        entity1, y, entity1_idx = property_dataset_load(
-            "approved_pampa_ncats", self.path, None, dataset_names["ADME"]
-        )
+            raise ValueError(
+                "This function is only available for PAMPA_NCATS dataset")
+        entity1, y, entity1_idx = property_dataset_load("approved_pampa_ncats",
+                                                        self.path, None,
+                                                        dataset_names["ADME"])
         return pd.DataFrame({"Drug_ID": entity1_idx, "Drug": entity1, "Y": y})
 
     def get_other_species(self, species=None):
@@ -83,7 +84,8 @@ class ADME(single_pred_dataset.DataLoader):
             return self.ppbr_df
 
         if species in self.ppbr_df.Species.unique():
-            return self.ppbr_df[self.ppbr_df.Species == species].reset_index(drop=True)
+            return self.ppbr_df[self.ppbr_df.Species == species].reset_index(
+                drop=True)
         else:
             raise ValueError(
                 "You can only specify the following set of species name: 'Canis lupus familiaris', 'Cavia porcellus', 'Homo sapiens', 'Mus musculus', 'Rattus norvegicus', 'all'"
@@ -99,19 +101,15 @@ class ADME(single_pred_dataset.DataLoader):
 
         if mode == "max":
             df_ = self.get_data()
-            df = (
-                df_.sort_values("Y", ascending=True)
-                .drop_duplicates("Drug")
-                .reset_index(drop=True)
-            )
+            df = (df_.sort_values(
+                "Y",
+                ascending=True).drop_duplicates("Drug").reset_index(drop=True))
 
         elif mode == "min":
             df_ = self.get_data()
-            df = (
-                df_.sort_values("Y", ascending=False)
-                .drop_duplicates("Drug")
-                .reset_index(drop=True)
-            )
+            df = (df_.sort_values(
+                "Y",
+                ascending=False).drop_duplicates("Drug").reset_index(drop=True))
 
         elif mode == "remove_all":
             df_ = self.get_data()

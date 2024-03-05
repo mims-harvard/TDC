@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class TestMultiPred(bi_pred_dataset.DataLoader):
-
     """Summary
 
     Attributes:

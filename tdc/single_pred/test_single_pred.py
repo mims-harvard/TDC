@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class TestSinglePred(single_pred_dataset.DataLoader):
-
     """Data loader class to test the single instance prediction data loader.
 
     Args:

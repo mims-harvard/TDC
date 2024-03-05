@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class Tox(single_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Tox (Toxicity Prediction) task. More info: https://tdcommons.ai/single_pred_tasks/tox/
 
     Args:

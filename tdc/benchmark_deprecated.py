@@ -25,6 +25,7 @@ from .evaluator import Evaluator
 
 
 class BenchmarkGroup:
+
     def __init__(
         self,
         name,
@@ -162,7 +163,8 @@ class BenchmarkGroup:
                     ncpu=self.num_cpus,
                     num_max_call=self.num_max_call,
                 )
-                data = pd.read_csv(os.path.join(self.path, "zinc.tab"), sep="\t")
+                data = pd.read_csv(os.path.join(self.path, "zinc.tab"),
+                                   sep="\t")
                 return {"oracle": oracle, "data": data, "name": dataset}
             else:
                 return {"train_val": train, "test": test, "name": dataset}
@@ -200,15 +202,19 @@ class BenchmarkGroup:
 			frac = [frac[0], frac[1], 0.0]
 		"""
         if split_method == "scaffold":
-            out = create_scaffold_split(train_val, seed, frac=frac, entity="Drug")
+            out = create_scaffold_split(train_val,
+                                        seed,
+                                        frac=frac,
+                                        entity="Drug")
         elif split_method == "random":
             out = create_fold(train_val, seed, frac=frac)
         elif split_method == "combination":
             out = create_combination_split(train_val, seed, frac=frac)
         elif split_method == "group":
-            out = create_group_split(
-                train_val, seed, holdout_frac=0.2, group_column="Year"
-            )
+            out = create_group_split(train_val,
+                                     seed,
+                                     holdout_frac=0.2,
+                                     group_column="Year")
         else:
             raise NotImplementedError
         return out["train"], out["valid"]
@@ -246,7 +252,12 @@ class BenchmarkGroup:
         else:
             return {"train_val": train, "test": test, "name": dataset}
 
-    def evaluate(self, pred, true=None, benchmark=None, m1_api=None, save_dict=True):
+    def evaluate(self,
+                 pred,
+                 true=None,
+                 benchmark=None,
+                 m1_api=None,
+                 save_dict=True):
 
         if self.name == "docking_group":
             results_all = {}
@@ -284,7 +295,8 @@ class BenchmarkGroup:
                         dataset = fuzzy_search(data_name, self.dataset_names)
 
                         # docking scores for the top K smiles (K <= 100)
-                        target_pdb_file = os.path.join(self.path, dataset + ".pdb")
+                        target_pdb_file = os.path.join(self.path,
+                                                       dataset + ".pdb")
                         from .oracles import Oracle
 
                         data_path = os.path.join(self.path, dataset)
@@ -304,12 +316,14 @@ class BenchmarkGroup:
 
                         docking_scores = oracle(pred_)
                     print_sys("---- Calculating average docking scores ----")
-                    if (
-                        len(np.where(np.array(list(docking_scores.values())) > 0)[0])
-                        > 0.7
-                    ):
+                    if (len(
+                            np.where(
+                                np.array(list(docking_scores.values())) > 0)[0])
+                            > 0.7):
                         ## check if the scores are all positive.. if so, make them all negative
-                        docking_scores = {j: -k for j, k in docking_scores.items()}
+                        docking_scores = {
+                            j: -k for j, k in docking_scores.items()
+                        }
                     if save_dict:
                         results["docking_scores_dict"] = docking_scores
                     values = np.array(list(docking_scores.values()))
@@ -327,23 +341,23 @@ class BenchmarkGroup:
                         )
                         from .oracles import Oracle
 
-                        m1 = Oracle(name="Molecule One Synthesis", api_token=m1_api)
+                        m1 = Oracle(name="Molecule One Synthesis",
+                                    api_token=m1_api)
                         import heapq
                         from operator import itemgetter
 
                         top10_docking_smiles = list(
                             dict(
-                                heapq.nsmallest(
-                                    10, docking_scores.items(), key=itemgetter(1)
-                                )
-                            ).keys()
-                        )
+                                heapq.nsmallest(10,
+                                                docking_scores.items(),
+                                                key=itemgetter(1))).keys())
                         m1_scores = m1(top10_docking_smiles)
                         scores_array = list(m1_scores.values())
-                        scores_array = np.array([float(i) for i in scores_array])
-                        scores_array[
-                            np.where(scores_array == -1.0)[0]
-                        ] = 10  # m1 score errors are usually large complex molecules
+                        scores_array = np.array(
+                            [float(i) for i in scores_array])
+                        scores_array[np.where(
+                            scores_array == -1.0
+                        )[0]] = 10  # m1 score errors are usually large complex molecules
                         if save_dict:
                             results["m1_dict"] = m1_scores
                         results["m1"] = np.mean(scores_array)
@@ -361,8 +375,7 @@ class BenchmarkGroup:
                         results["pass_list"] = pred_filter
                     results["%pass"] = float(len(pred_filter)) / 100
                     results["top1_%pass"] = max(
-                        [docking_scores[i] for i in pred_filter]
-                    )
+                        [docking_scores[i] for i in pred_filter])
                     print_sys("---- Calculating diversity ----")
                     from .evaluator import Evaluator
 
@@ -371,13 +384,13 @@ class BenchmarkGroup:
                     results["diversity"] = score
                     print_sys("---- Calculating novelty ----")
                     evaluator = Evaluator(name="Novelty")
-                    training = pd.read_csv(
-                        os.path.join(self.path, "zinc.tab"), sep="\t"
-                    )
+                    training = pd.read_csv(os.path.join(self.path, "zinc.tab"),
+                                           sep="\t")
                     score = evaluator(pred_, training.smiles.values)
                     results["novelty"] = score
                     results["top smiles"] = [
-                        i[0] for i in sorted(docking_scores.items(), key=lambda x: x[1])
+                        i[0] for i in sorted(docking_scores.items(),
+                                             key=lambda x: x[1])
                     ]
                     results_max_call[num_max_call] = results
                 results_all[data_name] = results_max_call
@@ -395,8 +408,11 @@ class BenchmarkGroup:
                 elif self.file_format == "pkl":
                     test = pd.read_pickle(os.path.join(data_path, "test.pkl"))
                 y = test.Y.values
-                evaluator = eval("Evaluator(name = '" + metric_dict[data_name] + "')")
-                out[data_name] = {metric_dict[data_name]: round(evaluator(y, pred_), 3)}
+                evaluator = eval("Evaluator(name = '" + metric_dict[data_name] +
+                                 "')")
+                out[data_name] = {
+                    metric_dict[data_name]: round(evaluator(y, pred_), 3)
+                }
 
                 # If reporting accuracy across target classes
                 if "target_class" in test.columns:
@@ -407,13 +423,11 @@ class BenchmarkGroup:
                         y_subset = test_subset.Y.values
                         pred_subset = test_subset.pred.values
 
-                        evaluator = eval(
-                            "Evaluator(name = '" + metric_dict[data_name_subset] + "')"
-                        )
+                        evaluator = eval("Evaluator(name = '" +
+                                         metric_dict[data_name_subset] + "')")
                         out[data_name_subset] = {
-                            metric_dict[data_name_subset]: round(
-                                evaluator(y_subset, pred_subset), 3
-                            )
+                            metric_dict[data_name_subset]:
+                                round(evaluator(y_subset, pred_subset), 3)
                         }
             return out
         else:
@@ -424,12 +438,15 @@ class BenchmarkGroup:
                 )
             data_name = fuzzy_search(benchmark, self.dataset_names)
             metric_dict = bm_metric_names[self.name]
-            evaluator = eval("Evaluator(name = '" + metric_dict[data_name] + "')")
+            evaluator = eval("Evaluator(name = '" + metric_dict[data_name] +
+                             "')")
             return {metric_dict[data_name]: round(evaluator(true, pred), 3)}
 
-    def evaluate_many(
-        self, preds, save_file_name=None, m1_api=None, results_individual=None
-    ):
+    def evaluate_many(self,
+                      preds,
+                      save_file_name=None,
+                      m1_api=None,
+                      results_individual=None):
         """
         :param preds: list of dict<str dataset_name: list of float>
         :return: dict<dataset_name: [mean_metric_result, std_metric_result]
@@ -443,11 +460,9 @@ class BenchmarkGroup:
             min_requirement = 5
 
         if len(preds) < min_requirement:
-            return ValueError(
-                "Must have predictions from at least "
-                + str(min_requirement)
-                + " runs for leaderboard submission"
-            )
+            return ValueError("Must have predictions from at least " +
+                              str(min_requirement) +
+                              " runs for leaderboard submission")
         if results_individual is None:
             individual_results = []
             for pred in preds:
@@ -479,19 +494,14 @@ class BenchmarkGroup:
                     for metric in metrics:
                         if metric == "top smiles":
                             results_agg_target_call[metric] = np.unique(
-                                np.array(
-                                    [
-                                        individual_results[fold][target][num_calls][
-                                            metric
-                                        ]
-                                        for fold in range(num_folds)
-                                    ]
-                                ).reshape(-1)
-                            ).tolist()
+                                np.array([
+                                    individual_results[fold][target][num_calls]
+                                    [metric] for fold in range(num_folds)
+                                ]).reshape(-1)).tolist()
                         else:
                             res = [
-                                individual_results[fold][target][num_calls][metric]
-                                for fold in range(num_folds)
+                                individual_results[fold][target][num_calls]
+                                [metric] for fold in range(num_folds)
                             ]
                             results_agg_target_call[metric] = [
                                 round(np.mean(res), 3),
@@ -514,7 +524,8 @@ class BenchmarkGroup:
             for dataset_name in given_dataset_names:
                 my_results = []
                 for individual_result in individual_results:
-                    my_result = list(individual_result[dataset_name].values())[0]
+                    my_result = list(
+                        individual_result[dataset_name].values())[0]
                     my_results.append(my_result)
                 u = np.mean(my_results)
                 std = np.std(my_results)

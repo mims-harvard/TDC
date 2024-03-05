@@ -73,7 +73,8 @@ def get_reaction_type(name, path="./data", output_format="array"):
     elif output_format == "array":
         return df["category"].values
     else:
-        raise ValueError("Please use the correct output format, select from df, array.")
+        raise ValueError(
+            "Please use the correct output format, select from df, array.")
 
 
 def retrieve_label_name_list(name):

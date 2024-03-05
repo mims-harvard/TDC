@@ -16,7 +16,6 @@ from . import utils
 
 
 class DataLoader:
-
     """base data loader class that contains functions shared by almost all data loader classes."""
 
     def __init__(self):
@@ -35,13 +34,11 @@ class DataLoader:
             AttributeError: format not supported
         """
         if format == "df":
-            return pd.DataFrame(
-                {
-                    self.entity1_name + "_ID": self.entity1_idx,
-                    self.entity1_name: self.entity1,
-                    "Y": self.y,
-                }
-            )
+            return pd.DataFrame({
+                self.entity1_name + "_ID": self.entity1_idx,
+                self.entity1_name: self.entity1,
+                "Y": self.y,
+            })
         elif format == "dict":
             return {
                 self.entity1_name + "_ID": self.entity1_idx,
@@ -56,11 +53,8 @@ class DataLoader:
     def print_stats(self):
         """print statistics"""
         print(
-            "There are "
-            + str(len(np.unique(self.entity1)))
-            + " unique "
-            + self.entity1_name.lower()
-            + "s",
+            "There are " + str(len(np.unique(self.entity1))) + " unique " +
+            self.entity1_name.lower() + "s",
             flush=True,
             file=sys.stderr,
         )
@@ -86,7 +80,8 @@ class DataLoader:
         if method == "random":
             return utils.create_fold(df, seed, frac)
         elif method == "cold_" + self.entity1_name.lower():
-            return utils.create_fold_setting_cold(df, seed, frac, self.entity1_name)
+            return utils.create_fold_setting_cold(df, seed, frac,
+                                                  self.entity1_name)
         else:
             raise AttributeError("Please specify the correct splitting method")
 
@@ -110,30 +105,22 @@ class DataLoader:
         if threshold is None:
             raise AttributeError(
                 "Please specify the threshold to binarize the data by "
-                "'binarize(threshold = N)'!"
-            )
+                "'binarize(threshold = N)'!")
 
         if len(np.unique(self.y)) == 2:
             print("The data is already binarized!", flush=True, file=sys.stderr)
         else:
             print(
-                "Binariztion using threshold "
-                + str(threshold)
-                + ", default, we assume the smaller values are 1 "
+                "Binariztion using threshold " + str(threshold) +
+                ", default, we assume the smaller values are 1 "
                 "and larger ones is 0, you can change the order "
                 "by 'binarize(order = 'ascending')'",
                 flush=True,
                 file=sys.stderr,
             )
-            if (
-                np.unique(self.y)
-                .reshape(
-                    -1,
-                )
-                .shape[0]
-                < 2
-            ):
-                raise AttributeError("Adjust your threshold, there is only one class.")
+            if (np.unique(self.y).reshape(-1,).shape[0] < 2):
+                raise AttributeError(
+                    "Adjust your threshold, there is only one class.")
             self.y = utils.binarize(self.y, threshold, order)
         return self
 
@@ -223,36 +210,26 @@ class DataLoader:
                 flush=True,
                 file=sys.stderr,
             )
-            val = (
-                pd.concat(
-                    [
-                        val[val.Y == major_class].sample(
-                            n=len(val[val.Y == minor_class]),
-                            replace=False,
-                            random_state=seed,
-                        ),
-                        val[val.Y == minor_class],
-                    ]
-                )
-                .sample(frac=1, replace=False, random_state=seed)
-                .reset_index(drop=True)
-            )
+            val = (pd.concat([
+                val[val.Y == major_class].sample(
+                    n=len(val[val.Y == minor_class]),
+                    replace=False,
+                    random_state=seed,
+                ),
+                val[val.Y == minor_class],
+            ]).sample(frac=1, replace=False,
+                      random_state=seed).reset_index(drop=True))
         else:
-            print(
-                " Oversample of minority class is used. ", flush=True, file=sys.stderr
-            )
-            val = (
-                pd.concat(
-                    [
-                        val[val.Y == minor_class].sample(
-                            n=len(val[val.Y == major_class]),
-                            replace=True,
-                            random_state=seed,
-                        ),
-                        val[val.Y == major_class],
-                    ]
-                )
-                .sample(frac=1, replace=False, random_state=seed)
-                .reset_index(drop=True)
-            )
+            print(" Oversample of minority class is used. ",
+                  flush=True,
+                  file=sys.stderr)
+            val = (pd.concat([
+                val[val.Y == minor_class].sample(
+                    n=len(val[val.Y == major_class]),
+                    replace=True,
+                    random_state=seed,
+                ),
+                val[val.Y == major_class],
+            ]).sample(frac=1, replace=False,
+                      random_state=seed).reset_index(drop=True))
         return val
