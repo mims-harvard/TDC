@@ -33,6 +33,7 @@ class TestFunctions(unittest.TestCase):
     #    data = ADME(name='Caco2_Wang')
     #    x = data.label_distribution()
 
+    
     def test_get_label_map(self):
         from tdc.multi_pred import DDI
         from tdc.utils import get_label_map
@@ -41,22 +42,26 @@ class TestFunctions(unittest.TestCase):
         split = data.get_split()
         get_label_map(name="DrugBank", task="DDI")
 
+    
     def test_balanced(self):
         from tdc.single_pred import HTS
 
         data = HTS(name="SARSCoV2_3CLPro_Diamond")
         data.balanced(oversample=True, seed=42)
 
+    
     def test_cid2smiles(self):
         from tdc.utils import cid2smiles
 
         smiles = cid2smiles(2248631)
 
+    
     def test_uniprot2seq(self):
         from tdc.utils import uniprot2seq
 
         seq = uniprot2seq("P49122")
 
+    
     def test_to_graph(self):
         from tdc.multi_pred import DTI
 
@@ -90,7 +95,7 @@ class TestFunctions(unittest.TestCase):
         )
         # output: {'pyg_graph': the PyG graph object, 'index_to_entities': a dict map from ID in the data to node ID in the PyG object, 'split': {'train': df, 'valid': df, 'test': df}}
 
-    #
+    # 
     def tearDown(self):
         print(os.getcwd())
 
