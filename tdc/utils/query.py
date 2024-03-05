@@ -15,7 +15,8 @@ except ImportError:
 def _parse_prop(search, proplist):
     """Extract property value from record using the given urn search filter."""
     props = [
-        i for i in proplist if all(item in i["urn"].items() for item in search.items())
+        i for i in proplist
+        if all(item in i["urn"].items() for item in search.items())
     ]
     if len(props) > 0:
         return props[0]["value"][list(props[0]["value"].keys())[0]]
@@ -48,18 +49,15 @@ def request(
     urlid, postdata = None, None
     if namespace == "sourceid":
         identifier = identifier.replace("/", ".")
-    if (
-        namespace in ["listkey", "formula", "sourceid"]
-        or searchtype == "xref"
-        or (searchtype and namespace == "cid")
-        or domain == "sources"
-    ):
+    if (namespace in ["listkey", "formula", "sourceid"] or
+            searchtype == "xref" or (searchtype and namespace == "cid") or
+            domain == "sources"):
         urlid = quote(identifier.encode("utf8"))
     else:
         postdata = urlencode([(namespace, identifier)]).encode("utf8")
     comps = filter(
-        None, [API_BASE, domain, searchtype, namespace, urlid, operation, output]
-    )
+        None,
+        [API_BASE, domain, searchtype, namespace, urlid, operation, output])
     apiurl = "/".join(comps)
     # Make request
     response = urlopen(apiurl, postdata)
@@ -99,8 +97,12 @@ def cid2smiles(cid):
     """
     try:
         smiles = _parse_prop(
-            {"label": "SMILES", "name": "Canonical"},
-            json.loads(request(cid).read().decode())["PC_Compounds"][0]["props"],
+            {
+                "label": "SMILES",
+                "name": "Canonical"
+            },
+            json.loads(
+                request(cid).read().decode())["PC_Compounds"][0]["props"],
         )
     except:
         print("cid " + str(cid) + " failed, use NULL string")

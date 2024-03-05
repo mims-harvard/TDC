@@ -636,10 +636,8 @@ ToxCast_targets = [
     "Tanguay_ZF_120hpf_YSE_up",
 ]
 
-
 QM7_targets = ["Y"]
 # QM7_targets = ["E_PBE0", "E_max_EINDO", "I_max_ZINDO", "HOMO_ZINDO", "LUMO_ZINDO", "E_1st_ZINDO", "IP_ZINDO", "EA_ZINDO", "HOMO_PBE0", "LUMO_PBE0", "HOMO_GW", "LUMO_GW", "alpha_PBE0", "alpha_SCS"]
-
 
 #### qm7b: 14 labels
 QM7b_targets = [
@@ -682,7 +680,6 @@ QM8_targets = [
     "E2-CAM",
     "f1-CAM",
 ]
-
 
 # QM9_targets = [
 #       "mu", "alpha", "homo", "lumo", "gap", "r2", "zpve", "cv", "u0", "u298",
