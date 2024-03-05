@@ -10,4 +10,4 @@ from .peptidemhc import PeptideMHC
 from .ppi import PPI
 from .test_multi_pred import TestMultiPred
 from .tcr_epi import TCREpitopeBinding
-from .trialoutcome import TrialOutcome 
+from .trialoutcome import TrialOutcome
