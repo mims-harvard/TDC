@@ -16,5 +16,5 @@ dependencies:
   - tqdm=4.65.0
   - pip:
     - cellxgene-census==1.10.2 
-    - PyTDC==0.4.1
     - rdkit==2023.9.5
+    - yapf==0.40.2
