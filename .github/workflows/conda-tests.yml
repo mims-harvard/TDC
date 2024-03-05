@@ -10,6 +10,7 @@ on:
       - main
       - avelez-cellxgene-dev
       - avelez-dev
+      - '*'
   workflow_dispatch:
 
 jobs:
