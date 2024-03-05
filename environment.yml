@@ -2,6 +2,7 @@ name: tdc-conda-env
 channels:
   - conda-forge
   - defaults
+  - pyg
   - pytorch
 dependencies:
   - dataclasses=0.8
