@@ -12,9 +12,8 @@ from ..utils import print_sys
 from ..metadata import dataset_names
 
 
-class Yields(single_pred_dataset.DataLoader):
-
-    """Data loader class to load datasets in Yields (Reaction Yields Prediction) task. More info: https://tdcommons.ai/single_pred_tasks/yields/
+class Tox(single_pred_dataset.DataLoader):
+    """Data loader class to load datasets in Tox (Toxicity Prediction) task. More info: https://tdcommons.ai/single_pred_tasks/tox/
 
     Args:
         name (str): the dataset name.
@@ -36,16 +35,15 @@ class Yields(single_pred_dataset.DataLoader):
         print_stats=False,
         convert_format=None,
     ):
-        """Create Yields (Reaction Yields Prediction) dataloader object."""
+        """Create a Tox (Toxicity Prediction) dataloader object."""
         super().__init__(
             name,
             path,
             label_name,
             print_stats,
-            dataset_names=dataset_names["Yields"],
+            dataset_names=dataset_names["Tox"],
             convert_format=convert_format,
         )
-        self.entity1_name = "Reaction"
         if print_stats:
             self.print_stats()
         print("Done!", flush=True, file=sys.stderr)

@@ -16,7 +16,6 @@ from ..utils import general_load
 
 
 class PrimeKG:
-
     """PrimeKG data loader class to load the knowledge graph with additional support functions."""
 
     def __init__(self, path="./data"):
@@ -32,19 +31,18 @@ class PrimeKG:
 
         G = nx.Graph()
         for i in self.df.relation.unique():
-            G.add_edges_from(
-                self.df[self.df.relation == i][["x_id", "y_id"]].values, relation=i
-            )
+            G.add_edges_from(self.df[self.df.relation == i][["x_id",
+                                                             "y_id"]].values,
+                             relation=i)
         return G
 
     def get_features(self, feature_type):
         if feature_type not in ["drug", "disease"]:
             raise ValueError("feature_type only supports drug/disease!")
-        return general_load("primekg_" + feature_type + "_feature", self.path, "\t")
+        return general_load("primekg_" + feature_type + "_feature", self.path,
+                            "\t")
 
     def get_node_list(self, node_type):
         df = self.df
-        return np.unique(
-            df[(df.x_type == node_type)].x_id.unique().tolist()
-            + df[(df.y_type == node_type)].y_id.unique().tolist()
-        )
+        return np.unique(df[(df.x_type == node_type)].x_id.unique().tolist() +
+                         df[(df.y_type == node_type)].y_id.unique().tolist())
