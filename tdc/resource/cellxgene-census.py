@@ -13,7 +13,7 @@ class CensusResource:
     _CENSUS_DATA = "census_data"
     _CENSUS_META = "census_info"
     _FEATURE_PRESENCE = "feature_dataset_presence_matrix"
-    _LATEST_CENSUS = "2023-12-15"
+    _LATEST_CENSUS = "2023-12-15" # TODO: maybe change to 'latest'
     _HUMAN = "homo_sapiens"
 
     class decorators:
@@ -36,6 +36,31 @@ class CensusResource:
                 self.dataset = self._CENSUS_META
                 return func(*args, **kwargs)
 
+            return check
+
+        @classmethod
+        def slice_checks_X_and_FM(cls, func):
+            """Decorator for functions that need X and feature presence matrix apply slicing if not filtering"""
+            def check(*args, **kwargs):
+                upper, lower = kwargs.get('upper', None), kwargs.get("lower", None)
+                measurement_name = kwargs.get("measurement_name")
+                fmt = kwargs.get("fmt")
+                todense = kwargs.get("todense")
+                if upper is None or lower is None:
+                    raise Exception(
+                        "No upper and/or lower bound for slicing was provided. Dataset is too large to fit in memory. \
+                        Memory-Efficient queries are not supported yet.")
+                elif measurement_name is None:
+                    raise Exception("measurement_name was not provided.")
+                elif fmt is not None and fmt not in ["scipy", "pyarrow"]:
+                    raise ValueError(
+                        "measurement_matrix only supports 'scipy' or 'pyarrow' format")
+                kwargs["todense"] = todense if todense is not None else False
+                if todense and fmt != "scipy":
+                    raise ValueError(
+                        "dense representation only available in scipy format")
+                kwargs["fmt"] = fmt if fmt is not None else "scipy"
+                return func(*args, **kwargs)
             return check
 
     def __init__(self, census_version=None, organism=None):
@@ -108,6 +133,7 @@ class CensusResource:
                 varread = var.read(value_filter=value_filter)
             return self.fmt_cellxgene_data(varread, fmt)
 
+    @decorators.slice_checks_X_and_FM
     @decorators.check_dataset_is_census_data
     def get_measurement_matrix(self,
                                upper=None,
@@ -128,21 +154,7 @@ class CensusResource:
             Exception: _description_
             Exception: _description_
         """
-        if upper is None or lower is None:
-            raise Exception(
-                "No upper and/or lower bound for slicing was provided. Dataset is too large to fit in memory. \
-                Memory-Efficient queries are not supported yet.")
-        elif measurement_name is None:
-            raise Exception("measurement_name was not provided.")
-        elif fmt is not None and fmt not in ["scipy", "pyarrow"]:
-            raise ValueError(
-                "measurement_matrix only supports 'scipy' or 'pyarrow' format")
         value_adjustment = value_adjustment if value_adjustment is not None else "raw"
-        todense = todense if todense is not None else False
-        fmt = fmt if fmt is not None else "scipy"
-        if todense and fmt != "scipy":
-            raise ValueError(
-                "dense representation only available in scipy format")
         with cellxgene_census.open_soma(
                 census_version=self.census_version) as census:
             n_obs = len(census[self.dataset][self.organism].obs)
@@ -154,6 +166,7 @@ class CensusResource:
             out = self.fmt_cellxgene_data(slc, fmt)
             return out if not todense else out.todense()
 
+    @decorators.slice_checks_X_and_FM
     @decorators.check_dataset_is_census_data
     def get_feature_dataset_presence_matrix(self,
                                             upper=None,
@@ -161,21 +174,6 @@ class CensusResource:
                                             measurement_name=None,
                                             fmt=None,
                                             todense=None):
-        if upper is None or lower is None:
-            raise ValueError(
-                "No upper and/or lower bound for slicing was provided. Dataset is too large to fit in memory. \
-                Memory-Efficient queries are not supported yet.")
-        elif measurement_name is None:
-            raise ValueError("measurement_name was not provided")
-        elif fmt is not None and fmt not in ["scipy", "pyarrow"]:
-            raise ValueError(
-                "feature dataset presence matrix only supports 'scipy' or 'pyarrow' formats"
-            )
-        todense = todense if todense is not None else False
-        fmt = fmt if fmt is not None else "scipy"
-        if todense and fmt != "scipy":
-            raise ValueError(
-                "dense representation only available in scipy format")
         with cellxgene_census.open_soma(
                 census_version=self.census_version) as census:
             n_obs = len(census[self.dataset][self.organism].obs)
@@ -208,6 +206,7 @@ class CensusResource:
                 census_version=self.census_version) as census:
             return census[self.dataset]["summary_cell_counts"]
 
+    @decorators.slice_checks_X_and_FM 
     @decorators.check_dataset_is_census_data
     def query_measurement_matrix(self,
                                  value_filter=None,
@@ -233,21 +232,7 @@ class CensusResource:
         Yields:
             a slice of the output query in the specified format
         """
-        if value_filter is None:
-            raise ValueError(
-                "query_measurement_matrix expects a value_filter. if you don't plan to apply a filter, use get_measurement_matrix()"
-            )
-        elif measurement_name is None:
-            raise Exception("measurement_name was not provided.")
-        elif fmt is not None and fmt not in ["scipy", "pyarrow"]:
-            raise ValueError(
-                "measurement_matrix only supports 'scipy' or 'pyarrow' format")
         value_adjustment = value_adjustment if value_adjustment is not None else "raw"
-        todense = todense if todense is not None else False
-        fmt = fmt if fmt is not None else "scipy"
-        if todense and fmt != "scipy":
-            raise ValueError(
-                "dense representation only available in scipy format")
         with cellxgene_census.open_soma(
                 census_version=self.census_version) as census:
             organism = census[self.dataset][self.organism]
