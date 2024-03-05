@@ -3,7 +3,6 @@
 # License: MIT
 from packaging import version
 import pkg_resources
-
 """This file contains all metadata of datasets in TDC.
 
 Attributes:
@@ -121,18 +120,16 @@ adme_dataset_names = [
     "clearance_microsome_az",
 ]
 
-hts_dataset_names = ["hiv", 
-    "sarscov2_3clpro_diamond", 
-    "sarscov2_vitro_touret", 
-    "orexin1_receptor_butkiewicz", 
-    "m1_muscarinic_receptor_agonists_butkiewicz", 
-    "m1_muscarinic_receptor_antagonists_butkiewicz", 
-    "potassium_ion_channel_kir2.1_butkiewicz", 
-    "kcnq2_potassium_channel_butkiewicz", 
-    "cav3_t-type_calcium_channels_butkiewicz", 
-    "choline_transporter_butkiewicz", 
-    "serine_threonine_kinase_33_butkiewicz", 
-    "tyrosyl-dna_phosphodiesterase_butkiewicz"]
+hts_dataset_names = [
+    "hiv", "sarscov2_3clpro_diamond", "sarscov2_vitro_touret",
+    "orexin1_receptor_butkiewicz", "m1_muscarinic_receptor_agonists_butkiewicz",
+    "m1_muscarinic_receptor_antagonists_butkiewicz",
+    "potassium_ion_channel_kir2.1_butkiewicz",
+    "kcnq2_potassium_channel_butkiewicz",
+    "cav3_t-type_calcium_channels_butkiewicz", "choline_transporter_butkiewicz",
+    "serine_threonine_kinase_33_butkiewicz",
+    "tyrosyl-dna_phosphodiesterase_butkiewicz"
+]
 
 qm_dataset_names = ["qm7", "qm7b", "qm8", "qm9"]
 
@@ -141,7 +138,6 @@ epitope_dataset_names = ["iedb_jespersen", "pdb_jespersen"]
 paratope_dataset_names = ["sabdab_liberis"]
 
 develop_dataset_names = ["tap", "sabdab_chen"]
-
 
 # multi_pred prediction
 
@@ -183,7 +179,6 @@ trial_outcome_dataset_names = ['phase1', 'phase2', 'phase3']
 ####################################
 # generation
 
-
 retrosyn_dataset_names = ["uspto50k", "uspto"]
 
 forwardsyn_dataset_names = ["uspto"]
@@ -193,7 +188,6 @@ single_molecule_dataset_names = ["zinc", "moses", "chembl", "chembl_v29"]
 multiple_molecule_dataset_names = ["dude", "pdbbind", "scpdb"]  #'crossdock',
 
 paired_dataset_names = ["uspto50k", "uspto"]
-
 
 ####################################
 # resource
@@ -287,7 +281,6 @@ guacamol_oracle = [
     "scaffold_hop",
 ]
 
-
 ####################################
 # Benchmark Datasets
 
@@ -342,7 +335,10 @@ docking_benchmark = {
 }
 
 docking_target_info = {
-    "3pbl": {"center": (9, 22.5, 26), "size": (15, 15, 15)},
+    "3pbl": {
+        "center": (9, 22.5, 26),
+        "size": (15, 15, 15)
+    },
     "1iep": {
         "center": (15.61389189189189, 53.38013513513513, 15.454837837837842),
         "size": (15, 15, 15),
@@ -355,7 +351,10 @@ docking_target_info = {
         "center": (-9.063639999999998, -7.1446, 55.86259999999999),
         "size": (15, 15, 15),
     },
-    "3ny8": {"center": (2.2488, 4.68495, 51.39820000000001), "size": (15, 15, 15)},
+    "3ny8": {
+        "center": (2.2488, 4.68495, 51.39820000000001),
+        "size": (15, 15, 15)
+    },
     "4rlu": {
         "center": (-0.7359999999999999, 22.75547368421052, -31.2368947368421),
         "size": (15, 15, 15),
@@ -460,13 +459,16 @@ dti_dg_splits = {"bindingdb_patent": "group"}
 ####################################
 
 # evaluator for single molecule, the input of __call__ is a single smiles OR list of smiles
-download_oracle_names = ["drd2", "gsk3b", "jnk3", "fpscores", "cyp3a4_veith", "smina"]
-# download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
-download_oracle_names = ["drd2", "gsk3b", "jnk3", "fpscores", "cyp3a4_veith"] + [
-    "drd2_current",
-    "gsk3b_current",
-    "jnk3_current",
+download_oracle_names = [
+    "drd2", "gsk3b", "jnk3", "fpscores", "cyp3a4_veith", "smina"
 ]
+# download_oracle_names = ['drd2', 'gsk3b', 'jnk3', 'fpscores', 'cyp3a4_veith']
+download_oracle_names = ["drd2", "gsk3b", "jnk3", "fpscores", "cyp3a4_veith"
+                        ] + [
+                            "drd2_current",
+                            "gsk3b_current",
+                            "jnk3_current",
+                        ]
 
 trivial_oracle_names = ["qed", "logp", "sa"] + guacamol_oracle
 synthetic_oracle_name = ["askcos", "ibm_rxn"]
@@ -503,7 +505,6 @@ download_receptor_oracle_name = [
     "3pbl_docking_vina",
 ]
 
-
 meta_oracle_name = [
     "isomer_meta",
     "rediscovery_meta",
@@ -514,24 +515,16 @@ meta_oracle_name = [
     "pyscreener",
 ]
 
-oracle_names = (
-    download_oracle_names
-    + trivial_oracle_names
-    + distribution_oracles
-    + synthetic_oracle_name
-    + meta_oracle_name
-    + docking_oracles
-    + download_receptor_oracle_name
-)
+oracle_names = (download_oracle_names + trivial_oracle_names +
+                distribution_oracles + synthetic_oracle_name +
+                meta_oracle_name + docking_oracles +
+                download_receptor_oracle_name)
 
 molgenpaired_dataset_names = ["qed", "drd2", "logp"]
 
-generation_datasets = (
-    retrosyn_dataset_names
-    + forwardsyn_dataset_names
-    + molgenpaired_dataset_names
-    + multiple_molecule_dataset_names
-)
+generation_datasets = (retrosyn_dataset_names + forwardsyn_dataset_names +
+                       molgenpaired_dataset_names +
+                       multiple_molecule_dataset_names)
 # generation
 ####################################
 
@@ -559,7 +552,7 @@ category_names = {
         "GDA",
         "Catalyst",
         "TCR_Epitope_Binding",
-        "TrialOutcome", 
+        "TrialOutcome",
     ],
     "generation": ["RetroSyn", "Reaction", "MolGen"],
 }
@@ -599,8 +592,8 @@ dataset_names = {
     "CRISPROutcome": crisproutcome_dataset_names,
     "test_single_pred": test_single_pred_dataset_names,
     "test_multi_pred": test_multi_pred_dataset_names,
-    "TCREpitopeBinding": tcr_epi_dataset_names, 
-    "TrialOutcome": trial_outcome_dataset_names, 
+    "TCREpitopeBinding": tcr_epi_dataset_names,
+    "TrialOutcome": trial_outcome_dataset_names,
 }
 
 benchmark_names = {
@@ -662,14 +655,14 @@ name2type = {
     "hiv": "tab",
     "sarscov2_3clpro_diamond": "tab",
     "sarscov2_vitro_touret": "tab",
-    "orexin1_receptor_butkiewicz": "tab", 
-    "m1_muscarinic_receptor_agonists_butkiewicz": "tab", 
+    "orexin1_receptor_butkiewicz": "tab",
+    "m1_muscarinic_receptor_agonists_butkiewicz": "tab",
     "m1_muscarinic_receptor_antagonists_butkiewicz": "tab",
-    "potassium_ion_channel_kir2.1_butkiewicz": "tab", 
-    "kcnq2_potassium_channel_butkiewicz": "tab", 
-    "cav3_t-type_calcium_channels_butkiewicz": "tab", 
-    "choline_transporter_butkiewicz": "tab", 
-    "serine_threonine_kinase_33_butkiewicz": "tab", 
+    "potassium_ion_channel_kir2.1_butkiewicz": "tab",
+    "kcnq2_potassium_channel_butkiewicz": "tab",
+    "cav3_t-type_calcium_channels_butkiewicz": "tab",
+    "choline_transporter_butkiewicz": "tab",
+    "serine_threonine_kinase_33_butkiewicz": "tab",
     "tyrosyl-dna_phosphodiesterase_butkiewicz": "tab",
     "davis": "tab",
     "kiba": "tab",
@@ -735,10 +728,10 @@ name2type = {
     "primekg": "tab",
     "primekg_drug_feature": "tab",
     "primekg_disease_feature": "tab",
-    "drug_comb_meta_data": "pkl", 
+    "drug_comb_meta_data": "pkl",
     "phase1": "tab",
-    "phase2": "tab", 
-    "phase3": "tab",  
+    "phase2": "tab",
+    "phase3": "tab",
 }
 
 name2id = {
@@ -782,14 +775,14 @@ name2id = {
     "ppbr_ma": 4259603,
     "sarscov2_3clpro_diamond": 4259606,
     "sarscov2_vitro_touret": 4259607,
-    "orexin1_receptor_butkiewicz": 6894447, 
-    "m1_muscarinic_receptor_agonists_butkiewicz": 6894443, 
+    "orexin1_receptor_butkiewicz": 6894447,
+    "m1_muscarinic_receptor_agonists_butkiewicz": 6894443,
     "m1_muscarinic_receptor_antagonists_butkiewicz": 6894446,
-    "potassium_ion_channel_kir2.1_butkiewicz": 6894442, 
-    "kcnq2_potassium_channel_butkiewicz": 6894444, 
-    "cav3_t-type_calcium_channels_butkiewicz": 6894445, 
-    "choline_transporter_butkiewicz": 6894441, 
-    "serine_threonine_kinase_33_butkiewicz": 6894448, 
+    "potassium_ion_channel_kir2.1_butkiewicz": 6894442,
+    "kcnq2_potassium_channel_butkiewicz": 6894444,
+    "cav3_t-type_calcium_channels_butkiewicz": 6894445,
+    "choline_transporter_butkiewicz": 6894441,
+    "serine_threonine_kinase_33_butkiewicz": 6894448,
     "tyrosyl-dna_phosphodiesterase_butkiewicz": 6894440,
     "solubility_aqsoldb": 4259610,
     "tox21": 4259612,
@@ -849,10 +842,10 @@ name2id = {
     "primekg": 6180626,
     "primekg_drug_feature": 6180619,
     "primekg_disease_feature": 6180618,
-    "drug_comb_meta_data": 7104245, 
-    "phase1": 7331305, 
-    "phase2": 7331306, 
-    "phase3": 7331307, 
+    "drug_comb_meta_data": 7104245,
+    "phase1": 7331305,
+    "phase2": 7331306,
+    "phase3": 7331307,
 }
 
 oracle2type = {
@@ -880,7 +873,6 @@ oracle2id = {
     "gsk3b_current": 6413412,
 }
 
-
 benchmark2type = {
     "admet_group": "zip",
     "drugcombo_group": "zip",
@@ -906,7 +898,6 @@ receptor2id = {
     "7l11": [5137921, 5617660],
     "3pbl": [5257195, 5617666],
 }  ## 'drd3': 5137901,
-
 
 sdf_file_names = {"grambow": ["Product", "Reactant", "TS"]}
 
