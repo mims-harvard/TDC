@@ -222,7 +222,8 @@ def NegSample(df, column_names, frac, two_types):
                     4: "Y"
                 })
             ],
-                           ignore_index=True, sort=False)
+                           ignore_index=True,
+                           sort=False)
         return df
     else:
         df_unique_id1 = np.unique(df[id1].values.reshape(-1))
@@ -267,5 +268,6 @@ def NegSample(df, column_names, frac, two_types):
                 4: "Y"
             })
         ],
-                       ignore_index=True, sort=False)
+                       ignore_index=True,
+                       sort=False)
         return df
