@@ -21,9 +21,9 @@ def create_fold(df, fold_seed, frac):
     train_frac, val_frac, test_frac = frac
     test = df.sample(frac=test_frac, replace=False, random_state=fold_seed)
     train_val = df[~df.index.isin(test.index)]
-    val = train_val.sample(
-        frac=val_frac / (1 - test_frac), replace=False, random_state=1
-    )
+    val = train_val.sample(frac=val_frac / (1 - test_frac),
+                           replace=False,
+                           random_state=1)
     train = train_val[~train_val.index.isin(val.index)]
 
     return {
@@ -54,10 +54,9 @@ def create_fold_setting_cold(df, fold_seed, frac, entities):
 
     # For each entity, sample the instances belonging to the test datasets
     test_entity_instances = [
-        df[e]
-        .drop_duplicates()
-        .sample(frac=test_frac, replace=False, random_state=fold_seed)
-        .values
+        df[e].drop_duplicates().sample(frac=test_frac,
+                                       replace=False,
+                                       random_state=fold_seed).values
         for e in entities
     ]
 
@@ -69,8 +68,7 @@ def create_fold_setting_cold(df, fold_seed, frac, entities):
     if len(test) == 0:
         raise ValueError(
             "No test samples found. Try another seed, increasing the test frac or a "
-            "less stringent splitting strategy."
-        )
+            "less stringent splitting strategy.")
 
     # Proceed with validation data
     train_val = df.copy()
@@ -78,10 +76,9 @@ def create_fold_setting_cold(df, fold_seed, frac, entities):
         train_val = train_val[~train_val[e].isin(test_entity_instances[i])]
 
     val_entity_instances = [
-        train_val[e]
-        .drop_duplicates()
-        .sample(frac=val_frac / (1 - test_frac), replace=False, random_state=fold_seed)
-        .values
+        train_val[e].drop_duplicates().sample(frac=val_frac / (1 - test_frac),
+                                              replace=False,
+                                              random_state=fold_seed).values
         for e in entities
     ]
     val = train_val.copy()
@@ -91,8 +88,7 @@ def create_fold_setting_cold(df, fold_seed, frac, entities):
     if len(val) == 0:
         raise ValueError(
             "No validation samples found. Try another seed, increasing the test frac "
-            "or a less stringent splitting strategy."
-        )
+            "or a less stringent splitting strategy.")
 
     train = train_val.copy()
     for i, e in enumerate(entities):
@@ -127,8 +123,7 @@ def create_scaffold_split(df, seed, frac, entity):
         RDLogger.DisableLog("rdApp.*")
     except:
         raise ImportError(
-            "Please install rdkit by 'conda install -c conda-forge rdkit'! "
-        )
+            "Please install rdkit by 'conda install -c conda-forge rdkit'! ")
     from tqdm import tqdm
     from random import Random
 
@@ -144,8 +139,7 @@ def create_scaffold_split(df, seed, frac, entity):
     for i, smiles in tqdm(enumerate(s), total=len(s)):
         try:
             scaffold = MurckoScaffold.MurckoScaffoldSmiles(
-                mol=Chem.MolFromSmiles(smiles), includeChirality=False
-            )
+                mol=Chem.MolFromSmiles(smiles), includeChirality=False)
             scaffolds[scaffold].add(i)
         except:
             print_sys(smiles + " returns RDKit error and is thus omitted...")
@@ -213,9 +207,9 @@ def create_combination_generation_split(dict1, dict2, seed, frac):
     length = len(dict1["coord"])
     indices = np.random.permutation(length)
     train_idx, val_idx, test_idx = (
-        indices[: int(length * train_frac)],
-        indices[int(length * train_frac) : int(length * (train_frac + val_frac))],
-        indices[int(length * (train_frac + val_frac)) :],
+        indices[:int(length * train_frac)],
+        indices[int(length * train_frac):int(length * (train_frac + val_frac))],
+        indices[int(length * (train_frac + val_frac)):],
     )
 
     return {
@@ -272,9 +266,10 @@ def create_combination_split(df, seed, frac):
         intxn = intxn.intersection(c)
 
     # Split combinations into train, val and test
-    test_choices = np.random.choice(
-        list(intxn), int(test_size / len(df["Cell_Line_ID"].unique())), replace=False
-    )
+    test_choices = np.random.choice(list(intxn),
+                                    int(test_size /
+                                        len(df["Cell_Line_ID"].unique())),
+                                    replace=False)
     trainval_intxn = intxn.difference(test_choices)
     val_choices = np.random.choice(
         list(trainval_intxn),
@@ -312,15 +307,18 @@ def create_fold_time(df, frac, date_column):
     df = df.sort_values(by=date_column).reset_index(drop=True)
     train_frac, val_frac, test_frac = frac[0], frac[1], frac[2]
 
-    split_date = df[: int(len(df) * (train_frac + val_frac))].iloc[-1][date_column]
+    split_date = df[:int(len(df) *
+                         (train_frac + val_frac))].iloc[-1][date_column]
     test = df[df[date_column] >= split_date].reset_index(drop=True)
     train_val = df[df[date_column] < split_date]
 
-    split_date_valid = train_val[
-        : int(len(train_val) * train_frac / (train_frac + val_frac))
-    ].iloc[-1][date_column]
-    train = train_val[train_val[date_column] <= split_date_valid].reset_index(drop=True)
-    valid = train_val[train_val[date_column] > split_date_valid].reset_index(drop=True)
+    split_date_valid = train_val[:int(
+        len(train_val) * train_frac /
+        (train_frac + val_frac))].iloc[-1][date_column]
+    train = train_val[train_val[date_column] <= split_date_valid].reset_index(
+        drop=True)
+    valid = train_val[train_val[date_column] > split_date_valid].reset_index(
+        drop=True)
 
     return {
         "train": train,
