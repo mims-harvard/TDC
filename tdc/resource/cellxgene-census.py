@@ -20,7 +20,7 @@ class CensusResource:
 
         @classmethod
         def check_dataset_is_census_data(cls, func):
-            # @wraps(func)
+            """Sets self.dataset to census_data"""
             def check(*args, **kwargs):
                 self = args[0]
                 self.dataset = self._CENSUS_DATA
@@ -30,7 +30,7 @@ class CensusResource:
 
         @classmethod
         def check_dataset_is_census_info(cls, func):
-
+            """Sets self.dataset to census_data"""
             def check(*args, **kwargs):
                 self = args[0]
                 self.dataset = self._CENSUS_META
@@ -40,26 +40,34 @@ class CensusResource:
 
         @classmethod
         def slice_checks_X_and_FM(cls, func):
-            """Decorator for functions that need X and feature presence matrix apply slicing if not filtering"""
+            """Decorator for:
+            1. functions that need X and feature presence matrix apply slicing if not filtering
+            2. functions with a todense() option abide by required formatting
+            3. functions requiring a measurement name provide a measurement name
+            4. fmt is a valid format
+            asserts these requirements hold in input arguments."""
             def check(*args, **kwargs):
-                upper, lower = kwargs.get('upper', None), kwargs.get("lower", None)
-                measurement_name = kwargs.get("measurement_name")
+                if "upper" in kwargs:
+                    upper, lower = kwargs.get('upper', None), kwargs.get("lower", None)
+                    if upper is None or lower is None:
+                        raise Exception(
+                            "No upper and/or lower bound for slicing was provided. Dataset is too large to fit in memory. \
+                            Memory-Efficient queries are not supported yet.")
                 fmt = kwargs.get("fmt")
-                todense = kwargs.get("todense")
-                if upper is None or lower is None:
-                    raise Exception(
-                        "No upper and/or lower bound for slicing was provided. Dataset is too large to fit in memory. \
-                        Memory-Efficient queries are not supported yet.")
-                elif measurement_name is None:
+                fmt = fmt if fmt is not None else "pandas"
+                if "todense" in kwargs:
+                    todense = kwargs.get("todense")
+                    kwargs["todense"] = todense if todense is not None else False
+                    if todense and fmt != "scipy":
+                        raise ValueError(
+                            "dense representation only available in scipy format")
+                measurement_name = kwargs.get("measurement_name")
+                if measurement_name is None:
                     raise Exception("measurement_name was not provided.")
                 elif fmt is not None and fmt not in ["scipy", "pyarrow"]:
                     raise ValueError(
                         "measurement_matrix only supports 'scipy' or 'pyarrow' format")
-                kwargs["todense"] = todense if todense is not None else False
-                if todense and fmt != "scipy":
-                    raise ValueError(
-                        "dense representation only available in scipy format")
-                kwargs["fmt"] = fmt if fmt is not None else "scipy"
+                kwargs["fmt"] = fmt if fmt is not None else "pandas"
                 return func(*args, **kwargs)
             return check
 
@@ -67,14 +75,27 @@ class CensusResource:
         """Initialize the Census Resource.
         
         Args:
-            census_version (str): The date of the census data release in YYYY- 
-            TODO: complete
+            census_version (str): The date of the census data release to use 
+            organism (str): string for census data organism to query data for. defaults to human.
         """
         self.census_version = census_version if census_version is not None else self._LATEST_CENSUS
         self.organism = organism if organism is not None else self._HUMAN
         self.dataset = None  # variable to set target census collection to either info or data
 
     def fmt_cellxgene_data(self, tiledb_ptr, fmt=None):
+        """Transform TileDB DataFrame or SparseNDArray to one of the supported API formats.
+
+        Args:
+            tiledb_ptr (TileDB DataFrame or SparseNDArray): pointer to the TileDB DataFrame
+            fmt (str, optional): deisgnates a format to transfowm TileDB data to. Defaults to None.
+
+        Raises:
+            Exception: if no format is provided
+            Exception: if format is not a valid option
+
+        Returns:
+            The dataset in selected format if it's a valid format
+        """
         if fmt is None:
             raise Exception(
                 "format not provided to fmt_cellxgene_data(), please provide fmt variable"
@@ -145,14 +166,13 @@ class CensusResource:
         """Count matrix for an input measurement by slice
 
         Args:
-            upper (_type_, optional): _description_. Defaults to None.
-            lower (_type_, optional): _description_. Defaults to None.
-            value_adjustment (_type_, optional): _description_. Defaults to None.
-            measurement_name (_type_, optional): _description_. Defaults to None.
+            upper (int, optional): upper bound on the slice to obtain. Defaults to None.
+            lower (int, optional): lower bound on the slice to obtain. Defaults to None.
+            value_adjustment (str, optional): designates the type of count desired for this measurement. Defaults to None.
+            measurement_name (str, optional): name of measurement, i.e. 'raw'. Defaults to None.
 
-        Raises:
-            Exception: _description_
-            Exception: _description_
+        Returns:
+            A slice from the count matrix in the specified format. If `todense` is True, then a dense scipy array will be returned.
         """
         value_adjustment = value_adjustment if value_adjustment is not None else "raw"
         with cellxgene_census.open_soma(
@@ -174,6 +194,18 @@ class CensusResource:
                                             measurement_name=None,
                                             fmt=None,
                                             todense=None):
+        """Gets a slice from the feature_dataset_presence_matrix for a given measurement_name
+
+        Args:
+            upper (int, optional): upper bound on the slice. Defaults to None.
+            lower (int, optional): lower bound on the slice. Defaults to None.
+            measurement_name (str, optional): measurment_name for the query i.e. 'rna'. Defaults to None.
+            fmt (str, optional): output format desired for the output dataset. Defaults to None.
+            todense (bool, optional): if True, returns scipy dense representation. Defaults to None.
+
+        Returns:
+            dataset in desired format
+        """
         with cellxgene_census.open_soma(
                 census_version=self.census_version) as census:
             n_obs = len(census[self.dataset][self.organism].obs)
@@ -181,7 +213,7 @@ class CensusResource:
                 census[self.dataset][self.organism].ms[measurement_name].var)
             fMatrix = census[self.dataset][self.organism].ms[measurement_name][
                 "feature_dataset_presence_matrix"]
-            slc = fMatrix.read((slice(0, 5),)).coos((n_obs, n_var))
+            slc = fMatrix.read((slice(lower, upper),)).coos((n_obs, n_var))
             out = self.fmt_cellxgene_data(slc, fmt)
             return out if not todense else out.todense()
 
@@ -217,18 +249,12 @@ class CensusResource:
         """Query the Census Measurement Matrix. Function returns a Python generator.
 
         Args:
-            value_filter (_type_, optional): _description_. Defaults to None.
-            value_adjustment (_type_, optional): _description_. Defaults to None.
-            measurement_name (_type_, optional): _description_. Defaults to None.
-            fmt (_type_, optional): _description_. Defaults to None.
-            todense (_type_, optional): _description_. Defaults to None.
+            value_filter (str, optional): a valuer filter (obs) to apply to the query. Defaults to None.
+            value_adjustment (str, optional): the type of count to obtain from count matricx for this measurement. Defaults to None.
+            measurement_name (str, optional): measurement name to query, i.e. "RNA". Defaults to None.
+            fmt (str, optional): output format for the output dataset. Defaults to None.
+            todense (bool, optional): if True, will output a dense scipy array as the representation. Defaults to None.
 
-        Raises:
-            ValueError: _description_
-            Exception: _description_
-            ValueError: _description_
-            ValueError: _description_
-            
         Yields:
             a slice of the output query in the specified format
         """
