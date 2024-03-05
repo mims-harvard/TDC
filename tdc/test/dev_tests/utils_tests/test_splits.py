@@ -11,10 +11,12 @@ import shutil
 
 # temporary solution for relative imports in case TDC is not installed
 # if TDC is installed, no need to use the following line
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
 
 class TestFunctions(unittest.TestCase):
+
     def setUp(self):
         print(os.getcwd())
         pass
@@ -42,19 +44,24 @@ class TestFunctions(unittest.TestCase):
         split = data.get_split(method="cold_split", column_name="Drug")
 
         self.assertEqual(
-            0, len(set(split["train"]["Drug"]).intersection(set(split["test"]["Drug"])))
-        )
-        self.assertEqual(
-            0, len(set(split["valid"]["Drug"]).intersection(set(split["test"]["Drug"])))
-        )
+            0,
+            len(
+                set(split["train"]["Drug"]).intersection(
+                    set(split["test"]["Drug"]))))
         self.assertEqual(
             0,
-            len(set(split["train"]["Drug"]).intersection(set(split["valid"]["Drug"]))),
+            len(
+                set(split["valid"]["Drug"]).intersection(
+                    set(split["test"]["Drug"]))))
+        self.assertEqual(
+            0,
+            len(
+                set(split["train"]["Drug"]).intersection(
+                    set(split["valid"]["Drug"]))),
         )
 
-        multi_split = data.get_split(
-            method="cold_split", column_name=["Drug_ID", "Target_ID"]
-        )
+        multi_split = data.get_split(method="cold_split",
+                                     column_name=["Drug_ID", "Target_ID"])
         for entity in ["Drug_ID", "Target_ID"]:
             train_entity = set(multi_split["train"][entity])
             valid_entity = set(multi_split["valid"][entity])

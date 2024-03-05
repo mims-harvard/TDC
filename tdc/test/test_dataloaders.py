@@ -11,11 +11,13 @@ import shutil
 
 # temporary solution for relative imports in case TDC is not installed
 # if TDC is installed, no need to use the following line
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 # TODO: add verification for the generation other than simple integration
 
 
 class TestDataloader(unittest.TestCase):
+
     def setUp(self):
         print(os.getcwd())
         pass
@@ -41,6 +43,7 @@ class TestDataloader(unittest.TestCase):
     def tearDown(self):
         print(os.getcwd())
         shutil.rmtree(os.path.join(os.getcwd(), "data"))
+
 
 if __name__ == "__main__":
     unittest.main()
