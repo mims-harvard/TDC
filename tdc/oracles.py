@@ -17,7 +17,8 @@ from .metadata import (
     docking_target_info,
 )
 
-SKLEARN_VERSION = version.parse(pkg_resources.get_distribution("scikit-learn").version)
+SKLEARN_VERSION = version.parse(
+    pkg_resources.get_distribution("scikit-learn").version)
 
 
 def _normalize_docking_score(raw_score):
@@ -25,7 +26,6 @@ def _normalize_docking_score(raw_score):
 
 
 class Oracle:
-
     """the oracle class to retrieve any oracle given by query name
 
     Args:
@@ -112,28 +112,24 @@ class Oracle:
             from .chem_utils import similarity_meta
 
             self.evaluator_func = similarity_meta(
-                target_smiles=self.target_smiles, **self.kwargs
-            )
+                target_smiles=self.target_smiles, **self.kwargs)
         elif self.name == "rediscovery_meta":
             from .chem_utils import rediscovery_meta
 
             self.evaluator_func = rediscovery_meta(
-                target_smiles=self.target_smiles, **self.kwargs
-            )
+                target_smiles=self.target_smiles, **self.kwargs)
         elif self.name == "isomer_meta":
             from .chem_utils import isomer_meta
 
-            self.evaluator_func = isomer_meta(
-                target_smiles=self.target_smiles, **self.kwargs
-            )
+            self.evaluator_func = isomer_meta(target_smiles=self.target_smiles,
+                                              **self.kwargs)
         elif self.name == "median_meta":
             from .chem_utils import median_meta
 
             self.evaluator_func = median_meta(
                 target_smiles_1=self.target_smiles[0],
                 target_smiles_2=self.target_smiles[1],
-                **self.kwargs
-            )
+                **self.kwargs)
         elif self.name == "rediscovery":
             from .chem_utils import (
                 celecoxib_rediscovery,
@@ -257,7 +253,10 @@ class Oracle:
         elif self.name == "hop":
             from .chem_utils import deco_hop, scaffold_hop
 
-            self.evaluator_func = {"Deco Hop": deco_hop, "Scaffold Hop": scaffold_hop}
+            self.evaluator_func = {
+                "Deco Hop": deco_hop,
+                "Scaffold Hop": scaffold_hop
+            }
         elif self.name == "deco_hop":
             from .chem_utils import deco_hop
 
@@ -318,12 +317,9 @@ class Oracle:
                 box_size=boxsize,
             )
 
-        elif (
-            self.name == "drd3_docking"
-            or self.name == "3pbl_docking"
-            or self.name == "drd3_docking_normalize"
-            or self.name == "3pbl_docking_normalize"
-        ):
+        elif (self.name == "drd3_docking" or self.name == "3pbl_docking" or
+              self.name == "drd3_docking_normalize" or
+              self.name == "3pbl_docking_normalize"):
 
             from .chem_utils import PyScreener_meta
 
@@ -596,10 +592,9 @@ class Oracle:
                     self.num_called -= len(smiles_lst)
                     raise ValueError(
                         "The maximum number of evaluator call is reached! The maximum is: "
-                        + str(self.num_max_call)
-                        + ". The current requested call (plus accumulated calls) is: "
-                        + str(self.num_called + len(smiles_lst))
-                    )
+                        + str(self.num_max_call) +
+                        ". The current requested call (plus accumulated calls) is: "
+                        + str(self.num_called + len(smiles_lst)))
 
             #### evaluator for single molecule,
             #### the input of __call__ is a single smiles OR list of smiles
@@ -618,16 +613,14 @@ class Oracle:
                     for smiles in smiles_lst:
                         results_lst.append(
                             self.normalize(
-                                self.evaluator_func(smiles, *(args[1:]), **kwargs)
-                            )
-                        )
+                                self.evaluator_func(smiles, *(args[1:]),
+                                                    **kwargs)))
                 else:
                     results_lst = []
                     for smiles in smiles_lst:
                         try:
-                            results = self.evaluator_func(
-                                [smiles], *(args[1:]), **kwargs
-                            )
+                            results = self.evaluator_func([smiles], *(args[1:]),
+                                                          **kwargs)
                             results = results[0]
                         except:
                             results = self.default_property
@@ -649,10 +642,9 @@ class Oracle:
                     self.num_called -= 1
                     raise ValueError(
                         "The maximum number of evaluator call is reached! The maximum is: "
-                        + str(self.num_max_call)
-                        + ". The current requested call (plus accumulated calls) is: "
-                        + str(self.num_called + 1)
-                    )
+                        + str(self.num_max_call) +
+                        ". The current requested call (plus accumulated calls) is: "
+                        + str(self.num_called + 1))
 
             ## a single smiles
             if type(self.evaluator_func) == dict:
