@@ -11,7 +11,6 @@ from ..metadata import dataset_names
 
 
 class Reaction(generation_dataset.PairedDataLoader):
-
     """Data loader class accessing to forward reaction prediction task."""
 
     def __init__(

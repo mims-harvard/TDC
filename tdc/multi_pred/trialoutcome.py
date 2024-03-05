@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class TrialOutcome(multi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in clinical trial outcome Prediction task.
     More info: https://tdcommons.ai/multi_pred_tasks/trialoutcome/
 
@@ -35,9 +34,10 @@ class TrialOutcome(multi_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data", label_name=None, print_stats=False):
         """Create Clinical Trial Outcome Prediction dataloader object"""
-        super().__init__(
-            name, path, print_stats, dataset_names=dataset_names["TrialOutcome"]
-        )
+        super().__init__(name,
+                         path,
+                         print_stats,
+                         dataset_names=dataset_names["TrialOutcome"])
         self.entity1_name = "drug_molecule"
         self.entity2_name = "disease_code"
         # self.entity3_name = "eligibility_criteria"

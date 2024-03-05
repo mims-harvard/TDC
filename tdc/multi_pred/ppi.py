@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class PPI(bi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Protein-Protein Interaction Prediction task.
     More info: https://tdcommons.ai/multi_pred_tasks/ppi/
 
@@ -33,9 +32,11 @@ class PPI(bi_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data", label_name=None, print_stats=False):
         """Create Protein-Protein Interaction Prediction dataloader object"""
-        super().__init__(
-            name, path, label_name, print_stats, dataset_names=dataset_names["PPI"]
-        )
+        super().__init__(name,
+                         path,
+                         label_name,
+                         print_stats,
+                         dataset_names=dataset_names["PPI"])
         self.entity1_name = "Protein1"
         self.entity2_name = "Protein2"
         self.two_types = False
@@ -51,9 +52,9 @@ class PPI(bi_pred_dataset.DataLoader):
 
         print_sys("--- Dataset Statistics ---")
         print(
-            "There are "
-            + str(len(np.unique(self.entity1.tolist() + self.entity2.tolist())))
-            + " unique proteins.",
+            "There are " +
+            str(len(np.unique(self.entity1.tolist() + self.entity2.tolist()))) +
+            " unique proteins.",
             flush=True,
             file=sys.stderr,
         )

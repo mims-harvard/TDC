@@ -29,7 +29,6 @@ from ..evaluator import Evaluator
 
 
 class BenchmarkGroup:
-
     """Boilerplate of benchmark group class. It downloads, processes, and loads a set of benchmark classes along with their splits. It also provides evaluators and train/valid splitters."""
 
     def __init__(self, name, path="./data", file_format="csv"):
@@ -118,15 +117,19 @@ class BenchmarkGroup:
         frac = [0.875, 0.125, 0.0]
 
         if split_method == "scaffold":
-            out = create_scaffold_split(train_val, seed, frac=frac, entity="Drug")
+            out = create_scaffold_split(train_val,
+                                        seed,
+                                        frac=frac,
+                                        entity="Drug")
         elif split_method == "random":
             out = create_fold(train_val, seed, frac=frac)
         elif split_method == "combination":
             out = create_combination_split(train_val, seed, frac=frac)
         elif split_method == "group":
-            out = create_group_split(
-                train_val, seed, holdout_frac=0.2, group_column="Year"
-            )
+            out = create_group_split(train_val,
+                                     seed,
+                                     holdout_frac=0.2,
+                                     group_column="Year")
         else:
             raise NotImplementedError
         return out["train"], out["valid"]
@@ -178,8 +181,11 @@ class BenchmarkGroup:
                 elif self.file_format == "pkl":
                     test = pd.read_pickle(os.path.join(data_path, "test.pkl"))
                 y = test.Y.values
-                evaluator = eval("Evaluator(name = '" + metric_dict[data_name] + "')")
-                out[data_name] = {metric_dict[data_name]: round(evaluator(y, pred_), 3)}
+                evaluator = eval("Evaluator(name = '" + metric_dict[data_name] +
+                                 "')")
+                out[data_name] = {
+                    metric_dict[data_name]: round(evaluator(y, pred_), 3)
+                }
 
                 # If reporting accuracy across target classes
                 if "target_class" in test.columns:
@@ -190,13 +196,11 @@ class BenchmarkGroup:
                         y_subset = test_subset.Y.values
                         pred_subset = test_subset.pred.values
 
-                        evaluator = eval(
-                            "Evaluator(name = '" + metric_dict[data_name_subset] + "')"
-                        )
+                        evaluator = eval("Evaluator(name = '" +
+                                         metric_dict[data_name_subset] + "')")
                         out[data_name_subset] = {
-                            metric_dict[data_name_subset]: round(
-                                evaluator(y_subset, pred_subset), 3
-                            )
+                            metric_dict[data_name_subset]:
+                                round(evaluator(y_subset, pred_subset), 3)
                         }
             return out
         else:
@@ -207,10 +211,14 @@ class BenchmarkGroup:
                 )
             data_name = fuzzy_search(benchmark, self.dataset_names)
             metric_dict = bm_metric_names[self.name]
-            evaluator = eval("Evaluator(name = '" + metric_dict[data_name] + "')")
+            evaluator = eval("Evaluator(name = '" + metric_dict[data_name] +
+                             "')")
             return {metric_dict[data_name]: round(evaluator(true, pred), 3)}
 
-    def evaluate_many(self, preds, save_file_name=None, results_individual=None):
+    def evaluate_many(self,
+                      preds,
+                      save_file_name=None,
+                      results_individual=None):
         """
         This function returns the data in a format needed to submit to the Leaderboard
 
@@ -225,11 +233,9 @@ class BenchmarkGroup:
         min_requirement = 5
 
         if len(preds) < min_requirement:
-            return ValueError(
-                "Must have predictions from at least "
-                + str(min_requirement)
-                + " runs for leaderboard submission"
-            )
+            return ValueError("Must have predictions from at least " +
+                              str(min_requirement) +
+                              " runs for leaderboard submission")
         if results_individual is None:
             individual_results = []
             for pred in preds:

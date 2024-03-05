@@ -14,7 +14,6 @@ from ..metadata import dataset_names
 
 
 class TCREpitopeBinding(multi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in T cell receptor (TCR) Specificity Prediction Task.
     More info:
 
@@ -31,9 +30,10 @@ class TCREpitopeBinding(multi_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data", print_stats=False):
         """Create TCR Specificity Prediction dataloader object"""
-        super().__init__(
-            name, path, print_stats, dataset_names=dataset_names["TCREpitopeBinding"]
-        )
+        super().__init__(name,
+                         path,
+                         print_stats,
+                         dataset_names=dataset_names["TCREpitopeBinding"])
         self.entity1_name = "TCR"
         self.entity2_name = "Epitope"
 

@@ -5,7 +5,6 @@
 import numpy as np
 from typing import List
 
-
 try:
     from rdkit import Chem, DataStructs
     from rdkit.Chem import AllChem
@@ -15,8 +14,8 @@ try:
     from rdkit.Chem.Fingerprints import FingerprintMols
     from rdkit.Chem import MACCSkeys
 except:
-    raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")
-
+    raise ImportError(
+        "Please install rdkit by 'conda install -c conda-forge rdkit'! ")
 
 from ...utils import print_sys
 from ..oracle.oracle import (
@@ -52,15 +51,14 @@ def smiles2morgan(s, radius=2, nBits=1024):
     try:
         s = canonicalize(s)
         mol = Chem.MolFromSmiles(s)
-        features_vec = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=nBits)
+        features_vec = AllChem.GetMorganFingerprintAsBitVect(mol,
+                                                             radius,
+                                                             nBits=nBits)
         features = np.zeros((1,))
         DataStructs.ConvertToNumpyArray(features_vec, features)
     except:
-        print_sys(
-            "rdkit not found this smiles for morgan: "
-            + s
-            + " convert to all 0 features"
-        )
+        print_sys("rdkit not found this smiles for morgan: " + s +
+                  " convert to all 0 features")
         features = np.zeros((nBits,))
     return features
 
@@ -89,9 +87,8 @@ def smiles2rdkit2d(s):
         NaNs = np.isnan(features)
         features[NaNs] = 0
     except:
-        print_sys(
-            "descriptastorus not found this smiles: " + s + " convert to all 0 features"
-        )
+        print_sys("descriptastorus not found this smiles: " + s +
+                  " convert to all 0 features")
         features = np.zeros((200,))
     return np.array(features)
 
@@ -115,7 +112,8 @@ def smiles2daylight(s):
         features = np.zeros((NumFinger,))
         features[np.array(temp)] = 1
     except:
-        print_sys("rdkit not found this smiles: " + s + " convert to all 0 features")
+        print_sys("rdkit not found this smiles: " + s +
+                  " convert to all 0 features")
         features = np.zeros((2048,))
     return np.array(features)
 
@@ -210,7 +208,6 @@ def smiles2ECFP6(smiles):
 
 
 class MoleculeFingerprint:
-
     """
     Example:
     MolFP = MoleculeFingerprint(fp = 'ECFP6')
@@ -239,10 +236,9 @@ class MoleculeFingerprint:
         try:
             assert fp in fp2func
         except:
-            raise Exception(
-                "The fingerprint you specify are not supported. \
+            raise Exception("The fingerprint you specify are not supported. \
               It can only among 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem'"
-            )
+                           )
 
         self.fp = fp
         self.func = fp2func[fp]
@@ -388,12 +384,11 @@ def onek_encoding_unk(x, allowable_set):
 
 def get_atom_features(atom):
     return torch.Tensor(
-        onek_encoding_unk(atom.GetSymbol(), ELEM_LIST)
-        + onek_encoding_unk(atom.GetDegree(), [0, 1, 2, 3, 4, 5])
-        + onek_encoding_unk(atom.GetFormalCharge(), [-1, -2, 1, 2, 0])
-        + onek_encoding_unk(int(atom.GetChiralTag()), [0, 1, 2, 3])
-        + [atom.GetIsAromatic()]
-    )
+        onek_encoding_unk(atom.GetSymbol(), ELEM_LIST) +
+        onek_encoding_unk(atom.GetDegree(), [0, 1, 2, 3, 4, 5]) +
+        onek_encoding_unk(atom.GetFormalCharge(), [-1, -2, 1, 2, 0]) +
+        onek_encoding_unk(int(atom.GetChiralTag()), [0, 1, 2, 3]) +
+        [atom.GetIsAromatic()])
 
 
 def smiles2PyG(smiles):
@@ -413,8 +408,9 @@ def smiles2PyG(smiles):
     atom_features = torch.stack(atom_features)
     y = [atom.GetSymbol() for atom in mol.GetAtoms()]
     y = list(
-        map(lambda x: ELEM_LIST.index(x) if x in ELEM_LIST else len(ELEM_LIST) - 1, y)
-    )
+        map(
+            lambda x: ELEM_LIST.index(x)
+            if x in ELEM_LIST else len(ELEM_LIST) - 1, y))
     y = torch.LongTensor(y)
     bond_features = []
     for bond in mol.GetBonds():
@@ -437,6 +433,7 @@ def molfile2PyG(molfile):
 
 
 ############### PyG end ###############
+
 
 ############### DGL begin ###############
 def smiles2DGL(smiles):
@@ -467,7 +464,6 @@ def smiles2DGL(smiles):
 
 
 ############### DGL end ###############
-
 
 from ._xyz2mol import xyzfile2mol
 
@@ -511,7 +507,8 @@ def xyzfile2selfies(xyzfile):
 
 
 def distance3d(coordinate_1, coordinate_2):
-    return np.sqrt(sum([(c1 - c2) ** 2 for c1, c2 in zip(coordinate_1, coordinate_2)]))
+    return np.sqrt(
+        sum([(c1 - c2)**2 for c1, c2 in zip(coordinate_1, coordinate_2)]))
 
 
 def upper_atom(atomsymbol):
@@ -526,7 +523,9 @@ def xyzfile2graph3d(xyzfile):
         for j in range(i + 1, num_atoms):
             distance = distance3d(xyz_coordinates[i], xyz_coordinates[j])
             distance_adj_matrix[i, j] = distance_adj_matrix[j, i] = distance
-    idx2atom = {idx: upper_atom(str_atom(atom)) for idx, atom in enumerate(atoms)}
+    idx2atom = {
+        idx: upper_atom(str_atom(atom)) for idx, atom in enumerate(atoms)
+    }
     mol, BO = xyzfile2mol(xyzfile)
     return idx2atom, distance_adj_matrix, BO
 
@@ -599,9 +598,9 @@ def mol_conformer2graph3d(mol_conformer_lst):
         positions = np.concatenate(positions, 0)
         for i in range(atom_num):
             for j in range(i + 1, atom_num):
-                distance_adj_matrix[i, j] = distance_adj_matrix[j, i] = distance3d(
-                    positions[i], positions[j]
-                )
+                distance_adj_matrix[i,
+                                    j] = distance_adj_matrix[j, i] = distance3d(
+                                        positions[i], positions[j])
         for bond in mol.GetBonds():
             a1 = bond.GetBeginAtom().GetIdx()
             a2 = bond.GetEndAtom().GetIdx()
@@ -687,6 +686,7 @@ def xyzfile2coulomb(xyzfile):
 # 2D_format = ['SMILES', 'SELFIES', 'Graph2D', 'PyG', 'DGL', 'ECFP2', 'ECFP4', 'ECFP6', 'MACCS', 'Daylight', 'RDKit2D', 'Morgan', 'PubChem']
 # 3D_format = ['Graph3D', 'Coulumb']
 
+
 ## XXX2smiles
 def molfile2smiles(molfile):
     """convert molfile into SMILES string
@@ -721,7 +721,6 @@ def mol2file2smiles(molfile):
 
 
 ## smiles2xxx
-
 
 atom_types = ["C", "N", "O", "H", "F", "unknown"]  ### Cl, S?
 
@@ -868,7 +867,6 @@ threeD_format = [
 
 
 class MolConvert:
-
     """MolConvert: convert the molecule from src formet to dst format.
 
 
@@ -902,7 +900,8 @@ class MolConvert:
 
                 global sf
             except:
-                raise Exception("Please install selfies via 'pip install selfies'")
+                raise Exception(
+                    "Please install selfies via 'pip install selfies'")
 
         if "Coulumb" == dst:
             try:
@@ -1023,7 +1022,8 @@ class MolConvert:
             else:
                 lst = []
                 for x0 in x:
-                    lst.append(self.func(x0, radius=self._radius, nBits=self._nbits))
+                    lst.append(
+                        self.func(x0, radius=self._radius, nBits=self._nbits))
                 out = lst
             if self._dst in fingerprints_list:
                 out = np.array(out)

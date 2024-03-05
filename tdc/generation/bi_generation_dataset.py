@@ -15,7 +15,6 @@ from ..utils import create_combination_generation_split
 
 
 class DataLoader(base_dataset.DataLoader):
-
     """A base dataset loader class.
 
     Attributes:
@@ -34,7 +33,9 @@ class DataLoader(base_dataset.DataLoader):
         threshold=15,
         remove_Hs=True,
         keep_het=False,
-        allowed_atom_list=["C", "N", "O", "S", "H", "B", "Br", "Cl", "P", "I", "F"],
+        allowed_atom_list=[
+            "C", "N", "O", "S", "H", "B", "Br", "Cl", "P", "I", "F"
+        ],
     ):
         """To create a base dataloader object that each generation task can inherit from.
 
@@ -115,6 +116,7 @@ class DataLoader(base_dataset.DataLoader):
         protein, ligand = data["protein"], data["ligand"]
 
         if method == "random":
-            return create_combination_generation_split(protein, ligand, seed, frac)
+            return create_combination_generation_split(protein, ligand, seed,
+                                                       frac)
         else:
             raise AttributeError("Please use the correct split method")

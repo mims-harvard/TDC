@@ -26,7 +26,6 @@ from ..utils import (
 
 
 class DataLoader(base_dataset.DataLoader):
-
     """A base data loader class that each bi-instance prediction task dataloader class can inherit from.
 
     Attributes: TODO
@@ -52,10 +51,8 @@ class DataLoader(base_dataset.DataLoader):
             if label_name is None:
                 raise ValueError(
                     "Please select a label name. "
-                    "You can use tdc.utils.retrieve_label_name_list('"
-                    + name.lower()
-                    + "') to retrieve all available label names."
-                )
+                    "You can use tdc.utils.retrieve_label_name_list('" +
+                    name.lower() + "') to retrieve all available label names.")
 
         name = fuzzy_search(name, dataset_names)
         if name == "bindingdb_patent":
@@ -70,9 +67,11 @@ class DataLoader(base_dataset.DataLoader):
             entity1_idx,
             entity2_idx,
             aux_column_val,
-        ) = interaction_dataset_load(
-            name, path, label_name, dataset_names, aux_column=aux_column
-        )
+        ) = interaction_dataset_load(name,
+                                     path,
+                                     label_name,
+                                     dataset_names,
+                                     aux_column=aux_column)
 
         self.name = name
         self.entity1 = entity1
@@ -107,26 +106,22 @@ class DataLoader(base_dataset.DataLoader):
         """
         if format == "df":
             if self.aux_column is None:
-                return pd.DataFrame(
-                    {
-                        self.entity1_name + "_ID": self.entity1_idx,
-                        self.entity1_name: self.entity1,
-                        self.entity2_name + "_ID": self.entity2_idx,
-                        self.entity2_name: self.entity2,
-                        "Y": self.y,
-                    }
-                )
+                return pd.DataFrame({
+                    self.entity1_name + "_ID": self.entity1_idx,
+                    self.entity1_name: self.entity1,
+                    self.entity2_name + "_ID": self.entity2_idx,
+                    self.entity2_name: self.entity2,
+                    "Y": self.y,
+                })
             else:
-                return pd.DataFrame(
-                    {
-                        self.entity1_name + "_ID": self.entity1_idx,
-                        self.entity1_name: self.entity1,
-                        self.entity2_name + "_ID": self.entity2_idx,
-                        self.entity2_name: self.entity2,
-                        "Y": self.y,
-                        self.aux_column: self.aux_column_val,
-                    }
-                )
+                return pd.DataFrame({
+                    self.entity1_name + "_ID": self.entity1_idx,
+                    self.entity1_name: self.entity1,
+                    self.entity2_name + "_ID": self.entity2_idx,
+                    self.entity2_name: self.entity2,
+                    "Y": self.y,
+                    self.aux_column: self.aux_column_val,
+                })
 
         elif format == "DeepPurpose":
             return self.entity1.values, self.entity2.values, self.y.values
@@ -165,12 +160,8 @@ class DataLoader(base_dataset.DataLoader):
             file=sys.stderr,
         )
         print(
-            str(len(self.y))
-            + " "
-            + self.entity1_name.lower()
-            + "-"
-            + self.entity2_name.lower()
-            + " pairs.",
+            str(len(self.y)) + " " + self.entity1_name.lower() + "-" +
+            self.entity2_name.lower() + " pairs.",
             flush=True,
             file=sys.stderr,
         )
@@ -218,12 +209,10 @@ class DataLoader(base_dataset.DataLoader):
             return create_fold_setting_cold(df, seed, frac, self.entity2_name)
         elif method == "cold_split":
             if column_name is None or not all(
-                list(map(lambda x: x in df.columns.values, column_name))
-            ):
+                    list(map(lambda x: x in df.columns.values, column_name))):
                 raise AttributeError(
                     "For cold_split, please provide one or multiple column names "
-                    "that are contained in the dataframe."
-                )
+                    "that are contained in the dataframe.")
             return create_fold_setting_cold(df, seed, frac, column_name)
         elif method == "combination":
             return create_combination_split(df, seed, frac)
@@ -298,9 +287,8 @@ class DataLoader(base_dataset.DataLoader):
         if len(np.unique(self.raw_y)) > 2:
             print(
                 "The dataset label consists of affinity scores. "
-                "Binarization using threshold "
-                + str(threshold)
-                + " is conducted to construct the positive edges in the network. "
+                "Binarization using threshold " + str(threshold) +
+                " is conducted to construct the positive edges in the network. "
                 "Adjust the threshold by to_graph(threshold = X)",
                 flush=True,
                 file=sys.stderr,
@@ -308,29 +296,34 @@ class DataLoader(base_dataset.DataLoader):
             if threshold is None:
                 raise AttributeError(
                     "Please specify the threshold to binarize the data by "
-                    "'to_graph(threshold = N)'!"
-                )
-            df["label_binary"] = label_transform(
-                self.raw_y, True, threshold, False, verbose=False, order=order
-            )
+                    "'to_graph(threshold = N)'!")
+            df["label_binary"] = label_transform(self.raw_y,
+                                                 True,
+                                                 threshold,
+                                                 False,
+                                                 verbose=False,
+                                                 order=order)
         else:
             # already binary
             df["label_binary"] = df["Y"]
 
-        df[self.entity1_name + "_ID"] = df[self.entity1_name + "_ID"].astype(str)
-        df[self.entity2_name + "_ID"] = df[self.entity2_name + "_ID"].astype(str)
+        df[self.entity1_name + "_ID"] = df[self.entity1_name +
+                                           "_ID"].astype(str)
+        df[self.entity2_name + "_ID"] = df[self.entity2_name +
+                                           "_ID"].astype(str)
         df_pos = df[df.label_binary == 1]
         df_neg = df[df.label_binary == 0]
 
         return_dict = {}
 
-        pos_edges = df_pos[
-            [self.entity1_name + "_ID", self.entity2_name + "_ID"]
-        ].values
-        neg_edges = df_neg[
-            [self.entity1_name + "_ID", self.entity2_name + "_ID"]
-        ].values
-        edges = df[[self.entity1_name + "_ID", self.entity2_name + "_ID"]].values
+        pos_edges = df_pos[[
+            self.entity1_name + "_ID", self.entity2_name + "_ID"
+        ]].values
+        neg_edges = df_neg[[
+            self.entity1_name + "_ID", self.entity2_name + "_ID"
+        ]].values
+        edges = df[[self.entity1_name + "_ID",
+                    self.entity2_name + "_ID"]].values
 
         if format == "edge_list":
             return_dict["edge_list"] = pos_edges
@@ -364,7 +357,8 @@ class DataLoader(base_dataset.DataLoader):
             edge_list1 = np.array([dict_[i] for i in pos_edges.T[0]])
             edge_list2 = np.array([dict_[i] for i in pos_edges.T[1]])
 
-            edge_index = torch.tensor([edge_list1, edge_list2], dtype=torch.long)
+            edge_index = torch.tensor([edge_list1, edge_list2],
+                                      dtype=torch.long)
             x = torch.tensor(np.array(index), dtype=torch.float)
             data = Data(x=x, edge_index=edge_index)
             return_dict["pyg_graph"] = data

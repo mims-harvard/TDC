@@ -14,7 +14,6 @@ from ..metadata import dataset_names
 
 
 class DrugRes(bi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Drug Response Prediction Task.
     More info: https://tdcommons.ai/multi_pred_tasks/drugres/
 
@@ -33,9 +32,11 @@ class DrugRes(bi_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data", label_name=None, print_stats=False):
         """Create Drug Response Prediction dataloader object"""
-        super().__init__(
-            name, path, label_name, print_stats, dataset_names=dataset_names["DrugRes"]
-        )
+        super().__init__(name,
+                         path,
+                         label_name,
+                         print_stats,
+                         dataset_names=dataset_names["DrugRes"])
         self.entity1_name = "Drug"
         self.entity2_name = "Cell Line"
         self.two_types = True
@@ -51,12 +52,11 @@ class DrugRes(bi_pred_dataset.DataLoader):
         Retrieve the gene symbols for the cell line gene expression
         """
         path = self.path
-        name = download_wrapper("gdsc_gene_symbols", path, ["gdsc_gene_symbols"])
+        name = download_wrapper("gdsc_gene_symbols", path,
+                                ["gdsc_gene_symbols"])
         print_sys("Loading...")
         import pandas as pd
         import os
 
         df = pd.read_csv(os.path.join(path, name + ".tab"), sep="\t")
-        return df.values.reshape(
-            -1,
-        )
+        return df.values.reshape(-1,)

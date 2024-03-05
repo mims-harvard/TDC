@@ -12,7 +12,8 @@ try:
 
     rdBase.DisableLog("rdApp.error")
 except:
-    raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")
+    raise ImportError(
+        "Please install rdkit by 'conda install -c conda-forge rdkit'! ")
 
 
 def single_molecule_validity(smiles):
@@ -57,7 +58,8 @@ def canonicalize(smiles):
 
 def unique_lst_of_smiles(list_of_smiles):
     canonical_smiles_lst = list(map(canonicalize, list_of_smiles))
-    canonical_smiles_lst = list(filter(lambda x: x is not None, canonical_smiles_lst))
+    canonical_smiles_lst = list(
+        filter(lambda x: x is not None, canonical_smiles_lst))
     canonical_smiles_lst = list(set(canonical_smiles_lst))
     return canonical_smiles_lst
 
@@ -88,11 +90,9 @@ def novelty(generated_smiles_lst, training_smiles_lst):
     """
     generated_smiles_lst = unique_lst_of_smiles(generated_smiles_lst)
     training_smiles_lst = unique_lst_of_smiles(training_smiles_lst)
-    novel_ratio = (
-        sum([1 if i in training_smiles_lst else 0 for i in generated_smiles_lst])
-        * 1.0
-        / len(generated_smiles_lst)
-    )
+    novel_ratio = (sum(
+        [1 if i in training_smiles_lst else 0 for i in generated_smiles_lst]) *
+                   1.0 / len(generated_smiles_lst))
     return 1 - novel_ratio
 
 
@@ -107,14 +107,19 @@ def diversity(list_of_smiles):
       div: float
     """
     list_of_unique_smiles = unique_lst_of_smiles(list_of_smiles)
-    list_of_mol = [Chem.MolFromSmiles(smiles) for smiles in list_of_unique_smiles]
+    list_of_mol = [
+        Chem.MolFromSmiles(smiles) for smiles in list_of_unique_smiles
+    ]
     list_of_fp = [
-        AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=2048, useChirality=False)
+        AllChem.GetMorganFingerprintAsBitVect(mol,
+                                              2,
+                                              nBits=2048,
+                                              useChirality=False)
         for mol in list_of_mol
     ]
     avg_lst = []
     for idx, fp in enumerate(list_of_fp):
-        for fp2 in list_of_fp[idx + 1 :]:
+        for fp2 in list_of_fp[idx + 1:]:
             sim = DataStructs.TanimotoSimilarity(fp, fp2)
             ### option I
             distance = 1 - sim
@@ -235,7 +240,9 @@ def get_fingerprints(mols, radius=2, length=4096):
 
     Returns: a list of fingerprints
     """
-    return [AllChem.GetMorganFingerprintAsBitVect(m, radius, length) for m in mols]
+    return [
+        AllChem.GetMorganFingerprintAsBitVect(m, radius, length) for m in mols
+    ]
 
 
 def get_mols(smiles_list):
@@ -267,10 +274,8 @@ def calculate_internal_pairwise_similarities(smiles_list):
         Symmetric matrix of pairwise similarities. Diagonal is set to zero.
     """
     if len(smiles_list) > 10000:
-        logger.warning(
-            f"Calculating internal similarity on large set of "
-            f"SMILES strings ({len(smiles_list)})"
-        )
+        logger.warning(f"Calculating internal similarity on large set of "
+                       f"SMILES strings ({len(smiles_list)})")
 
     mols = get_mols(smiles_list)
     fps = get_fingerprints(mols)
@@ -313,7 +318,8 @@ def kl_divergence(generated_smiles_lst, training_smiles_lst):
     def canonical(smiles):
         mol = Chem.MolFromSmiles(smiles)
         if mol is not None:
-            return Chem.MolToSmiles(mol, isomericSmiles=True)  ### todo double check
+            return Chem.MolToSmiles(mol,
+                                    isomericSmiles=True)  ### todo double check
         else:
             return None
 
@@ -323,17 +329,20 @@ def kl_divergence(generated_smiles_lst, training_smiles_lst):
     generated_lst_mol = list(filter(filter_out_func, generated_lst_mol))
     training_lst_mol = list(filter(filter_out_func, training_lst_mol))
 
-    d_sampled = calculate_pc_descriptors(generated_lst_mol, pc_descriptor_subset)
+    d_sampled = calculate_pc_descriptors(generated_lst_mol,
+                                         pc_descriptor_subset)
     d_chembl = calculate_pc_descriptors(training_lst_mol, pc_descriptor_subset)
 
     kldivs = {}
     for i in range(4):
-        kldiv = continuous_kldiv(X_baseline=d_chembl[:, i], X_sampled=d_sampled[:, i])
+        kldiv = continuous_kldiv(X_baseline=d_chembl[:, i],
+                                 X_sampled=d_sampled[:, i])
         kldivs[pc_descriptor_subset[i]] = kldiv
 
     # ... and for the int valued ones.
     for i in range(4, 9):
-        kldiv = discrete_kldiv(X_baseline=d_chembl[:, i], X_sampled=d_sampled[:, i])
+        kldiv = discrete_kldiv(X_baseline=d_chembl[:, i],
+                               X_sampled=d_sampled[:, i])
         kldivs[pc_descriptor_subset[i]] = kldiv
 
     # pairwise similarity
@@ -344,7 +353,8 @@ def kl_divergence(generated_smiles_lst, training_smiles_lst):
     sampled_sim = calculate_internal_pairwise_similarities(generated_lst_mol)
     sampled_sim = sampled_sim.max(axis=1)
 
-    kldiv_int_int = continuous_kldiv(X_baseline=chembl_sim, X_sampled=sampled_sim)
+    kldiv_int_int = continuous_kldiv(X_baseline=chembl_sim,
+                                     X_sampled=sampled_sim)
     kldivs["internal_similarity"] = kldiv_int_int
     """
         # for some reason, this runs into problems when both sets are identical.
@@ -395,10 +405,14 @@ def fcd_distance_tf(generated_smiles_lst, training_smiles_lst):
         cov = np.cov(gen_mol_act.T)
         return mu, cov
 
-    mu_ref, cov_ref = _calculate_distribution_statistics(chemnet, training_smiles_lst)
+    mu_ref, cov_ref = _calculate_distribution_statistics(
+        chemnet, training_smiles_lst)
     mu, cov = _calculate_distribution_statistics(chemnet, generated_smiles_lst)
 
-    FCD = fcd.calculate_frechet_distance(mu1=mu_ref, mu2=mu, sigma1=cov_ref, sigma2=cov)
+    FCD = fcd.calculate_frechet_distance(mu1=mu_ref,
+                                         mu2=mu,
+                                         sigma1=cov_ref,
+                                         sigma2=cov)
     fcd_distance = np.exp(-0.2 * FCD)
     return fcd_distance
 

@@ -16,7 +16,6 @@ from ..metadata import dataset_names
 
 
 class SBDD(base_dataset.DataLoader):
-
     """Data loader class accessing to structure-based drug design task."""
 
     def __init__(
@@ -51,7 +50,8 @@ class SBDD(base_dataset.DataLoader):
         try:
             import biopandas
         except:
-            raise ImportError("Please install biopandas by 'pip install biopandas'! ")
+            raise ImportError(
+                "Please install biopandas by 'pip install biopandas'! ")
         protein, ligand = bi_distribution_dataset_load(
             name,
             path,
@@ -126,7 +126,8 @@ class SBDD(base_dataset.DataLoader):
         data = self.get_data(format="dict")
         protein, ligand = data["protein"], data["ligand"]
 
-        splitted_data = create_combination_generation_split(protein, ligand, seed, frac)
+        splitted_data = create_combination_generation_split(
+            protein, ligand, seed, frac)
 
         if self.save:
             np.savez(

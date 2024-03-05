@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class DDI(bi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Drug-Drug Interaction Prediction task
     More info:  https://tdcommons.ai/multi_pred_tasks/ddi/
 
@@ -32,9 +31,11 @@ class DDI(bi_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data", label_name=None, print_stats=False):
         """Create Drug-Drug Interaction (DDI) Prediction dataloader object"""
-        super().__init__(
-            name, path, label_name, print_stats, dataset_names=dataset_names["DDI"]
-        )
+        super().__init__(name,
+                         path,
+                         label_name,
+                         print_stats,
+                         dataset_names=dataset_names["DDI"])
         self.entity1_name = "Drug1"
         self.entity2_name = "Drug2"
         self.two_types = False
@@ -50,9 +51,9 @@ class DDI(bi_pred_dataset.DataLoader):
 
         print_sys("--- Dataset Statistics ---")
         print(
-            "There are "
-            + str(len(np.unique(self.entity1.tolist() + self.entity2.tolist())))
-            + " unique drugs.",
+            "There are " +
+            str(len(np.unique(self.entity1.tolist() + self.entity2.tolist()))) +
+            " unique drugs.",
             flush=True,
             file=sys.stderr,
         )

@@ -34,9 +34,11 @@ class docking_group(BenchmarkGroup):
 
     """
 
-    def __init__(
-        self, path="./data", num_workers=None, num_cpus=None, num_max_call=5000
-    ):
+    def __init__(self,
+                 path="./data",
+                 num_workers=None,
+                 num_cpus=None,
+                 num_max_call=5000):
         """Create a docking group benchmark loader.
 
         Raises:
@@ -157,7 +159,12 @@ class docking_group(BenchmarkGroup):
         data = pd.read_csv(os.path.join(self.path, "zinc.tab"), sep="\t")
         return {"oracle": oracle, "data": data, "name": dataset}
 
-    def evaluate(self, pred, true=None, benchmark=None, m1_api=None, save_dict=True):
+    def evaluate(self,
+                 pred,
+                 true=None,
+                 benchmark=None,
+                 m1_api=None,
+                 save_dict=True):
         """Summary
 
         Args:
@@ -227,7 +234,9 @@ class docking_group(BenchmarkGroup):
 
                     docking_scores = oracle(pred_)
                 print_sys("---- Calculating average docking scores ----")
-                if len(np.where(np.array(list(docking_scores.values())) > 0)[0]) > 0.7:
+                if len(
+                        np.where(np.array(list(docking_scores.values())) > 0)
+                    [0]) > 0.7:
                     ## check if the scores are all positive.. if so, make them all negative
                     docking_scores = {j: -k for j, k in docking_scores.items()}
                 if save_dict:
@@ -275,7 +284,8 @@ class docking_group(BenchmarkGroup):
                 if save_dict:
                     results["pass_list"] = pred_filter
                 results["%pass"] = float(len(pred_filter)) / 100
-                results["top1_%pass"] = min([docking_scores[i] for i in pred_filter])
+                results["top1_%pass"] = min(
+                    [docking_scores[i] for i in pred_filter])
                 print_sys("---- Calculating diversity ----")
                 from ..evaluator import Evaluator
 
@@ -284,19 +294,23 @@ class docking_group(BenchmarkGroup):
                 results["diversity"] = score
                 print_sys("---- Calculating novelty ----")
                 evaluator = Evaluator(name="Novelty")
-                training = pd.read_csv(os.path.join(self.path, "zinc.tab"), sep="\t")
+                training = pd.read_csv(os.path.join(self.path, "zinc.tab"),
+                                       sep="\t")
                 score = evaluator(pred_, training.smiles.values)
                 results["novelty"] = score
                 results["top smiles"] = [
-                    i[0] for i in sorted(docking_scores.items(), key=lambda x: x[1])
+                    i[0]
+                    for i in sorted(docking_scores.items(), key=lambda x: x[1])
                 ]
                 results_max_call[num_max_call] = results
             results_all[data_name] = results_max_call
         return results_all
 
-    def evaluate_many(
-        self, preds, save_file_name=None, m1_api=None, results_individual=None
-    ):
+    def evaluate_many(self,
+                      preds,
+                      save_file_name=None,
+                      m1_api=None,
+                      results_individual=None):
         """evaluate many runs together and output submission ready pkl file.
 
         Args:
@@ -310,11 +324,9 @@ class docking_group(BenchmarkGroup):
         """
         min_requirement = 3
         if len(preds) < min_requirement:
-            return ValueError(
-                "Must have predictions from at least "
-                + str(min_requirement)
-                + " runs for leaderboard submission"
-            )
+            return ValueError("Must have predictions from at least " +
+                              str(min_requirement) +
+                              " runs for leaderboard submission")
         if results_individual is None:
             individual_results = []
             for pred in preds:
@@ -345,13 +357,10 @@ class docking_group(BenchmarkGroup):
                 for metric in metrics:
                     if metric == "top smiles":
                         results_agg_target_call[metric] = np.unique(
-                            np.array(
-                                [
-                                    individual_results[fold][target][num_calls][metric]
-                                    for fold in range(num_folds)
-                                ]
-                            ).reshape(-1)
-                        ).tolist()
+                            np.array([
+                                individual_results[fold][target][num_calls]
+                                [metric] for fold in range(num_folds)
+                            ]).reshape(-1)).tolist()
                     else:
                         res = [
                             individual_results[fold][target][num_calls][metric]
