@@ -12,6 +12,7 @@ dependencies:
   - python=3.9.13
   - pip=23.3.1
   - pandas=2.1.4
+  - pydantic=2.6.3
   - pyg=2.5.0
   - pytorch=2.2.1
   - requests=2.31.0
