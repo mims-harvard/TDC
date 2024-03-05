@@ -21,14 +21,14 @@ class TestFunctions(unittest.TestCase):
         print(os.getcwd())
         pass
 
-    @unittest.skip("dev test")
+    
     def test_random_split(self):
         from tdc.single_pred import ADME
 
         data = ADME(name="Caco2_Wang")
         split = data.get_split(method="random")
 
-    @unittest.skip("dev test")
+    
     def test_scaffold_split(self):
         ## requires RDKit
         from tdc.single_pred import ADME
@@ -36,7 +36,7 @@ class TestFunctions(unittest.TestCase):
         data = ADME(name="Caco2_Wang")
         split = data.get_split(method="scaffold")
 
-    @unittest.skip("dev test")
+    
     def test_cold_start_split(self):
         from tdc.multi_pred import DTI
 
@@ -70,21 +70,21 @@ class TestFunctions(unittest.TestCase):
             self.assertEqual(0, len(train_entity.intersection(test_entity)))
             self.assertEqual(0, len(valid_entity.intersection(test_entity)))
 
-    @unittest.skip("dev test")
+    
     def test_combination_split(self):
         from tdc.multi_pred import DrugSyn
 
         data = DrugSyn(name="DrugComb")
         split = data.get_split(method="combination")
 
-    @unittest.skip("dev test")
+    
     def test_time_split(self):
         from tdc.multi_pred import DTI
 
         data = DTI(name="BindingDB_Patent")
         split = data.get_split(method="time", time_column="Year")
 
-    @unittest.skip("dev test")
+    
     def test_tearDown(self):
         print(os.getcwd())
 

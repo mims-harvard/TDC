@@ -21,7 +21,7 @@ class TestOracle(unittest.TestCase):
         print(os.getcwd())
         pass
 
-    @unittest.skip("dev test")
+    
     def test_Oracle(self):
         from tdc import Oracle
 
@@ -35,7 +35,7 @@ class TestOracle(unittest.TestCase):
         oracle = Oracle(name="Hop")
         x = oracle(["CC(=O)OC1=CC=CC=C1C(=O)O", "C1=CC=C(C=C1)C=O"])
 
-    @unittest.skip("dev test")
+    
     def test_distribution(self):
         from tdc import Evaluator
 
