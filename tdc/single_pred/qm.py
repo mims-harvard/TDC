@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class QM(single_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in QM (Quantum Mechanics Modeling) task. More info: https://tdcommons.ai/single_pred_tasks/qm/
 
     Args:

@@ -21,7 +21,6 @@ from ..utils import (
 
 
 class DataLoader(base_dataset.DataLoader):
-
     """A base data loader class.
 
     Args:
@@ -65,13 +64,11 @@ class DataLoader(base_dataset.DataLoader):
             if label_name is None:
                 raise ValueError(
                     "Please select a label name. You can use tdc.utils.retrieve_label_name_list('"
-                    + name.lower()
-                    + "') to retrieve all available label names."
-                )
+                    + name.lower() +
+                    "') to retrieve all available label names.")
 
-        entity1, y, entity1_idx = property_dataset_load(
-            name, path, label_name, dataset_names
-        )
+        entity1, y, entity1_idx = property_dataset_load(name, path, label_name,
+                                                        dataset_names)
 
         self.entity1 = entity1
         self.y = y
@@ -106,32 +103,34 @@ class DataLoader(base_dataset.DataLoader):
 
         if format == "df":
             if self.convert_format is not None:
-                return pd.DataFrame(
-                    {
-                        self.entity1_name + "_ID": self.entity1_idx,
-                        self.entity1_name: self.entity1,
-                        self.entity1_name
-                        + "_"
-                        + self.convert_format: self.convert_result,
-                        "Y": self.y,
-                    }
-                )
+                return pd.DataFrame({
+                    self.entity1_name + "_ID":
+                        self.entity1_idx,
+                    self.entity1_name:
+                        self.entity1,
+                    self.entity1_name + "_" + self.convert_format:
+                        self.convert_result,
+                    "Y":
+                        self.y,
+                })
             else:
-                return pd.DataFrame(
-                    {
-                        self.entity1_name + "_ID": self.entity1_idx,
-                        self.entity1_name: self.entity1,
-                        "Y": self.y,
-                    }
-                )
+                return pd.DataFrame({
+                    self.entity1_name + "_ID": self.entity1_idx,
+                    self.entity1_name: self.entity1,
+                    "Y": self.y,
+                })
 
         elif format == "dict":
             if self.convert_format is not None:
                 return {
-                    self.entity1_name + "_ID": self.entity1_idx.values,
-                    self.entity1_name: self.entity1.values,
-                    self.entity1_name + "_" + self.convert_format: self.convert_result,
-                    "Y": self.y.values,
+                    self.entity1_name + "_ID":
+                        self.entity1_idx.values,
+                    self.entity1_name:
+                        self.entity1.values,
+                    self.entity1_name + "_" + self.convert_format:
+                        self.convert_result,
+                    "Y":
+                        self.y.values,
                 }
             else:
                 return {
