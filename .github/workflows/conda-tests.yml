@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - main
+      - avelez-cellxgene-dev
       - avelez-dev
   workflow_dispatch:
 
