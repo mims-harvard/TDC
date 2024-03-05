@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class DrugSyn(multi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Drug Synergy Prediction task.
     More info: https://tdcommons.ai/multi_pred_tasks/drugsyn/
 
@@ -32,9 +31,10 @@ class DrugSyn(multi_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data", print_stats=False):
         """Create Drug Synergy Prediction dataloader object"""
-        super().__init__(
-            name, path, print_stats, dataset_names=dataset_names["DrugSyn"]
-        )
+        super().__init__(name,
+                         path,
+                         print_stats,
+                         dataset_names=dataset_names["DrugSyn"])
 
         if print_stats:
             self.print_stats()
