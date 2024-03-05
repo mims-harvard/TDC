@@ -13,6 +13,7 @@ from ..utils.knowledge_graph import KnowledgeGraph
 
 warnings.filterwarnings("ignore")
 
+
 class PrimeKG:
     """PrimeKG data loader class to load the knowledge graph with additional support functions.
     """
@@ -30,9 +31,9 @@ class PrimeKG:
 
         G = nx.Graph()
         for i in self.KG.df.relation.unique():
-            G.add_edges_from(
-                self.KG.df[self.df.relation == i][["x_id", "y_id"]].values, relation=i
-            )
+            G.add_edges_from(self.KG.df[self.df.relation == i][["x_id",
+                                                                "y_id"]].values,
+                             relation=i)
         return G
 
     def get_features(self, feature_type):
@@ -43,7 +44,5 @@ class PrimeKG:
 
     def get_node_list(self, node_type):
         df = self.KG.df
-        return np.unique(
-            df[(df.x_type == node_type)].x_id.unique().tolist()
-            + df[(df.y_type == node_type)].y_id.unique().tolist()
-        )
+        return np.unique(df[(df.x_type == node_type)].x_id.unique().tolist() +
+                         df[(df.y_type == node_type)].y_id.unique().tolist())
