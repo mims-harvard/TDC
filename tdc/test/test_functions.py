@@ -11,10 +11,12 @@ import shutil
 
 # temporary solution for relative imports in case TDC is not installed
 # if TDC is installed, no need to use the following line
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 
 class TestFunctions(unittest.TestCase):
+
     def setUp(self):
         print(os.getcwd())
         pass
@@ -50,6 +52,7 @@ class TestFunctions(unittest.TestCase):
             shutil.rmtree(os.path.join(os.getcwd(), "data"))
         if os.path.exists(os.path.join(os.getcwd(), "oracle")):
             shutil.rmtree(os.path.join(os.getcwd(), "oracle"))
+
 
 if __name__ == "__main__":
     unittest.main()

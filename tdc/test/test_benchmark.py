@@ -5,7 +5,8 @@ import random
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from tdc.benchmark_group import admet_group
 
 
@@ -17,6 +18,7 @@ def is_classification(values):
 
 
 class TestBenchmarkGroup(unittest.TestCase):
+
     def setUp(self):
         self.group = admet_group(path="data/")
 
@@ -52,11 +54,14 @@ class TestBenchmarkGroup(unittest.TestCase):
         for ds_name, metrics in results.items():
             self.assertEqual(len(metrics), 2)
             u, std = metrics
-            self.assertTrue(u in (1, 0))  # A perfect score for all metrics is 1 or 0
+            self.assertTrue(u
+                            in (1,
+                                0))  # A perfect score for all metrics is 1 or 0
             self.assertEqual(0, std)
 
         for my_group in self.group:
             self.assertTrue(my_group["name"] in results)
+
 
 if __name__ == "__main__":
     unittest.main()
