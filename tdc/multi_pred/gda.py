@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class GDA(bi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Gene-Disease Association Prediction task.
     More info: https://tdcommons.ai/multi_pred_tasks/gdi/
 
@@ -35,9 +34,11 @@ class GDA(bi_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data", label_name=None, print_stats=False):
         """Create Gene-Disease Association Prediction dataloader object"""
-        super().__init__(
-            name, path, label_name, print_stats, dataset_names=dataset_names["GDA"]
-        )
+        super().__init__(name,
+                         path,
+                         label_name,
+                         print_stats,
+                         dataset_names=dataset_names["GDA"])
         self.entity1_name = "Gene"
         self.entity2_name = "Disease"
         self.two_types = True

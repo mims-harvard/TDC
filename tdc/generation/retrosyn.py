@@ -12,7 +12,6 @@ from ..utils import create_fold
 
 
 class RetroSyn(generation_dataset.PairedDataLoader):
-
     """Data loader class accessing to retro-synthetic prediction task."""
 
     def __init__(
@@ -66,10 +65,8 @@ class RetroSyn(generation_dataset.PairedDataLoader):
                 df["reaction_type"] = rt
             except:
                 raise ValueError(
-                    "Reaction Type Unavailable for "
-                    + str(self.name)
-                    + "! Please turn include_reaction_type to be false!"
-                )
+                    "Reaction Type Unavailable for " + str(self.name) +
+                    "! Please turn include_reaction_type to be false!")
 
         if method == "random":
             return create_fold(df, seed, frac)

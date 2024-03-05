@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class AntibodyAff(bi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Antibody-antigen Affinity Prediction task.
     More info: https://tdcommons.ai/multi_pred_tasks/antibodyaff/
 

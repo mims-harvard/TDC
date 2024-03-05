@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class Paratope(single_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Paratope Prediction task. More info: https://tdcommons.ai/single_pred_tasks/paratope/
 
     Args:

@@ -41,9 +41,8 @@ class DataLoader(base_dataset.DataLoader):
             if label_name is None:
                 raise ValueError(
                     "Please select a label name. You can use tdc.utils.retrieve_label_name_list('"
-                    + name.lower()
-                    + "') to retrieve all available label names."
-                )
+                    + name.lower() +
+                    "') to retrieve all available label names.")
 
         df = multi_dataset_load(name, path, dataset_names)
 
@@ -77,9 +76,11 @@ class DataLoader(base_dataset.DataLoader):
         print(str(len(self.df)) + " data points.", flush=True, file=sys.stderr)
         print_sys("--------------------------")
 
-    def get_split(
-        self, method="random", seed=42, frac=[0.7, 0.1, 0.2], column_name=None
-    ):
+    def get_split(self,
+                  method="random",
+                  seed=42,
+                  frac=[0.7, 0.1, 0.2],
+                  column_name=None):
         """split dataset into train/validation/test.
 
         Args:
@@ -106,9 +107,8 @@ class DataLoader(base_dataset.DataLoader):
         elif method == "cold_split":
             if isinstance(column_name, str):
                 column_name = [column_name]
-            if (column_name is None) or (
-                not all([x in df.columns.values for x in column_name])
-            ):
+            if (column_name is None) or (not all(
+                [x in df.columns.values for x in column_name])):
                 raise AttributeError(
                     "For cold_split, please provide one or multiple column names that are contained in the dataframe."
                 )

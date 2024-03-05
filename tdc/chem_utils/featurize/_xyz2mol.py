@@ -2,15 +2,14 @@ import numpy as np
 from collections import defaultdict
 from typing import List
 
-
 try:
     from rdkit import Chem
     from rdkit import rdBase
 
     rdBase.DisableLog("rdApp.error")
 except:
-    raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")
-
+    raise ImportError(
+        "Please install rdkit by 'conda install -c conda-forge rdkit'! ")
 
 try:
     import networkx as nx
@@ -18,7 +17,6 @@ except:
     raise ImportError("Please install networkx by 'pip install networkx'! ")
 
 from ...utils import print_sys
-
 
 ############## begin xyz2mol ################
 # from https://github.com/jensengroup/xyz2mol/blob/master/xyz2mol.py
@@ -121,7 +119,6 @@ __ATOM_LIST__ = [
     "pu",
 ]
 
-
 global atomic_valence
 global atomic_valence_electrons
 
@@ -179,7 +176,8 @@ def get_UA(maxValence_list, valence_list):
     """ """
     UA = []
     DU = []
-    for i, (maxValence, valence) in enumerate(zip(maxValence_list, valence_list)):
+    for i, (maxValence, valence) in enumerate(zip(maxValence_list,
+                                                  valence_list)):
         if not maxValence - valence > 0:
             continue
         UA.append(i)
@@ -235,7 +233,8 @@ def charge_is_OK(
 
         BO_valences = list(BO.sum(axis=1))
         for i, atom in enumerate(atoms):
-            q = get_atomic_charge(atom, atomic_valence_electrons[atom], BO_valences[i])
+            q = get_atomic_charge(atom, atomic_valence_electrons[atom],
+                                  BO_valences[i])
             Q += q
             if atom == 6:
                 number_of_single_bonds_to_C = list(BO[i, :]).count(1)
@@ -381,8 +380,7 @@ def BO2mol(
 
     if l != l2:
         raise RuntimeError(
-            "sizes of adjMat ({0:d}) and Atoms {1:d} differ".format(l, l2)
-        )
+            "sizes of adjMat ({0:d}) and Atoms {1:d} differ".format(l, l2))
 
     rwMol = Chem.RWMol(mol)
 
@@ -403,23 +401,23 @@ def BO2mol(
     mol = rwMol.GetMol()
 
     if allow_charged_fragments:
-        mol = set_atomic_charges(
-            mol, atoms, atomic_valence_electrons, BO_valences, BO_matrix, mol_charge
-        )
+        mol = set_atomic_charges(mol, atoms, atomic_valence_electrons,
+                                 BO_valences, BO_matrix, mol_charge)
     else:
-        mol = set_atomic_radicals(mol, atoms, atomic_valence_electrons, BO_valences)
+        mol = set_atomic_radicals(mol, atoms, atomic_valence_electrons,
+                                  BO_valences)
 
     return mol
 
 
-def set_atomic_charges(
-    mol, atoms, atomic_valence_electrons, BO_valences, BO_matrix, mol_charge
-):
+def set_atomic_charges(mol, atoms, atomic_valence_electrons, BO_valences,
+                       BO_matrix, mol_charge):
     """ """
     q = 0
     for i, atom in enumerate(atoms):
         a = mol.GetAtomWithIdx(i)
-        charge = get_atomic_charge(atom, atomic_valence_electrons[atom], BO_valences[i])
+        charge = get_atomic_charge(atom, atomic_valence_electrons[atom],
+                                   BO_valences[i])
         q += charge
         if atom == 6:
             number_of_single_bonds_to_C = list(BO_matrix[i, :]).count(1)
@@ -444,7 +442,8 @@ def set_atomic_radicals(mol, atoms, atomic_valence_electrons, BO_valences):
     """
     for i, atom in enumerate(atoms):
         a = mol.GetAtomWithIdx(i)
-        charge = get_atomic_charge(atom, atomic_valence_electrons[atom], BO_valences[i])
+        charge = get_atomic_charge(atom, atomic_valence_electrons[atom],
+                                   BO_valences[i])
 
         if abs(charge) > 0:
             a.SetNumRadicalElectrons(abs(int(charge)))
@@ -457,7 +456,7 @@ def get_bonds(UA, AC):
     bonds = []
 
     for k, i in enumerate(UA):
-        for j in UA[k + 1 :]:
+        for j in UA[k + 1:]:
             if AC[i, j] == 1:
                 bonds.append(tuple(sorted([i, j])))
 
@@ -510,7 +509,9 @@ def AC2BO(AC, atoms, charge, allow_charged_fragments=True, use_graph=True):
 
     for i, (atomicNum, valence) in enumerate(zip(atoms, AC_valence)):
         # valence can't be smaller than number of neighbourgs
-        possible_valence = [x for x in atomic_valence[atomicNum] if x >= valence]
+        possible_valence = [
+            x for x in atomic_valence[atomicNum] if x >= valence
+        ]
         if not possible_valence:
             print_sys(
                 "Valence of atom",
@@ -553,7 +554,12 @@ def AC2BO(AC, atoms, charge, allow_charged_fragments=True, use_graph=True):
 
         UA_pairs_list = get_UA_pairs(UA, AC, use_graph=use_graph)
         for UA_pairs in UA_pairs_list:
-            BO = get_BO(AC, UA, DU_from_AC, valences, UA_pairs, use_graph=use_graph)
+            BO = get_BO(AC,
+                        UA,
+                        DU_from_AC,
+                        valences,
+                        UA_pairs,
+                        use_graph=use_graph)
             status = BO_is_OK(
                 BO,
                 AC,
@@ -577,17 +583,19 @@ def AC2BO(AC, atoms, charge, allow_charged_fragments=True, use_graph=True):
 
             if status:
                 return BO, atomic_valence_electrons
-            elif (
-                BO.sum() >= best_BO.sum()
-                and valences_not_too_large(BO, valences)
-                and charge_OK
-            ):
+            elif (BO.sum() >= best_BO.sum() and
+                  valences_not_too_large(BO, valences) and charge_OK):
                 best_BO = BO.copy()
 
     return best_BO, atomic_valence_electrons
 
 
-def AC2mol(mol, AC, atoms, charge, allow_charged_fragments=True, use_graph=True):
+def AC2mol(mol,
+           AC,
+           atoms,
+           charge,
+           allow_charged_fragments=True,
+           use_graph=True):
     """ """
 
     # convert AC matrix to bond order (BO) matrix
@@ -614,9 +622,8 @@ def AC2mol(mol, AC, atoms, charge, allow_charged_fragments=True, use_graph=True)
     #     return []
 
     # BO2mol returns an arbitrary resonance form. Let's make the rest
-    mols = rdchem.ResonanceMolSupplier(
-        mol, Chem.UNCONSTRAINED_CATIONS, Chem.UNCONSTRAINED_ANIONS
-    )
+    mols = rdchem.ResonanceMolSupplier(mol, Chem.UNCONSTRAINED_CATIONS,
+                                       Chem.UNCONSTRAINED_ANIONS)
     mols = [mol for mol in mols]
 
     return mols, BO
@@ -754,15 +761,14 @@ def xyz2AC_huckel(atomicNumList, xyz, charge):
 
     mol_huckel = Chem.Mol(mol)
     mol_huckel.GetAtomWithIdx(0).SetFormalCharge(
-        charge
-    )  # mol charge arbitrarily added to 1st atom
+        charge)  # mol charge arbitrarily added to 1st atom
 
     passed, result = rdEHTTools.RunMol(mol_huckel)
     opop = result.GetReducedOverlapPopulationMatrix()
     tri = np.zeros((num_atoms, num_atoms))
-    tri[
-        np.tril(np.ones((num_atoms, num_atoms), dtype=bool))
-    ] = opop  # lower triangular to square matrix
+    tri[np.tril(np.ones(
+        (num_atoms, num_atoms),
+        dtype=bool))] = opop  # lower triangular to square matrix
     for i in range(num_atoms):
         for j in range(i + 1, num_atoms):
             pair_pop = abs(tri[j, i])

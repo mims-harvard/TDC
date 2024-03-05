@@ -11,10 +11,13 @@ from ..metadata import dataset_names
 
 
 class MolGen(generation_dataset.DataLoader):
-
     """Data loader class accessing to molecular generation task (distribution learning)"""
 
-    def __init__(self, name, path="./data", print_stats=False, column_name="smiles"):
+    def __init__(self,
+                 name,
+                 path="./data",
+                 print_stats=False,
+                 column_name="smiles"):
         """To create an data loader object for molecular generation task. The goal is to generate diverse,
         novel molecules that has desirable chemical properties. One can combined with oracle functions.
 

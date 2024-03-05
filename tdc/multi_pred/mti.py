@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class MTI(bi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in MicroRNA-Target Interaction Prediction task.
     More info: https://tdcommons.ai/multi_pred_tasks/mti/
 
@@ -35,9 +34,11 @@ class MTI(bi_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data", label_name=None, print_stats=False):
         """Create MicroRNA-Target Interaction Prediction dataloader object"""
-        super().__init__(
-            name, path, label_name, print_stats, dataset_names=dataset_names["MTI"]
-        )
+        super().__init__(name,
+                         path,
+                         label_name,
+                         print_stats,
+                         dataset_names=dataset_names["MTI"])
         self.entity1_name = "miRNA"
         self.entity2_name = "Target"
         self.two_types = True

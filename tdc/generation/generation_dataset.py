@@ -20,7 +20,6 @@ from ..utils import create_fold
 
 
 class DataLoader(base_dataset.DataLoader):
-
     """A base dataset loader class.
 
     Attributes:
@@ -42,8 +41,7 @@ class DataLoader(base_dataset.DataLoader):
         from ..metadata import single_molecule_dataset_names
 
         self.smiles_lst = distribution_dataset_load(
-            name, path, single_molecule_dataset_names, column_name=column_name
-        )
+            name, path, single_molecule_dataset_names, column_name=column_name)
         ### including fuzzy-search
         self.name = name
         self.path = path
@@ -102,7 +100,6 @@ class DataLoader(base_dataset.DataLoader):
 
 
 class PairedDataLoader(base_dataset.DataLoader):
-
     """A basic class for generation of biomedical entities conditioned on other entities, such as reaction prediction.
 
     Attributes:
@@ -125,8 +122,8 @@ class PairedDataLoader(base_dataset.DataLoader):
         from ..metadata import paired_dataset_names
 
         self.input_smiles_lst, self.output_smiles_lst = generation_paired_dataset_load(
-            name, path, paired_dataset_names, input_name, output_name
-        )  ### including fuzzy-search
+            name, path, paired_dataset_names, input_name,
+            output_name)  ### including fuzzy-search
         self.name = name
         self.path = path
         self.dataset_names = paired_dataset_names
@@ -155,11 +152,15 @@ class PairedDataLoader(base_dataset.DataLoader):
             AttributeError: Use the correct format as input (df, dict)
         """
         if format == "df":
-            return pd.DataFrame(
-                {"input": self.input_smiles_lst, "output": self.output_smiles_lst}
-            )
+            return pd.DataFrame({
+                "input": self.input_smiles_lst,
+                "output": self.output_smiles_lst
+            })
         elif format == "dict":
-            return {"input": self.input_smiles_lst, "output": self.output_smiles_lst}
+            return {
+                "input": self.input_smiles_lst,
+                "output": self.output_smiles_lst
+            }
         else:
             raise AttributeError("Please use the correct format input")
 
@@ -187,7 +188,6 @@ class PairedDataLoader(base_dataset.DataLoader):
 
 
 class DataLoader3D(base_dataset.DataLoader):
-
     """A basic class for generation of 3D biomedical entities. (under construction)
 
     Attributes:
@@ -209,8 +209,7 @@ class DataLoader3D(base_dataset.DataLoader):
             column_name (str): The name of the column containing smiles strings.
         """
         self.df, self.path, self.name = three_dim_dataset_load(
-            name, path, dataset_names
-        )
+            name, path, dataset_names)
         if print_stats:
             self.print_stats()
         print_sys("Done!")
@@ -240,7 +239,8 @@ class DataLoader3D(base_dataset.DataLoader):
         """
         if more_features in ["None", "SMILES"]:
             pass
-        elif more_features in ["Graph3D", "Coulumb", "SELFIES"]:  # why SELFIES here?
+        elif more_features in ["Graph3D", "Coulumb",
+                               "SELFIES"]:  # why SELFIES here?
             try:
                 from rdkit.Chem.PandasTools import LoadSDF
                 from rdkit import rdBase
@@ -256,7 +256,8 @@ class DataLoader3D(base_dataset.DataLoader):
 
             convert = MolConvert(src="SDF", dst=more_features)
             for i in sdf_file_names[self.name]:
-                self.df[i + "_" + more_features] = convert(self.path + i + ".sdf")
+                self.df[i + "_" + more_features] = convert(self.path + i +
+                                                           ".sdf")
 
         if format == "df":
             return self.df

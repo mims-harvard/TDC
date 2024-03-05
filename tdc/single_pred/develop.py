@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class Develop(single_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Develop task. More info: https://tdcommons.ai/single_pred_tasks/develop/
 
     Args:
@@ -85,17 +84,20 @@ class Develop(single_pred_dataset.DataLoader):
         from graphein.protein.utils import get_obsolete_mapping
 
         obs = get_obsolete_mapping()
-        train_obs = [t for t in split["train"]["Antibody_ID"] if t in obs.keys()]
-        valid_obs = [t for t in split["valid"]["Antibody_ID"] if t in obs.keys()]
+        train_obs = [
+            t for t in split["train"]["Antibody_ID"] if t in obs.keys()
+        ]
+        valid_obs = [
+            t for t in split["valid"]["Antibody_ID"] if t in obs.keys()
+        ]
         test_obs = [t for t in split["test"]["Antibody_ID"] if t in obs.keys()]
 
-        split["train"] = split["train"].loc[
-            ~split["train"]["Antibody_ID"].isin(train_obs)
-        ]
-        split["test"] = split["test"].loc[~split["test"]["Antibody_ID"].isin(test_obs)]
-        split["valid"] = split["valid"].loc[
-            ~split["valid"]["Antibody_ID"].isin(valid_obs)
-        ]
+        split["train"] = split["train"].loc[~split["train"]["Antibody_ID"].
+                                            isin(train_obs)]
+        split["test"] = split["test"].loc[~split["test"]["Antibody_ID"].
+                                          isin(test_obs)]
+        split["valid"] = split["valid"].loc[~split["valid"]["Antibody_ID"].
+                                            isin(valid_obs)]
 
         self.split = split
 
@@ -104,8 +106,7 @@ class Develop(single_pred_dataset.DataLoader):
                 zip(
                     split[split_name].Antibody_ID,
                     split[split_name].Y.apply(torch.tensor),
-                )
-            )
+                ))
 
         train_labels = get_label_map("train")
         valid_labels = get_label_map("valid")

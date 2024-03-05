@@ -38,7 +38,8 @@ class PrimeKG:
     def get_features(self, feature_type):
         if feature_type not in ["drug", "disease"]:
             raise ValueError("feature_type only supports drug/disease!")
-        return general_load("primekg_" + feature_type + "_feature", self.path, "\t")
+        return general_load("primekg_" + feature_type + "_feature", self.path,
+                            "\t")
 
     def get_node_list(self, node_type):
         df = self.KG.df

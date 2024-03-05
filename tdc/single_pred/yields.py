@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class Yields(single_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Yields (Reaction Yields Prediction) task. More info: https://tdcommons.ai/single_pred_tasks/yields/
 
     Args:

@@ -7,8 +7,8 @@ try:
 
     rdBase.DisableLog("rdApp.error")
 except:
-    raise ImportError("Please install rdkit by 'conda install -c conda-forge rdkit'! ")
-
+    raise ImportError(
+        "Please install rdkit by 'conda install -c conda-forge rdkit'! ")
 
 try:
     import networkx as nx
@@ -409,9 +409,11 @@ def func_4(mol, bits):
         for bondIdx in ring:
             BeginAtom = mol.GetBondWithIdx(bondIdx).GetBeginAtom()
             EndAtom = mol.GetBondWithIdx(bondIdx).GetEndAtom()
-            if BeginAtom.GetAtomicNum() not in [1, 6] or EndAtom.GetAtomicNum() not in [
-                1,
-                6,
+            if BeginAtom.GetAtomicNum() not in [
+                    1, 6
+            ] or EndAtom.GetAtomicNum() not in [
+                    1,
+                    6,
             ]:
                 heteroatom = True
                 break
@@ -752,9 +754,11 @@ def func_7(mol, bits):
         for bondIdx in ring:
             BeginAtom = mol.GetBondWithIdx(bondIdx).GetBeginAtom()
             EndAtom = mol.GetBondWithIdx(bondIdx).GetEndAtom()
-            if BeginAtom.GetAtomicNum() not in [1, 6] or EndAtom.GetAtomicNum() not in [
-                1,
-                6,
+            if BeginAtom.GetAtomicNum() not in [
+                    1, 6
+            ] or EndAtom.GetAtomicNum() not in [
+                    1,
+                    6,
             ]:
                 heteroatom = True
                 break
@@ -862,9 +866,11 @@ def func_8(mol, bits):
         for bondIdx in ring:
             BeginAtom = mol.GetBondWithIdx(bondIdx).GetBeginAtom()
             EndAtom = mol.GetBondWithIdx(bondIdx).GetEndAtom()
-            if BeginAtom.GetAtomicNum() not in [1, 6] or EndAtom.GetAtomicNum() not in [
-                1,
-                6,
+            if BeginAtom.GetAtomicNum() not in [
+                    1, 6
+            ] or EndAtom.GetAtomicNum() not in [
+                    1,
+                    6,
             ]:
                 heteroatom = True
                 break
@@ -936,6 +942,7 @@ def calcPubChemFingerAll(s):
             AllBits[index3 + 115] = 1
     return np.array(AllBits)
 
+
 def canonicalize(smiles):
     mol = Chem.MolFromSmiles(smiles)
     if mol is not None:
@@ -943,13 +950,13 @@ def canonicalize(smiles):
     else:
         return None
 
+
 def smiles2pubchem(s):
     s = canonicalize(s)
     try:
         features = calcPubChemFingerAll(s)
     except:
-        print(
-            "pubchem fingerprint not working for smiles: " + s + " convert to 0 vectors"
-        )
+        print("pubchem fingerprint not working for smiles: " + s +
+              " convert to 0 vectors")
         features = np.zeros((881,))
     return np.array(features)

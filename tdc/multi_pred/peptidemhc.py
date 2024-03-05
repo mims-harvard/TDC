@@ -13,7 +13,6 @@ from ..metadata import dataset_names
 
 
 class PeptideMHC(bi_pred_dataset.DataLoader):
-
     """Data loader class to load datasets in Peptide-MHC Binding Prediction task.
     More info: https://tdcommons.ai/multi_pred_tasks/peptidemhc/
 

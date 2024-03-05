@@ -11,7 +11,6 @@ from ..metadata import dataset_names
 
 
 class LigandMolGen(bi_generation_dataset.DataLoader):
-
     """Data loader class accessing to pocket-based ligand generation task."""
 
     def __init__(self, name, path="./data", print_stats=False):

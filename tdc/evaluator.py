@@ -126,8 +126,8 @@ def range_logAUC(true_y, predicted_score, FPR_range=(0.001, 0.1)):
     upper_bound_idx = np.where(x == upper_bound)[-1][-1]
 
     # Create a new array trimmed at the lower and upper bound
-    trim_x = x[lower_bound_idx : upper_bound_idx + 1]
-    trim_y = y[lower_bound_idx : upper_bound_idx + 1]
+    trim_x = x[lower_bound_idx:upper_bound_idx + 1]
+    trim_y = y[lower_bound_idx:upper_bound_idx + 1]
 
     area = auc(trim_x, trim_y) / (upper_bound - lower_bound)
     return area
@@ -371,7 +371,6 @@ def kabsch_weighted(P, Q, W=None):
 
 
 class Evaluator:
-
     """evaluator to evaluate predictions
 
     Args:
