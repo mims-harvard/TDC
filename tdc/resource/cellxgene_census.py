@@ -2,7 +2,7 @@
 import os
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = "TRUE"
-# TODO: find better fix or encode in environment / docker ^^^
+# TODO: remove 
 import cellxgene_census
 import gget
 import tiledbsoma
@@ -326,38 +326,4 @@ class CensusResource:
 
 
 if __name__ == "__main__":
-    # TODO: tmp, run testing suite when this file is called as main
-    print("running tests for census resource")
-    print("instantiating resource")
-    resource = CensusResource()
-    cell_value_filter = "tissue == 'brain' and sex == 'male'"
-    cell_column_names = ["assay", "cell_type", "tissue"]
-    gene_value_filter = "feature_id in ['ENSG00000161798', 'ENSG00000188229']"
-    gene_column_names = ["feature_name", "feature_length"]
-    print("getting cell metadata as pandas dataframe")
-    obsdf = resource.get_cell_metadata(value_filter=cell_value_filter,
-                                       column_names=cell_column_names,
-                                       fmt="pandas")
-    print("success!")
-    print(obsdf.head())
-    print("geting gene metadata as pyarrow")
-    varpyarrow = resource.get_gene_metadata(value_filter=gene_value_filter,
-                                            column_names=gene_column_names,
-                                            fmt="pyarrow",
-                                            measurement_name="RNA")
-    print("success!")
-    print(varpyarrow)
-    print("getting sample count matrix, checking todense() and scipy")
-    Xslice = resource.get_measurement_matrix(upper=5,
-                                             lower=0,
-                                             measurement_name="RNA",
-                                             fmt="scipy",
-                                             todense=True)
-    print("success")
-    print(Xslice)
-    print("getting feature presence matrix, checking pyarrow")
-    FMslice = resource.get_feature_dataset_presence_matrix(
-        upper=5, lower=0, measurement_name="RNA", fmt="pyarrow", todense=False)
-    print("success")
-    print(FMslice)
-    print("all tests passed")
+    pass
