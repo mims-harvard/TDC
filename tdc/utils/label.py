@@ -22,6 +22,7 @@ def convert_y_unit(y, from_, to_):
         y = y
     elif from_ == "p":
         y = (10**(-y) - 1e-10) / 1e-9
+        y = (10**(-y) - 1e-10) / 1e-9
 
     if to_ == "p":
         y = -np.log10(y * 1e-9 + 1e-10)
@@ -65,6 +66,8 @@ def label_transform(y,
         elif order == "ascending":
             y = np.array([1 if i else 0 for i in np.array(y) > threshold])
         else:
+            raise ValueError(
+                "Please select order from 'descending or ascending!")
             raise ValueError(
                 "Please select order from 'descending or ascending!")
     else:
@@ -152,10 +155,16 @@ def label_dist(y, name=None):
         ax_hist) = plt.subplots(2,
                                 sharex=True,
                                 gridspec_kw={"height_ratios": (0.15, 1)})
+    f, (ax_box,
+        ax_hist) = plt.subplots(2,
+                                sharex=True,
+                                gridspec_kw={"height_ratios": (0.15, 1)})
 
     if name is None:
         sns.boxplot(y, ax=ax_box).set_title("Label Distribution")
     else:
+        sns.boxplot(y, ax=ax_box).set_title("Label Distribution of " +
+                                            str(name) + " Dataset")
         sns.boxplot(y, ax=ax_box).set_title("Label Distribution of " +
                                             str(name) + " Dataset")
     ax_box.axvline(median, color="b", linestyle="--")
@@ -197,6 +206,8 @@ def NegSample(df, column_names, frac, two_types):
         samples = np.random.choice(df_unique, size=(x, 2), replace=True)
         neg_set = set([tuple([i[0], i[1]]) for i in samples if i[0] != i[1]
                       ]) - pos_set
+        neg_set = set([tuple([i[0], i[1]]) for i in samples if i[0] != i[1]
+                      ]) - pos_set
 
         while len(neg_set) < x:
             sample = np.random.choice(df_unique, 2, replace=False)
@@ -212,7 +223,7 @@ def NegSample(df, column_names, frac, two_types):
         for i in neg_list:
             neg_list_val.append([i[0], id2seq[i[0]], i[1], id2seq[i[1]], 0])
 
-            df = pd.concat([
+            df2 = pd.concat([
                 df,
                 pd.DataFrame(neg_list_val).rename(columns={
                     0: id1,
@@ -222,9 +233,9 @@ def NegSample(df, column_names, frac, two_types):
                     4: "Y"
                 })
             ],
-                           ignore_index=True,
-                           sort=False)
-        return df
+                            ignore_index=True,
+                            sort=False)
+        return df2
     else:
         df_unique_id1 = np.unique(df[id1].values.reshape(-1))
         df_unique_id2 = np.unique(df[id2].values.reshape(-1))
@@ -236,6 +247,11 @@ def NegSample(df, column_names, frac, two_types):
         sample_id1 = np.random.choice(df_unique_id1, size=len(df), replace=True)
         sample_id2 = np.random.choice(df_unique_id2, size=len(df), replace=True)
 
+        neg_set = (set([
+            tuple([sample_id1[i], sample_id2[i]])
+            for i in range(len(df))
+            if sample_id1[i] != sample_id2[i]
+        ]) - pos_set)
         neg_set = (set([
             tuple([sample_id1[i], sample_id2[i]])
             for i in range(len(df))
@@ -258,7 +274,7 @@ def NegSample(df, column_names, frac, two_types):
         for i in neg_list:
             neg_list_val.append([i[0], id2seq1[i[0]], i[1], id2seq2[i[1]], 0])
 
-        df = pd.concat([
+        df2 = pd.concat([
             df,
             pd.DataFrame(neg_list_val).rename(columns={
                 0: id1,
@@ -268,6 +284,6 @@ def NegSample(df, column_names, frac, two_types):
                 4: "Y"
             })
         ],
-                       ignore_index=True,
-                       sort=False)
-        return df
+                        ignore_index=True,
+                        sort=False)
+        return df2

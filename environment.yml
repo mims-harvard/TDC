@@ -4,6 +4,8 @@ channels:
   - defaults
   - pyg
   - pytorch
+  - pyg
+  - pytorch
 dependencies:
   - dataclasses=0.8
   - fuzzywuzzy=0.18.0
@@ -14,14 +16,26 @@ dependencies:
   - pandas=2.1.4
   - pyg=2.5.0
   - pytorch=2.2.1
+  - pyg=2.5.0
+  - pytorch=2.2.1
   - requests=2.31.0
   - scikit-learn=1.3.0
   - seaborn=0.12.2
   - tqdm=4.65.0
   - torchaudio=2.2.1
   - torchvision=0.17.1
+  - torchaudio=2.2.1
+  - torchvision=0.17.1
   - pip:
     - cellxgene-census==1.10.2 
+    - gget==0.28.4
+    - pydantic==2.6.3
+    - gget==0.28.4
+    - pydantic==2.6.3
+    - gget==0.28.4
     - pydantic==2.6.3
     - rdkit==2023.9.5
+    - tiledbsoma==1.7.2
     - yapf==0.40.2
+variables:
+  KMP_DUPLICATE_LIB_OK: "TRUE"
