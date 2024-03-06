@@ -5,7 +5,7 @@ sys.path.append(
 import unittest
 
 from pandas import DataFrame
-from pyarrow import SparseCOOTensor 
+# from pyarrow import SparseCOOTensor 
 from tdc.resource import cellxgene_census
 
 class TestResources(unittest.TestCase):
