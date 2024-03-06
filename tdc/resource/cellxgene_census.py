@@ -2,7 +2,7 @@
 import os
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = "TRUE"
-# TODO: remove 
+# TODO: remove
 import cellxgene_census
 import gget
 import tiledbsoma
@@ -13,7 +13,7 @@ class CensusResource:
     _CENSUS_DATA = "census_data"
     _CENSUS_META = "census_info"
     _FEATURE_PRESENCE = "feature_dataset_presence_matrix"
-    _LATEST_CENSUS = "2023-12-15" # TODO: maybe change to 'latest'
+    _LATEST_CENSUS = "2023-12-15"  # TODO: maybe change to 'latest'
     _HUMAN = "homo_sapiens"
 
     class decorators:
@@ -21,6 +21,7 @@ class CensusResource:
         @classmethod
         def check_dataset_is_census_data(cls, func):
             """Sets self.dataset to census_data"""
+
             def check(*args, **kwargs):
                 self = args[0]
                 self.dataset = self._CENSUS_DATA
@@ -31,6 +32,7 @@ class CensusResource:
         @classmethod
         def check_dataset_is_census_info(cls, func):
             """Sets self.dataset to census_data"""
+
             def check(*args, **kwargs):
                 self = args[0]
                 self.dataset = self._CENSUS_META
@@ -46,9 +48,11 @@ class CensusResource:
             3. functions requiring a measurement name provide a measurement name
             4. fmt is a valid format
             asserts these requirements hold in input arguments."""
+
             def check(*args, **kwargs):
                 if "upper" in kwargs:
-                    upper, lower = kwargs.get('upper', None), kwargs.get("lower", None)
+                    upper, lower = kwargs.get('upper',
+                                              None), kwargs.get("lower", None)
                     if upper is None or lower is None:
                         raise Exception(
                             "No upper and/or lower bound for slicing was provided. Dataset is too large to fit in memory. \
@@ -57,18 +61,22 @@ class CensusResource:
                 fmt = fmt if fmt is not None else "pandas"
                 if "todense" in kwargs:
                     todense = kwargs.get("todense")
-                    kwargs["todense"] = todense if todense is not None else False
+                    kwargs[
+                        "todense"] = todense if todense is not None else False
                     if todense and fmt != "scipy":
                         raise ValueError(
-                            "dense representation only available in scipy format")
+                            "dense representation only available in scipy format"
+                        )
                 measurement_name = kwargs.get("measurement_name")
                 if measurement_name is None:
                     raise Exception("measurement_name was not provided.")
                 elif fmt is not None and fmt not in ["scipy", "pyarrow"]:
                     raise ValueError(
-                        "measurement_matrix only supports 'scipy' or 'pyarrow' format")
+                        "measurement_matrix only supports 'scipy' or 'pyarrow' format"
+                    )
                 kwargs["fmt"] = fmt if fmt is not None else "pandas"
                 return func(*args, **kwargs)
+
             return check
 
     def __init__(self, census_version=None, organism=None):
@@ -238,7 +246,7 @@ class CensusResource:
                 census_version=self.census_version) as census:
             return census[self.dataset]["summary_cell_counts"]
 
-    @decorators.slice_checks_X_and_FM 
+    @decorators.slice_checks_X_and_FM
     @decorators.check_dataset_is_census_data
     def query_measurement_matrix(self,
                                  value_filter=None,
