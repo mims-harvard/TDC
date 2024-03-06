@@ -10,7 +10,10 @@ on:
       - main
       - avelez-cellxgene-dev
       - avelez-dev
+      - avelez-cellxgene-dev
       - '*'
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
