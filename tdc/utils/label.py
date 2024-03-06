@@ -38,12 +38,6 @@ def label_transform(y,
                     convert_to_log,
                     verbose=True,
                     order="descending"):
-def label_transform(y,
-                    binary,
-                    threshold,
-                    convert_to_log,
-                    verbose=True,
-                    order="descending"):
     """label transformation helper function
 
     Args:
