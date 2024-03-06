@@ -19,7 +19,6 @@ sys.path.append(
 
 class TestFunctions(unittest.TestCase):
 
-
     def setUp(self):
         print(os.getcwd())
         pass
