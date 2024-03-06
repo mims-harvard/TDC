@@ -9,6 +9,3 @@ torch
 tqdm
 huggingface_hub
 dataclasses
-cellxgene-census
-gget
-tiledbsoma
