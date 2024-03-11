@@ -1,0 +1,25 @@
+- name: Alejandro Velez-Arce
+  email: alejandro_velez-arce@hms.harvard.edu
+  github: amva13
+  aliases:
+  - Alejandro Velez
+  - Alex Velez
+  - Alejandro Velez Arce
+  alternate_emails:
+  - amva13@mit.edu
+  - alejandro.velez.arce@gmail.com
+  - alex@alexv24.com
+
+- name: Kexin Huang
+  email: kexinh@stanford.edu 
+  github: kexinhuang12345
+  alternate_emails:
+  - kexinhuang@hsph.harvard.edu
+
+- name: Marinka Zitnik, PhD
+  email: marinka@hms.harvard.edu
+  github: marinkaz
+  aliases:
+  - Marinka Zitnik
+  alternate_emails:
+  - marinka@zitnik.si
