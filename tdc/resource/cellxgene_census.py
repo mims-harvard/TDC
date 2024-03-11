@@ -1,8 +1,3 @@
-# TODO: tmp fix
-import os
-
-os.environ['KMP_DUPLICATE_LIB_OK'] = "TRUE"
-# TODO: remove
 import cellxgene_census
 import gget
 import tiledbsoma
