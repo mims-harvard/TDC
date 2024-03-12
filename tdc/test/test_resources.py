@@ -40,7 +40,8 @@ class TestCellXGene(unittest.TestCase):
         # assert isinstance(varpyarrow, SparseCOOTensor)
 
     @unittest.skip(
-        "this test takes up too much mem for GH worker but works locally.. skip for now")
+        "this test takes up too much mem for GH worker but works locally.. skip for now"
+    )
     def test_get_measurement_matrix(self):
         Xslice = self.resource.get_measurement_matrix(upper=5,
                                                       lower=0,

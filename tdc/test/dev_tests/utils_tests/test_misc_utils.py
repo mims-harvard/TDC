@@ -31,9 +31,9 @@ class TestFunctions(unittest.TestCase):
 
     @unittest.skip("this is a visual test and should only be run locally")
     def test_label_distribution(self):
-       from tdc.single_pred import ADME
-       data = ADME(name='Caco2_Wang')
-       x = data.label_distribution()
+        from tdc.single_pred import ADME
+        data = ADME(name='Caco2_Wang')
+        x = data.label_distribution()
 
     def test_get_label_map(self):
         from tdc.multi_pred import DDI
