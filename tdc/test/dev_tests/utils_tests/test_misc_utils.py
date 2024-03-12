@@ -59,7 +59,7 @@ class TestFunctions(unittest.TestCase):
 
         seq = uniprot2seq("P49122")
 
-    # @unittest.skip("long running test")  # TODO: debug
+    # note - this test might fail locally
     def test_to_graph(self):
         from tdc.multi_pred import DTI
 
