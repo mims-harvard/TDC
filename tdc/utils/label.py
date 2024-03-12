@@ -223,19 +223,15 @@ def NegSample(df, column_names, frac, two_types):
         for i in neg_list:
             neg_list_val.append([i[0], id2seq[i[0]], i[1], id2seq[i[1]], 0])
 
-            df2 = pd.concat([
-                df,
-                pd.DataFrame(neg_list_val).rename(columns={
-                    0: id1,
-                    1: x1,
-                    2: id2,
-                    3: x2,
-                    4: "Y"
-                })
-            ],
-                            ignore_index=True,
-                            sort=False)
-        return df2
+        concat_frames = pd.DataFrame(neg_list_val).rename(columns={
+            0: id1,
+            1: x1,
+            2: id2,
+            3: x2,
+            4: "Y"
+        })
+        df = pd.concat([df, concat_frames], ignore_index=True, sort=False)
+        return df
     else:
         df_unique_id1 = np.unique(df[id1].values.reshape(-1))
         df_unique_id2 = np.unique(df[id2].values.reshape(-1))
@@ -274,7 +270,7 @@ def NegSample(df, column_names, frac, two_types):
         for i in neg_list:
             neg_list_val.append([i[0], id2seq1[i[0]], i[1], id2seq2[i[1]], 0])
 
-        df2 = pd.concat([
+        df = pd.concat([
             df,
             pd.DataFrame(neg_list_val).rename(columns={
                 0: id1,
@@ -284,6 +280,6 @@ def NegSample(df, column_names, frac, two_types):
                 4: "Y"
             })
         ],
-                        ignore_index=True,
-                        sort=False)
-        return df2
+                       ignore_index=True,
+                       sort=False)
+        return df
