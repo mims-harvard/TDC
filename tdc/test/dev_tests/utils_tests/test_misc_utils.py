@@ -24,7 +24,6 @@ class TestFunctions(unittest.TestCase):
         pass
 
     @unittest.skip("long running test")
-    @unittest.skip("long running test")
     def test_neg_sample(self):
         from tdc.multi_pred import PPI
 
