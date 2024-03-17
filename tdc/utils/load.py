@@ -295,13 +295,15 @@ def pd_load(name, path):
                              sep="\t")
         elif name2type[name] == "csv":
             df = pd.read_csv(os.path.join(path, name + "." + name2type[name]))
+        elif name2type[name] == "xlsx":
+            df = pd.read_excel(os.path.join(path, name + "." + name2type[name]))
         elif name2type[name] == "pkl":
             df = pd.read_pickle(os.path.join(path,
                                              name + "." + name2type[name]))
         elif name2type[name] == "zip":
             df = pd.read_pickle(os.path.join(path, name + "/" + name + ".pkl"))
         else:
-            raise ValueError("The file type must be one of tab/csv/pickle/zip.")
+            raise ValueError("The file type must be one of tab/csv/xlsx/pickle/zip.")
         try:
             df = df.drop_duplicates()
         except:
@@ -370,7 +372,7 @@ def property_dataset_load(name, path, target, dataset_names):
         return df["Drug"], df[target], df["Drug_ID"]
 
 
-def interaction_dataset_load(name, path, target, dataset_names, aux_column):
+def interaction_dataset_load(name, path, target, dataset_names, aux_column, var_map=None):
     """a wrapper to download, process and load two-instance prediction task datasets
 
     Args:
@@ -378,6 +380,7 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column):
         path (str): the dataset path to save/retrieve
         target (str): for multi-label dataset, retrieve the label of interest
         dataset_names (list): a list of availabel exact dataset names
+        var_map (dict): maps variable names X1, X2, ID1, ID2 into existing column names
 
     Returns:
         pandas.Series: three series (entity 1 representation, entity 2 representation, entity id 1, entity id 2, label)
@@ -385,6 +388,11 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column):
     name = download_wrapper(name, path, dataset_names)
     print_sys("Loading...")
     df = pd_load(name, path)
+    if var_map is not None:
+        df["X1"] = df[var_map["X1"]]
+        df["X2"] = df[var_map["X2"]]
+        df["ID1"] = df[var_map["ID1"]]
+        df["ID2"] = df[var_map["ID2"]]
     try:
         if target is None:
             target = "Y"

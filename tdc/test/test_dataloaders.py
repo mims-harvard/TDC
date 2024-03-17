@@ -33,6 +33,13 @@ class TestDataloader(unittest.TestCase):
 
         data = TestMultiPred(name="Test_Multi_Pred")
         split = data.get_split()
+        
+    def test_pentelute(self):
+        from tdc.multi_pred import ProteinPeptide
+        
+        data = ProteinPeptide(name="pentelute_mdm2_ace2_12ca5")
+        split = data.get_split() # TODO: factor out into specialized test suites for individual datasets
+        print("Pentelute dataset was loaded successfully!")
 
     def test_generation(self):
         from tdc.generation import MolGen

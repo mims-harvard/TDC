@@ -32,7 +32,7 @@ class DataLoader(base_dataset.DataLoader):
 
     """
 
-    def __init__(self, name, path, label_name, print_stats, dataset_names):
+    def __init__(self, name, path, label_name, print_stats, dataset_names, var_map=None):
         """Create a base dataloader object that each multi-instance prediction task dataloader class can inherit from.
 
         Args:
@@ -71,7 +71,8 @@ class DataLoader(base_dataset.DataLoader):
                                      path,
                                      label_name,
                                      dataset_names,
-                                     aux_column=aux_column)
+                                     aux_column=aux_column,
+                                     var_map=var_map)
 
         self.name = name
         self.entity1 = entity1

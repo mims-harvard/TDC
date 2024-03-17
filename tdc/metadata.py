@@ -176,6 +176,8 @@ tcr_epi_dataset_names = ["weber"]
 
 trial_outcome_dataset_names = ['phase1', 'phase2', 'phase3']
 
+proteinpeptide_dataset_names = ['pentelute_mdm2_ace2_12ca5']
+
 ####################################
 # generation
 
@@ -594,6 +596,7 @@ dataset_names = {
     "test_multi_pred": test_multi_pred_dataset_names,
     "TCREpitopeBinding": tcr_epi_dataset_names,
     "TrialOutcome": trial_outcome_dataset_names,
+    "ProteinPeptide": proteinpeptide_dataset_names,
 }
 
 benchmark_names = {
@@ -732,6 +735,7 @@ name2type = {
     "phase1": "tab",
     "phase2": "tab",
     "phase3": "tab",
+    "pentelute_mdm2_ace2_12ca5": "xlsx",
 }
 
 name2id = {
@@ -846,6 +850,7 @@ name2id = {
     "phase1": 7331305,
     "phase2": 7331306,
     "phase3": 7331307,
+    "pentelute_mdm2_ace2_12ca5": 9272481,
 }
 
 oracle2type = {
