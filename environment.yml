@@ -2,12 +2,14 @@ name: tdc-conda-env
 channels:
   - conda-forge
   - defaults
+  - dglteam
   - pyg
   - pytorch
   - pyg
   - pytorch
 dependencies:
   - dataclasses=0.8
+  - dgl=2.1.0
   - fuzzywuzzy=0.18.0
   - huggingface_hub=0.20.3
   - numpy=1.26.4

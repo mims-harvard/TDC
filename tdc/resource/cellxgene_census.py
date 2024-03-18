@@ -185,7 +185,7 @@ class CensusResource:
                 census[self.dataset][self.organism].ms[measurement_name].var)
             X = census[self.dataset][
                 self.organism].ms[measurement_name].X[value_adjustment]
-            slc = X.read((slice(lower, upper),)).coos((n_obs, n_var))
+            slc = X.read([slice(lower, upper)]).coos((n_obs, n_var))
             out = self.fmt_cellxgene_data(slc, fmt)
             return out if not todense else out.todense()
 

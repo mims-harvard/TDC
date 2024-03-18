@@ -23,18 +23,17 @@ class TestFunctions(unittest.TestCase):
         print(os.getcwd())
         pass
 
-    @unittest.skip("long running test")
-    @unittest.skip("long running test")
     def test_neg_sample(self):
         from tdc.multi_pred import PPI
 
         data = PPI(name="HuRI")
         data = data.neg_sample(frac=1)
 
-    # def test_label_distribution(self):
-    #    from tdc.single_pred import ADME
-    #    data = ADME(name='Caco2_Wang')
-    #    x = data.label_distribution()
+    @unittest.skip("this is a visual test and should only be run locally")
+    def test_label_distribution(self):
+        from tdc.single_pred import ADME
+        data = ADME(name='Caco2_Wang')
+        x = data.label_distribution()
 
     def test_get_label_map(self):
         from tdc.multi_pred import DDI
@@ -60,7 +59,7 @@ class TestFunctions(unittest.TestCase):
 
         seq = uniprot2seq("P49122")
 
-    @unittest.skip("long running test")  # TODO: debug
+    # note - this test might fail locally
     def test_to_graph(self):
         from tdc.multi_pred import DTI
 
