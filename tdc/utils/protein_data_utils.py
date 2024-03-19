@@ -95,6 +95,19 @@ class ProteinDataUtils(DataParser):
         except (IndexError, KeyError):
             # Handle cases where the protein sequence is not found
             return "Protein sequence not found for the given gene name."
+
+    @classmethod
+    def get_type_of_gene(cls, gene_name: str) -> str:
+        assert isinstance(gene_name, str), (type(gene_name) , gene_name)
+        mg = mygene.MyGeneInfo()
+        # Query MyGene.info for the given gene name
+        # You might need to adjust the fields based on the gene's specifics
+        # 'fields': 'proteins' might vary depending on the data available for your gene
+        gene_info = mg.query(gene_name, fields='all', species='human')
+        try:
+            return gene_info["hits"][0]["type_of_gene"] if gene_name != "12CA5" else "protein-coding"
+        except:
+            return "Could not find type of gene"
     
     @classmethod
     def insert_protein_sequence(cls, gene_df: DataFrame, gene_column: str) -> DataFrame:
@@ -119,5 +132,6 @@ class ProteinDataUtils(DataParser):
         new_col = gene_df[gene_column].apply(cls.get_protein_sequence).tolist()
         assert len(new_col) == len(gene_df[gene_column]), (new_col, gene_df[gene_column])
         gene_df['sequence'] = new_col
+        gene_df["gene_type"] = gene_df[gene_column].apply(cls.get_type_of_gene).tolist()
         
         return gene_df

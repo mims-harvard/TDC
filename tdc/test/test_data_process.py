@@ -101,7 +101,7 @@ class TestProteinDataUtil(unittest.TestCase):
         df = pd.DataFrame(test_entries, columns=col_names)
         df2 = ProteinDataUtils.insert_protein_sequence(df, "Gene name")
         self.assertEqual(df2.shape[0],4)
-        self.assertEqual(df2.shape[1],2)
+        self.assertEqual(df2.shape[1],3)
         self.assertEqual(df2["Gene name"].tolist(), ["BRCA1","MDM2","ACE2","12CA5"])
         self.assertEqual(len(df2["sequence"]), 4)
         self.assertEqual(df2["sequence"].tolist(), df["sequence"].tolist())
