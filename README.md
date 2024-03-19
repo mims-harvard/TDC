@@ -238,7 +238,7 @@ For more information, visit [here](https://tdcommons.ai/benchmark/overview/).
 
 ## Cite Us
 
-If you find Therapeutics Data Commons useful, cite our [NeurIPS paper](https://openreview.net/pdf?id=8nvgnORnoWr) and [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2):
+If you find Therapeutics Data Commons useful, cite our [NeurIPS paper](https://openreview.net/pdf?id=8nvgnORnoWr) , [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2) , and our [Harvard Dataverse Dataset](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/21LKWG):
 
 ```
 @article{Huang2021tdc,
@@ -259,7 +259,18 @@ If you find Therapeutics Data Commons useful, cite our [NeurIPS paper](https://o
   year={2022}
 }
 ```
-
+```
+@data{DVN/21LKWG_2020,
+  author = {Kexin Huang, Tianfan Fu, Wenhao Gao, Yue Zhao, Yusuf Roohani, Jure Leskovec, Connor W. Coley, Cao Xiao, Jimeng Sun, Marinka Zitnik and Velez-Arce, Alejandro},
+  publisher = {Harvard Dataverse},
+  title = {{Therapeutics Data Commons (https://tdcommons.ai)}},
+  UNF = {UNF:6:KESpbe1TOPOW2BGCtjSI2w==},
+  year = {2020},
+  version = {V80},
+  doi = {10.7910/DVN/21LKWG},
+  url = {https://doi.org/10.7910/DVN/21LKWG}
+}
+```
 TDC is built on top of other open-sourced projects. If you used these datasets/functions in your research, please cite the original work as well. You can find the original paper in the website to the function/dataset.
 
 ## Contribute
