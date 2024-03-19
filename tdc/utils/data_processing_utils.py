@@ -3,7 +3,7 @@ Class encapsulating general data processing functions. Also supports running the
 Goal is to make it easier to integrate custom datasets not yet in TDC format.
 """
 
-from pandas import Series, DataFrame
+from pandas import DataFrame
 
 class DataParser(object):
     """

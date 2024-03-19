@@ -17,6 +17,7 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from tdc.utils.data_processing_utils import DataParser
+from tdc.utils.protein_data_utils import ProteinDataUtils
 
 
 class TestDataParser(unittest.TestCase):
@@ -72,6 +73,39 @@ class TestDataParser(unittest.TestCase):
         self.assertEqual(df2["some_value"].tolist(), [0,1,5])
         self.assertEqual(df2.shape[0],3)
         self.assertEqual(df2.shape[1],5)
+
+    def tearDown(self):
+        print(os.getcwd())
+
+        if os.path.exists(os.path.join(os.getcwd(), "data")):
+            shutil.rmtree(os.path.join(os.getcwd(), "data"))
+        if os.path.exists(os.path.join(os.getcwd(), "oracle")):
+            shutil.rmtree(os.path.join(os.getcwd(), "oracle"))
+
+class TestProteinDataUtil(unittest.TestCase):
+    
+    def setUp(self):
+        print(os.getcwd())
+        pass
+    
+    def testInsertProteinSequence(self):
+        test_entries = [
+            ["BRCA1"],
+            ["MDM2"],
+            ["ACE2"],
+            ["12CA5"],
+        ]
+        col_names = [
+            "Gene name" 
+        ]
+        df = pd.DataFrame(test_entries, columns=col_names)
+        df2 = ProteinDataUtils.insert_protein_sequence(df, "Gene name")
+        self.assertEqual(df2.shape[0],4)
+        self.assertEqual(df2.shape[1],2)
+        self.assertEqual(df2["Gene name"].tolist(), ["BRCA1","MDM2","ACE2","12CA5"])
+        self.assertEqual(len(df2["sequence"]), 4)
+        self.assertEqual(df2["sequence"].tolist(), df["sequence"].tolist())
+        self.assertEqual(len(df2["sequence"].unique()), 4)
 
     def tearDown(self):
         print(os.getcwd())
