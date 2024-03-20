@@ -10,13 +10,14 @@ import requests
 
 from .data_processing_utils import DataParser
 
+
 class ProteinDataUtils(DataParser):
     """
     Class encapsulating protein data processing functions. Also supports running them in sequence.
     Goals are to make it easier to integrate custom datasets not yet in TDC format.
     Note: for running in sequence, this class inherits from data_processing_utils.DataParser
     """
-    
+
     @classmethod
     def get_ncrna_sequence(cls, ncrna_id):
         """
@@ -33,13 +34,16 @@ class ProteinDataUtils(DataParser):
 
         try:
             # Fetch the sequence using efetch
-            handle = Entrez.efetch(db="nucleotide", id=ncrna_id, rettype="fasta", retmode="text")
+            handle = Entrez.efetch(db="nucleotide",
+                                   id=ncrna_id,
+                                   rettype="fasta",
+                                   retmode="text")
             record = SeqIO.read(handle, "fasta")
             handle.close()
             return str(record.seq)
         except Exception as e:
             return "Failed to retrieve sequence: " + str(e)
-    
+
     @classmethod
     def get_amino_acid_sequence(cls, uniprot_id):
         """
@@ -62,10 +66,11 @@ class ProteinDataUtils(DataParser):
             sequence = ''.join(sequence_lines)
             return sequence
         else:
-            return "Failed to retrieve sequence. Status code: " + str(response.status_code)
-    
+            return "Failed to retrieve sequence. Status code: " + str(
+                response.status_code)
+
     @classmethod
-    def get_protein_sequence(cls, gene_name : str) -> str:
+    def get_protein_sequence(cls, gene_name: str) -> str:
         """
         Retrieves protein sequence for the given gene name.
         
@@ -75,7 +80,7 @@ class ProteinDataUtils(DataParser):
         Returns:
             str: Protein amino acid sequence.
         """
-        assert isinstance(gene_name, str), (type(gene_name) , gene_name)
+        assert isinstance(gene_name, str), (type(gene_name), gene_name)
         mg = mygene.MyGeneInfo()
         # Query MyGene.info for the given gene name
         # You might need to adjust the fields based on the gene's specifics
@@ -89,7 +94,7 @@ class ProteinDataUtils(DataParser):
             if gene_info['hits'][0]["type_of_gene"].lower() == "ncrna":
                 ncbi_id = gene_info['hits'][0]['entrezgene']
                 return cls.get_ncrna_sequence(ncbi_id)
-                
+
             protid = gene_info['hits'][0]["uniprot"]["Swiss-Prot"]
             return cls.get_amino_acid_sequence(protid)
         except (IndexError, KeyError):
@@ -98,19 +103,21 @@ class ProteinDataUtils(DataParser):
 
     @classmethod
     def get_type_of_gene(cls, gene_name: str) -> str:
-        assert isinstance(gene_name, str), (type(gene_name) , gene_name)
+        assert isinstance(gene_name, str), (type(gene_name), gene_name)
         mg = mygene.MyGeneInfo()
         # Query MyGene.info for the given gene name
         # You might need to adjust the fields based on the gene's specifics
         # 'fields': 'proteins' might vary depending on the data available for your gene
         gene_info = mg.query(gene_name, fields='all', species='human')
         try:
-            return gene_info["hits"][0]["type_of_gene"] if gene_name != "12CA5" else "protein-coding"
+            return gene_info["hits"][0][
+                "type_of_gene"] if gene_name != "12CA5" else "protein-coding"
         except:
             return "Could not find type of gene"
-    
+
     @classmethod
-    def insert_protein_sequence(cls, dataset: DataFrame, gene_column: str) -> DataFrame:
+    def insert_protein_sequence(cls, dataset: DataFrame,
+                                gene_column: str) -> DataFrame:
         """
         Inserts protein sequence for each gene in the given DataFrame.
         
@@ -121,6 +128,7 @@ class ProteinDataUtils(DataParser):
         Returns:
             pd.DataFrame: DataFrame with an additional column for protein sequences.
         """
+
         def helper(gene_name):
             if gene_name in memo:
                 return memo[gene_name]
@@ -141,11 +149,12 @@ class ProteinDataUtils(DataParser):
 
         # Ensure the DataFrame index is aligned
         # gene_df = gene_df.reset_index(drop=True)
-        
+
         # Retrieve protein sequences for each gene and store them in a new column
         new_col = dataset[gene_column].apply(helper).tolist()
-        assert len(new_col) == len(dataset[gene_column]), (new_col, dataset[gene_column])
+        assert len(new_col) == len(dataset[gene_column]), (new_col,
+                                                           dataset[gene_column])
         dataset['protein_or_rna_sequence'] = new_col
         dataset["gene_type"] = dataset[gene_column].apply(helper_type).tolist()
-        
+
         return dataset

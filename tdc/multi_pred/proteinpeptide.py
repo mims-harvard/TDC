@@ -35,7 +35,7 @@ class ProteinPeptide(bi_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data", label_name=None, print_stats=False):
         """Create Protein-Peptide Prediction dataloader object"""
-        label_name = label_name if label_name is not None else "KD (nm)" # TODO: this column should be parsed into float and upper/lower
+        label_name = label_name if label_name is not None else "KD (nm)"  # TODO: this column should be parsed into float and upper/lower
         super().__init__(
             name,
             path,
@@ -44,8 +44,8 @@ class ProteinPeptide(bi_pred_dataset.DataLoader):
             dataset_names=dataset_names["ProteinPeptide"],
             data_config=PenteluteProteinPeptideConfig(),
         )
-        self.entity1_name = "Sequence" # peptide sequence
-        self.entity2_name = "Protein Target" # protein target label
+        self.entity1_name = "Sequence"  # peptide sequence
+        self.entity2_name = "Protein Target"  # protein target label
         self.two_types = True
 
         if print_stats:

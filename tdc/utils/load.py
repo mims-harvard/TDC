@@ -303,7 +303,8 @@ def pd_load(name, path):
         elif name2type[name] == "zip":
             df = pd.read_pickle(os.path.join(path, name + "/" + name + ".pkl"))
         else:
-            raise ValueError("The file type must be one of tab/csv/xlsx/pickle/zip.")
+            raise ValueError(
+                "The file type must be one of tab/csv/xlsx/pickle/zip.")
         try:
             df = df.drop_duplicates()
         except:
@@ -372,7 +373,12 @@ def property_dataset_load(name, path, target, dataset_names):
         return df["Drug"], df[target], df["Drug_ID"]
 
 
-def interaction_dataset_load(name, path, target, dataset_names, aux_column, data_config=None):
+def interaction_dataset_load(name,
+                             path,
+                             target,
+                             dataset_names,
+                             aux_column,
+                             data_config=None):
     """a wrapper to download, process and load two-instance prediction task datasets
 
     Args:
@@ -406,7 +412,8 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column, data
             target = fuzzy_search(target, df.columns.values)
         df = df[df[target].notnull()].reset_index(drop=True)
         if aux_column is None:
-            return df["X1"], df["X2"], df[target], df["ID1"], df["ID2"], "_", df, data_config is not None
+            return df["X1"], df["X2"], df[target], df["ID1"], df[
+                "ID2"], "_", df, data_config is not None
         else:
             return df["X1"], df["X2"], df[target], df["ID1"], df["ID2"], df[
                 aux_column], df, data_config is not None

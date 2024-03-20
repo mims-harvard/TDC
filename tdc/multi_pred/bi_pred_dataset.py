@@ -32,7 +32,13 @@ class DataLoader(base_dataset.DataLoader):
 
     """
 
-    def __init__(self, name, path, label_name, print_stats, dataset_names, data_config=None):
+    def __init__(self,
+                 name,
+                 path,
+                 label_name,
+                 print_stats,
+                 dataset_names,
+                 data_config=None):
         """Create a base dataloader object that each multi-instance prediction task dataloader class can inherit from.
 
         Args:
@@ -60,21 +66,13 @@ class DataLoader(base_dataset.DataLoader):
         else:
             aux_column = None
 
-        (
-            entity1,
-            entity2,
-            raw_y,
-            entity1_idx,
-            entity2_idx,
-            aux_column_val,
-            df,
-            augment_df
-        ) = interaction_dataset_load(name,
-                                     path,
-                                     label_name,
-                                     dataset_names,
-                                     aux_column=aux_column,
-                                     data_config=data_config)
+        (entity1, entity2, raw_y, entity1_idx, entity2_idx, aux_column_val, df,
+         augment_df) = interaction_dataset_load(name,
+                                                path,
+                                                label_name,
+                                                dataset_names,
+                                                aux_column=aux_column,
+                                                data_config=data_config)
 
         self.name = name
         self.entity1 = entity1
@@ -132,7 +130,7 @@ class DataLoader(base_dataset.DataLoader):
                 return out
             for col in self.df.columns:
                 out[col] = self.df[col].values
-            return out 
+            return out
 
         elif format == "DeepPurpose":
             return self.entity1.values, self.entity2.values, self.y.values
