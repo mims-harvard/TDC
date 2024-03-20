@@ -372,7 +372,7 @@ def property_dataset_load(name, path, target, dataset_names):
         return df["Drug"], df[target], df["Drug_ID"]
 
 
-def interaction_dataset_load(name, path, target, dataset_names, aux_column, var_map=None):
+def interaction_dataset_load(name, path, target, dataset_names, aux_column, data_config=None):
     """a wrapper to download, process and load two-instance prediction task datasets
 
     Args:
@@ -388,11 +388,14 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column, var_
     name = download_wrapper(name, path, dataset_names)
     print_sys("Loading...")
     df = pd_load(name, path)
-    if var_map is not None:
-        df["X1"] = df[var_map["X1"]]
-        df["X2"] = df[var_map["X2"]]
-        df["ID1"] = df[var_map["ID1"]]
-        df["ID2"] = df[var_map["ID2"]]
+    if data_config is not None:
+        # code block to apply preprocessing rules defined by config files
+        process_callback = data_config.processing_callback
+        if process_callback is not None:
+            df = process_callback(df)
+        tdc_standard_callback = data_config.tdc_cols_callback
+        if tdc_standard_callback is not None:
+            df = tdc_standard_callback(df)
     try:
         if target is None:
             target = "Y"
@@ -403,10 +406,10 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column, var_
             target = fuzzy_search(target, df.columns.values)
         df = df[df[target].notnull()].reset_index(drop=True)
         if aux_column is None:
-            return df["X1"], df["X2"], df[target], df["ID1"], df["ID2"], "_"
+            return df["X1"], df["X2"], df[target], df["ID1"], df["ID2"], "_", df, data_config is not None
         else:
             return df["X1"], df["X2"], df[target], df["ID1"], df["ID2"], df[
-                aux_column]
+                aux_column], df, data_config is not None
 
     except:
         with open(os.path.join(path, name + "." + name2type[name]), "r") as f:

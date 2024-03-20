@@ -35,11 +35,12 @@ class TestDataloader(unittest.TestCase):
         split = data.get_split()
         
     def test_pentelute(self):
+        # TODO: factor out into specialized test suites for individual datasets
+        # this test serves as an integration test of the data processing, data configs, and existing tdc pipeline. leave here for now.
         from tdc.multi_pred import ProteinPeptide
-        
         data = ProteinPeptide(name="pentelute_mdm2_ace2_12ca5")
-        split = data.get_split() # TODO: factor out into specialized test suites for individual datasets
-        print("Pentelute dataset was loaded successfully!")
+        assert "protein_or_rna_sequence" in data.get_data().columns # pentelute protein<>peptide dataset uses a data config inserting this column
+        data.get_split()
 
     def test_generation(self):
         from tdc.generation import MolGen

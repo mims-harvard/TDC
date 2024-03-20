@@ -110,7 +110,7 @@ class ProteinDataUtils(DataParser):
             return "Could not find type of gene"
     
     @classmethod
-    def insert_protein_sequence(cls, gene_df: DataFrame, gene_column: str) -> DataFrame:
+    def insert_protein_sequence(cls, dataset: DataFrame, gene_column: str) -> DataFrame:
         """
         Inserts protein sequence for each gene in the given DataFrame.
         
@@ -121,17 +121,31 @@ class ProteinDataUtils(DataParser):
         Returns:
             pd.DataFrame: DataFrame with an additional column for protein sequences.
         """
+        def helper(gene_name):
+            if gene_name in memo:
+                return memo[gene_name]
+            memo[gene_name] = cls.get_protein_sequence(gene_name)
+            return memo[gene_name]
+
+        def helper_type(gene_name):
+            if gene_name in memo_type:
+                return memo_type[gene_name]
+            memo_type[gene_name] = cls.get_type_of_gene(gene_name)
+            return memo_type[gene_name]
+
+        memo: dict = {}  # To store already computed values
+        memo_type: dict = {}
         # Check if gene_column exists in gene_df
-        if gene_column not in gene_df.columns:
+        if gene_column not in dataset.columns:
             raise ValueError(f"{gene_column} does not exist in the DataFrame.")
 
         # Ensure the DataFrame index is aligned
         # gene_df = gene_df.reset_index(drop=True)
         
         # Retrieve protein sequences for each gene and store them in a new column
-        new_col = gene_df[gene_column].apply(cls.get_protein_sequence).tolist()
-        assert len(new_col) == len(gene_df[gene_column]), (new_col, gene_df[gene_column])
-        gene_df['sequence'] = new_col
-        gene_df["gene_type"] = gene_df[gene_column].apply(cls.get_type_of_gene).tolist()
+        new_col = dataset[gene_column].apply(helper).tolist()
+        assert len(new_col) == len(dataset[gene_column]), (new_col, dataset[gene_column])
+        dataset['protein_or_rna_sequence'] = new_col
+        dataset["gene_type"] = dataset[gene_column].apply(helper_type).tolist()
         
-        return gene_df
+        return dataset

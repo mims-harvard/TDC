@@ -161,9 +161,9 @@ class TestProteinDataUtil(unittest.TestCase):
         self.assertEqual(df2.shape[0],4)
         self.assertEqual(df2.shape[1],3)
         self.assertEqual(df2["Gene name"].tolist(), ["BRCA1","MDM2","ACE2","12CA5"])
-        self.assertEqual(len(df2["sequence"]), 4)
-        self.assertEqual(df2["sequence"].tolist(), df["sequence"].tolist())
-        self.assertEqual(len(df2["sequence"].unique()), 4)
+        self.assertEqual(len(df2["protein_or_rna_sequence"]), 4)
+        self.assertEqual(df2["protein_or_rna_sequence"].tolist(), df["protein_or_rna_sequence"].tolist())
+        self.assertEqual(len(df2["protein_or_rna_sequence"].unique()), 4)
 
     def tearDown(self):
         print(os.getcwd())

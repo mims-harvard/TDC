@@ -3,7 +3,7 @@ Class encapsulating general data processing functions. Also supports running the
 Goal is to make it easier to integrate custom datasets not yet in TDC format.
 """
 import inspect
-from pandas import DataFrame
+from pandas import DataFrame, isnull
 
 class DataParser(object):
     """
@@ -40,7 +40,10 @@ class DataParser(object):
         Modifies dataset in-place.
         If special keys are provided, corresponding entries are replaced for the numerical value in subs"""
         def helper(entry):
+            if isnull(entry):
+                return (None, None)
             buffer=""
+            assert isinstance(entry, str), ("Entry must be a string", entry)
             for idx, char in enumerate(entry):
                 if char.isdigit() or char == ".":
                     buffer += char
@@ -55,8 +58,10 @@ class DataParser(object):
         assert isinstance(subs, list)
         assert len(keys) == len(subs)
         subs_dict = {k:s for k,s in zip(keys, subs)}
-        entries = [helper(x) if x not in keys else (subs_dict[x], subs_dict[x]) for x in dataset[column]]
-        bounds = [[x1-x2, x1, x1+x2] if x1 not in keys else [x1,x1,x1] for x1,x2 in entries]
+        if None not in subs_dict:
+            subs_dict[None] = None
+        entries = [helper(x) if x not in subs_dict else (subs_dict[x], subs_dict[x]) for x in dataset[column]]
+        bounds = [[x1-x2, x1, x1+x2] if x1 not in subs_dict else [x1,x1,x1] for x1,x2 in entries]
         df_bounds = DataFrame(bounds, columns=['lower','expected','upper'])
         dataset["lower"] = df_bounds["lower"]
         dataset["expected"] = df_bounds["expected"]
