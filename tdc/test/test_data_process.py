@@ -74,6 +74,64 @@ class TestDataParser(unittest.TestCase):
         self.assertEqual(df2.shape[0],3)
         self.assertEqual(df2.shape[1],5)
 
+    def testProcessData(self):
+        test_entries1 = [
+            ["7.7±4.5", 0],
+            ["10±2.3", 1],
+            ["Putative binder", 5],
+            ["Putative binder", 5],
+            ["Putative binder", 5],
+        ]
+        test_entries2 = [
+            [0,"x",8],
+            [1,'y',4],
+            [None, "x", 9],
+            [None, "y", 8],
+            [2, "z", 12]
+        ]
+        test_entries = [x+y for x,y in zip(test_entries1, test_entries2)]
+        col_names = [
+            "num",
+            "some_value",
+            "autofill",
+            "index",
+            "value",
+        ]
+        assert len(col_names) == len(test_entries[0]),\
+            ("Number of columns in test_entries does not match number of columns in col_names", col_names, test_entries[0])
+        functions = [
+            "create_range",
+            "autofill_identifier",
+        ]
+        args = [
+            {
+            "column": "num",
+            "keys": ["Putative binder"],
+            "subs": [0],
+            },
+            {
+            "autofill_column": "autofill",
+            "key_column": "index"
+            },
+        ]
+        df = pd.DataFrame(test_entries, columns=col_names)
+        df2 = DataParser.process_data(df, functions, args)
+        assert "expected" in df.columns
+        assert "expected" in df2.columns
+        assert "lower" in df2.columns
+        assert "upper" in df2.columns
+        self.assertEqual(df2["expected"].tolist(), [7.7,10,0,0,0])
+        self.assertEqual(df2["lower"].tolist(), [3.2,7.7,0,0,0])
+        self.assertEqual(df2["upper"].tolist(), [12.2,12.3,0,0,0])
+        self.assertEqual(df2["num"].tolist(), ["7.7±4.5","10±2.3","Putative binder","Putative binder","Putative binder"])
+        self.assertEqual(df2["some_value"].tolist(), [0,1,5,5,5])
+        self.assertEqual(df2.shape[0],5)
+        self.assertEqual(df2.shape[1],8)
+        self.assertEqual(df["autofill"].tolist(), [0,1,0,1,2])
+        self.assertEqual(df2["autofill"].tolist(), [0,1,0,1,2])
+        self.assertEqual(df2["index"].tolist(), ["x","y","x","y","z"])
+        self.assertEqual(df2["value"].tolist(), [8,4,9,8,12])
+
     def tearDown(self):
         print(os.getcwd())
 

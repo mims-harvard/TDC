@@ -850,7 +850,7 @@ name2id = {
     "phase1": 7331305,
     "phase2": 7331306,
     "phase3": 7331307,
-    "pentelute_mdm2_ace2_12ca5": 9272481,
+    "pentelute_mdm2_ace2_12ca5": 9649623,
 }
 
 oracle2type = {

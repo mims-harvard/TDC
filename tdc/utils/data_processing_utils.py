@@ -2,7 +2,7 @@
 Class encapsulating general data processing functions. Also supports running them in sequence.
 Goal is to make it easier to integrate custom datasets not yet in TDC format.
 """
-
+import inspect
 from pandas import DataFrame
 
 class DataParser(object):
@@ -62,3 +62,23 @@ class DataParser(object):
         dataset["expected"] = df_bounds["expected"]
         dataset["upper"] = df_bounds["upper"]
         return dataset
+
+    @classmethod
+    def process_data(cls, dataset, functions, args):
+        """Run a series of data transformation on the input dataset
+
+        Args:
+            dataset (no specificaton): The original dataset. As different functions can require different data types, this is left unspecified
+            functions (list[str]): list of string with function names
+            args (list[dict(str: object)]): a list of dicts containing the arguments for each function.
+        """
+        functions_dict = {name: getattr(cls, name) for name,_ in inspect.getmembers(cls)}
+        df = dataset
+        for idx,f in enumerate(functions):
+            a = args[idx]
+            a["dataset"] = df
+            try:
+                df = functions_dict[f](**a)
+            except KeyError as e:
+                raise ValueError("Unknown function '{}'".format(f), functions_dict.keys(), e)
+        return df
