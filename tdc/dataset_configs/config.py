@@ -1,5 +1,6 @@
 """General class for representing dataset configs"""
 
+
 class ConfigBase(dict):
     """Class for representing configs"""
     pass
