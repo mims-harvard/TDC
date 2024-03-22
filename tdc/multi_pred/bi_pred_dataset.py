@@ -32,7 +32,13 @@ class DataLoader(base_dataset.DataLoader):
 
     """
 
-    def __init__(self, name, path, label_name, print_stats, dataset_names):
+    def __init__(self,
+                 name,
+                 path,
+                 label_name,
+                 print_stats,
+                 dataset_names,
+                 data_config=None):
         """Create a base dataloader object that each multi-instance prediction task dataloader class can inherit from.
 
         Args:
@@ -60,18 +66,13 @@ class DataLoader(base_dataset.DataLoader):
         else:
             aux_column = None
 
-        (
-            entity1,
-            entity2,
-            raw_y,
-            entity1_idx,
-            entity2_idx,
-            aux_column_val,
-        ) = interaction_dataset_load(name,
-                                     path,
-                                     label_name,
-                                     dataset_names,
-                                     aux_column=aux_column)
+        (entity1, entity2, raw_y, entity1_idx, entity2_idx, aux_column_val, df,
+         augment_df) = interaction_dataset_load(name,
+                                                path,
+                                                label_name,
+                                                dataset_names,
+                                                aux_column=aux_column,
+                                                data_config=data_config)
 
         self.name = name
         self.entity1 = entity1
@@ -90,6 +91,8 @@ class DataLoader(base_dataset.DataLoader):
         self.aux_column_val = aux_column_val
         self.log_flag = False
         self.two_types = False
+        self.augment_df = augment_df
+        self.df = df if augment_df else None
 
     def get_data(self, format="df"):
         """generate data in some format, e.g., pandas.DataFrame
@@ -105,8 +108,9 @@ class DataLoader(base_dataset.DataLoader):
             AttributeError: Use the correct format input (df, dict, DeepPurpose)
         """
         if format == "df":
+            out = None
             if self.aux_column is None:
-                return pd.DataFrame({
+                out = pd.DataFrame({
                     self.entity1_name + "_ID": self.entity1_idx,
                     self.entity1_name: self.entity1,
                     self.entity2_name + "_ID": self.entity2_idx,
@@ -114,7 +118,7 @@ class DataLoader(base_dataset.DataLoader):
                     "Y": self.y,
                 })
             else:
-                return pd.DataFrame({
+                out = pd.DataFrame({
                     self.entity1_name + "_ID": self.entity1_idx,
                     self.entity1_name: self.entity1,
                     self.entity2_name + "_ID": self.entity2_idx,
@@ -122,17 +126,27 @@ class DataLoader(base_dataset.DataLoader):
                     "Y": self.y,
                     self.aux_column: self.aux_column_val,
                 })
+            if not self.augment_df:
+                return out
+            for col in self.df.columns:
+                out[col] = self.df[col].values
+            return out
 
         elif format == "DeepPurpose":
             return self.entity1.values, self.entity2.values, self.y.values
         elif format == "dict":
-            return {
+            out = {
                 self.entity1_name + "_ID": self.entity1_idx.values,
                 self.entity1_name: self.entity1.values,
                 self.entity2_name + "_ID": self.entity2_idx.values,
                 self.entity2_name: self.entity2.values,
                 "Y": self.y.values,
             }
+            if not self.augment_df:
+                return out
+            for col in self.df.columns:
+                out[col] = self.df[col].values
+            return out
         else:
             raise AttributeError("Please use the correct format input")
 

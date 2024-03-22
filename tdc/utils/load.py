@@ -295,13 +295,16 @@ def pd_load(name, path):
                              sep="\t")
         elif name2type[name] == "csv":
             df = pd.read_csv(os.path.join(path, name + "." + name2type[name]))
+        elif name2type[name] == "xlsx":
+            df = pd.read_excel(os.path.join(path, name + "." + name2type[name]))
         elif name2type[name] == "pkl":
             df = pd.read_pickle(os.path.join(path,
                                              name + "." + name2type[name]))
         elif name2type[name] == "zip":
             df = pd.read_pickle(os.path.join(path, name + "/" + name + ".pkl"))
         else:
-            raise ValueError("The file type must be one of tab/csv/pickle/zip.")
+            raise ValueError(
+                "The file type must be one of tab/csv/xlsx/pickle/zip.")
         try:
             df = df.drop_duplicates()
         except:
@@ -370,7 +373,12 @@ def property_dataset_load(name, path, target, dataset_names):
         return df["Drug"], df[target], df["Drug_ID"]
 
 
-def interaction_dataset_load(name, path, target, dataset_names, aux_column):
+def interaction_dataset_load(name,
+                             path,
+                             target,
+                             dataset_names,
+                             aux_column,
+                             data_config=None):
     """a wrapper to download, process and load two-instance prediction task datasets
 
     Args:
@@ -378,6 +386,7 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column):
         path (str): the dataset path to save/retrieve
         target (str): for multi-label dataset, retrieve the label of interest
         dataset_names (list): a list of availabel exact dataset names
+        var_map (dict): maps variable names X1, X2, ID1, ID2 into existing column names
 
     Returns:
         pandas.Series: three series (entity 1 representation, entity 2 representation, entity id 1, entity id 2, label)
@@ -385,6 +394,14 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column):
     name = download_wrapper(name, path, dataset_names)
     print_sys("Loading...")
     df = pd_load(name, path)
+    if data_config is not None:
+        # code block to apply preprocessing rules defined by config files
+        process_callback = data_config.processing_callback
+        if process_callback is not None:
+            df = process_callback(df)
+        tdc_standard_callback = data_config.tdc_cols_callback
+        if tdc_standard_callback is not None:
+            df = tdc_standard_callback(df)
     try:
         if target is None:
             target = "Y"
@@ -395,10 +412,11 @@ def interaction_dataset_load(name, path, target, dataset_names, aux_column):
             target = fuzzy_search(target, df.columns.values)
         df = df[df[target].notnull()].reset_index(drop=True)
         if aux_column is None:
-            return df["X1"], df["X2"], df[target], df["ID1"], df["ID2"], "_"
+            return df["X1"], df["X2"], df[target], df["ID1"], df[
+                "ID2"], "_", df, data_config is not None
         else:
             return df["X1"], df["X2"], df[target], df["ID1"], df["ID2"], df[
-                aux_column]
+                aux_column], df, data_config is not None
 
     except:
         with open(os.path.join(path, name + "." + name2type[name]), "r") as f:
