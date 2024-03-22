@@ -6,7 +6,7 @@ import inspect
 from pandas import DataFrame, isnull
 
 
-class DataParser(object):
+class DataFeatureGenerator(object):
     """
     Class encapsulating general data processing functions. Also supports running them in sequence.
     Goals are to make it easier to integrate custom datasets not yet in TDC format.

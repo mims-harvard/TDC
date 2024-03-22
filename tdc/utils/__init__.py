@@ -48,5 +48,5 @@ from .retrieve import (
 )
 from .query import uniprot2seq, cid2smiles
 
-from .data_processing_utils import DataParser
-from .protein_data_utils import ProteinDataUtils
+from ..feature_generators.data_feature_generator import DataFeatureGenerator
+from ..feature_generators.protein_feature_generator import ProteinFeatureGenerator

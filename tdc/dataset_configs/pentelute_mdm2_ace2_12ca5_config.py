@@ -1,5 +1,5 @@
 from .config import DatasetConfig
-from ..utils.protein_data_utils import ProteinDataUtils
+from ..feature_generators.protein_feature_generator import ProteinFeatureGenerator
 
 
 class PenteluteProteinPeptideConfig(DatasetConfig):
@@ -8,7 +8,7 @@ class PenteluteProteinPeptideConfig(DatasetConfig):
     def __init__(self):
         super(PenteluteProteinPeptideConfig, self).__init__(
             dataset_name="pentelute_mdm2_ace2_12ca5",
-            data_processing_class=ProteinDataUtils,
+            data_processing_class=ProteinFeatureGenerator,
             functions_to_run=[
                 "autofill_identifier", "create_range", "insert_protein_sequence"
             ],

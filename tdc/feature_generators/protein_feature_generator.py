@@ -8,14 +8,14 @@ import mygene
 from pandas import DataFrame
 import requests
 
-from .data_processing_utils import DataParser
+from .data_feature_generator import DataFeatureGenerator
 
 
-class ProteinDataUtils(DataParser):
+class ProteinFeatureGenerator(DataFeatureGenerator):
     """
     Class encapsulating protein data processing functions. Also supports running them in sequence.
     Goals are to make it easier to integrate custom datasets not yet in TDC format.
-    Note: for running in sequence, this class inherits from data_processing_utils.DataParser
+    Note: for running in sequence, this class inherits from data_processing_utils.DataFeatureGenerator
     """
 
     @classmethod

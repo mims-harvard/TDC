@@ -16,11 +16,11 @@ import pandas as pd
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from tdc.utils.data_processing_utils import DataParser
-from tdc.utils.protein_data_utils import ProteinDataUtils
+from tdc.feature_generators.data_feature_generator import DataFeatureGenerator
+from tdc.feature_generators.protein_feature_generator import ProteinFeatureGenerator
 
 
-class TestDataParser(unittest.TestCase):
+class TestDataFeatureGenerator(unittest.TestCase):
 
     def setUp(self):
         print(os.getcwd())
@@ -31,7 +31,7 @@ class TestDataParser(unittest.TestCase):
                         [None, "y", 8], [2, "z", 12]]
         col_names = ["autofill", "index", "value"]
         df = pd.DataFrame(test_entries, columns=col_names)
-        df2 = DataParser.autofill_identifier(df, "autofill", "index")
+        df2 = DataFeatureGenerator.autofill_identifier(df, "autofill", "index")
         self.assertEqual(df["autofill"].tolist(), [0, 1, 0, 1, 2])
         self.assertEqual(df2["autofill"].tolist(), [0, 1, 0, 1, 2])
         self.assertEqual(df2["index"].tolist(), ["x", "y", "x", "y", "z"])
@@ -45,7 +45,7 @@ class TestDataParser(unittest.TestCase):
         keys = ["Putative binder"]
         subs = [0]
         df = pd.DataFrame(test_entries, columns=col_names)
-        df2 = DataParser.create_range(df, "num", keys, subs)
+        df2 = DataFeatureGenerator.create_range(df, "num", keys, subs)
         assert "expected" in df.columns
         assert "expected" in df2.columns
         assert "lower" in df2.columns
@@ -95,7 +95,7 @@ class TestDataParser(unittest.TestCase):
             },
         ]
         df = pd.DataFrame(test_entries, columns=col_names)
-        df2 = DataParser.process_data(df, functions, args)
+        df2 = DataFeatureGenerator.process_data(df, functions, args)
         assert "expected" in df.columns
         assert "expected" in df2.columns
         assert "lower" in df2.columns
@@ -139,7 +139,7 @@ class TestProteinDataUtil(unittest.TestCase):
         ]
         col_names = ["Gene name"]
         df = pd.DataFrame(test_entries, columns=col_names)
-        df2 = ProteinDataUtils.insert_protein_sequence(df, "Gene name")
+        df2 = ProteinFeatureGenerator.insert_protein_sequence(df, "Gene name")
         self.assertEqual(df2.shape[0], 4)
         self.assertEqual(df2.shape[1], 3)
         self.assertEqual(df2["Gene name"].tolist(),

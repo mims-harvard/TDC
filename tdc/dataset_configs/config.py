@@ -1,8 +1,5 @@
 """General class for representing dataset configs"""
 
-from ..utils.data_processing_utils import DataParser
-
-
 class ConfigBase(dict):
     """Class for representing configs"""
     pass
@@ -20,7 +17,6 @@ class DatasetConfig(ConfigBase):
                  **kwargs):
         self.dataset_name = dataset_name
         self.data_processing_class = data_processing_class
-        # assert self.data_processing_class is None or isinstance(self.data_processing_class, DataParser), ("Must provide a data processing class inheriting from DataParser.", self.data_processing_class)
         self.functions_to_run = functions_to_run
         self.args_for_functions = args_for_functions
         self.var_map = var_map
