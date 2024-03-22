@@ -17,6 +17,18 @@ class ProteinFeatureGenerator(DataFeatureGenerator):
     Goals are to make it easier to integrate custom datasets not yet in TDC format.
     Note: for running in sequence, this class inherits from data_processing_utils.DataFeatureGenerator
     """
+    
+    _SEQUENCE_MAP = {
+        "ACE2": (
+            "protein-coding",
+            "MSSSSWLLLSLVAVTAAQSTIEEQAKTFLDKFNHEAEDLFYQSSLASWNYNTNITEENVQNMNNAGDKWSAFLKEQSTLAQMYPLQEIQNLTVKLQLQALQQNGSSVLSEDKSKRLNTILNTMSTIYSTGKVCNPDNPQECLLLEPGLNEIMANSLDYNERLWAWESWRSEVGKQLRPLYEEYVVLKNEMARANHYEDYGDYWRGDYEVNGVDGYDYSRGQLIEDVEHTFEEIKPLYEHLHAYVRAKLMNAYPSYISPIGCLPAHLLGDMWGRFWTNLYSLTVPFGQKPNIDVTDAMVDQAWDAQRIFKEAEKFFVSVGLPNMTQGFWENSMLTDPGNVQKAVCHPTAWDLGKGDFRILMCTKVTMDDFLTAHHEMGHIQYDMAYAAQPFLLRNGANEGFHEAVGEIMSLSAATPKHLKSIGLLSPDFQEDNETEINFLLKQALTIVGTLPFTYMLEKWRWMVFKGEIPKDQWMKKWWEMKREIVGVVEPVPHDETYCDPASLFHVSNDYSFIRYYTRTLYQFQFQEALCQAAKHEGPLHKCDISNSTEAGQKLFNMLRLGKSEPWTLALENVVGAKNMNVRPLLNYFEPLFTWLKDQNKNSFVGWSTDWSPYADQSIKVRISLKSALGDKAYEWNDNEMYLFRSSVAYAMRQYFLKVKNQMILFGEEDVRVANLKPRISFNFFVTAPKNVSDIIPRTEVEKAIRMSRSRINDAFRLNDNSLEFLGIQPTLGPPNQPPVSIWLIVFGVVMGVIVVGIVILIFTGIRDRKKKNKARSGENPYASIDISKGENNPGFQNTDDVQTSF"
+        ),
+        "12CA5": (
+            "protein-coding",
+            "YPYDVPDYA"
+        )
+        
+    }
 
     @classmethod
     def get_ncrna_sequence(cls, ncrna_id):
@@ -85,12 +97,12 @@ class ProteinFeatureGenerator(DataFeatureGenerator):
         # Query MyGene.info for the given gene name
         # You might need to adjust the fields based on the gene's specifics
         # 'fields': 'proteins' might vary depending on the data available for your gene
+        if gene_name in cls._SEQUENCE_MAP:  # genes for which mygene seems to be mislabled
+            return cls._SEQUENCE_MAP[gene_name][1]
         gene_info = mg.query(gene_name, fields='all', species='human')
         try:
             # Attempt to extract the protein sequence
             # The path to the protein sequence might need adjustment based on the response structure
-            if gene_name.upper() == "12CA5":
-                return "YPYDVPDYA"  # hard-coded due to unavailability in mygene
             if gene_info['hits'][0]["type_of_gene"].lower() == "ncrna":
                 ncbi_id = gene_info['hits'][0]['entrezgene']
                 return cls.get_ncrna_sequence(ncbi_id)
@@ -108,6 +120,8 @@ class ProteinFeatureGenerator(DataFeatureGenerator):
         # Query MyGene.info for the given gene name
         # You might need to adjust the fields based on the gene's specifics
         # 'fields': 'proteins' might vary depending on the data available for your gene
+        if gene_name in cls._SEQUENCE_MAP:
+            return cls._SEQUENCE_MAP[gene_name][0]
         gene_info = mg.query(gene_name, fields='all', species='human')
         try:
             return gene_info["hits"][0][
