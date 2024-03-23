@@ -241,8 +241,14 @@ For more information, visit [here](https://tdcommons.ai/benchmark/overview/).
 If you find Therapeutics Data Commons useful, cite our [package](https://pypi.org/project/PyTDC/), our [NeurIPS paper](https://openreview.net/pdf?id=8nvgnORnoWr) , [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2) , and our [Harvard Dataverse Dataset](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/21LKWG):
 
 ```
-Velez-Arce, Alejandro and Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
-Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka. Therapeutic Data Commons - PyTDC. Available at: [https://pypi.org/project/PyTDC/] and [https://github.com/mims-harvard/TDC].
+@online{PyTDC,
+  author={Velez-Arce, Alejandro, and Huang, Kexin, and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
+          Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka}
+  title={Therapeutic Data Commons - PyTDC},
+  url={https://pypi.org/project/PyTDC/},
+  urldate = {2021-03-28}, 
+  publisher={Zitnik Lab, Harvard University}
+}
 ```
 
 ```
