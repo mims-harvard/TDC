@@ -32,7 +32,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/mims-harvard/TDC",
     author="TDC Team",
-    author_email="kexinhuang@hsph.harvard.edu",
+    author_email="alejandro_velez-arce@hms.harvard.edu",
     packages=find_packages(exclude=["test"]),
     zip_safe=False,
     include_package_data=True,
