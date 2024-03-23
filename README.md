@@ -266,7 +266,7 @@ Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka. Therapeutic Data Com
 ```
 ```
 @data{DVN/21LKWG_2020,
-  author = {Kexin Huang, Tianfan Fu, Wenhao Gao, Yue Zhao, Yusuf Roohani, Jure Leskovec, Connor W. Coley, Cao Xiao, Jimeng Sun, Marinka Zitnik and Alejandro Velez-Arce},
+  author = {Alejandro Velez-Arce, Kexin Huang, Tianfan Fu, Wenhao Gao, Yue Zhao, Yusuf Roohani, Jure Leskovec, Connor W. Coley, Cao Xiao, Jimeng Sun, and Marinka Zitnik},
   publisher = {Harvard Dataverse},
   title = {{Therapeutics Data Commons (https://tdcommons.ai)}},
   UNF = {UNF:6:KESpbe1TOPOW2BGCtjSI2w==},
