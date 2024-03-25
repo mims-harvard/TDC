@@ -40,10 +40,11 @@ class TestCellXGene(unittest.TestCase):
         # assert isinstance(varpyarrow, SparseCOOTensor)
 
     def test_get_measurement_matrix(self):
-        X = self.resource.query_measurement_matrix(measurement_name="RNA",
-                                                   fmt="pyarrow",
-                                                   value_adjustment="raw",
-                                                   value_filter="tissue == 'brain' and sex == 'male'")
+        X = self.resource.query_measurement_matrix(
+            measurement_name="RNA",
+            fmt="pyarrow",
+            value_adjustment="raw",
+            value_filter="tissue == 'brain' and sex == 'male'")
         next(X)[:3]
 
     def test_get_feature_dataset_presence_matrix(self):
