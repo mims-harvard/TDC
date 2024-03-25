@@ -162,7 +162,15 @@ gda_dataset_names = ["disgenet"]
 
 crisproutcome_dataset_names = ["leenay"]
 
-drugres_dataset_names = ["gdsc1", "gdsc2"]
+drugres_dataset_names = [
+    "gdsc1",
+    "gdsc2",
+    "scperturb_drug_AissaBenevolenskaya2021",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex2",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex3",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex4",
+    "scperturb_drug_ZhaoSims2021",
+    ]
 
 drugsyn_dataset_names = ["oncopolypharmacology", "drugcomb"]
 
@@ -736,6 +744,11 @@ name2type = {
     "phase2": "tab",
     "phase3": "tab",
     "pentelute_mdm2_ace2_12ca5": "xlsx",
+    "scperturb_drug_AissaBenevolenskaya2021": "h5ad",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex2": "h5ad",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex3": "h5ad",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex4": "h5ad",
+    "scperturb_drug_ZhaoSims2021": "h5ad",
 }
 
 name2id = {
@@ -851,6 +864,11 @@ name2id = {
     "phase2": 7331306,
     "phase3": 7331307,
     "pentelute_mdm2_ace2_12ca5": 9649623,
+    "scperturb_drug_AissaBenevolenskaya2021": 9845396,
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex2": 9845394,
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex3": 9845397,
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex4": 9845395,
+    "scperturb_drug_ZhaoSims2021": 9845393,
 }
 
 oracle2type = {

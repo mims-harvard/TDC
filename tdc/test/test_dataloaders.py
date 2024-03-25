@@ -43,6 +43,13 @@ class TestDataloader(unittest.TestCase):
         ).columns  # pentelute protein<>peptide dataset uses a data config inserting this column
         data.get_split()
 
+    def test_h5ad_dataloader(self):
+        from tdc.multi_pred import DrugRes
+        from pandas import DataFrame
+        testdf = DrugRes(name="scperturb_drug_AissaBenevolenskaya2021")
+        assert isinstance(testdf, DataFrame)
+        testdf.get_split()
+
     def test_generation(self):
         from tdc.generation import MolGen
 
