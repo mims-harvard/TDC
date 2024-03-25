@@ -39,16 +39,13 @@ class TestCellXGene(unittest.TestCase):
         print(varpyarrow)
         # assert isinstance(varpyarrow, SparseCOOTensor)
 
-    @unittest.skip(
-        "this test takes up too much mem for GH worker but works locally.. skip for now"
-    )
     def test_get_measurement_matrix(self):
-        Xslice = self.resource.get_measurement_matrix(upper=5,
-                                                      lower=0,
-                                                      measurement_name="RNA",
-                                                      fmt="scipy",
-                                                      todense=True)
-        print("x", Xslice)
+        X = self.resource.query_measurement_matrix(
+            measurement_name="RNA",
+            fmt="pyarrow",
+            value_adjustment="raw",
+            value_filter="tissue == 'brain' and sex == 'male'")
+        next(X)[:3]
 
     def test_get_feature_dataset_presence_matrix(self):
         FMslice = self.resource.get_feature_dataset_presence_matrix(

@@ -1,5 +1,6 @@
 import cellxgene_census
 import gget
+from scipy.sparse import csr_matrix
 import tiledbsoma
 
 
@@ -85,7 +86,7 @@ class CensusResource:
         self.organism = organism if organism is not None else self._HUMAN
         self.dataset = None  # variable to set target census collection to either info or data
 
-    def fmt_cellxgene_data(self, tiledb_ptr, fmt=None):
+    def fmt_cellxgene_data(self, tiledb_ptr, fmt=None, input_is_table=False):
         """Transform TileDB DataFrame or SparseNDArray to one of the supported API formats.
 
         Args:
@@ -103,12 +104,18 @@ class CensusResource:
             raise Exception(
                 "format not provided to fmt_cellxgene_data(), please provide fmt variable"
             )
-        elif fmt == "pandas":
+        elif fmt == "pandas" and not input_is_table:
             return tiledb_ptr.concat().to_pandas()
-        elif fmt == "pyarrow":
+        elif fmt == "pandas":
+            return tiledb_ptr.to_pandas()
+        elif fmt == "pyarrow" and not input_is_table:
             return tiledb_ptr.concat()
-        elif fmt == "scipy":
+        elif fmt == "pyarrow":
+            return tiledb_ptr
+        elif fmt == "scipy" and not input_is_table:
             return tiledb_ptr.concat().to_scipy()
+        elif fmt == "scipy":
+            return csr_matrix(tiledb_ptr.to_pandas().values)
         else:
             raise Exception(
                 "fmt not in [pandas, pyarrow, scipy] for fmt_cellxgene_data()")
@@ -270,7 +277,7 @@ class CensusResource:
                 obs_query=tiledbsoma.AxisQuery(value_filter=value_filter))
             it = query.X(value_adjustment).tables()
             for slc in it:
-                out = self.fmt_cellxgene_data(slc, fmt)
+                out = self.fmt_cellxgene_data(slc, fmt, input_is_table=True)
                 out = out if not todense else out.todense()
                 yield out
 
