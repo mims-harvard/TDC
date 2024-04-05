@@ -302,6 +302,15 @@ def pd_load(name, path):
                                              name + "." + name2type[name]))
         elif name2type[name] == "zip":
             df = pd.read_pickle(os.path.join(path, name + "/" + name + ".pkl"))
+        elif name2type[name] == "h5ad":
+            import anndata
+            adata = anndata.read_h5ad(
+                os.path.join(path, name + "." + name2type[name]))
+            # df = pd.DataFrame(adata.X.toarray(), columns=adata.var_names, index=adata.obs_names)
+            # TODO: multi-index would help include var information in columns
+            # multi_index = pd.MultiIndex.from_frame(adata.var.reset_index())
+            # df.columns = multi_index
+            return adata
         else:
             raise ValueError(
                 "The file type must be one of tab/csv/xlsx/pickle/zip.")

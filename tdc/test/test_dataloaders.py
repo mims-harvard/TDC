@@ -43,6 +43,18 @@ class TestDataloader(unittest.TestCase):
         ).columns  # pentelute protein<>peptide dataset uses a data config inserting this column
         data.get_split()
 
+    @unittest.skip(
+        "test is taking up too much memory"
+    )  #FIXME: should probably create much smaller version and use that for the test
+    def test_h5ad_dataloader(self):
+        from tdc.multi_pred.cellxgene import SingleCellPrediction
+        from pandas import DataFrame
+        test_loader = SingleCellPrediction(
+            name="scperturb_drug_AissaBenevolenskaya2021")
+        testdf = test_loader.get_data()
+        assert isinstance(testdf, DataFrame)
+        test_loader.get_split()
+
     def test_generation(self):
         from tdc.generation import MolGen
 

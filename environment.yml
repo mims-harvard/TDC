@@ -7,6 +7,7 @@ channels:
   - pyg
   - pytorch
 dependencies:
+  - anndata=0.6.22
   - biopython=1.78
   - dataclasses=0.8
   - dgl=2.1.0

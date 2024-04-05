@@ -162,7 +162,10 @@ gda_dataset_names = ["disgenet"]
 
 crisproutcome_dataset_names = ["leenay"]
 
-drugres_dataset_names = ["gdsc1", "gdsc2"]
+drugres_dataset_names = [
+    "gdsc1",
+    "gdsc2",
+]
 
 drugsyn_dataset_names = ["oncopolypharmacology", "drugcomb"]
 
@@ -177,6 +180,14 @@ tcr_epi_dataset_names = ["weber"]
 trial_outcome_dataset_names = ['phase1', 'phase2', 'phase3']
 
 proteinpeptide_dataset_names = ['pentelute_mdm2_ace2_12ca5']
+
+cellxgene_dataset_names = [
+    "scperturb_drug_AissaBenevolenskaya2021",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex2",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex3",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex4",
+    "scperturb_drug_ZhaoSims2021",
+]
 
 ####################################
 # generation
@@ -543,18 +554,9 @@ category_names = {
         "CRISPROutcome",
     ],
     "multi_pred": [
-        "DTI",
-        "PPI",
-        "DDI",
-        "PeptideMHC",
-        "DrugRes",
-        "AntibodyAff",
-        "DrugSyn",
-        "MTI",
-        "GDA",
-        "Catalyst",
-        "TCR_Epitope_Binding",
-        "TrialOutcome",
+        "DTI", "PPI", "DDI", "PeptideMHC", "DrugRes", "AntibodyAff", "DrugSyn",
+        "MTI", "GDA", "Catalyst", "TCR_Epitope_Binding", "TrialOutcome",
+        "CellXGene"
     ],
     "generation": ["RetroSyn", "Reaction", "MolGen"],
 }
@@ -597,6 +599,7 @@ dataset_names = {
     "TCREpitopeBinding": tcr_epi_dataset_names,
     "TrialOutcome": trial_outcome_dataset_names,
     "ProteinPeptide": proteinpeptide_dataset_names,
+    "CellXGene": cellxgene_dataset_names,
 }
 
 benchmark_names = {
@@ -736,6 +739,11 @@ name2type = {
     "phase2": "tab",
     "phase3": "tab",
     "pentelute_mdm2_ace2_12ca5": "xlsx",
+    "scperturb_drug_AissaBenevolenskaya2021": "h5ad",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex2": "h5ad",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex3": "h5ad",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex4": "h5ad",
+    "scperturb_drug_ZhaoSims2021": "h5ad",
 }
 
 name2id = {
@@ -851,6 +859,11 @@ name2id = {
     "phase2": 7331306,
     "phase3": 7331307,
     "pentelute_mdm2_ace2_12ca5": 9649623,
+    "scperturb_drug_AissaBenevolenskaya2021": 9845396,
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex2": 9845394,
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex3": 9845397,
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex4": 9845395,
+    "scperturb_drug_ZhaoSims2021": 9845393,
 }
 
 oracle2type = {
