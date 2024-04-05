@@ -8,11 +8,14 @@ class SCPerturb(DatasetConfig):
     def __init__(self):
         super(SCPerturb, self).__init__(
             data_processing_class=AnnDataToDataFrame,
-            functions_to_run=[
-                "anndata_to_df"
-            ],
-            args_for_functions=[{
-                "obs_cols": ["ncounts", 'celltype', 'cell_line', 'cancer', 'disease', 'tissue_type', 'perturbation', 'perturbation_type', 'ngenes'],
-            },
+            functions_to_run=["anndata_to_df"],
+            args_for_functions=[
+                {
+                    "obs_cols": [
+                        "ncounts", 'celltype', 'cell_line', 'cancer', 'disease',
+                        'tissue_type', 'perturbation', 'perturbation_type',
+                        'ngenes'
+                    ],
+                },
             ],
         )

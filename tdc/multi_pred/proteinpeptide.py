@@ -13,6 +13,7 @@ from . import bi_pred_dataset
 from ..metadata import dataset_names
 from ..dataset_configs.config_map import ConfigMap
 
+
 class ProteinPeptide(bi_pred_dataset.DataLoader):
     """Data loader class to load datasets in Protein-Peptide Binding Prediction task.
     More info: TODO 

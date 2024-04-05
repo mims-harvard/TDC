@@ -46,7 +46,8 @@ class TestDataloader(unittest.TestCase):
     def test_h5ad_dataloader(self):
         from tdc.multi_pred.cellxgene import SingleCellPrediction
         from pandas import DataFrame
-        test_loader = SingleCellPrediction(name="scperturb_drug_AissaBenevolenskaya2021")
+        test_loader = SingleCellPrediction(
+            name="scperturb_drug_AissaBenevolenskaya2021")
         testdf = test_loader.get_data()
         assert isinstance(testdf, DataFrame)
         test_loader.get_split()

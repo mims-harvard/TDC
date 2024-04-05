@@ -165,7 +165,7 @@ crisproutcome_dataset_names = ["leenay"]
 drugres_dataset_names = [
     "gdsc1",
     "gdsc2",
-    ]
+]
 
 drugsyn_dataset_names = ["oncopolypharmacology", "drugcomb"]
 
@@ -182,11 +182,11 @@ trial_outcome_dataset_names = ['phase1', 'phase2', 'phase3']
 proteinpeptide_dataset_names = ['pentelute_mdm2_ace2_12ca5']
 
 cellxgene_dataset_names = [
-        "scperturb_drug_AissaBenevolenskaya2021",
-        "scperturb_drug_SrivatsanTrapnell2020_sciplex2",
-        "scperturb_drug_SrivatsanTrapnell2020_sciplex3",
-        "scperturb_drug_SrivatsanTrapnell2020_sciplex4",
-        "scperturb_drug_ZhaoSims2021",
+    "scperturb_drug_AissaBenevolenskaya2021",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex2",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex3",
+    "scperturb_drug_SrivatsanTrapnell2020_sciplex4",
+    "scperturb_drug_ZhaoSims2021",
 ]
 
 ####################################
@@ -554,18 +554,8 @@ category_names = {
         "CRISPROutcome",
     ],
     "multi_pred": [
-        "DTI",
-        "PPI",
-        "DDI",
-        "PeptideMHC",
-        "DrugRes",
-        "AntibodyAff",
-        "DrugSyn",
-        "MTI",
-        "GDA",
-        "Catalyst",
-        "TCR_Epitope_Binding",
-        "TrialOutcome",
+        "DTI", "PPI", "DDI", "PeptideMHC", "DrugRes", "AntibodyAff", "DrugSyn",
+        "MTI", "GDA", "Catalyst", "TCR_Epitope_Binding", "TrialOutcome",
         "CellXGene"
     ],
     "generation": ["RetroSyn", "Reaction", "MolGen"],
