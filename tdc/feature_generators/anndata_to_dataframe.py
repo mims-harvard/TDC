@@ -9,7 +9,10 @@ from .data_feature_generator import DataFeatureGenerator
 class AnnDataToDataFrame(DataFeatureGenerator):
     
     @classmethod
-    def anndata_to_df(cls, adata, obs_cols=None):
+    def anndata_to_df(cls, dataset=None, obs_cols=None):
+        if dataset is None:
+            raise ValueError("dataset must be specified")
+        adata = dataset
         df_main = pd.DataFrame(adata.X.todense() if adata.X is not None else adata.X,
                        columns=adata.var_names,
                        index=adata.obs_names)

@@ -44,11 +44,12 @@ class TestDataloader(unittest.TestCase):
         data.get_split()
 
     def test_h5ad_dataloader(self):
-        from tdc.multi_pred import DrugRes
+        from tdc.multi_pred.cellxgene import SingleCellPrediction
         from pandas import DataFrame
-        testdf = DrugRes(name="scperturb_drug_AissaBenevolenskaya2021")
+        test_loader = SingleCellPrediction(name="scperturb_drug_AissaBenevolenskaya2021")
+        testdf = test_loader.get_data()
         assert isinstance(testdf, DataFrame)
-        testdf.get_split()
+        test_loader.get_split()
 
     def test_generation(self):
         from tdc.generation import MolGen

@@ -11,7 +11,7 @@ from ..utils import print_sys
 from ..dataset_configs.pentelute_mdm2_ace2_12ca5_config import PenteluteProteinPeptideConfig
 from . import bi_pred_dataset
 from ..metadata import dataset_names
-
+from ..dataset_configs.config_map import ConfigMap
 
 class ProteinPeptide(bi_pred_dataset.DataLoader):
     """Data loader class to load datasets in Protein-Peptide Binding Prediction task.
@@ -36,13 +36,15 @@ class ProteinPeptide(bi_pred_dataset.DataLoader):
     def __init__(self, name, path="./data", label_name=None, print_stats=False):
         """Create Protein-Peptide Prediction dataloader object"""
         label_name = label_name if label_name is not None else "KD (nm)"  # TODO: this column should be parsed into float and upper/lower
+        cfm = ConfigMap()
+        config = cfm.get(name)
         super().__init__(
             name,
             path,
             label_name,
             print_stats,
             dataset_names=dataset_names["ProteinPeptide"],
-            data_config=PenteluteProteinPeptideConfig(),
+            data_config=config(),
         )
         self.entity1_name = "Sequence"  # peptide sequence
         self.entity2_name = "Protein Target"  # protein target label

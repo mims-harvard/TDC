@@ -1,8 +1,8 @@
-import multi_pred_dataset
+from .multi_pred_dataset import DataLoader as DL
 from ..dataset_configs.config_map import ConfigMap
 from ..feature_generators.anndata_to_dataframe import AnnDataToDataFrame
 
-class DataLoader(multi_pred_dataset.DataLoader):
+class DataLoader(DL):
     
     def __init__(self, name, path, print_stats, dataset_names):
         super(DataLoader, self).__init__(name, path, print_stats, dataset_names)
@@ -13,4 +13,5 @@ class DataLoader(multi_pred_dataset.DataLoader):
             # default to converting adata to dataframe as is
             self.df = AnnDataToDataFrame.anndata_to_df(self.adata)
         else:
-            self.df = self.config.processing_callback(self.adata)
+            cf = self.config()
+            self.df = cf.processing_callback(self.adata)

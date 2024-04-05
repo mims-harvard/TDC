@@ -2,12 +2,11 @@ from .config import DatasetConfig
 from ..feature_generators.anndata_to_dataframe import AnnDataToDataFrame
 
 
-class PenteluteProteinPeptideConfig(DatasetConfig):
-    """Configuration for the pentelute-protein-peptide datasets"""
+class SCPerturb(DatasetConfig):
+    """Configuration for the scPerturb datasets"""
 
     def __init__(self):
-        super(PenteluteProteinPeptideConfig, self).__init__(
-            dataset_name="pentelute_mdm2_ace2_12ca5",
+        super(SCPerturb, self).__init__(
             data_processing_class=AnnDataToDataFrame,
             functions_to_run=[
                 "anndata_to_df"

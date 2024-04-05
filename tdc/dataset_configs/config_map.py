@@ -1,4 +1,5 @@
 from .pentelute_mdm2_ace2_12ca5_config import PenteluteProteinPeptideConfig
+from .scperturb_config import SCPerturb
 
 
 scperturb_datasets = [
@@ -16,3 +17,5 @@ class ConfigMap(dict):
 
     def __init__(self):
         self["pentelute_mdm2_ace2_12ca5"] = PenteluteProteinPeptideConfig
+        for ds in scperturb_datasets:
+            self[ds] = SCPerturb
