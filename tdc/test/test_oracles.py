@@ -24,19 +24,19 @@ class TestOracle(unittest.TestCase):
 
     def test_gsk3b(self):
         from tdc import Oracle
-        
-        oracle = Oracle(name = 'GSK3B')
+
+        oracle = Oracle(name='GSK3B')
 
         x = oracle('CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1')
-        assert abs(x-0.03) < 0.0001
+        assert abs(x - 0.03) < 0.0001
 
     def test_jnk3(self):
         from tdc import Oracle
-        
-        oracle = Oracle(name = 'JNK3')
+
+        oracle = Oracle(name='JNK3')
 
         x = oracle('C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O')
-        assert abs(x-0.01) < 0.0001
+        assert abs(x - 0.01) < 0.0001
 
     # def tearDown(self):
     #     print(os.getcwd())
