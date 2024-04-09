@@ -45,7 +45,7 @@ class TestDataloader(unittest.TestCase):
 
     @unittest.skip(
         "test is taking up too much memory"
-    )  #FIXME: should probably create much smaller version and use that for the test
+    )  #FIXME: should probably create much smaller version and use that for the test. This test does pass locally, please rerun if changing anndata code.
     def test_h5ad_dataloader(self):
         from tdc.multi_pred.cellxgene import SingleCellPrediction
         from pandas import DataFrame
