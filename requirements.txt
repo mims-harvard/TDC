@@ -11,7 +11,6 @@ scikit-learn==1.2.2
 seaborn==0.12.2
 tqdm==4.65.0
 cellxgene-census==1.10.2 
-gget==0.28.4
 pydantic==2.6.3
 gget==0.28.4
 rdkit==2023.9.5
