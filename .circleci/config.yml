@@ -33,6 +33,8 @@ jobs:
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
+            pip install pytest
+            pip install pytest-cov
 
 
       - save_cache:
@@ -47,7 +49,8 @@ jobs:
           no_output_timeout: 30m
           command: |
             . venv/bin/activate
-            python run_tests.py
+            pytest --ignore=tdc/test/dev_tests/ --ignore=tdc/test/test_resources.py
+
       - store_artifacts:
           path: test-reports
           destination: test-reports
