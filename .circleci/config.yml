@@ -11,7 +11,7 @@ workflows:
 jobs:
   test-3.9:
     docker:
-      - image: cimg/python:3.9.13
+      - image: circleci/python:3.9.13
 
     working_directory: ~/repo
 
@@ -20,11 +20,11 @@ jobs:
       - run: sudo chown -R circleci:circleci /usr/local/bin
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-py3-dependencies-{{ checksum "requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-py3-dependencies-
+      # - restore_cache:
+      #     keys:
+      #       - v1-py3-dependencies-{{ checksum "requirements.txt" }}
+      #       # fallback to using the latest cache if no exact match is found
+      #       - v1-py3-dependencies-
 
       - run:
           name: install dependencies
@@ -38,10 +38,10 @@ jobs:
             pip install pytest-cov
 
 
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-py3-dependencies-{{ checksum "requirements.txt" }}
+      # - save_cache:
+      #     paths:
+      #       - ./venv
+      #     key: v1-py3-dependencies-{{ checksum "requirements.txt" }}
 
 
       # run tests!
