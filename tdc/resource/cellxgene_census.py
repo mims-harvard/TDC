@@ -227,6 +227,22 @@ class CensusResource:
             out = self.fmt_cellxgene_data(slc, fmt)
             return out if not todense else out.todense()
 
+    def get_feature_dataset_presence_matrix_entry(self,
+                                                  dataset_name,
+                                                  measurement_name=None,
+                                                  fmt=None,
+                                                  todense=None):
+       with cellxgene_census.open_soma(
+                census_version=self.census_version) as census:
+            # n_obs = len(census[self.dataset][self.organism].obs)
+            # n_var = len(
+            #     census[self.dataset][self.organism].ms[measurement_name].var)
+            fMatrix = census[self.dataset][self.organism].ms[measurement_name][
+                "feature_dataset_presence_matrix"] 
+            entry = fMatrix[dataset_name]
+            out = self.fmt_cellxgene_data(entry, fmt)
+            return out if not todense else out.todense()
+
     @decorators.check_dataset_is_census_info
     def get_metadata(self):
         """Get the metadata for the Cell Census."""
