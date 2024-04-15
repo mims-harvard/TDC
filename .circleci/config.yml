@@ -22,14 +22,14 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-py3-dependencies-{{ checksum "requirements_ci.txt" }}
+            - v1-py3-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
             - v1-py3-dependencies-
 
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
