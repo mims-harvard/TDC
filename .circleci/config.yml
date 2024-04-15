@@ -7,11 +7,11 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-3.6
+      - test-3.9
 jobs:
-  test-3.6:
+  test-3.9:
     docker:
-      - image: circleci/python:3.6-stretch
+      - image: circleci/python:3.9
 
     working_directory: ~/repo
 
@@ -22,18 +22,17 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-py3-dependencies-{{ checksum "requirements_ci.txt" }}
+            - v1-py3-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
             - v1-py3-dependencies-
 
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
-            pip install -r requirements_ci.txt
-            pip install conda
+            pip install -r requirements.txt
             pip install pytest
             pip install pytest-cov
 
@@ -50,6 +49,7 @@ jobs:
           no_output_timeout: 30m
           command: |
             . venv/bin/activate
+            pytest --ignore=tdc/test/dev_tests/ --ignore=tdc/test/test_resources.py
 
       - store_artifacts:
           path: test-reports
