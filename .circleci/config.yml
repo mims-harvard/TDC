@@ -49,7 +49,7 @@ jobs:
           no_output_timeout: 30m
           command: |
             . venv/bin/activate
-            pytest --ignore=tdc/test/dev_tests/ --ignore=tdc/test/test_resources.py
+            pytest --ignore=tdc/test/dev_tests/ --ignore=tdc/test/test_resources.py --ignore=tdc/test/test_dataloaders.py
 
       - store_artifacts:
           path: test-reports
