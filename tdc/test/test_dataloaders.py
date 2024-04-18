@@ -37,8 +37,9 @@ class TestDataloader(unittest.TestCase):
     def test_resource_dataloader(self):
         from tdc.multi_pred.cellxgene import CellXGene
         from pandas import DataFrame
-        dataloader = CellXGene(name="tabula_sapiens")
-        gen = dataloader.get_data(value_filter="tissue == 'brain' and sex == 'male'",debug=True)
+        dataloader = CellXGene(name="Tabula Sapiens - All Cells")
+        gen = dataloader.get_data(
+            value_filter="tissue == 'brain' and sex == 'male'")
         df = next(gen)
         assert isinstance(df, DataFrame)
         assert len(df) > 0
@@ -52,7 +53,17 @@ class TestDataloader(unittest.TestCase):
         # assert isinstance(split["test"], DataFrame)
         # assert len(split["test"]) > 0
 
-    
+    def test_cellxgene_list(self):
+        from tdc.multi_pred.cellxgene import CellXGene
+        from pandas import DataFrame
+        dataloader = CellXGene(
+            name=["Tabula Sapiens - Skin", "Tabula Sapiens - Kidney"])
+        gen = dataloader.get_data(
+            value_filter="tissue == 'liver' and sex == 'male'")
+        df = next(gen)
+        assert isinstance(df, DataFrame)
+        assert len(df) > 0
+        print(df.head())
 
     def test_pentelute(self):
         # TODO: factor out into specialized test suites for individual datasets

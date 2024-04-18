@@ -83,7 +83,12 @@ class CensusResource:
         self.organism = organism if organism is not None else self._HUMAN
         self.dataset = None  # variable to set target census collection to either info or data
 
-    def fmt_cellxgene_data(self, tiledb_ptr, fmt=None, input_is_table=False, is_csr=False):
+    def fmt_cellxgene_data(self,
+                           tiledb_ptr,
+                           fmt=None,
+                           input_is_table=False,
+                           is_csr=False,
+                           is_soma=False):
         """Transform TileDB DataFrame or SparseNDArray to one of the supported API formats.
 
         Args:
@@ -101,6 +106,15 @@ class CensusResource:
             raise Exception(
                 "format not provided to fmt_cellxgene_data(), please provide fmt variable"
             )
+        elif is_soma:
+            import tiledb
+            uri = tiledb_ptr.uri
+            config = tiledb.Config({
+                'vfs.s3.region': 'us-west-2',
+            })
+            ctx = tiledb.Ctx(config=config)
+            with tiledb.open(uri, ctx=ctx, mode="r") as df:
+                return pd.DataFrame(df[:])
         elif fmt == "pandas" and is_csr:
             return pd.DataFrame(tiledb_ptr.toarray())
         elif fmt == "pandas" and not input_is_table:
@@ -162,21 +176,6 @@ class CensusResource:
             else:
                 varread = var.read(value_filter=value_filter)
             return self.fmt_cellxgene_data(varread, fmt)
-
-    @decorators.check_dataset_is_census_data
-    def get_genes(self,
-                  value_filter=None,
-                  measurement_name=None,
-                  fmt=None):
-        """Get available genes"""
-        with cellxgene_census.open_soma(
-            census_version=self.census_version) as census:
-            adata = cellxgene_census.get_anndata(
-            census = census,
-            organism = "Homo sapiens",
-            obs_value_filter = "sex == 'female' and cell_type in ['microglial cell', 'neuron']",
-            column_names = {"obs": ["assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease"]})
-            return adata.var_names
 
     @decorators.slice_checks_X_and_FM
     @decorators.check_dataset_is_census_data
@@ -241,7 +240,7 @@ class CensusResource:
             out = self.fmt_cellxgene_data(slc, fmt)
             return out if not todense else out.todense()
 
-    @decorators.check_dataset_is_census_data 
+    @decorators.check_dataset_is_census_data
     def get_feature_dataset_presence_matrix_entry(self,
                                                   dataset_name,
                                                   measurement_name=None,
@@ -249,9 +248,11 @@ class CensusResource:
                                                   todense=None):
         with cellxgene_census.open_soma(
                 census_version=self.census_version) as census:
-            fMatrix = cellxgene_census.get_presence_matrix(census, organism=self.organism, measurement_name=measurement_name)
-            meta = self.get_dataset_metadata()
-            meta_df = meta.read().concat().to_pandas()
+            fMatrix = cellxgene_census.get_presence_matrix(
+                census,
+                organism=self.organism,
+                measurement_name=measurement_name)
+            meta_df = self.get_dataset_metadata()
             dataset_id = meta_df[meta_df["dataset_title"] == dataset_name].index
             entry = fMatrix[dataset_id]
             out = self.fmt_cellxgene_data(entry, "pandas", is_csr=True)
@@ -269,7 +270,9 @@ class CensusResource:
         """Get the metadata for the Cell Census's datasets."""
         with cellxgene_census.open_soma(
                 census_version=self.census_version) as census:
-            return census[self.dataset]["datasets"]
+            return self.fmt_cellxgene_data(census[self.dataset]["datasets"],
+                                           fmt="pandas",
+                                           is_soma=True)
 
     @decorators.check_dataset_is_census_info
     def get_cell_count_metadata(self):
@@ -306,8 +309,11 @@ class CensusResource:
             organism = census[self.dataset][self.organism]
             query = organism.axis_query(
                 measurement_name=measurement_name,
-                obs_query=tiledbsoma.AxisQuery(value_filter=value_filter) if value_filter else tiledbsoma.AxisQuery(),
-                var_query=tiledbsoma.AxisQuery(coords=(numpy.array(gene_filter),)) if gene_filter else tiledbsoma.AxisQuery(),
+                obs_query=tiledbsoma.AxisQuery(value_filter=value_filter)
+                if value_filter else tiledbsoma.AxisQuery(),
+                var_query=tiledbsoma.AxisQuery(
+                    coords=(numpy.array(gene_filter),))
+                if gene_filter else tiledbsoma.AxisQuery(),
             )
             it = query.X(value_adjustment).tables()
             for slc in it:
@@ -373,12 +379,13 @@ class CensusResource:
         Get AnnData object.
 
         """
-        with cellxgene_census.open_soma(census_version=self.census_version) as census:
+        with cellxgene_census.open_soma(
+                census_version=self.census_version) as census:
             adata = cellxgene_census.get_anndata(
-                census = census,
-                organism = "Homo sapiens",
-                var_value_filter = kwargs.get("var_value_filter"),
-                obs_value_filter = kwargs.get("obs_value_filter"),
+                census=census,
+                organism="Homo sapiens",
+                var_value_filter=kwargs.get("var_value_filter"),
+                obs_value_filter=kwargs.get("obs_value_filter"),
             )
             return adata
 
