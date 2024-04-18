@@ -1,4 +1,5 @@
 from collections.abc import Iterable
+import pandas as pd
 
 from .anndata_dataset import DataLoader
 from .cellxgene_metadata.collection_to_datasets import collection_to_datasets
@@ -36,28 +37,29 @@ class CellXGene(DataLoader):  #TODO: create separate class for wrapping around a
         assert self.is_collection is not None
         
     def get_data_for_dataset(self, measurement_name = None, value_filter = None, value_adjustment = None):
-        """Returns a generator"""
+        """Generator Expression"""
+        measurement_name = measurement_name or "RNA"
+        value_adjustment = value_adjustment or "raw"
         if self.genes is None:
             feature_presence_vector = self.resource.get_feature_dataset_presence_matrix_entry(self.name, measurement_name=measurement_name)
-            genes_in_dataset = feature_presence_vector.columns[feature_presence_vector.loc[feature_presence_vector]]
+            genes_in_dataset = feature_presence_vector.values
             self.genes = genes_in_dataset.tolist()
-        if value_filter is not None:
-            for slice in self.resource.query_measurement_matrix(
-                value_filter=value_filter,
-                measurement_name=measurement_name,
-                value_adjustment=value_adjustment
-            ):
-                df = slice[self.genes]
-                filtered_df = df[df.any(axis=1)]
-                yield filtered_df
-        else:
-            # TODO: yield from the measurement matrix
-            pass
+        gene_filter = [idx for idx, v in enumerate(self.genes) if v]
+        for slice in self.resource.query_measurement_matrix(
+            value_filter=value_filter,
+            measurement_name=measurement_name,
+            value_adjustment=value_adjustment,
+            gene_filter=gene_filter
+        ):
+            filtered_df = slice[slice["soma_data"] != 0]
+            filtered_df.columns = ["cell_idx", "gene_idx", "expression"]
+            yield filtered_df
         
-    def get_data_for_collection(self, measurement_name = None, value_filter = None, value_adjustment = None):
-        """Returns a generator"""
+    def get_data_for_collection(self, measurement_name = None, value_filter = None, value_adjustment = None, debug=False):
+        """Generator Expression"""
         assert self.name in collection_to_datasets
         all_datasets = collection_to_datasets[self.name]
+        all_datasets = all_datasets[:3] if debug else all_datasets
         self.genes = self.get_union_of_genes(measurement_name = measurement_name, all_datasets = all_datasets)
         yield from self.get_data_for_dataset(measurement_name=measurement_name, value_filter=value_filter, value_adjustment=value_adjustment)
             
@@ -65,12 +67,53 @@ class CellXGene(DataLoader):  #TODO: create separate class for wrapping around a
         assert all_datasets is not None
         assert self.is_collection
         assert isinstance(all_datasets, Iterable)
-        sset = set()
+        measurement_name = measurement_name or "RNA"
+        gene_presence = None 
         for ds in all_datasets:
             feature_presence_vector = self.resource.get_feature_dataset_presence_matrix_entry(ds, measurement_name=measurement_name)
-            genes_in_dataset = feature_presence_vector.columns[feature_presence_vector.loc[feature_presence_vector]]
-            sset.union(set(genes_in_dataset.tolist()))
-        return list(sset) 
+            genes_in_dataset = feature_presence_vector.values[0].tolist()
+            gene_presence = genes_in_dataset if gene_presence is None else [a | b for a,b in zip(genes_in_dataset,gene_presence)]
+        return gene_presence
+    
+    def get_data(self, measurement_name = None, value_filter = None, value_adjustment = None, debug = False):
+        """TDC get_data() API implementation for the CELLXGENE data class. Can be a generator expression or return a traditional
+        Pandas dataframe of union of all CELLXGENE entries of the queried dataset satisfying the provided conditions.
+
+        Args:
+            measurement_name (str, optional): measurement name to query, i.e. "RNA". Defaults to None.
+            value_filter (str, optional): a valuer filter (obs) to apply to the query. Defaults to None.
+            value_adjustment (str, optional): the type of count to obtain from count matricx for this measurement. Defaults to None.
+            as_dataframe (bool, optional): Whether to return a fully concatendated dataframe or yield from the dataset. Defaults to False.
+
+        Returns:
+            pd.DataFrame: a dataframe if as_dataframe is True
+
+        Yields:
+            pd.DataFrame: yields chunks of the output datframe if as_dataframe is False
+
+        WARNNG: requesting as_dataframe = True for too large a result may result in OOM or other process failure.
+        """
+        generator = self.get_data_for_collection(measurement_name=measurement_name, value_filter=value_filter, value_adjustment=value_adjustment, debug=debug) \
+            if self.is_collection \
+            else self.get_data_for_dataset(measurement_name=measurement_name, value_filter=value_filter, value_adjustment=value_adjustment)
+        yield from generator
+        
+    def get_dataframe(self, measurement_name = None, value_filter = None, value_adjustment = None, debug = False):
+        return pd.concat(self.get_data(measurement_name=measurement_name, value_filter=value_filter, value_adjustment=value_adjustment, debug=debug), axis=0)
+        
+    def get_split(self, measurement_name=None, value_filter=None, value_adjustment=None, debug=False, **kwargs):
+        """TDC get_split() API implementation for the CELLXGENE data class. It assumes the dataset can fit in memory.
+        Invokes the parent class get_split() function and supports configuring parameters for said class.
+
+        WARNING: calling get_split() on too large a dataset can result in OOM or other process failure.
+        """
+        self.df = self.get_dataframe(measurement_name = measurement_name,
+                                value_filter = value_filter, 
+                                value_adjustment = value_adjustment,
+                                debug = debug)
+        assert len(self.df) > 1
+        kwargs["data_ready"]=True
+        return super().get_split(**kwargs)
             
     def get_available_datasets(self):
         if self.available_datasets is not None:

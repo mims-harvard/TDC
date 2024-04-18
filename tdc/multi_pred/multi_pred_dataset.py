@@ -80,7 +80,8 @@ class DataLoader(base_dataset.DataLoader):
                   method="random",
                   seed=42,
                   frac=[0.7, 0.1, 0.2],
-                  column_name=None):
+                  column_name=None,
+                  data_ready=False):
         """split dataset into train/validation/test.
 
         Args:
@@ -99,7 +100,7 @@ class DataLoader(base_dataset.DataLoader):
             AttributeError: the input split method is not available.
 
         """
-        df = self.get_data(format="df")
+        df = self.get_data(format="df") if not data_ready else self.df
 
         if method == "random":
             return create_fold(df, seed, frac)
