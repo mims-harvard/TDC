@@ -3,6 +3,7 @@ Class for customizations when transforming anndata format objects to pandas.Data
 """
 
 import pandas as pd
+import numpy as np
 from .data_feature_generator import DataFeatureGenerator
 
 
@@ -13,8 +14,10 @@ class AnnDataToDataFrame(DataFeatureGenerator):
         if dataset is None:
             raise ValueError("dataset must be specified")
         adata = dataset
+        if not isinstance(adata.X, np.ndarray):
+            adata.X = adata.X.todense()
         df_main = pd.DataFrame(
-            adata.X.todense() if adata.X is not None else adata.X,
+            adata.X if adata.X is not None else adata.X,
             columns=adata.var_names,
             index=adata.obs_names)
         dfobs = pd.DataFrame(adata.obs,
