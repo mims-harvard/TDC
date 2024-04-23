@@ -15,6 +15,7 @@ scperturb_gene_datasets = [
     "scperturb_gene_ReplogleWeissman2022_k562_essential",
 ]
 
+
 class ConfigMap(dict):
     """
     The ConfigMap stores key-value pairs where the key is a dataset string name and the value is a config class.

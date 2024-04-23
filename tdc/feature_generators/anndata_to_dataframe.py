@@ -16,10 +16,9 @@ class AnnDataToDataFrame(DataFeatureGenerator):
         adata = dataset
         if not isinstance(adata.X, np.ndarray):
             adata.X = adata.X.todense()
-        df_main = pd.DataFrame(
-            adata.X if adata.X is not None else adata.X,
-            columns=adata.var_names,
-            index=adata.obs_names)
+        df_main = pd.DataFrame(adata.X if adata.X is not None else adata.X,
+                               columns=adata.var_names,
+                               index=adata.obs_names)
         dfobs = pd.DataFrame(adata.obs,
                              columns=adata.obs.keys(),
                              index=adata.obs.index)

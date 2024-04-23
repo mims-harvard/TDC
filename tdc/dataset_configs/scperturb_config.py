@@ -31,9 +31,10 @@ class SCPerturb_Gene(DatasetConfig):
             args_for_functions=[
                 {
                     "obs_cols": [
-                        'UMI_count', 'cancer', 'cell_line', 'disease', 'guide_id',
-                           'ncounts', 'ngenes', 'nperts', 'organism', 'percent_mito',
-                           'percent_ribo', 'perturbation', 'perturbation_type', 'tissue_type'
+                        'UMI_count', 'cancer', 'cell_line', 'disease',
+                        'guide_id', 'ncounts', 'ngenes', 'nperts', 'organism',
+                        'percent_mito', 'percent_ribo', 'perturbation',
+                        'perturbation_type', 'tissue_type'
                     ],
                 },
             ],

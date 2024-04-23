@@ -24,4 +24,3 @@ class PerturbOutcome(CellXGeneTemplate):
 
     def get_dropout_genes(self):
         raise ValueError("TODO")
-    
