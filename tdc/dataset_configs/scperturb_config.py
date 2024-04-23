@@ -19,3 +19,23 @@ class SCPerturb(DatasetConfig):
                 },
             ],
         )
+
+
+class SCPerturb_Gene(DatasetConfig):
+    """Configuration for the scPerturb genetic perturbation datasets"""
+
+    def __init__(self):
+        super(SCPerturb_Gene, self).__init__(
+            data_processing_class=AnnDataToDataFrame,
+            functions_to_run=["anndata_to_df"],
+            args_for_functions=[
+                {
+                    "obs_cols": [
+                        'UMI_count', 'cancer', 'cell_line', 'disease',
+                        'guide_id', 'ncounts', 'ngenes', 'nperts', 'organism',
+                        'percent_mito', 'percent_ribo', 'perturbation',
+                        'perturbation_type', 'tissue_type'
+                    ],
+                },
+            ],
+        )

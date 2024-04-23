@@ -187,6 +187,9 @@ cellxgene_dataset_names = [
     "scperturb_drug_SrivatsanTrapnell2020_sciplex3",
     "scperturb_drug_SrivatsanTrapnell2020_sciplex4",
     "scperturb_drug_ZhaoSims2021",
+    "scperturb_gene_NormanWeissman2019",
+    "scperturb_gene_ReplogleWeissman2022_rpe1",
+    "scperturb_gene_ReplogleWeissman2022_k562_essential",
 ]
 
 ####################################
@@ -744,6 +747,9 @@ name2type = {
     "scperturb_drug_SrivatsanTrapnell2020_sciplex3": "h5ad",
     "scperturb_drug_SrivatsanTrapnell2020_sciplex4": "h5ad",
     "scperturb_drug_ZhaoSims2021": "h5ad",
+    "scperturb_gene_NormanWeissman2019": "h5ad",
+    "scperturb_gene_ReplogleWeissman2022_rpe1": "h5ad",
+    "scperturb_gene_ReplogleWeissman2022_k562_essential": "h5ad",
 }
 
 name2id = {
@@ -864,6 +870,9 @@ name2id = {
     "scperturb_drug_SrivatsanTrapnell2020_sciplex3": 9845397,
     "scperturb_drug_SrivatsanTrapnell2020_sciplex4": 9845395,
     "scperturb_drug_ZhaoSims2021": 9845393,
+    "scperturb_gene_NormanWeissman2019": 10133995,
+    "scperturb_gene_ReplogleWeissman2022_rpe1": 10133996,
+    "scperturb_gene_ReplogleWeissman2022_k562_essential": 10134031,
 }
 
 oracle2type = {

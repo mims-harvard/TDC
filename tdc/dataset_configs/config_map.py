@@ -1,5 +1,5 @@
 from .pentelute_mdm2_ace2_12ca5_config import PenteluteProteinPeptideConfig
-from .scperturb_config import SCPerturb
+from .scperturb_config import SCPerturb, SCPerturb_Gene
 
 scperturb_datasets = [
     "scperturb_drug_AissaBenevolenskaya2021",
@@ -7,6 +7,12 @@ scperturb_datasets = [
     "scperturb_drug_SrivatsanTrapnell2020_sciplex3",
     "scperturb_drug_SrivatsanTrapnell2020_sciplex4",
     "scperturb_drug_ZhaoSims2021",
+]
+
+scperturb_gene_datasets = [
+    "scperturb_gene_NormanWeissman2019",
+    "scperturb_gene_ReplogleWeissman2022_rpe1",
+    "scperturb_gene_ReplogleWeissman2022_k562_essential",
 ]
 
 
@@ -19,3 +25,5 @@ class ConfigMap(dict):
         self["pentelute_mdm2_ace2_12ca5"] = PenteluteProteinPeptideConfig
         for ds in scperturb_datasets:
             self[ds] = SCPerturb
+        for ds in scperturb_gene_datasets:
+            self[ds] = SCPerturb_Gene

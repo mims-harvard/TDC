@@ -12,3 +12,4 @@ from .proteinpeptide import ProteinPeptide
 from .test_multi_pred import TestMultiPred
 from .tcr_epi import TCREpitopeBinding
 from .trialoutcome import TrialOutcome
+from .perturboutcome import PerturbOutcome
