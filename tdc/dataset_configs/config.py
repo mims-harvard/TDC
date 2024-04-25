@@ -79,45 +79,34 @@ class LoaderConfig(DatasetConfig):
     LoaderConfig allows DataLoader instance variables to be used
     as parameters in feature generation"""
     
-    def __init__(self, loader_functions=None, loader_args=None, feature_class=None, **kwargs):
+    def __init__(self, keys=None, loader_functions=None, loader_args=None, feature_class=None, **kwargs):
         if feature_class is not None:
             assert isinstance(feature_class, base.FeatureGenerator)
             self.feature_class = feature_class
-        super().__init__(**kwargs)
-        self.data = None
+        if kwargs:
+            super().__init__(**kwargs)
         self.loader_functions = loader_functions if loader_functions else []
         self.loader_args = loader_args if loader_args else []
-        self.dataloader = None
+        self.keys = keys
     
     @property
-    def df(self):
-        return self.data if self.data is not None else self.get_data()
-    
-    def get_data(self):
-        if not self.dataloader:
-            raise Exception("DataLoader not set. Call set_loader()")
-        elif not self.data_config:
-            self.set_loader(self.dataloader)
-        init_frame = None
-        try:
-            init_frame = self.dataloader.df
-        except:
-            init_frame = pd.DataFrame()
-        self.data = self.data_config.processing_callback(init_frame)
-        return self.data
-
-    def set_loader(self, dataloader):
-        assert isinstance(dataloader, DataLoader)
-        assert isinstance(dataloader, dict)
-        self.dataloader = dataloader
-        for k,v in self.loader_args.items():
-            if isinstance(v, tuple) and v[0]=="self" and len(v)==2:
-                self.loader_args[k] = self.dataloader[v[1]]
-        self.data_config = DatasetConfig(data_processing_class=self.feature_class, functions_to_run=self.loader_functions, args_for_functions=self.loader_args)
+    def loader_setup_callback(self):
+        """Returns a callback for processing a dataloader according to this config"""
+        return lambda loader: self.feature_class.process_loader(
+            loader, self.keys, self.loader_functions, self.loader_args
+        ) if self.feature_class is not None else None
         
 class ResourceConfig(LoaderConfig):
     """Class for representing configs for Resource DataLoader instances"""
     
-    def __init__(self, dataloader, feature_class, **kwargs):
+    def __init__(self, feature_class, **kwargs):
         assert isinstance(feature_class, resource.ResourceFeatureGenerator) 
-        super().__init__(dataloader, feature_class=feature_class, **kwargs)
+        super().__init__(feature_class=feature_class, **kwargs)
+
+    @property
+    def df_key(self):
+        return "df"
+    
+    @property
+    def split_key(self):
+        return "split"

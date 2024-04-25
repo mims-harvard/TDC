@@ -200,7 +200,7 @@ resource_dataset_names = [
 ]
 
 resources = {
-    "pinnacle": {
+    "pinnacle_dti": {
         "splits":[
             "pinnacle_ra_data_splits",
             "pinnacle_ibd_data_splits",
