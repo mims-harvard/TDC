@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore")
 import sys
 
 from ..utils import print_sys
-from .cellxgene import CellXGeneTemplate
+from .single_cell import CellXGeneTemplate
 
 
 class PerturbOutcome(CellXGeneTemplate):

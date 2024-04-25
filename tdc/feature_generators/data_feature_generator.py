@@ -5,8 +5,9 @@ Goal is to make it easier to integrate custom datasets not yet in TDC format.
 import inspect
 from pandas import DataFrame, isnull
 
+from base import FeatureGenerator
 
-class DataFeatureGenerator(object):
+class DataFeatureGenerator(FeatureGenerator):
     """
     Class encapsulating general data processing functions. Also supports running them in sequence.
     Goals are to make it easier to integrate custom datasets not yet in TDC format.

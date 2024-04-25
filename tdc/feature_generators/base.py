@@ -1,0 +1,2 @@
+class FeatureGenerator(object):
+    pass
