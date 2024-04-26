@@ -50,9 +50,9 @@ class DatasetConfig(ConfigBase):
     @property
     def processing_callback(self):
         """Returns a callback for processing a dataset according to this config"""
-        return lambda dataset: self.data_processing_class.process_data(
+        return (lambda dataset: self.data_processing_class.process_data(
             dataset, self.functions, self.args
-        ) if self.data_processing_class is not None else None
+        )) if self.data_processing_class is not None else None
 
     @property
     def tdc_cols_callback(self, dataset_type=None):
@@ -79,12 +79,21 @@ class LoaderConfig(DatasetConfig):
     LoaderConfig allows DataLoader instance variables to be used
     as parameters in feature generation"""
     
-    def __init__(self, keys=None, loader_functions=None, loader_args=None, feature_class=None, **kwargs):
+    def __init__(self, keys=None, loader_functions=None, loader_args=None, feature_class=None, dataset_name=None,
+                 data_processing_class=None,
+                 functions_to_run=None,
+                 args_for_functions=None,
+                 var_map=None,
+                 **kwargs):
         if feature_class is not None:
             assert isinstance(feature_class, base.FeatureGenerator)
             self.feature_class = feature_class
-        if kwargs:
-            super().__init__(**kwargs)
+        super().__init__(dataset_name=None,
+                data_processing_class=None,
+                functions_to_run=None,
+                args_for_functions=None,
+                var_map=None,
+                **kwargs)
         self.loader_functions = loader_functions if loader_functions else []
         self.loader_args = loader_args if loader_args else []
         self.keys = keys
@@ -99,7 +108,12 @@ class LoaderConfig(DatasetConfig):
 class ResourceConfig(LoaderConfig):
     """Class for representing configs for Resource DataLoader instances"""
     
-    def __init__(self, feature_class, **kwargs):
+    def __init__(self, feature_class, dataset_name=None,
+                 data_processing_class=None,
+                 functions_to_run=None,
+                 args_for_functions=None,
+                 var_map=None,
+                 **kwargs):
         assert isinstance(feature_class, resource.ResourceFeatureGenerator) 
         super().__init__(feature_class=feature_class, **kwargs)
 

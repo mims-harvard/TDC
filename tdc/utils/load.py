@@ -312,7 +312,16 @@ def pd_load(name, path):
             # df.columns = multi_index
             return adata
         elif name2type[name] == "json":
-            df = pd.read_json(os.path.join(path, name + "." + name2type[name]))
+            # df = pd.read_json(os.path.join(path, name + "." + name2type[name]))
+            import json
+            file_path =os.path.join(path, name + "." + name2type[name]) 
+            with open(file_path, 'r') as f:
+                file_content = json.load(f)
+            maxlen = max(len(x) for x in file_content.values())
+            for k,v in file_content.items():
+                r = maxlen - len(v)
+                file_content[k] = v + [None] * r
+            df = pd.DataFrame(file_content)
         else:
             raise ValueError(
                 "The file type must be one of tab/csv/xlsx/pickle/zip.")

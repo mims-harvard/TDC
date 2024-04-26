@@ -5,7 +5,7 @@ Goal is to make it easier to integrate custom datasets not yet in TDC format.
 import inspect
 from pandas import DataFrame, isnull
 
-from base import FeatureGenerator
+from .base import FeatureGenerator
 
 class DataFeatureGenerator(FeatureGenerator):
     """

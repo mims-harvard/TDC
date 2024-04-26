@@ -1,4 +1,5 @@
 from .pentelute_mdm2_ace2_12ca5_config import PenteluteProteinPeptideConfig
+from .pinnacle_dti import PinnacleDTI
 from .scperturb_config import SCPerturb, SCPerturb_Gene
 
 scperturb_datasets = [
@@ -27,3 +28,4 @@ class ConfigMap(dict):
             self[ds] = SCPerturb
         for ds in scperturb_gene_datasets:
             self[ds] = SCPerturb_Gene
+        self["pinnacle_dti"] = PinnacleDTI

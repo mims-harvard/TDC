@@ -27,15 +27,20 @@ class DataLoader (base_dataset.DataLoader, dict):
         assert type(names) == list, "list expected"
         for n in names:
             self[n] = load.resource_dataset_load(n, path, dataset_names)
-        for nsplit in metadata.resources[name].get("split", []):
+        for nsplit in metadata.resources[name].get("splits", []):
             self[nsplit] = {"splits": self[nsplit]}
+        # raise Exception("keys", self.keys())
         self.config = config_map.ConfigMap().get(name)
+        self.config = self.config()
         assert self.config is not None, "resource.DataLoader requires a corresponding config"
-        assert isinstance(self.config, config.ResourceConfig), "resource.DataLoader requires a ResourceConfig"
+        assert isinstance(self.config, config.ResourceConfig), "resource.DataLoader requires a ResourceConfig, got {}".format(type(self.config))
         # run transformations
         self.config.loader_setup_callback(self)
         # run data transformations
-        self[self.config.df_key] = self.config.processing_callback(self[self.config.df_key])
+        if self.config.processing_callback is not None:
+            self[self.config.df_key] = self.config.processing_callback(self[self.config.df_key])
+        else:
+            self[self.config.df_key] = self[self.config.df_key]
             
     def get_data(self, df_key = None, **kwargs):
         # TODO: can call parent's get_data(**kwargs) function if dataset not pre-loaded

@@ -92,6 +92,19 @@ class TestDataloader(unittest.TestCase):
         data = MolGen(name="ZINC")
         split = data.get_split()
 
+    def test_resource_dataverse_dataloader(self):
+        import pandas as pd
+        from tdc.resource.dataloader import DataLoader
+        
+        data = DataLoader(name="pinnacle_dti")
+        df = data.get_data()
+        assert "Y" in df.columns
+        split = data.get_split()
+        assert "train" in split
+        assert len(split["train"]) > 0
+        assert len(split["test"]) > 0
+        assert isinstance(split["train"], pd.DataFrame)
+
     def tearDown(self):
         try:
             print(os.getcwd())
