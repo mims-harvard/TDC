@@ -7,6 +7,7 @@ from pandas import DataFrame, isnull
 
 from .base import FeatureGenerator
 
+
 class DataFeatureGenerator(FeatureGenerator):
     """
     Class encapsulating general data processing functions. Also supports running them in sequence.

@@ -5,6 +5,7 @@ import pandas as pd
 from ..base_dataset import DataLoader
 from ..feature_generators import resource, base
 
+
 class ConfigBase(dict):
     """Class for representing configs"""
     pass
@@ -51,8 +52,8 @@ class DatasetConfig(ConfigBase):
     def processing_callback(self):
         """Returns a callback for processing a dataset according to this config"""
         return (lambda dataset: self.data_processing_class.process_data(
-            dataset, self.functions, self.args
-        )) if self.data_processing_class is not None else None
+            dataset, self.functions, self.args)
+               ) if self.data_processing_class is not None else None
 
     @property
     def tdc_cols_callback(self, dataset_type=None):
@@ -72,14 +73,20 @@ class DatasetConfig(ConfigBase):
         else:
             return None
 
+
 class LoaderConfig(DatasetConfig):
     """Class for representing configs for DataLoader instances
     
     Requires DataLoader parent class to inherit from dictionary
     LoaderConfig allows DataLoader instance variables to be used
     as parameters in feature generation"""
-    
-    def __init__(self, keys=None, loader_functions=None, loader_args=None, feature_class=None, dataset_name=None,
+
+    def __init__(self,
+                 keys=None,
+                 loader_functions=None,
+                 loader_args=None,
+                 feature_class=None,
+                 dataset_name=None,
                  data_processing_class=None,
                  functions_to_run=None,
                  args_for_functions=None,
@@ -89,38 +96,41 @@ class LoaderConfig(DatasetConfig):
             assert isinstance(feature_class, base.FeatureGenerator)
             self.feature_class = feature_class
         super().__init__(dataset_name=None,
-                data_processing_class=None,
-                functions_to_run=None,
-                args_for_functions=None,
-                var_map=None,
-                **kwargs)
+                         data_processing_class=None,
+                         functions_to_run=None,
+                         args_for_functions=None,
+                         var_map=None,
+                         **kwargs)
         self.loader_functions = loader_functions if loader_functions else []
         self.loader_args = loader_args if loader_args else []
         self.keys = keys
-    
+
     @property
     def loader_setup_callback(self):
         """Returns a callback for processing a dataloader according to this config"""
         return lambda loader: self.feature_class.process_loader(
             loader, self.keys, self.loader_functions, self.loader_args
         ) if self.feature_class is not None else None
-        
+
+
 class ResourceConfig(LoaderConfig):
     """Class for representing configs for Resource DataLoader instances"""
-    
-    def __init__(self, feature_class, dataset_name=None,
+
+    def __init__(self,
+                 feature_class,
+                 dataset_name=None,
                  data_processing_class=None,
                  functions_to_run=None,
                  args_for_functions=None,
                  var_map=None,
                  **kwargs):
-        assert isinstance(feature_class, resource.ResourceFeatureGenerator) 
+        assert isinstance(feature_class, resource.ResourceFeatureGenerator)
         super().__init__(feature_class=feature_class, **kwargs)
 
     @property
     def df_key(self):
         return "df"
-    
+
     @property
     def split_key(self):
         return "split"

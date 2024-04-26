@@ -203,21 +203,21 @@ resource_dataset_names = [
 
 resources = {
     "pinnacle_dti": {
-        "splits":[
+        "splits": [
             "pinnacle_ra_data_splits",
             "pinnacle_ibd_data_splits",
-            ],
+        ],
         "datasets": [
             "pinnacle_ra_drug_evidence",
             "pinnacle_ibd_drug_evidence",
-            ],
+        ],
         "all": [
             "pinnacle_ra_data_splits",
             "pinnacle_ibd_data_splits",
             "pinnacle_ra_drug_evidence",
             "pinnacle_ibd_drug_evidence",
         ],
-    } 
+    }
 }
 
 ####################################

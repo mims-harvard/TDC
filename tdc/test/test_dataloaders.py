@@ -95,7 +95,7 @@ class TestDataloader(unittest.TestCase):
     def test_resource_dataverse_dataloader(self):
         import pandas as pd
         from tdc.resource.dataloader import DataLoader
-        
+
         data = DataLoader(name="pinnacle_dti")
         df = data.get_data()
         assert "Y" in df.columns
