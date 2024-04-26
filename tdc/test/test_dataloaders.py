@@ -35,7 +35,7 @@ class TestDataloader(unittest.TestCase):
         split = data.get_split()
 
     def test_resource_dataloader(self):
-        from tdc.multi_pred.cellxgene import CellXGene
+        from tdc.multi_pred.single_cell import CellXGene
         from pandas import DataFrame
         dataloader = CellXGene(name="Tabula Sapiens - All Cells")
         gen = dataloader.get_data(
@@ -54,7 +54,7 @@ class TestDataloader(unittest.TestCase):
         # assert len(split["test"]) > 0
 
     def test_cellxgene_list(self):
-        from tdc.multi_pred.cellxgene import CellXGene
+        from tdc.multi_pred.single_cell import CellXGene
         from pandas import DataFrame
         dataloader = CellXGene(
             name=["Tabula Sapiens - Skin", "Tabula Sapiens - Kidney"])
@@ -78,9 +78,9 @@ class TestDataloader(unittest.TestCase):
         "test is taking up too much memory"
     )  #FIXME: should probably create much smaller version and use that for the test. This test does pass locally, please rerun if changing anndata code.
     def test_h5ad_dataloader(self):
-        from tdc.multi_pred.cellxgene import SingleCellPrediction
+        from tdc.multi_pred.perturboutcome import PerturbOutcome
         from pandas import DataFrame
-        test_loader = SingleCellPrediction(
+        test_loader = PerturbOutcome(
             name="scperturb_drug_AissaBenevolenskaya2021")
         testdf = test_loader.get_data()
         assert isinstance(testdf, DataFrame)
@@ -91,6 +91,19 @@ class TestDataloader(unittest.TestCase):
 
         data = MolGen(name="ZINC")
         split = data.get_split()
+
+    def test_resource_dataverse_dataloader(self):
+        import pandas as pd
+        from tdc.resource.dataloader import DataLoader
+
+        data = DataLoader(name="pinnacle_dti")
+        df = data.get_data()
+        assert "Y" in df.columns
+        split = data.get_split()
+        assert "train" in split
+        assert len(split["train"]) > 0
+        assert len(split["test"]) > 0
+        assert isinstance(split["train"], pd.DataFrame)
 
     def tearDown(self):
         try:

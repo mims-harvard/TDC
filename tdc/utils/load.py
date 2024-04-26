@@ -311,6 +311,17 @@ def pd_load(name, path):
             # multi_index = pd.MultiIndex.from_frame(adata.var.reset_index())
             # df.columns = multi_index
             return adata
+        elif name2type[name] == "json":
+            # df = pd.read_json(os.path.join(path, name + "." + name2type[name]))
+            import json
+            file_path = os.path.join(path, name + "." + name2type[name])
+            with open(file_path, 'r') as f:
+                file_content = json.load(f)
+            maxlen = max(len(x) for x in file_content.values())
+            for k, v in file_content.items():
+                r = maxlen - len(v)
+                file_content[k] = v + [None] * r
+            df = pd.DataFrame(file_content)
         else:
             raise ValueError(
                 "The file type must be one of tab/csv/xlsx/pickle/zip.")
@@ -380,6 +391,15 @@ def property_dataset_load(name, path, target, dataset_names):
         return df["X"], df[target], df["ID"]
     except:
         return df["Drug"], df[target], df["Drug_ID"]
+
+
+def resource_dataset_load(name, path, dataset_names):
+    if name not in dataset_names:
+        raise ValueError(
+            "Unknown resource dataset {}, should be one of: {}".format(
+                name, dataset_names))
+    name = download_wrapper(name, path, dataset_names)
+    return pd_load(name, path)
 
 
 def interaction_dataset_load(name,

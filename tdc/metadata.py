@@ -192,6 +192,34 @@ cellxgene_dataset_names = [
     "scperturb_gene_ReplogleWeissman2022_k562_essential",
 ]
 
+resource_dataset_names = [
+    "pinnacle_ra_data_splits",
+    "pinnacle_ibd_data_splits",
+    "pinnacle_ra_drug_evidence",
+    "pinnacle_ibd_drug_evidence",
+    "pinnacle_ra_data_splits_idx",
+    "pinnacle_ibd_data_splits_idx",
+]
+
+resources = {
+    "pinnacle_dti": {
+        "splits": [
+            "pinnacle_ra_data_splits",
+            "pinnacle_ibd_data_splits",
+        ],
+        "datasets": [
+            "pinnacle_ra_drug_evidence",
+            "pinnacle_ibd_drug_evidence",
+        ],
+        "all": [
+            "pinnacle_ra_data_splits",
+            "pinnacle_ibd_data_splits",
+            "pinnacle_ra_drug_evidence",
+            "pinnacle_ibd_drug_evidence",
+        ],
+    }
+}
+
 ####################################
 # generation
 
@@ -603,6 +631,7 @@ dataset_names = {
     "TrialOutcome": trial_outcome_dataset_names,
     "ProteinPeptide": proteinpeptide_dataset_names,
     "CellXGene": cellxgene_dataset_names,
+    "Resource": resource_dataset_names,
 }
 
 benchmark_names = {
@@ -750,6 +779,12 @@ name2type = {
     "scperturb_gene_NormanWeissman2019": "h5ad",
     "scperturb_gene_ReplogleWeissman2022_rpe1": "h5ad",
     "scperturb_gene_ReplogleWeissman2022_k562_essential": "h5ad",
+    "pinnacle_ra_data_splits": "json",
+    "pinnacle_ra_data_splits_idx": "json",
+    "pinnacle_ibd_data_splits": "json",
+    "pinnacle_ibd_data_splits_idx": "json",
+    "pinnacle_ra_drug_evidence": "tab",
+    "pinnacle_ibd_drug_evidence": "tab",
 }
 
 name2id = {
@@ -873,6 +908,12 @@ name2id = {
     "scperturb_gene_NormanWeissman2019": 10133995,
     "scperturb_gene_ReplogleWeissman2022_rpe1": 10133996,
     "scperturb_gene_ReplogleWeissman2022_k562_essential": 10134031,
+    "pinnacle_ra_data_splits": 10141152,
+    "pinnacle_ibd_data_splits": 10141151,
+    "pinnacle_ra_data_splits_idx": 10143574,
+    "pinnacle_ibd_data_splits_idx": 10143573,
+    "pinnacle_ra_drug_evidence": 10141153,
+    "pinnacle_ibd_drug_evidence": 10141154,
 }
 
 oracle2type = {

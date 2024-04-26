@@ -15,12 +15,6 @@ class CellXGeneTemplate(DataLoader):
         super().__init__(name, path, print_stats, dsn)
 
 
-class SingleCellPrediction(CellXGeneTemplate):
-
-    def __init__(self, name, path="./data", print_stats=False):
-        super().__init__(name, path, print_stats)
-
-
 class CellXGene(
         DataLoader
 ):  #TODO: create separate class for wrapping around a resource. as this is the only current use case it is left as is.
