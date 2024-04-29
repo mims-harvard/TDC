@@ -57,7 +57,7 @@ class PrimeKGDev(KnowledgeGraph):
         self.df = df
         self.path = path
         super().__init__(self.df)
-    
+
     def get_data(self):
         return self.df
 
