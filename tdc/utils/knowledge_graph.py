@@ -32,10 +32,11 @@ class KnowledgeGraph:
             f"x_source == '{source}' | y_source == '{source}'")[[
                 col for col in self.df.columns if col.startswith("x_")
             ]]
-        
 
-def build_KG(indices, relation, display_relation, x_id, x_type, x_name, x_source, y_id, y_type, y_name, y_source):
-    df = pd.DataFrame('',columns=kg_columns,index=indices)
+
+def build_KG(indices, relation, display_relation, x_id, x_type, x_name,
+             x_source, y_id, y_type, y_name, y_source):
+    df = pd.DataFrame('', columns=kg_columns, index=indices)
 
     df.relation = relation
     df.display_relation = display_relation
