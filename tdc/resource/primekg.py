@@ -53,11 +53,11 @@ class PrimeKGDev(KnowledgeGraph):
 
     def __init__(self, path="./data"):
         """load the KG to the specified path"""
-        kg = KnowledgeGraph(df=general_load("primekg", path, ","))
-        self = kg.copy()
-        self.df = kg.df
+        df = general_load("primekg", path, ",")
+        self.df = df
         self.path = path
-
+        super().__init__(self.df)
+    
     def get_data(self):
         return self.df
 
