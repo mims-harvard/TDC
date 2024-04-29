@@ -21,7 +21,7 @@ class KnowledgeGraph:
     def copy(self):
         return copy(self)
 
-    def run_query(self, query, inplace=True): 
+    def run_query(self, query, inplace=True):
         """build subgraph using given query"""
         df_filt = self.df.query(query).reset_index(drop=True)
         if inplace:
@@ -29,7 +29,6 @@ class KnowledgeGraph:
             self.df = df_filt
         else:
             return df_filt
-
 
     def get_nodes_by_source(self, source):
         # extract x nodes
