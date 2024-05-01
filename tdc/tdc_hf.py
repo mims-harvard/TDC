@@ -12,6 +12,7 @@ deeppurpose_repo = [
     'CYP3A4_Veith-Morgan',
     'CYP3A4_Veith-CNN',
     'CYP3A4_Veith-AttentiveFP',
+    "mli-PINNACLE"
 ]
 
 

@@ -1,0 +1,3 @@
+[submodule "tdc/ml_submodules/PINNACLE"]
+	path = tdc/ml_submodules/PINNACLE
+	url = https://github.com/mims-harvard/PINNACLE.git
