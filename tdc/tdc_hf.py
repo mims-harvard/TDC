@@ -2,6 +2,9 @@ from huggingface_hub import create_repo
 from huggingface_hub import HfApi, snapshot_download, hf_hub_download
 import os
 
+import torch
+from .ml_submodules import _MODELS, _CALLBACKS 
+
 deeppurpose_repo = [
     'hERG_Karim-Morgan',
     'hERG_Karim-CNN',
@@ -12,7 +15,10 @@ deeppurpose_repo = [
     'CYP3A4_Veith-Morgan',
     'CYP3A4_Veith-CNN',
     'CYP3A4_Veith-AttentiveFP',
-    "mli-PINNACLE"
+]
+
+hf_repo_torch = [
+    "mli-PINNACLE",
 ]
 
 
@@ -45,8 +51,73 @@ class tdc_hf_interface:
                                      filename=filename,
                                      cache_dir=save_path)
 
+    def torch_file_download(self, save_path, filename):
+        return hf_hub_download(repo_id=self.repo_id,
+                                     filename=filename,
+                                     cache_dir=save_path)
+
     def repo_download(self, save_path):
         snapshot_download(repo_id=self.repo_id, cache_dir=save_path)
+        
+    def load(self, save_path="./tmp", has_data_dir=True):
+        if not os.path.exists(save_path):
+            os.mkdir(save_path)
+        if self.repo_id[4:] in hf_repo_torch:
+            save_path = save_path + '/' + self.repo_id[4:]
+            if not os.path.exists(save_path):
+                os.mkdir(save_path)
+            # model = self.torch_file_download(save_path, "model/model.pt")
+            # ckpt = self.torch_file_download(save_path, "model/config.ckpt")
+            # get the right model class
+            model_class = _MODELS.get(self.model_name)
+            assert model_class is not None, f"{self.model_name} is not configured with an appropriate model class."
+            self.repo_download(save_path)
+            # data_path = str(save_path)
+
+            # save_path = save_path + '/models--tdc--' + self.repo_id[
+            #     4:] + '/blobs/'
+
+            save_path = save_path + '/models--tdc--' + self.repo_id[4:] + "/"
+            
+            # get model_file
+            model_file = None
+            # for f in os.listdir(save_path):
+            #     if f.endswith(".pt"):
+            #         model_file = f
+            #         break
+            for root, dirs, files in os.walk(save_path):
+                for file in files:
+                    if file.endswith(".pt"):
+                        model_file = os.path.join(root, file)
+                        break
+            assert model_file is not None, "No model file found in {}".format(save_path)
+            os.rename(model_file, save_path+"model.pt")
+            # get config_file
+            # file_name1 = save_path + os.listdir(save_path)[0]
+            # file_name2 = save_path + os.listdir(save_path)[1]
+
+            # if os.path.getsize(file_name1) > os.path.getsize(file_name2):
+            #     model_file, config_file = file_name1, file_name2
+            # else:
+            #     config_file, model_file = file_name1, file_name2
+
+            # os.rename(model_file, save_path + 'model.pt')
+            # os.rename(config_file, save_path + 'config.ckpt')
+
+            # if has_data_dir:
+            #     api = HfApi()
+            #     repo_files = api.list_repo_files(self.repo_id[4:])
+            #     for file in repo_files:
+            #         if file.startswith("data"):
+            #             self.torch_file_download(data_path, file)
+            
+            cb = _CALLBACKS.get(self.model_name)
+            assert cb is not None, "{} does not have configured call back".format(self.model_name)
+            net = cb(model_class, save_path)
+            net.load_state_dict(torch.load(model_file))
+            return net
+        else:
+            raise ValueError("This repo not in configured list of pytorch model repos {}".format(",".join(hf_repo_torch)))
 
     def load_deeppurpose(self, save_path):
         if self.repo_id[4:] in deeppurpose_repo:
@@ -78,7 +149,7 @@ class tdc_hf_interface:
             net = CompoundPred.model_pretrained(path_dir=save_path)
             return net
         else:
-            raise ValueError("This repo does not host a DeepPurpose model!")
+            raise ValueError("This repo does not host a DeepPurpose model!.. try calling load() for a standard model")
 
     def predict_deeppurpose(self, model, drugs):
         try:

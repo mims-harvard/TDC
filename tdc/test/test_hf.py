@@ -35,10 +35,10 @@ class TestHF(unittest.TestCase):
 
     def test_hf_load_new_pytorch_standard(self):
         from tdc import tdc_hf_interface
-        from tdc.resource.dataloader import DataLoader
-        data = DataLoader(name="pinnacle_dti")
+        # from tdc.resource.dataloader import DataLoader
+        # data = DataLoader(name="pinnacle_dti")
         tdc_hf = tdc_hf_interface("mli-PINNACLE")
-        dp_model = tdc_hf.load_deeppurpose('./data')
+        dp_model = tdc_hf.load()
         assert dp_model is not None
         
     def tearDown(self):
