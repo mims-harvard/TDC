@@ -65,14 +65,14 @@ class TestBenchmarkGroup(unittest.TestCase):
     def test_SCDTI_benchmark(self):
         group = scdti_group.SCDTIGroup()
         train, val = group.get_train_valid_split()
-        assert len(val) == 0 # this benchmark has no validation set
+        assert len(val) == 0  # this benchmark has no validation set
         # test simple preds
         y_true = group.get_test()["Y"]
         results = group.evaluate(y_true)
-        assert results[-1] == 1.0 # should be perfect F1 score
+        assert results[-1] == 1.0  # should be perfect F1 score
         zero_pred = [0] * len(y_true)
         results = group.evaluate(zero_pred)
-        assert results[-1] != 1.0 # should not be perfect F1 score
+        assert results[-1] != 1.0  # should not be perfect F1 score
 
 
 if __name__ == "__main__":

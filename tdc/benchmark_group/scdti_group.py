@@ -30,7 +30,7 @@ class SCDTIGroup(BenchmarkGroup):
             dl = DataLoader(name="pinnacle_dti")
             self.split = dl.get_split()
         return self.split["train"], self.split["dev"]
-    
+
     def get_test(self):
         from ..resource.dataloader import DataLoader
         if self.split is None:
