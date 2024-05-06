@@ -7,7 +7,7 @@ import os
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from tdc.benchmark_group import admet_group
+from tdc.benchmark_group import admet_group, scdti_group
 
 
 def is_classification(values):
@@ -61,6 +61,25 @@ class TestBenchmarkGroup(unittest.TestCase):
 
         for my_group in self.group:
             self.assertTrue(my_group["name"] in results)
+
+    def test_SCDTI_benchmark(self):
+        from tdc.resource.dataloader import DataLoader
+
+        data = DataLoader(name="pinnacle_dti")
+        group = scdti_group.SCDTIGroup()
+        train, val = group.get_train_valid_split()
+        assert len(val) == 0  # this benchmark has no validation set
+        # test simple preds
+        y_true = group.get_test()["Y"]
+        results = group.evaluate(y_true)
+        assert results[-1] == 1.0  # should be perfect F1 score
+        # assert it matches the PINNACLE official test scores
+        tst = data.get_split()["test"]["Y"]
+        results = group.evaluate(tst)
+        assert results[-1] == 1.0
+        zero_pred = [0] * len(y_true)
+        results = group.evaluate(zero_pred)
+        assert results[-1] != 1.0  # should not be perfect F1 score
 
 
 if __name__ == "__main__":
