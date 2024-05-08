@@ -1,6 +1,7 @@
 import unittest
 import sys
 
+
 if __name__ == '__main__':
     loader = unittest.TestLoader()
     start_dir = 'tdc/test'
