@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Docking Benchmark Group - TDC</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" type="image/png"
+           href="/favicon.png" 
+    />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Docking Benchmark Group | TDC</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Docking Benchmark Group" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Artificial intelligence foundation for therapeutic science" />
+<meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
+<link rel="canonical" href="http://localhost:4000/benchmark/scdti_group/overview/" />
+<meta property="og:url" content="http://localhost:4000/benchmark/scdti_group/overview/" />
+<meta property="og:site_name" content="TDC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Docking Benchmark Group" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Docking Benchmark Group","url":"http://localhost:4000/benchmark/scdti_group/overview/"}</script>
+<!-- End Jekyll SEO tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
+<script>
+  window['ga-disable-UA-183522810-1'] = window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1";
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-183522810-1');
+</script><!-- head scripts --></head>
+
+  <body>
+    
+<nav class="navbar is-primary" >
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-brand" href="/">
+            <span><img src="/logonav.png" alt="Logo" style="height: auto; width: auto; max-height: 45px; max-width: 250px;"></span>
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu">
+            <div class="navbar-end">
+                
+                
+                    
+                    <a href="/" class="navbar-item ">Home</a>
+                    
+                
+                    
+                    <a href="/start/" class="navbar-item ">Start</a>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/overview/" class="navbar-link ">Datasets</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/single_pred_tasks/overview" class="navbar-item ">Single-instance Prediction</a>
+                            
+                            <a href="/multi_pred_tasks/overview" class="navbar-item ">Multi-instance Prediction</a>
+                            
+                            <a href="/generation_tasks/overview" class="navbar-item ">Generation</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/fct_overview/" class="navbar-link ">Data Functions</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/fct_overview/" class="navbar-item ">Overview</a>
+                            
+                            <a href="/functions/data_evaluation/" class="navbar-item ">Model Evaluation</a>
+                            
+                            <a href="/functions/data_split/" class="navbar-item ">Dataset Splits</a>
+                            
+                            <a href="/functions/data_process/" class="navbar-item ">Data Processing</a>
+                            
+                            <a href="/functions/oracles/" class="navbar-item ">Molecule Generation Oracles</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a href="/benchmark/overview/" class="navbar-link ">Leaderboards</a>
+                        <div class="navbar-dropdown">
+                            
+                            <a href="/benchmark/overview/" class="navbar-item ">Guidelines</a>
+                            
+                            <a href="/benchmark/admet_group/overview" class="navbar-item ">ADMET Group</a>
+                            
+                            <a href="/benchmark/drugcombo_group/overview" class="navbar-item ">DrugCombo Group</a>
+                            
+                            <a href="/benchmark/docking_group/overview" class="navbar-item ">Docking Group</a>
+                            
+                            <a href="/benchmark/dti_dg_group/overview" class="navbar-item ">DTI DG Group</a>
+                            
+                            <a href="/benchmark/scdti_group/overview" class="navbar-item ">Single-cell DTI Group</a>
+                            
+                        </div>
+                    </div>
+                    
+                
+                    
+                    <a href="https://huggingface.co/tdc" class="navbar-item ">HF Models</a>
+                    
+                
+                    
+                    <a href="/news/" class="navbar-item ">News</a>
+                    
+                
+                    
+                    <a href="/team/" class="navbar-item ">Team</a>
+                    
+                
+                <a href="https://arxiv.org/abs/2102.09548" class="navbar-item">NeurIPS Paper</a>
+                <a href="https://www.nature.com/articles/s41589-022-01131-2" class="navbar-item">Nat Chem Bio Paper</a>
+                <a href="https://tdc.readthedocs.io" class="navbar-item">Docs</a>
+                <a href="https://github.com/mims-harvard/TDC" class="navbar-item">GitHub</a>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+    
+    
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-4-desktop is-4-tablet">
+                    
+
+<aside class="menu">
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="/benchmark/scdti_group/overview" class=""><strong>Single-cell DTI Group Leaderboard</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/benchmark/scdti_group/pinnacle_dti/" class=""><code>TDC.pinnacle_dti</code> Leaderboard</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+    <p class="menu-label"></p>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="" class=""><strong>References</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/benchmark/overview/#step-by-step-instructions" class="">Submission Instructions</a></li>
+                
+                
+                
+                <li><a href="/benchmark/overview/#further-details-about-benchmark-groups-in-tdc" class="">BenchmarkGroup Class Documentation</a></li>
+                
+                
+                
+                <li><a href="/benchmark/overview/" class="">Leaderboard Guidelines</a></li>
+                
+                
+                
+                <li><a href="https://www.biorxiv.org/content/10.1101/2023.07.18.549602v1" class="">Dataset Description</a></li>
+                
+                
+            </ul>
+            
+        </li>
+            
+    </ul>
+
+</aside>
+                </div>
+                
+                <div class="column is-8">
+                    
+                    
+                    
+                    
+<div class="content">
+    <h1 id="leaderboard-guidelines">Leaderboard Guidelines</h1>
+
+<p class="is-size-5"> Every dataset in TDC is a benchmark, and we provide training, validation, and test sets for it, together with data splits and performance evaluation metrics. </p>
+
+<p class="is-size-5">To participate in the leaderboard for a specific benchmark, follow these steps: </p>
+<ol>
+    <li><p class="is-size-5">Use the TDC benchmark data loader to retrieve the benchmark.</p></li>
+    <li><p class="is-size-5">Use training and/or validation set to train your model.</p></li>
+    <li><p class="is-size-5">Use the TDC model evaluator to calculate the performance of your model on the test set.</p></li>
+    <li><p class="is-size-5">Submit the test set performance to a TDC leaderboard.</p></li>
+</ol>
+
+<p class="is-size-5">Below we provide detailed instructions on how to participate in TDC leaderboards. </p>
+
+<p class="is-size-5">As many datasets share a therapeutics theme, we organize benchmarks into meaningfully defined groups, which we refer to as <b>benchmark groups</b>. Datasets and tasks within a benchmark group are carefully curated and centered around a theme (for example, TDC contains a benchmark group to support ML predictions of the ADMET properties). While every benchmark group consists of multiple benchmarks, it is possible to separately submit results for each benchmark in the group.</p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h2 id="step-by-step-instructions">Step-by-step Instructions</h2>
+
+<p class="is-size-5"> TDC provides a programmatic framework to access the benchmarks and use them for model evaluation.</p>
+
+<h4 id="step-1-train-your-model-using-a-tdc-benchmarkgroup">Step 1: Train your model using a TDC BenchmarkGroup</h4>
+
+<p class="is-size-5"> Suppose you want to evaluate your model on the <code>Caco2_Wang</code> benchmark that belongs to the <code>ADMET_Group</code> benchmark group. Take the following code and replace the commented line block with the code to train your model. The <code>train</code>, <code>valid</code>, <code>test</code> variables contain the split of the benchmark dataset. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">admet_group</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">admet_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">predictions_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+    <span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span> 
+    <span class="c1"># all benchmark names in a benchmark group are stored in group.dataset_names
+</span>    <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+    <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+    
+        <span class="c1"># --------------------------------------------- # 
+</span>        <span class="c1">#  Train your model using train, valid, test    #
+</span>        <span class="c1">#  Save test prediction in y_pred_test variable #
+</span>        <span class="c1"># --------------------------------------------- #
+</span>        
+    <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
+    <span class="n">predictions_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
+<span class="c1"># {'caco2_wang': [6.328, 0.101]}
+</span></code></pre></div></div>
+
+<p class="is-size-5"> The output <code>results</code> is a dictionary storing average values and standard deviations of each performance metric achieved by your model on the <code>Caco2_Wang</code> benchmark. </p>
+
+<h4 id="step-2-submit-results-of-your-model-to-a-tdc-leaderboard">Step 2: Submit results of your model to a TDC Leaderboard</h4>
+
+<p class="is-size-5"> We invite submissions to any one or multiple benchmarks in a group. To be included in the leaderboard, please fill out <b><a href="https://forms.gle/HYupGaV7WDuutbr9A">THIS FORM</a></b>, include results of your model and provide a brief summary about your model (e.g., the number of parameters and hardware details).</p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<h2 id="further-details-about-benchmark-groups-in-tdc">Further Details about Benchmark Groups in TDC</h2>
+
+<p class="is-size-5"> The <code>BenchmarkGroup</code> class is a wrapper class that provides utility functions for benchmarking. For each benchmark, TDC provides a separate <code>test</code> set and a <code>train_val</code> set. </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">admet_group</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">admet_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+<span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+
+<span class="c1">## --- train your model --- ##
+</span>
+<span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred</span>
+<span class="n">group</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<span class="c1"># {'caco2_wang': {'mae': 0.234}}
+</span></code></pre></div></div>
+
+<p class="is-size-5"> You can use <code>train_val</code> to construct training and validation sets as you see best fit. For example, you can (1) construct a customized training and validation set using the <code>train_val</code> or (2) use a <a href="https://tdcommons.ai/functions/data_split/">TDC utility function</a> to get data splits for different random seeds: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="s">'Caco2_Wang'</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="is-size-5"> Importantly, you must evaluate your model on the test set as specified by TDC to ensure fair comparison of models. To promote robust measurement of model performance, TDC requires at minimum five independent runs of the model to calculate average performance and standard deviation. Following is an example showing how to obtain five different train and validation splits: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">admet_group</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">admet_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">predictions_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+
+    <span class="n">benchmark</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Caco2_Wang'</span><span class="p">)</span>
+    
+    <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+    <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+    
+    <span class="c1">## --- train your model --- ##
+</span>        
+    <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
+    <span class="n">predictions_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+<span class="n">group</span><span class="p">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
+<span class="c1"># {'caco2_wang': [6.328, 0.101]}
+</span></code></pre></div></div>
+
+<p class="is-size-5"> You can get a list of benchmarks included in the benchmark group as follows: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">utils</span><span class="p">.</span><span class="n">retrieve_benchmark_names</span><span class="p">(</span><span class="s">'ADMET_Group'</span><span class="p">)</span>
+<span class="c1"># ['caco2_wang', 'hia_hou', ....]
+</span></code></pre></div></div>
+<p class="is-size-5"> Alternatively, the same can be achieved via: </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">admet_group</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">admet_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">group</span><span class="p">.</span><span class="n">dataset_names</span>
+<span class="c1"># ['caco2_wang', 'hia_hou', ....]
+</span></code></pre></div></div>
+
+<p class="is-size-5"> For every benchmark group, we provide multiple benchmarks that all instantiate the same learning task. We encourage you to submit results for the entire benchmark group; however, we also accept submissions reporting performance on just one benchmark in the group. To access all benchmarks in a group, TDC provides the following helper function:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">admet_group</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">admet_group</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">'data/'</span><span class="p">)</span>
+<span class="n">predictions_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">benchmark</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+        <span class="n">train_val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'train_val'</span><span class="p">],</span> <span class="n">benchmark</span><span class="p">[</span><span class="s">'test'</span><span class="p">]</span>
+        <span class="n">train</span><span class="p">,</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">(</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> <span class="n">split_type</span> <span class="o">=</span> <span class="s">'default'</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="p">)</span>
+        <span class="c1">## --- train your model --- ##
+</span>        <span class="n">predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred_test</span>
+    <span class="n">predictions_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+<span class="n">group</span><span class="p">.</span><span class="n">evaluate_many</span><span class="p">(</span><span class="n">predictions_list</span><span class="p">)</span>
+<span class="c1"># {'caco2_wang': [6.328, 0.101], 'hia_hou': [0.5, 0.01], ...}
+</span></code></pre></div></div>
+<div class="column is-12">
+    <hr />
+</div>
+
+<h2 id="the-fair-guiding-principles">The FAIR Guiding Principles</h2>
+
+<p class="is-size-5">ML tools have become essential for research. TDC leaderboards keep track of ML tools across the entire range of therapeutics. To improve the findability, accessibility, interoperability, and reuse of ML tools, we apply <a href="https://github.com/force11/FAIR4RS">FAIR4RS principles and implementation guidelines</a> to all software and ML tools included in TDC leaderboards.</p>
+
+<p class="is-size-5">We strongly believe that software and ML tools should be open and adhere to FAIR principles to encourage repeatability, reproducibility, and reuse. TDC follows the FAIR guidelines for both <a href="https://www.nature.com/articles/sdata201618%22"> datasets </a> as well as <a href="https://content.iospress.com/articles/data-science/ds190026#ref001">ML tools and data functions</a>. </p>
+
+<div class="column is-12">
+    <hr />
+</div>
+
+<p class="is-size-3 has-text-centered"> <strong>Start Exploring Groups of Leaderboards in TDC</strong> </p>
+
+<div class="container">
+        <div class="columns is-vcentered is-size-5">
+            <div class="column is-4 has-text-centered"> <a href="/benchmark/admet_group/overview" class="box has-background-info has-text-white">ADMET Group</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/benchmark/drugcombo_group/overview" class="box has-background-info has-text-white">Drug Combination Group</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/benchmark/docking_group/overview" class="box has-background-info has-text-white">Docking Group</a></div>
+            <div class="column is-4 has-text-centered"> <a href="/benchmark/scdti_group/overview" class="box has-background-info has-text-white">Single-cell DTI Group</a></div>
+        </div>
+</div>
+
+
+</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+        <footer class="footer">
+    <div class="container">
+        
+        <div class="columns is-mobile">
+            <div class="column is-8 has-text-left is-vcentered">
+                <a class="navbar-brand" href="/">
+                    <span><img src="/tdc_horizontal.png" alt="Logo" style="max-height: 40px; max-width: 250px;"></span>
+                </a>
+            </div>
+            <div class="column is-4 has-text-right is-vcentered">
+                <a href="https://arxiv.org/abs/2102.09548">
+                    <span class="icon is-large">
+                      <i class="fas fa-file-alt fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://github.com/mims-harvard/TDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-github fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://twitter.com/ProjectTDC">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-twitter fa-3x"></i>
+                    </span>
+                </a>
+
+                <a href="https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g">
+                    <span class="icon is-large">
+                      <i class="fas fab fa-slack fa-3x"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+    
+    <script src="/assets/js/app.js" type="text/javascript"></script><!-- footer scripts --></body>
+</html>
+
