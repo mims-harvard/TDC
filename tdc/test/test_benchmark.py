@@ -80,6 +80,10 @@ class TestBenchmarkGroup(unittest.TestCase):
         zero_pred = [0] * len(y_true)
         results = group.evaluate(zero_pred)
         assert results[-1] != 1.0  # should not be perfect F1 score
+        many_results = group.evaluate_many([y_true] * 5)
+        assert "f1" in many_results
+        assert len(many_results["f1"]
+                  ) == 2  # should include mean and standard deviation
 
 
 if __name__ == "__main__":

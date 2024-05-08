@@ -47,3 +47,20 @@ class SCDTIGroup(BenchmarkGroup):
         accuracy = accuracy_score(y_true, y_pred)
         f1 = f1_score(y_true, y_pred)
         return [precision, recall, accuracy, f1]
+
+    def evaluate_many(self, preds):
+        from numpy import mean, std
+        if len(preds) < 5:
+            raise Exception(
+                "Run your model on at least 5 seeds to compare results and provide your outputs in preds."
+            )
+        out = dict()
+        preds = [self.evaluate(p) for p in preds]
+        out["precision"] = (mean([x[0] for x in preds]),
+                            std([x[0] for x in preds]))
+        out["recall"] = (mean([x[1] for x in preds]), std([x[1] for x in preds
+                                                          ]))
+        out["accuracy"] = (mean([x[2] for x in preds]),
+                           std([x[2] for x in preds]))
+        out["f1"] = (mean([x[3] for x in preds]), std([x[3] for x in preds]))
+        return out
