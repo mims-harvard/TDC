@@ -18,8 +18,8 @@ class SCDTIGroup(BenchmarkGroup):
         # super().__init__(name="SCDTI_Group", path=path)
         self.name = "SCDTI_Group"
         self.path = os.path.join(path, self.name)
-        # self.datasets = ["pinnacle_dti"]
-        self.dataset_names = ["pinnacle_dti"]
+        # self.datasets = ["opentargets_dti"]
+        self.dataset_names = ["opentargets_dti"]
         self.file_format = file_format
         self.split = None
 
@@ -27,14 +27,14 @@ class SCDTIGroup(BenchmarkGroup):
         """parameters included for compatibility. this benchmark has a fixed train/test split."""
         from ..resource.dataloader import DataLoader
         if self.split is None:
-            dl = DataLoader(name="pinnacle_dti")
+            dl = DataLoader(name="opentargets_dti")
             self.split = dl.get_split()
         return self.split["train"], self.split["dev"]
 
     def get_test(self):
         from ..resource.dataloader import DataLoader
         if self.split is None:
-            dl = DataLoader(name="pinnacle_dti")
+            dl = DataLoader(name="opentargets_dti")
             self.split = dl.get_split()
         return self.split["test"]
 

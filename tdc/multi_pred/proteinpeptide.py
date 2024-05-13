@@ -8,7 +8,6 @@ warnings.filterwarnings("ignore")
 import sys
 
 from ..utils import print_sys
-from ..dataset_configs.pentelute_mdm2_ace2_12ca5_config import PenteluteProteinPeptideConfig
 from . import bi_pred_dataset
 from ..metadata import dataset_names
 from ..dataset_configs.config_map import ConfigMap
