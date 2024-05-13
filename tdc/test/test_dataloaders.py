@@ -96,7 +96,7 @@ class TestDataloader(unittest.TestCase):
         import pandas as pd
         from tdc.resource.dataloader import DataLoader
 
-        data = DataLoader(name="pinnacle_dti")
+        data = DataLoader(name="opentargets_dti")
         df = data.get_data()
         assert "Y" in df.columns
         split = data.get_split()
