@@ -65,7 +65,7 @@ class TestBenchmarkGroup(unittest.TestCase):
     def test_SCDTI_benchmark(self):
         from tdc.resource.dataloader import DataLoader
 
-        data = DataLoader(name="pinnacle_dti")
+        data = DataLoader(name="opentargets_dti")
         group = scdti_group.SCDTIGroup()
         train, val = group.get_train_valid_split()
         assert len(val) == 0  # this benchmark has no validation set
@@ -73,7 +73,7 @@ class TestBenchmarkGroup(unittest.TestCase):
         y_true = group.get_test()["Y"]
         results = group.evaluate(y_true)
         assert results[-1] == 1.0  # should be perfect F1 score
-        # assert it matches the PINNACLE official test scores
+        # assert it matches the opentargets official test scores
         tst = data.get_split()["test"]["Y"]
         results = group.evaluate(tst)
         assert results[-1] == 1.0

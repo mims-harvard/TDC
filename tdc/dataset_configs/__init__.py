@@ -1,2 +1,2 @@
 from .config import DatasetConfig
-from .pentelute_mdm2_ace2_12ca5_config import PenteluteProteinPeptideConfig
+from .brown_mdm2_ace2_12ca5_config import BrownProteinPeptideConfig
