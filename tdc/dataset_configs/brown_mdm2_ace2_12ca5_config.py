@@ -2,12 +2,12 @@ from .config import DatasetConfig
 from ..feature_generators.protein_feature_generator import ProteinFeatureGenerator
 
 
-class PenteluteProteinPeptideConfig(DatasetConfig):
-    """Configuration for the pentelute-protein-peptide datasets"""
+class BrownProteinPeptideConfig(DatasetConfig):
+    """Configuration for the brown-protein-peptide datasets"""
 
     def __init__(self):
-        super(PenteluteProteinPeptideConfig, self).__init__(
-            dataset_name="pentelute_mdm2_ace2_12ca5",
+        super(BrownProteinPeptideConfig, self).__init__(
+            dataset_name="brown_mdm2_ace2_12ca5",
             data_processing_class=ProteinFeatureGenerator,
             functions_to_run=[
                 "autofill_identifier", "create_range", "insert_protein_sequence"

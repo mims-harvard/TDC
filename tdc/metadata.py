@@ -179,7 +179,7 @@ tcr_epi_dataset_names = ["weber"]
 
 trial_outcome_dataset_names = ['phase1', 'phase2', 'phase3']
 
-proteinpeptide_dataset_names = ['pentelute_mdm2_ace2_12ca5']
+proteinpeptide_dataset_names = ['brown_mdm2_ace2_12ca5']
 
 cellxgene_dataset_names = [
     "scperturb_drug_AissaBenevolenskaya2021",
@@ -770,7 +770,7 @@ name2type = {
     "phase1": "tab",
     "phase2": "tab",
     "phase3": "tab",
-    "pentelute_mdm2_ace2_12ca5": "xlsx",
+    "brown_mdm2_ace2_12ca5": "xlsx",
     "scperturb_drug_AissaBenevolenskaya2021": "h5ad",
     "scperturb_drug_SrivatsanTrapnell2020_sciplex2": "h5ad",
     "scperturb_drug_SrivatsanTrapnell2020_sciplex3": "h5ad",
@@ -899,7 +899,7 @@ name2id = {
     "phase1": 7331305,
     "phase2": 7331306,
     "phase3": 7331307,
-    "pentelute_mdm2_ace2_12ca5": 9649623,
+    "brown_mdm2_ace2_12ca5": 9649623,
     "scperturb_drug_AissaBenevolenskaya2021": 9845396,
     "scperturb_drug_SrivatsanTrapnell2020_sciplex2": 9845394,
     "scperturb_drug_SrivatsanTrapnell2020_sciplex3": 9845397,

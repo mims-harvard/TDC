@@ -65,13 +65,13 @@ class TestDataloader(unittest.TestCase):
         assert len(df) > 0
         print(df.head())
 
-    def test_pentelute(self):
+    def test_brown(self):
         # TODO: factor out into specialized test suites for individual datasets
         # this test serves as an integration test of the data processing, data configs, and existing tdc pipeline. leave here for now.
         from tdc.multi_pred import ProteinPeptide
-        data = ProteinPeptide(name="pentelute_mdm2_ace2_12ca5")
+        data = ProteinPeptide(name="brown_mdm2_ace2_12ca5")
         assert "protein_or_rna_sequence" in data.get_data(
-        ).columns  # pentelute protein<>peptide dataset uses a data config inserting this column
+        ).columns  # brown protein<>peptide dataset uses a data config inserting this column
         data.get_split()
 
     @unittest.skip(

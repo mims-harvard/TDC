@@ -1,4 +1,4 @@
-from .pentelute_mdm2_ace2_12ca5_config import PenteluteProteinPeptideConfig
+from .brown_mdm2_ace2_12ca5_config import BrownProteinPeptideConfig
 from .opentargets_dti import OpentargetsDTI
 from .scperturb_config import SCPerturb, SCPerturb_Gene
 
@@ -23,7 +23,7 @@ class ConfigMap(dict):
     """
 
     def __init__(self):
-        self["pentelute_mdm2_ace2_12ca5"] = PenteluteProteinPeptideConfig
+        self["brown_mdm2_ace2_12ca5"] = BrownProteinPeptideConfig
         for ds in scperturb_datasets:
             self[ds] = SCPerturb
         for ds in scperturb_gene_datasets:
