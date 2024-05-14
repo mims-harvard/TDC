@@ -129,7 +129,7 @@ class TestBenchmarkGroup(unittest.TestCase):
             if e != "Putative binder":
                 df["Y"][idx] = "1"
             else:
-                df["Y"][idx] = "0"  
+                df["Y"][idx] = "0"
         # raise Exception("unique", )
         # Split the data while stratifying
         _, _, _, y_test = train_test_split(
