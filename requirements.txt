@@ -1,8 +1,5 @@
 biopython==1.78
 dataclasses==0.6
-DeepPurpose
-descriptastorus
-dgl
 fuzzywuzzy==0.18.0
 huggingface_hub==0.20.3
 mygene==3.2.2

@@ -41,7 +41,9 @@ class PrimeKG:
         return general_load("primekg_" + feature_type + "_feature", self.path,
                             "\t")
 
-    def get_node_list(self, node_type):
+    def get_node_list(self, type=None):
+        assert type is not None, "please provide a type for getting node list"
+        node_type = type
         df = self.df
         return np.unique(df[(df.x_type == node_type)].x_id.unique().tolist() +
                          df[(df.y_type == node_type)].y_id.unique().tolist())
