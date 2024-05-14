@@ -110,7 +110,7 @@ We provide  tutorials to get started with TDC:
 | [DGL](tutorials/DGL_User_Group_Demo.ipynb)   | Demo presented at DGL GNN User Group Meeting                             |
 | [U1.1](tutorials/User_Group/UserGroupMeeting_Tianfan.ipynb)   | Demo presented at first TDC User Group Meetup                             |
 | [U1.2](tutorials/User_Group/UserGroupMeeting_Wenhao.ipynb)   | Demo presented at first TDC User Group Meetup                             |
-| [201] (https://colab.research.google.com/drive/1xTgBwKUfP2b8j6Fqh28M2GUp2ScfENMX?usp=sharing>) | TDC-2 Resource and Multi-modal Single-Cell API |
+| `201 <https://colab.research.google.com/drive/1xTgBwKUfP2b8j6Fqh28M2GUp2ScfENMX?usp=sharing>`_ | TDC-2 Resource and Multi-modal Single-Cell API |
 
 
 ## Design of TDC
