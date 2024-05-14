@@ -116,6 +116,33 @@ class TestBenchmarkGroup(unittest.TestCase):
         assert not group_gene.is_drug
         assert set(group_gene.dataset_names) == set(scperturb_gene_datasets)
 
+    def test_proteinpeptide(self):
+        from tdc.benchmark_group.protein_peptide_group import ProteinPeptideGroup
+        from tdc.multi_pred.proteinpeptide import ProteinPeptide
+        from sklearn.model_selection import train_test_split
+        group = ProteinPeptideGroup()
+        test = group.get_test()
+        assert test is not None and len(test) > 0
+        dl = ProteinPeptide(name="brown_mdm2_ace2_12ca5")
+        df = dl.get_data()
+        for idx, e in enumerate(df["Y"]):
+            if e != "Putative binder":
+                df["Y"][idx] = "1"
+            else:
+                df["Y"][idx] = "0"  
+        # raise Exception("unique", )
+        # Split the data while stratifying
+        _, _, _, y_test = train_test_split(
+            df.drop('Y', axis=1),  # features
+            df['Y'],  # labels
+            test_size=0.9,  # 90% of the data goes to the test set
+            random_state=42,  # for reproducibility
+            stratify=df[
+                'Y']  # stratify by the label column to ensure even distribution
+        )
+        res = group.evaluate(y_test)
+        assert res[-1] == 1 and res[-2] == 1, res
+
 
 if __name__ == "__main__":
     unittest.main()
