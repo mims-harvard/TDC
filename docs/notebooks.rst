@@ -15,4 +15,6 @@ We provide a series of tutorials for you to get started using TDC:
 `106 <https://github.com/mims-harvard/TDC/blob/master/tutorials/TDC_106_BenchmarkGroup_Submission_Demo.ipynb>`_             Benchmark submission
 `DGL <https://github.com/mims-harvard/TDC/blob/master/tutorials/DGL_User_Group_Demo.ipynb>`_                                Demo for DGL GNN User Group Meeting
 `201 <https://colab.research.google.com/drive/1xTgBwKUfP2b8j6Fqh28M2GUp2ScfENMX?usp=sharing>`_                              TDC-2 Resource and Multi-modal Single-Cell API
+`202 <https://colab.research.google.com/drive/1kYH8nt3nW7tXYBPNcfYuDbWxGTqOEnWg?usp=sharing`_                              TDC-2 Resource and PrimeKG
+`203 <https://colab.research.google.com/drive/13MYlg5tWpywWbKYsJQXafKAlVF2hz-sP?usp=sharing`_                              TDC-2 Resource and External APIs
 ==========================================================================================================================  =========================================================================================================
