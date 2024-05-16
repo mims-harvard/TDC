@@ -4,27 +4,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Single-cell Drug-Target Interaction Benchmark Group - TDC</title>
+    <title>Leaderboard Guide - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Single-cell Drug-Target Interaction Benchmark Group | TDC</title>
+<title>Leaderboard Guide | TDC</title>
 <meta name="generator" content="Jekyll v3.9.3" />
-<meta property="og:title" content="Single-cell Drug-Target Interaction Benchmark Group" />
+<meta property="og:title" content="Leaderboard Guide" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
 <meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
-<link rel="canonical" href="http://localhost:4000/benchmark/scdti_group/overview/" />
-<meta property="og:url" content="http://localhost:4000/benchmark/scdti_group/overview/" />
+<link rel="canonical" href="http://localhost:4000/benchmark/counterfactual_group/overview/" />
+<meta property="og:url" content="http://localhost:4000/benchmark/counterfactual_group/overview/" />
 <meta property="og:site_name" content="TDC" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Single-cell Drug-Target Interaction Benchmark Group" />
+<meta property="twitter:title" content="Leaderboard Guide" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Single-cell Drug-Target Interaction Benchmark Group","url":"http://localhost:4000/benchmark/scdti_group/overview/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Leaderboard Guide","url":"http://localhost:4000/benchmark/counterfactual_group/overview/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -162,12 +162,12 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/benchmark/scdti_group/overview" class=""><strong>Single-cell DTI Group Leaderboard</strong></a>
+            <a href="/benchmark/counterfactual_group/overview" class=""><strong>Counterfactual Group Leaderboard</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/benchmark/scdti_group/pinnacle_dti/" class=""><code>TDC.opentargets_dti</code> Leaderboard</a></li>
+                <li><a href="/benchmark/counterfactual_group/scperturb_drug_AissaBenevolenskaya2021/" class=""><code>TDC.scperturb_drug_AissaBenevolenskaya2021</code> Leaderboard</a></li>
                 
                 
             </ul>
@@ -197,7 +197,7 @@
                 
                 
                 
-                <li><a href="https://www.biorxiv.org/content/10.1101/2023.07.18.549602v1" class="">Dataset Description</a></li>
+                <li><a href="https://dataverse.harvard.edu/file.xhtml?fileId=9845396" class="">Dataset Description</a></li>
                 
                 
             </ul>
@@ -215,18 +215,24 @@
                     
                     
 <div class="content">
-    <h2 id="single-cell-drug-target-interaction-benchmark-group">Single-cell Drug-Target Interaction Benchmark Group</h2>
+    <h2 id="counterfactual-prediction-benchmark-group">Counterfactual Prediction Benchmark Group</h2>
 
-<p class="is-size-5">We formalize the predictive, non-generative, task definition as a function taking a given protein, cell,
-and drug as input to output a score representing a probability of drug-target binding. More details to-be-announced. </p>
+<p class="is-size-5">We define a task for predicting responses in gene expression of single cells to chemical and genetic
+perturbations, aiming to measure model generalization across cell lines and perturbation types. Understanding
+ cellular responses to genetic perturbation is central to numerous biomedical applications,
+from identifying genetic interactions involved in cancer to developing methods for regenerative
+medicine. Furthermore, counterfactual prediction of drug-based perturbations at single-cell
+resolution enables cell-type specific drugs and treatments, facilitating precision medicine [ 10]. The230
+predictive, non-generative task is then formalized as a function of a cell, with corresponding attributes
+such as cell line, disease, and tissue, and a perturbation, such as a drug type or a CRISPR-based
+perturbation, which outputs a count for gene expression of the cell after the input pe </p>
 
-<p class="is-size-5">A dataset containing drug-target interactions at single-cell resolution for various contextualized215
-proteins and diseases must be constructed to train a model for this task. In TDC-2, we assembeled a dataset containing data points for Rheumatoid Arthritis and Inflammatory Bowel Disease. More details to-be-announced. </p>
+<p class="is-size-5">In TDC-2, we’ve used the scPerturb [ 18 ] datasets for building benchmarks for this task. More details to-be-announced. </p>
 
 <p class="is-size-5">To access a benchmark in the group, use the following code:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">scdti_group</span>
-<span class="n">group</span> <span class="o">=</span> <span class="n">scdti_group</span><span class="p">.</span><span class="n">SCDTIGroup</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">counterfactual_group</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">counterfactual_group</span><span class="p">.</span><span class="n">CounterfactualGroup</span><span class="p">()</span>
 <span class="n">train</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">()</span>
 <span class="n">test</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_test</span><span class="p">()</span>
 
@@ -238,7 +244,7 @@ proteins and diseases must be constructed to train a model for this task. In TDC
 
 <p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard. </p>
 
-<p class="is-size-5"> The evaluation metric is AUC. More details to-be-announced.</p>
+<p class="is-size-5"> The evaluation metric is R-squared. More details to-be-announced.</p>
 
 <div class="column is-12">
     <hr />
