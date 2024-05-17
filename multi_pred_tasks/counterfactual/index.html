@@ -4,27 +4,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Epitope Prediction - TDC</title>
+    <title>Protein-peptide Interaction - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Epitope Prediction | TDC</title>
+<title>Protein-peptide Interaction | TDC</title>
 <meta name="generator" content="Jekyll v3.9.3" />
-<meta property="og:title" content="Epitope Prediction" />
+<meta property="og:title" content="Protein-peptide Interaction" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
 <meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
-<link rel="canonical" href="http://localhost:4000/single_pred_tasks/epitope/" />
-<meta property="og:url" content="http://localhost:4000/single_pred_tasks/epitope/" />
+<link rel="canonical" href="http://localhost:4000/multi_pred_tasks/counterfactual/" />
+<meta property="og:url" content="http://localhost:4000/multi_pred_tasks/counterfactual/" />
 <meta property="og:site_name" content="TDC" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Epitope Prediction" />
+<meta property="twitter:title" content="Protein-peptide Interaction" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Epitope Prediction","url":"http://localhost:4000/single_pred_tasks/epitope/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Protein-peptide Interaction","url":"http://localhost:4000/multi_pred_tasks/counterfactual/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -162,40 +162,68 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/single_pred_tasks/overview/" class=""><strong>Single-instance Prediction Problem</strong></a>
+            <a href="/multi_pred_tasks/overview/" class=""><strong>Multi-instance Prediction Problem</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/single_pred_tasks/adme/" class=""><code>ADME</code> Pharmaco-kinetics</a></li>
+                <li><a href="/multi_pred_tasks/dti/" class=""><code>DTI</code> Drug-Target Interaction</a></li>
                 
                 
                 
-                <li><a href="/single_pred_tasks/tox/" class=""><code>Tox</code> Toxicity</a></li>
+                <li><a href="/multi_pred_tasks/ddi/" class=""><code>DDI</code> Drug-Drug Interaction</a></li>
                 
                 
                 
-                <li><a href="/single_pred_tasks/hts/" class=""><code>HTS</code> High-Throughput Screening</a></li>
+                <li><a href="/multi_pred_tasks/ppi/" class=""><code>PPI</code> Protein-Protein Interaction</a></li>
                 
                 
                 
-                <li><a href="/single_pred_tasks/qm/" class=""><code>QM</code> Quantum Mechanics</a></li>
+                <li><a href="/multi_pred_tasks/gdi/" class=""><code>GDA</code> Gene-Disease Association</a></li>
                 
                 
                 
-                <li><a href="/single_pred_tasks/yields/" class=""><code>Yields</code> Reaction Yields Prediction</a></li>
+                <li><a href="/multi_pred_tasks/drugres/" class=""><code>DrugRes</code> Drug Response Prediction</a></li>
                 
                 
                 
-                <li><a href="/single_pred_tasks/epitope/" class="is-active"><code>Epitope</code> Epitope Prediction</a></li>
+                <li><a href="/multi_pred_tasks/drugsyn/" class=""><code>DrugSyn</code> Drug Synergy Prediction</a></li>
                 
                 
                 
-                <li><a href="/single_pred_tasks/develop/" class=""><code>Develop</code> Developability Prediction</a></li>
+                <li><a href="/multi_pred_tasks/peptidemhc/" class=""><code>PeptideMHC</code> Peptide-MHC Binding</a></li>
                 
                 
                 
-                <li><a href="/single_pred_tasks/CRISPROutcome/" class=""><code>CRISPROutcome</code> CRISPR Repair Prediction</a></li>
+                <li><a href="/multi_pred_tasks/antibodyaff/" class=""><code>AntibodyAff</code> Antibody-Antigen Affinity</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/mti/" class=""><code>MTI</code> miRNA-Target Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/catalyst/" class=""><code>Catalyst</code> Catalyst Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/tcrepitope" class=""><code>TCREpitopeBinding</code> TCR-Epitope Binding</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/trialoutcome" class=""><code>TrialOutcome</code> Clinical Trial Outcome Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/proteinpeptide" class=""><code>ProteinPeptide</code> Protein-Peptide Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/counterfactual" class=""><code>PerturbOutcome</code> Counterfactual Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/scdti" class=""><code>scDTI</code> Single-cell Drug-Target Interaction</a></li>
                 
                 
             </ul>
@@ -213,7 +241,7 @@
             <ul>
                 
                 
-                <li><a href="/multi_pred_tasks/overview/" class="">Multi-instance Prediction Problem</a></li>
+                <li><a href="/single_pred_tasks/overview/" class="">Single-instance Prediction Problem</a></li>
                 
                 
                 
@@ -240,10 +268,7 @@
 <div class="contents">
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
-        <ul class="menu-list">
-  <li><a href="#iedb-jespersen-et-al">IEDB, Jespersen et al.</a></li>
-  <li><a href="#pdb-jespersen-et-al">PDB, Jespersen et al.</a></li>
-</ul>
+        
     </div>
 </div>
 
@@ -251,83 +276,53 @@
 
 
 <div class="content">
-    <h1 id="epitope-prediction-task-overview">Epitope Prediction Task Overview</h1>
+    <h1 id="counterfactual-prediction-task-overview">Counterfactual Prediction Task Overview</h1>
 
 <div class="box">
 	
 
 <p class="is-size-6">  <strong> Definition: </strong> 
-An epitope, also known as antigenic determinant, is the region of a pathogen that can be recognized by antibody and cause adaptive immune response. This task is to classify the active and non-active sites from the antigen protein sequences.
-
-</p>
-
+We define a task for predicting responses in gene expression of single cells to chemical and genetic perturbations, aiming to measure model generalization across cell lines and perturbation types. Understanding cellular responses to genetic perturbation is central to numerous biomedical applications, from identifying genetic interactions involved in cancer to developing methods for regenerative medicine \cite{gears}. Furthermore, counterfactual prediction of drug-based perturbations at single-cell resolution enables cell-type specific drugs and treatments, facilitating precision medicine \cite{chemcpa}. The predictive, non-generative task is then formalized as a function of a cell, with corresponding attributes such as cell line, disease, and tissue, and a perturbation, such as a drug type or a CRISPR-based perturbation, which outputs a count for gene expression of the cell after the input perturbation.
 <p class="is-size-6"> <strong> Impact: </strong>  
-Identifying the potential epitope is of primary importance in many clinical and biotechnologies, such as vaccine design and antibody development, and for our general understanding of the immune system.
-
+Machine learning has significantly advanced the ability to predict how single cells respond to various chemical and genetic perturbations. This capability is crucial for understanding cellular behaviors and developing new therapeutic strategies. Machine learning models have revolutionized the prediction of gene expression responses in single cells to chemical and genetic perturbations by enhancing predictive accuracy, handling dose dependencies, managing complex perturbations, and optimizing experimental designs. These advancements enable more efficient and accurate exploration of cellular responses, facilitating drug discovery and the development of personalized medicine.
 </p>
 
 <p class="is-size-6"> <strong> Generalization: </strong> 
-The models are expected to be generalized to unseen pathogens antigens amino acid sequences with diverse set of structures and functions.
-
+We measure model generalization across seen and unseen perturbations and across seen and unseen cell lines.
 </p>
 
-<p class="is-size-6"> <strong> Product: </strong> Immunotherapy. </p>
+<p class="is-size-6"> <strong> Product: </strong>  Drug Repurposing, Predicting Adverse Drug Reactions, Biopharmaceuticals</p>
 
-<p class="is-size-6"> <strong> Pipeline: </strong> Target discovery. </p>
+<p class="is-size-6"> <strong> Pipeline: </strong>  Target discovery, Phenotypic Screening. </p>
 
-</div>
+&lt;/div&gt;
 
-<h3 id="iedb-jespersen-et-al">IEDB, Jespersen et al.</h3>
+### scPerturb 
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> Epitope prediction is to predict the active region in the antigen. This dataset is from Bepipred, which curates a dataset from IEDB. It collects B-cell epitopes and non-epitope amino acids determined from crystal structures.  </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> The scPerturb dataset is a comprehensive collection of single-cell perturbation data, harmonized to facilitate the development and benchmarking of computational methods in systems biology. It includes various types of molecular readouts, such as transcriptomics, proteomics, and epigenomics. scPerturb is a harmonized dataset that compiles single-cell perturbation-response data. This dataset is designed to support the development and validation of computational tools by providing a consistent and comprehensive resource. The data includes responses to various genetic and chemical perturbations, which are crucial for understanding cellular mechanisms and developing therapeutic strategies. Data from different sources are uniformly pre-processed to ensure consistency. Rigorous quality control measures are applied to maintain high data quality. Features across different datasets are standardized for easy comparison and integration. 
 
-<p class="is-size-6">  <strong> Task Description: </strong>Token-level classification. Given an amino acid sequence, predict amino acid token that is active in binding, i.e. X is amino acid sequence, Y is a list of indices for the active positions in X. </p>
+<p class="is-size-6">  <strong> Task Description: </strong>Given cell-type-specific labels and a perturbation, predict the gene expression vector for that cell. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 3,159 antigens. </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> 44 publicly available single-cell perturbation-response datasets. Most datasets have on average approximately 3000 genes measured per cell. 100,000+ perturbations.</p>
 
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split, Seen-unseen splits across cell line and perturbation</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Epitope</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">Epitope</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'IEDB_Jespersen'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://academic.oup.com/nar/article-abstract/47/D1/D339/5144151">[1] Vita, Randi, et al. “The immune epitope database (IEDB): 2018 update.” Nucleic acids research 47.D1 (2019): D339-D343.</a></p>
-
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/28472356/">[2] Jespersen, Martin Closter, et al. “BepiPred-2.0: improving sequence-based B-cell epitope prediction using conformational epitopes.” Nucleic acids research 45.W1 (2017): W24-W29.</a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong>  <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
-
-<hr />
-
-<h3 id="pdb-jespersen-et-al">PDB, Jespersen et al.</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> Epitope prediction is to predict the active region in the antigen. This dataset is from Bepipred, which curates a dataset from PDB. It collects B-cell epitopes and non-epitope amino acids determined from crystal structures.  </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong>Token-level classification. Given the antigen's amino acid sequence, predict amino acid token that is active in binding, i.e. X is an amino acid sequence, Y is a list of indices for the active tokens in X. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 447 antigens. </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">Epitope</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">Epitope</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'PDB_Jespersen'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
+``` python
+from tdc.multi_pred.perturboutcome import PerturbOutcome
+test_loader = PerturbOutcome(
+    name="scperturb_drug_AissaBenevolenskaya2021")
+testdf = test_loader.get_data()
+```
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/28472356/">[1] Jespersen, Martin Closter, et al. “BepiPred-2.0: improving sequence-based B-cell epitope prediction using conformational epitopes.” Nucleic acids research 45.W1 (2017): W24-W29.</a></p>
+<a href="https://doi.org/10.1038/s42004-022-00737-w">Peidli, S., Green, T. D., Shen, C., Gross, T., Min, J. K., Garda, S., Yuan, B., Schumacher, L., Taylor-King, J., Marks, D., Luna, A., Blüthgen, N., &amp; Sander, C. (2023). scPerturb: Harmonized Single-Cell Perturbation Data. https://doi.org/10.1101/2022.08.20.504663 </a> 
 
-<p><a href="https://academic.oup.com/nar/article-abstract/28/1/235/2384399">[2] Berman, Helen M., et al. “The protein data bank.” Nucleic acids research 28.1 (2000): 235-242.
-</a></p>
+<!-- <p class='is-size-6'> <strong> Dataset License: </strong><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p> -->
 
-<p class="is-size-6"> <strong> Dataset License: </strong>  <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
 <hr />
-
+</p></p></div>
 
 </div>
                 </div>
