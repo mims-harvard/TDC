@@ -27,7 +27,10 @@ class PerturbOutcome(CellXGeneTemplate):
     def get_dropout_genes(self):
         raise ValueError("TODO")
 
-    def get_cellline_split(self, ratios=[0.8, 0.1, 0.1], random_state=42, split_to_unseen=False):
+    def get_cellline_split(self,
+                           ratios=[0.8, 0.1, 0.1],
+                           random_state=42,
+                           split_to_unseen=False):
         df = self.get_data()
         print("got data grouping by cell line")
         cell_line_groups = df.groupby("cell_line")
@@ -35,15 +38,18 @@ class PerturbOutcome(CellXGeneTemplate):
         cell_line_splits = {}
         for cell_line, cell_line_group in cell_line_groups:
             print("processing cell line", cell_line)
-            control = cell_line_group[cell_line_group["perturbation"] == "control"]
-            cell_line_group = cell_line_group[cell_line_group["perturbation"] != "control"]
+            control = cell_line_group[cell_line_group["perturbation"] ==
+                                      "control"]
+            cell_line_group = cell_line_group[cell_line_group["perturbation"] !=
+                                              "control"]
             if not split_to_unseen:
                 train, tmp = train_test_split(cell_line_group,
-                                            test_size=ratios[1] + ratios[2],
-                                            random_state=random_state)
+                                              test_size=ratios[1] + ratios[2],
+                                              random_state=random_state)
                 test, dev = train_test_split(tmp,
-                                            test_size=ratios[2] / (ratios[1] + ratios[2]),
-                                            random_state=random_state)
+                                             test_size=ratios[2] /
+                                             (ratios[1] + ratios[2]),
+                                             random_state=random_state)
                 cell_line_splits[cell_line] = {
                     "control": control,
                     "train": train,
@@ -52,22 +58,32 @@ class PerturbOutcome(CellXGeneTemplate):
                 }
             else:
                 perturbs = cell_line_group["perturbation"].unique()
-                perturbs_train, tmp = train_test_split(perturbs,
-                                                       test_size=ratios[1]+ratios[2],
-                                                       random_state=random_state)
-                perturbs_test, perturbs_dev = train_test_split(tmp,
-                                                               test_size=ratios[2] / (ratios[1] + ratios[2]),
-                                                               random_state=random_state)
+                perturbs_train, tmp = train_test_split(
+                    perturbs,
+                    test_size=ratios[1] + ratios[2],
+                    random_state=random_state)
+                perturbs_test, perturbs_dev = train_test_split(
+                    tmp,
+                    test_size=ratios[2] / (ratios[1] + ratios[2]),
+                    random_state=random_state)
                 cell_line_splits[cell_line] = {
-                    "control": control,
-                    "train": cell_line_group[cell_line_group["perturbation"].isin(perturbs_train)],
-                    "test": cell_line_group[cell_line_group["perturbation"].isin(perturbs_test)],
-                    "dev": cell_line_group[cell_line_group["perturbation"].isin(perturbs_dev)]
+                    "control":
+                        control,
+                    "train":
+                        cell_line_group[
+                            cell_line_group["perturbation"].isin(perturbs_train)
+                        ],
+                    "test":
+                        cell_line_group[
+                            cell_line_group["perturbation"].isin(perturbs_test)
+                        ],
+                    "dev":
+                        cell_line_group[
+                            cell_line_group["perturbation"].isin(perturbs_dev)]
                 }
             print("done with cell line", cell_line)
 
         return cell_line_splits
-        
 
     def get_split(self,
                   ratios=[0.8, 0.1, 0.1],
@@ -80,23 +96,18 @@ class PerturbOutcome(CellXGeneTemplate):
         TODO: also allow for splitting by unseen perturbations
         TODO: allow for evaluating within the same cell line"""
         if not use_random:
-            return self.get_cellline_split(split_to_unseen = unseen,
-                                           ratios = ratios,
-                                           random_state = random_state)
+            return self.get_cellline_split(split_to_unseen=unseen,
+                                           ratios=ratios,
+                                           random_state=random_state)
         df = self.get_data()
         # just do a random split, otherwise you'll split by cell line...
         control = df[df["perturbation"] == "control"]
         perturbs = df[df["perturbation"] != "control"]
         train, tmp = train_test_split(perturbs,
-                                        test_size=ratios[1] + ratios[2],
-                                        random_state=random_state)
+                                      test_size=ratios[1] + ratios[2],
+                                      random_state=random_state)
         test, dev = train_test_split(tmp,
-                                        test_size=ratios[2] /
-                                        (ratios[1] + ratios[2]),
-                                        random_state=random_state)
-        return {
-            "control": control,
-            "train": train,
-            "dev": dev,
-            "test": test
-        }
+                                     test_size=ratios[2] /
+                                     (ratios[1] + ratios[2]),
+                                     random_state=random_state)
+        return {"control": control, "train": train, "dev": dev, "test": test}

@@ -68,10 +68,12 @@ class CounterfactualGroup(BenchmarkGroup):
                 df.drop(cols, axis=1)
             if check in y_pred[cell_line].columns:
                 y_pred[cell_line].drop(cols, axis=1)
-            categorical_cols = df.select_dtypes(include=['object', 'category']).columns
-            df = df.drop(columns = categorical_cols)
-            categorical_cols = y_pred[cell_line].select_dtypes(include=['object', 'category']).columns
-            y_pred[cell_line] = y_pred[cell_line].drop(columns = categorical_cols)
+            categorical_cols = df.select_dtypes(
+                include=['object', 'category']).columns
+            df = df.drop(columns=categorical_cols)
+            categorical_cols = y_pred[cell_line].select_dtypes(
+                include=['object', 'category']).columns
+            y_pred[cell_line] = y_pred[cell_line].drop(columns=categorical_cols)
             r2 = r2_score(df.mean(), y_pred[cell_line].mean())
             r2vec.append(r2)
         return np.mean(r2vec)

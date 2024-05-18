@@ -85,13 +85,12 @@ class TestBenchmarkGroup(unittest.TestCase):
         assert len(many_results["f1"]
                   ) == 2  # should include mean and standard deviation
 
-    # @unittest.skip(
-    #     "counterfactual test is taking up too much memory"
-    # )  #FIXME: please run if making changes to counterfactual benchmark or core code.
+    @unittest.skip(
+        "counterfactual test is taking up too much memory"
+    )  #FIXME: please run if making changes to counterfactual benchmark or core code.
     def test_counterfactual(self):
         from tdc.multi_pred.perturboutcome import PerturbOutcome
         from tdc.dataset_configs.config_map import scperturb_datasets, scperturb_gene_datasets
-
 
         test_data = PerturbOutcome("scperturb_drug_AissaBenevolenskaya2021")
         print("got test data")
