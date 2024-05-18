@@ -85,33 +85,48 @@ class TestBenchmarkGroup(unittest.TestCase):
         assert len(many_results["f1"]
                   ) == 2  # should include mean and standard deviation
 
-    @unittest.skip(
-        "counterfactual test is taking up too much memory"
-    )  #FIXME: please run if making changes to counterfactual benchmark or core code.
+    # @unittest.skip(
+    #     "counterfactual test is taking up too much memory"
+    # )  #FIXME: please run if making changes to counterfactual benchmark or core code.
     def test_counterfactual(self):
         from tdc.multi_pred.perturboutcome import PerturbOutcome
         from tdc.dataset_configs.config_map import scperturb_datasets, scperturb_gene_datasets
 
+
         test_data = PerturbOutcome("scperturb_drug_AissaBenevolenskaya2021")
+        print("got test data")
         group = counterfactual_group.CounterfactualGroup()  # is drug
         assert group.is_drug
         assert set(group.dataset_names) == set(
             scperturb_datasets
         ), "loaded datasets should be scperturb drug, but were {} vs correct: {}".format(
             group.dataset_names, scperturb_datasets)
+        print("getting test data via dataloader")
         ct = len(test_data.get_data())
+        print("getting splits")
         train, val = group.get_train_valid_split()
         test = group.get_test()
-        control = group.split["control"]
-        testct = len(train) + len(val) + len(test) + len(control)
-        assert ct == testct, "counts between original data and the 3 splits should match: original {} vs splits {}".format(
-            ct, testct)
+        print("got splits; checking counts")
+        trainct = sum(len(x) for _, x in train.items())
+        valct = sum(len(x) for _, x in val.items())
+        testct = sum(len(x) for _, x in test.items())
+        controlct = sum(len(x) for _, x in group.split["control"].items())
+        totalct = trainct + valct + testct + controlct
+        assert ct == totalct, "counts between original data and the 3 splits should match: original {} vs splits {}".format(
+            ct, totalct)
         # basic test on perfect score
-        tst = test_data.get_split()["test"]
-        r2 = group.evaluate(tst)
+        print("benchmark - generating identical test set")
+        tst = test_data.get_split()
+        tstdict = {}
+        for line, splits in tst.items():
+            tstdict[line] = splits["test"]
+        print("benchmark - running evaluate")
+        r2 = group.evaluate(tstdict)
         assert r2 == 1, "comparing test to itself should have perfect R^2 score, was {}".format(
             r2)
+        print("done")
         # now just check we can load sc perturb gene correctly
+        print("benchmark - basic load test on the gene benchmark")
         group_gene = counterfactual_group.CounterfactualGroup(is_drug=False)
         assert not group_gene.is_drug
         assert set(group_gene.dataset_names) == set(scperturb_gene_datasets)
