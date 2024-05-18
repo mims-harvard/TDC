@@ -56,5 +56,19 @@ class TestCellXGene(unittest.TestCase):
         print("f", FMslice)
 
 
+class TestPrimeKG(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_node_retrieval(self):
+        from tdc.resource import PrimeKG
+        data = PrimeKG(path='./data')
+        drug_feature = data.get_features(feature_type='drug')
+        data.to_nx()
+        l = data.get_node_list('disease')
+        assert "1" in l and "9997" in l
+
+
 if __name__ == "__main__":
     unittest.main()
