@@ -7,7 +7,7 @@ import os
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from tdc.benchmark_group import admet_group, scdti_group, counterfactual_group
+from tdc.benchmark_group import admet_group, scdti_group, counterfactual_group, geneperturb_group
 
 
 def is_classification(values):
@@ -129,6 +129,14 @@ class TestBenchmarkGroup(unittest.TestCase):
         group_gene = counterfactual_group.CounterfactualGroup(is_drug=False)
         assert not group_gene.is_drug
         assert set(group_gene.dataset_names) == set(scperturb_gene_datasets)
+
+    @unittest.skip(
+        "counterfactual test is taking up too much memory"
+    )  #FIXME: please run if making changes to counterfactual benchmark or core code.
+    def test_gene_perturb(self):
+        group = geneperturb_group.GenePerturbGroup()
+        group.get_train_valid_split()
+        group.get_test()
 
     def test_proteinpeptide(self):
         from tdc.benchmark_group.protein_peptide_group import ProteinPeptideGroup
