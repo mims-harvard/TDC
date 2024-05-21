@@ -62,7 +62,8 @@ class PerturbOutcome(CellXGeneTemplate):
     def get_cellline_split(self,
                            ratios=[0.8, 0.1, 0.1],
                            random_state=42,
-                           split_to_unseen=False):
+                           split_to_unseen=False,
+                           remove_unseen=True):
         df = self.get_data()
         print("got data grouping by cell line")
         cell_line_groups = df.groupby("cell_line")
@@ -82,11 +83,22 @@ class PerturbOutcome(CellXGeneTemplate):
                                              test_size=ratios[2] /
                                              (ratios[1] + ratios[2]),
                                              random_state=random_state)
+                filter_test = test["perturbation"].isin(train["perturbation"])
+                filter_dev = dev["perturbation"].isin(train["perturbation"])
+                adj = 0
+                if remove_unseen:
+                    lbef = len(test), len(dev)
+                    test = test[~filter_test]
+                    dev = dev[~filter_dev]
+                    laft = len(test), len(dev)
+                    adj = sum(lbef) - sum(laft)
+                # TODO: filters might dilute test/dev siginificantly ...
                 cell_line_splits[cell_line] = {
                     "control": control,
                     "train": train,
                     "test": test,
-                    "dev": dev
+                    "dev": dev,
+                    "adj": adj,
                 }
             else:
                 perturbs = cell_line_group["perturbation"].unique()
@@ -257,12 +269,12 @@ class PerturbOutcome(CellXGeneTemplate):
                   use_random=False,
                   random_state=42,
                   train_val_gene_set_size=0.75,
-                  combo_seen2_train_frac=0.75):
+                  combo_seen2_train_frac=0.75,
+                  remove_unseen=True):
         """obtain train/dev/test splits for each cell_line
         counterfactual prediction model is trained on a single cell line and then evaluated on same cell line
         and against new cell lines
-        TODO: also allow for splitting by unseen perturbations
-        TODO: allow for evaluating within the same cell line"""
+        """
 
         if self.is_gene:
             ## use gene perturbation data split
@@ -317,7 +329,8 @@ class PerturbOutcome(CellXGeneTemplate):
         if not use_random:
             return self.get_cellline_split(split_to_unseen=unseen,
                                            ratios=ratios,
-                                           random_state=random_state)
+                                           random_state=random_state,
+                                           remove_unseen=remove_unseen)
         df = self.get_data()
         # just do a random split, otherwise you'll split by cell line...
         control = df[df["perturbation"] == "control"]
