@@ -103,19 +103,20 @@ class TestBenchmarkGroup(unittest.TestCase):
         print("getting test data via dataloader")
         ct = len(test_data.get_data())
         print("getting splits")
-        train, val = group.get_train_valid_split()
+        train, val = group.get_train_valid_split(remove_unseen=False)
         test = group.get_test()
         print("got splits; checking counts")
         trainct = sum(len(x) for _, x in train.items())
         valct = sum(len(x) for _, x in val.items())
         testct = sum(len(x) for _, x in test.items())
         controlct = sum(len(x) for _, x in group.split["control"].items())
-        totalct = trainct + valct + testct + controlct
+        adjct = group.split["adj"]
+        totalct = trainct + valct + testct + controlct + adjct
         assert ct == totalct, "counts between original data and the 3 splits should match: original {} vs splits {}".format(
             ct, totalct)
         # basic test on perfect score
         print("benchmark - generating identical test set")
-        tst = test_data.get_split()
+        tst = test_data.get_split(remove_unseen=False)
         tstdict = {}
         for line, splits in tst.items():
             tstdict[line] = splits["test"]
