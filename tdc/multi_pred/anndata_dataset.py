@@ -9,6 +9,7 @@ class DataLoader(DL):
         super(DataLoader, self).__init__(name, path, print_stats, dataset_names)
         self.adata = self.df  # this is in AnnData format
         cmap = ConfigMap()
+        self.cmap = cmap
         self.config = cmap.get(name)
         if self.config is None:
             # default to converting adata to dataframe as is
