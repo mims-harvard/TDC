@@ -3,6 +3,7 @@
 # License: MIT
 import numpy as np
 import os
+import pandas as pd
 
 from .base_group import BenchmarkGroup
 from ..dataset_configs.config_map import scperturb_datasets, scperturb_gene_datasets
@@ -34,20 +35,28 @@ class CounterfactualGroup(BenchmarkGroup):
         self.file_format = file_format
         self.split = None
 
-    def get_train_valid_split(self, dataset=None, only_seen=False):
+    def get_train_valid_split(self,
+                              dataset=None,
+                              split_to_unseen=False,
+                              remove_unseen=True):
         """parameters included for compatibility. this benchmark has a fixed train/test split."""
         from ..multi_pred.perturboutcome import PerturbOutcome
         dataset = dataset or "scperturb_drug_AissaBenevolenskaya2021"
         assert dataset in self.dataset_names, "{} dataset not in {}".format(
             dataset, self.dataset_names)
         data = PerturbOutcome(dataset)
-        self.split = data.get_split()
+        self.split = data.get_split(unseen=split_to_unseen,
+                                    remove_unseen=remove_unseen)
         cell_lines = list(self.split.keys())
+        self.split["adj"] = 0
         for line in cell_lines:
             print("processing benchmark line", line)
             for split, df in self.split[line].items():
                 if split not in self.split:
                     self.split[split] = {}
+                elif split == "adj":
+                    self.split["adj"] += df
+                    continue
                 self.split[split][line] = df
             print("done with line", line)
         return self.split["train"], self.split["dev"]
@@ -74,7 +83,20 @@ class CounterfactualGroup(BenchmarkGroup):
             categorical_cols = y_pred[cell_line].select_dtypes(
                 include=['object', 'category']).columns
             y_pred[cell_line] = y_pred[cell_line].drop(columns=categorical_cols)
-            r2 = r2_score(df.mean(), y_pred[cell_line].mean())
+            mdf = df.mean()
+            mpred = y_pred[cell_line].mean()
+            if len(mdf) != len(mpred):
+                raise Exception(
+                    "lengths between true and test mean vectors defers in cell line {} with {} vs {}"
+                    .format(cell_line, len(mdf), len(mpred)))
+            elif pd.isna(mdf.values).any():
+                raise Exception(
+                    "ground truth mean contains {} nan values".format(
+                        mdf.isna().sum()))
+            elif pd.isna(mpred.values).any():
+                raise Exception("prediction mean contains {} nan values".format(
+                    mpred.isna().sum()))
+            r2 = r2_score(mdf, mpred)
             r2vec.append(r2)
         return np.mean(r2vec)
 
