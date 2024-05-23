@@ -118,6 +118,8 @@ adme_dataset_names = [
     "half_life_obach",
     "clearance_hepatocyte_az",
     "clearance_microsome_az",
+    "hlm",
+    "rlm"
 ]
 
 hts_dataset_names = [
@@ -785,6 +787,8 @@ name2type = {
     "opentargets_ibd_data_splits_idx": "json",
     "opentargets_ra_drug_evidence": "tab",
     "opentargets_ibd_drug_evidence": "tab",
+    "hlm": "tab",
+    "rlm": "tab"
 }
 
 name2id = {
@@ -914,6 +918,8 @@ name2id = {
     "opentargets_ibd_data_splits_idx": 10143573,
     "opentargets_ra_drug_evidence": 10141153,
     "opentargets_ibd_drug_evidence": 10141154,
+    "hlm": 10218426,
+    "rlm": 10218425
 }
 
 oracle2type = {
