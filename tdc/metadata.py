@@ -319,13 +319,14 @@ resources = {
                     2: "tchard_pep_cdr3b_cdr3a_mhc_only_sampled_negs_test-2",
                     3: "tchard_pep_cdr3b_cdr3a_mhc_only_sampled_negs_test-3",
                     4: "tchard_pep_cdr3b_cdr3a_mhc_only_sampled_negs_test-4",
-                } 
+                }
             },
             "dev": {}  # no dev set on tchard
         },
-        "all": [
-            "tchard_full", 
-        ]
+        "all": ["tchard_full",],
+        "config": {
+            "Y": "label",
+        }
     },
 }
 
