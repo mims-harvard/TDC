@@ -166,6 +166,15 @@ class TestBenchmarkGroup(unittest.TestCase):
         res = group.evaluate(y_test)
         assert res[-1] == 1 and res[-2] == 1, res
 
+    def test_tcrepitope(self):
+        from tdc.benchmark_group.tcrepitope_group import TCREpitopeGroup
+        from tdc.resource.dataloader import DataLoader
+        data = DataLoader("tchard")
+        tst = data.get_split()["test"]
+        group = TCREpitopeGroup()
+        res = group.evaluate(tst)
+        assert res == 1
+
 
 if __name__ == "__main__":
     unittest.main()

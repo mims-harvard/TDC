@@ -51,14 +51,21 @@ class DataLoader(base_dataset.DataLoader, dict):
             for split_type, labeled_splits in self[self.split_key].items():
                 for label, keyed_splits in labeled_splits.items():
                     for key, split_name in keyed_splits.items():
-                        splitdf = load.resource_dataset_load(
-                            split_name, path, dataset_names)
-                        # apply config
-                        splitdf["Y"] = splitdf[self.config["Y"]]
-                        # store dataframe
-                        self[self.split_key][split_type][label][key] = splitdf
+                        if type(split_name) == str:
+                            splitdf = load.resource_dataset_load(
+                                split_name, path, dataset_names)
+                            # apply config
+                            splitdf["Y"] = splitdf[self.config["Y"]]
+                            # store dataframe
+                            self[self.
+                                 split_key][split_type][label][key] = splitdf
+                        else:
+                            assert type(split_name) == pd.DataFrame, type(
+                                split_name)
+
             # apply label
-            self[self.df_key]["Y"] = self[self.df_key][self.config["Y"]]
+            if "Y" not in self[self.df_key].columns:  # for repeat loader runs
+                self[self.df_key]["Y"] = self[self.df_key][self.config["Y"]]
             return  # no further data processing needed. TODO: can support dsl configs as well here.
 
         # raise Exception("keys", self.keys())
