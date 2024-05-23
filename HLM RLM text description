@@ -1,0 +1,17 @@
+# HLM_RLM
+Dataset description: 
+- The HLM_RLM datasets predict the metabolic stability of compounds in Rat and Human Liver Microsomes, which is crucial for early-stage drug development. The datasets include 5,590 compounds for rat liver microsomes and 6,013 for human liver microsomes. Compounds are classified as stable or unstable based on their half-life. We have sanitized and organized the datasets, derived from a published paper(DOI: 10.1021/acs.chemrestox.2c00207), into a format with three columns: ID, X, and Y.
+
+Task description: 
+- The primary task for these datasets is binary classfication. The compounds with a half-time greater than 30 mins were considered stable(labeled as 0), those with a half-time equal to or less than 30 mins were considered unstable(labeled as 1).
+
+Dataset statistics: 
+- HLM dataset: 4771 training compounds, 1131 test compounds, and 111 external compounds (Total 6013)
+- RLM dataset: 2512 training compounds, 596 test compounds, and 2482 external compounds (Total 5590)
+
+Data split methods: 
+- The processed data were randomly split into the training and test sets with the proportions of 8:2. Hyperparameter settings for the top five models and the D-MPNN of RLM and HLM stability in 10-fold cross-validation are given below.
+<img width="1064" alt="image" src="https://github.com/haneul-park/HLM_RLM/assets/157252313/4e1e31ab-3344-43af-8b10-a7e6c3d3e7ef">
+
+References for the website: 
+https://pubs.acs.org/doi/10.1021/acs.chemrestox.2c00207?ref=pdf
