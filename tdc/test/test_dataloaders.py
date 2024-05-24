@@ -105,6 +105,25 @@ class TestDataloader(unittest.TestCase):
         assert len(split["test"]) > 0
         assert isinstance(split["train"], pd.DataFrame)
 
+    def test_resource_dataverse_dataloader_raw_splits(self):
+        import pandas as pd
+        from tdc.resource.dataloader import DataLoader
+        data = DataLoader(name="tchard")
+        df = data.get_data()
+        assert isinstance(df, pd.DataFrame)
+        assert "Y" in df.columns
+        assert "splits" in data
+        splits = data.get_split()
+        assert "train" in splits
+        assert "dev" in splits
+        assert "test" in splits
+        assert isinstance(
+            splits["train"]["tchard_pep_cdr3b_only_neg_assays"][0],
+            pd.DataFrame)
+        assert isinstance(splits["test"]["tchard_pep_cdr3b_only_neg_assays"][2],
+                          pd.DataFrame)
+        assert not splits["dev"]
+
     def tearDown(self):
         try:
             print(os.getcwd())
