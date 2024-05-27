@@ -351,4 +351,3 @@ class PerturbOutcome(CellXGeneTemplate):
                                      (ratios[1] + ratios[2]),
                                      random_state=random_state)
         return {"control": control, "train": train, "dev": dev, "test": test}
-
