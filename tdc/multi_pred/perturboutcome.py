@@ -57,7 +57,9 @@ class PerturbOutcome(CellXGeneTemplate):
             sc.pp.log1p(self.adata)
             from scipy.sparse import csr_matrix
             self.adata.X = csr_matrix(self.adata.X)
-            sc.pp.highly_variable_genes(self.adata, n_top_genes=5000, subset=True)
+            sc.pp.highly_variable_genes(self.adata,
+                                        n_top_genes=5000,
+                                        subset=True)
 
     def get_mean_expression(self):
         raise ValueError("TODO")
