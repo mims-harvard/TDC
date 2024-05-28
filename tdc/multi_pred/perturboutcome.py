@@ -50,6 +50,17 @@ class PerturbOutcome(CellXGeneTemplate):
         else:
             self.is_combo = False
 
+        if self.is_gene:
+            import scanpy as sc
+            print_sys("Normalizing (log1p, 5K HVGs)!")
+            sc.pp.normalize_total(self.adata)
+            sc.pp.log1p(self.adata)
+            from scipy.sparse import csr_matrix
+            self.adata.X = csr_matrix(self.adata.X)
+            sc.pp.highly_variable_genes(self.adata,
+                                        n_top_genes=5000,
+                                        subset=True)
+
     def get_mean_expression(self):
         raise ValueError("TODO")
 
@@ -65,12 +76,12 @@ class PerturbOutcome(CellXGeneTemplate):
                            split_to_unseen=False,
                            remove_unseen=True):
         df = self.get_data()
-        print("got data grouping by cell line")
+        print_sys("got data grouping by cell line")
         cell_line_groups = df.groupby("cell_line")
-        print("groupby completed")
+        print_sys("groupby completed")
         cell_line_splits = {}
         for cell_line, cell_line_group in cell_line_groups:
-            print("processing cell line", cell_line)
+            print_sys("processing cell line", cell_line)
             control = cell_line_group[cell_line_group["perturbation"] ==
                                       "control"]
             cell_line_group = cell_line_group[cell_line_group["perturbation"] !=
@@ -125,7 +136,7 @@ class PerturbOutcome(CellXGeneTemplate):
                         cell_line_group[
                             cell_line_group["perturbation"].isin(perturbs_dev)]
                 }
-            print("done with cell line", cell_line)
+            print_sys("done with cell line", cell_line)
 
         return cell_line_splits
 
@@ -188,9 +199,6 @@ class PerturbOutcome(CellXGeneTemplate):
                                                       pert_list, 'single')
         unseen_single = self.get_perts_from_genes(ood_genes, pert_list,
                                                   'single')
-
-        #print(len(pert_single_train), len(unseen_single), len(pert_list))
-        #assert len(unseen_single) + len(pert_single_train) == len(pert_list)
 
         return pert_single_train, unseen_single, {
             'unseen_single': unseen_single
