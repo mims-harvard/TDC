@@ -93,33 +93,15 @@ toxicity_dataset_names = [
 ]
 
 adme_dataset_names = [
-    "lipophilicity_astrazeneca",
-    "solubility_aqsoldb",
-    "hydrationfreeenergy_freesolv",
-    "caco2_wang",
-    "pampa_ncats",
-    "approved_pampa_ncats",
-    "hia_hou",
-    "pgp_broccatelli",
-    "bioavailability_ma",
-    "vdss_lombardo",
-    "cyp2c19_veith",
-    "cyp2d6_veith",
-    "cyp3a4_veith",
-    "cyp1a2_veith",
-    "cyp2c9_veith",
-    "cyp2c9_substrate_carbonmangels",
-    "cyp2d6_substrate_carbonmangels",
-    "cyp3a4_substrate_carbonmangels",
-    "bbb_martins",
-    "b3db_classification",
-    "b3db_regression",
-    "ppbr_az",
-    "half_life_obach",
-    "clearance_hepatocyte_az",
-    "clearance_microsome_az",
-    "hlm",
-    "rlm"
+    "lipophilicity_astrazeneca", "solubility_aqsoldb",
+    "hydrationfreeenergy_freesolv", "caco2_wang", "pampa_ncats",
+    "approved_pampa_ncats", "hia_hou", "pgp_broccatelli", "bioavailability_ma",
+    "vdss_lombardo", "cyp2c19_veith", "cyp2d6_veith", "cyp3a4_veith",
+    "cyp1a2_veith", "cyp2c9_veith", "cyp2c9_substrate_carbonmangels",
+    "cyp2d6_substrate_carbonmangels", "cyp3a4_substrate_carbonmangels",
+    "bbb_martins", "b3db_classification", "b3db_regression", "ppbr_az",
+    "half_life_obach", "clearance_hepatocyte_az", "clearance_microsome_az",
+    "hlm", "rlm"
 ]
 
 hts_dataset_names = [
