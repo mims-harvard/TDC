@@ -119,7 +119,6 @@ class PerturbOutcome(CellXGeneTemplate):
             sc.pp.highly_variable_genes(self.adata, 
                                         n_top_genes=5000, 
                                         subset=True)
-        
             if self.is_combo:
                 def map_name(x):
                     if x == 'control':
@@ -138,6 +137,10 @@ class PerturbOutcome(CellXGeneTemplate):
             self.adata.var['gene_name'] = self.adata.var.index.values
             self.adata = get_DE_genes(self.adata)
             
+            sc.pp.highly_variable_genes(self.adata,
+                                        n_top_genes=5000,
+                                        subset=True)
+
     def get_mean_expression(self):
         raise ValueError("TODO")
 
