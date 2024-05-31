@@ -35,6 +35,64 @@ def parse_any_pert(p):
         out = parse_combo_pert(p)
         return [out[0], out[1]]
 
+def rank_genes_groups_by_cov(
+    adata,
+    groupby,
+    control_group,
+    covariate,
+    pool_doses=False,
+    n_genes=50,
+    rankby_abs=True,
+    key_added='rank_genes_groups_cov',
+    return_dict=False,
+):
+    import scanpy as sc
+    import pandas as pd
+    gene_dict = {}
+    cov_categories = adata.obs[covariate].unique()
+    for cov_cat in cov_categories:
+        #name of the control group in the groupby obs column
+        control_group_cov = '_'.join([cov_cat, control_group])
+
+        #subset adata to cells belonging to a covariate category
+        adata_cov = adata[adata.obs[covariate]==cov_cat]
+
+        #compute DEGs
+        sc.tl.rank_genes_groups(
+            adata_cov,
+            groupby=groupby,
+            reference=control_group_cov,
+            rankby_abs=rankby_abs,
+            n_genes=n_genes,
+            use_raw=False
+        )
+
+        #add entries to dictionary of gene sets
+        de_genes = pd.DataFrame(adata_cov.uns['rank_genes_groups']['names'])
+        for group in de_genes:
+            gene_dict[group] = de_genes[group].tolist()
+
+    adata.uns[key_added] = gene_dict
+
+    if return_dict:
+        return gene_dict
+
+
+def get_DE_genes(adata):
+    import scanpy as sc
+    adata.obs.loc[:, 'dose_val'] = adata.obs.condition.apply(lambda x: '1+1' if len(x.split('+')) == 2 else '1')
+    adata.obs.loc[:, 'control'] = adata.obs.condition.apply(lambda x: 0 if len(x.split('+')) == 2 else 1)
+    adata.obs.loc[:, 'condition_name'] =  adata.obs.apply(lambda x: '_'.join([x.cell_type, x.condition, x.dose_val]), axis = 1) 
+    
+    adata.obs = adata.obs.astype('category')
+    rank_genes_groups_by_cov(adata, 
+                     groupby='condition_name', 
+                     covariate='cell_type', 
+                     control_group='ctrl_1', 
+                     n_genes=len(adata.var),
+                     key_added = 'rank_genes_groups_cov_all')
+    return adata
+
 
 class PerturbOutcome(CellXGeneTemplate):
 
@@ -57,8 +115,29 @@ class PerturbOutcome(CellXGeneTemplate):
             sc.pp.log1p(self.adata)
             from scipy.sparse import csr_matrix
             self.adata.X = csr_matrix(self.adata.X)
-            sc.pp.highly_variable_genes(self.adata, n_top_genes=5000, subset=True)
-
+            print_sys("Getting DE genes!")
+            sc.pp.highly_variable_genes(self.adata, 
+                                        n_top_genes=5000, 
+                                        subset=True)
+        
+            if self.is_combo:
+                def map_name(x):
+                    if x == 'control':
+                        return 'ctrl'
+                    else:
+                        return '+'.join(
+                            x.split('_')) if '_' in x else x + '+ctrl'
+    
+                self.adata.obs['condition'] = self.adata.obs.perturbation.apply(
+                    lambda x: map_name(x))
+                
+            else:
+                self.adata.obs['condition'] = self.adata.obs.perturbation.apply(
+                    lambda x: x + '+ctrl' if x != 'control' else 'ctrl')
+            self.adata.obs['cell_type'] = self.adata.obs['cell_line']
+            self.adata.var['gene_name'] = self.adata.var.index.values
+            self.adata = get_DE_genes(self.adata)
+            
     def get_mean_expression(self):
         raise ValueError("TODO")
 
@@ -289,16 +368,6 @@ class PerturbOutcome(CellXGeneTemplate):
             combo_seen2_train_frac = combo_seen2_train_frac
 
             if self.is_combo:
-
-                def map_name(x):
-                    if x == 'control':
-                        return 'ctrl'
-                    else:
-                        return '+'.join(
-                            x.split('_')) if '_' in x else x + '+ctrl'
-
-                self.adata.obs['condition'] = self.adata.obs.perturbation.apply(
-                    lambda x: map_name(x))
                 unique_perts = self.adata.obs.condition.unique()
                 train, test, test_subgroup = self.get_simulation_split(
                     unique_perts, train_gene_set_size, combo_seen2_train_frac,
@@ -306,8 +375,6 @@ class PerturbOutcome(CellXGeneTemplate):
                 train, val, val_subgroup = self.get_simulation_split(
                     train, 0.9, 0.9, random_state)
             else:
-                self.adata.obs['condition'] = self.adata.obs.perturbation.apply(
-                    lambda x: x + '+ctrl' if x != 'control' else 'ctrl')
                 unique_perts = self.adata.obs.condition.unique()
 
                 train, test, test_subgroup = self.get_simulation_split_single(
