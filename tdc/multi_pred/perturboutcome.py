@@ -35,6 +35,7 @@ def parse_any_pert(p):
         out = parse_combo_pert(p)
         return [out[0], out[1]]
 
+
 def rank_genes_groups_by_cov(
     adata,
     groupby,
@@ -55,17 +56,15 @@ def rank_genes_groups_by_cov(
         control_group_cov = '_'.join([cov_cat, control_group])
 
         #subset adata to cells belonging to a covariate category
-        adata_cov = adata[adata.obs[covariate]==cov_cat]
+        adata_cov = adata[adata.obs[covariate] == cov_cat]
 
         #compute DEGs
-        sc.tl.rank_genes_groups(
-            adata_cov,
-            groupby=groupby,
-            reference=control_group_cov,
-            rankby_abs=rankby_abs,
-            n_genes=n_genes,
-            use_raw=False
-        )
+        sc.tl.rank_genes_groups(adata_cov,
+                                groupby=groupby,
+                                reference=control_group_cov,
+                                rankby_abs=rankby_abs,
+                                n_genes=n_genes,
+                                use_raw=False)
 
         #add entries to dictionary of gene sets
         de_genes = pd.DataFrame(adata_cov.uns['rank_genes_groups']['names'])
@@ -80,17 +79,20 @@ def rank_genes_groups_by_cov(
 
 def get_DE_genes(adata):
     import scanpy as sc
-    adata.obs.loc[:, 'dose_val'] = adata.obs.condition.apply(lambda x: '1+1' if len(x.split('+')) == 2 else '1')
-    adata.obs.loc[:, 'control'] = adata.obs.condition.apply(lambda x: 0 if len(x.split('+')) == 2 else 1)
-    adata.obs.loc[:, 'condition_name'] =  adata.obs.apply(lambda x: '_'.join([x.cell_type, x.condition, x.dose_val]), axis = 1) 
-    
+    adata.obs.loc[:, 'dose_val'] = adata.obs.condition.apply(
+        lambda x: '1+1' if len(x.split('+')) == 2 else '1')
+    adata.obs.loc[:, 'control'] = adata.obs.condition.apply(
+        lambda x: 0 if len(x.split('+')) == 2 else 1)
+    adata.obs.loc[:, 'condition_name'] = adata.obs.apply(
+        lambda x: '_'.join([x.cell_type, x.condition, x.dose_val]), axis=1)
+
     adata.obs = adata.obs.astype('category')
-    rank_genes_groups_by_cov(adata, 
-                     groupby='condition_name', 
-                     covariate='cell_type', 
-                     control_group='ctrl_1', 
-                     n_genes=len(adata.var),
-                     key_added = 'rank_genes_groups_cov_all')
+    rank_genes_groups_by_cov(adata,
+                             groupby='condition_name',
+                             covariate='cell_type',
+                             control_group='ctrl_1',
+                             n_genes=len(adata.var),
+                             key_added='rank_genes_groups_cov_all')
     return adata
 
 
@@ -116,27 +118,28 @@ class PerturbOutcome(CellXGeneTemplate):
             from scipy.sparse import csr_matrix
             self.adata.X = csr_matrix(self.adata.X)
             print_sys("Getting DE genes!")
-            sc.pp.highly_variable_genes(self.adata, 
-                                        n_top_genes=5000, 
+            sc.pp.highly_variable_genes(self.adata,
+                                        n_top_genes=5000,
                                         subset=True)
             if self.is_combo:
+
                 def map_name(x):
                     if x == 'control':
                         return 'ctrl'
                     else:
                         return '+'.join(
                             x.split('_')) if '_' in x else x + '+ctrl'
-    
+
                 self.adata.obs['condition'] = self.adata.obs.perturbation.apply(
                     lambda x: map_name(x))
-                
+
             else:
                 self.adata.obs['condition'] = self.adata.obs.perturbation.apply(
                     lambda x: x + '+ctrl' if x != 'control' else 'ctrl')
             self.adata.obs['cell_type'] = self.adata.obs['cell_line']
             self.adata.var['gene_name'] = self.adata.var.index.values
             self.adata = get_DE_genes(self.adata)
-            
+
             sc.pp.highly_variable_genes(self.adata,
                                         n_top_genes=5000,
                                         subset=True)
