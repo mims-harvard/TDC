@@ -97,4 +97,3 @@ class GenePerturbGroup(CounterfactualGroup):
             'mse_20_de_genes': mse_20_de,
             'ratio_direction_correct_20_de_genes': direction
         }
-
