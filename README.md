@@ -111,6 +111,9 @@ We provide  tutorials to get started with TDC:
 | [U1.1](tutorials/User_Group/UserGroupMeeting_Tianfan.ipynb)   | Demo presented at first TDC User Group Meetup                             |
 | [U1.2](tutorials/User_Group/UserGroupMeeting_Wenhao.ipynb)   | Demo presented at first TDC User Group Meetup                             |
 | [201](https://colab.research.google.com/drive/1xTgBwKUfP2b8j6Fqh28M2GUp2ScfENMX?usp=sharing) | TDC-2 Resource and Multi-modal Single-Cell API |
+| [202](https://colab.research.google.com/drive/1kYH8nt3nW7tXYBPNcfYuDbWxGTqOEnWg?usp=sharing) | TDC-2 Resource and PrimeKG |
+| [203](https://colab.research.google.com/drive/13MYlg5tWpywWbKYsJQXafKAlVF2hz-sP?usp=sharing) | TDC-2 Resource and External APIs |
+| [204](https://colab.research.google.com/drive/17Pd328W27mn-iBCRkHIa78L3pukKcfW1?usp=sharing) | TDC-2 Model Hub |
 
 
 ## Design of TDC
