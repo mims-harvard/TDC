@@ -107,10 +107,10 @@ We provide  tutorials to get started with TDC:
 | [104](tutorials/TDC_104_ML_Model_DeepPurpose.ipynb)   | Generate 21 ADME ML Predictors with 15 Lines of Code |
 | [105](tutorials/TDC_105_Oracle.ipynb)   | Molecule Generation Oracles                             |
 | [106](tutorials/TDC_106_BenchmarkGroup_Submission_Demo.ipynb)   | Benchmark submission                             |
+| [201] (tutorials/TDC_201_Resource_and_CellXGene.ipynb)   | TDC-2 Resource and Multi-modal Single-Cell API                     |
 | [DGL](tutorials/DGL_User_Group_Demo.ipynb)   | Demo presented at DGL GNN User Group Meeting                             |
 | [U1.1](tutorials/User_Group/UserGroupMeeting_Tianfan.ipynb)   | Demo presented at first TDC User Group Meetup                             |
 | [U1.2](tutorials/User_Group/UserGroupMeeting_Wenhao.ipynb)   | Demo presented at first TDC User Group Meetup                             |
-| [201] (tutorials/TDC_201_Resource_and_CellXGene.ipynb) | TDC-2 Resource and Multi-modal Single-Cell API                     |
 
 
 ## Design of TDC
