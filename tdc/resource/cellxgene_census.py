@@ -374,11 +374,16 @@ class CensusResource:
         gget.setup("cellxgene")
         return gget.cellxgene(**kwargs)
 
-    def get_anndata(self, **kwargs):
+    def get_anndata(self, add_embeddings=False, **kwargs):
         """
         Get AnnData object.
 
         """
+        embeddings = None
+        if add_embeddings and "emb_names" not in kwargs:
+            embeddings = ["scvi", "geneformer"]
+        else:
+            embeddings = kwargs.get("emb_names")
         with cellxgene_census.open_soma(
                 census_version=self.census_version) as census:
             adata = cellxgene_census.get_anndata(
@@ -386,6 +391,7 @@ class CensusResource:
                 organism="Homo sapiens",
                 var_value_filter=kwargs.get("var_value_filter"),
                 obs_value_filter=kwargs.get("obs_value_filter"),
+                obs_embeddings=embeddings,
             )
             return adata
 
