@@ -4,27 +4,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Structure-based Drug Design - TDC</title>
+    <title>Single-cell Drug-Target Nomination (Identification) - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Structure-based Drug Design | TDC</title>
+<title>Single-cell Drug-Target Nomination (Identification) | TDC</title>
 <meta name="generator" content="Jekyll v3.9.3" />
-<meta property="og:title" content="Structure-based Drug Design" />
+<meta property="og:title" content="Single-cell Drug-Target Nomination (Identification)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
 <meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
-<link rel="canonical" href="http://localhost:4000/generation_tasks/sbdd/" />
-<meta property="og:url" content="http://localhost:4000/generation_tasks/sbdd/" />
+<link rel="canonical" href="http://localhost:4000/multi_pred_tasks/scdti/" />
+<meta property="og:url" content="http://localhost:4000/multi_pred_tasks/scdti/" />
 <meta property="og:site_name" content="TDC" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Structure-based Drug Design" />
+<meta property="twitter:title" content="Single-cell Drug-Target Nomination (Identification)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Structure-based Drug Design","url":"http://localhost:4000/generation_tasks/sbdd/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Single-cell Drug-Target Nomination (Identification)","url":"http://localhost:4000/multi_pred_tasks/scdti/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -164,24 +164,68 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/generation_tasks/overview/" class=""><strong>Generation Problem</strong></a>
+            <a href="/multi_pred_tasks/overview/" class=""><strong>Multi-instance Prediction Problem</strong></a>
             
             <ul>
                 
                 
-                <li><a href="/generation_tasks/molgen/" class=""><code>MolGen</code> Molecule Generation</a></li>
+                <li><a href="/multi_pred_tasks/dti/" class=""><code>DTI</code> Drug-Target Interaction</a></li>
                 
                 
                 
-                <li><a href="/generation_tasks/retrosyn/" class=""><code>RetroSyn</code> Retrosynthesis Prediction</a></li>
+                <li><a href="/multi_pred_tasks/ddi/" class=""><code>DDI</code> Drug-Drug Interaction</a></li>
                 
                 
                 
-                <li><a href="/generation_tasks/reaction/" class=""><code>Reaction</code> Reaction Outcome Prediction</a></li>
+                <li><a href="/multi_pred_tasks/ppi/" class=""><code>PPI</code> Protein-Protein Interaction</a></li>
                 
                 
                 
-                <li><a href="/generation_tasks/sbdd/" class="is-active"><code>SBDD</code> Structure-based Drug Design</a></li>
+                <li><a href="/multi_pred_tasks/gdi/" class=""><code>GDA</code> Gene-Disease Association</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/drugres/" class=""><code>DrugRes</code> Drug Response Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/drugsyn/" class=""><code>DrugSyn</code> Drug Synergy Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/peptidemhc/" class=""><code>PeptideMHC</code> Peptide-MHC Binding</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/antibodyaff/" class=""><code>AntibodyAff</code> Antibody-Antigen Affinity</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/mti/" class=""><code>MTI</code> miRNA-Target Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/catalyst/" class=""><code>Catalyst</code> Catalyst Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/tcrepitope" class=""><code>TCREpitopeBinding</code> TCR-Epitope Binding</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/trialoutcome" class=""><code>TrialOutcome</code> Clinical Trial Outcome Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/proteinpeptide" class=""><code>ProteinPeptide</code> Protein-Peptide Interaction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/counterfactual" class=""><code>PerturbOutcome</code> Counterfactual Prediction</a></li>
+                
+                
+                
+                <li><a href="/multi_pred_tasks/scdti" class=""><code>scDTI</code> Single-cell Drug-Target Interaction</a></li>
                 
                 
             </ul>
@@ -203,7 +247,7 @@
                 
                 
                 
-                <li><a href="/multi_pred_tasks/overview/" class="">Multi-instance Prediction Problem</a></li>
+                <li><a href="/generation_tasks/overview/" class="">Generation Problem</a></li>
                 
                 
             </ul>
@@ -227,9 +271,7 @@
     <div class="menu">
         <p class="menu-label">Dataset Index</p>
         <ul class="menu-list">
-  <li><a href="#pdbbind">PDBBind</a></li>
-  <li><a href="#dud-e">DUD-E</a></li>
-  <li><a href="#scpdb">scPDB</a></li>
+  <li><a href="#li-michelle-et-al">(Li, Michelle, et al.)</a></li>
 </ul>
     </div>
 </div>
@@ -238,136 +280,52 @@
 
 
 <div class="content">
-    <h1 id="structure-based-drug-design-task-overview">Structure-based Drug Design Task Overview</h1>
+    <h1 id="single-cell-drug-target-nomination-identification-task-overview">Single-cell Drug-Target Nomination (Identification) Task Overview</h1>
 
 <div class="box">
 	
 
 <p class="is-size-6">  <strong> Definition: </strong> 
- Structure-based Drug Design is to generate diverse, novel molecules that have high binding affinity to protein pockets (3D structures) and desirable chemical properties. These properties are measured by oracle functions. A machine learning task first learns the molecular characteristics given specific protein pockets from a large set of protein-ligand pair data. Then, from the learned conditional distribution, we can sample novel candidates.</p>
+TDC-2 introduces TDC.scDTI task. The goal is to train a model for predicting the probability that a protein is a candidate therapeutic target in a specific cell type. The model learns an estimator for a function of a protein target and a cell-type-specific biological context as input, and the model is tasked to predict the probability the candidate protein is a therapeutic target in that cell type. 
+</p>
 
 <p class="is-size-6"> <strong> Impact: </strong>  
- Designing a new drug candidate taking account into its structure and potential interaction with biological targets is of great importance to drug design (often referred as to structure-based drug design). Recent advances in machine learning, especially geometric deep learning have brought a new set of tools and a new wave for modeling highly structural data (including 3D biomolecular structures). Thus, structure-based drug design task is potentially of interest to both ML methodological advancements and applications in drug design.
+Single-cell data have enabled the study of gene expression and function at the level of individual cells across healthy and disease states. To facilitate biological discoveries using single-cell data, machine-learning models have been developed to capture the complex, cell-type-specific behavior of genes. In addition to providing the single-cell measurements and foundation models, TDC-2 supports the development of contextual AI models to nominate therapeutic targets in a cell type-specific manner.
 </p>
 
 <p class="is-size-6"> <strong> Generalization: </strong> 
-The generated molecules have to obtain superior properties given a range of high binding affinity, and structurally diverse drugs. Besides, the generated molecules have to suffice other basic properties, such as synthesizablility and drug-likeness. 
+Models are expected to have strong performance on cell-context-specific evaluation metrics across different sets of disease-specific proteins and cells. 
 </p>
 
 <p class="is-size-6"> <strong> Product: </strong> Small-molecule. </p>
 
-<p class="is-size-6"> <strong> Pipeline: </strong> Efficacy and safety - lead development and optimization, activity - hit identification. </p>
+<p class="is-size-6"> <strong> Pipeline: </strong> Nomination / Identification. </p>
 
 </div>
 
-<h3 id="pdbbind">PDBBind</h3>
+<h3 id="li-michelle-et-al">(Li, Michelle, et al.)</h3>
 
-<p class="is-size-6">  <strong> Dataset Description: </strong> PDBBind is a comprehensive database extracted from PDB with experimentally measured binding affinity data for protein-ligand complexes. </p>
+<p class="is-size-6">  <strong> Dataset Description: </strong> To curate target information for a therapeutic area, we examine the drugs indicated for the therapeutic area of interest and its descendants. The two therapeutic areas examined are rheumatoid arthritis (RA) and inflammatory bowel disease. Positive examples (i.e., where the label y = 1) are proteins targeted by drugs that have at least completed phase 2 of clinical trials for treating a specific therapeutic area. As such, a protein is a promising candidate if a compound that targets the protein is safe for humans and effective for treating the disease. We retain positive training examples activated in at least one cell type-specific protein interaction network. We define negative examples (i.e., where the label y = 0) as druggable proteins that do not have any known association with the therapeutic area of interest according to Open Targets. A protein is deemed druggable if targeted by at least one existing drug. We extract drugs and their nominal targets from Drugbank. We retain negative training examples activated in at least one cell type-specific protein interaction network. </p>
 
-<p class="is-size-6">  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
+<p class="is-size-6">  <strong> Task Description: </strong>Classification. Given the protein and cell-context, predict whether the protein is a therapeutic target. </p>
 
-<p class="is-size-6">  <strong> Note: </strong> : PDBBind does not allow re-distribution of the dataset in any format, thus, we could not host it in TDC server. However, since it requires significant processing to make the dataset ML ready, we provide an alternative route to do it. The user only needs to register in <a href="http://www.pdbbind.org.cn/"> http://www.pdbbind.org.cn/ </a> and download the raw dataset, and then provide the local path, TDC will then automatically detect the path and transform it to ML-ready format into the TDC dataloader.
- </p>
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> The final number of positive (negative) samples for RA and IBD were 152 (1,465) and 114 (1,377), respectively. In PINNACLE, this dataset was augmented to include 156 cell types. </p>
 
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 19,445 protein-ligand pairs. </p>
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Cold Protein Split</span> We split the dataset such that about 80% of the proteins are in the training set, about 10% of the proteins are in the validation set, and about 10% of the proteins are in the test set. The data splits are consistent for each cell type context to avoid data leakage.</p>
 
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">SBDD</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">SBDD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'PDBBind'</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">'./pdbbind'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.resource.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"opentargets_dti"</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
-<p><a href="http://pubs.acs.org/doi/abs/10.1021/jm030580l">[1] Wang, Renxiao, Xueliang Fang, Yipin Lu, and Shaomeng Wang. “The PDBbind database: Collection of binding affinities for protein−ligand complexes with known three-dimensional structures.” Journal of medicinal chemistry 47, no. 12 (2004): 2977-2980.  </a></p>
+<p><a href="https://www.biorxiv.org/content/10.1101/2023.07.18.549602v1">[1] Li, Michelle, et al. “Contextualizing Protein Representations Using Deep Learning on Protein Networks and Single-Cell Data” bioRxiv (2023) </a></p>
 
-<p class="is-size-6"> <strong> Dataset License: </strong> See note above.</p>
-
-<hr />
-
-<h3 id="dud-e">DUD-E</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong> DUD-E provides a directory of useful decoys for protein-ligand docking. </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
-
-<p class="is-size-6">  <strong> Note: </strong> : DUD-E does not support pocket extraction as protein and ligand are not aligned.</p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 22,886 active compounds and affinities against 102 targets </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">SBDD</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">SBDD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'dude'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://pubs.acs.org/doi/10.1021/jm300687e">[1] Mysinger, M.M., Carchia, M., Irwin, J.J. and Shoichet, B.K., 2012. Directory of useful decoys, enhanced (DUD-E): better ligands and decoys for better benchmarking. Journal of medicinal chemistry, 55(14), pp.6582-6594.  </a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> Not specified.</p>
+<p class="is-size-6"> <strong> Dataset License: </strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 US</a>.</p>
 
 <hr />
 
-<h3 id="scpdb">scPDB</h3>
-
-<p class="is-size-6">  <strong> Dataset Description: </strong>  scPDB is processed from PDB for structure-based drug design that identifies suitable binding site for protein-ligand docking. </p>
-
-<p class="is-size-6">  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
-
-<p class="is-size-6">  <strong> Dataset Statistics: </strong> 16,034 protein-ligand pairs over 4,782 proteins and 6,326 ligands </p>
-
-<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.generation</span> <span class="kn">import</span> <span class="n">SBDD</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">SBDD</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'scPDB'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p class="is-size-6">  <strong> References: </strong>  </p>
-
-<p><a href="https://pubmed.ncbi.nlm.nih.gov/21398668/">[1]Meslamani, J., Rognan, D. and Kellenberger, E., 2011. sc-PDB: a database for identifying variations and multiplicity of ‘druggable’ binding sites in proteins. Bioinformatics, 27(9), pp.1324-1326.  </a></p>
-
-<p class="is-size-6"> <strong> Dataset License: </strong> Not specified.</p>
-
-<hr />
-
-<!--
-### CrossDock
-
-<p class='is-size-6'>  <strong> Dataset Description: </strong>   CrossDock provides binding poses of ligands docked into binding pockets across PDB. </p>
-
-<p class='is-size-6'>  <strong> Task Description: </strong> SBDD is to generate ligand that binds to protein pocket and has desirable properties measured by some oracles. </p>
-
-<p class='is-size-6'>  <strong> Note: </strong> : The subset of crossdock [1] is provided by [2]. </p>
-
-
-<p class='is-size-6'>  <strong> Dataset Statistics: </strong> 184,057 protein-ligand pairs. </p>
-
-<p class='is-size-6'>  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> </p>
-
-``` python
-from tdc.generation import SBDD
-data = SBDD(name='crossdock')
-split = data.get_split()
-```
-
-<p class='is-size-6'>  <strong> References: </strong>  </p>
-
-<a href="https://pubmed.ncbi.nlm.nih.gov/32865404/">[1]Francoeur, P.G., Masuda, T., Sunseri, J., Jia, A., Iovanisci, R.B., Snyder, I. and Koes, D.R., 2020. Three-dimensional convolutional neural networks and a cross-docked data set for structure-based drug design. Journal of chemical information and modeling, 60(9), pp.4200-4215. </a> 
-
-<a href="https://openreview.net/forum?id=yDwfVD_odRo">[2] Luo, S., Guan, J., Ma, J. and Peng, J., 2022. A 3D Molecule Generative Model for Structure-Based Drug Design. arXiv preprint arXiv:2203.10446.
-License: Not specified.
- </a> 
-
-
-<p class='is-size-6'> <strong> Dataset License: </strong> Not specified.</p>
-
-<hr />
-
--->
 
 </div>
                 </div>

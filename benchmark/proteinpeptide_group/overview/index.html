@@ -118,6 +118,8 @@
                             
                             <a href="/benchmark/counterfactual_group/overview" class="navbar-item ">Counterfactual Prediction Group</a>
                             
+                            <a href="/benchmark/clinical_trial/overview" class="navbar-item ">Clinical Trial Outcome Prediction Group</a>
+                            
                         </div>
                     </div>
                     
@@ -173,6 +175,19 @@
             </ul>
             
         </li>
+        
+        <li>
+            <a href="/benchmark/proteinpeptide_group/overview" class=""><strong>TCR-Epitope Binding Interaction Group Leaderboard</strong></a>
+            
+            <ul>
+                
+                
+                <li><a href="/benchmark/proteinpeptide_group/tchard/" class=""><code>TDC.tchard</code> Leaderboard</a></li>
+                
+                
+            </ul>
+            
+        </li>
             
     </ul>
 
@@ -215,64 +230,15 @@
                     
                     
 <div class="content">
-    <h2 id="protein-peptide-binding-affinity-benchmark-group">Protein-Peptide Binding Affinity Benchmark Group</h2>
+    <h2 id="protein-peptide-interaction-benchmark-group-tcr-epitope">Protein-Peptide Interaction Benchmark Group (+TCR-Epitope)</h2>
 
-<p class="is-size-5">Despite the availability of several benchmarks for protein-protein interactions, there is a comparatively269
-large gap compared to benchmarks for protein-peptide binding affinity prediction. For example, the270
-renowned multi-task benchmark for Protein sEquence undERstanding (PEER) [ 24], lacks support271
-for a specifically defined protein-peptide binding affinity prediction task. Protein-peptide binding272
-affinity prediction and protein-protein binding affinity prediction involve similar underlying biological273
-interactions, but they differ significantly in their complexity and the methods used to predict them [ 2].274
-Here’s why they are treated differently:275
-• Molecular Complexity and Size: Proteins are generally large and complex molecules276
-composed of multiple domains and potentially numerous subunits. Peptides, however, are277
-smaller and typically consist of only a short chain of amino acids. The size difference affects278
-how the molecules interact, the surface area available for interaction, and the dynamics of279
-the binding process.280
-• Conformational Flexibility: Peptides often have greater conformational flexibility than281
-proteins. This flexibility can enable peptides to adopt multiple conformations when unbound282
-and possibly select a conformation that fits a protein binding site upon interaction. Predicting283
-how a peptide will conform to a protein binding site can be challenging and different from284
-predicting interactions between larger, more structured proteins.285
-• Interaction Surface and Specificity: Protein-protein interactions typically involve larger286
-interaction surfaces and can be influenced by multiple factors, including electrostatic inter-287
-actions, hydrophobic effects, and hydrogen bonding across a larger area. Peptide binding288
-often involves a smaller surface area and might be driven more by specific key residues or289
-motifs that fit into complementary pockets on the protein.290
-• Computational Modelling: The methods for modeling and predicting these interactions291
-often differ. Protein-protein interactions may require more detailed and computationally292
-intensive models that account for the interactions of larger and more complex surfaces. In293
-contrast, peptide binding predictions might focus more on the peptide’s ability to adopt294
-conformations that match a specific binding site on a protein.295
-• Biological Role and Implications: The biological implications of protein-protein versus296
-protein-peptide interactions can also differ, affecting how these interactions are studied.297
-Protein-protein interactions often govern major cellular processes such as signal transduction,298
-metabolism, and cell structure dynamics. Protein-peptide interactions might be more299
-transient and critical in regulatory mechanisms, such as those involving inhibitors, signal300
-peptides, or short-lived regulatory interactions.301
-• Data Availability: There might also be differences in the availability of experimental data302
-for training predictive models. Protein-protein interactions have been extensively studied,303
-and numerous databases contain detailed interaction data. Protein-peptide interactions,304
-especially those involving short or uncommon peptides, may be less well-documented,305
-making it challenging to train robust predictive models.306
-Due to these differences, the strategies and algorithms developed for one type of interaction often307
-need substantial modification to be effective for the other. This distinction necessitates treating these308
-predictions as distinct problems, each requiring tailored approaches to model and predict binding309
-affinities accurately. As such, TDC-2 defines a Protein-Peptide binding affinity prediction task310
-and provides corresponding datasets and benchmarks. The formal non-generative predictive task311
-9
-definition is a function accepting a protein and a peptide as input and outputting a probability for312
-binding affinity</p>
+<p class="is-size-5">TDC-2 introduces the Protein-Peptide Binding Affinity prediction task. The predictive, non-generative task is to learn a model estimating a function of a protein, peptide, antigen processing pathway, biological context, and interaction features. It outputs a binding affinity value or binary label indicating strong or weak binding. The binary label can also include additional biomarkers, such as allowing for a positive label if and only if the binding interaction is specific. To account for additional biomarkers beyond binding affinity value, our task is specified with a binary label.
+<br />
+TDC-2 provides datasets and benchmarks for a generalized protein-peptide binding interaction prediction task and a TCR-Epitope binding interaction prediction task.</p>
 
-<p class="is-size-5">TDC-2 provides unique dataset for benchmarking this task. It contains a small training set which can be used for fine-tuning.
-The majority of the data is used as a test set. As this dataset contains newly discovery ligand peptides, it is expected there will be no standard
-datasets containing these samples. As such, we welcome submissions with models trained using a broad array of methodologies and datasets. More details on the dataset:
+<p class="is-size-5"></p>
 
-Affinity selection-mass spectrometry data of discovered ligands against single biomolecular targets (MDM2, ACE2, 12ca5) from the Pentelute Lab of MIT This dataset contains affinity selection-mass spectrometry data of discovered ligands against single biomolecular targets. Several of these AS-MS discovered ligands were taken forward for experimental validation to determine the binding affinity (KD) as measured by biolayer interferometry (BLI) to the listed target protein. If listed as a "putative binder," AS-MS alone was used to isolate the ligands to the target, with KD &lt; 1 uM required and often observed in orthogonal assays, though there is some (&lt; 50%) chance that the ligand is nonspecific. Most of the ligands are putative binders with 4446 total provided. For those characterized by BLI (only 34 total), the average KD is 266 ± 44 nM, median KD is 9.4 nM. 
-
-Related publication: Ye X, Lee YC, Gates ZP, Ling Y, Mortensen JC, Yang FS, Lin YS, Pentelute BL. Binary combinatorial scanning reveals potent poly-alanine-substituted inhibitors of protein-protein interactions. Commun Chem. 2022 Oct 14;5(1):128. doi: 10.1038/s42004-022-00737-w. PMID: 36697672; PMCID: PMC9814900.  </p>
-
-<p class="is-size-5">To access a benchmark in the group, use the following code:</p>
+<p class="is-size-5">To access a generalized protein-peptide benchmark in the group, use the following code:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group.protein_peptide_group</span> <span class="kn">import</span> <span class="n">ProteinPeptideGroup</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">ProteinPeptideGroup</span><span class="p">()</span>
@@ -285,9 +251,22 @@ Related publication: Ye X, Lee YC, Gates ZP, Ling Y, Mortensen JC, Yang FS, Lin 
 </span><span class="n">out</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
 </code></pre></div></div>
 
+<p class="is-size-5">To access a TCR-Epitope benchmark in the group, use the following code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group.protein_peptide_group</span> <span class="kn">import</span> <span class="n">ProteinPeptideGroup</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">TCREpitopeGroup</span><span class="p">()</span>
+<span class="n">train</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">()</span> 
+<span class="n">test</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_test</span><span class="p">()</span>
+
+<span class="c1">## --- train your model --- ##
+</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>  <span class="c1"># modify as per your model code and test output
+</span><span class="n">res</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+</code></pre></div></div>
+
 <p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard. </p>
 
-<p class="is-size-5"> The evaluation metric is AUC. More details to-be-announced.</p>
+<p class="is-size-5"> The evaluation metric is AUC. For TCR-Epitope, we provide other metrics as well. See corresponding leaderboards.</p>
 
 <div class="column is-12">
     <hr />

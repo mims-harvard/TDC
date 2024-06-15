@@ -118,6 +118,8 @@
                             
                             <a href="/benchmark/counterfactual_group/overview" class="navbar-item ">Counterfactual Prediction Group</a>
                             
+                            <a href="/benchmark/clinical_trial/overview" class="navbar-item ">Clinical Trial Outcome Prediction Group</a>
+                            
                         </div>
                     </div>
                     
@@ -217,7 +219,7 @@
 <div class="content">
     <p class="is-size-3"><b><code>TDC.opentargets_dti</code> Leaderboard</b></p>
 
-<h3 id="leaderboard">Leaderboard</h3>
+<h3 id="leaderboard---ra">Leaderboard - RA</h3>
 
 <table class="table is-striped is-hoverable" id="A">
   <thead>
@@ -227,7 +229,7 @@
     <th>Model</th>
     <th>Contact</th>
     <th>Link</th>
-    <th onclick="sortTable(8, 'A', 'asc')">PCC</th>
+    <th onclick="sortTable(8, 'A', 'asc')">APR@5 Top 20 CT</th>
   </tr>
 </thead>
 <tr> 
@@ -235,7 +237,30 @@
   <td> PINNACLE </td> 
   <td><a href="mailto:alejandro_velez-arce@hms.harvard.edu">Alejandro Velez-Arce</a></td> 
   <td><a href="https://github.com/mims-harvard/PINNACLE"> GitHub</a>, <a href="https://www.biorxiv.org/content/10.1101/2023.07.18.549602v2">Paper </a></td> 
-  <td>classified <span>&#177;</span> classified </td> 
+  <td>0.913 <span>&#177;</span> 0.059 </td> 
+</tr>
+
+</table>
+
+<h3 id="leaderboard---ibd">Leaderboard - IBD</h3>
+
+<table class="table is-striped is-hoverable" id="A">
+  <thead>
+  <tr>
+   <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+    <th>Rank</th>
+    <th>Model</th>
+    <th>Contact</th>
+    <th>Link</th>
+    <th onclick="sortTable(8, 'A', 'asc')">APR@5 Top 20 CT</th>
+  </tr>
+</thead>
+<tr> 
+  <td> 1 </td> 
+  <td> PINNACLE </td> 
+  <td><a href="mailto:alejandro_velez-arce@hms.harvard.edu">Alejandro Velez-Arce</a></td> 
+  <td><a href="https://github.com/mims-harvard/PINNACLE"> GitHub</a>, <a href="https://www.biorxiv.org/content/10.1101/2023.07.18.549602v2">Paper </a></td> 
+  <td>0.873 <span>&#177;</span> 0.069 </td> 
 </tr>
 
 </table>

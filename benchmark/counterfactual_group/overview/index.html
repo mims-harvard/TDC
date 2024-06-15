@@ -118,6 +118,8 @@
                             
                             <a href="/benchmark/counterfactual_group/overview" class="navbar-item ">Counterfactual Prediction Group</a>
                             
+                            <a href="/benchmark/clinical_trial/overview" class="navbar-item ">Clinical Trial Outcome Prediction Group</a>
+                            
                         </div>
                     </div>
                     
@@ -167,7 +169,7 @@
             <ul>
                 
                 
-                <li><a href="/benchmark/counterfactual_group/scperturb_drug_AissaBenevolenskaya2021/" class=""><code>TDC.scperturb_drug_AissaBenevolenskaya2021</code> Leaderboard</a></li>
+                <li><a href="/benchmark/counterfactual_group/scperturb_drug_SrivatsanTrapnell2020_sciplex2/" class=""><code>TDC.scperturb_drug_SrivatsanTrapnell2020_sciplex2</code> Leaderboard</a></li>
                 
                 
             </ul>
@@ -215,7 +217,7 @@
                     
                     
 <div class="content">
-    <h2 id="counterfactual-prediction-benchmark-group">Counterfactual Prediction Benchmark Group</h2>
+    <h2 id="perturboutcome-prediction-benchmark-group">PerturbOutcome Prediction Benchmark Group</h2>
 
 <p class="is-size-5">We define a task for predicting responses in gene expression of single cells to chemical and genetic
 perturbations, aiming to measure model generalization across cell lines and perturbation types. Understanding
@@ -232,8 +234,8 @@ perturbation, which outputs a count for gene expression of the cell after the in
 <p class="is-size-5">To access a benchmark in the group, use the following code:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.benchmark_group</span> <span class="kn">import</span> <span class="n">counterfactual_group</span>
-<span class="n">group</span> <span class="o">=</span> <span class="n">counterfactual_group</span><span class="p">.</span><span class="n">CounterfactualGroup</span><span class="p">()</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">()</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">counterfactual_group</span><span class="p">.</span><span class="n">CounterfactualGroup</span><span class="p">()</span> <span class="c1"># GenePerturbGroup for genetic perturbations
+</span><span class="n">train</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_train_valid_split</span><span class="p">()</span>
 <span class="n">test</span> <span class="o">=</span> <span class="n">group</span><span class="p">.</span><span class="n">get_test</span><span class="p">()</span>
 
 <span class="c1">## --- train your model --- ##

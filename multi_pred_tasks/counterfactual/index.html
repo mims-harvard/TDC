@@ -118,6 +118,8 @@
                             
                             <a href="/benchmark/counterfactual_group/overview" class="navbar-item ">Counterfactual Prediction Group</a>
                             
+                            <a href="/benchmark/clinical_trial/overview" class="navbar-item ">Clinical Trial Outcome Prediction Group</a>
+                            
                         </div>
                     </div>
                     
@@ -310,7 +312,7 @@ We measure model generalization across seen and unseen perturbations and across 
 ``` python
 from tdc.multi_pred.perturboutcome import PerturbOutcome
 test_loader = PerturbOutcome(
-    name="scperturb_drug_AissaBenevolenskaya2021")
+    name="scperturb_drug_SrivatsanTrapnell2020_sciplex2")
 testdf = test_loader.get_data()
 ```
 
