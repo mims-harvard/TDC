@@ -165,6 +165,49 @@
 
 <hr />
 
+  <p class="is-size-5"><strong>2024.06.22</strong> TDC-2 <a href="https://www.biorxiv.org/content/10.1101/2024.06.12.598655v2" a>preprint</a> is released!</p>
+<h2>TDC-2 Features</h2>
+    <ul>
+        <li><strong>10+ new modalities</strong>: TDC-2 drastically expands the coverage of ML tasks across therapeutic pipelines and 10+ new modalities, spanning but not limited to single-cell gene expression data, clinical trial data, peptide sequence data, peptidomimetics protein-peptide interaction data regarding newly discovered ligands derived from AS-MS spectroscopy, novel 3D structural data for proteins, and cell-type-specific protein-protein interaction networks at single-cell resolution.</li>
+        <li><strong>Single-cell atlases and foundation model embeddings</strong>: TDC-2 introduces over <strong>1,000</strong> multimodal datasets, spanning approximately 85 million cells and pre-calculated embeddings from 5 state-of-the-art single-cell models via <a href="https://cellxgene.cziscience.com/" a>CZ CELLxGENE Census</a> and the <a href="https://huggingface.co/tdc">TDC Model Hub</a></li>
+        <li><strong>API-First Multimodal Retrieval API via TDC-2 MVC and Resource</strong>: TDC-2 drastically expands dataset retrieval capabilities available in TDC-1 beyond those of other leading benchmarks. The software architecture of TDC-2 was redesigned using the Model-View-Controller (MVC) design pattern.
+        The MVC pattern supports the integration of multiple data modalities by using data mappings and views. The MVC-enabled-multimodal retrieval API is powered by TDC-2’s Resource Model and a Domain-Specific-Language.
+        <ul>
+          <li><strong>TDC-2 Domain-Specific Language</strong>: TDC-2 develops an Application-Embedded Domain-Specific Data Definition Programming Language 
+            that facilitates the integration of multiple modalities by generating data views from a mapping of various datasets and functions for transformations, 
+            integration, and multimodal enhancements while maintaining a high level of abstraction for the Resource framework.</li>
+          <li><strong>TDC-2 Resource Model</strong>: The Commons introduces a redesign of TDC-1’s dataset layer into a new data model dubbed 
+            the TDC-2 resource, developed under the MVC paradigm to integrate multiple modalities into the API-first model of TDC-2. We leverage 
+            the CZ CellXGene to develop a TDC-2 Resource Model for constructing large-scale single-cell datasets that map gene expression profiles 
+            of individual cells across tissues, healthy, and disease states.</li>
+            <li><strong>Biomedical Knowledge Graphs and External APIs</strong>: We have developed a framework for biomedical knowledge graphs to 
+            enhance the multimodality of dataset retrieval via TDC-2’s Resource Model. Our system leverages PrimeKG to integrate 
+            <strong>20 high-quality resources to describe 17,080 diseases with 4,050,249 relationships</strong>. Our framework also 
+            extends to external APIs, with data views currently leveraging BioPython, for obtaining nucleotide sequence information for a given 
+            non-coding RNA ID from NCBI, and The Uniprot Consortium’s RESTful GET API for obtaining amino acid sequences</li>
+          <li><strong>TDC-2 Model Hub</strong>: In addition, we’ve developed a framework that allows access to predictive and foundation 
+            embedding models under diverse biological contexts via the TDC-2 Model Hub. TDC-2 releases AI-powered endpoints via 
+            The Commons' Model Hub, which enhances multimodal retrieval capabilities by providing access to protein embeddings 
+            under cell-type-specific biological contexts and model predictions for key biomedical challenges including but not limited to 
+            binary classification on SMILES strings for Ether-a-go-go-related gene blockers, blood-brain-barrier permeability, and CYP3A4 
+            inhibition. These models can be fine-tuned under TDC-2's fine-tuning paradigm and/or used for innovative downstream tasks.</li>
+        </ul></li>
+        <li><strong>7 innovative multimodal ML Tasks and benchmarks</strong>: TDC-2 introduces 7 novel ML tasks with fine-grained biological contexts: 
+          contextualized drug-target identification, single-cell chemical/genetic perturbation response prediction, protein-peptide binding 
+          affinity prediction task, and clinical trial outcome prediction task, which introduce antigen-processing-pathway-specific, 
+          cell-type-specific, peptide-specific, and patient-specific biological contexts. TDC-2 also releases benchmarks evaluating 
+          15+ state-of-the-art models across 5+ new learning tasks evaluating models on diverse biological contexts and sampling approaches. 
+          Among these, TDC-2 provides the first benchmark for context-specific learning. TDC-2, to our knowledge, is also the first to introduce 
+          a protein-peptide binding interaction benchmark. TDC-2's tasks, frameworks, datasets, and models are tailored to take on some of the most 
+          pressing machine learning challenges in biomedicine, including but not limited to cell-type-specific machine learning modeling and 
+          evaluation, the inferential gap in precision medicine, negative-sampling challenges in peptidomimetics, and model generalizability 
+          across unseen cell lines and perturbations.</li>
+        <li><strong>Performance Optimization</strong>: Implement effective strategies to boost your code's performance, ensuring faster, more efficient applications.</li>
+        <li><strong>Collaboration Enhancement</strong>: Foster better teamwork through improved code readability and maintainability, making collaborative projects smoother and more productive.</li>
+    </ul>
+  <p>For more information on these and additional features, please refer to the <a href="https://www.biorxiv.org/content/10.1101/2024.06.12.598655v2">bioRxiv preprint</a>.</p>
+  <hr />
+
 <p class="is-size-5"><strong>2023.07.10</strong> TDC <code>0.4.1</code> is released! TDC has a new exciting task on clinical trial outcome prediction  (Thanks to Tianfan)! Checkout <a href="/multi_pred_tasks/trialoutcome/">here</a> for more information.</p>
 
 <hr />
