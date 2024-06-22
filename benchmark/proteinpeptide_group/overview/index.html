@@ -232,7 +232,9 @@
 <div class="content">
     <h2 id="protein-peptide-interaction-benchmark-group-tcr-epitope">Protein-Peptide Interaction Benchmark Group (+TCR-Epitope)</h2>
 
-<p class="is-size-5">TDC-2 introduces the Protein-Peptide Binding Affinity prediction task. The predictive, non-generative task is to learn a model estimating a function of a protein, peptide, antigen processing pathway, biological context, and interaction features. It outputs a binding affinity value or binary label indicating strong or weak binding. The binary label can also include additional biomarkers, such as allowing for a positive label if and only if the binding interaction is specific. To account for additional biomarkers beyond binding affinity value, our task is specified with a binary label.
+<p class="is-size-5">TDC-2 introduces the Protein-Peptide Binding Affinity prediction task. The predictive, non-generative task is to learn a model estimating a function of a protein, peptide, antigen processing pathway, biological context, and interaction features. It outputs a binding affinity value or binary label indicating strong or weak binding. The binary label can also include additional biomarkers, such as allowing for a positive label if and only if the binding interaction is specific. 
+  <br />
+  To account for additional biomarkers beyond binding affinity value, our task is specified with a binary label.
 <br />
 TDC-2 provides datasets and benchmarks for a generalized protein-peptide binding interaction prediction task and a TCR-Epitope binding interaction prediction task.</p>
 
@@ -265,8 +267,6 @@ TDC-2 provides datasets and benchmarks for a generalized protein-peptide binding
 </code></pre></div></div>
 
 <p class="is-size-5"> Follow the <b><a href="/benchmark/overview/">instructions</a></b> on how to use the <code>BenchmarkGroup</code> class and obtain training, validation, and test sets, and how to submit your model to the leaderboard. </p>
-
-<p class="is-size-5"> The evaluation metric is AUC. For TCR-Epitope, we provide other metrics as well. See corresponding leaderboards.</p>
 
 <div class="column is-12">
     <hr />

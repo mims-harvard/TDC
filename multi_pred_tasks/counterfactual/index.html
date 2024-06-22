@@ -296,10 +296,8 @@ We measure model generalization across seen and unseen perturbations and across 
 <p class="is-size-6"> <strong> Product: </strong>  Drug Repurposing, Predicting Adverse Drug Reactions, Biopharmaceuticals</p>
 
 <p class="is-size-6"> <strong> Pipeline: </strong>  Target discovery, Phenotypic Screening. </p>
-
-&lt;/div&gt;
-
-### scPerturb 
+  
+<h3 id="scperturb">scPerturb</h3>
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> The scPerturb dataset is a comprehensive collection of single-cell perturbation data, harmonized to facilitate the development and benchmarking of computational methods in systems biology. It includes various types of molecular readouts, such as transcriptomics, proteomics, and epigenomics. scPerturb is a harmonized dataset that compiles single-cell perturbation-response data. This dataset is designed to support the development and validation of computational tools by providing a consistent and comprehensive resource. The data includes responses to various genetic and chemical perturbations, which are crucial for understanding cellular mechanisms and developing therapeutic strategies. Data from different sources are uniformly pre-processed to ensure consistency. Rigorous quality control measures are applied to maintain high data quality. Features across different datasets are standardized for easy comparison and integration. 
 
@@ -309,12 +307,10 @@ We measure model generalization across seen and unseen perturbations and across 
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split, Seen-unseen splits across cell line and perturbation</span> </p>
 
-``` python
-from tdc.multi_pred.perturboutcome import PerturbOutcome
-test_loader = PerturbOutcome(
-    name="scperturb_drug_SrivatsanTrapnell2020_sciplex2")
-testdf = test_loader.get_data()
-```
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred.perturboutcome</span> <span class="kn">import</span> <span class="n">PerturbOutcome</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">PerturbOutcome</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'scperturb_drug_SrivatsanTrapnell2020_sciplex2'</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
+</code></pre></div></div>
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
