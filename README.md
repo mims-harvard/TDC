@@ -20,33 +20,35 @@
 
 Artificial intelligence is poised to reshape therapeutic science. **Therapeutics Data Commons** is a coordinated initiative to access and evaluate artificial intelligence capability across therapeutic modalities and stages of discovery, supporting the development of AI methods, with a strong bent towards establishing the foundation of which AI methods are most suitable for drug discovery applications and why.
 
-Researchers across disciplines can use TDC for numerous applications. AI-solvable tasks, AI-ready datasets, and curated benchmarks in TDC serve as a meeting point between biochemical and AI scientists. TDC facilitates algorithmic and scientific advances and accelerate machine learning method development, validation and transition into biomedical and clinical implementation.
+Researchers across disciplines can use TDC for numerous applications. AI-solvable tasks, AI-ready datasets, and curated benchmarks in TDC serve as a meeting point between biochemical and AI scientists. TDC facilitates algorithmic and scientific advances and accelerates machine learning method development, validation, and transition into biomedical and clinical implementation.
 
 TDC is an open-science initiative. We welcome [contributions from the community.](CONTRIBUTE.md)
 
 ## Key TDC Presentations and Publications
 
-[1] Huang, Fu, Gao, et al., Artificial Intelligence Foundation for Therapeutic Science, Nature Chemical Biology, 2022 [**\[Paper\]**](https://www.nature.com/articles/s41589-022-01131-2)
+[1] Velez-Arce, Huang, Li, Lin, et al., TDC-2: Multimodal Foundation for Therapeutic Science, bioRxiv, 2024 [**\[Paper\]**](https://www.biorxiv.org/content/10.1101/2024.06.12.598655v2)
 
-[2] Huang, Fu, Gao, et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, NeurIPS 2021 [**\[Paper\]**](https://openreview.net/forum?id=8nvgnORnoWr) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing) 
+[2] Huang, Fu, Gao, et al., Artificial Intelligence Foundation for Therapeutic Science, Nature Chemical Biology, 2022 [**\[Paper\]**](https://www.nature.com/articles/s41589-022-01131-2)
 
-[3] Huang et al., Benchmarking Molecular Machine Learning in Therapeutics Data Commons, ELLIS ML4Molecules 2021 [**\[Paper\]**](https://cloud.ml.jku.at/s/54pB5Eqf6ftX7qA) [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing) 
+[3] Huang, Fu, Gao, et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, NeurIPS 2021 [**\[Paper\]**](https://openreview.net/forum?id=8nvgnORnoWr) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing) 
 
-[4] Huang et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, Baylearn 2021 [**\[Slides\]**](https://drive.google.com/file/d/1BNpk3dOdqE3ksgyVV-V3xySdBMq-8cXL/view?usp=sharing) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing)
+[4] Huang et al., Benchmarking Molecular Machine Learning in Therapeutics Data Commons, ELLIS ML4Molecules 2021 [**\[Paper\]**](https://cloud.ml.jku.at/s/54pB5Eqf6ftX7qA) [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing) 
 
-[5] Huang, Fu, Gao et al., Therapeutics Data Commons, NSF-Harvard Symposium on Drugs for Future Pandemics 2020 [**\[#futuretx20\]**](https://www.drugsymposium.org/) [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
+[5] Huang et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, Baylearn 2021 [**\[Slides\]**](https://drive.google.com/file/d/1BNpk3dOdqE3ksgyVV-V3xySdBMq-8cXL/view?usp=sharing) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing)
 
-[6] [TDC User Group Meetup, Jan 2022](https://harvard.zoom.us/rec/share/HO0TjRPs56YG-Fu3i033izaTwebB4KwUhPeNURkWSI-anrH9su03lCtUlHeZG-WP.67ZJmAIHsD7Q_2GQ) [**\[Agenda\]**](https://shoutout.wix.com/so/d1Nv1pC2d#/main)
+[6] Huang, Fu, Gao et al., Therapeutics Data Commons, NSF-Harvard Symposium on Drugs for Future Pandemics 2020 [**\[#futuretx20\]**](https://www.drugsymposium.org/) [**\[Slides\]**](https://drive.google.com/file/d/11eTrh_lsqPcwu3RZRYjJGNpJ3s18YlBS/view) [**\[Video\]**](https://youtu.be/ZuCOhEZtaOw)
 
-[7] Zitnik, Machine Learning to Translate the Cancer Genome and Epigenome Session, [AACR Annual Meeting 2022, Apr 2022](https://www.aacr.org/meeting/aacr-annual-meeting-2022/)
+[7] [TDC User Group Meetup, Jan 2022](https://harvard.zoom.us/rec/share/HO0TjRPs56YG-Fu3i033izaTwebB4KwUhPeNURkWSI-anrH9su03lCtUlHeZG-WP.67ZJmAIHsD7Q_2GQ) [**\[Agenda\]**](https://shoutout.wix.com/so/d1Nv1pC2d#/main)
 
-[8] Zitnik, Few-Shot Learning for Network Biology, [Keynote at KDD Workshop on Data Mining in Bioinformatics](https://biokdd.org/biokdd21/keynote.html)
+[8] Zitnik, Machine Learning to Translate the Cancer Genome and Epigenome Session, [AACR Annual Meeting 2022, Apr 2022](https://www.aacr.org/meeting/aacr-annual-meeting-2022/)
 
-[9] Zitnik, Actionable machine learning for drug discovery and development, [Broad Institute, Models, Inference & Algorithms Seminar, 2021](https://www.broadinstitute.org/talks/actionable-machine-learning-drug-discovery-and-development)
+[9] Zitnik, Few-Shot Learning for Network Biology, [Keynote at KDD Workshop on Data Mining in Bioinformatics](https://biokdd.org/biokdd21/keynote.html)
 
-[10] Zitnik, Graph Neural Networks for Biomedical Data, [Machine Learning in Computational Biology, 2020](https://sites.google.com/cs.washington.edu/mlcb2020/schedule?authuser=0)
+[10] Zitnik, Actionable machine learning for drug discovery and development, [Broad Institute, Models, Inference & Algorithms Seminar, 2021](https://www.broadinstitute.org/talks/actionable-machine-learning-drug-discovery-and-development)
 
-[11] Zitnik, Graph Neural Networks for Identifying COVID-19 Drug Repurposing Opportunities, [MIT AI Cures, 2020](https://www.aicures.mit.edu/drugdiscoveryconference)
+[11] Zitnik, Graph Neural Networks for Biomedical Data, [Machine Learning in Computational Biology, 2020](https://sites.google.com/cs.washington.edu/mlcb2020/schedule?authuser=0)
+
+[12] Zitnik, Graph Neural Networks for Identifying COVID-19 Drug Repurposing Opportunities, [MIT AI Cures, 2020](https://www.aicures.mit.edu/drugdiscoveryconference)
 
 
 ## Unique Features of TDC
@@ -54,7 +56,7 @@ TDC is an open-science initiative. We welcome [contributions from the community.
 - *Diverse areas of therapeutics development*: TDC covers a wide range of learning tasks, including target discovery, activity screening, efficacy, safety, and manufacturing across biomedical products, including small molecules, antibodies, and vaccines.
 - *Ready-to-use datasets*: TDC is minimally dependent on external packages. Any TDC dataset can be retrieved using only 3 lines of code.
 - *Data functions*: TDC provides extensive data functions, including data evaluators, meaningful data splits, data processors, and molecule generation oracles. 
-- *Leaderboards*: TDC provides benchmarks for fair model comparison and a systematic model development and evaluation.
+- *Leaderboards*: TDC provides benchmarks for fair model comparison and systematic model development and evaluation.
 - *Open-source initiative*: TDC is an open-source initiative. If you want to get involved, let us know. 
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
@@ -118,7 +120,7 @@ We provide  tutorials to get started with TDC:
 
 ## Design of TDC
 
-TDC has a unique three-tiered hierarchical structure, which to our knowledge, is the first attempt at systematically organizing machine learning for therapeutics. We organize TDC into three distinct *problems*. For each problem, we give a collection *learning tasks*. Finally, for each task, we provide a series of *datasets*.
+TDC has a unique three-tiered hierarchical structure, which to our knowledge, is the first attempt at systematically organizing machine learning for therapeutics. We organize TDC into three distinct *problems*. For each problem, we give a collection of *learning tasks*. Finally, for each task, we provide a series of *datasets*.
 
 In the first tier, after observing a large set of therapeutics tasks, we categorize and abstract out three major areas (i.e., problems) where machine learning can facilitate scientific advances, namely, single-instance prediction, multi-instance prediction, and generation:
 
@@ -128,7 +130,7 @@ In the first tier, after observing a large set of therapeutics tasks, we categor
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_problems.png" alt="problems" width="500px" /></p>
 
-The second tier in the TDC structure is organized into learning tasks. Improvement on these tasks can result in numerous applications, including identifying personalized combinatorial therapies, designing novel class of antibodies, improving disease diagnosis, and finding new cures for emerging diseases.
+The second tier in the TDC structure is organized into learning tasks. Improvement in these tasks can result in numerous applications, including identifying personalized combinatorial therapies, designing novel classes of antibodies, improving disease diagnosis, and finding new cures for emerging diseases.
 
 Finally, in the third tier of TDC, each task is instantiated via multiple datasets. For each dataset, we provide several splits of the dataset into training, validation, and test sets to simulate the type of understanding and generalization (e.g., the model's ability to generalize to entirely unseen compounds or to granularly resolve patient response to a polytherapy) needed for transition into production and clinical implementation.
 
@@ -137,7 +139,7 @@ Finally, in the third tier of TDC, each task is instantiated via multiple datase
 
 TDC provides a collection of workflows with intuitive, high-level APIs for both beginners and experts to create machine learning models in Python. Building off the modularized "Problem -- Learning Task -- Data Set" structure (see above) in TDC, we provide a three-layer API to access any learning task and dataset. This hierarchical API design allows us to easily incorporate new tasks and datasets.
 
-For a concrete example, to obtain the HIA dataset from ADME therapeutic learning task in the single-instance prediction problem:
+For a concrete example, to obtain the HIA dataset from the ADME therapeutic learning task in the single-instance prediction problem:
 
 ```python
 from tdc.single_pred import ADME
@@ -181,11 +183,11 @@ score = evaluator(y_true, y_pred)
 
 #### Data Processing 
 
-TDC provides numerous data processing functions, including label transformation, data balancing, pair data to PyG/DGL graphs, negative sampling, database querying and so on. For function usage, see our [data processing page](https://zitniklab.hms.harvard.edu/TDC/functions/data_process/) on the TDC website.
+TDC provides numerous data processing functions, including label transformation, data balancing, pairing data to PyG/DGL graphs, negative sampling, database querying, and so on. For function usage, see our [data processing page](https://zitniklab.hms.harvard.edu/TDC/functions/data_process/) on the TDC website.
 
 #### Molecule Generation Oracles
 
-For molecule generation tasks, we provide 10+ oracles for both goal-oriented and distribution learning. For detailed usage of each oracle, please checkout the [oracle page](https://zitniklab.hms.harvard.edu/TDC/functions/oracles/) on the website. For example, we want to retrieve the GSK3Beta oracle:
+For molecule generation tasks, we provide 10+ oracles for both goal-oriented and distribution learning. For detailed usage of each oracle, please check out the [oracle page](https://zitniklab.hms.harvard.edu/TDC/functions/oracles/) on the website. For example, we want to retrieve the GSK3Beta oracle:
 
 ```python
 from tdc import Oracle
@@ -242,16 +244,19 @@ For more information, visit [here](https://tdcommons.ai/benchmark/overview/).
 
 ## Cite Us
 
-If you find Therapeutics Data Commons useful, cite our [package](https://pypi.org/project/PyTDC/), our [NeurIPS paper](https://openreview.net/pdf?id=8nvgnORnoWr) , [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2) , and our [Harvard Dataverse Dataset](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/21LKWG):
+If you find Therapeutics Data Commons useful, cite our [latest preprint](https://www.biorxiv.org/content/10.1101/2024.06.12.598655v2), our [NeurIPS paper](https://openreview.net/pdf?id=8nvgnORnoWr), and [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2) :
 
 ```
-@online{PyTDC,
-  author={Velez-Arce, Alejandro, and Huang, Kexin, and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
-          Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka}
-  title={Therapeutic Data Commons - PyTDC},
-  url={https://pypi.org/project/PyTDC/},
-  urldate = {2021-03-28}, 
-  publisher={Zitnik Lab, Harvard University}
+@article {Velez-Arce2024tdc,
+	author = {Velez-Arce, Alejandro and Huang, Kexin and Li, Michelle and Lin, Xiang and Gao, Wenhao and Fu, Tianfan and Kellis, Manolis and Pentelute, Bradley L. and Zitnik, Marinka},
+	title = {TDC-2: Multimodal Foundation for Therapeutic Science},
+	elocation-id = {2024.06.12.598655},
+	year = {2024},
+	doi = {10.1101/2024.06.12.598655},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2024/06/21/2024.06.12.598655},
+	eprint = {https://www.biorxiv.org/content/early/2024/06/21/2024.06.12.598655.full.pdf},
+	journal = {bioRxiv}
 }
 ```
 
@@ -274,23 +279,12 @@ If you find Therapeutics Data Commons useful, cite our [package](https://pypi.or
   year={2022}
 }
 ```
-```
-@data{DVN/21LKWG_2020,
-  author = {Alejandro Velez-Arce, Kexin Huang, Tianfan Fu, Wenhao Gao, Yue Zhao, Yusuf Roohani, Jure Leskovec, Connor W. Coley, Cao Xiao, Jimeng Sun, and Marinka Zitnik},
-  publisher = {Harvard Dataverse},
-  title = {{Therapeutics Data Commons (https://tdcommons.ai)}},
-  UNF = {UNF:6:KESpbe1TOPOW2BGCtjSI2w==},
-  year = {2020},
-  version = {V80},
-  doi = {10.7910/DVN/21LKWG},
-  url = {https://doi.org/10.7910/DVN/21LKWG}
-}
-```
-TDC is built on top of other open-sourced projects. If you used these datasets/functions in your research, please cite the original work as well. You can find the original paper in the website to the function/dataset.
+
+TDC is built on top of other open-sourced projects. If you used these datasets/functions in your research, please cite the original work as well. You can find the original paper on the website for the function/dataset.
 
 ## Contribute
 
-TDC is a community-driven and open-science initiative. To get involved, join our [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) and checkout the [contribution guide](CONTRIBUTE.md)!
+TDC is a community-driven and open-science initiative. To get involved, join our [Slack Workspace](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) and check out the [contribution guide](CONTRIBUTE.md)!
 
 ## Contact
 
