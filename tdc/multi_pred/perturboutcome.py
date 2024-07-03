@@ -112,12 +112,10 @@ class PerturbOutcome(CellXGeneTemplate):
 
         if self.is_gene:
             import scanpy as sc
-            print_sys("Normalizing (log1p, 5K HVGs)!")
             sc.pp.normalize_total(self.adata)
             sc.pp.log1p(self.adata)
             from scipy.sparse import csr_matrix
             self.adata.X = csr_matrix(self.adata.X)
-            print_sys("Getting DE genes!")
             sc.pp.highly_variable_genes(self.adata,
                                         n_top_genes=5000,
                                         subset=True)
@@ -159,12 +157,9 @@ class PerturbOutcome(CellXGeneTemplate):
                            split_to_unseen=False,
                            remove_unseen=True):
         df = self.get_data()
-        print_sys("got data grouping by cell line")
         cell_line_groups = df.groupby("cell_line")
-        print_sys("groupby completed")
         cell_line_splits = {}
         for cell_line, cell_line_group in cell_line_groups:
-            print_sys("processing cell line", cell_line)
             control = cell_line_group[cell_line_group["perturbation"] ==
                                       "control"]
             cell_line_group = cell_line_group[cell_line_group["perturbation"] !=
@@ -219,7 +214,6 @@ class PerturbOutcome(CellXGeneTemplate):
                         cell_line_group[
                             cell_line_group["perturbation"].isin(perturbs_dev)]
                 }
-            print_sys("done with cell line", cell_line)
 
         return cell_line_splits
 
