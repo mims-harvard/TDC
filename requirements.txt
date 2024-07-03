@@ -7,7 +7,8 @@ numpy>=1.26.4,<2.0.0
 openpyxl>=3.0.10,<4.0.0
 pandas>=2.1.4,<3.0.0
 requests>=2.31.0,<3.0.0
-scikit-learn>=1.2.2,<2.0.0
+# scikit-learn>=1.2.2,<2.0.0
+scikit-learn==1.2.2
 seaborn>=0.12.2,<1.0.0
 tqdm>=4.65.0,<5.0.0
 cellxgene-census>=1.10.2,<2.0.0
