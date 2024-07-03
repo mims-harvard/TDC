@@ -58,6 +58,16 @@ class TestOracle(unittest.TestCase):
         assert abs(x[1] - 0.0) < 0.0001
         assert abs(x[2] - 0.01) < 0.0001
 
+    def test_oracle_update(self):
+        from tdc import Oracle
+        oracle = Oracle(name='DRD2')
+        y = oracle(['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
+                'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1', \
+            'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'])
+        assert abs(y[0] - 0.0015465365340340924) <= 1e-10
+        assert abs(y[1] - 0.0023541754878916416) <= 1e-10
+        assert abs(y[2] - 0.004715407010872501) <= 1e-10
+
     # def tearDown(self):
     #     print(os.getcwd())
     #     shutil.rmtree(os.path.join(os.getcwd(), "data"))
