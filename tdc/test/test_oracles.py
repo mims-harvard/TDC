@@ -60,7 +60,7 @@ class TestOracle(unittest.TestCase):
 
     def test_oracle_update(self):
         from tdc import Oracle
-        oracle = Oracle(name = 'DRD2')
+        oracle = Oracle(name='DRD2')
         y = oracle(['CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1', \
                 'CCNC(=O)c1ccc(NC(=O)N2CC[C@H](C)[C@H](O)C2)c(C)c1', \
             'C[C@@H]1CCN(C(=O)CCCc2ccccc2)C[C@@H]1O'])
