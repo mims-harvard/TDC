@@ -69,6 +69,19 @@ class TestPrimeKG(unittest.TestCase):
         l = data.get_node_list('disease')
         assert "1" in l and "9997" in l
 
+class TestPINNACLE(unittest.TestCase):
+    
+    def setUp(self):
+        pass
+    
+    def test_mg_ppi_load(self):
+        from tdc.resource.pinnacle import PINNACLE
+        pinnacle = PINNACLE()
+        assert isinstance(pinnacle.get_ppi(), DataFrame)
+        assert isinstance(pinnacle.get_mg(), DataFrame)
+        assert len(pinnacle.get_ppi()) > 0
+        assert len(pinnacle.get_mg()) > 0
+
 
 if __name__ == "__main__":
     unittest.main()

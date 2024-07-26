@@ -922,6 +922,8 @@ name2type = {
     "tchard_pep_cdr3b_only_sampled_negs_train-2": "tab",
     "tchard_pep_cdr3b_only_sampled_negs_train-3": "tab",
     "tchard_pep_cdr3b_only_sampled_negs_train-4": "tab",
+    "cell_tissue_mg_edgelist": "txt",
+    "pinnacle_global_ppi_edgelist": "txt",
 }
 
 name2id = {
@@ -1094,6 +1096,8 @@ name2id = {
     "tchard_pep_cdr3b_only_sampled_negs_train-2": 10228322,
     "tchard_pep_cdr3b_only_sampled_negs_train-3": 10228316,
     "tchard_pep_cdr3b_only_sampled_negs_train-4": 10228326,
+    "cell_tissue_mg_edgelist": 10407107,
+    "pinnacle_global_ppi_edgelist": 10407108
 }
 
 oracle2type = {
