@@ -81,6 +81,9 @@ class TestPINNACLE(unittest.TestCase):
         assert isinstance(pinnacle.get_mg(), DataFrame)
         assert len(pinnacle.get_ppi()) > 0
         assert len(pinnacle.get_mg()) > 0
+        embeds = pinnacle.get_embeds()
+        assert isinstance(embeds, DataFrame)
+        assert len(embeds) > 0, "PINNACLE embeds is empty"
 
 
 if __name__ == "__main__":

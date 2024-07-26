@@ -322,6 +322,18 @@ def pd_load(name, path):
                 r = maxlen - len(v)
                 file_content[k] = v + [None] * r
             df = pd.DataFrame(file_content)
+
+        elif name2type[name] == "pth":
+            import torch
+            tensors = torch.load(os.path.join(path, name + "." + name2type[name]))
+            dfs = {} 
+            for k, v in tensors.items():
+                if isinstance(v, torch.Tensor):
+                    dfs[k] = pd.DataFrame(v.detach().numpy())
+                else:
+                    raise Exception("encountered non-tensor")
+            df = pd.concat(dfs, axis=0)
+                    
         else:
             raise ValueError(
                 "The file type must be one of tab/csv/xlsx/pickle/zip.")
