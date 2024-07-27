@@ -349,6 +349,23 @@ def pd_load(name, path):
             "TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/."
         )
 
+def load_json_from_txt_file(name, path):
+    import json
+    import re
+    name = download_wrapper(name, path, [name])
+    file_path = os.path.join(path, name + ".txt")
+    with open(file_path, 'r') as f:
+        data = f.read()
+        # data = re.sub(r"(?<!\\)'", '"', data)
+        data = data.replace("\'", "\"")
+        file_content = json.loads(data)
+    maxlen = max(len(x) for x in file_content.values())
+    for k, v in file_content.items():
+        r = maxlen - len(v)
+        file_content[k] = v + [None] * r
+    df = pd.DataFrame(file_content)
+    return df
+    
 
 def property_dataset_load(name, path, target, dataset_names):
     """a wrapper to download, process and load single-instance prediction task datasets

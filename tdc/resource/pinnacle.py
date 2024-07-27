@@ -1,5 +1,7 @@
 from ..utils import general_load
-from ..utils.load import resource_dataset_load 
+from ..utils.load import resource_dataset_load, load_json_from_txt_file 
+
+import pandas as pd
 
 class PINNACLE:
     
@@ -12,6 +14,7 @@ class PINNACLE:
         self.cell_tissue_mg.columns = ["Tissue", "Cell"]
         self.embeds_name = "pinnacle_protein_embed"
         self.embeds = resource_dataset_load(self.embeds_name, path, [self.embeds_name])
+        self.keys = load_json_from_txt_file("pinnacle_labels_dict", path)
     
     def get_ppi(self):
         return self.ppi
@@ -21,6 +24,13 @@ class PINNACLE:
     
     def get_embeds(self):
         return self.embeds
+
+    def get_keys(self):
+        protein_names_celltypes = [p for p in zip(self.keys["Cell Type"], self.keys["Name"]) if not (p[0].startswith("BTO") or p[0].startswith("CCI") or p[0].startswith("Sanity"))]
+        proteins = pd.DataFrame.from_dict({"target":[n for _,n in protein_names_celltypes], "cell type":[c for c,_ in protein_names_celltypes]})
+        proteins.drop_duplicates()
+        return proteins
+        
    
    
     

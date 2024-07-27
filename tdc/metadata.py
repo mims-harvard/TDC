@@ -925,6 +925,7 @@ name2type = {
     "cell_tissue_mg_edgelist": "txt",
     "pinnacle_global_ppi_edgelist": "txt",
     "pinnacle_protein_embed": "pth",
+    "pinnacle_labels_dict": "txt",
 }
 
 name2id = {
@@ -1099,7 +1100,8 @@ name2id = {
     "tchard_pep_cdr3b_only_sampled_negs_train-4": 10228326,
     "cell_tissue_mg_edgelist": 10407107,
     "pinnacle_global_ppi_edgelist": 10407108,
-    "pinnacle_protein_embed": 10407128
+    "pinnacle_protein_embed": 10407128,
+    "pinnacle_labels_dict": 10407642,
 }
 
 oracle2type = {

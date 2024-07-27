@@ -85,6 +85,18 @@ class TestPINNACLE(unittest.TestCase):
         assert isinstance(embeds, DataFrame)
         assert len(embeds) > 0, "PINNACLE embeds is empty"
 
+    def test_embeddings(self):
+        from tdc.resource.pinnacle import PINNACLE
+        pinnacle = PINNACLE()
+        embeds = pinnacle.get_embeds()
+        assert isinstance(embeds, DataFrame)
+        assert len(embeds) > 0, "PINNACLE embeds is empty"
+        keys = pinnacle.get_keys()
+        assert isinstance(keys, DataFrame)
+        assert len(keys) > 0, "PINNACLE keys is empty"
+        assert len(keys) == len(embeds), "{} vs {}".format(len(keys), len(embeds))
+        
+
 
 if __name__ == "__main__":
     unittest.main()
