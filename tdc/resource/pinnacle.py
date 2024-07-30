@@ -1,5 +1,5 @@
 from ..utils import general_load
-from ..utils.load import resource_dataset_load, load_json_from_txt_file
+from ..utils.load import download_wrapper, load_json_from_txt_file
 
 import pandas as pd
 import os
@@ -31,6 +31,8 @@ class PINNACLE:
         self.cell_tissue_mg.columns = ["Tissue", "Cell"]
         self.embeds_name = "pinnacle_protein_embed"
         # self.embeds = resource_dataset_load(self.embeds_name, path, [self.embeds_name])
+        self.embeds_name = download_wrapper(self.embeds_name, path,
+                                            self.embeds_name)
         self.embeds = torch.load(os.path.join(path, self.embeds_name + ".pth"))
         self.keys = load_json_from_txt_file("pinnacle_labels_dict", path)
 
