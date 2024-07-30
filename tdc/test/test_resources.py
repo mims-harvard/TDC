@@ -70,5 +70,34 @@ class TestPrimeKG(unittest.TestCase):
         assert "1" in l and "9997" in l
 
 
+class TestPINNACLE(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_mg_ppi_load(self):
+        from tdc.resource.pinnacle import PINNACLE
+        pinnacle = PINNACLE()
+        assert isinstance(pinnacle.get_ppi(), DataFrame)
+        assert isinstance(pinnacle.get_mg(), DataFrame)
+        assert len(pinnacle.get_ppi()) > 0
+        assert len(pinnacle.get_mg()) > 0
+        embeds = pinnacle.get_embeds()
+        assert isinstance(embeds, DataFrame)
+        assert len(embeds) > 0, "PINNACLE embeds is empty"
+
+    def test_embeddings(self):
+        from tdc.resource.pinnacle import PINNACLE
+        pinnacle = PINNACLE()
+        embeds = pinnacle.get_embeds()
+        assert isinstance(embeds, DataFrame)
+        assert len(embeds) > 0, "PINNACLE embeds is empty"
+        keys = pinnacle.get_keys()
+        assert isinstance(keys, DataFrame)
+        assert len(keys) > 0, "PINNACLE keys is empty"
+        assert len(keys) == len(embeds), "{} vs {}".format(
+            len(keys), len(embeds))
+
+
 if __name__ == "__main__":
     unittest.main()
