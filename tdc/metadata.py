@@ -1101,7 +1101,7 @@ name2id = {
     "cell_tissue_mg_edgelist": 10407107,
     "pinnacle_global_ppi_edgelist": 10407108,
     "pinnacle_protein_embed": 10407128,
-    "pinnacle_labels_dict": 10407642,
+    "pinnacle_labels_dict": 10409635,
 }
 
 oracle2type = {

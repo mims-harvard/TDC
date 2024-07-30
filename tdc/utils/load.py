@@ -325,15 +325,21 @@ def pd_load(name, path):
 
         elif name2type[name] == "pth":
             import torch
-            tensors = torch.load(os.path.join(path, name + "." + name2type[name]))
-            dfs = {} 
-            for k, v in tensors.items():
-                if isinstance(v, torch.Tensor):
-                    dfs[k] = pd.DataFrame(v.detach().numpy())
-                else:
-                    raise Exception("encountered non-tensor")
-            df = pd.concat(dfs, axis=0)
-                    
+            tensors = torch.load(
+                os.path.join(path, name + "." + name2type[name]))
+            dfs = {}
+            if isinstance(tensors, dict):
+                for k, v in tensors.items():
+                    if isinstance(v, torch.Tensor):
+                        dfs[k] = pd.DataFrame(v.detach().numpy())
+                    else:
+                        raise Exception("encountered non-tensor")
+                df = pd.concat(dfs, axis=0)
+            elif torch.is_tensor(tensors):
+                df = pd.DataFrame(tensors.detach().numpy())
+            else:
+                raise Exception("encountered non-tensor")
+
         else:
             raise ValueError(
                 "The file type must be one of tab/csv/xlsx/pickle/zip.")
@@ -348,6 +354,7 @@ def pd_load(name, path):
         sys.exit(
             "TDC is hosted in Harvard Dataverse and it is currently under maintenance, please check back in a few hours or checkout https://dataverse.harvard.edu/."
         )
+
 
 def load_json_from_txt_file(name, path):
     import json
@@ -365,7 +372,7 @@ def load_json_from_txt_file(name, path):
         file_content[k] = v + [None] * r
     df = pd.DataFrame(file_content)
     return df
-    
+
 
 def property_dataset_load(name, path, target, dataset_names):
     """a wrapper to download, process and load single-instance prediction task datasets

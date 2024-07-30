@@ -69,11 +69,12 @@ class TestPrimeKG(unittest.TestCase):
         l = data.get_node_list('disease')
         assert "1" in l and "9997" in l
 
+
 class TestPINNACLE(unittest.TestCase):
-    
+
     def setUp(self):
         pass
-    
+
     def test_mg_ppi_load(self):
         from tdc.resource.pinnacle import PINNACLE
         pinnacle = PINNACLE()
@@ -94,8 +95,8 @@ class TestPINNACLE(unittest.TestCase):
         keys = pinnacle.get_keys()
         assert isinstance(keys, DataFrame)
         assert len(keys) > 0, "PINNACLE keys is empty"
-        assert len(keys) == len(embeds), "{} vs {}".format(len(keys), len(embeds))
-        
+        assert len(keys) == len(embeds), "{} vs {}".format(
+            len(keys), len(embeds))
 
 
 if __name__ == "__main__":
