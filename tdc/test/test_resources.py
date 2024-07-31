@@ -97,6 +97,16 @@ class TestPINNACLE(unittest.TestCase):
         assert len(keys) > 0, "PINNACLE keys is empty"
         assert len(keys) == len(embeds), "{} vs {}".format(
             len(keys), len(embeds))
+        num_targets = len(keys["target"].unique())
+        num_cells = len(keys["cell type"].unique())
+        all_entries = embeds.index
+        prots = [x.split("--")[0] for x in all_entries]
+        cells = [x.split("--")[1] for x in all_entries]
+        assert len(
+            set(prots)) == num_targets, "{} vs {} for target proteins".format(
+                len(prots), num_targets)
+        assert len(set(cells)) == num_cells, "{} vs {} for cell_types".format(
+            len(cells), num_cells)
 
 
 if __name__ == "__main__":
