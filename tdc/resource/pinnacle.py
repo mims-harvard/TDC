@@ -61,12 +61,28 @@ class PINNACLE:
     def get_embeds(self):
         prots = self.get_keys()
         emb = self.get_embeds_raw()
-        nemb = {'--'.join(prots.iloc[k]): v for k, v in emb.items()}
+        # nemb = {'--'.join(prots.iloc[k]): v for k, v in emb.items()}
         x = {}
-        for k, v in nemb.items():
+        ctr = 0
+        for _, v in emb.items():
             if isinstance(v, torch.Tensor):
-                x[k] = pd.DataFrame(v.detach().numpy())
+                if v.size()[0] == 1:
+                    k = "--".join(prots.iloc[ctr])
+                    ctr += 1
+                    x[k] = v.detach().numpy()
+                    continue
+                for t in v:
+                    assert len(t.size()) == 1, t.size()
+                    k = "--".join(prots.iloc[ctr])
+                    ctr += 1
+                    x[k] = t.detach().numpy()
             else:
                 raise Exception("encountered non-tensor")
-        df = pd.concat(x, axis=0)
+        assert len(x) == len(prots), "dict len {} vs keys length {}".format(
+            len(x), len(prots))
+        df = pd.DataFrame.from_dict(x)
+        df = df.transpose()
+        assert len(df) == len(
+            x), "dims not mantained when translated to pandas. {} vs {}".format(
+                len(df), len(x))
         return df
