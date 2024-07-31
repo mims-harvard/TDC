@@ -4,6 +4,7 @@ import sys
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 import unittest
+import shutil
 
 from pandas import DataFrame
 from tdc.resource import cellxgene_census
@@ -21,6 +22,7 @@ class TestCellXGene(unittest.TestCase):
         self.gene_column_names = ["feature_name", "feature_length"]
         self.cell_value_filter = "tissue == 'brain' and sex == 'male'"
         self.cell_column_names = ["assay", "cell_type", "tissue"]
+        print(os.getcwd())
 
     def test_get_cell_metadata(self):
         obsdf = self.resource.get_cell_metadata(
@@ -59,6 +61,7 @@ class TestCellXGene(unittest.TestCase):
 class TestPrimeKG(unittest.TestCase):
 
     def setUp(self):
+        print(os.getcwd())
         pass
 
     def test_node_retrieval(self):
@@ -73,6 +76,7 @@ class TestPrimeKG(unittest.TestCase):
 class TestPINNACLE(unittest.TestCase):
 
     def setUp(self):
+        print(os.getcwd())
         pass
 
     def test_mg_ppi_load(self):
@@ -107,6 +111,13 @@ class TestPINNACLE(unittest.TestCase):
                 len(prots), num_targets)
         assert len(set(cells)) == num_cells, "{} vs {} for cell_types".format(
             len(cells), num_cells)
+
+    def tearDown(self):
+        try:
+            print(os.getcwd())
+            shutil.rmtree(os.path.join(os.getcwd(), "data"))
+        except:
+            pass
 
 
 if __name__ == "__main__":
