@@ -32,7 +32,10 @@ dependencies:
   - torchaudio=2.2.1
   - torchvision=0.17.1
   - pip:
+    - accelerate==0.33.0
     - cellxgene-census==1.10.2 
+    - datasets==2.20.0
+    - evaluate==0.4.2
     - gget==0.28.4
     - pydantic==2.6.3
     - gget==0.28.4
@@ -41,6 +44,7 @@ dependencies:
     - pydantic==2.6.3
     - rdkit==2023.9.5
     - tiledbsoma==1.7.2
+    - transformers==4.43.3
     - yapf==0.40.2
 variables:
   KMP_DUPLICATE_LIB_OK: "TRUE"
