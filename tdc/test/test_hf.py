@@ -8,6 +8,7 @@ import sys
 
 import unittest
 import shutil
+import pytest
 
 # temporary solution for relative imports in case TDC is not installed
 # if TDC is installed, no need to use the following line
@@ -22,6 +23,7 @@ class TestHF(unittest.TestCase):
         print(os.getcwd())
         pass
 
+    @pytest.mark.skip(reason="This test is skipped due to deeppurpose installation dependency")
     def test_hf_load_predict(self):
         from tdc.single_pred import Tox
         data = Tox(name='herg_karim')

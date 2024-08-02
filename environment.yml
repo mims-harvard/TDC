@@ -42,6 +42,7 @@ dependencies:
     - pydantic==2.6.3
     - gget==0.28.4
     - pydantic==2.6.3
+    - pytest==8.3.2
     - rdkit==2023.9.5
     - tiledbsoma==1.7.2
     - transformers==4.43.3
