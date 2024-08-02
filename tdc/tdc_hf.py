@@ -54,16 +54,18 @@ class tdc_hf_interface:
     def repo_download(self, save_path):
         snapshot_download(repo_id=self.repo_id, cache_dir=save_path)
 
-    def load(self, model_name):
-        if model_name not in model_hub:
+    def load(self):
+        if self.model_name not in model_hub:
             raise Exception("this model is not in the TDC model hub GH repo.")
-        elif model_name == "Geneformer":
+        elif self.model_name == "Geneformer":
             # Load model directly
             from transformers import AutoTokenizer, AutoModelForMaskedLM, pipeline
-            tokenizer = AutoTokenizer.from_pretrained("ctheodoris/Geneformer")
+            # tokenizer = AutoTokenizer.from_pretrained("ctheodoris/Geneformer")
             model = AutoModelForMaskedLM.from_pretrained("ctheodoris/Geneformer")
-            pipe = pipeline("fill-mask", model=model, tokenizer=tokenizer)
-            return pipe
+            # pipe = pipeline("fill-mask", model=model, tokenizer=tokenizer)
+            # pipe = pipeline("fill-mask", model="ctheodoris/Geneformer")
+            # return pipe
+            return model
         raise Exception("Not implemented yet!")
  
         
