@@ -14,9 +14,7 @@ deeppurpose_repo = [
     'CYP3A4_Veith-AttentiveFP',
 ]
 
-model_hub = [
-    "Geneformer"
-]
+model_hub = ["Geneformer"]
 
 
 class tdc_hf_interface:
@@ -61,14 +59,13 @@ class tdc_hf_interface:
             # Load model directly
             from transformers import AutoTokenizer, AutoModelForMaskedLM, pipeline
             # tokenizer = AutoTokenizer.from_pretrained("ctheodoris/Geneformer")
-            model = AutoModelForMaskedLM.from_pretrained("ctheodoris/Geneformer")
+            model = AutoModelForMaskedLM.from_pretrained(
+                "ctheodoris/Geneformer")
             # pipe = pipeline("fill-mask", model=model, tokenizer=tokenizer)
             # pipe = pipeline("fill-mask", model="ctheodoris/Geneformer")
             # return pipe
             return model
         raise Exception("Not implemented yet!")
- 
-        
 
     def load_deeppurpose(self, save_path):
         if self.repo_id[4:] in deeppurpose_repo:

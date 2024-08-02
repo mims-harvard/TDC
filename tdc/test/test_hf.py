@@ -21,11 +21,11 @@ class TestHF(unittest.TestCase):
     def setUp(self):
         print(os.getcwd())
         pass
-    
+
     def test_hf_load_predict(self):
         from tdc.single_pred import Tox
-        data = Tox(name = 'herg_karim')
-        
+        data = Tox(name='herg_karim')
+
         from tdc import tdc_hf_interface
         tdc_hf = tdc_hf_interface("hERG_Karim-CNN")
         # load deeppurpose model from this repo
@@ -35,12 +35,11 @@ class TestHF(unittest.TestCase):
     def test_hf_transformer(self):
         from tdc import tdc_hf_interface
         # from transformers import Pipeline
-        from transformers import BertForMaskedLM as BertModel 
+        from transformers import BertForMaskedLM as BertModel
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
         # assert isinstance(pipeline, Pipeline)
         assert isinstance(model, BertModel), type(model)
-
 
     # def test_hf_load_new_pytorch_standard(self):
     #     from tdc import tdc_hf_interface
@@ -49,7 +48,7 @@ class TestHF(unittest.TestCase):
     #     tdc_hf = tdc_hf_interface("mli-PINNACLE")
     #     dp_model = tdc_hf.load()
     #     assert dp_model is not None
-        
+
     def tearDown(self):
         try:
             print(os.getcwd())
