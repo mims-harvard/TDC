@@ -35,6 +35,7 @@ dependencies:
     - rdkit==2023.9.5
     - tiledbsoma==1.11.4
     - torch==2.1.1
+    - torch_geometric==2.5.3
     - torchvision==0.16.1
     - transformers==4.43.4
     - yapf==0.40.2
