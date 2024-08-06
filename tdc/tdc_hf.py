@@ -14,6 +14,8 @@ deeppurpose_repo = [
     'CYP3A4_Veith-AttentiveFP',
 ]
 
+model_hub = ["Geneformer"]
+
 
 class tdc_hf_interface:
     '''
@@ -29,7 +31,10 @@ class tdc_hf_interface:
 
     def __init__(self, repo_name):
         self.repo_id = "tdc/" + repo_name
-        self.model_name = repo_name.split('-')[1]
+        try:
+            self.model_name = repo_name.split('-')[1]
+        except:
+            self.model_name = repo_name
 
     def upload(self, folder_path):
         create_repo(repo_id=self.repo_id)
@@ -46,6 +51,21 @@ class tdc_hf_interface:
 
     def repo_download(self, save_path):
         snapshot_download(repo_id=self.repo_id, cache_dir=save_path)
+
+    def load(self):
+        if self.model_name not in model_hub:
+            raise Exception("this model is not in the TDC model hub GH repo.")
+        elif self.model_name == "Geneformer":
+            # Load model directly
+            from transformers import AutoTokenizer, AutoModelForMaskedLM, pipeline
+            # tokenizer = AutoTokenizer.from_pretrained("ctheodoris/Geneformer")
+            model = AutoModelForMaskedLM.from_pretrained(
+                "ctheodoris/Geneformer")
+            # pipe = pipeline("fill-mask", model=model, tokenizer=tokenizer)
+            # pipe = pipeline("fill-mask", model="ctheodoris/Geneformer")
+            # return pipe
+            return model
+        raise Exception("Not implemented yet!")
 
     def load_deeppurpose(self, save_path):
         if self.repo_id[4:] in deeppurpose_repo:
