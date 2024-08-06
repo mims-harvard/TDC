@@ -26,6 +26,7 @@ class TestHF(unittest.TestCase):
     @pytest.mark.skip(
         reason="This test is skipped due to deeppurpose installation dependency"
     )
+    @unittest.skip(reason="DeepPurpose")
     def test_hf_load_predict(self):
         from tdc.single_pred import Tox
         data = Tox(name='herg_karim')
@@ -63,4 +64,3 @@ class TestHF(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
