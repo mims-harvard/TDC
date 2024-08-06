@@ -8,9 +8,6 @@ on:
   push:
     branches:
       - main
-      - avelez-cellxgene-dev
-      - avelez-dev
-      - avelez-cellxgene-dev
       - '*'
   pull_request:
     branches: [ "main" ]
@@ -36,7 +33,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: "latest"
-          channels: bioconda, conda-forge, defaults
+          channels: bioconda, conda-forge, defaults, dgl
           use-only-tar-bz2: true  
           auto-update-conda: true
           auto-activate-base: true
