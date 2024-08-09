@@ -926,7 +926,7 @@ name2type = {
     "pinnacle_global_ppi_edgelist": "txt",
     "pinnacle_protein_embed": "pth",
     "pinnacle_labels_dict": "txt",
-    "panpep":'tab",
+    "panpep": "tab",
 }
 
 name2id = {
@@ -1103,7 +1103,7 @@ name2id = {
     "pinnacle_global_ppi_edgelist": 10407108,
     "pinnacle_protein_embed": 10407128,
     "pinnacle_labels_dict": 10409635,
-    "panpep":10428565,
+    "panpep": 10428565,
 }
 
 oracle2type = {
@@ -1236,3 +1236,4 @@ name2idlist = {
     "dude": [6429245, 6429251],
     "scpdb": [6431629, 6431631],
 }
+
