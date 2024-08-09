@@ -159,7 +159,7 @@ yield_dataset_names = ["uspto_yields", "buchwald-hartwig"]
 
 catalyst_dataset_names = ["uspto_catalyst"]
 
-tcr_epi_dataset_names = ["weber"]
+tcr_epi_dataset_names = ["weber", "panpep"]
 
 trial_outcome_dataset_names = ['phase1', 'phase2', 'phase3']
 
@@ -926,6 +926,7 @@ name2type = {
     "pinnacle_global_ppi_edgelist": "txt",
     "pinnacle_protein_embed": "pth",
     "pinnacle_labels_dict": "txt",
+    "panpep":'tab",
 }
 
 name2id = {
@@ -1102,6 +1103,7 @@ name2id = {
     "pinnacle_global_ppi_edgelist": 10407108,
     "pinnacle_protein_embed": 10407128,
     "pinnacle_labels_dict": 10409635,
+    "panpep":10428565,
 }
 
 oracle2type = {
