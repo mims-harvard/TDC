@@ -15,6 +15,7 @@ from . import single_pred_dataset
 from ..utils import print_sys, fuzzy_search, property_dataset_load
 from ..metadata import dataset_names
 
+
 class MPC(single_pred_dataset.DataLoader):
 
     def __init__(self, name, path="./data"):
@@ -27,7 +28,9 @@ class MPC(single_pred_dataset.DataLoader):
             self.data = Data(self.name)
             self.data(Descriptors.SMILES)
         except:
-            raise Exception("could not find dataset {}. For list of MoleculeAce datasets see https://github.com/bidd-group/MPCD/tree/main?tab=readme-ov-file#overview-of-the-mpc-benchmark-datasets".format(self.name))
+            raise Exception(
+                "could not find dataset {}. For list of MoleculeAce datasets see https://github.com/bidd-group/MPCD/tree/main?tab=readme-ov-file#overview-of-the-mpc-benchmark-datasets"
+                .format(self.name))
         return self.data
 
     def get_split(self):
