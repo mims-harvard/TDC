@@ -5,6 +5,7 @@ datasets==2.20.0
 evaluate==0.4.2
 fuzzywuzzy>=0.18.0,<1.0
 huggingface_hub>=0.20.3,<1.0
+moleculeace==3.0.0
 mygene>=3.2.2,<4.0.0
 numpy>=1.26.4,<2.0.0
 openpyxl>=3.0.10,<4.0.0
