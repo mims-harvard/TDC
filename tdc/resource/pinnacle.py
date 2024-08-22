@@ -86,3 +86,9 @@ class PINNACLE:
             x), "dims not mantained when translated to pandas. {} vs {}".format(
                 len(df), len(x))
         return df
+
+    def get_exp_data(self, seed=1, split="train"):
+        if split not in ["train", "val", "test", "all"]:
+            raise ValueError("{} not a valid split".format(split))
+        filename = "pinnacle_output{}".format(seed)
+
