@@ -4,27 +4,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Single-instance Prediction - TDC</title>
+    <title>CRISPR Repair Outcome Prediction - TDC</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" type="image/png"
            href="/favicon.png" 
     />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Single-instance Prediction | TDC</title>
+<title>CRISPR Repair Outcome Prediction | TDC</title>
 <meta name="generator" content="Jekyll v3.9.3" />
-<meta property="og:title" content="Single-instance Prediction" />
+<meta property="og:title" content="Molecular Property Cliff Prediction" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Artificial intelligence foundation for therapeutic science" />
 <meta property="og:description" content="Artificial intelligence foundation for therapeutic science" />
-<link rel="canonical" href="http://localhost:4000/single_pred_tasks/overview/" />
-<meta property="og:url" content="http://localhost:4000/single_pred_tasks/overview/" />
+<link rel="canonical" href="http://localhost:4000/single_pred_tasks/MPC/" />
+<meta property="og:url" content="http://localhost:4000/single_pred_tasks/MPC/" />
 <meta property="og:site_name" content="TDC" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Single-instance Prediction" />
+<meta property="twitter:title" content="CRISPR Repair Outcome Prediction" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"Single-instance Prediction","url":"http://localhost:4000/single_pred_tasks/overview/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Artificial intelligence foundation for therapeutic science","headline":"CRISPR Repair Outcome Prediction","url":"http://localhost:4000/single_pred_tasks/CRISPROutcome/"}</script>
 <!-- End Jekyll SEO tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-183522810-1"></script>
 <script>
@@ -164,7 +164,7 @@
     <ul class="menu-list">
         
         <li>
-            <a href="/single_pred_tasks/overview/" class="is-active"><strong>Single-instance Prediction Problem</strong></a>
+            <a href="/single_pred_tasks/overview/" class=""><strong>Single-instance Prediction Problem</strong></a>
             
             <ul>
                 
@@ -197,9 +197,10 @@
                 
                 
                 
-                <li><a href="/single_pred_tasks/CRISPROutcome/" class=""><code>CRISPROutcome</code> CRISPR Repair Prediction</a></li>
+                <li><a href="/single_pred_tasks/CRISPROutcome/" class="is-active"><code>CRISPROutcome</code> CRISPR Repair Prediction</a></li>
 
-                <li><a href="/single_pred_tasks/MPC/" class=""><code>MPC</code> Molecular Property Cliff Prediction Prediction</a></li>
+
+                <li><a href="/single_pred_tasks/MPC/" class="is-active"><code>MPC</code> Molecular Property Cliff Prediction</a></li>
 
                 
                 
@@ -239,63 +240,74 @@
                     
                     
                     
-<div class="content">
-    <h2 id="single-instance-prediction-datasets">Single-instance Prediction Datasets</h2>
+    
+    
 
-<table class="table is-hoverable">
-   <thead>
-      <tr>
-      	 <th>Task</th>
-      	 <th>Dataset</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-      	<th><a href="/single_pred_tasks/adme"><code>ADME</code></a></th>
-      	<td> <ul class="mt-0">
-      		<li><strong>Absorption</strong>: Caco2_Wang, HIA_Hou, Pgp_Broccatelli, Bioavailability_Ma, Lipophilicity_AstraZeneca, Solubility_AqSolDB, HydrationFreeEnergy_FreeSolv </li>
-      		<li><strong>Distribution</strong>: BBB_Martins, PPBR_AZ, VDss_Lombardo </li>
-      		<li> <strong>Metabolism</strong>: CYP2C19_Veith, CYP2D6_Veith, CYP3A4_Veith, CYP_1A2_Veith, CYP2C9_Veith, CYP2C9_Substrate_CarbonMangels, CYP2D6_Substrate_CarbonMangels, CYP3A4_Substrate_CarbonMangels </li>
-      		<li><strong>Execretion</strong>: Half_Life_Obach, Clearance_Hepatocyte_AZ, Clearance_Microsome_AZ</li>
-      		</ul>
-      	</td>
-      </tr>
-      <tr>
-      	<th><a href="/single_pred_tasks/tox"><code>Tox</code></a></th>
-      	<td>hERG, AMES, DILI, Skin Reaction, LD50_Zhu, Carcinogens_Lagunin, ToxCast, Tox21, ClinTox</td>
-      </tr>
-      <tr>
-      	<th><a href="/single_pred_tasks/hts"> <code>HTS</code></a></th>
-      	<td>HIV, SARSCoV2_3CLPro_Diamond, SARSCoV2_Vitro_Touret, Orexin1 Receptor, M1 Muscarinic Receptor Agonists, M1 Muscarinic Receptor Antagonists, Potassium Ion Channel Kir2.1, KCNQ2 Potassium Channel, Cav3 T-type Calcium Channels, Choline Transporter, Serine/Threonine Kinase 33, Tyrosyl-DNA Phosphodiesterase</td>
-      </tr>
-      <tr>
-      	<th><a href="/single_pred_tasks/qm"><code>QM</code></a></th>
-      	<td>QM7b, QM8, QM9</td>
-      </tr>
- 	  <tr>
- 	  	<th><a href="/single_pred_tasks/yields"><code>Yields</code></a></th>
- 	  	<td>Buchwald-Hartwig, USPTO</td>
- 	  </tr>        
-	  <!---
-     <tr>
-	  	<th><a href="/single_pred_tasks/paratope"><code>Paratope</code></a></th>
-	  	<td>SAbDab_Liberis</td>
-	  </tr>      
-     -->   
-      <tr>
-      	<th><a href="/single_pred_tasks/epitope"><code>Epitope</code></a></th>
-      	<td>IEDB_Jespersen, PDB_Jespersen</td>
-      </tr>
-      <tr>
-      	<th><a href="/single_pred_tasks/develop"><code>Develop</code></a></th>
-      	<td>TAP, SAbDab_Chen</td>
-      </tr>
-      <tr>
-         <th><a href="/single_pred_tasks/CRISPROutcome"><code>CRISPROutcome</code></a></th>
-         <td>Leenay</td>
-      </tr>
-   </tbody>
-</table>
+<div class="contents">
+    <div class="menu">
+        <p class="menu-label">Dataset Index</p>
+        <ul class="menu-list">
+  <li><a href="#leenay-et-al">Leenay et al.</a></li>
+</ul>
+    </div>
+</div>
+
+
+
+
+<div class="content">
+    <h1 id="crispr-repair-outcome-prediction-task-overview">Molecular Property Cliff Prediction Task Overview</h1>
+
+<div class="box">
+	
+
+<p class="is-size-6">  <strong> Definition: </strong> 
+Activity cliffs are molecules with small differences in structure but large differences in potency. Activity cliffs play an important role in drug discovery, but the bioactivity of activity cliff compounds are notoriously difficult to predict.
+</p>
+
+<p class="is-size-6"> <strong> Impact: </strong>  
+Predicting molecular activity and modeling quantitative structure-activity relationships are crucial for drug discovery. Graph neural networks use molecular structures as frameworks to evaluate the biological activity of chemical compounds. They guide the selection and optimization of candidates for further development. However, current models often overlook activity cliffs (ACs), where structurally similar molecules exhibit different bioactivities. This oversight is due to latent spaces primarily optimized for structural features (Wan Xiang et al.).
+</p>
+
+<p class="is-size-6"> <strong> Generalization: </strong> 
+ACs, or activity cliffs, occur when structurally similar molecules have very different biological activities, creating challenges for accurate modeling. This is especially problematic in Graph Neural Networks (GNNs), where similar molecules are closely grouped in the latent space, leading to inaccurate predictions when their activities are significantly different. Overcoming these challenges is essential for improving the accuracy and reliability of forecasts related to molecular activities. Dealing with ACs directly at the level of compound pairs by predicting whether a matched molecular pair (MMP) forms an AC based on a predefined activity threshold can be a more practical approach. For example, they classify it as an MMP-cliff if the activity difference is more significant than 100-fold or an MMP-nonCliff if the activity difference is less than 10-fold. It has been observed that QSAR regression models have low sensitivity to ACs when the activities of both compounds in the MMP are unknown, as they are absent from the training set. Developing techniques to improve AC sensitivity could enhance the performance of QSAR models and offer a promising direction for future research (Wan Xiang et al.)
+</p>
+
+<p class="is-size-6"> <strong> Product: </strong> Small Molecule</p>
+
+<p class="is-size-6"> <strong> Pipeline: </strong> Hit identification and hit-to-lead optimization </p>
+
+</div>
+
+<h3 id="leenay-et-al">Wan Xiang et al.</h3>
+
+<p class="is-size-6">  <strong> Dataset Description: </strong> Benchmark datasets of molecular property cliff (MPC) in ACANet paper. Includes: 1) The 9 datasets of low sample size and narrow scaffolds (LSSNS) for molecular activity prediction LSSNS, 2) The 30 datasets of high sample size and mixed scaffolds (HSSMS) for molecular activity prediction. Datasets are the molecular activity prediction benchmark datasets that from MoleculeACE, 3) The 3 matched molecular pair (MMP) datasets of activity cliff classification. Datasets are from ACGCN, 4) The 10 datasets of ADMET properties in delta prediction. Datasets are from DeepDelta. More information can be found https://github.com/bidd-group/MPCD . </p>
+
+<p class="is-size-6"> Information on each individual dataset can be found https://github.com/bidd-group/MPCD . </p>
+
+<p class="is-size-6">  <strong> Task Description: </strong>Regression. Given a SMILES sequence, predict the activity cliff of the small molecule compound. </p>
+
+<p class="is-size-6">  <strong> Dataset Statistics: </strong> More information on each individual dataset can be found https://github.com/bidd-group/MPCD .</p>
+
+<p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> </p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">MPC</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">MPC</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"INSERT_URL_HERE"</span> # url from the source github repo https://github.com/bidd-group/MPCD/tree/main/dataset
+<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p class="is-size-6"> We additionally support direct retrieval from the MoleculeACE API for those datasets. You can call: </p>
+<span class="n">data</span> <span class="o">=</span> <span class="n">MPC</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"INSERT_MOLECULEACE_HERE"</span>, <span class="n">get_from_gh</span> <span class="o">=</span> <span class="n">False</span> # name from MoleculeACE API https://github.com/molML/MoleculeACE?tab=readme-ov-file
+
+
+<p class="is-size-6">  <strong> References: </strong>  </p>
+
+<p><a href="https://doi.org/10.21203/rs.3.rs-2988283/v1">[1] Wan Xiang, et al. “Online triplet contrastive learning enables efficient cliff awareness in molecular activity prediction” 28 June 2023, PREPRINT (Version 1) available at Research Square [https://doi.org/10.21203/rs.3.rs-2988283/v1].</a></p>
+
+<p class="is-size-6"> <strong> Dataset License: </strong><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+
+<hr />
+
 
 </div>
                 </div>
