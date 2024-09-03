@@ -22,8 +22,26 @@ class MPC(single_pred_dataset.DataLoader):
         self.name = name
         self.data = None
 
-    def get_data(self):
-        from MoleculeACE import Data, Descriptors  #TODO: support non-MoleculeACE
+    def get_from_gh(self, link):
+        import pandas as pd
+        import requests
+        import io
+
+        data = requests.get(link)
+        try:
+            data.raise_for_status()
+        except:
+            raise Exception("invalid link provided. choose a link for datasets in https://github.com/bidd-group/MPCD")
+        self.data = pd.read_csv(io.StringIO(data.text))
+        return self.data
+
+    def get_data(self, link=None, get_from_gh=True):
+        if (not get_from_gh) and link is None:
+            raise Exception("provide dataset github link from https://github.com/bidd-group/MPCD")
+        elif get_from_gh:
+            return self.get_from_gh(link)
+        # support direct interfface with MoleculeACE API as well
+        from MoleculeACE import Data, Descriptors
         try:
             self.data = Data(self.name)
             self.data(Descriptors.SMILES)
