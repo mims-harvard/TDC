@@ -292,20 +292,22 @@ ACs, or activity cliffs, occur when structurally similar molecules have very dif
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split</span> <span class="tag is-info is-light">Scaffold Split</span> </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.single_pred</span> <span class="kn">import</span> <span class="n">MPC</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">MPC</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"INSERT_URL_HERE"</span> # url from the source github repo https://github.com/bidd-group/MPCD/tree/main/dataset
+<span class="n">data</span> <span class="o">=</span> <span class="n">MPC</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"INSERT_URL_HERE"</span><span class="n">)</span> # url from the source github repo https://github.com/bidd-group/MPCD/tree/main/dataset
+<span class="n"># example url: https://github.com/bidd-group/MPCD/blob/main/dataset/ADMET/DeepDelta_benchmark/Caco2.csv </span>
 <span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p class="is-size-6"> We additionally support direct retrieval from the MoleculeACE API for those datasets. You can call: </p>
+<p class="is-size-6"> We additionally support direct retrieval from the MoleculeACE API [2] for those datasets. You can call: </p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="n">data</span> <span class="o">=</span> <span class="n">MPC</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"INSERT_MOLECULEACE_HERE"</span>, <span class="n">get_from_gh</span> <span class="o">=</span> <span class="n">False</span> # name from MoleculeACE API https://github.com/molML/MoleculeACE?tab=readme-ov-file
+<span class="n">data</span> <span class="o">=</span> <span class="n">MPC</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"INSERT_MOLECULEACE_HERE"</span>, <span class="n">get_from_gh</span> <span class="o">=</span> <span class="n">False</span><span class="n">)</span> # name from MoleculeACE API https://github.com/molML/MoleculeACE?tab=readme-ov-file
 </code></pre></div></div>
 
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
 <p><a href="https://doi.org/10.21203/rs.3.rs-2988283/v1">[1] Wan Xiang, et al. “Online triplet contrastive learning enables efficient cliff awareness in molecular activity prediction” 28 June 2023, PREPRINT (Version 1) available at Research Square [https://doi.org/10.21203/rs.3.rs-2988283/v1].</a></p>
+<p><a href="https://github.com/molML/MoleculeACE?tab=readme-ov-file">[2] van Tilborg et al. "Exposing the Limitations of Molecular Machine Learning with Activity Cliffs.", Journal of Chemical Information and Modeling, 2022, 62 (23), 5938-5951. DOI: 10.1021/acs.jcim.2c01073.</a></p>
 
 <p class="is-size-6"> <strong> Dataset License: </strong><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 
