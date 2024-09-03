@@ -31,13 +31,17 @@ class MPC(single_pred_dataset.DataLoader):
         try:
             data.raise_for_status()
         except:
-            raise Exception("invalid link provided. choose a link for datasets in https://github.com/bidd-group/MPCD")
+            raise Exception(
+                "invalid link provided. choose a link for datasets in https://github.com/bidd-group/MPCD"
+            )
         self.data = pd.read_csv(io.StringIO(data.text))
         return self.data
 
     def get_data(self, link=None, get_from_gh=True):
         if (not get_from_gh) and link is None:
-            raise Exception("provide dataset github link from https://github.com/bidd-group/MPCD")
+            raise Exception(
+                "provide dataset github link from https://github.com/bidd-group/MPCD"
+            )
         elif get_from_gh:
             return self.get_from_gh(link)
         # support direct interfface with MoleculeACE API as well
