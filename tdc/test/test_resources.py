@@ -38,7 +38,6 @@ class TestCellXGene(unittest.TestCase):
             fmt="pyarrow",
             measurement_name="RNA")
         print(varpyarrow)
-        # assert isinstance(varpyarrow, SparseCOOTensor)
 
     def test_get_measurement_matrix(self):
         X = self.resource.query_measurement_matrix(
@@ -111,6 +110,13 @@ class TestPINNACLE(unittest.TestCase):
                 len(prots), num_targets)
         assert len(set(cells)) == num_cells, "{} vs {} for cell_types".format(
             len(cells), num_cells)
+
+    def test_exp_data(self):
+        from tdc.resource.pinnacle import PINNACLE
+        pinnacle = PINNACLE()
+        exp_data = pinnacle.get_exp_data()
+        assert isinstance(exp_data, DataFrame)
+        assert len(exp_data) > 0, "PINNACLE exp_data is empty"
 
     def tearDown(self):
         try:
