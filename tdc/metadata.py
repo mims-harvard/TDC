@@ -927,6 +927,16 @@ name2type = {
     "pinnacle_protein_embed": "pth",
     "pinnacle_labels_dict": "txt",
     "panpep": "tab",
+    "pinnacle_output1": "zip",
+    "pinnacle_output2": "zip",
+    "pinnacle_output3": "zip",
+    "pinnacle_output4": "zip",
+    "pinnacle_output5": "zip",
+    "pinnacle_output6": "zip",
+    "pinnacle_output7": "zip",
+    "pinnacle_output8": "zip",
+    "pinnacle_output9": "zip",
+    "pinnacle_output10": "zip",
 }
 
 name2id = {
@@ -1104,6 +1114,16 @@ name2id = {
     "pinnacle_protein_embed": 10407128,
     "pinnacle_labels_dict": 10409635,
     "panpep": 10428565,
+    "pinnacle_output1": 10431072,
+    "pinnacle_output2": 10431073,
+    "pinnacle_output3": 10431078,
+    "pinnacle_output4": 10431080,
+    "pinnacle_output5": 10431077,
+    "pinnacle_output6": 10431076,
+    "pinnacle_output7": 10431079,
+    "pinnacle_output8": 10431074,
+    "pinnacle_output9": 10431075,
+    "pinnacle_output10": 10431081,
 }
 
 oracle2type = {
