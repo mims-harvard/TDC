@@ -85,10 +85,14 @@ class PINNACLE:
         for file in file_list:
             os.remove(os.path.join("./data", file))
         print("downloading pinancle zip data...")
-        zip_data_download_wrapper(filename, "./data", ["pinnacle_output{}".format(x) for x in range(1,11)])
+        zip_data_download_wrapper(
+            filename, "./data",
+            ["pinnacle_output{}".format(x) for x in range(1, 11)])
         print("success!")
         # Get non-csv files and remove them
-        non_csv_files = [f for f in os.listdir("./data") if not f.endswith(".csv")]
+        non_csv_files = [
+            f for f in os.listdir("./data") if not f.endswith(".csv")
+        ]
         for x in non_csv_files:
             os.remove("./data/{}".format(x))
         # Get a list of all CSV files in the unzipped folder
@@ -112,6 +116,3 @@ class PINNACLE:
             x.append(df)
             os.remove("./data/{}".format(file))
         return pd.concat(x, axis=0, ignore_index=True)
-        
-        
-
