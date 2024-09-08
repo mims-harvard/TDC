@@ -38,11 +38,8 @@ class MPC(single_pred_dataset.DataLoader):
         return self.data
 
     def get_data(self, link=None, get_from_gh=True):
-        if (not get_from_gh) and link is None:
-            raise Exception(
-                "provide dataset github link from https://github.com/bidd-group/MPCD"
-            )
-        elif get_from_gh:
+        link = link if link is not None else self.name
+        if get_from_gh:
             return self.get_from_gh(link)
         # support direct interfface with MoleculeACE API as well
         from MoleculeACE import Data, Descriptors

@@ -124,6 +124,15 @@ class TestDataloader(unittest.TestCase):
                           pd.DataFrame)
         assert not splits["dev"]
 
+    def test_mpc(self):
+        from tdc.single_pred.mpc import MPC
+        Xs = MPC(name = "https://raw.githubusercontent.com/bidd-group/MPCD/main/dataset/ADMET/DeepDelta_benchmark/Caco2.csv")
+        Xs_split = Xs.get_split()
+        Xs_train = Xs_split["train"]
+        Xs_test = Xs_split["test"]
+        y_train_pIC50 = Xs_train["Y"]
+        y_test_pIC50 = Xs_test["Y"]
+
     def tearDown(self):
         try:
             print(os.getcwd())
