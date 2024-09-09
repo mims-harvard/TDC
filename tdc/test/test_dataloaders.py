@@ -126,7 +126,10 @@ class TestDataloader(unittest.TestCase):
 
     def test_mpc(self):
         from tdc.single_pred.mpc import MPC
-        Xs = MPC(name = "https://raw.githubusercontent.com/bidd-group/MPCD/main/dataset/ADMET/DeepDelta_benchmark/Caco2.csv")
+        Xs = MPC(
+            name=
+            "https://raw.githubusercontent.com/bidd-group/MPCD/main/dataset/ADMET/DeepDelta_benchmark/Caco2.csv"
+        )
         Xs_split = Xs.get_split()
         Xs_train = Xs_split["train"]
         Xs_test = Xs_split["test"]
