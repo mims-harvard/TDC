@@ -12,7 +12,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from . import single_pred_dataset
-from ..utils import print_sys, fuzzy_search, property_dataset_load
+from ..utils import create_fold_setting_cold, create_scaffold_split
 from ..metadata import dataset_names
 
 
@@ -21,6 +21,7 @@ class MPC(single_pred_dataset.DataLoader):
     def __init__(self, name, path="./data"):
         self.name = name
         self.data = None
+        self.is_molace = False
 
     def get_from_gh(self, link):
         import pandas as pd
@@ -37,15 +38,13 @@ class MPC(single_pred_dataset.DataLoader):
         self.data = pd.read_csv(io.StringIO(data.text))
         return self.data
 
-    def get_data(self, link=None, get_from_gh=True):
-        if (not get_from_gh) and link is None:
-            raise Exception(
-                "provide dataset github link from https://github.com/bidd-group/MPCD"
-            )
-        elif get_from_gh:
+    def get_data(self, link=None, get_from_gh=True, **kwargs):
+        link = link if link is not None else self.name
+        if get_from_gh:
             return self.get_from_gh(link)
         # support direct interfface with MoleculeACE API as well
         from MoleculeACE import Data, Descriptors
+        self.molace = True
         try:
             self.data = Data(self.name)
             self.data(Descriptors.SMILES)
@@ -55,8 +54,21 @@ class MPC(single_pred_dataset.DataLoader):
                 .format(self.name))
         return self.data
 
-    def get_split(self):
+    def get_split(self, method="scaffold", seed=42, frac=[0.7, 0.1, 0.2]):
         d = self.get_data()
+        if not self.is_molace:
+            if method == "scaffold":
+                return create_scaffold_split(d,
+                                             seed=seed,
+                                             frac=frac,
+                                             entity="SMILES")
+            elif method == "cold":
+                return create_fold_setting_cold(d,
+                                                seed=seed,
+                                                frac=frac,
+                                                entities="SMILES")
+            raise Exception(
+                "only scaffold or cold splits supported for the MPC task")
         train = pd.concat([d.x_train, d.y_train], axis=1)
         test = pd.concat([d.x_test, d.y_test], axis=1)
         return {
