@@ -63,27 +63,34 @@ class TestBenchmarkGroup(unittest.TestCase):
             self.assertTrue(my_group["name"] in results)
 
     def test_SCDTI_benchmark(self):
-        from tdc.resource.dataloader import DataLoader
-
-        data = DataLoader(name="opentargets_dti")
         group = scdti_group.SCDTIGroup()
-        train, val = group.get_train_valid_split()
-        assert len(val) == 0  # this benchmark has no validation set
-        # test simple preds
-        y_true = group.get_test()["Y"]
-        results = group.evaluate(y_true)
-        assert results[-1] == 1.0  # should be perfect F1 score
-        # assert it matches the opentargets official test scores
-        tst = data.get_split()["test"]["Y"]
+        train_val = group.get_train_valid_split()
+        assert "train" in train_val, "no training set"
+        assert "val" in train_val, "no validation set"
+        assert len(train_val["train"]) > 0, "no entries in training set"
+        tst = group.get_test()["test"]
+        tst["preds"] = tst["y"]  # switch predictions to ground truth
         results = group.evaluate(tst)
-        assert results[-1] == 1.0
-        zero_pred = [0] * len(y_true)
-        results = group.evaluate(zero_pred)
-        assert results[-1] != 1.0  # should not be perfect F1 score
-        many_results = group.evaluate_many([y_true] * 5)
-        assert "f1" in many_results
-        assert len(many_results["f1"]
-                  ) == 2  # should include mean and standard deviation
+        assert "IBD" in results, "missing ibd from diseases. got {}".format(
+            results.keys())
+        assert "RA" in results, "missing ra from diseases. got {}".format(
+            results.keys())
+        assert results["IBD"] == results[
+            "RA"], "both should be perfect scores but got IBD {} vs RA {}".format(
+                results["IBD"], results["RA"])  # both should be perfect scores
+        assert results["IBD"] - 1.0 < 0.000001  # should be a perfect score
+        many_results = group.evaluate_many([tst] * 5)
+        assert "IBD" in many_results, "missing ibd from diseases in evaluate many. got {}".format(
+            many_results.keys())
+        assert "RA" in many_results, "missing ra from diseases in evaluate many. got {}".format(
+            many_results.keys())
+        assert len(many_results["IBD"]) == len(
+            many_results["RA"]
+        ), "both diseases should include mean and standard deviation"
+        assert len(many_results["IBD"]
+                  ) == 2, "results should include mean and standard deviation"
+        assert many_results["IBD"][
+            0] - 1.0 < 0.000001, "should get perfect score"
 
     @unittest.skip(
         "counterfactual test is taking up too much memory"
