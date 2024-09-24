@@ -33,9 +33,9 @@ class PrimeKG(KnowledgeGraph):
 
         G = nx.Graph()
         for i in self.df.relation.unique():
-            G.add_edges_from(self.df[self.df.relation == i][["x_id",
-                                                             "y_id"]].values,
-                             relation=i)
+            G.add_edges_from(
+                self.df[self.df.relation == i][["x_name", "y_name"]].values,
+                relation=i)
         return G
 
     def get_features(self, feature_type):
