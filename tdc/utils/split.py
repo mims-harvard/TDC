@@ -351,8 +351,8 @@ def create_group_split(train_val, seed, holdout_frac, group_column):
         train_val_temp = train_val[train_val[group_column] == i]
         np.random.seed(seed)
         msk = np.random.rand(len(train_val_temp)) < (1 - holdout_frac)
-        train_df = pd.concat([train_df,train_val_temp[msk]], axis=0)
-        val_df = pd.concat([val_df,train_val_temp[~msk]], axis=0)
+        train_df = pd.concat([train_df, train_val_temp[msk]], axis=0)
+        val_df = pd.concat([val_df, train_val_temp[~msk]], axis=0)
 
     return {
         "train": train_df.reset_index(drop=True),
