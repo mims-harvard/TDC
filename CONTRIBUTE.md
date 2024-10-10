@@ -2,6 +2,11 @@
 
 Thanks for your interest in contributing to TDC!  TDC is a community driven effort. Currently, we are looking for contributions to enrich 1) dataset for existing therapeutics tasks; 2) new meaningful therapeutic task; 3) data functions; 4) leaderboards. Below are the guideline for contributing each of the above categories.
 
+## 0(NEW)
+We have new process for adding entries to the TDC leaderboard.
+
+Tentative instructions can be found at https://github.com/mims-harvard/tdc2website-flask/blob/main/README.md
+
 ## 0) Development Environment
 Before starting to contribute, we suggest you build an environment for TDC, which installs all dependencies, following the below command:
 
