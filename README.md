@@ -85,17 +85,6 @@ The core data loaders are lightweight with minimum dependency on external packag
 numpy, pandas, tqdm, scikit-learn, fuzzywuzzy, seaborn
 ```
 
-For utilities requiring extra dependencies, TDC prints installation instructions. To install full dependencies, please use the following `conda-forge` solution. 
-
-### Using `conda`
-
-Data functions for molecule oracles, scaffold split, etc., require certain packages like RDKit. To install those packages, use the following `conda` installation: 
-
-```bash
-conda install -c conda-forge pytdc
-```
-
-
 ## Tutorials
 
 We provide  tutorials to get started with TDC:
