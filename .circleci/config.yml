@@ -7,11 +7,11 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-3.9
+      - test-3.10
 jobs:
   test-3.9:
     docker:
-      - image: circleci/python:3.9
+      - image: circleci/python:3.10
 
     working_directory: ~/repo
 
@@ -25,6 +25,12 @@ jobs:
             - v1-py3-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
             - v1-py3-dependencies-
+
+      - run:
+          name: Install git-lfs
+          command: |
+            sudo apt-get install git-lfs
+            git lfs install
 
       - run:
           name: install dependencies

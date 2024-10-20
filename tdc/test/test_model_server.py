@@ -66,12 +66,6 @@ def get_ensembl_id_from_chembl_id(chembl_id):
     except Exception as e:
         return str(e)
 
-# # Example usage
-# chembl_id = "CHEMBL25"  # Replace with the actual ChEMBL ID
-# ensembl_id = get_ensembl_id_from_chembl_id(chembl_id)
-# print(ensembl_id)
-
-
 class TestModelServer(unittest.TestCase):
 
     def setUp(self):

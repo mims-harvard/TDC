@@ -40,8 +40,7 @@ dependencies:
     - torchvision==0.16.1
     - transformers==4.43.4
     - yapf==0.40.2
+    - git+https://github.com/amva13/geneformer.git@main#egg=geneformer
 
 variables:
   KMP_DUPLICATE_LIB_OK: "TRUE"
-
-# install geneformer via script https://github.com/jkobject/geneformer/tree/main
