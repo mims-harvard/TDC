@@ -2,9 +2,9 @@
 #
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 # Adapted from https://github.com/NeuralEnsemble/python-neo
-version: 3
+version: 2
 workflows:
-  version: 3
+  version: 2
   test:
     jobs:
       - test-3.9
