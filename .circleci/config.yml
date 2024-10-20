@@ -2,14 +2,14 @@
 #
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 # Adapted from https://github.com/NeuralEnsemble/python-neo
-version: 2
+version: 3
 workflows:
-  version: 2
+  version: 3
   test:
     jobs:
       - test-3.10
 jobs:
-  test-3.9:
+  test-3.10:
     docker:
       - image: circleci/python:3.10
 
