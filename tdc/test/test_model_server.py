@@ -14,16 +14,16 @@ sys.path.append(
 # TODO: add verification for the generation other than simple integration
 
 from tdc.resource import cellxgene_census
-from tdc.model_server.tokenizers.geneformer import GeneformerTokenizer 
-
+from tdc.model_server.tokenizers.geneformer import GeneformerTokenizer
 
 import requests
+
 
 def get_target_from_chembl(chembl_id):
     # Query ChEMBL API for target information
     chembl_url = f"https://www.ebi.ac.uk/chembl/api/data/target/{chembl_id}.json"
     response = requests.get(chembl_url)
-    
+
     if response.status_code == 200:
         data = response.json()
         # Extract UniProt ID from the ChEMBL target info
@@ -35,11 +35,12 @@ def get_target_from_chembl(chembl_id):
         raise ValueError(f"ChEMBL ID {chembl_id} not found or invalid.")
     return None
 
+
 def get_ensembl_from_uniprot(uniprot_id):
     # Query UniProt API to get Ensembl ID from UniProt ID
     uniprot_url = f"https://rest.uniprot.org/uniprotkb/{uniprot_id}.json"
     response = requests.get(uniprot_url)
-    
+
     if response.status_code == 200:
         data = response.json()
         # Extract Ensembl Gene ID from the cross-references
@@ -49,6 +50,7 @@ def get_ensembl_from_uniprot(uniprot_id):
     else:
         raise ValueError(f"UniProt ID {uniprot_id} not found or invalid.")
     return None
+
 
 def get_ensembl_id_from_chembl_id(chembl_id):
     try:
@@ -65,6 +67,7 @@ def get_ensembl_id_from_chembl_id(chembl_id):
         return f"Ensembl ID for ChEMBL ID {chembl_id}: {ensembl_id}"
     except Exception as e:
         return str(e)
+
 
 class TestModelServer(unittest.TestCase):
 
@@ -85,7 +88,8 @@ class TestModelServer(unittest.TestCase):
         adata = adata_flipped
         print("swap complete")
         print("adding ensembl ids...")
-        adata.var["ensembl_id"] = adata.var["chembl-ID"].apply(get_ensembl_id_from_chembl_id)
+        adata.var["ensembl_id"] = adata.var["chembl-ID"].apply(
+            get_ensembl_id_from_chembl_id)
         print("added ensembl_id column")
 
         print(type(adata.var))
@@ -96,7 +100,7 @@ class TestModelServer(unittest.TestCase):
         tokenizer = GeneformerTokenizer()
         print("testing tokenizer")
         x = tokenizer.tokenize_cell_vectors(adata)
-        assert x 
+        assert x
 
     def tearDown(self):
         try:
@@ -104,5 +108,3 @@ class TestModelServer(unittest.TestCase):
             shutil.rmtree(os.path.join(os.getcwd(), "data"))
         except:
             pass
-
-    
