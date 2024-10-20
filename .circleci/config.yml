@@ -7,9 +7,9 @@ workflows:
   version: 3
   test:
     jobs:
-      - test-3.10
+      - test-3.9
 jobs:
-  test-3.10:
+  test-3.9:
     docker:
       - image: circleci/python:3.10
 
