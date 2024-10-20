@@ -29,7 +29,7 @@ class GeneformerTokenizer(TranscriptomeTokenizer):
         self.genelist_dict = dict(zip(self.gene_keys, [True] * len(self.gene_keys)))
 
     @classmethod
-    def rank_genes(gene_vector, gene_tokens):
+    def rank_genes(cls, gene_vector, gene_tokens):
         """
         Rank gene expression vector.
         """
@@ -84,14 +84,10 @@ class GeneformerTokenizer(TranscriptomeTokenizer):
         for i in range(0, len(filter_pass_loc), chunk_size):
             idx = filter_pass_loc[i:i+chunk_size]
 
-            print(adata[idx].obs.columns)
-
             n_counts = adata[idx].obs['ncounts'].values[:, None]
             X_view = adata[idx, coding_miRNA_loc].X
             X_norm = (X_view / n_counts * target_sum / norm_factor_vector)
-            # print(type(adata[idx].X))
-            # X_norm = adata[idx].X["normalized"]
-            # X_norm = sp.csr_matrix(X_norm)
+            X_norm = sp.csr_matrix(X_norm)
 
             tokenized_cells += [
                 self.rank_genes(X_norm[i].data, coding_miRNA_tokens[X_norm[i].indices])
