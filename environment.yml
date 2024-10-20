@@ -12,7 +12,7 @@ dependencies:
   - mygene=3.2.2
   - numpy=1.26.4
   - openpyxl=3.0.10
-  - python=3.9.13
+  - python=3.10
   - pip=23.3.1
   - pandas=2.1.4
   - requests=2.31.0
@@ -40,6 +40,7 @@ dependencies:
     - torchvision==0.16.1
     - transformers==4.43.4
     - yapf==0.40.2
+    - git+https://github.com/amva13/geneformer.git@main#egg=geneformer
 
 variables:
   KMP_DUPLICATE_LIB_OK: "TRUE"
