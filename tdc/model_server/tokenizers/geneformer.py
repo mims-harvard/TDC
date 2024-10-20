@@ -9,7 +9,7 @@ class GeneformerTokenizer(TranscriptomeTokenizer):
     """
     Uses Geneformer Utils to parse zero-shot model server requests for tokenizing single-cell gene expression data.
 
-    Geneformer tokenizer source code: https://github.com/jkobject/geneformer/blob/main/geneformer/tokenizer.py
+    Tokenizer source code: https://github.com/amva13/geneformer/blob/main/geneformer/tokenizer.py
     """
 
     def __init__(
