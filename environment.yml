@@ -12,7 +12,7 @@ dependencies:
   - mygene=3.2.2
   - numpy=1.26.4
   - openpyxl=3.0.10
-  - python=3.9.13
+  - python=3.10
   - pip=23.3.1
   - pandas=2.1.4
   - requests=2.31.0
@@ -43,3 +43,5 @@ dependencies:
 
 variables:
   KMP_DUPLICATE_LIB_OK: "TRUE"
+
+# install geneformer via script https://github.com/jkobject/geneformer/tree/main

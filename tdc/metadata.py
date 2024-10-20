@@ -937,6 +937,9 @@ name2type = {
     "pinnacle_output8": "zip",
     "pinnacle_output9": "zip",
     "pinnacle_output10": "zip",
+    "geneformer_gene_median_dictionary": "pkl",
+    "geneformer_gene_name_id_dict": "pkl",
+    "geneformer_token_dictionary": "pkl",
 }
 
 name2id = {
@@ -1124,6 +1127,9 @@ name2id = {
     "pinnacle_output8": 10431074,
     "pinnacle_output9": 10431075,
     "pinnacle_output10": 10431081,
+    "geneformer_gene_median_dictionary": 10626278,
+    "geneformer_gene_name_id_dict": 10626276,
+    "geneformer_token_dictionary": 10626277,
 }
 
 oracle2type = {
