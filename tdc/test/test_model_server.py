@@ -100,7 +100,21 @@ class TestModelServer(unittest.TestCase):
         tokenizer = GeneformerTokenizer()
         print("testing tokenizer")
         x = tokenizer.tokenize_cell_vectors(adata)
-        assert x
+        assert x[0]
+
+        # test Geneformer can serve the request
+        cells = x[0]
+        print("cells is", len(cells), cells)
+        assert cells[0]
+        assert len(cells[0]) > 0
+        from tdc import tdc_hf_interface
+        import torch
+        geneformer = tdc_hf_interface("Geneformer")
+        model = geneformer.load()
+        out = model(torch.tensor(cells))
+        assert out
+        assert out[0]
+        assert len(out[0]) > 0
 
     def tearDown(self):
         try:
