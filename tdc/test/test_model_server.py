@@ -6,6 +6,7 @@ import sys
 import unittest
 import shutil
 import pytest
+import mygene
 
 # temporary solution for relative imports in case TDC is not installed
 # if TDC is installed, no need to use the following line
@@ -19,9 +20,14 @@ from tdc.model_server.tokenizers.geneformer import GeneformerTokenizer
 import requests
 
 
+def get_ensembl_id(gene_symbols):
+    mg = mygene.MyGeneInfo()
+    return mg.querymany(gene_symbols, scopes='symbol', fields='ensembl.gene', species='human')
+
+
 def get_target_from_chembl(chembl_id):
     # Query ChEMBL API for target information
-    chembl_url = f"https://www.ebi.ac.uk/chembl/api/data/target/{chembl_id}.json"
+    chembl_url = f"https://www.ebi.ac.uk/chembl/api/data/{chembl_id}.json"
     response = requests.get(chembl_url)
 
     if response.status_code == 200:
@@ -76,26 +82,15 @@ class TestModelServer(unittest.TestCase):
         self.resource = cellxgene_census.CensusResource()
 
     def testGeneformerTokenizer(self):
-        import anndata
-        from tdc.multi_pred.perturboutcome import PerturbOutcome
-        test_loader = PerturbOutcome(
-            name="scperturb_drug_AissaBenevolenskaya2021")
-        adata = test_loader.adata
-        print("swapping obs and var because scperturb violated convention...")
-        adata_flipped = anndata.AnnData(adata.X.T)
-        adata_flipped.obs = adata.var
-        adata_flipped.var = adata.obs
-        adata = adata_flipped
-        print("swap complete")
-        print("adding ensembl ids...")
-        adata.var["ensembl_id"] = adata.var["chembl-ID"].apply(
-            get_ensembl_id_from_chembl_id)
-        print("added ensembl_id column")
 
-        print(type(adata.var))
-        print(adata.var.columns)
-        print(type(adata.obs))
-        print(adata.obs.columns)
+        adata = self.resource.get_anndata(
+            var_value_filter = "feature_id in ['ENSG00000161798', 'ENSG00000188229']",
+            obs_value_filter = "sex == 'female' and cell_type in ['microglial cell', 'neuron']",
+            column_names = {"obs": ["assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease"]},
+        )
+        # adata.obs["ncounts"] = [2] * len(adata.obs)
+        raise Exception("obs", adata.obs.columns, "var", adata.var.columns)
+        adata.obs["ncounts"] = [2] * len(adata.obs)
         print("initializing tokenizer")
         tokenizer = GeneformerTokenizer()
         print("testing tokenizer")
