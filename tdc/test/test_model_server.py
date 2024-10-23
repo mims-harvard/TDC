@@ -88,8 +88,6 @@ class TestModelServer(unittest.TestCase):
             obs_value_filter = "sex == 'female' and cell_type in ['microglial cell', 'neuron']",
             column_names = {"obs": ["assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease"]},
         )
-        # adata.obs["ncounts"] = [2] * len(adata.obs)
-        # raise Exception("obs", adata.obs.columns, "var", adata.var.columns)
         print("initializing tokenizer")
         tokenizer = GeneformerTokenizer()
         print("testing tokenizer")
@@ -97,17 +95,16 @@ class TestModelServer(unittest.TestCase):
         assert x[0]
 
         # test Geneformer can serve the request
-        cells = x[0]
-        assert cells[0]
-        assert len(cells[0]) > 0
+        cells = x[0],
+        assert cells, "FAILURE: cells false-like. Value is = {}".format(cells)
+        assert len(cells) > 0, "FAILURE: length of cells <= 0 {}".format(cells)
         from tdc import tdc_hf_interface
         import torch
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
         out = model(torch.tensor(cells).int())
-        assert out
-        assert out[0]
-        assert len(out[0]) > 0
+        assert out, "FAILURE: Geneformer output is false-like. Value = {}".format(out)
+        assert len(out) == len(cells), "FAILURE: Geneformer output and cells input don't have the same length. {} vs {}".format(len(out), len(cells))
 
     def tearDown(self):
         try:
