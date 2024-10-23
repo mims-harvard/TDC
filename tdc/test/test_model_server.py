@@ -89,12 +89,26 @@ class TestModelServer(unittest.TestCase):
             column_names = {"obs": ["assay", "cell_type", "tissue", "tissue_general", "suspension_type", "disease"]},
         )
         # adata.obs["ncounts"] = [2] * len(adata.obs)
-        raise Exception("obs", adata.obs.columns, "var", adata.var.columns)
-        adata.obs["ncounts"] = [2] * len(adata.obs)
+        # raise Exception("obs", adata.obs.columns, "var", adata.var.columns)
+        """
+         Exception: ('obs', Index(['soma_joinid', 'dataset_id', 'assay', 'assay_ontology_term_id',
+       'cell_type', 'cell_type_ontology_term_id', 'development_stage',
+       'development_stage_ontology_term_id', 'disease',
+       'disease_ontology_term_id', 'donor_id', 'is_primary_data',
+       'observation_joinid', 'self_reported_ethnicity',
+       'self_reported_ethnicity_ontology_term_id', 'sex',
+       'sex_ontology_term_id', 'suspension_type', 'tissue',
+       'tissue_ontology_term_id', 'tissue_type', 'tissue_general',
+       'tissue_general_ontology_term_id', 'raw_sum', 'nnz', 'raw_mean_nnz',
+       'raw_variance_nnz', 'n_measured_vars'],
+      dtype='object'), 'var', Index(['soma_joinid', 'feature_id', 'feature_name', 'feature_length', 'nnz',
+       'n_measured_obs'],
+      dtype='object'))
+        """
         print("initializing tokenizer")
         tokenizer = GeneformerTokenizer()
         print("testing tokenizer")
-        x = tokenizer.tokenize_cell_vectors(adata)
+        x = tokenizer.tokenize_cell_vectors(adata, ensembl_id="feature_id", ncounts="n_measured_vars")
         assert x[0]
 
         # test Geneformer can serve the request

@@ -53,7 +53,8 @@ class GeneformerTokenizer(TranscriptomeTokenizer):
                               cell_vector_adata,
                               target_sum=10_000,
                               chunk_size=512,
-                              ensembl_id="ensembl_id"):
+                              ensembl_id="ensembl_id",
+                              ncounts="ncounts"):
         """
         Tokenizing single-cell gene expression vectors formatted as anndata types.
 
@@ -96,7 +97,7 @@ class GeneformerTokenizer(TranscriptomeTokenizer):
         for i in range(0, len(filter_pass_loc), chunk_size):
             idx = filter_pass_loc[i:i + chunk_size]
 
-            n_counts = adata[idx].obs['ncounts'].values[:, None]
+            n_counts = adata[idx].obs[ncounts].values[:, None]
             X_view = adata[idx, coding_miRNA_loc].X
             X_norm = (X_view / n_counts * target_sum / norm_factor_vector)
             X_norm = sp.csr_matrix(X_norm)
