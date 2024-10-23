@@ -102,7 +102,9 @@ class TestModelServer(unittest.TestCase):
         import torch
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
-        out = model(torch.tensor(cells).int())
+        input_tensor = torch.tensor(cells).int()
+        raise Exception("shape is", input_tensor.shape, "values are\n", input_tensor)
+        out = model(input_tensor)
         assert out, "FAILURE: Geneformer output is false-like. Value = {}".format(out)
         assert len(out) == len(cells), "FAILURE: Geneformer output and cells input don't have the same length. {} vs {}".format(len(out), len(cells))
 
