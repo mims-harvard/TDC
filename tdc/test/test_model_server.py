@@ -103,15 +103,15 @@ class TestModelServer(unittest.TestCase):
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
         input_tensor = torch.tensor(cells)
-        input_tensor = torch.squeeze(input_tensor)
-        x = input_tensor.shape[0]
-        y = input_tensor.shape[1]
-        input_tensor = input_tensor.reshape(x, y)
+        input_tensor_squeezed = torch.squeeze(input_tensor)
+        x = input_tensor_squeezed.shape[0]
+        y = input_tensor_squeezed.shape[1]
         out = None  # try-except block
         try:
-            out = model(input_tensor)
+            input_tensor_squeezed = input_tensor_squeezed.reshape(x, y)
+            out = model(input_tensor_squeezed)
         except Exception as e:
-            raise Exception("shape is", input_tensor.shape, "exception was: {}".format(e), "values are\n", input_tensor)
+            raise Exception("shape is", input_tensor.shape, "exception was: {}".format(e), "input_tensor_squeezed is\n", input_tensor, "\n\ninput_tensor normal is: {}".format(input_tensor))
         assert out, "FAILURE: Geneformer output is false-like. Value = {}".format(out)
         assert out.shape[0] == input_tensor.shape[0], "FAILURE: Geneformer output and input tensor input don't have the same length. {} vs {}".format(out.shape[0], input_tensor.shape[0])
         assert out.shape[0] == len(cells), "FAILURE: Geneformer output and tokenized cells don't have the same length. {} vs {}".format(out.shape[0], len(cells))
