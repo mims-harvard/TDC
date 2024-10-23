@@ -90,21 +90,6 @@ class TestModelServer(unittest.TestCase):
         )
         # adata.obs["ncounts"] = [2] * len(adata.obs)
         # raise Exception("obs", adata.obs.columns, "var", adata.var.columns)
-        """
-         Exception: ('obs', Index(['soma_joinid', 'dataset_id', 'assay', 'assay_ontology_term_id',
-       'cell_type', 'cell_type_ontology_term_id', 'development_stage',
-       'development_stage_ontology_term_id', 'disease',
-       'disease_ontology_term_id', 'donor_id', 'is_primary_data',
-       'observation_joinid', 'self_reported_ethnicity',
-       'self_reported_ethnicity_ontology_term_id', 'sex',
-       'sex_ontology_term_id', 'suspension_type', 'tissue',
-       'tissue_ontology_term_id', 'tissue_type', 'tissue_general',
-       'tissue_general_ontology_term_id', 'raw_sum', 'nnz', 'raw_mean_nnz',
-       'raw_variance_nnz', 'n_measured_vars'],
-      dtype='object'), 'var', Index(['soma_joinid', 'feature_id', 'feature_name', 'feature_length', 'nnz',
-       'n_measured_obs'],
-      dtype='object'))
-        """
         print("initializing tokenizer")
         tokenizer = GeneformerTokenizer()
         print("testing tokenizer")
@@ -113,14 +98,13 @@ class TestModelServer(unittest.TestCase):
 
         # test Geneformer can serve the request
         cells = x[0]
-        print("cells is", len(cells), cells)
         assert cells[0]
         assert len(cells[0]) > 0
         from tdc import tdc_hf_interface
         import torch
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
-        out = model(torch.tensor(cells))
+        out = model(torch.tensor(cells).int())
         assert out
         assert out[0]
         assert len(out[0]) > 0
