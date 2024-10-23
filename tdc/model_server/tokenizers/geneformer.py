@@ -102,11 +102,11 @@ class GeneformerTokenizer(TranscriptomeTokenizer):
             X_norm = (X_view / n_counts * target_sum / norm_factor_vector)
             X_norm = sp.csr_matrix(X_norm)
 
-            tokenized_cells += [
+            tokenized_cells.append([
                 self.rank_genes(X_norm[i].data,
                                 coding_miRNA_tokens[X_norm[i].indices])
                 for i in range(X_norm.shape[0])
-            ]
+            ])
 
             # add custom attributes for subview to dict
             if self.custom_attr_name_dict is not None:
