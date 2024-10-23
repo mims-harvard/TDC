@@ -102,7 +102,7 @@ class TestModelServer(unittest.TestCase):
         import torch
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
-        input_tensor = torch.tensor(cells).int()
+        input_tensor = torch.tensor(cells)
         raise Exception("shape is", input_tensor.shape, "values are\n", input_tensor)
         out = model(input_tensor)
         assert out, "FAILURE: Geneformer output is false-like. Value = {}".format(out)
