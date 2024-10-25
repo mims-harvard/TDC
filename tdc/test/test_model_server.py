@@ -103,7 +103,8 @@ class TestModelServer(unittest.TestCase):
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
         tokenized_data = tokenizer.create_dataset(cells, metadata)
-        input_tensor = torch.squeeze(tokenized_data)
+        input_tensor = torch.tensor(tokenized_data)
+        input_tensor = torch.squeeze(input_tensor)
         try:
             out = model(tokenized_data)
         except Exception as e:
