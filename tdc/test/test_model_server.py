@@ -99,11 +99,15 @@ class TestModelServer(unittest.TestCase):
         assert cells, "FAILURE: cells false-like. Value is = {}".format(cells)
         assert len(cells) > 0, "FAILURE: length of cells <= 0 {}".format(cells)
         from tdc import tdc_hf_interface
-        # import torch
+        import torch
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
         tokenized_data = tokenizer.create_dataset(cells, metadata)
-        out = model(tokenized_data)
+        input_tensor = torch.squeeze(tokenized_data)
+        try:
+            out = model(tokenized_data)
+        except Exception as e:
+            raise Exception("tensor shape is", input_tensor.shape, "exception was:", e)
         # input_tensor = torch.tensor(cells)
         # input_tensor_squeezed = torch.squeeze(input_tensor)
         # x = input_tensor_squeezed.shape[0]
