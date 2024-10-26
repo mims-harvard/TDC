@@ -106,6 +106,7 @@ class TestModelServer(unittest.TestCase):
         input_tensor = torch.tensor(cells)
         input_tensor = torch.squeeze(input_tensor)
         try:
+            input_tensor.squeeze(2)  # last dim is zero
             out = model(input_tensor)
         except Exception as e:
             raise Exception("tensor shape is", input_tensor.shape, "exception was:", e)
