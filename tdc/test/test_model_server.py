@@ -118,13 +118,15 @@ class TestModelServer(unittest.TestCase):
                             out = np.append(out, 0)
                     cells[idx][j] = out
             if len(cells[idx]) < 512: # batch size
-                out = None
-                for _ in range(512 - len(cells[idx])): # pad with zero vectors if dims unfulfilled
-                    if out is None:
-                        out = np.append(cells[idx], [0,0])
-                    else:
-                        out = np.append(out, [0,0])
-                cells[idx] = out
+                array = cells[idx]
+                # Calculate how many rows need to be added
+                n_rows_to_add = 512 - len(array)
+
+                # Create a padding array with [0, 0] for the remaining rows
+                padding = np.tile([0, 0], (n_rows_to_add, 1))
+
+                # Concatenate the original array with the padding array
+                cells[idx] = np.vstack((array, padding))
 
         input_tensor = torch.tensor(cells)
         # input_tensor = torch.squeeze(input_tensor)
