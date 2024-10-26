@@ -130,12 +130,13 @@ class TestModelServer(unittest.TestCase):
 
         input_tensor = torch.tensor(cells)
         # input_tensor = torch.squeeze(input_tensor)
+        out = []
         try:
-            # input_tensor.squeeze(2)  # last dim is zero
-            out = model(input_tensor)
+            for batch in input_tensor:
+                out.append(model(batch))
         except Exception as e:
             raise Exception("tensor shape is", input_tensor.shape, "exception was:", e, "\n cells was\n", cells)
-            # raise Exception(e)
+        
         # input_tensor = torch.tensor(cells)
         # input_tensor_squeezed = torch.squeeze(input_tensor)
         # x = input_tensor_squeezed.shape[0]
@@ -147,8 +148,8 @@ class TestModelServer(unittest.TestCase):
         # except Exception as e:
         #     raise Exception("tensor shape is", input_tensor.shape, "exception was: {}".format(e), "input_tensor_squeezed is\n", input_tensor, "\n\ninput_tensor normal is: {}".format(input_tensor))
         assert out, "FAILURE: Geneformer output is false-like. Value = {}".format(out)
-        assert out.shape[0] == input_tensor.shape[0], "FAILURE: Geneformer output and input tensor input don't have the same length. {} vs {}".format(out.shape[0], input_tensor.shape[0])
-        assert out.shape[0] == len(cells), "FAILURE: Geneformer output and tokenized cells don't have the same length. {} vs {}".format(out.shape[0], len(cells))
+        assert len(out) == input_tensor.shape[0], "FAILURE: Geneformer output and input tensor input don't have the same length. {} vs {}".format(len(out), input_tensor.shape[0])
+        assert len(out) == len(cells), "FAILURE: Geneformer output and tokenized cells don't have the same length. {} vs {}".format(len(out), len(cells))
 
     def tearDown(self):
         try:
