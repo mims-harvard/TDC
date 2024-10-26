@@ -102,14 +102,14 @@ class TestModelServer(unittest.TestCase):
         import torch
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
-        tokenized_data = tokenizer.create_dataset(cells, metadata)
-        # input_tensor = torch.tensor(tokenized_data)
-        # input_tensor = torch.squeeze(input_tensor)
+        # tokenized_data = tokenizer.create_dataset(cells, metadata)
+        input_tensor = torch.tensor(cells)
+        input_tensor = torch.squeeze(input_tensor)
         try:
-            out = model(tokenized_data)
+            out = model(input_tensor)
         except Exception as e:
-            # raise Exception("tensor shape is", input_tensor.shape, "exception was:", e)
-            raise Exception(e)
+            raise Exception("tensor shape is", input_tensor.shape, "exception was:", e)
+            # raise Exception(e)
         # input_tensor = torch.tensor(cells)
         # input_tensor_squeezed = torch.squeeze(input_tensor)
         # x = input_tensor_squeezed.shape[0]
