@@ -1,11 +1,10 @@
 import numpy as np
 import scipy.sparse as sp
 
-from geneformer import TranscriptomeTokenizer
 from ...utils.load import pd_load, download_wrapper
 
 
-class GeneformerTokenizer(TranscriptomeTokenizer):
+class GeneformerTokenizer:
     """
     Uses Geneformer Utils to parse zero-shot model server requests for tokenizing single-cell gene expression data.
 

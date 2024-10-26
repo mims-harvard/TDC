@@ -95,7 +95,7 @@ class TestModelServer(unittest.TestCase):
         assert x[0]
 
         # test Geneformer can serve the request
-        cells, metadata = x
+        cells, _ = x
         assert cells, "FAILURE: cells false-like. Value is = {}".format(cells)
         assert len(cells) > 0, "FAILURE: length of cells <= 0 {}".format(cells)
         from tdc import tdc_hf_interface
