@@ -104,13 +104,28 @@ class TestModelServer(unittest.TestCase):
         geneformer = tdc_hf_interface("Geneformer")
         model = geneformer.load()
         # tokenized_data = tokenizer.create_dataset(cells, metadata)
-        print("using very few genes for these test cases so expecting empties... let's pad/remove just for the test case...")
+        print("using very few genes for these test cases so expecting empties... let's pad...")
         for idx in range(len(cells)):
             x = cells[idx]
             for j in range(len(x)):
                 v = x[j]
                 if len(v) < 2:
-                    cells[idx][j] = [16162, 10576]  # confirmed tokenizer values from pkl dict
+                    out = None
+                    for _ in range(2-len(v)):
+                        if out is None:
+                            out = np.append(v, 0)  # pad with 0
+                        else:
+                            out = np.append(out, 0)
+                    cells[idx][j] = out
+            if len(cells[idx]) < 512: # batch size
+                out = None
+                for _ in range(512 - len(cells[idx])): # pad with zero vectors if dims unfulfilled
+                    if out is None:
+                        out = np.append(cells[idx], [0,0])
+                    else:
+                        out = np.append(out, [0,0])
+                cells[idx] = out
+
         input_tensor = torch.tensor(cells)
         # input_tensor = torch.squeeze(input_tensor)
         try:
