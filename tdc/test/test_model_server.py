@@ -7,6 +7,7 @@ import unittest
 import shutil
 import pytest
 import mygene
+import numpy as np
 
 # temporary solution for relative imports in case TDC is not installed
 # if TDC is installed, no need to use the following line
@@ -106,10 +107,10 @@ class TestModelServer(unittest.TestCase):
         print("using very few genes for these test cases so expecting empties... let's pad/remove just for the test case...")
         for idx in range(len(cells)):
             x = cells[idx]
-            if len(x)<2:
-                for _ in range(2-len(x)):
-                    x.append(1)
-            cells[idx] = x
+            for j in range(len(x)):
+                v = x[j]
+                if len(v) < 2:
+                    cells[idx][j] = [16162, 10576]  # confirmed tokenizer values from pkl dict
         input_tensor = torch.tensor(cells)
         # input_tensor = torch.squeeze(input_tensor)
         try:
