@@ -1,11 +1,10 @@
 import numpy as np
 import scipy.sparse as sp
 
-from geneformer import TranscriptomeTokenizer
 from ...utils.load import pd_load, download_wrapper
 
 
-class GeneformerTokenizer(TranscriptomeTokenizer):
+class GeneformerTokenizer:
     """
     Uses Geneformer Utils to parse zero-shot model server requests for tokenizing single-cell gene expression data.
 
@@ -53,7 +52,8 @@ class GeneformerTokenizer(TranscriptomeTokenizer):
                               cell_vector_adata,
                               target_sum=10_000,
                               chunk_size=512,
-                              ensembl_id="ensembl_id"):
+                              ensembl_id="ensembl_id",
+                              ncounts="ncounts"):
         """
         Tokenizing single-cell gene expression vectors formatted as anndata types.
 
@@ -96,16 +96,16 @@ class GeneformerTokenizer(TranscriptomeTokenizer):
         for i in range(0, len(filter_pass_loc), chunk_size):
             idx = filter_pass_loc[i:i + chunk_size]
 
-            n_counts = adata[idx].obs['ncounts'].values[:, None]
+            n_counts = adata[idx].obs[ncounts].values[:, None]
             X_view = adata[idx, coding_miRNA_loc].X
             X_norm = (X_view / n_counts * target_sum / norm_factor_vector)
             X_norm = sp.csr_matrix(X_norm)
 
-            tokenized_cells += [
+            tokenized_cells.append([
                 self.rank_genes(X_norm[i].data,
                                 coding_miRNA_tokens[X_norm[i].indices])
                 for i in range(X_norm.shape[0])
-            ]
+            ])
 
             # add custom attributes for subview to dict
             if self.custom_attr_name_dict is not None:
