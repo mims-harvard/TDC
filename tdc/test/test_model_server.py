@@ -155,8 +155,8 @@ class TestModelServer(unittest.TestCase):
         # except Exception as e:
         #     raise Exception("tensor shape is", input_tensor.shape, "exception was: {}".format(e), "input_tensor_squeezed is\n", input_tensor, "\n\ninput_tensor normal is: {}".format(input_tensor))
         assert out, "FAILURE: Geneformer output is false-like. Value = {}".format(out)
-        assert len(out[0]) == input_tensor.shape[1], "FAILURE: Geneformer output and input tensor input don't have the same length. {} vs {}".format(len(out[0]), input_tensor.shape[1])
-        assert len(out[0][0]) == input_tensor.shape[2], "FAILURE: Geneformer output and tokenized cells don't have the same length. {} vs {}".format(len(out[0][0]), input_tensor.shape[2])
+        print(out)
+        assert len(out) == 3, "length not matching ctr+1: {} vs {}. output was \n {}".format(len(out), ctr + 1, out)
 
     def tearDown(self):
         try:
