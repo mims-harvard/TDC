@@ -40,7 +40,6 @@ dependencies:
     - torchvision==0.16.1
     - transformers==4.43.4
     - yapf==0.40.2
-    - git+https://huggingface.co/ctheodoris/Geneformer.git@main#egg=geneformer
 
 variables:
   KMP_DUPLICATE_LIB_OK: "TRUE"
