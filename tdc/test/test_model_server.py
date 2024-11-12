@@ -154,7 +154,9 @@ class TestModelServer(unittest.TestCase):
                 # build an attention mask
                 attention_mask = torch.tensor(
                     [[x[0] != 0, x[1] != 0] for x in batch])
-                outputs = model(batch, attention_mask=attention_mask)
+                outputs = model(batch,
+                                attention_mask=attention_mask,
+                                output_hidden_states=True)
                 layer_to_quant = quant_layers(model) + (
                     -1
                 )  # TODO note this can be parametrized to either 0 (extract last embedding layer) or -1 (second-to-last which is more generalized)
