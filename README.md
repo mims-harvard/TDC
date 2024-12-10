@@ -234,7 +234,7 @@ For more information, visit [here](https://tdcommons.ai/benchmark/overview/).
 
 ## Cite Us
 
-If you find Therapeutics Data Commons useful, cite our [latest preprint](https://www.biorxiv.org/content/10.1101/2024.06.12.598655v2), our [NeurIPS paper](https://openreview.net/pdf?id=8nvgnORnoWr), and [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2) :
+If you find Therapeutics Data Commons useful, cite our [NeurIPS paper](https://openreview.net/forum?id=kL8dlYp6IM), and [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2) :
 
 ```
 @inproceedings{
@@ -244,16 +244,6 @@ author={Alejandro Velez-Arce and Kexin Huang and Michelle M Li and xiang lin and
 booktitle={NeurIPS 2024 Workshop on AI for New Drug Modalities},
 year={2024},
 url={https://openreview.net/forum?id=kL8dlYp6IM}
-}
-```
-
-```
-@article{Huang2021tdc,
-  title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development},
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
-          Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
-  journal={Proceedings of Neural Information Processing Systems, NeurIPS Datasets and Benchmarks},
-  year={2021}
 }
 ```
 
