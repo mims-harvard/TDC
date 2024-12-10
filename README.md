@@ -237,16 +237,13 @@ For more information, visit [here](https://tdcommons.ai/benchmark/overview/).
 If you find Therapeutics Data Commons useful, cite our [latest preprint](https://www.biorxiv.org/content/10.1101/2024.06.12.598655v2), our [NeurIPS paper](https://openreview.net/pdf?id=8nvgnORnoWr), and [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2) :
 
 ```
-@article {Velez-Arce2024tdc,
-	author = {Velez-Arce, Alejandro and Huang, Kexin and Li, Michelle and Lin, Xiang and Gao, Wenhao and Fu, Tianfan and Kellis, Manolis and Pentelute, Bradley L. and Zitnik, Marinka},
-	title = {TDC-2: Multimodal Foundation for Therapeutic Science},
-	elocation-id = {2024.06.12.598655},
-	year = {2024},
-	doi = {10.1101/2024.06.12.598655},
-	publisher = {Cold Spring Harbor Laboratory},
-	URL = {https://www.biorxiv.org/content/early/2024/06/21/2024.06.12.598655},
-	eprint = {https://www.biorxiv.org/content/early/2024/06/21/2024.06.12.598655.full.pdf},
-	journal = {bioRxiv}
+@inproceedings{
+velez-arce2024signals,
+title={Signals in the Cells: Multimodal and Contextualized Machine Learning Foundations for Therapeutics},
+author={Alejandro Velez-Arce and Kexin Huang and Michelle M Li and xiang lin and Wenhao Gao and Bradley Pentelute and Tianfan Fu and Manolis Kellis and Marinka Zitnik},
+booktitle={NeurIPS 2024 Workshop on AI for New Drug Modalities},
+year={2024},
+url={https://openreview.net/forum?id=kL8dlYp6IM}
 }
 ```
 
