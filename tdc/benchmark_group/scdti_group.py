@@ -62,10 +62,10 @@ class SCDTIGroup(BenchmarkGroup):
     def get_test(self, seed=1):
         return {"test": self.p.get_exp_data(seed=seed, split="test")}
 
-    def evaluate(self, y_pred, k=5, top_k=20):
+    def evaluate(self, y_pred, k=5, top_k=20, seed=1):
         from numpy import mean
         from sklearn.metrics import roc_auc_score
-        y_true = self.get_test()["test"]
+        y_true = self.get_test(seed=seed)["test"]
         assert "preds" in y_pred.columns, "require 'preds' prediction label in input df"
         assert "cell_type_label" in y_pred.columns, "require cell_type_label in input df"
         assert "disease" in y_pred.columns, "require 'disease' in input df"
@@ -117,7 +117,7 @@ class SCDTIGroup(BenchmarkGroup):
             results[d] = mean(topk_cells)
         return results
 
-    def evaluate_many(self, preds: list):
+    def evaluate_many(self, preds: list, seed=1):
         from numpy import mean, std
         assert type(
             preds
@@ -126,7 +126,7 @@ class SCDTIGroup(BenchmarkGroup):
             raise Exception(
                 "Run your model on at least 5 seeds to compare results and provide your outputs in preds."
             )
-        evals = [self.evaluate(x) for x in preds]
+        evals = [self.evaluate(x, seed=seed) for x in preds]
         diseases = preds[0]["disease"].unique()
         return {
             d: [mean([x[d] for x in evals]),
