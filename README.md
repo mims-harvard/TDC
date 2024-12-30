@@ -16,9 +16,9 @@
 [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
 
-[**Website**](https://tdcommons.ai) | [**Nature Chemical Biology 2022 Paper**](https://www.nature.com/articles/s41589-022-01131-2) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [**TDC Documentation**](https://tdc.readthedocs.io/) | [**Contribution Guidelines**](CONTRIBUTE.md)
+[**Website**](https://tdcommons.ai) | [**NeurIPS 2024 AIDrugX Paper**](https://openreview.net/forum?id=kL8dlYp6IM) | [**Nature Chemical Biology 2022 Paper**](https://www.nature.com/articles/s41589-022-01131-2) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [**TDC Documentation**](https://tdc.readthedocs.io/) | [**Contribution Guidelines**](CONTRIBUTE.md)
 
-Artificial intelligence is poised to reshape therapeutic science. **Therapeutics Data Commons** is a coordinated initiative to access and evaluate artificial intelligence capability across therapeutic modalities and stages of discovery, supporting the development of AI methods, with a strong bent towards establishing the foundation of which AI methods are most suitable for drug discovery applications and why.
+Artificial intelligence is poised to reshape therapeutic science. **Therapeutics Data Commons** is a coordinated initiative to access and evaluate artificial intelligence capability across therapeutic modalities and stages of discovery. It supports the development of AI methods and aims to establish the foundation of which AI methods are most suitable for drug discovery applications and why.
 
 Researchers across disciplines can use TDC for numerous applications. AI-solvable tasks, AI-ready datasets, and curated benchmarks in TDC serve as a meeting point between biochemical and AI scientists. TDC facilitates algorithmic and scientific advances and accelerates machine learning method development, validation, and transition into biomedical and clinical implementation.
 
@@ -54,10 +54,10 @@ TDC is an open-science initiative. We welcome [contributions from the community.
 ## Unique Features of TDC
 
 - *Diverse areas of therapeutics development*: TDC covers a wide range of learning tasks, including target discovery, activity screening, efficacy, safety, and manufacturing across biomedical products, including small molecules, antibodies, and vaccines.
-- *Ready-to-use datasets*: TDC is minimally dependent on external packages. Any TDC dataset can be retrieved using only 3 lines of code.
+- *Ready-to-use datasets*: TDC is minimally dependent on external packages. Any TDC dataset can be retrieved using only three lines of code.
 - *Data functions*: TDC provides extensive data functions, including data evaluators, meaningful data splits, data processors, and molecule generation oracles. 
 - *Leaderboards*: TDC provides benchmarks for fair model comparison and systematic model development and evaluation.
-- *Open-source initiative*: TDC is an open-source initiative. If you want to get involved, let us know. 
+- *Open-source initiative*: TDC is an open-source initiative. If you'd like to get involved, please don't hesitate to let us know. 
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
 
@@ -110,7 +110,7 @@ We provide  tutorials to get started with TDC:
 
 ## Design of TDC
 
-TDC has a unique three-tiered hierarchical structure, which to our knowledge, is the first attempt at systematically organizing machine learning for therapeutics. We organize TDC into three distinct *problems*. For each problem, we give a collection of *learning tasks*. Finally, for each task, we provide a series of *datasets*.
+TDC has a unique three-tiered hierarchical structure, which to our knowledge, is the first attempt at systematically organizing machine learning for therapeutics. We organize TDC into three distinct *problems*. For each problem, we provide a collection of *learning tasks*. Finally, for each task, we provide a series of *datasets*.
 
 In the first tier, after observing a large set of therapeutics tasks, we categorize and abstract out three major areas (i.e., problems) where machine learning can facilitate scientific advances, namely, single-instance prediction, multi-instance prediction, and generation:
 
@@ -122,7 +122,7 @@ In the first tier, after observing a large set of therapeutics tasks, we categor
 
 The second tier in the TDC structure is organized into learning tasks. Improvement in these tasks can result in numerous applications, including identifying personalized combinatorial therapies, designing novel classes of antibodies, improving disease diagnosis, and finding new cures for emerging diseases.
 
-Finally, in the third tier of TDC, each task is instantiated via multiple datasets. For each dataset, we provide several splits of the dataset into training, validation, and test sets to simulate the type of understanding and generalization (e.g., the model's ability to generalize to entirely unseen compounds or to granularly resolve patient response to a polytherapy) needed for transition into production and clinical implementation.
+Finally, in the third tier of TDC, each task is instantiated via multiple datasets. For each dataset, we provide several splits into training, validation, and test sets to simulate the type of understanding and generalization (e.g., the model's ability to generalize to entirely unseen compounds or to granularly resolve patient response to a polytherapy) needed for transition into production and clinical implementation.
 
 
 ## TDC Data Loaders
@@ -153,17 +153,17 @@ See all therapeutic tasks and datasets on the [TDC website](https://zitniklab.hm
 
 #### Dataset Splits
 
-To retrieve the training/validation/test dataset split, you could simply type
+To retrieve the training/validation/test dataset split, you could type
 ```python 
 data = X(name = Y)
 data.get_split(seed = 42)
 # {'train': df_train, 'val': df_val, 'test': df_test}
 ```
-You can specify the splitting method, random seed, and split fractions in the function by e.g. `data.get_split(method = 'scaffold', seed = 1, frac = [0.7, 0.1, 0.2])`. Check out the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) on the website for details.
+You can specify the function's splitting method, random seed, and split fractions by, e.g., `data.get_split(method = 'scaffold', seed = 1, frac = [0.7, 0.1, 0.2])`. Check the [data split page](https://zitniklab.hms.harvard.edu/TDC/functions/data_split/) for details.
 
 #### Strategies for Model Evaluation
 
-We provide various evaluation metrics for the tasks in TDC, which are described in [model evaluation page](https://zitniklab.hms.harvard.edu/TDC/functions/data_evaluation/) on the website. For example, to use metric ROC-AUC, you could simply type
+We provide various evaluation metrics for the tasks in TDC, described in [model evaluation page](https://zitniklab.hms.harvard.edu/TDC/functions/data_evaluation/) on the website. For example, to use metric ROC-AUC, you could type
 
 ```python
 from tdc import Evaluator
@@ -177,7 +177,7 @@ TDC provides numerous data processing functions, including label transformation,
 
 #### Molecule Generation Oracles
 
-For molecule generation tasks, we provide 10+ oracles for both goal-oriented and distribution learning. For detailed usage of each oracle, please check out the [oracle page](https://zitniklab.hms.harvard.edu/TDC/functions/oracles/) on the website. For example, we want to retrieve the GSK3Beta oracle:
+For molecule generation tasks, we provide 10+ oracles for both goal-oriented and distribution learning. For detailed usage of each oracle, please have a look at the [oracle page](https://zitniklab.hms.harvard.edu/TDC/functions/oracles/) on the website. For example, we want to retrieve the GSK3Beta oracle:
 
 ```python
 from tdc import Oracle
@@ -198,11 +198,11 @@ Every dataset in TDC is a benchmark, and we provide training/validation and test
 
 * Use training and/or validation set to train your model.
 
-* Use the TDC model evaluator to calculate the performance of your model on the test set.
+* Use the TDC model evaluator to calculate your model's performance on the test set.
 
 * Submit the test set performance to a TDC leaderboard.
 
-As many datasets share a therapeutics theme, we organize benchmarks into meaningfully defined groups, which we refer to as benchmark groups. Datasets and tasks within a benchmark group are carefully curated and centered around a theme (for example, TDC contains a benchmark group to support ML predictions of the ADMET properties). While every benchmark group consists of multiple benchmarks, it is possible to separately submit results for each benchmark in the group. Here is the code framework to access the benchmarks:
+As many datasets share a therapeutics theme, we organize benchmarks into meaningfully defined groups, which we refer to as benchmark groups. Datasets and tasks within a benchmark group are carefully curated and centered around a theme (for example, TDC contains a benchmark group to support ML predictions of the ADMET properties). While every benchmark group consists of multiple benchmarks, it is possible to separately submit results for each benchmark. Here is the code framework to access the benchmarks:
 
 ```python
 from tdc import BenchmarkGroup
@@ -234,16 +234,26 @@ For more information, visit [here](https://tdcommons.ai/benchmark/overview/).
 
 ## Cite Us
 
-If you find Therapeutics Data Commons useful, cite our [NeurIPS paper](https://openreview.net/forum?id=kL8dlYp6IM), and [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2) :
+If you find Therapeutics Data Commons useful, cite our [NeurIPS'24 AIDrugX paper](https://openreview.net/pdf?id=kL8dlYp6IM), our [NeurIPS paper](https://openreview.net/pdf?id=8nvgnORnoWr), and [Nature Chemical Biology paper](https://www.nature.com/articles/s41589-022-01131-2) :
 
 ```
 @inproceedings{
 velez-arce2024signals,
 title={Signals in the Cells: Multimodal and Contextualized Machine Learning Foundations for Therapeutics},
-author={Alejandro Velez-Arce and Kexin Huang and Michelle M Li and xiang lin and Wenhao Gao and Bradley Pentelute and Tianfan Fu and Manolis Kellis and Marinka Zitnik},
+author={Alejandro Velez-Arce and Kexin Huang and Michelle M Li and Xiang Lin and Wenhao Gao and Bradley Pentelute and Tianfan Fu and Manolis Kellis and Marinka Zitnik},
 booktitle={NeurIPS 2024 Workshop on AI for New Drug Modalities},
 year={2024},
 url={https://openreview.net/forum?id=kL8dlYp6IM}
+}
+```
+
+```
+@article{Huang2021tdc,
+  title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development},
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
+          Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
+  journal={Proceedings of Neural Information Processing Systems, NeurIPS Datasets and Benchmarks},
+  year={2021}
 }
 ```
 
@@ -257,7 +267,7 @@ url={https://openreview.net/forum?id=kL8dlYp6IM}
 }
 ```
 
-TDC is built on top of other open-sourced projects. If you used these datasets/functions in your research, please cite the original work as well. You can find the original paper on the website for the function/dataset.
+TDC is built on top of other open-sourced projects. Additionally, please cite the original work if you used these datasets/functions in your research. You can find the original paper for the function/dataset on the website.
 
 ## Contribute
 
@@ -269,7 +279,7 @@ Reach us at [contact@tdcommons.ai](mailto:contact@tdcommons.ai) or open a GitHub
 
 ## Data Server
 
-TDC is hosted on [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/21LKWG) with the following persistent identifier [https://doi.org/10.7910/DVN/21LKWG](https://doi.org/10.7910/DVN/21LKWG). When Dataverse is under maintenance, TDC datasets cannot be retrieved. That happens rarely; please check the status on [the Dataverse website](https://dataverse.harvard.edu/).
+Many TDC datasets are hosted on [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/21LKWG) with the following persistent identifier [https://doi.org/10.7910/DVN/21LKWG](https://doi.org/10.7910/DVN/21LKWG). When Dataverse is under maintenance, TDC datasets cannot be retrieved. That happens rarely; please check the status on [the Dataverse website](https://dataverse.harvard.edu/).
 
 ## License
-TDC codebase is under MIT license. For individual dataset usage, please refer to the dataset license found in the website.
+The TDC codebase is licensed under the MIT license. For individual dataset usage, please refer to the dataset license on the website.
