@@ -126,5 +126,29 @@ class TestPINNACLE(unittest.TestCase):
             pass
 
 
+class TestPharmoneMap(unittest.TestCase):
+
+    def setUp(self):
+        print(os.getcwd())
+        pass
+
+    def test_get_data(self):
+        from tdc.resource.pharmone import PharmoneMap
+
+        resource = PharmoneMap()
+        data = resource.get_data()
+        assert isinstance(data, DataFrame), type(data)
+        assert "Compound" in data.columns
+        assert "Target_ID" in data.columns
+        assert "pXC50" in data.columns
+
+    def tearDown(self):
+        try:
+            print(os.getcwd())
+            shutil.rmtree(os.path.join(os.getcwd(), "data"))
+        except:
+            pass
+
+
 if __name__ == "__main__":
     unittest.main()
