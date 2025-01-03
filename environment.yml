@@ -22,7 +22,7 @@ dependencies:
   - pip:
     - accelerate==0.33.0
     - cellxgene-census==1.15.0 
-    - datasets==2.20.0
+    - datasets<2.20.0
     - dgl==1.1.3
     - evaluate==0.4.2
     - gget==0.28.4
