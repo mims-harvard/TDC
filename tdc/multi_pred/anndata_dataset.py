@@ -5,12 +5,19 @@ from ..feature_generators.anndata_to_dataframe import AnnDataToDataFrame
 
 class DataLoader(DL):
 
-    def __init__(self, name, path, print_stats, dataset_names):
+    def __init__(self,
+                 name,
+                 path,
+                 print_stats=False,
+                 dataset_names=None,
+                 no_convert=False):
         super(DataLoader, self).__init__(name, path, print_stats, dataset_names)
         self.adata = self.df  # this is in AnnData format
         cmap = ConfigMap()
         self.cmap = cmap
         self.config = cmap.get(name)
+        if no_convert:
+            return
         if self.config is None:
             # default to converting adata to dataframe as is
             self.df = AnnDataToDataFrame.anndata_to_df(self.adata)
