@@ -48,6 +48,7 @@ jobs:
           echo "Creating Conda Environment from environment.yml"
           conda env create -f environment.yml
           conda activate tdc-conda-env
+          python run_tests.py tdc.test.test_model_server.TestModelServer.testGeneformerTokenizer
           python run_tests.py
           yapf --style=google -r -d tdc
           conda deactivate
