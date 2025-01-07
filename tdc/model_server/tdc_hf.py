@@ -14,7 +14,7 @@ deeppurpose_repo = [
     'CYP3A4_Veith-AttentiveFP',
 ]
 
-model_hub = ["Geneformer"]
+model_hub = ["Geneformer", "scGPT"]
 
 
 class tdc_hf_interface:
@@ -56,14 +56,12 @@ class tdc_hf_interface:
         if self.model_name not in model_hub:
             raise Exception("this model is not in the TDC model hub GH repo.")
         elif self.model_name == "Geneformer":
-            # Load model directly
-            from transformers import AutoTokenizer, AutoModelForMaskedLM, pipeline
-            # tokenizer = AutoTokenizer.from_pretrained("ctheodoris/Geneformer")
-            model = AutoModelForMaskedLM.from_pretrained(
-                "ctheodoris/Geneformer")
-            # pipe = pipeline("fill-mask", model=model, tokenizer=tokenizer)
-            # pipe = pipeline("fill-mask", model="ctheodoris/Geneformer")
-            # return pipe
+            from transformers import AutoModelForMaskedLM
+            model = AutoModelForMaskedLM.from_pretrained("ctheodoris/Geneformer")
+            return model
+        elif self.model_name == "scGPT":
+            from transformers import AutoModel
+            model = AutoModel.from_pretrained("tdc/scGPT")
             return model
         raise Exception("Not implemented yet!")
 

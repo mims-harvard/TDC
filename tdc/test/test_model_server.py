@@ -93,6 +93,24 @@ class TestModelServer(unittest.TestCase):
         print(os.getcwd())
         self.resource = cellxgene_census.CensusResource()
 
+    def testscGPT(self):
+        from tdc.multi_pred.anndata_dataset import DataLoader
+        from tdc import tdc_hf_interface
+        from tdc.model_server.tokenizers.scgpt import scGPTTokenizer
+        adata = DataLoader("cellxgene_sample_small",
+                           "./data",
+                           dataset_names=["cellxgene_sample_small"],
+                           no_convert=True).adata
+        scgpt = tdc_hf_interface("scGPT")
+        model = scgpt.load()  # this line can cause segmentation fault
+        tokenizer = scGPTTokenizer()
+        gene_ids = adata.var["feature_name"].to_numpy(
+        )  # Convert to numpy array
+        tokenized_data = tokenizer.tokenize_cell_vectors(
+            adata.X.toarray(), gene_ids)
+        first_embed = model(tokenized_data[0][1]).last_hidden_state
+        self.assertEqual(first_embed.shape[0], len(tokenized_data[0][0]))
+
     def testGeneformerTokenizer(self):
 
         adata = self.resource.get_anndata(
