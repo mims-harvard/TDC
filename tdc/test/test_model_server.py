@@ -108,7 +108,7 @@ class TestModelServer(unittest.TestCase):
         )  # Convert to numpy array
         tokenized_data = tokenizer.tokenize_cell_vectors(
             adata.X.toarray(), gene_ids)
-        first_embed = model(tokenized_data[0]).last_hidden_state
+        first_embed = model(tokenized_data[0][1]).last_hidden_state
         self.assertEqual(first_embed.shape[0], len(tokenized_data[0][0]))
 
     def testGeneformerTokenizer(self):
