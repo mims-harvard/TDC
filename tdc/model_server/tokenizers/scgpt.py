@@ -25,7 +25,7 @@ def tokenize_batch(
     Returns:
         list: A list of tuple (gene_names, counts) of non zero gene expressions.
     """
-    vocab_map = download_wrapper("scgpt_vocab")
+    vocab_map = download_wrapper("scgpt_vocab", "./data", ["scgpt_vocab"])
     if data.shape[1] != len(gene_ids):
         raise ValueError(
             f"Number of features in data ({data.shape[1]}) does not match "
@@ -46,7 +46,8 @@ def tokenize_batch(
             values = np.insert(values, 0, 0)
         if return_pt:
             import torch
-            genes = torch.tensor([vocab_map.get(x,0) for x in genes], dtype=torch.int64)
+            genes = torch.tensor([vocab_map.get(x, 0) for x in genes],
+                                 dtype=torch.int64)
             values = torch.from_numpy(values).float().to(torch.int64)
         tokenized_data.append((genes, values))
     return tokenized_data
