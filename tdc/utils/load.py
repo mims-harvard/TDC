@@ -317,7 +317,10 @@ def pd_load(name, path):
             file_path = os.path.join(path, name + "." + name2type[name])
             with open(file_path, 'r') as f:
                 file_content = json.load(f)
-            maxlen = max(len(x) for x in file_content.values())
+            try:
+                maxlen = max(len(x) for x in file_content.values())
+            except:
+                return file_content
             for k, v in file_content.items():
                 r = maxlen - len(v)
                 file_content[k] = v + [None] * r
