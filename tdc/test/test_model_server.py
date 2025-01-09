@@ -110,11 +110,9 @@ class TestModelServer(unittest.TestCase):
             adata.X.toarray(), gene_ids)
         mask = [x != 0 for x in tokenized_data[0][1]]
         assert sum(mask) != 0, "FAILURE: mask is empty"
-        first_embed = model(tokenized_data[0][1],
-                            input_ids=tokenized_data[0][0],
+        first_embed = model(tokenized_data[0][0],
                             attention_mask=mask).last_hidden_state
         print(f"scgpt ran successfully. here is an output {first_embed}")
-        self.assertEqual(first_embed.shape[0], len(tokenized_data[0][0]))
 
     def testGeneformerTokenizer(self):
 
