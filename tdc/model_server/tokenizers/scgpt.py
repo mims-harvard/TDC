@@ -25,6 +25,7 @@ def tokenize_batch(
     Returns:
         list: A list of tuple (gene_names, counts) of non zero gene expressions.
     """
+    download_wrapper("scgpt_vocab", "./data", ["scgpt_vocab"])
     vocab_map = pd_load("scgpt_vocab", "./data")
     if data.shape[1] != len(gene_ids):
         raise ValueError(
