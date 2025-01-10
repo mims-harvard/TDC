@@ -109,11 +109,12 @@ class TestModelServer(unittest.TestCase):
         )  # Convert to numpy array
         tokenized_data = tokenizer.tokenize_cell_vectors(
             adata.X.toarray(), gene_ids)
-        mask = torch.tensor([x != 0 for x in tokenized_data[0][1]], dtype=torch.bool)
+        mask = torch.tensor([x != 0 for x in tokenized_data[0][1]],
+                            dtype=torch.bool)
         assert sum(mask) != 0, "FAILURE: mask is empty"
         first_embed = model(tokenized_data[0][0],
                             tokenized_data[0][1],
-                            attention_mask=mask).last_hidden_state
+                            attention_mask=mask)
         print(f"scgpt ran successfully. here is an output {first_embed}")
 
     def testGeneformerTokenizer(self):

@@ -4,27 +4,27 @@ import torch
 import torch.nn.functional as F
 from typing import Optional, Dict
 
+
 class ScGPTConfig(PretrainedConfig):
     model_type = "scgpt"
 
     def __init__(
-        self,
-        vocab_size=60697,
-        embsize=512,
-        d_hid=512,
-        nlayers=12,
-        nhead=8,
-        max_seq_len=1536,
-        dropout=0.0,
-        pad_token_id=0,
-        use_fast_transformer=True,
-        input_emb_style="continuous",
-        cell_emb_style="cls", # output embedding vector with 
-        norm_scheme="post",
-        explicit_zero_prob=False,
-        use_flash_attention=True,
-        **kwargs
-    ):
+            self,
+            vocab_size=60697,
+            embsize=512,
+            d_hid=512,
+            nlayers=12,
+            nhead=8,
+            max_seq_len=1536,
+            dropout=0.0,
+            pad_token_id=0,
+            use_fast_transformer=True,
+            input_emb_style="continuous",
+            cell_emb_style="cls",  # output embedding vector with 
+            norm_scheme="post",
+            explicit_zero_prob=False,
+            use_flash_attention=True,
+            **kwargs):
         self.vocab_size = vocab_size
         self.embsize = embsize
         self.d_hid = d_hid
@@ -35,19 +35,24 @@ class ScGPTConfig(PretrainedConfig):
         self.pad_token_id = pad_token_id
         self.use_fast_transformer = use_fast_transformer
         if input_emb_style not in ["continuous"]:
-            raise ValueError(f"Invalid input_emb_style: {input_emb_style}. Only continuous embeddings currently supported.")
+            raise ValueError(
+                f"Invalid input_emb_style: {input_emb_style}. Only continuous embeddings currently supported."
+            )
         self.input_emb_style = input_emb_style
         self.cell_emb_style = cell_emb_style
         self.norm_scheme = norm_scheme
         self.explicit_zero_prob = explicit_zero_prob
-        self.use_flash_attention = self.use_fast_transformer and torch.cuda.is_available() and use_flash_attention
+        self.use_flash_attention = self.use_fast_transformer and torch.cuda.is_available(
+        ) and use_flash_attention
         super().__init__(pad_token_id=pad_token_id, **kwargs)
 
+
 class ExprDecoder(nn.Module):
+
     def __init__(self, d_model: int, explicit_zero_prob: bool = False):
         super().__init__()
         self.fc = nn.Sequential(
-            nn.Linear(d_model, d_model), # we don't use batch labels
+            nn.Linear(d_model, d_model),  # we don't use batch labels
             nn.LeakyReLU(),
             nn.Linear(d_model, d_model),
             nn.LeakyReLU(),
@@ -69,10 +74,20 @@ class ExprDecoder(nn.Module):
             return {"pred": pred_value}
         zero_logits = self.zero_logit(x).squeeze(-1)
         zero_probs = torch.sigmoid(zero_logits)
-        return {"pred": pred_value, "zero_probs": zero_probs} # TODO: what about inference / bernoulli?
+        return {
+            "pred": pred_value,
+            "zero_probs": zero_probs
+        }  # TODO: what about inference / bernoulli?
+
 
 class FlashTransformerEncoderLayer(nn.Module):
-    def __init__(self, d_model, nhead, dim_feedforward, dropout, norm_scheme="post"):
+
+    def __init__(self,
+                 d_model,
+                 nhead,
+                 dim_feedforward,
+                 dropout,
+                 norm_scheme="post"):
         super().__init__()
         from flash_attn.flash_attention import FlashMHA
 
@@ -82,19 +97,18 @@ class FlashTransformerEncoderLayer(nn.Module):
             dropout=dropout,
             attention_dropout=dropout,
         )
-        self.feed_forward = nn.Sequential(
-            nn.Linear(d_model, dim_feedforward),
-            nn.GELU(),
-            nn.Dropout(dropout),
-            nn.Linear(dim_feedforward, d_model)
-        )
+        self.feed_forward = nn.Sequential(nn.Linear(d_model, dim_feedforward),
+                                          nn.GELU(), nn.Dropout(dropout),
+                                          nn.Linear(dim_feedforward, d_model))
         self.norm1 = nn.LayerNorm(d_model)
         self.norm2 = nn.LayerNorm(d_model)
         self.dropout = nn.Dropout(dropout)
         self.norm_scheme = norm_scheme
 
+
 # Helper class to ensure we have the correct attention structure
 class MultiheadAttentionWithBias(nn.Module):
+
     def __init__(self, embed_dim, num_heads, dropout=0.0, batch_first=True):
         super().__init__()
         self.embed_dim = embed_dim
@@ -103,7 +117,8 @@ class MultiheadAttentionWithBias(nn.Module):
         self.batch_first = batch_first
 
         # Combined input projections for Q, K, V
-        self.in_proj_weight = nn.Parameter(torch.empty((3 * embed_dim, embed_dim)))
+        self.in_proj_weight = nn.Parameter(
+            torch.empty((3 * embed_dim, embed_dim)))
         self.in_proj_bias = nn.Parameter(torch.empty(3 * embed_dim))
 
         # Output projection
@@ -120,19 +135,28 @@ class MultiheadAttentionWithBias(nn.Module):
 
     def forward(self, query, key, value, key_padding_mask=None):
         return nn.functional.multi_head_attention_forward(
-            query, key, value,
-            self.embed_dim, self.num_heads,
-            self.in_proj_weight, self.in_proj_bias,
-            None, None, None,  # No bias_k, bias_v, or add_zero_attn
-            self.dropout, self.out_proj.weight, self.out_proj.bias,
+            query,
+            key,
+            value,
+            self.embed_dim,
+            self.num_heads,
+            self.in_proj_weight,
+            self.in_proj_bias,
+            None,
+            None,
+            None,  # No bias_k, bias_v, or add_zero_attn
+            self.dropout,
+            self.out_proj.weight,
+            self.out_proj.bias,
             training=self.training,
             key_padding_mask=key_padding_mask,
             need_weights=False,
-            batch_first=self.batch_first
-        )[0]
-        
+            batch_first=self.batch_first)[0]
+
+
 from transformers import PreTrainedModel
 import torch.nn as nn
+
 
 class ScGPTPreTrainedModel(PreTrainedModel):
     config_class = ScGPTConfig
@@ -151,18 +175,20 @@ class ScGPTPreTrainedModel(PreTrainedModel):
             module.bias.data.zero_()
             module.weight.data.fill_(1.0)
 
+
 class ScGPTModel(ScGPTPreTrainedModel):
+
     def __init__(self, config):
         super().__init__(config)
 
         # Gene name embeddings remain the same
         self.gene_encoder = nn.ModuleDict({
-            "embedding": nn.Embedding(
-                config.vocab_size,
-                config.embsize,
-                padding_idx=config.pad_token_id
-            ),
-            "enc_norm": nn.LayerNorm(config.embsize)
+            "embedding":
+                nn.Embedding(config.vocab_size,
+                             config.embsize,
+                             padding_idx=config.pad_token_id),
+            "enc_norm":
+                nn.LayerNorm(config.embsize)
         })
 
         # Value encoder remains the same
@@ -175,7 +201,9 @@ class ScGPTModel(ScGPTPreTrainedModel):
             })
         elif config.input_emb_style == "scaling":
             self.value_encoder = nn.Identity()
-            raise Exception("scaling input embedding style not supported because this model was trained on continuous style")
+            raise Exception(
+                "scaling input embedding style not supported because this model was trained on continuous style"
+            )
         else:
             raise Exception("unsupported embedding style")
 
@@ -204,13 +232,13 @@ class ScGPTModel(ScGPTPreTrainedModel):
                 nhead=config.nhead,
                 dim_feedforward=config.d_hid,
                 dropout=config.dropout,
-                batch_first=True, # just for replication
+                batch_first=True,  # just for replication
             ),
-            num_layers=config.nlayers
-        )
+            num_layers=config.nlayers)
 
         # Decoder remains the same
-        self.expr_decoder = ExprDecoder(config.embsize, config.explicit_zero_prob)
+        self.expr_decoder = ExprDecoder(config.embsize,
+                                        config.explicit_zero_prob)
 
         # we ignore cls_decoder because we do not pursue classification task
         # we also ignore mvc and similarity because we ignore generative tasks
@@ -273,10 +301,8 @@ class ScGPTModel(ScGPTPreTrainedModel):
         #             src_key_padding_mask=attention_mask
         #         )
         # else:
-        hidden_states = self.transformer(
-            hidden_states,
-            src_key_padding_mask=attention_mask
-        )
+        hidden_states = self.transformer(hidden_states,
+                                         src_key_padding_mask=attention_mask)
 
         # Get cell embeddings if requested
         output_dict = {}
