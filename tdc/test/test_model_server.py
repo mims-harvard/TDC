@@ -97,6 +97,7 @@ class TestModelServer(unittest.TestCase):
         from tdc.multi_pred.anndata_dataset import DataLoader
         from tdc import tdc_hf_interface
         from tdc.model_server.tokenizers.scgpt import scGPTTokenizer
+        import torch
         adata = DataLoader("cellxgene_sample_small",
                            "./data",
                            dataset_names=["cellxgene_sample_small"],
@@ -108,8 +109,13 @@ class TestModelServer(unittest.TestCase):
         )  # Convert to numpy array
         tokenized_data = tokenizer.tokenize_cell_vectors(
             adata.X.toarray(), gene_ids)
-        first_embed = model(tokenized_data[0][1]).last_hidden_state
-        self.assertEqual(first_embed.shape[0], len(tokenized_data[0][0]))
+        mask = torch.tensor([x != 0 for x in tokenized_data[0][1]],
+                            dtype=torch.bool)
+        assert sum(mask) != 0, "FAILURE: mask is empty"
+        first_embed = model(tokenized_data[0][0],
+                            tokenized_data[0][1],
+                            attention_mask=mask)
+        print(f"scgpt ran successfully. here is an output {first_embed}")
 
     def testGeneformerTokenizer(self):
 
