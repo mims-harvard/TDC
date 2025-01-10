@@ -97,6 +97,7 @@ class TestModelServer(unittest.TestCase):
         from tdc.multi_pred.anndata_dataset import DataLoader
         from tdc import tdc_hf_interface
         from tdc.model_server.tokenizers.scgpt import scGPTTokenizer
+        import torch
         adata = DataLoader("cellxgene_sample_small",
                            "./data",
                            dataset_names=["cellxgene_sample_small"],
