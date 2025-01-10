@@ -49,7 +49,7 @@ def tokenize_batch(
             import torch
             genes = torch.tensor([vocab_map.get(x, 0) for x in genes],
                                  dtype=torch.int64)
-            values = torch.from_numpy(values).float().to(torch.int64)
+            values = torch.from_numpy(values).float()
         tokenized_data.append((genes, values))
     return tokenized_data
 

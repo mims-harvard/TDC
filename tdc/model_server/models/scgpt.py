@@ -178,35 +178,34 @@ class ScGPTModel(ScGPTPreTrainedModel):
             raise Exception("unsupported embedding style")
 
         # Modified transformer layers to use combined QKV projections
-        self.transformer = nn.ModuleDict({
-            "layers": nn.ModuleList([
-                nn.ModuleDict({
-                    "self_attn": MultiheadAttentionWithBias(
-                        config.embsize,
-                        config.nhead,
-                        dropout=config.dropout,
-                        batch_first=True
-                    ),
-                    "linear1": nn.Linear(config.embsize, config.d_hid),
-                    "linear2": nn.Linear(config.d_hid, config.embsize),
-                    "norm1": nn.LayerNorm(config.embsize),
-                    "norm2": nn.LayerNorm(config.embsize),
-                }) for _ in range(config.nlayers)
-            ])
-        })
+        # self.transformer = nn.ModuleDict({
+        #     "layers": nn.ModuleList([
+        #         nn.ModuleDict({
+        #             "self_attn": MultiheadAttentionWithBias(
+        #                 config.embsize,
+        #                 config.nhead,
+        #                 dropout=config.dropout,
+        #                 batch_first=True
+        #             ),
+        #             "linear1": nn.Linear(config.embsize, config.d_hid),
+        #             "linear2": nn.Linear(config.d_hid, config.embsize),
+        #             "norm1": nn.LayerNorm(config.embsize),
+        #             "norm2": nn.LayerNorm(config.embsize),
+        #         }) for _ in range(config.nlayers)
+        #     ])
+        # })
 
-        # # Rather than combining qkv projections, mimicking gh implementation to match weights
-        # from torch.nn import TransformerEncoder, TransformerEncoderLayer
-        # self.transformer = TransformerEncoder(
-        #     TransformerEncoderLayer(
-        #         d_model=config.embsize,
-        #         nhead=config.nhead,
-        #         dim_feedforward=config.d_hid,
-        #         dropout=config.dropout,
-        #         batch_first=True, # just for replication
-        #     ),
-        #     num_layers=config.nlayers
-        # )
+        from torch.nn import TransformerEncoder, TransformerEncoderLayer
+        self.transformer = TransformerEncoder(
+            TransformerEncoderLayer(
+                d_model=config.embsize,
+                nhead=config.nhead,
+                dim_feedforward=config.d_hid,
+                dropout=config.dropout,
+                batch_first=True, # just for replication
+            ),
+            num_layers=config.nlayers
+        )
 
         # Decoder remains the same
         self.expr_decoder = ExprDecoder(config.embsize, config.explicit_zero_prob)
