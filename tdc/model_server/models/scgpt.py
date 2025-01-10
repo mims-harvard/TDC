@@ -39,6 +39,7 @@ class ScGPTConfig(PretrainedConfig):
         self.cell_emb_style = cell_emb_style
         self.norm_scheme = norm_scheme
         self.explicit_zero_prob = explicit_zero_prob
+        self.use_flash_attention = self.use_fast_transformer
         super().__init__(pad_token_id=pad_token_id, **kwargs)
 
 class ExprDecoder(nn.Module):
