@@ -260,23 +260,23 @@ class ScGPTModel(ScGPTPreTrainedModel):
 
         # Convert attention_mask for transformer
         # Flash attention expects mask of 0s for tokens to attend to and 1s for tokens to ignore
-        if self.use_flash_attention and attention_mask is not None:
-            if attention_mask.dtype != torch.bool:
-                attention_mask = attention_mask.bool()
-            attention_mask = ~attention_mask # we assume user follows huggingface convention for the attention mask
+        # if self.use_flash_attention and attention_mask is not None:
+        #     if attention_mask.dtype != torch.bool:
+        #         attention_mask = attention_mask.bool()
+        #     attention_mask = ~attention_mask # we assume user follows huggingface convention for the attention mask
 
-        # Apply transformer layers
-        if self.use_flash_attention:
-            for layer in self.transformer:
-                hidden_states = layer(
-                    hidden_states,
-                    src_key_padding_mask=attention_mask
-                )
-        else:
-            hidden_states = self.transformer(
-                hidden_states,
-                src_key_padding_mask=attention_mask
-            )
+        # # Apply transformer layers
+        # if self.use_flash_attention:
+        #     for layer in self.transformer:
+        #         hidden_states = layer(
+        #             hidden_states,
+        #             src_key_padding_mask=attention_mask
+        #         )
+        # else:
+        hidden_states = self.transformer(
+            hidden_states,
+            src_key_padding_mask=attention_mask
+        )
 
         # Get cell embeddings if requested
         output_dict = {}
