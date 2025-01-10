@@ -60,7 +60,10 @@ class tdc_hf_interface:
             model = AutoModelForMaskedLM.from_pretrained("tdc/Geneformer")
             return model
         elif self.model_name == "scGPT":
-            from transformers import AutoModel
+            from transformers import AutoConfig, AutoModel
+            from .models.scgpt import ScGPTModel, ScGPTConfig
+            AutoConfig.register("scgpt", ScGPTConfig)
+            AutoModel.register(ScGPTConfig, ScGPTModel)
             model = AutoModel.from_pretrained("tdc/scGPT")
             return model
         raise Exception("Not implemented yet!")
