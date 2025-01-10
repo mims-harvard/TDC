@@ -243,7 +243,8 @@ class ScGPTModel(ScGPTPreTrainedModel):
         if hasattr(self, 'value_encoder'):
             values = values.unsqueeze(-1)  # Add feature dimension
             value_emb = self.value_encoder["linear1"](values)
-            value_emb = self.value_encoder["activation"](value_emb)
+            if "activation" in self.value_encoder:
+                value_emb = self.value_encoder["activation"](value_emb)
             value_emb = self.value_encoder["linear2"](value_emb)
             value_emb = self.value_encoder["norm"](value_emb)
             value_emb = self.value_encoder["dropout"](value_emb)
