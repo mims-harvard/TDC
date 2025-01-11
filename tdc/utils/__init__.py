@@ -47,6 +47,3 @@ from .retrieve import (
     retrieve_benchmark_names,
 )
 from .query import uniprot2seq, cid2smiles
-
-from ..feature_generators.data_feature_generator import DataFeatureGenerator
-from ..feature_generators.protein_feature_generator import ProteinFeatureGenerator

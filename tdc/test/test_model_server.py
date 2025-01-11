@@ -5,8 +5,6 @@ import sys
 
 import unittest
 import shutil
-import pytest
-import mygene
 import numpy as np
 
 # temporary solution for relative imports in case TDC is not installed
@@ -19,64 +17,6 @@ from tdc.resource import cellxgene_census
 from tdc.model_server.tokenizers.geneformer import GeneformerTokenizer
 
 import requests
-
-
-def get_ensembl_id(gene_symbols):
-    mg = mygene.MyGeneInfo()
-    return mg.querymany(gene_symbols,
-                        scopes='symbol',
-                        fields='ensembl.gene',
-                        species='human')
-
-
-def get_target_from_chembl(chembl_id):
-    # Query ChEMBL API for target information
-    chembl_url = f"https://www.ebi.ac.uk/chembl/api/data/{chembl_id}.json"
-    response = requests.get(chembl_url)
-
-    if response.status_code == 200:
-        data = response.json()
-        # Extract UniProt ID from the ChEMBL target info
-        for component in data.get('target_components', []):
-            for xref in component.get('target_component_xrefs', []):
-                if xref['xref_src_db'] == 'UniProt':
-                    return xref['xref_id']
-    else:
-        raise ValueError(f"ChEMBL ID {chembl_id} not found or invalid.")
-    return None
-
-
-def get_ensembl_from_uniprot(uniprot_id):
-    # Query UniProt API to get Ensembl ID from UniProt ID
-    uniprot_url = f"https://rest.uniprot.org/uniprotkb/{uniprot_id}.json"
-    response = requests.get(uniprot_url)
-
-    if response.status_code == 200:
-        data = response.json()
-        # Extract Ensembl Gene ID from the cross-references
-        for xref in data.get('dbReferences', []):
-            if xref['type'] == 'Ensembl':
-                return xref['id']
-    else:
-        raise ValueError(f"UniProt ID {uniprot_id} not found or invalid.")
-    return None
-
-
-def get_ensembl_id_from_chembl_id(chembl_id):
-    try:
-        # Step 1: Get UniProt ID from ChEMBL
-        uniprot_id = get_target_from_chembl(chembl_id)
-        if not uniprot_id:
-            return f"No UniProt ID found for ChEMBL ID {chembl_id}"
-
-        # Step 2: Get Ensembl ID from UniProt
-        ensembl_id = get_ensembl_from_uniprot(uniprot_id)
-        if not ensembl_id:
-            return f"No Ensembl ID found for UniProt ID {uniprot_id}"
-
-        return f"Ensembl ID for ChEMBL ID {chembl_id}: {ensembl_id}"
-    except Exception as e:
-        return str(e)
 
 
 def quant_layers(model):
