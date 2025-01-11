@@ -240,7 +240,7 @@ If you find Therapeutics Data Commons useful, cite our [NeurIPS'24 AIDrugX paper
 @inproceedings{
 velez-arce2024signals,
 title={Signals in the Cells: Multimodal and Contextualized Machine Learning Foundations for Therapeutics},
-author={Alejandro Velez-Arce and Kexin Huang and Michelle M Li and Xiang Lin and Wenhao Gao and Bradley Pentelute and Tianfan Fu and Manolis Kellis and Marinka Zitnik},
+author={Alejandro Velez-Arce and Xiang Lin and Kexin Huang and Michelle M Li and Wenhao Gao and Bradley Pentelute and Tianfan Fu and Manolis Kellis and Marinka Zitnik},
 booktitle={NeurIPS 2024 Workshop on AI for New Drug Modalities},
 year={2024},
 url={https://openreview.net/forum?id=kL8dlYp6IM}
