@@ -79,6 +79,8 @@ class PINNACLE:
     def get_exp_data(self, seed=1, split="train"):
         if split not in ["train", "val", "test"]:
             raise ValueError("{} not a valid split".format(split))
+        if seed < 1 or seed > 10:
+            raise ValueError(f'{seed} is not a valid seed in range 1-10.')
         filename = "pinnacle_output{}".format(seed)
         # clean data directory
         file_list = os.listdir("./data")
