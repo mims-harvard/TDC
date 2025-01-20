@@ -3,8 +3,6 @@ Class encapsulating protein data processing functions. Also supports running the
 Goal is to make it easier to integrate custom datasets not yet in TDC format.
 """
 
-from Bio import Entrez, SeqIO
-import mygene
 from pandas import DataFrame
 import requests
 
@@ -37,6 +35,7 @@ class ProteinFeatureGenerator(DataFeatureGenerator):
         Returns:
         str: The nucleotide sequence of the non-coding RNA, or a message if not found.
         """
+        from Bio import Entrez, SeqIO
         # Provide your email to NCBI to let them know who you are
         Entrez.email = "alejandro_velez-arce@hms.harvard.edu"
 
@@ -88,6 +87,7 @@ class ProteinFeatureGenerator(DataFeatureGenerator):
         Returns:
             str: Protein amino acid sequence.
         """
+        import mygene
         assert isinstance(gene_name, str), (type(gene_name), gene_name)
         mg = mygene.MyGeneInfo()
         # Query MyGene.info for the given gene name
@@ -111,6 +111,7 @@ class ProteinFeatureGenerator(DataFeatureGenerator):
 
     @classmethod
     def get_type_of_gene(cls, gene_name: str) -> str:
+        import mygene
         assert isinstance(gene_name, str), (type(gene_name), gene_name)
         mg = mygene.MyGeneInfo()
         # Query MyGene.info for the given gene name
@@ -156,9 +157,6 @@ class ProteinFeatureGenerator(DataFeatureGenerator):
         # Check if gene_column exists in gene_df
         if gene_column not in dataset.columns:
             raise ValueError(f"{gene_column} does not exist in the DataFrame.")
-
-        # Ensure the DataFrame index is aligned
-        # gene_df = gene_df.reset_index(drop=True)
 
         # Retrieve protein sequences for each gene and store them in a new column
         new_col = dataset[gene_column].apply(helper).tolist()

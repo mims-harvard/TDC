@@ -304,12 +304,10 @@ def pd_load(name, path):
             df = pd.read_pickle(os.path.join(path, name + "/" + name + ".pkl"))
         elif name2type[name] == "h5ad":
             import anndata
+            print_sys("loading anndata object...")
             adata = anndata.read_h5ad(
                 os.path.join(path, name + "." + name2type[name]))
-            # df = pd.DataFrame(adata.X.toarray(), columns=adata.var_names, index=adata.obs_names)
-            # TODO: multi-index would help include var information in columns
-            # multi_index = pd.MultiIndex.from_frame(adata.var.reset_index())
-            # df.columns = multi_index
+            print_sys("loader anndata object!")
             return adata
         elif name2type[name] == "json":
             # df = pd.read_json(os.path.join(path, name + "." + name2type[name]))
