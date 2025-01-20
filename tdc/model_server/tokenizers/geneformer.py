@@ -73,7 +73,7 @@ class GeneformerTokenizer:
         ])
         coding_miRNA_ids = adata.var[ensembl_id][coding_miRNA_loc]
         coding_miRNA_tokens = np.array(
-            [self.gene_token_dict[i] for i in coding_miRNA_ids])
+            [self.gene_token_dict.get(i, 0) for i in coding_miRNA_ids])
 
         try:
             _ = adata.obs["filter_pass"]
