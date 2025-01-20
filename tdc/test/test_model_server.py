@@ -16,8 +16,6 @@ sys.path.append(
 from tdc.resource import cellxgene_census
 from tdc.model_server.tokenizers.geneformer import GeneformerTokenizer
 
-import requests
-
 
 def quant_layers(model):
     layer_nums = []
