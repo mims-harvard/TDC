@@ -60,7 +60,7 @@ class TestModelServer(unittest.TestCase):
         dataset = "scperturb_drug_AissaBenevolenskaya2021"
         data = PerturbOutcome(dataset)
         adata = data.adata
-        tokenizer = GeneformerTokenizer()
+        tokenizer = GeneformerTokenizer(max_input_size=3)
         adata.var["feature_id"] = adata.var.index.map(
             lambda x: tokenizer.gene_name_id_dict.get(x, 0))
         x = tokenizer.tokenize_cell_vectors(adata,
