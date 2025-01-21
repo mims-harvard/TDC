@@ -80,14 +80,14 @@ class TestModelServer(unittest.TestCase):
                 for _ in range(mdim - len(cell)):
                     cell = np.append(cell, 0)
                 batch[idx] = cell
-        input_tensor = torch.tensor([batch])
+        input_tensor = torch.tensor(batch)
         attention_mask = torch.tensor([[t != 0 for t in cell] for cell in batch
                                       ])
         outputs = model(input_tensor,
                         attention_mask=attention_mask,
                         output_hidden_states=True)
         num_out_in_batch = len(outputs.hidden_states[-1])
-        input_batch_size = input_tensor.shape[1]
+        input_batch_size = input_tensor.shape[0]
         num_gene_out_in_batch = len(outputs.hidden_states[-1][0])
         assert num_out_in_batch == input_batch_size, f"FAILURE: length doesn't match batch size {num_out_in_batch} vs {input_batch_size}"
         assert num_gene_out_in_batch == mdim, f"FAILURE: out length {num_gene_out_in_batch} doesn't match gene length {mdim}"
