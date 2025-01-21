@@ -55,6 +55,52 @@ class TestModelServer(unittest.TestCase):
                             attention_mask=mask)
         print(f"scgpt ran successfully. here is an output {first_embed}")
 
+    def testGeneformerPerturb(self):
+        from tdc.multi_pred.perturboutcome import PerturbOutcome
+        dataset = "scperturb_drug_AissaBenevolenskaya2021"
+        data = PerturbOutcome(dataset)
+        adata = data.adata
+        tokenizer = GeneformerTokenizer(max_input_size=3)
+        adata.var["feature_id"] = adata.var.index.map(
+            lambda x: tokenizer.gene_name_id_dict.get(x, 0))
+        x = tokenizer.tokenize_cell_vectors(adata,
+                                            ensembl_id="feature_id",
+                                            ncounts="ncounts")
+        cells, _ = x
+        assert cells, "FAILURE: cells false-like. Value is = {}".format(cells)
+        assert len(cells) > 0, "FAILURE: length of cells <= 0 {}".format(cells)
+        from tdc import tdc_hf_interface
+        import torch
+        geneformer = tdc_hf_interface("Geneformer")
+        model = geneformer.load()
+        mdim = max(len(cell) for b in cells for cell in b)
+        batch = cells[0]
+        for idx, cell in enumerate(batch):
+            if len(cell) < mdim:
+                for _ in range(mdim - len(cell)):
+                    cell = np.append(cell, 0)
+                batch[idx] = cell
+        input_tensor = torch.tensor(batch)
+        assert input_tensor.shape[0] == 512, "unexpected batch size"
+        assert input_tensor.shape[1] == mdim, f"unexpected gene length {mdim}"
+        attention_mask = torch.tensor([[t != 0 for t in cell] for cell in batch
+                                      ])
+        assert input_tensor.shape[0] == attention_mask.shape[0]
+        assert input_tensor.shape[1] == attention_mask.shape[1]
+        try:
+            outputs = model(input_tensor,
+                            attention_mask=attention_mask,
+                            output_hidden_states=True)
+        except Exception as e:
+            raise Exception(
+                f"sizes: {input_tensor.shape[0]}, {input_tensor.shape[1]}\n {e}"
+            )
+        num_out_in_batch = len(outputs.hidden_states[-1])
+        input_batch_size = input_tensor.shape[0]
+        num_gene_out_in_batch = len(outputs.hidden_states[-1][0])
+        assert num_out_in_batch == input_batch_size, f"FAILURE: length doesn't match batch size {num_out_in_batch} vs {input_batch_size}"
+        assert num_gene_out_in_batch == mdim, f"FAILURE: out length {num_gene_out_in_batch} doesn't match gene length {mdim}"
+
     def testGeneformerTokenizer(self):
 
         adata = self.resource.get_anndata(

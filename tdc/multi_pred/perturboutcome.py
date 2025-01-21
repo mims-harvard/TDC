@@ -104,6 +104,8 @@ class PerturbOutcome(CellXGeneTemplate):
             self.is_gene = True
         else:
             self.is_gene = False
+            self.is_combo = False
+            return
 
         if name == 'scperturb_gene_NormanWeissman2019':
             self.is_combo = True

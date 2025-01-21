@@ -16,6 +16,7 @@ class GeneformerTokenizer:
         path=None,
         custom_attr_name_dict=None,
         nproc=1,
+        max_input_size=4096,
     ):
         path = path or "./data"
         download_wrapper("geneformer_gene_median_dictionary", path,
@@ -38,6 +39,8 @@ class GeneformerTokenizer:
         # protein-coding and miRNA gene list dictionary for selecting .loom rows for tokenization
         self.genelist_dict = dict(
             zip(self.gene_keys, [True] * len(self.gene_keys)))
+
+        self.max_input_size = max_input_size
 
     @classmethod
     def rank_genes(cls, gene_vector, gene_tokens):
@@ -73,7 +76,7 @@ class GeneformerTokenizer:
         ])
         coding_miRNA_ids = adata.var[ensembl_id][coding_miRNA_loc]
         coding_miRNA_tokens = np.array(
-            [self.gene_token_dict[i] for i in coding_miRNA_ids])
+            [self.gene_token_dict.get(i, 0) for i in coding_miRNA_ids])
 
         try:
             _ = adata.obs["filter_pass"]
@@ -102,8 +105,8 @@ class GeneformerTokenizer:
             X_norm = sp.csr_matrix(X_norm)
 
             tokenized_cells.append([
-                self.rank_genes(X_norm[i].data,
-                                coding_miRNA_tokens[X_norm[i].indices])
+                self.rank_genes(X_norm[i].data, coding_miRNA_tokens[
+                    X_norm[i].indices])[:self.max_input_size]
                 for i in range(X_norm.shape[0])
             ])
 
