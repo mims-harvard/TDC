@@ -87,9 +87,14 @@ class TestModelServer(unittest.TestCase):
                                       ])
         assert input_tensor.shape[0] == attention_mask.shape[0]
         assert input_tensor.shape[1] == attention_mask.shape[1]
-        outputs = model(input_tensor,
-                        attention_mask=attention_mask,
-                        output_hidden_states=True)
+        try:
+            outputs = model(input_tensor,
+                            attention_mask=attention_mask,
+                            output_hidden_states=True)
+        except Exception as e:
+            raise Exception(
+                f"sizes: {input_tensor.shape[0]}, {input_tensor.shape[1]}\n {e}"
+            )
         num_out_in_batch = len(outputs.hidden_states[-1])
         input_batch_size = input_tensor.shape[0]
         num_gene_out_in_batch = len(outputs.hidden_states[-1][0])
