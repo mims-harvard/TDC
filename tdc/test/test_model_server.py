@@ -81,6 +81,8 @@ class TestModelServer(unittest.TestCase):
                     cell = np.append(cell, 0)
                 batch[idx] = cell
         input_tensor = torch.tensor(batch)
+        assert input_tensor.shape[0] == 512, "unexpected batch size"
+        assert input_tensor.shape[1] == mdim, f"unexpected gene length {mdim}"
         attention_mask = torch.tensor([[t != 0 for t in cell] for cell in batch
                                       ])
         outputs = model(input_tensor,
