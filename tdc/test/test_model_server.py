@@ -31,6 +31,9 @@ class TestModelServer(unittest.TestCase):
         print(os.getcwd())
         self.resource = cellxgene_census.CensusResource()
 
+    def testFake(self):
+        print("success")
+
     def testscGPT(self):
         from tdc.multi_pred.anndata_dataset import DataLoader
         from tdc import tdc_hf_interface
