@@ -14,7 +14,7 @@ deeppurpose_repo = [
     'CYP3A4_Veith-AttentiveFP',
 ]
 
-model_hub = ["Geneformer", "scGPT"]
+model_hub = ["Geneformer", "scGPT", "scVI"]
 
 
 class tdc_hf_interface:
@@ -66,6 +66,9 @@ class tdc_hf_interface:
             AutoModel.register(ScGPTConfig, ScGPTModel)
             model = AutoModel.from_pretrained("tdc/scGPT")
             return model
+        elif self.model_name == "scVI":
+            # import scVI model and return the model class
+            pass
         raise Exception("Not implemented yet!")
 
     def load_deeppurpose(self, save_path):
