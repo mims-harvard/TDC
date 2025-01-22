@@ -31,8 +31,18 @@ class TestModelServer(unittest.TestCase):
         print(os.getcwd())
         self.resource = cellxgene_census.CensusResource()
 
-    def testFake(self):
-        print("success")
+    def testscVI(self):
+        from tdc.multi_pred.anndata_dataset import DataLoader
+        from tdc import tdc_hf_interface
+        # run scvi test
+        adata = DataLoader("cellxgene_sample_small",
+                    "./data",
+                    dataset_names=["cellxgene_sample_small"],
+                    no_convert=True).adata
+        # run scVI on a single sample
+        scvi = tdc_hf_interface("scVI")
+        model = scvi.load()  # this line can cause segmentation fault
+        pass
 
     def testscGPT(self):
         from tdc.multi_pred.anndata_dataset import DataLoader
