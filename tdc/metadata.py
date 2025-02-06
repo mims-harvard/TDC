@@ -958,6 +958,7 @@ name2type = {
     "evebio_pharmone_v1_target_table": "tab",
     "cellxgene_sample_small": "h5ad",
     "scgpt_vocab": "json",
+    "scvi_test_dataset": "h5ad",
 }
 
 name2id = {
@@ -1166,6 +1167,7 @@ name2id = {
     "evebio_pharmone_v1_target_table": 10741537,
     "cellxgene_sample_small": 10806522,
     "scgpt_vocab": 10809431,
+    "scvi_test_dataset": 10872157,
 }
 
 oracle2type = {
