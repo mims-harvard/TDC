@@ -10,7 +10,7 @@ class CensusResource:
     _CENSUS_DATA = "census_data"
     _CENSUS_META = "census_info"
     _FEATURE_PRESENCE = "feature_dataset_presence_matrix"
-    _LATEST_CENSUS = "stable"
+    _LATEST_CENSUS = "2023-12-15"
     _HUMAN = "homo_sapiens"
 
     class decorators:
