@@ -16,7 +16,7 @@
 [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40ProjectTDC)](https://twitter.com/ProjectTDC)
 
 
-[**Website**](https://tdcommons.ai) | [**NeurIPS 2024 AIDrugX Paper**](https://openreview.net/forum?id=kL8dlYp6IM) | [**Nature Chemical Biology 2022 Paper**](https://www.nature.com/articles/s41589-022-01131-2) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [**TDC Documentation**](https://tdc.readthedocs.io/) | [**Contribution Guidelines**](CONTRIBUTE.md)
+[**Website**](https://tdcommons.ai) | [**NeurIPS 2024 AIDrugX Paper**](https://openreview.net/forum?id=kL8dlYp6IM) | [**Nature Chemical Biology 2022 Paper**](https://www.nature.com/articles/s41589-022-01131-2) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [**TDC Documentation**](https://tdc.readthedocs.io/) | [**Contribution Guidelines**](CONTRIBUTE.md) | [**\[PyTDC Webpage\]**](https://tdcommons.ai/pytdc)
 
 # (NEW) Introducing PyTDC
 Existing biomedical benchmarks do not provide end-to-end infrastructure for training, evaluation, and inference of models that integrate multimodal biological data and a broad range of machine learning tasks in therapeutics. We present PyTDC, an open-source machine-learning platform providing streamlined training, evaluation, and inference software for multimodal biological AI models. PyTDC unifies distributed, heterogeneous, continuously updated data sources and model weights and standardizes benchmarking and inference endpoints.
@@ -30,6 +30,8 @@ The components of PyTDC include:
 <p align="center"><img src="https://github.com/mims-harvard/TDC/blob/12be2b9f5ab39480d5489cf3867126f41287598b/fig/TDCneurips.pptx(1).png" alt="workflow" width="600px" /></p>
 We present PyTDC, a machine-learning platform providing streamlined training, evaluation, and inference software for single-cell biological foundation models to accelerate research in transfer learning method development in therapeutics. PyTDC introduces an API-first architecture that unifies heterogeneous, continuously updated data sources. The platform introduces a model server, which provides unified access to model weights across distributed repositories and standardized inference endpoints. The model server accelerates research workflows by exposing state-of-the-art, research-ready models and training setups for biomedical representation learning models across modalities. Building upon Therapeutic Data Commons, we present single-cell therapeutics tasks, datasets, and benchmarks for model development and evaluation.
 
+[**\[Learn More\]**](https://tdcommons.ai/pytdc)
+
 ## Built on the Therapeutic Data Commons (TDC)
 
 Artificial intelligence is poised to reshape therapeutic science. **Therapeutics Data Commons** is a coordinated initiative to access and evaluate artificial intelligence capability across therapeutic modalities and stages of discovery. It supports the development of AI methods and aims to establish the foundation of which AI methods are most suitable for drug discovery applications and why.
@@ -38,9 +40,11 @@ Researchers across disciplines can use TDC for numerous applications. AI-solvabl
 
 TDC is an open-science initiative. We welcome [contributions from the community.](CONTRIBUTE.md)
 
-## Key TDC Presentations and Publications
+## Key (Py)TDC Presentations and Publications
 
-[1] Velez-Arce, Huang, Li, Lin, et al., TDC-2: Multimodal Foundation for Therapeutic Science, bioRxiv, 2024 [**\[Paper\]**](https://www.biorxiv.org/content/10.1101/2024.06.12.598655v2)
+[0] Western Bioinformatics Seminar Series: Alejandro Velez-Arce, "Signals in the Cells: Multimodal and Contextualized Machine Learning Foundations for Therapeutics." [**\[Event\]**](https://www.events.westernu.ca/events/schulich-medicine-dentistry/2024-11/western-bioinformatics-nov14.html) [**\[Seminar\]**](https://western-bioinfo.github.io/seminars/alejandro-velez-arce) [**\[Slides\]**](https://neurips.cc/media/neurips-2024/Slides/102832.pdf)
+
+[1] Velez-Arce, Huang, Li, Lin, et al., Signals in the Cells: Multimodal and Contextualized Machine Learning Foundations for Therapeutics, NeurIPS AIDrugX, 2024 [**\[Paper\]**](https://openreview.net/pdf?id=kL8dlYp6IM) [**\[Slides\]**](https://neurips.cc/media/neurips-2024/Slides/102832.pdf) [**\[Webpage\]**](https://tdcommons.ai/pytdc)
 
 [2] Huang, Fu, Gao, et al., Artificial Intelligence Foundation for Therapeutic Science, Nature Chemical Biology, 2022 [**\[Paper\]**](https://www.nature.com/articles/s41589-022-01131-2)
 
