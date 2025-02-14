@@ -27,6 +27,9 @@ The components of PyTDC include:
 - PyTDC presents open-source model retrieval and deployment software that streamlines AI inferencing and exposes **state-of-the-art, research-ready models** and training setups for biomedical representation learning models across modalities.
 - We integrate **single-cell analysis with multimodal machine learning in therapeutics** via the introduction of contextualized tasks.
 
+<p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/TDCneurips.pptx(1).png" alt="logo" width="600px" /></p>
+We present PyTDC, a machine-learning platform providing streamlined training, evaluation, and inference software for single-cell biological foundation models to accelerate research in transfer learning method development in therapeutics. PyTDC introduces an API-first architecture that unifies heterogeneous, continuously updated data sources. The platform introduces a model server, which provides unified access to model weights across distributed repositories and standardized inference endpoints. The model server accelerates research workflows by exposing state-of-the-art, research-ready models and training setups for biomedical representation learning models across modalities. Building upon Therapeutic Data Commons, we present single-cell therapeutics tasks, datasets, and benchmarks for model development and evaluation.
+
 ## Built on the Therapeutic Data Commons (TDC)
 
 Artificial intelligence is poised to reshape therapeutic science. **Therapeutics Data Commons** is a coordinated initiative to access and evaluate artificial intelligence capability across therapeutic modalities and stages of discovery. It supports the development of AI methods and aims to establish the foundation of which AI methods are most suitable for drug discovery applications and why.
