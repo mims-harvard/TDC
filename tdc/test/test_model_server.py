@@ -188,6 +188,20 @@ class TestModelServer(unittest.TestCase):
             "Geneformer ran sucessfully. Find batch embedding example here:\n {}"
             .format(out[0]))
 
+    def testscVI(self):
+        from tdc.multi_pred.anndata_dataset import DataLoader
+        from tdc import tdc_hf_interface
+
+        adata = DataLoader("scvi_test_dataset",
+                "./data",
+                dataset_names=["scvi_test_dataset"],
+                no_convert=True).adata
+
+        scvi = tdc_hf_interface("scVI")
+        model = scvi.load()
+        output = model(adata)
+        print(f"scVI ran successfully. here is an ouput: {output}")
+
     def tearDown(self):
         try:
             print(os.getcwd())
