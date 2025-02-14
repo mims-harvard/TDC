@@ -18,6 +18,17 @@
 
 [**Website**](https://tdcommons.ai) | [**NeurIPS 2024 AIDrugX Paper**](https://openreview.net/forum?id=kL8dlYp6IM) | [**Nature Chemical Biology 2022 Paper**](https://www.nature.com/articles/s41589-022-01131-2) | [**NeurIPS 2021 Paper**](https://openreview.net/pdf?id=8nvgnORnoWr) | [**Long Paper**](https://arxiv.org/abs/2102.09548) | [**Slack**](https://join.slack.com/t/pytdc/shared_invite/zt-x0ujg5v6-zwtQZt83fhRdgrYjXRFz5g) | [**TDC Mailing List**](https://groups.io/g/tdc) | [**TDC Documentation**](https://tdc.readthedocs.io/) | [**Contribution Guidelines**](CONTRIBUTE.md)
 
+# (NEW) Introducing PyTDC
+Existing biomedical benchmarks do not provide end-to-end infrastructure for training, evaluation, and inference of models that integrate multimodal biological data and a broad range of machine learning tasks in therapeutics. We present PyTDC, an open-source machine-learning platform providing streamlined training, evaluation, and inference software for multimodal biological AI models. PyTDC unifies distributed, heterogeneous, continuously updated data sources and model weights and standardizes benchmarking and inference endpoints.
+
+The components of PyTDC include:
+
+- A collection of multimodal, continually updated heterogeneous data sources is unified under the introduced "API-first-dataset" architecture. Inspired by **API-first design**, this microservice architecture uses the model-view-controller design pattern to enable multimodal data views.
+- PyTDC presents open-source model retrieval and deployment software that streamlines AI inferencing and exposes **state-of-the-art, research-ready models** and training setups for biomedical representation learning models across modalities.
+- We integrate **single-cell analysis with multimodal machine learning in therapeutics** via the introduction of contextualized tasks.
+
+## Built on the Therapeutic Data Commons (TDC)
+
 Artificial intelligence is poised to reshape therapeutic science. **Therapeutics Data Commons** is a coordinated initiative to access and evaluate artificial intelligence capability across therapeutic modalities and stages of discovery. It supports the development of AI methods and aims to establish the foundation of which AI methods are most suitable for drug discovery applications and why.
 
 Researchers across disciplines can use TDC for numerous applications. AI-solvable tasks, AI-ready datasets, and curated benchmarks in TDC serve as a meeting point between biochemical and AI scientists. TDC facilitates algorithmic and scientific advances and accelerates machine learning method development, validation, and transition into biomedical and clinical implementation.
