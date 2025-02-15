@@ -83,8 +83,8 @@ class TestModelServer(unittest.TestCase):
         input_tensor = torch.tensor(batch)
         assert input_tensor.shape[0] == 512, "unexpected batch size"
         assert input_tensor.shape[1] == mdim, f"unexpected gene length {mdim}"
-        attention_mask = torch.tensor([[t != 0 for t in cell] for cell in batch
-                                      ])
+        attention_mask = torch.tensor([[t != 0 for t in cell]
+                                       for cell in batch])
         assert input_tensor.shape[0] == attention_mask.shape[0]
         assert input_tensor.shape[1] == attention_mask.shape[1]
         try:
@@ -160,8 +160,8 @@ class TestModelServer(unittest.TestCase):
             ctr = 0  # stop after some passes to avoid failure
             for batch in input_tensor:
                 # build an attention mask
-                attention_mask = torch.tensor(
-                    [[x[0] != 0, x[1] != 0] for x in batch])
+                attention_mask = torch.tensor([[x[0] != 0, x[1] != 0]
+                                               for x in batch])
                 outputs = model(batch,
                                 attention_mask=attention_mask,
                                 output_hidden_states=True)
@@ -193,9 +193,9 @@ class TestModelServer(unittest.TestCase):
         from tdc import tdc_hf_interface
 
         adata = DataLoader("scvi_test_dataset",
-                "./data",
-                dataset_names=["scvi_test_dataset"],
-                no_convert=True).adata
+                           "./data",
+                           dataset_names=["scvi_test_dataset"],
+                           no_convert=True).adata
 
         scvi = tdc_hf_interface("scVI")
         model = scvi.load()

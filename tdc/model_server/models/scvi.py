@@ -1,6 +1,8 @@
 import torch.nn as nn
 
+
 class scVI(nn.Module):
+
     def __init__(self):
         import scvi as scvi_package
 
@@ -26,7 +28,6 @@ class scVI(nn.Module):
 
         return vae_q.get_latent_representation()
 
-
     def load(self):
         import scvi as scvi_package
         import os
@@ -40,10 +41,9 @@ class scVI(nn.Module):
 
         # adata object needed for loading model
         adata = DataLoader("scvi_test_dataset",
-                    "./data",
-                    dataset_names=["scvi_test_dataset"],
-                    no_convert=True).adata
-
+                           "./data",
+                           dataset_names=["scvi_test_dataset"],
+                           no_convert=True).adata
 
         # See docstring for more information. Expect index
         # ordered and dimensions per scVI specifications
@@ -75,18 +75,20 @@ class scVI(nn.Module):
         import torch
         import numpy as np
 
-        metadata = torch.load("scvi_model/model.pt", map_location=torch.device('cpu'))
+        metadata = torch.load("scvi_model/model.pt",
+                              map_location=torch.device('cpu'))
 
         # setting indices that match
-        adata.var.index = metadata[
-            "attr_dict"]["registry_"]["field_registries"]["X"]["state_registry"]["column_names"]
+        adata.var.index = metadata["attr_dict"]["registry_"][
+            "field_registries"]["X"]["state_registry"]["column_names"]
 
         # Padding X so dimensions match. Need 8000 columns because scVI was trained using adata
         # containing 8000 genes. This is the number of var indices extracted from metadata above.
-        additional_columns = np.zeros((adata.X.shape[0], 8000 - adata.X.shape[1]))
+        additional_columns = np.zeros(
+            (adata.X.shape[0], 8000 - adata.X.shape[1]))
         adata.X = np.hstack([adata.X, additional_columns])
 
         # getting a batch name that matches
-        adata.obs['batch'] = metadata[
-            "attr_dict"]["registry_"]["field_registries"]["batch"]["state_registry"][
+        adata.obs['batch'] = metadata["attr_dict"]["registry_"][
+            "field_registries"]["batch"]["state_registry"][
                 "categorical_mapping"][0]

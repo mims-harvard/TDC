@@ -1,4 +1,5 @@
 class scVILoader():
+
     def __init__(self):
         pass
 
@@ -14,7 +15,9 @@ class scVILoader():
         try:
             response = requests.get(scvi_url, verify=False)
             if response.status_code == 404:
-                raise Exception('Census version not found, defaulting to version 2024-07-01')
+                raise Exception(
+                    'Census version not found, defaulting to version 2024-07-01'
+                )
         except Exception as e:
             print(e)
             census_version = "2024-07-01"
@@ -24,4 +27,6 @@ class scVILoader():
         with open(output_path, "wb") as file:
             file.write(response.content)
 
-        print(f'scVI version {census_version} downloaded to {output_path} in current directory')
+        print(
+            f'scVI version {census_version} downloaded to {output_path} in current directory'
+        )
