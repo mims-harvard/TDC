@@ -16,13 +16,15 @@ class scVI(nn.Module):
             print("No var names found in SCVI reference vars")
             print(f"adata.var.index must include some of {self.var_names}")
 
+            # See docstring for more information. Expect input data to have index
+            # ordered and dimensions per scVI specifications
             self.force_data_match(adata)
 
         # getting variational autoencoder
         vae_q = self.model.load_query_data(adata, self.model)
         vae_q.is_trained = True
 
-        return vae_q.get_latent_representation() # or get normalized expression
+        return vae_q.get_latent_representation()
 
 
     def load(self):
@@ -34,14 +36,17 @@ class scVI(nn.Module):
 
         if not os.path.isdir("scvi_model"):
             loader = scvi_loader.scVILoader()
-            loader.load("2024-07-01") # can add a var for a new version
+            loader.load("2024-07-01")
 
+        # adata object needed for loading model
         adata = DataLoader("scvi_test_dataset",
                     "./data",
                     dataset_names=["scvi_test_dataset"],
                     no_convert=True).adata
 
-        # Matching adata shape and var names with SCVI's adata
+
+        # See docstring for more information. Expect index
+        # ordered and dimensions per scVI specifications
         self.force_data_match(adata)
 
         #instantiate SCVI model (not callable, just used to get VAE)
@@ -55,15 +60,18 @@ class scVI(nn.Module):
 
     def prepare_data(self, adata):
         import numpy as np
+
         assert True in np.isin(adata.var.index, self.var_names)
-        # tutorials also usually have these. Not sure why
-        # adata.var["ensembl_id"] = adata.var.index
-        # adata.obs["n_counts"] = adata.X.sum(axis=1)
-        # adata.obs["joinid"] = list(range(adata.n_obs))
+
         adata.obs["batch"] = "unassigned"
         self.model.prepare_query_anndata(adata, self.model)
 
     def force_data_match(self, adata):
+        '''
+        Input data is expected to have index ordered and dimensions as per scVI specifications.
+        For more information visit:
+        https://huggingface.co/datasets/scvi-tools/DATASET-FOR-UNIT-TESTING-1/tree/main
+        '''
         import torch
         import numpy as np
 
@@ -73,7 +81,8 @@ class scVI(nn.Module):
         adata.var.index = metadata[
             "attr_dict"]["registry_"]["field_registries"]["X"]["state_registry"]["column_names"]
 
-        # padding X so dimensions match
+        # Padding X so dimensions match. Need 8000 columns because scVI was trained using adata
+        # containing 8000 genes. This is the number of var indices extracted from metadata above.
         additional_columns = np.zeros((adata.X.shape[0], 8000 - adata.X.shape[1]))
         adata.X = np.hstack([adata.X, additional_columns])
 
