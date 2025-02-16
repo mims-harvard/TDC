@@ -84,7 +84,7 @@ class TestModelServer(unittest.TestCase):
         assert input_tensor.shape[0] == 512, "unexpected batch size"
         assert input_tensor.shape[1] == mdim, f"unexpected gene length {mdim}"
         attention_mask = torch.tensor([[t != 0 for t in cell] for cell in batch
-                                       ])
+                                      ])
         assert input_tensor.shape[0] == attention_mask.shape[0]
         assert input_tensor.shape[1] == attention_mask.shape[1]
         try:
