@@ -1,4 +1,4 @@
-name: tdc-conda-env 
+name: tdc-conda-env
 channels:
   - bioconda
   - conda-forge
@@ -21,7 +21,7 @@ dependencies:
   - tqdm=4.65.0
   - pip:
     - accelerate==0.33.0
-    - cellxgene-census==1.15.0 
+    - cellxgene-census==1.15.0
     - datasets<2.20.0
     - dgl==1.1.3
     - evaluate==0.4.2
@@ -34,6 +34,7 @@ dependencies:
     - pydantic==2.6.3
     - pytest==8.3.2
     - rdkit==2023.9.5
+    - scvi-tools==1.2.0
     - tiledbsoma==1.11.4
     - torch==2.1.1
     - torch_geometric==2.5.3
