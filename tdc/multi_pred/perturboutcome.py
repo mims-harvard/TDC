@@ -159,7 +159,7 @@ class PerturbOutcome(CellXGeneTemplate):
                            split_to_unseen=False,
                            remove_unseen=True):
         df = self.get_data()
-        cell_line_groups = df.groupby("cell_line")
+        cell_line_groups = df.obs.groupby("cell_line")
         cell_line_splits = {}
         for cell_line, cell_line_group in cell_line_groups:
             control = cell_line_group[cell_line_group["perturbation"] ==
