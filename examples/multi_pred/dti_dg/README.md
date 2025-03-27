@@ -1,6 +1,6 @@
 # TDC DTI Domain Generalization Leaderboard
 
-We adapt code from [domainbed](https://arxiv.org/abs/2007.01434) to add 7 baselines for this leaderboard. For the backbone model, we use [DeepDTA](https://academic.oup.com/bioinformatics/article/34/17/i821/5093245), one of the SOTA baselines for DTI affinity prediction. 
+We adapt code from [domainbed](https://arxiv.org/abs/2007.01434) to add 7 baselines for this leaderboard. For the backbone model, we use [DeepDTA](https://academic.oup.com/bioinformatics/article/34/17/i821/5093245), one of the SOTA baselines for DTI affinity prediction.
 
 ### Environment
 
@@ -18,4 +18,4 @@ python train.py --algorithm GroupDRO --seed 0
 
 ### Add your own domain generalization algorithm
 
-Go to `domainbed/algorithm.py` script to add your algorithm. 
+Go to `domainbed/algorithm.py` script to add your algorithm.

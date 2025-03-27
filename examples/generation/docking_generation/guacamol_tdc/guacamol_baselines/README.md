@@ -1,8 +1,8 @@
 # GuacaMol Baselines
 
-A series of baseline model implementations for the [`guacamol`](https://github.com/BenevolentAI/guacamol) benchmark 
-for generative chemistry.  
-A more in depth explanation of the benchmarks and scores for these baselines is 
+A series of baseline model implementations for the [`guacamol`](https://github.com/BenevolentAI/guacamol) benchmark
+for generative chemistry.
+A more in depth explanation of the benchmarks and scores for these baselines is
 can be found in our [paper](https://arxiv.org/abs/1811.09621).
 
 ## Dependencies
@@ -35,8 +35,8 @@ python -m random_smiles_sampler.distribution_learning
 
 
 ## Best from ChEMBL
-Dummy baseline that simply returns the molecules from the `guacamol` 
-training set that best satisfy the score of a goal-directed benchmark.  
+Dummy baseline that simply returns the molecules from the `guacamol`
+training set that best satisfy the score of a goal-directed benchmark.
 There is no model nor training, its only purpose is to establish a lower bound
 on the benchmark scores.
 
@@ -49,7 +49,7 @@ No distribution learning benchmark available.
 
 
 ## SMILES GA
-Genetic algorithm on SMILES as described in: https://www.journal.csj.jp/doi/10.1246/cl.180665  
+Genetic algorithm on SMILES as described in: https://www.journal.csj.jp/doi/10.1246/cl.180665
 
 Implementation adapted from: https://github.com/tsudalab/ChemGE
 
@@ -62,9 +62,9 @@ No distribution learning benchmark available.
 
 
 ## Graph GA
-Genetic algoritm on molecule graphs as described in: https://doi.org/10.26434/chemrxiv.7240751  
+Genetic algoritm on molecule graphs as described in: https://doi.org/10.26434/chemrxiv.7240751
 
-Implementation adapted from: https://github.com/jensengroup/GB-GA  
+Implementation adapted from: https://github.com/jensengroup/GB-GA
 
 To execute the goal-directed generation benchmarks:
 ```bash
@@ -75,9 +75,9 @@ No distribution learning benchmark available.
 
 
 ## Graph MCTS
-Monte Carlo Tree Search on molecule graphs as described in: https://doi.org/10.26434/chemrxiv.7240751  
+Monte Carlo Tree Search on molecule graphs as described in: https://doi.org/10.26434/chemrxiv.7240751
 
-Implementation adapted from: https://github.com/jensengroup/GB-GB  
+Implementation adapted from: https://github.com/jensengroup/GB-GB
 
 To execute the goal-directed generation benchmarks:
 ```bash
@@ -96,15 +96,15 @@ python -m graph_mcts.analyze_dataset
 
 
 ## SMILES LSTM Hill Climbing
-Long-short term memory on SMILES as described in: https://arxiv.org/abs/1701.01329  
+Long-short term memory on SMILES as described in: https://arxiv.org/abs/1701.01329
 
-This implementation optimizes using *hill climbing* algorithm.  
+This implementation optimizes using *hill climbing* algorithm.
 
 Implementation by [BenevolentAI](https://benevolent.ai/)
 
-A pre-trained model is provided in: [smiles_lstm/pretrained_model](https://github.com/BenevolentAI/guacamol_baselines/tree/master/smiles_lstm_hc/pretrained_model)  
+A pre-trained model is provided in: [smiles_lstm/pretrained_model](https://github.com/BenevolentAI/guacamol_baselines/tree/master/smiles_lstm_hc/pretrained_model)
 
-To execute the goal-directed generation benchmarks: 
+To execute the goal-directed generation benchmarks:
 ```bash
 python -m smiles_lstm_hc.goal_directed_generation
 ```
@@ -120,15 +120,15 @@ python -m smiles_lstm_hc.train_smiles_lstm_model
 ```
 
 ## SMILES LSTM PPO
-Long-short term memory on SMILES as described in: https://arxiv.org/abs/1701.01329  
+Long-short term memory on SMILES as described in: https://arxiv.org/abs/1701.01329
 
-This implementation optimizes using [*proximal policy optimization*](https://arxiv.org/pdf/1707.06347.pdf) algorithm.  
+This implementation optimizes using [*proximal policy optimization*](https://arxiv.org/pdf/1707.06347.pdf) algorithm.
 
 Implementation by [BenevolentAI](https://benevolent.ai/)
 
-A pre-trained model is provided in: [smiles_lstm/pretrained_model](https://github.com/BenevolentAI/guacamol_baselines/tree/master/smiles_lstm_ppo/pretrained_model)  
+A pre-trained model is provided in: [smiles_lstm/pretrained_model](https://github.com/BenevolentAI/guacamol_baselines/tree/master/smiles_lstm_ppo/pretrained_model)
 
-To execute the goal-directed generation benchmarks: 
+To execute the goal-directed generation benchmarks:
 ```bash
 python -m smiles_lstm_ppo.goal_directed_generation
 ```

@@ -1,6 +1,6 @@
 ## Drug Combination Benchmark Group MLP Baselines
 
-This directory contains the code used to train a simple baseline MLP regression model for the DrugCombo benchmark. 
+This directory contains the code used to train a simple baseline MLP regression model for the DrugCombo benchmark.
 
 To run the model, simply:
 

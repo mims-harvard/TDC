@@ -222,14 +222,14 @@ def goal_directed_suite_V() -> List[GoalDirectedBenchmark]:
     # jnk_benchmark(),
     """
         qed_benchmark(),
-        drd_benchmark(), 
+        drd_benchmark(),
         gsk_benchmark(),
-        jnk_benchmark(), 
+        jnk_benchmark(),
 
-        cyp3a4_benchmark(), 
+        cyp3a4_benchmark(),
 
         median_camphor_menthol(),
-        median_tadalafil_sildenafil(),    
+        median_tadalafil_sildenafil(),
         hard_osimertinib(),
         hard_fexofenadine(),
         ranolazine_mpo(),
@@ -239,7 +239,7 @@ def goal_directed_suite_V() -> List[GoalDirectedBenchmark]:
         zaleplon_with_other_formula(),
         valsartan_smarts(),
         decoration_hop(),
-        scaffold_hop(),  
+        scaffold_hop(),
 
     """
 

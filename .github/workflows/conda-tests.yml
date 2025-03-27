@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build Conda Environment And Run Python Tests 
+name: Build Conda Environment And Run Python Tests
 
 on:
   push:
@@ -39,10 +39,10 @@ jobs:
         with:
           miniconda-version: "latest"
           channels: bioconda, conda-forge, defaults, dgl
-          use-only-tar-bz2: true  
+          use-only-tar-bz2: true
           auto-update-conda: true
           auto-activate-base: true
-          
+
       - name: Create and start Conda environment. Run tests
         run: |
           echo "Creating Conda Environment from environment.yml"

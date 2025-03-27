@@ -21,12 +21,12 @@ class DataFeatureGenerator(FeatureGenerator):
     def autofill_identifier(cls, dataset, autofill_column, key_column):
         """Autofill a column based on base column. Assumes one-to-one mapping between both.
         Modifications done in-place.
-        
+
         Args:
             dataset (pandas.DataFrame): dataset to modify.
             autofill_column (str): name of the column to autofill.
             key_column (str): name of the column used for indexing.
-            
+
         Returns:
             pandas.DataFrame: The modified dataset.
         """

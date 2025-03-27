@@ -54,22 +54,22 @@ plt.xlabel("# docking call")
 plt.ylabel("docking score (DRD3) achieved by GCPN")
 plt.savefig("gcpn_docking.png")
 """
-scp -r tfu42@orcus1.cc.gatech.edu:/project/molecular_data/graphnn/GCPN/result .   
+scp -r tfu42@orcus1.cc.gatech.edu:/project/molecular_data/graphnn/GCPN/result .
 
-cp result.1.done/100.txt ../tdc_leaderboard/gcpn/gcpn_1_100.txt 
-cp result.1.done/500.txt ../tdc_leaderboard/gcpn/gcpn_1_500.txt 
-cp result.1.done/1000.txt ../tdc_leaderboard/gcpn/gcpn_1_1000.txt 
-cp result.1.done/5000.txt ../tdc_leaderboard/gcpn/gcpn_1_5000.txt 
+cp result.1.done/100.txt ../tdc_leaderboard/gcpn/gcpn_1_100.txt
+cp result.1.done/500.txt ../tdc_leaderboard/gcpn/gcpn_1_500.txt
+cp result.1.done/1000.txt ../tdc_leaderboard/gcpn/gcpn_1_1000.txt
+cp result.1.done/5000.txt ../tdc_leaderboard/gcpn/gcpn_1_5000.txt
 
-cp result.2.done/100.txt ../tdc_leaderboard/gcpn/gcpn_2_100.txt 
-cp result.2.done/500.txt ../tdc_leaderboard/gcpn/gcpn_2_500.txt 
-cp result.2.done/1000.txt ../tdc_leaderboard/gcpn/gcpn_2_1000.txt 
-cp result.2.done/5000.txt ../tdc_leaderboard/gcpn/gcpn_2_5000.txt 
+cp result.2.done/100.txt ../tdc_leaderboard/gcpn/gcpn_2_100.txt
+cp result.2.done/500.txt ../tdc_leaderboard/gcpn/gcpn_2_500.txt
+cp result.2.done/1000.txt ../tdc_leaderboard/gcpn/gcpn_2_1000.txt
+cp result.2.done/5000.txt ../tdc_leaderboard/gcpn/gcpn_2_5000.txt
 
-cp result.3.done/100.txt ../tdc_leaderboard/gcpn/gcpn_3_100.txt 
-cp result.3.done/500.txt ../tdc_leaderboard/gcpn/gcpn_3_500.txt 
-cp result.3.done/1000.txt ../tdc_leaderboard/gcpn/gcpn_3_1000.txt 
-cp result.3.done/5000.txt ../tdc_leaderboard/gcpn/gcpn_3_5000.txt 
+cp result.3.done/100.txt ../tdc_leaderboard/gcpn/gcpn_3_100.txt
+cp result.3.done/500.txt ../tdc_leaderboard/gcpn/gcpn_3_500.txt
+cp result.3.done/1000.txt ../tdc_leaderboard/gcpn/gcpn_3_1000.txt
+cp result.3.done/5000.txt ../tdc_leaderboard/gcpn/gcpn_3_5000.txt
 
 
 """

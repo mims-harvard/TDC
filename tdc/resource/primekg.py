@@ -2,7 +2,7 @@
 # Author: TDC Team
 # License: MIT
 """
-This file contains a primekg dataloader. 
+This file contains a primekg dataloader.
 """
 
 import numpy as np

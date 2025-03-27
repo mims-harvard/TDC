@@ -36,7 +36,7 @@ plt.xlabel("# docking call")
 plt.ylabel("docking score (DRD3) achieved by MolDQN")
 plt.savefig("docking_iter.png")
 """
-cd chemgraph 
-scp -r tfu42@orcus1.cc.gatech.edu:/project/molecular_data/graphnn/mol_dqn_docking/chemgraph/result .   
+cd chemgraph
+scp -r tfu42@orcus1.cc.gatech.edu:/project/molecular_data/graphnn/mol_dqn_docking/chemgraph/result .
 
 """

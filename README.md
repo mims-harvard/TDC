@@ -48,9 +48,9 @@ TDC is an open-science initiative. We welcome [contributions from the community.
 
 [2] Huang, Fu, Gao, et al., Artificial Intelligence Foundation for Therapeutic Science, Nature Chemical Biology, 2022 [**\[Paper\]**](https://www.nature.com/articles/s41589-022-01131-2)
 
-[3] Huang, Fu, Gao, et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, NeurIPS 2021 [**\[Paper\]**](https://openreview.net/forum?id=8nvgnORnoWr) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing) 
+[3] Huang, Fu, Gao, et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, NeurIPS 2021 [**\[Paper\]**](https://openreview.net/forum?id=8nvgnORnoWr) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing)
 
-[4] Huang et al., Benchmarking Molecular Machine Learning in Therapeutics Data Commons, ELLIS ML4Molecules 2021 [**\[Paper\]**](https://cloud.ml.jku.at/s/54pB5Eqf6ftX7qA) [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing) 
+[4] Huang et al., Benchmarking Molecular Machine Learning in Therapeutics Data Commons, ELLIS ML4Molecules 2021 [**\[Paper\]**](https://cloud.ml.jku.at/s/54pB5Eqf6ftX7qA) [**\[Slides\]**](https://drive.google.com/file/d/1iOSW_5eruca4vdygDxS1H64c49oQuH40/view?usp=sharing)
 
 [5] Huang et al., Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development, Baylearn 2021 [**\[Slides\]**](https://drive.google.com/file/d/1BNpk3dOdqE3ksgyVV-V3xySdBMq-8cXL/view?usp=sharing) [**\[Poster\]**](https://drive.google.com/file/d/1LfF8mfPLUqAVEzH3KPBxDO_VF7nLFtiJ/view?usp=sharing)
 
@@ -73,9 +73,9 @@ TDC is an open-science initiative. We welcome [contributions from the community.
 
 - *Diverse areas of therapeutics development*: TDC covers a wide range of learning tasks, including target discovery, activity screening, efficacy, safety, and manufacturing across biomedical products, including small molecules, antibodies, and vaccines.
 - *Ready-to-use datasets*: TDC is minimally dependent on external packages. Any TDC dataset can be retrieved using only three lines of code.
-- *Data functions*: TDC provides extensive data functions, including data evaluators, meaningful data splits, data processors, and molecule generation oracles. 
+- *Data functions*: TDC provides extensive data functions, including data evaluators, meaningful data splits, data processors, and molecule generation oracles.
 - *Leaderboards*: TDC provides benchmarks for fair model comparison and systematic model development and evaluation.
-- *Open-source initiative*: TDC is an open-source initiative. If you'd like to get involved, please don't hesitate to let us know. 
+- *Open-source initiative*: TDC is an open-source initiative. If you'd like to get involved, please don't hesitate to let us know.
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_overview.png" alt="overview" width="600px" /></p>
 
@@ -133,7 +133,7 @@ TDC has a unique three-tiered hierarchical structure, which to our knowledge, is
 In the first tier, after observing a large set of therapeutics tasks, we categorize and abstract out three major areas (i.e., problems) where machine learning can facilitate scientific advances, namely, single-instance prediction, multi-instance prediction, and generation:
 
 * Single-instance prediction `single_pred`: Prediction of property given individual biomedical entity.
-* Multi-instance prediction `multi_pred`: Prediction of property given multiple biomedical entities. 
+* Multi-instance prediction `multi_pred`: Prediction of property given multiple biomedical entities.
 * Generation `generation`: Generation of new desirable biomedical entities.
 
 <p align="center"><img src="https://raw.githubusercontent.com/mims-harvard/TDC/master/fig/tdc_problems.png" alt="problems" width="500px" /></p>
@@ -172,7 +172,7 @@ See all therapeutic tasks and datasets on the [TDC website](https://zitniklab.hm
 #### Dataset Splits
 
 To retrieve the training/validation/test dataset split, you could type
-```python 
+```python
 data = X(name = Y)
 data.get_split(seed = 42)
 # {'train': df_train, 'val': df_val, 'test': df_test}
@@ -189,7 +189,7 @@ evaluator = Evaluator(name = 'ROC-AUC')
 score = evaluator(y_true, y_pred)
 ```
 
-#### Data Processing 
+#### Data Processing
 
 TDC provides numerous data processing functions, including label transformation, data balancing, pairing data to PyG/DGL graphs, negative sampling, database querying, and so on. For function usage, see our [data processing page](https://zitniklab.hms.harvard.edu/TDC/functions/data_process/) on the TDC website.
 
@@ -200,9 +200,9 @@ For molecule generation tasks, we provide 10+ oracles for both goal-oriented and
 ```python
 from tdc import Oracle
 oracle = Oracle(name = 'GSK3B')
-oracle(['CC(C)(C)....' 
+oracle(['CC(C)(C)....'
   'C[C@@H]1....',
-  'CCNC(=O)....', 
+  'CCNC(=O)....',
   'C[C@@H]1....'])
 
 # [0.03, 0.02, 0.0, 0.1]
@@ -228,18 +228,18 @@ group = BenchmarkGroup(name = 'ADMET_Group', path = 'data/')
 predictions_list = []
 
 for seed in [1, 2, 3, 4, 5]:
-    benchmark = group.get('Caco2_Wang') 
+    benchmark = group.get('Caco2_Wang')
     # all benchmark names in a benchmark group are stored in group.dataset_names
     predictions = {}
     name = benchmark['name']
     train_val, test = benchmark['train_val'], benchmark['test']
     train, valid = group.get_train_valid_split(benchmark = name, split_type = 'default', seed = seed)
-    
-        # --------------------------------------------- # 
+
+        # --------------------------------------------- #
         #  Train your model using train, valid, test    #
         #  Save test prediction in y_pred_test variable #
         # --------------------------------------------- #
-        
+
     predictions[name] = y_pred_test
     predictions_list.append(predictions)
 
@@ -268,7 +268,7 @@ url={https://openreview.net/forum?id=kL8dlYp6IM}
 ```
 @article{Huang2021tdc,
   title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development},
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley,
           Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
   journal={Proceedings of Neural Information Processing Systems, NeurIPS Datasets and Benchmarks},
   year={2021}
@@ -278,7 +278,7 @@ url={https://openreview.net/forum?id=kL8dlYp6IM}
 ```
 @article{Huang2022artificial,
   title={Artificial intelligence foundation for therapeutic science},
-  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
+  author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley,
           Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
   journal={Nature Chemical Biology},
   year={2022}
