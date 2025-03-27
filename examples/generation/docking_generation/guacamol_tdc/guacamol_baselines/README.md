@@ -132,4 +132,3 @@ To execute the goal-directed generation benchmarks:
 ```bash
 python -m smiles_lstm_ppo.goal_directed_generation
 ```
-

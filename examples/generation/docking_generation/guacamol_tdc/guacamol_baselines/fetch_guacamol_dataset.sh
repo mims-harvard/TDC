@@ -9,4 +9,3 @@ wget https://ndownloader.figshare.com/files/13612760 -O data/guacamol_v1_train.s
 wget https://ndownloader.figshare.com/files/13612766 -O data/guacamol_v1_valid.smiles
 
 wget https://ndownloader.figshare.com/files/13612757 -O data/guacamol_v1_test.smiles
-

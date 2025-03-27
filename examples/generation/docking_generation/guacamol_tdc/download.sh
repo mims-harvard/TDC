@@ -8,5 +8,3 @@ rm -r results/graph_ga_1 results/graph_ga_2 results/graph_ga_3
 scp -r tfu42@orcus1.cc.gatech.edu:/project/molecular_data/graphnn/pyscreener/graph_ga/results ./results/graph_ga_1
 scp -r tfu42@orcus1.cc.gatech.edu:/project/molecular_data/graphnn/pyscreener/graph_ga/results.2 ./results/graph_ga_2
 scp -r tfu42@orcus1.cc.gatech.edu:/project/molecular_data/graphnn/pyscreener/graph_ga/results.3 ./results/graph_ga_3
-
-

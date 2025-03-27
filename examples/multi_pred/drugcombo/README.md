@@ -12,4 +12,3 @@ python train_MLP.py --epochs 10 --batch_size 128 --cuda True
 '''
 
 ```
-

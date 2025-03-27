@@ -39,4 +39,3 @@ tdc.chem\_utils.evaluator module
    :members:
    :undoc-members:
    :show-inheritance:
-

@@ -6,7 +6,7 @@ repos:
     rev: v4.0.1
     hooks:
       - id: trailing-whitespace
-#      - id: end-of-file-fixer
+      - id: end-of-file-fixer
 
   - repo: https://github.com/google/yapf
     rev: v0.43.0

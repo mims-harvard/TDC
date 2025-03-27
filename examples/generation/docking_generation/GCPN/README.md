@@ -70,9 +70,3 @@ tensorboard --logdir runs
 ```
 
 All the generated molecules along the training process are stored in the `molecule_gen` folder, each run configuration is stored in a different csv file. Molecules are stored using SMILES strings, along with the desired properties scores.
-
-
-
-
-
-
