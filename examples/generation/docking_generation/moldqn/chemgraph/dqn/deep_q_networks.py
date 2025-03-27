@@ -100,9 +100,8 @@ class DeepQNetwork(object):
         self._build_training_ops()
         self._build_summary_ops()
 
-    def _build_single_q_network(
-        self, observations, head, state_t, state_tp1, done_mask, reward_t, error_weight
-    ):
+    def _build_single_q_network(self, observations, head, state_t, state_tp1,
+                                done_mask, reward_t, error_weight):
         """Builds the computational graph for a single Q network.
 
         Briefly, this part is calculating the following two quantities:
@@ -147,18 +146,22 @@ class DeepQNetwork(object):
         # The Q network shares parameters with the action graph.
         with tf.variable_scope("q_fn", reuse=True):
             q_t = self.q_fn(state_t, reuse=True)
-        q_fn_vars = tf.trainable_variables(scope=tf.get_variable_scope().name + "/q_fn")
+        q_fn_vars = tf.trainable_variables(scope=tf.get_variable_scope().name +
+                                           "/q_fn")
 
         # calculating q_fn(state_tp1)
         with tf.variable_scope("q_tp1", reuse=tf.AUTO_REUSE):
-            q_tp1 = [self.q_fn(s_tp1, reuse=tf.AUTO_REUSE) for s_tp1 in state_tp1]
-        q_tp1_vars = tf.trainable_variables(
-            scope=tf.get_variable_scope().name + "/q_tp1"
-        )
+            q_tp1 = [
+                self.q_fn(s_tp1, reuse=tf.AUTO_REUSE) for s_tp1 in state_tp1
+            ]
+        q_tp1_vars = tf.trainable_variables(scope=tf.get_variable_scope().name +
+                                            "/q_tp1")
 
         if self.double_q:
             with tf.variable_scope("q_fn", reuse=True):
-                q_tp1_online = [self.q_fn(s_tp1, reuse=True) for s_tp1 in state_tp1]
+                q_tp1_online = [
+                    self.q_fn(s_tp1, reuse=True) for s_tp1 in state_tp1
+                ]
             if self.num_bootstrap_heads:
                 num_heads = self.num_bootstrap_heads
             else:
@@ -166,14 +169,17 @@ class DeepQNetwork(object):
             # determine the action to choose based on online Q estimator.
             q_tp1_online_idx = [
                 tf.stack(
-                    [tf.argmax(q, axis=0), tf.range(num_heads, dtype=tf.int64)], axis=1
-                )
-                for q in q_tp1_online
+                    [tf.argmax(q, axis=0),
+                     tf.range(num_heads, dtype=tf.int64)],
+                    axis=1) for q in q_tp1_online
             ]
             # use the index from max online q_values to compute the value
             # function
             v_tp1 = tf.stack(
-                [tf.gather_nd(q, idx) for q, idx in zip(q_tp1, q_tp1_online_idx)],
+                [
+                    tf.gather_nd(q, idx)
+                    for q, idx in zip(q_tp1, q_tp1_online_idx)
+                ],
                 axis=0,
             )
         else:
@@ -194,8 +200,7 @@ class DeepQNetwork(object):
         # training sample. Like the idea of dropout.
         if self.num_bootstrap_heads:
             head_mask = tf.keras.backend.random_binomial(
-                shape=(1, self.num_bootstrap_heads), p=0.6
-            )
+                shape=(1, self.num_bootstrap_heads), p=0.6)
             td_error = tf.reduce_mean(td_error * head_mask, axis=1)
         # The loss comes from a traditional trick in convex optimization:
         # http://web.stanford.edu/~boyd/cvxbook/.
@@ -239,9 +244,9 @@ class DeepQNetwork(object):
         with tf.variable_scope(self.scope, reuse=self.reuse):
             # Build the action graph to choose an action.
             # The observations, which are the inputs of the Q function.
-            self.observations = tf.placeholder(
-                tf.float32, [None, fingerprint_length], name="observations"
-            )
+            self.observations = tf.placeholder(tf.float32,
+                                               [None, fingerprint_length],
+                                               name="observations")
             # head is the index of the head we want to choose for decison.
             # See https://arxiv.org/abs/1703.07608
             self.head = tf.placeholder(tf.int32, [], name="head")
@@ -249,23 +254,22 @@ class DeepQNetwork(object):
             # When sample from memory, the batch_size can be fixed, as it is
             # possible to sample any number of samples from memory.
             # state_t is the state at time step t
-            self.state_t = tf.placeholder(tf.float32, self.input_shape, name="state_t")
+            self.state_t = tf.placeholder(tf.float32,
+                                          self.input_shape,
+                                          name="state_t")
             # state_tp1 is the state at time step t + 1, tp1 is short for t plus 1.
             self.state_tp1 = [
-                tf.placeholder(
-                    tf.float32, [None, fingerprint_length], name="state_tp1_%i" % i
-                )
+                tf.placeholder(tf.float32, [None, fingerprint_length],
+                               name="state_tp1_%i" % i)
                 for i in range(batch_size)
             ]
             # done_mask is a {0, 1} tensor indicating whether state_tp1 is the
             # terminal state.
-            self.done_mask = tf.placeholder(
-                tf.float32, (batch_size, 1), name="done_mask"
-            )
+            self.done_mask = tf.placeholder(tf.float32, (batch_size, 1),
+                                            name="done_mask")
 
-            self.error_weight = tf.placeholder(
-                tf.float32, (batch_size, 1), name="error_weight"
-            )
+            self.error_weight = tf.placeholder(tf.float32, (batch_size, 1),
+                                               name="error_weight")
 
     def _build_graph(self):
         """Builds the computational graph.
@@ -285,7 +289,8 @@ class DeepQNetwork(object):
         batch_size, _ = self.input_shape
         with tf.variable_scope(self.scope, reuse=self.reuse):
             self._build_input_placeholder()
-            self.reward_t = tf.placeholder(tf.float32, (batch_size, 1), name="reward_t")
+            self.reward_t = tf.placeholder(tf.float32, (batch_size, 1),
+                                           name="reward_t")
             # The Q network shares parameters with the action graph.
             # tenors start with q or v have shape [batch_size, 1] when not using
             # bootstrap. When using bootstrap, the shapes are
@@ -332,8 +337,8 @@ class DeepQNetwork(object):
 
             self.update_op = []
             for var, target in zip(
-                sorted(self.q_fn_vars, key=lambda v: v.name),
-                sorted(self.q_tp1_vars, key=lambda v: v.name),
+                    sorted(self.q_fn_vars, key=lambda v: v.name),
+                    sorted(self.q_tp1_vars, key=lambda v: v.name),
             ):
                 self.update_op.append(target.assign(var))
             self.update_op = tf.group(*self.update_op)
@@ -354,15 +359,13 @@ class DeepQNetwork(object):
                 # The td_error here is the difference between q_t and q_t_target.
                 # Without abs(), the summary of td_error is actually underestimated.
                 self.error_summary = tf.summary.scalar(
-                    "td_error", tf.reduce_mean(tf.abs(self.td_error))
-                )
+                    "td_error", tf.reduce_mean(tf.abs(self.td_error)))
                 self.smiles = tf.placeholder(tf.string, [], "summary_smiles")
                 self.reward = tf.placeholder(tf.float32, [], "summary_reward")
                 smiles_summary = tf.summary.text("SMILES", self.smiles)
                 reward_summary = tf.summary.scalar("reward", self.reward)
                 self.episode_summary = tf.summary.merge(
-                    [smiles_summary, reward_summary]
-                )
+                    [smiles_summary, reward_summary])
 
     def log_result(self, smiles, reward):
         """Summarizes the SMILES string and reward at the end of an episode.
@@ -374,9 +377,11 @@ class DeepQNetwork(object):
         Returns:
           the summary protobuf
         """
-        return tf.get_default_session().run(
-            self.episode_summary, feed_dict={self.smiles: smiles, self.reward: reward}
-        )
+        return tf.get_default_session().run(self.episode_summary,
+                                            feed_dict={
+                                                self.smiles: smiles,
+                                                self.reward: reward
+                                            })
 
     def _run_action_op(self, observations, head):
         """Function that runs the op calculating an action given the observations.
@@ -389,14 +394,19 @@ class DeepQNetwork(object):
         Returns:
           Integer. which action to be performed.
         """
-        return np.asscalar(
-            tf.get_default_session().run(
-                self.action,
-                feed_dict={self.observations: observations, self.head: head},
-            )
-        )
+        return np.asscalar(tf.get_default_session().run(
+            self.action,
+            feed_dict={
+                self.observations: observations,
+                self.head: head
+            },
+        ))
 
-    def get_action(self, observations, stochastic=True, head=0, update_epsilon=None):
+    def get_action(self,
+                   observations,
+                   stochastic=True,
+                   head=0,
+                   update_epsilon=None):
         """Function that chooses an action given the observations.
 
         Args:
@@ -521,14 +531,13 @@ class MultiObjectiveDeepQNetwork(DeepQNetwork):
         batch_size, _ = self.input_shape
         with tf.variable_scope(self.scope, reuse=self.reuse):
             self._build_input_placeholder()
-            self.reward_t = tf.placeholder(
-                tf.float32, (batch_size, self.num_objectives), name="reward_t"
-            )
+            self.reward_t = tf.placeholder(tf.float32,
+                                           (batch_size, self.num_objectives),
+                                           name="reward_t")
             # objective_weight is the weight to scalarize the objective vector:
             # reward = sum (objective_weight_i * objective_i)
             self.objective_weight_input = tf.placeholder(
-                tf.float32, [self.num_objectives, 1], name="objective_weight"
-            )
+                tf.float32, [self.num_objectives, 1], name="objective_weight")
 
             # split reward for each q network
             rewards_list = tf.split(self.reward_t, self.num_objectives, axis=1)
@@ -565,9 +574,9 @@ class MultiObjectiveDeepQNetwork(DeepQNetwork):
                     self.q_tp1_vars += q_tp1_vars
             q_values = tf.concat(q_values_list, axis=1)
             # action is the one that leads to the maximum weighted reward.
-            self.action = tf.argmax(
-                tf.matmul(q_values, self.objective_weight_input), axis=0
-            )
+            self.action = tf.argmax(tf.matmul(q_values,
+                                              self.objective_weight_input),
+                                    axis=0)
 
     def _build_summary_ops(self):
         """Creates the summary operations.
@@ -586,9 +595,8 @@ class MultiObjectiveDeepQNetwork(DeepQNetwork):
                 # The td_error here is the difference between q_t and q_t_target.
                 # Without abs(), the summary of td_error is actually underestimated.
                 error_summaries = [
-                    tf.summary.scalar(
-                        "td_error_%i" % i, tf.reduce_mean(tf.abs(self.td_error[i]))
-                    )
+                    tf.summary.scalar("td_error_%i" % i,
+                                      tf.reduce_mean(tf.abs(self.td_error[i])))
                     for i in range(self.num_objectives)
                 ]
                 self.error_summary = tf.summary.merge(error_summaries)
@@ -598,21 +606,18 @@ class MultiObjectiveDeepQNetwork(DeepQNetwork):
                     for i in range(self.num_objectives)
                 ]
                 # Weighted sum of the rewards.
-                self.weighted_reward = tf.placeholder(
-                    tf.float32, [], "summary_reward_sum"
-                )
+                self.weighted_reward = tf.placeholder(tf.float32, [],
+                                                      "summary_reward_sum")
                 smiles_summary = tf.summary.text("SMILES", self.smiles)
                 reward_summaries = [
                     tf.summary.scalar("reward_obj_%i" % i, self.rewards[i])
                     for i in range(self.num_objectives)
                 ]
                 reward_summaries.append(
-                    tf.summary.scalar("sum_reward", self.rewards[-1])
-                )
+                    tf.summary.scalar("sum_reward", self.rewards[-1]))
 
-                self.episode_summary = tf.summary.merge(
-                    [smiles_summary] + reward_summaries
-                )
+                self.episode_summary = tf.summary.merge([smiles_summary] +
+                                                        reward_summaries)
 
     def log_result(self, smiles, reward):
         """Summarizes the SMILES string and reward at the end of an episode.
@@ -631,9 +636,9 @@ class MultiObjectiveDeepQNetwork(DeepQNetwork):
             feed_dict[self.rewards[i]] = reward_value
         # calculated the weighted sum of the rewards.
         feed_dict[self.weighted_reward] = np.asscalar(
-            np.array([reward]).dot(self.objective_weight)
-        )
-        return tf.get_default_session().run(self.episode_summary, feed_dict=feed_dict)
+            np.array([reward]).dot(self.objective_weight))
+        return tf.get_default_session().run(self.episode_summary,
+                                            feed_dict=feed_dict)
 
     def _run_action_op(self, observations, head):
         """Function that runs the op calculating an action given the observations.
@@ -646,16 +651,14 @@ class MultiObjectiveDeepQNetwork(DeepQNetwork):
         Returns:
           Integer. which action to be performed.
         """
-        return np.asscalar(
-            tf.get_default_session().run(
-                self.action,
-                feed_dict={
-                    self.observations: observations,
-                    self.objective_weight_input: self.objective_weight,
-                    self.head: head,
-                },
-            )
-        )
+        return np.asscalar(tf.get_default_session().run(
+            self.action,
+            feed_dict={
+                self.observations: observations,
+                self.objective_weight_input: self.objective_weight,
+                self.head: head,
+            },
+        ))
 
 
 def multi_layer_model(inputs, hparams, reuse=None):
@@ -671,12 +674,16 @@ def multi_layer_model(inputs, hparams, reuse=None):
     """
     output = inputs
     for i, units in enumerate(hparams.dense_layers):
-        output = tf.layers.dense(output, units, name="dense_%i" % i, reuse=reuse)
+        output = tf.layers.dense(output,
+                                 units,
+                                 name="dense_%i" % i,
+                                 reuse=reuse)
         output = getattr(tf.nn, hparams.activation)(output)
         if hparams.batch_norm:
-            output = tf.layers.batch_normalization(
-                output, fused=True, name="bn_%i" % i, reuse=reuse
-            )
+            output = tf.layers.batch_normalization(output,
+                                                   fused=True,
+                                                   name="bn_%i" % i,
+                                                   reuse=reuse)
     if hparams.num_bootstrap_heads:
         output_dim = hparams.num_bootstrap_heads
     else:
@@ -782,8 +789,7 @@ def get_fingerprint(smiles, hparams):
     if molecule is None:
         return np.zeros((hparams.fingerprint_length,))
     fingerprint = AllChem.GetMorganFingerprintAsBitVect(
-        molecule, hparams.fingerprint_radius, hparams.fingerprint_length
-    )
+        molecule, hparams.fingerprint_radius, hparams.fingerprint_length)
     arr = np.zeros((1,))
     # ConvertToNumpyArray takes ~ 0.19 ms, while
     # np.asarray takes ~ 4.69 ms

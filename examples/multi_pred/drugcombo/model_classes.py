@@ -6,6 +6,7 @@ from torch.utils.data import Dataset
 
 
 class FC2(nn.Module):
+
     def __init__(self, in_features, out_features):
         super(FC2, self).__init__()
 
@@ -24,6 +25,7 @@ class FC2(nn.Module):
 
 
 class DrugCombDataset(Dataset):
+
     def __init__(self, df, drug_features, cell_features):
         self.df = df
         self.drug_features = drug_features
@@ -40,9 +42,8 @@ class DrugCombDataset(Dataset):
         # external features
         d1_fp = np.array(self.drug_features.loc[d1, "fps"])
         d2_fp = np.array(self.drug_features.loc[d2, "fps"])
-        c_gn = self.cell_features[self.cell_features["Cell_Line_ID"] == cell][
-            "CellLine"
-        ].values[0]
+        c_gn = self.cell_features[self.cell_features["Cell_Line_ID"] ==
+                                  cell]["CellLine"].values[0]
         out_metric = torch.tensor(self.df.loc[idx, "Y"], dtype=torch.float)
 
         sample = {
@@ -56,6 +57,7 @@ class DrugCombDataset(Dataset):
 
 
 class DrugEncoder(nn.Module):
+
     def __init__(self, num_drug_fp=167, fp_embed_size=32, out_size=64):
         super(DrugEncoder, self).__init__()
 
@@ -73,6 +75,7 @@ class DrugEncoder(nn.Module):
 
 
 class CellEncoder(nn.Module):
+
     def __init__(self, gene_embed_size=256, num_genes=0, out_size=64):
         super(CellEncoder, self).__init__()
         self.dense_gene = nn.Linear(num_genes, gene_embed_size)
@@ -86,6 +89,7 @@ class CellEncoder(nn.Module):
 
 
 class Comb(nn.Module):
+
     def __init__(self, out_size=64, num_genes=0):
         super(Comb, self).__init__()
         self.drugEncoder = DrugEncoder()

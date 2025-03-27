@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Maximizes the QED of the molecule while keep similarity.
 
 Multi-Objective optimization using single Q function.
@@ -40,7 +39,6 @@ from mol_dqn.chemgraph.mcts import deep_q_networks
 from mol_dqn.chemgraph.mcts import molecules as molecules_mdp
 from mol_dqn.chemgraph.mcts import run_dqn
 from mol_dqn.chemgraph.tensorflow import core
-
 
 flags.DEFINE_float("target_logp", 3.0, "The target logP value")
 flags.DEFINE_float("gamma", 0.999, "discount")
@@ -113,9 +111,8 @@ class Molecule(molecules_mdp.Molecule):
 
         fingerprint_structure = self.get_fingerprint(molecule)
 
-        return DataStructs.TanimotoSimilarity(
-            self._target_mol_fingerprint, fingerprint_structure
-        )
+        return DataStructs.TanimotoSimilarity(self._target_mol_fingerprint,
+                                              fingerprint_structure)
 
     def _reward(self):
         molecule = Chem.MolFromSmiles(self._state)
@@ -126,10 +123,9 @@ class Molecule(molecules_mdp.Molecule):
         cycle_score = num_long_cycles(molecule)
         logp_score = -abs(log_p - sas_score + cycle_score - FLAGS.target_logp)
         similarity_score = self.get_similarity(molecule)
-        return (
-            FLAGS.similarity_weight * similarity_score
-            + (1 - FLAGS.similarity_weight) * logp_score
-        ) * FLAGS.gamma ** (self.max_steps - self._counter)
+        return (FLAGS.similarity_weight * similarity_score +
+                (1 - FLAGS.similarity_weight) * logp_score) * FLAGS.gamma**(
+                    self.max_steps - self._counter)
 
 
 def main(argv):
@@ -153,7 +149,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

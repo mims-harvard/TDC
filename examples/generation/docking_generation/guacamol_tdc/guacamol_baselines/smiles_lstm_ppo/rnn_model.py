@@ -2,6 +2,7 @@ import torch.nn as nn
 
 
 class SmilesRnnActorCritic(nn.Module):
+
     def __init__(self, smiles_rnn) -> None:
         """
             Creates an Actor-Critic model from a Smiles RNN Language model

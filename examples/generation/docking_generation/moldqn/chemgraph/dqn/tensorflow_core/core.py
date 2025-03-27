@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Utility functions and other shared chemgraph code."""
 
 from __future__ import absolute_import
@@ -51,7 +50,8 @@ def write_hparams(hparams, filename):
       filename: String output filename.
     """
     with gfile.Open(filename, "w") as f:
-        f.write(hparams.to_json(indent=2, sort_keys=True, separators=(",", ": ")))
+        f.write(
+            hparams.to_json(indent=2, sort_keys=True, separators=(",", ": ")))
 
 
 def learning_rate_decay(initial_learning_rate, decay_steps, decay_rate):

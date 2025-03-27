@@ -10,7 +10,8 @@ if __name__ == "__main__":
     setup_default_logger()
 
     parser = argparse.ArgumentParser(
-        description="Molecule distribution learning benchmark for random smiles sampler",
+        description=
+        "Molecule distribution learning benchmark for random smiles sampler",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--dist_file", default="data/guacamol_v1_all.smiles")
@@ -26,7 +27,8 @@ if __name__ == "__main__":
 
     generator = RandomSmilesSampler(molecules=smiles_list)
 
-    json_file_path = os.path.join(args.output_dir, "distribution_learning_results.json")
+    json_file_path = os.path.join(args.output_dir,
+                                  "distribution_learning_results.json")
 
     assess_distribution_learning(
         generator,

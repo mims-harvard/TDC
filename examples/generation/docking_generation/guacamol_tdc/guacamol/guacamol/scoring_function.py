@@ -41,7 +41,8 @@ class ScoringFunction:
 
     @score_modifier.setter
     def score_modifier(self, modifier: Optional[ScoreModifier]):
-        self._score_modifier = LinearModifier() if modifier is None else modifier
+        self._score_modifier = LinearModifier(
+        ) if modifier is None else modifier
 
     def modify_score(self, raw_score: float) -> float:
         return self._score_modifier(raw_score)
@@ -91,7 +92,8 @@ class MoleculewiseScoringFunction(ScoringFunction):
         except InvalidMolecule:
             return self.corrupt_score
         except Exception:
-            logger.warning(f"Unknown exception thrown during scoring of {smiles}")
+            logger.warning(
+                f"Unknown exception thrown during scoring of {smiles}")
             return self.corrupt_score
 
     def score_list(self, smiles_list: List[str]) -> List[float]:
@@ -131,7 +133,8 @@ class BatchScoringFunction(ScoringFunction):
         raw_scores = self.raw_score_list(smiles_list)
 
         scores = [
-            self.corrupt_score if raw_score is None else self.modify_score(raw_score)
+            self.corrupt_score
+            if raw_score is None else self.modify_score(raw_score)
             for raw_score in raw_scores
         ]
 
@@ -183,7 +186,9 @@ class ArithmeticMeanScoringFunction(BatchScoringFunction):
     Scoring function that combines multiple scoring functions linearly.
     """
 
-    def __init__(self, scoring_functions: List[ScoringFunction], weights=None) -> None:
+    def __init__(self,
+                 scoring_functions: List[ScoringFunction],
+                 weights=None) -> None:
         """
         Args:
             scoring_functions: scoring functions to combine
@@ -194,7 +199,8 @@ class ArithmeticMeanScoringFunction(BatchScoringFunction):
         self.scoring_functions = scoring_functions
         number_scoring_functions = len(scoring_functions)
 
-        self.weights = np.ones(number_scoring_functions) if weights is None else weights
+        self.weights = np.ones(
+            number_scoring_functions) if weights is None else weights
         assert number_scoring_functions == len(self.weights)
 
     def raw_score_list(self, smiles_list: List[str]) -> List[float]:

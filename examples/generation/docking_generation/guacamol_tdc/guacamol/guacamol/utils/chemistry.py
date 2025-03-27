@@ -57,9 +57,8 @@ def canonicalize(smiles: str, include_stereocenters=True) -> Optional[str]:
         return None
 
 
-def canonicalize_list(
-    smiles_list: Iterable[str], include_stereocenters=True
-) -> List[str]:
+def canonicalize_list(smiles_list: Iterable[str],
+                      include_stereocenters=True) -> List[str]:
     """
     Canonicalize a list of smiles. Filters out repetitions and removes corrupted molecules.
 
@@ -139,7 +138,9 @@ def initialise_neutralisation_reactions():
         # Amides
         ("[$([N-]C=O)]", "N"),
     )
-    return [(Chem.MolFromSmarts(x), Chem.MolFromSmiles(y, False)) for x, y in patts]
+    return [
+        (Chem.MolFromSmarts(x), Chem.MolFromSmiles(y, False)) for x, y in patts
+    ]
 
 
 def neutralise_charges(mol, reactions=None):
@@ -189,8 +190,7 @@ def filter_and_canonicalize(
 
         # We only accept molecules consisting of H, B, C, N, O, F, Si, P, S, Cl, aliphatic Se, Br, I.
         metal_smarts = Chem.MolFromSmarts(
-            "[!#1!#5!#6!#7!#8!#9!#14!#15!#16!#17!#34!#35!#53]"
-        )
+            "[!#1!#5!#6!#7!#8!#9!#14!#15!#16!#17!#34!#35!#53]")
 
         has_metal = mol.HasSubstructMatch(metal_smarts)
 
@@ -206,10 +206,12 @@ def filter_and_canonicalize(
             return []
         # Balance charges if unbalanced
         if canon_smi.count("+") - canon_smi.count("-") != 0:
-            new_mol, changed = neutralise_charges(mol, reactions=neutralization_rxns)
+            new_mol, changed = neutralise_charges(mol,
+                                                  reactions=neutralization_rxns)
             if changed:
                 mol = new_mol
-                canon_smi = Chem.MolToSmiles(mol, isomericSmiles=include_stereocenters)
+                canon_smi = Chem.MolToSmiles(
+                    mol, isomericSmiles=include_stereocenters)
 
         # Get most similar to holdout fingerprints, and exclude too similar molecules.
         max_tanimoto = highest_tanimoto_precalc_fps(mol, holdout_fps)
@@ -222,7 +224,8 @@ def filter_and_canonicalize(
     return []
 
 
-def calculate_internal_pairwise_similarities(smiles_list: Collection[str]) -> np.array:
+def calculate_internal_pairwise_similarities(
+        smiles_list: Collection[str]) -> np.array:
     """
     Computes the pairwise similarities of the provided list of smiles against itself.
 
@@ -230,10 +233,8 @@ def calculate_internal_pairwise_similarities(smiles_list: Collection[str]) -> np
         Symmetric matrix of pairwise similarities. Diagonal is set to zero.
     """
     if len(smiles_list) > 10000:
-        logger.warning(
-            f"Calculating internal similarity on large set of "
-            f"SMILES strings ({len(smiles_list)})"
-        )
+        logger.warning(f"Calculating internal similarity on large set of "
+                       f"SMILES strings ({len(smiles_list)})")
 
     mols = get_mols(smiles_list)
     fps = get_fingerprints(mols)
@@ -249,9 +250,8 @@ def calculate_internal_pairwise_similarities(smiles_list: Collection[str]) -> np
     return similarities
 
 
-def calculate_pairwise_similarities(
-    smiles_list1: List[str], smiles_list2: List[str]
-) -> np.array:
+def calculate_pairwise_similarities(smiles_list1: List[str],
+                                    smiles_list2: List[str]) -> np.array:
     """
     Computes the pairwise ECFP4 tanimoto similarity of the two smiles containers.
 
@@ -261,8 +261,7 @@ def calculate_pairwise_similarities(
     if len(smiles_list1) > 10000 or len(smiles_list2) > 10000:
         logger.warning(
             f"Calculating similarity between large sets of "
-            f"SMILES strings ({len(smiles_list1)} x {len(smiles_list2)})"
-        )
+            f"SMILES strings ({len(smiles_list1)} x {len(smiles_list2)})")
 
     mols1 = get_mols(smiles_list1)
     fps1 = get_fingerprints(mols1)
@@ -306,7 +305,9 @@ def get_fingerprints(mols: Iterable[Chem.Mol], radius=2, length=4096):
 
     Returns: a list of fingerprints
     """
-    return [AllChem.GetMorganFingerprintAsBitVect(m, radius, length) for m in mols]
+    return [
+        AllChem.GetMorganFingerprintAsBitVect(m, radius, length) for m in mols
+    ]
 
 
 def get_mols(smiles_list: Iterable[str]) -> Iterable[Chem.Mol]:
@@ -362,9 +363,8 @@ def discrete_kldiv(X_baseline: np.array, X_sampled: np.array) -> float:
     return entropy(P, Q)
 
 
-def calculate_pc_descriptors(
-    smiles: Iterable[str], pc_descriptors: List[str]
-) -> np.array:
+def calculate_pc_descriptors(smiles: Iterable[str],
+                             pc_descriptors: List[str]) -> np.array:
     output = []
 
     for i in smiles:
@@ -375,7 +375,8 @@ def calculate_pc_descriptors(
     return np.array(output)
 
 
-def _calculate_pc_descriptors(smiles: str, pc_descriptors: List[str]) -> np.array:
+def _calculate_pc_descriptors(smiles: str,
+                              pc_descriptors: List[str]) -> np.array:
     calc = MoleculeDescriptors.MolecularDescriptorCalculator(pc_descriptors)
 
     mol = Chem.MolFromSmiles(smiles)

@@ -28,28 +28,38 @@ if __name__ == "__main__":
         type=int,
         help="Size of a mini-batch for gradient descent",
     )
-    parser.add_argument(
-        "--valid_every", default=1000, type=int, help="Validate every so many batches"
-    )
-    parser.add_argument(
-        "--print_every", default=10, type=int, help="Report every so many batches"
-    )
-    parser.add_argument(
-        "--n_epochs", default=10, type=int, help="Number of training epochs"
-    )
-    parser.add_argument(
-        "--max_len", default=100, type=int, help="Max length of a SMILES string"
-    )
-    parser.add_argument(
-        "--hidden_size", default=512, type=int, help="Size of hidden layer"
-    )
-    parser.add_argument(
-        "--n_layers", default=3, type=int, help="Number of layers for training"
-    )
-    parser.add_argument(
-        "--rnn_dropout", default=0.2, type=float, help="Dropout value for RNN"
-    )
-    parser.add_argument("--lr", default=1e-3, type=float, help="RNN learning rate")
+    parser.add_argument("--valid_every",
+                        default=1000,
+                        type=int,
+                        help="Validate every so many batches")
+    parser.add_argument("--print_every",
+                        default=10,
+                        type=int,
+                        help="Report every so many batches")
+    parser.add_argument("--n_epochs",
+                        default=10,
+                        type=int,
+                        help="Number of training epochs")
+    parser.add_argument("--max_len",
+                        default=100,
+                        type=int,
+                        help="Max length of a SMILES string")
+    parser.add_argument("--hidden_size",
+                        default=512,
+                        type=int,
+                        help="Size of hidden layer")
+    parser.add_argument("--n_layers",
+                        default=3,
+                        type=int,
+                        help="Number of layers for training")
+    parser.add_argument("--rnn_dropout",
+                        default=0.2,
+                        type=float,
+                        help="Dropout value for RNN")
+    parser.add_argument("--lr",
+                        default=1e-3,
+                        type=float,
+                        help="RNN learning rate")
     parser.add_argument("--seed", default=42, type=int, help="Random seed")
     parser.add_argument("--output_dir", default=None, help="Output directory")
 

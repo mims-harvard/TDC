@@ -3,9 +3,7 @@
 
 get_ipython().system(" pip show PyTDC")
 
-
 RANDOM_SEED = 42
-
 
 import pandas as pd
 
@@ -14,17 +12,14 @@ from tdc.single_pred import Tox
 
 from DeepPurpose import utils as dp_utils, CompoundPred
 
-
 # ## Prepare Data
 
-X, y = Tox(name="herg_central", label_name="hERG_inhib").get_data(format="DeepPurpose")
-
+X, y = Tox(name="herg_central",
+           label_name="hERG_inhib").get_data(format="DeepPurpose")
 
 X, y = X[:100], y[:100]
 
-
 pd.Series(y).value_counts()
-
 
 # ## Train
 
@@ -50,27 +45,23 @@ def parse_train_log(log_lines: List[str]):
             l,
         )
         if m:
-            train_stats.append(
-                {
-                    "epoch": int(m.group("epoch")),
-                    "train_iter": int(m.group("iter")),
-                    "train_loss": float(m.group("loss")),
-                }
-            )
+            train_stats.append({
+                "epoch": int(m.group("epoch")),
+                "train_iter": int(m.group("iter")),
+                "train_loss": float(m.group("loss")),
+            })
 
         m = re.match(
             r"Validation at Epoch (?P<epoch>\d+) , AUROC: (?P<aucroc>\d+\.\d+) , AUPRC: (?P<aupr>\d+\.\d+) , F1: (?P<f1>\d+\.\d+)",
             l,
         )
         if m:
-            val_stats.append(
-                {
-                    "epoch": int(m.group("epoch")),
-                    "val_aucroc": float(m.group("aucroc")),
-                    "val_aupr": float(m.group("aupr")),
-                    "val_f1": float(m.group("f1")),
-                }
-            )
+            val_stats.append({
+                "epoch": int(m.group("epoch")),
+                "val_aucroc": float(m.group("aucroc")),
+                "val_aupr": float(m.group("aupr")),
+                "val_f1": float(m.group("f1")),
+            })
 
         m = re.match(
             r"Testing AUROC: (?P<aucroc>\d+\.\d+) , AUPRC: (?P<aupr>\d+\.\d+) , F1: (?P<f1>\d+\.\d+)",
@@ -86,18 +77,20 @@ def parse_train_log(log_lines: List[str]):
     train_stats_df = pd.DataFrame.from_records(train_stats)
     val_stats_df = pd.DataFrame.from_records(val_stats)
 
-    train_val_stats_df = pd.merge(
-        left=train_stats_df, right=val_stats_df, on="epoch", validate="1:1"
-    )
+    train_val_stats_df = pd.merge(left=train_stats_df,
+                                  right=val_stats_df,
+                                  on="epoch",
+                                  validate="1:1")
 
     return {"train_val": train_val_stats_df, "test": test_stats}
 
 
 # @lru_cache() # doesn't work with Ray Tune
 def prepare_data(drug_encoding):
-    return dp_utils.data_process(
-        X_drug=X, y=y, drug_encoding=drug_encoding, random_seed=RANDOM_SEED
-    )
+    return dp_utils.data_process(X_drug=X,
+                                 y=y,
+                                 drug_encoding=drug_encoding,
+                                 random_seed=RANDOM_SEED)
 
 
 def train_fn(hparams):
@@ -124,7 +117,10 @@ def train_fn(hparams):
 
     model.save_model("./tutorial_model.pt")
     results["train_val"].to_csv("train_val_stats.csv", index=False)
-    return {**results["train_val"].to_dict(orient="records")[-1], **results["test"]}
+    return {
+        **results["train_val"].to_dict(orient="records")[-1],
+        **results["test"]
+    }
 
 
 # ## Tune
@@ -135,7 +131,6 @@ from ray.tune.search.bayesopt import BayesOptSearch
 from ray import air
 from ray.air import session
 from ray.air.callbacks.mlflow import MLflowLoggerCallback
-
 
 search_space = {
     "drug_encoding": "MPNN",
@@ -165,11 +160,9 @@ tuner = tune.Tuner(
 
 analysis = tuner.fit()
 
-
 # Explore the tuning results on mlflow dashboard as well. It can be started by running `mlflow ui --backend-store-uri examples/huggingface_examples/herg/mlruns/` in terminal. Any files saved to local disk during training can be found in the corresponding run in the `examples/huggingface_examples/herg/mlruns/` directory.
 
 # ## Export to Huggingface Hub
-
 
 # ## Appendix
 

@@ -15,7 +15,9 @@
 
 import matplotlib as mpl
 
-mpl.rcParams["font.sans-serif"] = ["Roboto Condensed", "Roboto Condensed Regular"]
+mpl.rcParams["font.sans-serif"] = [
+    "Roboto Condensed", "Roboto Condensed Regular"
+]
 
 import seaborn as sns
 import math
@@ -79,8 +81,7 @@ def get_valid_actions(
             # Only atoms that allow us to replace at least one H with a new bond
             # are enumerated here.
             if atom.GetNumImplicitHs() >= i
-        ]
-        for i in range(1, max(atom_valences.values()))
+        ] for i in range(1, max(atom_valences.values()))
     }
     valid_actions = set()
     valid_actions.update(
@@ -89,16 +90,14 @@ def get_valid_actions(
             atom_types=atom_types,
             atom_valences=atom_valences,
             atoms_with_free_valence=atoms_with_free_valence,
-        )
-    )
+        ))
     valid_actions.update(
         _bond_addition(
             mol,
             atoms_with_free_valence=atoms_with_free_valence,
             allowed_ring_sizes=allowed_ring_sizes,
             allow_bonds_between_rings=allow_bonds_between_rings,
-        )
-    )
+        ))
     if allow_removal:
         valid_actions.update(_bond_removal(mol))
     if allow_no_modification:
@@ -150,7 +149,8 @@ def _atom_addition(state, atom_types, atom_valences, atoms_with_free_valence):
                     new_state = Chem.RWMol(state)
                     idx = new_state.AddAtom(Chem.Atom(element))
                     new_state.AddBond(atom, idx, bond_order[i])
-                    sanitization_result = Chem.SanitizeMol(new_state, catchErrors=True)
+                    sanitization_result = Chem.SanitizeMol(new_state,
+                                                           catchErrors=True)
                     if sanitization_result:
                         continue  # Skip the molecule when sanitization fails.
                     # atom_addition.add(Chem.MolToSmiles(new_state))
@@ -158,9 +158,8 @@ def _atom_addition(state, atom_types, atom_valences, atoms_with_free_valence):
     return atom_addition
 
 
-def _bond_addition(
-    state, atoms_with_free_valence, allowed_ring_sizes, allow_bonds_between_rings
-):
+def _bond_addition(state, atoms_with_free_valence, allowed_ring_sizes,
+                   allow_bonds_between_rings):
     """Computes valid actions that involve adding bonds to the graph.
 
     Actions (where allowed):
@@ -218,17 +217,14 @@ def _bond_addition(
                     continue
             # If do not allow new bonds between atoms already in rings.
             elif not allow_bonds_between_rings and (
-                state.GetAtomWithIdx(atom1).IsInRing()
-                and state.GetAtomWithIdx(atom2).IsInRing()
-            ):
+                    state.GetAtomWithIdx(atom1).IsInRing() and
+                    state.GetAtomWithIdx(atom2).IsInRing()):
                 continue
             # If the distance between the current two atoms is not in the
             # allowed ring sizes
-            elif (
-                allowed_ring_sizes is not None
-                and len(Chem.rdmolops.GetShortestPath(state, atom1, atom2))
-                not in allowed_ring_sizes
-            ):
+            elif (allowed_ring_sizes is not None and
+                  len(Chem.rdmolops.GetShortestPath(
+                      state, atom1, atom2)) not in allowed_ring_sizes):
                 continue
             else:
                 new_state.AddBond(atom1, atom2, bond_orders[valence])
@@ -269,9 +265,8 @@ def _bond_removal(state):
         for bond in state.GetBonds():
             # Get the bond from a copy of the molecule so that SetBondType() doesn't
             # modify the original state.
-            bond = Chem.Mol(state).GetBondBetweenAtoms(
-                bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
-            )
+            bond = Chem.Mol(state).GetBondBetweenAtoms(bond.GetBeginAtomIdx(),
+                                                       bond.GetEndAtomIdx())
             if bond.GetBondType() not in bond_orders:
                 continue  # Skip aromatic bonds.
             new_state = Chem.RWMol(state)
@@ -287,7 +282,8 @@ def _bond_removal(state):
                 idx = bond.GetIdx()
                 bond.SetBondType(bond_orders[bond_order])
                 new_state.ReplaceBond(idx, bond)
-                sanitization_result = Chem.SanitizeMol(new_state, catchErrors=True)
+                sanitization_result = Chem.SanitizeMol(new_state,
+                                                       catchErrors=True)
                 if sanitization_result:
                     continue  # Skip the molecule when sanitization fails.
                 # bond_removal.add(Chem.MolToSmiles(new_state))
@@ -296,7 +292,8 @@ def _bond_removal(state):
                 atom1 = bond.GetBeginAtom().GetIdx()
                 atom2 = bond.GetEndAtom().GetIdx()
                 new_state.RemoveBond(atom1, atom2)
-                sanitization_result = Chem.SanitizeMol(new_state, catchErrors=True)
+                sanitization_result = Chem.SanitizeMol(new_state,
+                                                       catchErrors=True)
                 if sanitization_result:
                     continue  # Skip the molecule when sanitization fails.
                 smiles = Chem.MolToSmiles(new_state)
@@ -315,7 +312,8 @@ def highlights_diff(original_mol, next_mol):
     original_num_atoms = len(original_mol.GetAtoms())
     next_num_atoms = len(next_mol.GetAtoms())
     for i in range(min(original_num_atoms, next_num_atoms)):
-        if original_mol.GetAtoms()[i].GetSymbol() != next_mol.GetAtoms()[i].GetSymbol():
+        if original_mol.GetAtoms()[i].GetSymbol() != next_mol.GetAtoms(
+        )[i].GetSymbol():
             highlight_atoms.append(next_mol.GetAtoms()[i].GetIdx())
     if next_num_atoms > original_num_atoms:
         highlight_atoms.extend(range(original_num_atoms, next_num_atoms))
@@ -324,10 +322,8 @@ def highlights_diff(original_mol, next_mol):
     original_num_bonds = len(original_mol.GetBonds())
     next_num_bonds = len(next_mol.GetBonds())
     for i in range(min(original_num_bonds, next_num_bonds)):
-        if (
-            original_mol.GetBonds()[i].GetBondType()
-            != next_mol.GetBonds()[i].GetBondType()
-        ):
+        if (original_mol.GetBonds()[i].GetBondType()
+                != next_mol.GetBonds()[i].GetBondType()):
             highlight_bonds.append(next_mol.GetBonds()[i].GetIdx())
     if next_num_bonds > original_num_bonds:
         highlight_bonds.extend(range(original_num_bonds, next_num_bonds))
@@ -348,14 +344,13 @@ def tidy_smiles(smiles):
 
 def get_properties(smiles, target_molecule="C1CCC2CCCCC2C1"):
     target_mol_fp = AllChem.GetMorganFingerprintAsBitVect(
-        Chem.MolFromSmiles(target_molecule), radius=2, nBits=2048
-    )
+        Chem.MolFromSmiles(target_molecule), radius=2, nBits=2048)
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         return 0.0, 0.0
-    fingerprint_structure = AllChem.GetMorganFingerprintAsBitVect(
-        mol, radius=2, nBits=2048
-    )
+    fingerprint_structure = AllChem.GetMorganFingerprintAsBitVect(mol,
+                                                                  radius=2,
+                                                                  nBits=2048)
     sim = DataStructs.TanimotoSimilarity(target_mol_fp, fingerprint_structure)
     qed = QED.qed(mol)
     return sim, qed
@@ -368,7 +363,8 @@ def plot_multi_obj_opt(smiles, target_mol, idx=0):
     plt.figure()
     for i in range(6):
         ssl = smiles["weight_%i" % i]
-        sim, qed = zip(*[get_properties(ss, target_molecule=target_mol) for ss in ssl])
+        sim, qed = zip(
+            *[get_properties(ss, target_molecule=target_mol) for ss in ssl])
         plt.scatter(sim, qed, label="w=%.1f" % (i * 0.2), color=next(colors))
     target_sim, target_qed = get_properties(target_mol, target_mol)
     plt.axvline(x=target_sim, ls="dashed", color="grey")
@@ -396,9 +392,9 @@ def plot_qed_improvements():
 
     def double_gaussian(x, params):
         (c1, mu1, sigma1, c2, mu2, sigma2) = params
-        res = c1 * np.exp(-((x - mu1) ** 2.0) / (2.0 * sigma1**2.0)) + c2 * np.exp(
-            -((x - mu2) ** 2.0) / (2.0 * sigma2**2.0)
-        )
+        res = c1 * np.exp(-((x - mu1)**2.0) /
+                          (2.0 * sigma1**2.0)) + c2 * np.exp(-(
+                              (x - mu2)**2.0) / (2.0 * sigma2**2.0))
         return res
 
     def double_gaussian_fit(params, y):
@@ -417,17 +413,14 @@ def plot_qed_improvements():
         y /= y.sum()
         x = 0.5 * (binEdges[1:] + binEdges[:-1])
         if i == 0:
-            fit = leastsq(
-                lambda x: double_gaussian_fit(x, y), [1, 0, 0.02, 1, 0.3, 0.1]
-            )
+            fit = leastsq(lambda x: double_gaussian_fit(x, y),
+                          [1, 0, 0.02, 1, 0.3, 0.1])
         elif i == 1:
-            fit = leastsq(
-                lambda x: double_gaussian_fit(x, y), [1, 0, 0.02, 1, 0.1, 0.1]
-            )
+            fit = leastsq(lambda x: double_gaussian_fit(x, y),
+                          [1, 0, 0.02, 1, 0.1, 0.1])
         else:
-            fit = leastsq(
-                lambda x: double_gaussian_fit(x, y), [1, 0, 0.02, 1, 0.1, 0.05]
-            )
+            fit = leastsq(lambda x: double_gaussian_fit(x, y),
+                          [1, 0, 0.02, 1, 0.1, 0.05])
         xx = np.linspace(start, end, 300)
         yy = double_gaussian(xx, fit[0])
 
@@ -455,9 +448,9 @@ def plot_qed_relative_improvements():
 
     def double_gaussian(x, params):
         (c1, mu1, sigma1, c2, mu2, sigma2) = params
-        res = c1 * np.exp(-((x - mu1) ** 2.0) / (2.0 * sigma1**2.0)) + c2 * np.exp(
-            -((x - mu2) ** 2.0) / (2.0 * sigma2**2.0)
-        )
+        res = c1 * np.exp(-((x - mu1)**2.0) /
+                          (2.0 * sigma1**2.0)) + c2 * np.exp(-(
+                              (x - mu2)**2.0) / (2.0 * sigma2**2.0))
         return res
 
     def double_gaussian_fit(params, y):
@@ -476,15 +469,14 @@ def plot_qed_relative_improvements():
         y /= y.sum()
         x = 0.5 * (binEdges[1:] + binEdges[:-1])
         if i == 0:
-            fit = leastsq(
-                lambda x: double_gaussian_fit(x, y), [1, 0.5, 0.1, 1, 0.6, 0.1]
-            )
+            fit = leastsq(lambda x: double_gaussian_fit(x, y),
+                          [1, 0.5, 0.1, 1, 0.6, 0.1])
         elif i == 1:
-            fit = leastsq(
-                lambda x: double_gaussian_fit(x, y), [1, 0.2, 0.05, 1, 0.5, 0.1]
-            )
+            fit = leastsq(lambda x: double_gaussian_fit(x, y),
+                          [1, 0.2, 0.05, 1, 0.5, 0.1])
         else:
-            fit = leastsq(lambda x: double_gaussian_fit(x, y), [1, 0, 0.1, 1, 0.4, 0.5])
+            fit = leastsq(lambda x: double_gaussian_fit(x, y),
+                          [1, 0, 0.1, 1, 0.4, 0.5])
         xx = np.linspace(start, end, 300)
         yy = double_gaussian(xx, fit[0])
 
@@ -516,7 +508,8 @@ def plot_drug20_smiles():
     AllChem.Compute2DCoords(template1, canonOrient=True)
 
     properties = [
-        "SIM: %.3f\nQED: %.3f" % get_properties(mol, target_mol) for mol in smiles
+        "SIM: %.3f\nQED: %.3f" % get_properties(mol, target_mol)
+        for mol in smiles
     ]
     # img = Draw.MolsToGridImage(mols, molsPerRow=5,
     # subImgSize=(300, 150), useSVG=True)
@@ -538,19 +531,21 @@ def plot_drug20_smiles():
             except:
                 pass
         properties = [
-            "SIM: %.3f, QED: %.3f" % get_properties(mol, target_mol) for mol in smiles
+            "SIM: %.3f, QED: %.3f" % get_properties(mol, target_mol)
+            for mol in smiles
         ]
         imgsize1 = [260, 340, 280, 280, 220, 220]
         imgsize = (240, imgsize1[i])
-        drawer = rdMolDraw2D.MolDraw2DSVG(
-            imgsize[0] * 5, imgsize[1] + 5, imgsize[0], imgsize[1]
-        )
-        drawer.SetFontSize(0.8)  # <- default is 0.5, so this makes the font half
+        drawer = rdMolDraw2D.MolDraw2DSVG(imgsize[0] * 5, imgsize[1] + 5,
+                                          imgsize[0], imgsize[1])
+        drawer.SetFontSize(
+            0.8)  # <- default is 0.5, so this makes the font half
         drawer.drawOptions().legendFontSize = 18
         drawer.DrawMolecules(mols, legends=properties)
         drawer.FinishDrawing()
         img = drawer.GetDrawingText()
-        cs.svg2pdf(bytestring=img.encode("utf-8"), write_to=f"drug1_smiles_w{i}.pdf")
+        cs.svg2pdf(bytestring=img.encode("utf-8"),
+                   write_to=f"drug1_smiles_w{i}.pdf")
 
 
 def plot_max_qed_mols_2():
@@ -631,12 +626,16 @@ def plot_noisy_qed_reward():
 
         x = [j * 200 for j in range(lq // window - 1)]
         y = [
-            np.mean(qed[window * j : window * (j + 1)]) for j in range(lq // window - 1)
+            np.mean(qed[window * j:window * (j + 1)])
+            for j in range(lq // window - 1)
         ]
         fit = interpolate.UnivariateSpline(x, y, k=3)
         xx = np.linspace(0, 5000, 100)
         plt.plot(x, y, "-", alpha=0.2, color=colors[i])
-        plt.plot(xx, fit(xx), label="robust, $\sigma$=0.%i" % i, color=colors[i])
+        plt.plot(xx,
+                 fit(xx),
+                 label="robust, $\sigma$=0.%i" % i,
+                 color=colors[i])
 
         qed = all_qed["l2_0.%i" % i]
         lq = len(qed)
@@ -644,14 +643,17 @@ def plot_noisy_qed_reward():
 
         x = [j * 200 for j in range(lq // window - 1)]
         y = [
-            np.mean(qed[window * j : window * (j + 1)]) for j in range(lq // window - 1)
+            np.mean(qed[window * j:window * (j + 1)])
+            for j in range(lq // window - 1)
         ]
         fit = interpolate.UnivariateSpline(x, y, k=3)
         xx = np.linspace(0, 5000, 100)
         plt.plot(x, y, ls="dashed", alpha=0.2, color=colors[i])
-        plt.plot(
-            xx, fit(xx), ls="dashed", label="l2, $\sigma$=0.%i" % i, color=colors[i]
-        )
+        plt.plot(xx,
+                 fit(xx),
+                 ls="dashed",
+                 label="l2, $\sigma$=0.%i" % i,
+                 color=colors[i])
 
     plt.xlim(0, 4600)
     plt.ylim(0.2, 1)
@@ -672,7 +674,10 @@ def plot_final_vs_intermediate_reward():
     window = 200
 
     x = [j * window + 1 for j in range(lq // window - 1)]
-    y = [np.mean(qed[window * j : window * (j + 1)]) for j in range(lq // window - 1)]
+    y = [
+        np.mean(qed[window * j:window * (j + 1)])
+        for j in range(lq // window - 1)
+    ]
     fit = interpolate.UnivariateSpline(
         x,
         y,
@@ -686,7 +691,10 @@ def plot_final_vs_intermediate_reward():
     lq = len(qed)
     window = 200
     x = [j * window + 1 for j in range(lq // window - 1)]
-    y = [np.mean(qed[window * j : window * (j + 1)]) for j in range(lq // window - 1)]
+    y = [
+        np.mean(qed[window * j:window * (j + 1)])
+        for j in range(lq // window - 1)
+    ]
     fit = interpolate.UnivariateSpline(
         x,
         y,
@@ -724,8 +732,7 @@ def plot_qvals_with_change_20():
             allow_no_modification=True,
             allowed_ring_sizes={3, 5, 6},
             allow_bonds_between_rings=False,
-        )
-    )
+        ))
 
     bond_removal_actions = [
         Chem.MolToSmiles(ss) for ss in _bond_removal(original_state2)
@@ -820,8 +827,7 @@ def plot_opt_path_20():
                 allow_no_modification=True,
                 allowed_ring_sizes={3, 5, 6},
                 allow_bonds_between_rings=False,
-            )
-        )
+            ))
 
         stated = {Chem.MolToSmiles(s): s for s in next_states}
         current_smiles = smiles[i]
@@ -872,7 +878,10 @@ def plot_time_dependent_reward():
     window = 200
 
     x = [j * window + 1 for j in range(lq // window - 1)]
-    y = [np.mean(qed[window * j : window * (j + 1)]) for j in range(lq // window - 1)]
+    y = [
+        np.mean(qed[window * j:window * (j + 1)])
+        for j in range(lq // window - 1)
+    ]
     fit = interpolate.UnivariateSpline(
         x,
         y,
@@ -886,7 +895,10 @@ def plot_time_dependent_reward():
     lq = len(qed)
     window = 200
     x = [j * window + 1 for j in range(lq // window - 1)]
-    y = [np.mean(qed[window * j : window * (j + 1)]) for j in range(lq // window - 1)]
+    y = [
+        np.mean(qed[window * j:window * (j + 1)])
+        for j in range(lq // window - 1)
+    ]
     fit = interpolate.UnivariateSpline(
         x,
         y,
@@ -949,26 +961,20 @@ def multi_obj_gen_stat():
         tarQED = objs[i - 1][1]
         prop = list(zip(*data[str(i)]))
         prop = [list(set(pp)) for pp in prop]
-        print(
-            "targetSAS=%.3f, generatedSAS:mean=%.3f, var=%.3f,"
-            "mean_absolute_difference=%.3f"
-            % (
-                tarSAS,
-                np.mean(prop[0]),
-                np.std(prop[0]),
-                np.mean(np.abs(np.array(prop[0]) - tarSAS)),
-            )
-        )
-        print(
-            "targetQED=%.3f, generatedQED:mean=%.3f, var=%.3f,"
-            "mean_absolute_difference=%.3f"
-            % (
-                tarQED,
-                np.mean(prop[1]),
-                np.std(prop[1]),
-                np.mean(np.abs(np.array(prop[1]) - tarQED)),
-            )
-        )
+        print("targetSAS=%.3f, generatedSAS:mean=%.3f, var=%.3f,"
+              "mean_absolute_difference=%.3f" % (
+                  tarSAS,
+                  np.mean(prop[0]),
+                  np.std(prop[0]),
+                  np.mean(np.abs(np.array(prop[0]) - tarSAS)),
+              ))
+        print("targetQED=%.3f, generatedQED:mean=%.3f, var=%.3f,"
+              "mean_absolute_difference=%.3f" % (
+                  tarQED,
+                  np.mean(prop[1]),
+                  np.std(prop[1]),
+                  np.mean(np.abs(np.array(prop[1]) - tarQED)),
+              ))
 
 
 def plot_multi_obj_opt_multi_plot(smiles, target_mol, idx=0):
@@ -985,7 +991,8 @@ def plot_multi_obj_opt_multi_plot(smiles, target_mol, idx=0):
     target_sim, target_qed = get_properties(target_mol, target_mol)
     for i in range(6):
         ssl = smiles["weight_%i" % i]
-        sim, qed = zip(*[get_properties(ss, target_molecule=target_mol) for ss in ssl])
+        sim, qed = zip(
+            *[get_properties(ss, target_molecule=target_mol) for ss in ssl])
         all_sim += list(sim)
         all_qed += list(qed)
 
@@ -995,8 +1002,7 @@ def plot_multi_obj_opt_multi_plot(smiles, target_mol, idx=0):
         for col in row:
             ssl = smiles["weight_%i" % i]
             sim, qed = zip(
-                *[get_properties(ss, target_molecule=target_mol) for ss in ssl]
-            )
+                *[get_properties(ss, target_molecule=target_mol) for ss in ssl])
             # col.scatter(all_sim, all_qed, color='#d4d4d4')
             col.scatter(sim, qed, label="w=%.1f" % (i * 0.2), color=colors[i])
             col.axvline(x=target_sim, ls="dashed", color="grey")
@@ -1009,7 +1015,11 @@ def plot_multi_obj_opt_multi_plot(smiles, target_mol, idx=0):
     fig.text(0.5, 0.02, "Similarity", ha="center")
     fig.text(0.02, 0.5, "QED", va="center", rotation="vertical")
     fig.text(0.5, 0.94, molid[target_mol], ha="center")
-    plt.subplots_adjust(left=0.10, bottom=0.14, right=0.96, top=0.92, wspace=0.12)
+    plt.subplots_adjust(left=0.10,
+                        bottom=0.14,
+                        right=0.96,
+                        top=0.92,
+                        wspace=0.12)
     plt.savefig("batch/mult_obj_gen_{}.pdf".format(idx))
     # plt.show()
 
@@ -1039,7 +1049,11 @@ def plot_target_sas():
     print("Target SAS 4.8")
     print(f"Mean: {np.mean(y48)}, Std: {np.std(y48)}")
 
-    plt.subplots_adjust(left=0.13, bottom=0.14, right=0.96, top=0.92, wspace=0.12)
+    plt.subplots_adjust(left=0.13,
+                        bottom=0.14,
+                        right=0.96,
+                        top=0.92,
+                        wspace=0.12)
     plt.legend()
     plt.xlabel("SA score of the original molecules")
     plt.ylabel("SA score of the generated molecules")

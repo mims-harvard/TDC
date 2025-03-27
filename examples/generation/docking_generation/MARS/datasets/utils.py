@@ -27,8 +27,7 @@ def load_mols(data_dir, mols_file):
             lines = [line for line in lines if line[1] == "1"]
             smiles = [line[-1] for line in lines]
     elif mols_file.startswith("actives") or mols_file.startswith(
-        "init"
-    ):  # refenrence active mols
+            "init"):  # refenrence active mols
         with open(path, "r") as f:
             lines = f.readlines()[1:]
             lines = [line.strip().split(",") for line in lines]
@@ -42,6 +41,7 @@ def load_mols(data_dir, mols_file):
 
 
 class Vocab:
+
     def __init__(self, arms, cnts, smiles2idx):
         self.arms = arms
         self.cnts = cnts

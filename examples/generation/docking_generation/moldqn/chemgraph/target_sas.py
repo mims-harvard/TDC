@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Generates molecules whose SA score stays with in a range."""
 
 from __future__ import absolute_import
@@ -32,7 +31,8 @@ from dqn import molecules as molecules_mdp
 from dqn import run_dqn
 from dqn.tensorflow_core import core
 
-flags.DEFINE_float("target_sas", 2.5, "The target synthetic accessibility value")
+flags.DEFINE_float("target_sas", 2.5,
+                   "The target synthetic accessibility value")
 flags.DEFINE_string("loss_type", "l2", "The loss type")
 FLAGS = flags.FLAGS
 
@@ -68,9 +68,8 @@ class TargetSASMolecule(molecules_mdp.Molecule):
         if molecule is None:
             return -self.loss_fn(self.target_sas)
         sas = sascorer.calculateScore(molecule)
-        return -self.loss_fn(sas - self.target_sas) * (
-            self.discount_factor ** (self.max_steps - self.num_steps_taken)
-        )
+        return -self.loss_fn(sas - self.target_sas) * (self.discount_factor**(
+            self.max_steps - self.num_steps_taken))
 
 
 def main(argv):
@@ -96,7 +95,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

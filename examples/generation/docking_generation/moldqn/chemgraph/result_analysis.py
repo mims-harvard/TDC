@@ -17,7 +17,7 @@ for run_idx, run in enumerate(runs):
 
     top_1, top_10, top_100 = [], [], []
     for i in range(1, 51):
-        smiles_value_lst = smiles_score_lst[: i * 100]
+        smiles_value_lst = smiles_score_lst[:i * 100]
         smiles_value_lst.sort(key=lambda x: x[1])
         value_lst = [score for smiles, score in smiles_value_lst]
         top_1.append(value_lst[0])
@@ -48,12 +48,10 @@ for run_idx, run in enumerate(runs):
         smiles_value_lst = smiles_score_lst[:point]
         smiles_value_lst.sort(key=lambda x: x[1])
         smiles_value_lst = smiles_value_lst[:100]
-        with open(
-            output_file_prefix + str(run_idx) + "_" + str(point) + ".txt", "w"
-        ) as fout:
+        with open(output_file_prefix + str(run_idx) + "_" + str(point) + ".txt",
+                  "w") as fout:
             for smiles, value in smiles_value_lst:
                 fout.write(smiles + "\t" + str(value) + "\n")
-
 
 # num_lst = []
 # num2dockingscore = {}
@@ -76,7 +74,6 @@ for run_idx, run in enumerate(runs):
 # top_100 = [num2dockingscore[num][2] for num in num_lst]
 # num_lst = [i for i in range(len(num_lst))]
 
-
 # plt.plot(num_lst, top_1, color = 'b', label = 'top-1')
 # plt.plot(num_lst, top_10, color = 'r', label = 'top-10')
 # plt.plot(num_lst, top_100, color = 'y', label = 'top-100')
@@ -84,8 +81,6 @@ plt.legend()
 plt.xlabel("# docking call")
 plt.ylabel("docking score (DRD3) achieved by MolDQN")
 plt.savefig("docking_iter.png")
-
-
 """
 cd chemgraph 
 scp -r tfu42@orcus1.cc.gatech.edu:/project/molecular_data/graphnn/mol_dqn_docking/chemgraph/result .   

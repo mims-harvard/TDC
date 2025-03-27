@@ -40,12 +40,12 @@ def main():
 
     if args.model_path is None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        args.model_path = os.path.join(
-            dir_path, "pretrained_model", "model_final_0.473.pt"
-        )
+        args.model_path = os.path.join(dir_path, "pretrained_model",
+                                       "model_final_0.473.pt")
 
     # save command line args
-    with open(os.path.join(args.output_dir, "goal_directed_params.json"), "w") as jf:
+    with open(os.path.join(args.output_dir, "goal_directed_params.json"),
+              "w") as jf:
         json.dump(vars(args), jf, sort_keys=True, indent=4)
 
     optimiser = PPODirectedGenerator(
@@ -59,9 +59,9 @@ def main():
     )
 
     json_file_path = os.path.join(args.output_dir, "goal_directed_results.json")
-    assess_goal_directed_generation(
-        optimiser, json_output_file=json_file_path, benchmark_version=args.suite
-    )
+    assess_goal_directed_generation(optimiser,
+                                    json_output_file=json_file_path,
+                                    benchmark_version=args.suite)
 
 
 if __name__ == "__main__":

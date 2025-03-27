@@ -44,7 +44,8 @@ from guacamol.standard_benchmarks import (
 )
 
 
-def goal_directed_benchmark_suite(version_name: str) -> List[GoalDirectedBenchmark]:
+def goal_directed_benchmark_suite(
+        version_name: str) -> List[GoalDirectedBenchmark]:
     if version_name == "v1":
         return goal_directed_suite_v1()
     if version_name == "v2":
@@ -54,12 +55,13 @@ def goal_directed_benchmark_suite(version_name: str) -> List[GoalDirectedBenchma
     if version_name == "trivial":
         return goal_directed_suite_trivial()
 
-    raise Exception(f'Goal-directed benchmark suite "{version_name}" does not exist.')
+    raise Exception(
+        f'Goal-directed benchmark suite "{version_name}" does not exist.')
 
 
 def distribution_learning_benchmark_suite(
-    chembl_file_path: str, version_name: str, number_samples: int
-) -> List[DistributionLearningBenchmark]:
+        chembl_file_path: str, version_name: str,
+        number_samples: int) -> List[DistributionLearningBenchmark]:
     """
     Returns a suite of benchmarks for a specified benchmark version
 
@@ -73,9 +75,8 @@ def distribution_learning_benchmark_suite(
 
     # For distribution-learning, v1 and v2 are identical
     if version_name == "v1" or version_name == "v2":
-        return distribution_learning_suite_v1(
-            chembl_file_path=chembl_file_path, number_samples=number_samples
-        )
+        return distribution_learning_suite_v1(chembl_file_path=chembl_file_path,
+                                              number_samples=number_samples)
 
     raise Exception(
         f'Distribution-learning benchmark suite "{version_name}" does not exist.'
@@ -132,7 +133,8 @@ def goal_directed_suite_v1() -> List[GoalDirectedBenchmark]:
             threshold=0.75,
         ),
         similarity(
-            smiles="COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1",
+            smiles=
+            "COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1",
             name="Mestranol",
             fp_type="AP",
             threshold=0.75,
@@ -184,7 +186,8 @@ def goal_directed_suite_v2() -> List[GoalDirectedBenchmark]:
             threshold=0.75,
         ),
         similarity(
-            smiles="COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1",
+            smiles=
+            "COc1ccc2[C@H]3CC[C@@]4(C)[C@@H](CC[C@@]4(O)C#C)[C@@H]3CCc2c1",
             name="Mestranol",
             fp_type="AP",
             threshold=0.75,
@@ -257,8 +260,8 @@ def goal_directed_suite_trivial() -> List[GoalDirectedBenchmark]:
 
 
 def distribution_learning_suite_v1(
-    chembl_file_path: str, number_samples: int = 10000
-) -> List[DistributionLearningBenchmark]:
+        chembl_file_path: str,
+        number_samples: int = 10000) -> List[DistributionLearningBenchmark]:
     """
     Suite of distribution learning benchmarks, v1.
 
@@ -271,13 +274,10 @@ def distribution_learning_suite_v1(
     return [
         ValidityBenchmark(number_samples=number_samples),
         UniquenessBenchmark(number_samples=number_samples),
-        novelty_benchmark(
-            training_set_file=chembl_file_path, number_samples=number_samples
-        ),
-        kldiv_benchmark(
-            training_set_file=chembl_file_path, number_samples=number_samples
-        ),
-        frechet_benchmark(
-            training_set_file=chembl_file_path, number_samples=number_samples
-        ),
+        novelty_benchmark(training_set_file=chembl_file_path,
+                          number_samples=number_samples),
+        kldiv_benchmark(training_set_file=chembl_file_path,
+                        number_samples=number_samples),
+        frechet_benchmark(training_set_file=chembl_file_path,
+                          number_samples=number_samples),
     ]

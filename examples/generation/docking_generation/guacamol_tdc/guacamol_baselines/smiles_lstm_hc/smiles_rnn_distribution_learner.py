@@ -14,6 +14,7 @@ logger.addHandler(logging.NullHandler())
 
 
 class SmilesRnnDistributionLearner:
+
     def __init__(
         self,
         output_dir: str,
@@ -38,9 +39,8 @@ class SmilesRnnDistributionLearner:
         self.print_every = 10
         self.seed = 42
 
-    def train(
-        self, training_set: List[str], validation_set: List[str]
-    ) -> DistributionMatchingGenerator:
+    def train(self, training_set: List[str],
+              validation_set: List[str]) -> DistributionMatchingGenerator:
         # GPU if available
         cuda_available = torch.cuda.is_available()
         device_str = "cuda" if cuda_available else "cpu"

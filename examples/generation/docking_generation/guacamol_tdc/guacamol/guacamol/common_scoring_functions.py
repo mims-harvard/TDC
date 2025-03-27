@@ -40,7 +40,6 @@ import numpy as np
 #         smiles = Chem.MolToSmiles(mol, isomericSmiles=True)
 #         return self.oracle(smiles)
 
-
 # def docking_modify(x):
 #     '''
 #         -12 -> 1
@@ -71,6 +70,7 @@ def docking_modify(x):
 
 
 class TDCScoring(ScoringFunctionBasedOnRdkitMol):
+
     def __init__(self, name):
         ## DRD2  GSK3B  JNK3  cyp3a4_benchmark
         from tdc import Oracle
@@ -88,7 +88,8 @@ class TDCScoring(ScoringFunctionBasedOnRdkitMol):
                 receptors=[
                     "/project/molecular_data/graphnn/pyscreener/testing_inputs/5WIU.pdb"
                 ],
-                docked_ligand_file="/project/molecular_data/graphnn/pyscreener/testing_inputs/5WIU_with_ligand.pdb",
+                docked_ligand_file=
+                "/project/molecular_data/graphnn/pyscreener/testing_inputs/5WIU_with_ligand.pdb",
                 buffer=10,
                 path="/project/molecular_data/graphnn/pyscreener/my_test/",
                 num_worker=1,
@@ -112,8 +113,7 @@ class TDCScoring(ScoringFunctionBasedOnRdkitMol):
             )
 
         self.docking_num_file = (
-            "/project/molecular_data/graphnn/pyscreener/docking_num.txt"
-        )
+            "/project/molecular_data/graphnn/pyscreener/docking_num.txt")
         write_num(self.docking_num_file, 0)
         print("----------initialize docking_num_file-------------")
 
@@ -165,7 +165,10 @@ class TanimotoScoringFunction(ScoringFunctionBasedOnRdkitMol):
     Scoring function that looks at the fingerprint similarity against a target molecule.
     """
 
-    def __init__(self, target, fp_type, score_modifier: ScoreModifier = None) -> None:
+    def __init__(self,
+                 target,
+                 fp_type,
+                 score_modifier: ScoreModifier = None) -> None:
         """
         Args:
             target: target molecule
@@ -179,8 +182,7 @@ class TanimotoScoringFunction(ScoringFunctionBasedOnRdkitMol):
         target_mol = smiles_to_rdkit_mol(target)
         if target_mol is None:
             raise RuntimeError(
-                f"The similarity target {target} is not a valid molecule."
-            )
+                f"The similarity target {target} is not a valid molecule.")
 
         self.ref_fp = get_fingerprint(target_mol, self.fp_type)
 
@@ -194,9 +196,12 @@ class CNS_MPO_ScoringFunction(ScoringFunctionBasedOnRdkitMol):
     CNS MPO scoring function
     """
 
-    def __init__(
-        self, max_logP=5.0, maxMW=360, min_tpsa=40, max_tpsa=90, max_hbd=0
-    ) -> None:
+    def __init__(self,
+                 max_logP=5.0,
+                 maxMW=360,
+                 min_tpsa=40,
+                 max_tpsa=90,
+                 max_hbd=0) -> None:
         super().__init__()
 
         self.logP_gauss = MinGaussianModifier(max_logP, 1)
@@ -233,7 +238,9 @@ class IsomerScoringFunction(MoleculewiseScoringFunction):
     - total number of atoms with a Gaussian modifier with mu=6, sigma=2
     """
 
-    def __init__(self, molecular_formula: str, mean_function="geometric") -> None:
+    def __init__(self,
+                 molecular_formula: str,
+                 mean_function="geometric") -> None:
         """
         Args:
             molecular_formula: target molecular formula
@@ -242,10 +249,12 @@ class IsomerScoringFunction(MoleculewiseScoringFunction):
         super().__init__()
 
         self.mean_function = self.determine_mean_function(mean_function)
-        self.scoring_functions = self.determine_scoring_functions(molecular_formula)
+        self.scoring_functions = self.determine_scoring_functions(
+            molecular_formula)
 
     @staticmethod
-    def determine_mean_function(mean_function: str) -> Callable[[List[float]], float]:
+    def determine_mean_function(
+            mean_function: str) -> Callable[[List[float]], float]:
         if mean_function == "arithmetic":
             return arithmetic_mean
         if mean_function == "geometric":
@@ -254,30 +263,27 @@ class IsomerScoringFunction(MoleculewiseScoringFunction):
 
     @staticmethod
     def determine_scoring_functions(
-        molecular_formula: str,
-    ) -> List[RdkitScoringFunction]:
+        molecular_formula: str,) -> List[RdkitScoringFunction]:
         element_occurrences = parse_molecular_formula(molecular_formula)
 
         total_number_atoms = sum(
-            element_tuple[1] for element_tuple in element_occurrences
-        )
+            element_tuple[1] for element_tuple in element_occurrences)
 
         # scoring functions for each element
         functions = [
             RdkitScoringFunction(
                 descriptor=AtomCounter(element),
                 score_modifier=GaussianModifier(mu=n_atoms, sigma=1.0),
-            )
-            for element, n_atoms in element_occurrences
+            ) for element, n_atoms in element_occurrences
         ]
 
         # scoring functions for the total number of atoms
         functions.append(
             RdkitScoringFunction(
                 descriptor=num_atoms,
-                score_modifier=GaussianModifier(mu=total_number_atoms, sigma=2.0),
-            )
-        )
+                score_modifier=GaussianModifier(mu=total_number_atoms,
+                                                sigma=2.0),
+            ))
 
         return functions
 

@@ -41,6 +41,7 @@ def check_validity(mol):
 
 ### breaking and combination
 class Skeleton:
+
     def __init__(self, mol, u, bond_type=Chem.BondType.SINGLE):
         """
         @params:
@@ -54,6 +55,7 @@ class Skeleton:
 
 
 class Arm:
+
     def __init__(self, mol, v, bond_type=Chem.BondType.SINGLE):
         """
         @params:
@@ -88,8 +90,8 @@ def break_bond(mol, u, v):
 
     mapping = []
     frags = list(
-        Chem.rdmolops.GetMolFrags(mol, asMols=True, fragsMolAtomMapping=mapping)
-    )
+        Chem.rdmolops.GetMolFrags(mol, asMols=True,
+                                  fragsMolAtomMapping=mapping))
     mapping = [list(m) for m in mapping]
     if not len(frags) == 2:
         raise ValueError
@@ -170,11 +172,12 @@ def mol_to_dgl(mol):
             h_u.append(num_h)
             atom_feats_dict["n_feat"].append(torch.FloatTensor(h_u))
 
-        atom_feats_dict["n_feat"] = torch.stack(atom_feats_dict["n_feat"], dim=0)
-        atom_feats_dict["node_type"] = torch.LongTensor(atom_feats_dict["node_type"])
+        atom_feats_dict["n_feat"] = torch.stack(atom_feats_dict["n_feat"],
+                                                dim=0)
+        atom_feats_dict["node_type"] = torch.LongTensor(
+            atom_feats_dict["node_type"])
         atom_feats_dict["node_charge"] = torch.LongTensor(
-            atom_feats_dict["node_charge"]
-        )
+            atom_feats_dict["node_charge"])
         return atom_feats_dict
 
     num_atoms = mol.GetNumAtoms()
@@ -204,8 +207,7 @@ def mol_to_dgl(mol):
             else:
                 bond_type = e_uv.GetBondType()
             bond_feats_dict["e_feat"].append(
-                [float(bond_type == x) for x in BOND_TYPES]
-            )
+                [float(bond_type == x) for x in BOND_TYPES])
 
         bond_feats_dict["e_feat"] = torch.FloatTensor(bond_feats_dict["e_feat"])
         return bond_feats_dict

@@ -41,9 +41,13 @@ parser.add_argument(
     "--trial_seed",
     type=int,
     default=0,
-    help="Trial number (used for seeding split_dataset and " "random_hparams).",
+    help="Trial number (used for seeding split_dataset and "
+    "random_hparams).",
 )
-parser.add_argument("--seed", type=int, default=0, help="Seed for everything else")
+parser.add_argument("--seed",
+                    type=int,
+                    default=0,
+                    help="Seed for everything else")
 parser.add_argument(
     "--steps",
     type=int,
@@ -94,8 +98,8 @@ if args.hparams_seed == 0:
     hparams = hparams_registry.default_hparams(args.algorithm, args.dataset)
 else:
     hparams = hparams_registry.random_hparams(
-        args.algorithm, args.dataset, misc.seed_hash(args.hparams_seed, args.trial_seed)
-    )
+        args.algorithm, args.dataset,
+        misc.seed_hash(args.hparams_seed, args.trial_seed))
 
 if args.hparams:
     hparams.update(json.loads(args.hparams))
@@ -133,7 +137,9 @@ uda_splits = []
 
 test_set = []
 
-print("constructing in(train)/out(validation) splits with 80%/20% for training dataset")
+print(
+    "constructing in(train)/out(validation) splits with 80%/20% for training dataset"
+)
 
 for env_i, env in enumerate(dataset):
     uda = []
@@ -161,7 +167,6 @@ for env_i, env in enumerate(dataset):
         in_splits.append((in_, in_weights))
         out_splits.append((out, out_weights))
 
-
 print("creating training data loaders...")
 train_loaders = [
     InfiniteDataLoader(
@@ -182,7 +187,9 @@ val_loaders = [
 
 val_weights = [None for _, weights in (out_splits)]
 
-val_loader_names = ["env_{}".format(idx2train_env[i]) for i in range(len(out_splits))]
+val_loader_names = [
+    "env_{}".format(idx2train_env[i]) for i in range(len(out_splits))
+]
 
 print("creating test data loaders...")
 
@@ -193,7 +200,9 @@ eval_loaders = [
 
 eval_weights = [None for _, weights in (test_set)]
 
-eval_loader_names = ["env_{}".format(idx2test_env[i]) for i in range(len(test_set))]
+eval_loader_names = [
+    "env_{}".format(idx2test_env[i]) for i in range(len(test_set))
+]
 
 print("getting model...")
 
@@ -219,7 +228,8 @@ print("prepare for training...")
 train_minibatches_iterator = zip(*train_loaders)
 checkpoint_vals = collections.defaultdict(lambda: [])
 
-steps_per_epoch = min([len(env) / hparams["batch_size"] for env, _ in in_splits])
+steps_per_epoch = min(
+    [len(env) / hparams["batch_size"] for env, _ in in_splits])
 
 n_steps = args.steps or dataset.N_STEPS
 checkpoint_freq = args.checkpoint_freq or dataset.CHECKPOINT_FREQ
@@ -250,10 +260,9 @@ for step in range(start_step, n_steps):
     step_start_time = time.time()
 
     ## each item is a batch of drugs, targets, ys for env i
-    minibatches_device = [
-        (d.float().to(device), t.float().to(device), y.float().to(device))
-        for d, t, y in next(train_minibatches_iterator)
-    ]
+    minibatches_device = [(d.float().to(device), t.float().to(device),
+                           y.float().to(device))
+                          for d, t, y in next(train_minibatches_iterator)]
 
     uda_device = None
     step_vals = algorithm.update(minibatches_device, uda_device)
@@ -261,14 +270,9 @@ for step in range(start_step, n_steps):
 
     if step % 5 == 0:
 
-        print(
-            "Training at Step "
-            + str(step + 1)
-            + " with loss "
-            + str(step_vals["loss"])
-            + " and with training pcc "
-            + str(step_vals["training_pcc"])
-        )
+        print("Training at Step " + str(step + 1) + " with loss " +
+              str(step_vals["loss"]) + " and with training pcc " +
+              str(step_vals["training_pcc"]))
 
     for key, val in step_vals.items():
         checkpoint_vals[key].append(val)
@@ -318,13 +322,13 @@ for step in range(start_step, n_steps):
                 pred_all_envs_test = pred_all_envs_test + pred
                 y_all_envs_test = y_all_envs_test + y
 
-            results["test_all_pcc"] = evaluator(y_all_envs_test, pred_all_envs_test)
+            results["test_all_pcc"] = evaluator(y_all_envs_test,
+                                                pred_all_envs_test)
 
             print(" --- Testing at Step " + str(step + 1) + " --- ")
 
             for i, j in results.items():
                 print(i + ": " + str(j))
-
 
 print("Finalized and Final Testing on Early Stopped Model")
 evals = zip(eval_loader_names, eval_loaders, eval_weights)
@@ -347,6 +351,6 @@ for i, j in results.items():
     print(i + ": " + str(j))
 
 with open(
-    args.output_dir + "/" + args.algorithm + "_" + str(args.seed) + "_res.pkl", "wb"
-) as f:
+        args.output_dir + "/" + args.algorithm + "_" + str(args.seed) +
+        "_res.pkl", "wb") as f:
     pickle.dump(results, f)

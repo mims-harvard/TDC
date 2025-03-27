@@ -43,7 +43,6 @@ from mol_dqn.chemgraph.mcts import deep_q_networks
 from mol_dqn.chemgraph.mcts import molecules as molecules_mdp
 from mol_dqn.chemgraph.tensorflow import core
 
-
 flags.DEFINE_float("sim_delta", 0.0, "similarity_constraint")
 flags.DEFINE_integer("num_episodes", 50, "episodes.")
 flags.DEFINE_float("gamma", 0.999, "discount")
@@ -246,7 +245,8 @@ all_mols = [
     r"[NH3+]C[C@@H](c1ccc(F)cc1)[C@@H]1CCS(=O)(=O)C1",
     r"CC(C)CNC(=O)NC(=O)[C@H](C)[NH2+]CC1(N2CCSCC2)CCCC1",
     r"[NH3+][C@@H](CO)c1cc(C(F)(F)F)cc([N+](=O)[O-])c1[O-]",
-    r"CCCCN1C(=O)[C@@H]2[C@H](CCC(=O)[O-])" r"N[C@]3(C(=O)Nc4c(CC)cccc43)[C@@H]2C1=O",
+    r"CCCCN1C(=O)[C@@H]2[C@H](CCC(=O)[O-])"
+    r"N[C@]3(C(=O)Nc4c(CC)cccc43)[C@@H]2C1=O",
     r"Cc1cc(C)nc(NC(=[NH2+])Nc2ccc(S(=O)(=O)Nc3nccc(C)n3)cc2)n1",
     r"Cn1cnnc1C[NH+]1CC[C@]2(CCCN(C3CCCC3)C2=O)C1",
     r"CCN(CC(C)(C)O)C(=O)[C@H]1C[C@@H]2C=C[C@H]1C2",
@@ -429,7 +429,8 @@ all_mols = [
     r"CCOc1ncnc(S(=O)(=O)CC)c1N",
     r"CC(=O)c1cn(CCC(=O)N[C@@H]2CCC[NH+](C)C2)c2ccccc12",
     r"COC(=O)C(CC[C@@]1(C)[C@@H](C)CC=C[C@H]1O)C(=O)OC",
-    r"CCOc1ccc(NC(=O)c2ccc(N3C(=O)N4CCC5=c" r"6ccccc6=[NH+][C@H]5[C@@]4(C)C3=O)cc2)cc1",
+    r"CCOc1ccc(NC(=O)c2ccc(N3C(=O)N4CCC5=c"
+    r"6ccccc6=[NH+][C@H]5[C@@]4(C)C3=O)cc2)cc1",
     r"O=C(Cn1nnn(-c2cccs2)c1=O)NC[C@@H]1CN(Cc2ccccc2)CCO1",
     r"[O-]c1nc(-c2cccnc2)nc2c1CC[NH+](Cc1ccnc(N3CCOCC3)n1)C2",
     r"Cc1ccn2c(=O)c(C(=O)Nc3n[n-]c(C(F)(F)F)n3)cnc2c1",
@@ -552,7 +553,8 @@ all_mols = [
     r"Cn1cc(S(=O)(=O)N2CCN(C(=O)c3ccccc3O)CC2)cc1C(N)=O",
     r"CC[C@H](C)[C@@H]1CCCC[C@H]([NH2+]C)C1",
     r"Cc1ccc(C[NH2+][C@H](C)CN2CCOC2=O)nc1",
-    r"O=C(CS[C@H]1NN=C(C[C@@H]2CCS(=O)(=O)" r"C2)O1)C1=c2ccccc2=[NH+][C@@H]1c1ccccc1",
+    r"O=C(CS[C@H]1NN=C(C[C@@H]2CCS(=O)(=O)"
+    r"C2)O1)C1=c2ccccc2=[NH+][C@@H]1c1ccccc1",
     r"CCOc1cc(CN2CC[NH+]3CCCC[C@@H]3C2)ccc1OC",
     r"CC[NH+](CC)[C@](C)(CC)[C@H](O)c1cscc1Br",
     r"C[NH+]1CCC(NC(=O)c2ncoc2-c2ccccc2)CC1",
@@ -923,9 +925,8 @@ class Molecule(molecules_mdp.Molecule):
 
         fingerprint_structure = self.get_fingerprint(molecule)
 
-        return DataStructs.TanimotoSimilarity(
-            self._target_mol_fingerprint, fingerprint_structure
-        )
+        return DataStructs.TanimotoSimilarity(self._target_mol_fingerprint,
+                                              fingerprint_structure)
 
     def _reward(self):
         molecule = Chem.MolFromSmiles(self._state)
@@ -936,7 +937,7 @@ class Molecule(molecules_mdp.Molecule):
             reward = penalized_logp(molecule) + 100 * (sim - FLAGS.sim_delta)
         else:
             reward = penalized_logp(molecule)
-        return reward * FLAGS.gamma ** (self.max_steps - self._counter)
+        return reward * FLAGS.gamma**(self.max_steps - self._counter)
 
 
 def get_fingerprint(smiles, hparams):
@@ -955,8 +956,7 @@ def get_fingerprint(smiles, hparams):
     if molecule is None:
         return np.zeros((hparams.fingerprint_length,))
     fingerprint = AllChem.GetMorganFingerprintAsBitVect(
-        molecule, hparams.fingerprint_radius, hparams.fingerprint_length
-    )
+        molecule, hparams.fingerprint_radius, hparams.fingerprint_length)
     arr = np.zeros((1,))
     # ConvertToNumpyArray takes ~ 0.19 ms, while
     # np.asarray takes ~ 4.69 ms
@@ -992,17 +992,18 @@ def run_training(hparams, dqn):
 
         # The schedule for the epsilon in epsilon greedy policy.
         exploration = schedules.PiecewiseSchedule(
-            [(0, 1.0), (int(FLAGS.num_episodes / 2), 0.1), (FLAGS.num_episodes, 0.01)],
+            [(0, 1.0), (int(FLAGS.num_episodes / 2), 0.1),
+             (FLAGS.num_episodes, 0.01)],
             outside_value=0.01,
         )
 
         if hparams.prioritized:
             memory = replay_buffer.PrioritizedReplayBuffer(
-                hparams.replay_buffer_size, hparams.prioritized_alpha
-            )
+                hparams.replay_buffer_size, hparams.prioritized_alpha)
             beta_schedule = schedules.LinearSchedule(
-                FLAGS.num_episodes, initial_p=hparams.prioritized_beta, final_p=0
-            )
+                FLAGS.num_episodes,
+                initial_p=hparams.prioritized_beta,
+                final_p=0)
         else:
             memory = replay_buffer.ReplayBuffer(hparams.replay_buffer_size)
 
@@ -1029,37 +1030,30 @@ def run_training(hparams, dqn):
                 else:
                     head = 0
                 for step in range(hparams.max_steps_per_episode):
-                    steps_left = (
-                        hparams.max_steps_per_episode - environment.num_steps_taken
-                    )
+                    steps_left = (hparams.max_steps_per_episode -
+                                  environment.num_steps_taken)
                     valid_actions = list(environment.get_valid_actions())
-                    observations = np.vstack(
-                        [
-                            np.append(get_fingerprint(act, hparams), steps_left)
-                            for act in valid_actions
-                        ]
-                    )
-                    action = valid_actions[
-                        dqn.get_action(
-                            observations,
-                            head=head,
-                            update_epsilon=exploration.value(episode),
-                        )
-                    ]
+                    observations = np.vstack([
+                        np.append(get_fingerprint(act, hparams), steps_left)
+                        for act in valid_actions
+                    ])
+                    action = valid_actions[dqn.get_action(
+                        observations,
+                        head=head,
+                        update_epsilon=exploration.value(episode),
+                    )]
                     result = environment.step(action)
-                    steps_left = (
-                        hparams.max_steps_per_episode - environment.num_steps_taken
-                    )
-                    action_fingerprints = np.vstack(
-                        [
-                            np.append(get_fingerprint(act, hparams), steps_left)
-                            for act in environment.get_valid_actions()
-                        ]
-                    )
+                    steps_left = (hparams.max_steps_per_episode -
+                                  environment.num_steps_taken)
+                    action_fingerprints = np.vstack([
+                        np.append(get_fingerprint(act, hparams), steps_left)
+                        for act in environment.get_valid_actions()
+                    ])
                     # we store the fingerprint of the action in obs_t so action
                     # does not matter here.
                     memory.add(
-                        obs_t=np.append(get_fingerprint(action, hparams), steps_left),
+                        obs_t=np.append(get_fingerprint(action, hparams),
+                                        steps_left),
                         action=0,
                         reward=result.reward,
                         obs_tp1=action_fingerprints,
@@ -1067,7 +1061,8 @@ def run_training(hparams, dqn):
                     )
 
                     if step == hparams.max_steps_per_episode - 1:
-                        episode_summary = dqn.log_result(result.state, result.reward)
+                        episode_summary = dqn.log_result(
+                            result.state, result.reward)
                         summary_writer.add_summary(episode_summary, global_step)
                         # reward can be a tuple or a float number.
                         logging.info(
@@ -1077,9 +1072,8 @@ def run_training(hparams, dqn):
                             str(result.reward),
                         )
 
-                    if (episode > 1) and (
-                        global_step % hparams.learning_frequency == 0
-                    ):
+                    if (episode > 1) and (global_step %
+                                          hparams.learning_frequency == 0):
                         if hparams.prioritized:
                             (
                                 state_t,
@@ -1089,9 +1083,8 @@ def run_training(hparams, dqn):
                                 done_mask,
                                 weight,
                                 indices,
-                            ) = memory.sample(
-                                hparams.batch_size, beta=beta_schedule.value(episode)
-                            )
+                            ) = memory.sample(hparams.batch_size,
+                                              beta=beta_schedule.value(episode))
                         else:
                             (
                                 state_t,
@@ -1114,26 +1107,26 @@ def run_training(hparams, dqn):
                         )
 
                         summary_writer.add_summary(error_summary, global_step)
-                        logging.info(
-                            "Current TD error: %.4f", np.mean(np.abs(td_error))
-                        )
+                        logging.info("Current TD error: %.4f",
+                                     np.mean(np.abs(td_error)))
 
                         if hparams.prioritized:
                             memory.update_priorities(
                                 indices,
                                 np.abs(
-                                    np.squeeze(td_error) + hparams.prioritized_epsilon
-                                ).tolist(),
+                                    np.squeeze(td_error) +
+                                    hparams.prioritized_epsilon).tolist(),
                             )
                     global_step += 1
 
-                    if (global_step + 1) % hparams.max_steps_per_episode * 5 == 0:
+                    if (global_step +
+                            1) % hparams.max_steps_per_episode * 5 == 0:
                         sess.run(dqn.update_op)
 
             if (episode + 1) % 2 == 0:
-                model_saver.save(
-                    sess, os.path.join(FLAGS.model_dir, "ckpt"), global_step=global_step
-                )
+                model_saver.save(sess,
+                                 os.path.join(FLAGS.model_dir, "ckpt"),
+                                 global_step=global_step)
 
 
 def main(argv):
@@ -1146,7 +1139,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

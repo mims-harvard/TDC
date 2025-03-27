@@ -69,6 +69,5 @@ def train(
                 loss = metric2avg["loss"]
                 if save_dir and loss < best_eval_loss:
                     best_eval_loss = loss
-                    torch.save(
-                        model.state_dict(), os.path.join(save_dir, "model_best.pt")
-                    )
+                    torch.save(model.state_dict(),
+                               os.path.join(save_dir, "model_best.pt"))

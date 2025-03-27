@@ -28,7 +28,6 @@ import functools
 import json
 import os
 
-
 from absl import app
 from absl import flags
 
@@ -41,7 +40,6 @@ from dqn import deep_q_networks
 from dqn import molecules as molecules_mdp
 from dqn import run_dqn
 from dqn.tensorflow_core import core
-
 
 FLAGS = flags.FLAGS
 
@@ -57,7 +55,9 @@ oracle2 = Oracle(
     name="Docking_Score",
     software="vina",
     pyscreener_path="./",
-    receptors=["/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"],
+    receptors=[
+        "/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"
+    ],
     center=(9, 22.5, 26),
     size=(15, 15, 15),
     buffer=10,
@@ -70,7 +70,8 @@ oracle2 = Oracle(
 run = 9
 
 
-class Result(collections.namedtuple("Result", ["state", "reward", "terminated"])):
+class Result(collections.namedtuple("Result",
+                                    ["state", "reward", "terminated"])):
     """A namedtuple defines the result of a step for the molecule class.
 
     The namedtuple contains the following fields:
@@ -112,7 +113,8 @@ class DockingRewardMolecule(molecules_mdp.Molecule):
             score = -oracle2(self._state)
         except:
             score = 0.0
-        return score * self.discount_factor ** (self.max_steps - self.num_steps_taken)
+        return score * self.discount_factor**(self.max_steps -
+                                              self.num_steps_taken)
 
     def step(self, action):
         """Takes a step forward according to the action.
@@ -159,7 +161,8 @@ class DockingRewardMolecule(molecules_mdp.Molecule):
         result = Result(
             state=self._state,
             reward=reward,
-            terminated=(self._counter >= self.max_steps) or self._goal_reached(),
+            terminated=(self._counter >= self.max_steps) or
+            self._goal_reached(),
         )
 
         return result
@@ -186,7 +189,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

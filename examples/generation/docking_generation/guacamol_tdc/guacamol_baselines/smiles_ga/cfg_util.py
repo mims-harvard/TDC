@@ -52,7 +52,7 @@ def prods_to_eq(prods):
             break
         for ix, s in enumerate(seq):
             if s == prod.lhs():
-                seq = seq[:ix] + list(prod.rhs()) + seq[ix + 1 :]
+                seq = seq[:ix] + list(prod.rhs()) + seq[ix + 1:]
                 break
     try:
         return "".join(seq)

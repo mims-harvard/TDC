@@ -51,6 +51,7 @@ def num_atoms(mol: Mol) -> int:
 
 
 class AtomCounter:
+
     def __init__(self, element: str) -> None:
         """
         Args:

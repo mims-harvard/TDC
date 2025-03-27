@@ -67,11 +67,11 @@ class Molecule(molecules_mdp.Molecule):
         factor = 1.0 + np.random.normal(0, FLAGS.noise_std)
         if self._counter == self.max_steps:
             factor = 1.0
-        factor *= FLAGS.gamma ** (self.max_steps - self._counter)
+        factor *= FLAGS.gamma**(self.max_steps - self._counter)
         molecule = Chem.MolFromSmiles(self._state)
         if molecule is None:
             return -self.target_weight**2 * factor
-        return -((Descriptors.MolWt(molecule) - self.target_weight) ** 2) * factor
+        return -((Descriptors.MolWt(molecule) - self.target_weight)**2) * factor
 
 
 def main(argv):
@@ -97,9 +97,8 @@ def main(argv):
         klass = deep_q_networks_noise.DeepQNetwork
     dqn = klass(
         input_shape=(hparams.batch_size, hparams.fingerprint_length),
-        q_fn=functools.partial(
-            deep_q_networks_noise.multi_layer_model, hparams=hparams
-        ),
+        q_fn=functools.partial(deep_q_networks_noise.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

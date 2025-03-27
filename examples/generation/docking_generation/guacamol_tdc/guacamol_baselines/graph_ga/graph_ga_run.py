@@ -25,14 +25,15 @@ from graph_ga import crossover as co, mutate as mu
 
 result_folder = "/project/molecular_data/graphnn/pyscreener/graph_ga/results.3/"
 
-
 from tdc import Oracle
 
 drd3_oracle = Oracle(
     name="Docking_Score",
     software="vina",
     pyscreener_path="/project/molecular_data/graphnn/pyscreener",
-    receptors=["/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"],
+    receptors=[
+        "/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"
+    ],
     center=(9, 22.5, 26),
     size=(15, 15, 15),
     buffer=10,
@@ -86,7 +87,8 @@ def read_in_num(filename):
     return int(line)
 
 
-def make_mating_pool(population_mol: List[Mol], population_scores, offspring_size: int):
+def make_mating_pool(population_mol: List[Mol], population_scores,
+                     offspring_size: int):
     """
     Given a population of RDKit Mol and their scores, sample a list of the same size
     with replacement using the population_scores as weights
@@ -118,9 +120,10 @@ def make_mating_pool(population_mol: List[Mol], population_scores, offspring_siz
     else:
         population_probs = [p / sum_scores for p in population_scores]
     # print(population_probs, 'population_probs')
-    mating_pool = np.random.choice(
-        population_mol, p=population_probs, size=offspring_size, replace=True
-    )
+    mating_pool = np.random.choice(population_mol,
+                                   p=population_probs,
+                                   size=offspring_size,
+                                   replace=True)
     return mating_pool
 
 
@@ -162,9 +165,9 @@ def sanitize(population_mol):
 
 
 class GB_GA_Generator:
-    def __init__(
-        self, smi_file, population_size, offspring_size, generations, mutation_rate
-    ):
+
+    def __init__(self, smi_file, population_size, offspring_size, generations,
+                 mutation_rate):
         self.smi_file = smi_file
         self.all_smiles = self.load_smiles_from_file(self.smi_file)
 
@@ -185,8 +188,10 @@ class GB_GA_Generator:
         from random import shuffle
 
         shuffle(self.all_smiles)
-        starting_population = self.all_smiles[: self.population_size]
-        starting_population = [canonicalize(smiles) for smiles in starting_population]
+        starting_population = self.all_smiles[:self.population_size]
+        starting_population = [
+            canonicalize(smiles) for smiles in starting_population
+        ]
         print(
             "---------- before init, oracle_num",
             self.oracle_num,
@@ -213,7 +218,8 @@ class GB_GA_Generator:
                 if self.oracle_num % 100 == 0:
                     pickle.dump(
                         self.smiles2score,
-                        open(result_folder + str(self.oracle_num) + ".pkl", "wb"),
+                        open(result_folder + str(self.oracle_num) + ".pkl",
+                             "wb"),
                     )
                 self.smiles2score[smiles] = score
             population_scores.append(score)
@@ -221,9 +227,8 @@ class GB_GA_Generator:
         for generation in tqdm(range(self.generations)):  ### 1k
 
             # new_population
-            mating_pool = make_mating_pool(
-                population_mol, population_scores, self.offspring_size
-            )
+            mating_pool = make_mating_pool(population_mol, population_scores,
+                                           self.offspring_size)
             # offspring_mol = self.pool(delayed(reproduce)(mating_pool, self.mutation_rate) for _ in range(self.population_size))
             offspring_mol = []
             for _ in range(self.population_size):
@@ -252,15 +257,17 @@ class GB_GA_Generator:
                     if self.oracle_num % 100 == 0:
                         pickle.dump(
                             self.smiles2score,
-                            open(result_folder + str(self.oracle_num) + ".pkl", "wb"),
+                            open(result_folder + str(self.oracle_num) + ".pkl",
+                                 "wb"),
                         )
                     self.smiles2score[smiles] = score
-                population_scores.append(drd3_docking_oracle(Chem.MolToSmiles(m)))
+                population_scores.append(
+                    drd3_docking_oracle(Chem.MolToSmiles(m)))
 
             population_tuples = list(zip(population_scores, population_mol))
-            population_tuples = sorted(
-                population_tuples, key=lambda x: x[0], reverse=True
-            )[: self.population_size]
+            population_tuples = sorted(population_tuples,
+                                       key=lambda x: x[0],
+                                       reverse=True)[:self.population_size]
             population_mol = [t[1] for t in population_tuples]
             population_scores = [t[0] for t in population_tuples]
 
@@ -277,18 +284,18 @@ ga = GB_GA_Generator(
 
 ga.generate_optimized_molecules()
 
-
 num2score = {}
 
 for file in os.listdir(result_folder):
     num = int(file.split(".")[0])
     smiles2score = pickle.load(open(result_folder + file, "rb"))
-    smiles_score_lst = [(smiles, score) for smiles, score in smiles2score.items()]
+    smiles_score_lst = [
+        (smiles, score) for smiles, score in smiles2score.items()
+    ]
     smiles_score_lst.sort(key=lambda x: x[1], reverse=True)
     score_lst = [i[1] for i in smiles_score_lst]
     mean_score = np.mean(score_lst[:10])
     num2score[num] = mean_score
-
 
 num_score_lst = [(num, score) for num, score in num2score.items()]
 num_score_lst.sort(key=lambda x: x[0])

@@ -63,7 +63,8 @@ def insert_atom():
     if BO == "double":
         rxn_smarts = "[*;!H0:1]~[*:2]>>[*:1]=X-[*:2]".replace("X", new_atom)
     if BO == "triple":
-        rxn_smarts = "[*;!R;!H1;!H0:1]~[*:2]>>[*:1]#X-[*:2]".replace("X", new_atom)
+        rxn_smarts = "[*;!R;!H1;!H0:1]~[*:2]>>[*:1]#X-[*:2]".replace(
+            "X", new_atom)
 
     return rxn_smarts
 

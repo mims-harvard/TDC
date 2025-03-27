@@ -10,7 +10,6 @@ import re
 import os.path as op
 
 rdBase.DisableLog("rdApp.error")
-
 """Scores based on an ECFP classifier for activity."""
 
 clf_model = None

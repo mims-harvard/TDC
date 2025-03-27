@@ -36,7 +36,8 @@ from six.moves import zip
 from dqn.py import molecules
 
 
-class Result(collections.namedtuple("Result", ["state", "reward", "terminated"])):
+class Result(collections.namedtuple("Result",
+                                    ["state", "reward", "terminated"])):
     """A namedtuple defines the result of a step for the molecule class.
 
     The namedtuple contains the following fields:
@@ -81,14 +82,17 @@ def get_valid_actions(
     if mol is None:
         raise ValueError("Received invalid state: %s" % state)
     atom_valences = {
-        atom_type: molecules.atom_valences([atom_type])[0] for atom_type in atom_types
+        atom_type: molecules.atom_valences([atom_type])[0]
+        for atom_type in atom_types
     }
     atoms_with_free_valence = {}
     for i in range(1, max(atom_valences.values())):
         # Only atoms that allow us to replace at least one H with a new bond are
         # enumerated here.
         atoms_with_free_valence[i] = [
-            atom.GetIdx() for atom in mol.GetAtoms() if atom.GetNumImplicitHs() >= i
+            atom.GetIdx()
+            for atom in mol.GetAtoms()
+            if atom.GetNumImplicitHs() >= i
         ]
     valid_actions = set()
     valid_actions.update(
@@ -97,16 +101,14 @@ def get_valid_actions(
             atom_types=atom_types,
             atom_valences=atom_valences,
             atoms_with_free_valence=atoms_with_free_valence,
-        )
-    )
+        ))
     valid_actions.update(
         _bond_addition(
             mol,
             atoms_with_free_valence=atoms_with_free_valence,
             allowed_ring_sizes=allowed_ring_sizes,
             allow_bonds_between_rings=allow_bonds_between_rings,
-        )
-    )
+        ))
     if allow_removal:
         valid_actions.update(_bond_removal(mol))
     if allow_no_modification:
@@ -155,7 +157,8 @@ def _atom_addition(state, atom_types, atom_valences, atoms_with_free_valence):
                     new_state = Chem.RWMol(state)
                     idx = new_state.AddAtom(Chem.Atom(element))
                     new_state.AddBond(atom, idx, bond_order[i])
-                    sanitization_result = Chem.SanitizeMol(new_state, catchErrors=True)
+                    sanitization_result = Chem.SanitizeMol(new_state,
+                                                           catchErrors=True)
                     # When sanitization fails
                     if sanitization_result:
                         continue
@@ -163,9 +166,8 @@ def _atom_addition(state, atom_types, atom_valences, atoms_with_free_valence):
     return atom_addition
 
 
-def _bond_addition(
-    state, atoms_with_free_valence, allowed_ring_sizes, allow_bonds_between_rings
-):
+def _bond_addition(state, atoms_with_free_valence, allowed_ring_sizes,
+                   allow_bonds_between_rings):
     """Computes valid actions that involve adding bonds to the graph.
 
     Actions (where allowed):
@@ -221,17 +223,14 @@ def _bond_addition(
                     continue
             # If do not allow new bonds between atoms already in rings.
             elif not allow_bonds_between_rings and (
-                state.GetAtomWithIdx(atom1).IsInRing()
-                and state.GetAtomWithIdx(atom2).IsInRing()
-            ):
+                    state.GetAtomWithIdx(atom1).IsInRing() and
+                    state.GetAtomWithIdx(atom2).IsInRing()):
                 continue
             # If the distance between the current two atoms is not in the
             # allowed ring sizes
-            elif (
-                allowed_ring_sizes is not None
-                and len(Chem.rdmolops.GetShortestPath(state, atom1, atom2))
-                not in allowed_ring_sizes
-            ):
+            elif (allowed_ring_sizes is not None and
+                  len(Chem.rdmolops.GetShortestPath(
+                      state, atom1, atom2)) not in allowed_ring_sizes):
                 continue
             else:
                 new_state.AddBond(atom1, atom2, bond_orders[valence])
@@ -272,9 +271,8 @@ def _bond_removal(state):
         for bond in state.GetBonds():
             # Get the bond from a copy of the molecule so that SetBondType() doesn't
             # modify the original state.
-            bond = Chem.Mol(state).GetBondBetweenAtoms(
-                bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
-            )
+            bond = Chem.Mol(state).GetBondBetweenAtoms(bond.GetBeginAtomIdx(),
+                                                       bond.GetEndAtomIdx())
             if bond.GetBondType() not in bond_orders:
                 continue  # Skip aromatic bonds.
             new_state = Chem.RWMol(state)
@@ -290,7 +288,8 @@ def _bond_removal(state):
                 idx = bond.GetIdx()
                 bond.SetBondType(bond_orders[bond_order])
                 new_state.ReplaceBond(idx, bond)
-                sanitization_result = Chem.SanitizeMol(new_state, catchErrors=True)
+                sanitization_result = Chem.SanitizeMol(new_state,
+                                                       catchErrors=True)
                 # When sanitization fails
                 if sanitization_result:
                     continue
@@ -299,7 +298,8 @@ def _bond_removal(state):
                 atom1 = bond.GetBeginAtom().GetIdx()
                 atom2 = bond.GetEndAtom().GetIdx()
                 new_state.RemoveBond(atom1, atom2)
-                sanitization_result = Chem.SanitizeMol(new_state, catchErrors=True)
+                sanitization_result = Chem.SanitizeMol(new_state,
+                                                       catchErrors=True)
                 # When sanitization fails
                 if sanitization_result:
                     continue
@@ -375,8 +375,7 @@ class Molecule(object):
         self._max_bonds = 4
         atom_types = list(self.atom_types)
         self._max_new_bonds = dict(
-            list(zip(atom_types, molecules.atom_valences(atom_types)))
-        )
+            list(zip(atom_types, molecules.atom_valences(atom_types))))
 
     @property
     def state(self):
@@ -488,7 +487,8 @@ class Molecule(object):
         result = Result(
             state=self._state,
             reward=reward,
-            terminated=(self._counter >= self.max_steps) or self._goal_reached(),
+            terminated=(self._counter >= self.max_steps) or
+            self._goal_reached(),
         )
 
         return result

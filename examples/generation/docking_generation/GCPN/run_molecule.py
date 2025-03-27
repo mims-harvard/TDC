@@ -10,10 +10,8 @@ import tensorflow as tf
 oracle_call = 0
 # global oracle_call
 
-
 import gym
 from gym_molecule.envs.molecule import GraphEnv
-
 
 from rdkit import RDLogger
 
@@ -96,25 +94,26 @@ def arg_parser():
     import argparse
 
     return argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
 
 def molecule_arg_parser():
     parser = arg_parser()
-    parser.add_argument(
-        "--env", type=str, help="environment name: molecule; graph", default="molecule"
-    )
+    parser.add_argument("--env",
+                        type=str,
+                        help="environment name: molecule; graph",
+                        default="molecule")
     parser.add_argument("--seed", help="RNG seed", type=int, default=666)
     parser.add_argument("--num_steps", type=int, default=int(5e7))
     parser.add_argument("--name", type=str, default="test_conditional")
-    parser.add_argument(
-        "--name_load", type=str, default="0new_concatno_mean_layer3_expert1500"
-    )
+    parser.add_argument("--name_load",
+                        type=str,
+                        default="0new_concatno_mean_layer3_expert1500")
     # parser.add_argument('--name_load', type=str, default='test')
-    parser.add_argument(
-        "--dataset", type=str, default="zinc", help="caveman; grid; ba; zinc; gdb"
-    )
+    parser.add_argument("--dataset",
+                        type=str,
+                        default="zinc",
+                        help="caveman; grid; ba; zinc; gdb")
     parser.add_argument("--dataset_load", type=str, default="zinc")
     parser.add_argument(
         "--reward_type",
@@ -122,9 +121,10 @@ def molecule_arg_parser():
         default="docking",
         help="logppen;logp_target;qed;qedsa;qed_target;mw_target;gan",
     )
-    parser.add_argument(
-        "--reward_target", type=float, default=0.5, help="target reward value"
-    )
+    parser.add_argument("--reward_target",
+                        type=float,
+                        default=0.5,
+                        help="target reward value")
     parser.add_argument("--logp_ratio", type=float, default=1)
     parser.add_argument("--qed_ratio", type=float, default=1)
     parser.add_argument("--sa_ratio", type=float, default=1)
@@ -158,12 +158,10 @@ def molecule_arg_parser():
     parser.add_argument("--has_concat", type=int, default=0)
     parser.add_argument("--has_feature", type=int, default=0)
     parser.add_argument("--emb_size", type=int, default=128)  # default 64
-    parser.add_argument(
-        "--gcn_aggregate", type=str, default="mean"
-    )  # sum, mean, concat
-    parser.add_argument(
-        "--gan_type", type=str, default="normal"
-    )  # normal, recommend, wgan
+    parser.add_argument("--gcn_aggregate", type=str,
+                        default="mean")  # sum, mean, concat
+    parser.add_argument("--gan_type", type=str,
+                        default="normal")  # normal, recommend, wgan
     parser.add_argument("--gate_sum_d", type=int, default=0)
     parser.add_argument("--mask_null", type=int, default=0)
     parser.add_argument("--is_conditional", type=int, default=0)  # default 0
@@ -181,15 +179,8 @@ def main():
     args = molecule_arg_parser().parse_args()
     print(args)
     args.name_full = args.env + "_" + args.dataset + "_" + args.name
-    args.name_full_load = (
-        args.env
-        + "_"
-        + args.dataset_load
-        + "_"
-        + args.name_load
-        + "_"
-        + str(args.load_step)
-    )
+    args.name_full_load = (args.env + "_" + args.dataset_load + "_" +
+                           args.name_load + "_" + str(args.load_step))
     # check and clean
     if not os.path.exists("molecule_gen"):
         os.makedirs("molecule_gen")

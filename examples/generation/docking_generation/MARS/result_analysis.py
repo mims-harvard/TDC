@@ -2,7 +2,6 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 for i in range(1, 4):
     result_folder = "result." + str(i) + ".run"
     file_lst = os.listdir(result_folder)
@@ -19,7 +18,9 @@ for i in range(1, 4):
         file = os.path.join(result_folder, file)
         with open(file, "r") as fin:
             lines = fin.readlines()
-        smiles_score_lst = [(line.split()[0], float(line.split()[1])) for line in lines]
+        smiles_score_lst = [
+            (line.split()[0], float(line.split()[1])) for line in lines
+        ]
         score_lst = [i[1] for i in smiles_score_lst]
         num2dockingscore[num] = (
             score_lst[0],
@@ -52,14 +53,12 @@ for i in range(1, 4):
             color="y",
         )
 
-
 plt.legend()
 plt.xlabel("# docking call")
 plt.ylabel("docking score (DRD3) achieved by MARS")
 plt.savefig("docking_iter.png")
 
 exit()
-
 
 # result_folder = "result"
 # num_lst = []

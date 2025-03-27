@@ -34,7 +34,6 @@ from mol_dqn.chemgraph.mcts import run_dqn
 from mol_dqn.chemgraph.mcts.experimental import deep_q_networks_noise
 from mol_dqn.chemgraph.tensorflow import core
 
-
 flags.DEFINE_string("error_type", "robust", "error_type.")
 flags.DEFINE_float("noise_std", 0.1, "std dev of noise.")
 flags.DEFINE_float("gamma", 0.999, "discount")
@@ -52,7 +51,7 @@ class Molecule(molecules_mdp.Molecule):
             qed = QED.qed(molecule)
         except ValueError:
             qed = 0
-        return qed * FLAGS.gamma ** (self.max_steps - self._counter)
+        return qed * FLAGS.gamma**(self.max_steps - self._counter)
 
 
 def main(argv):
@@ -77,9 +76,8 @@ def main(argv):
         klass = deep_q_networks_noise.DeepQNetwork
     dqn = klass(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(
-            deep_q_networks_noise.multi_layer_model, hparams=hparams
-        ),
+        q_fn=functools.partial(deep_q_networks_noise.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

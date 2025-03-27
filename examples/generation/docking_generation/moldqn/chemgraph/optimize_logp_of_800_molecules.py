@@ -42,7 +42,6 @@ from dqn import run_dqn
 from dqn.py import molecules
 from dqn.tensorflow_core import core
 
-
 flags.DEFINE_float(
     "similarity_constraint",
     0.0,
@@ -60,7 +59,8 @@ class LogPRewardWithSimilarityConstraintMolecule(molecules_mdp.Molecule):
       a molecule from all molecules as target.
     """
 
-    def __init__(self, all_molecules, discount_factor, similarity_constraint, **kwargs):
+    def __init__(self, all_molecules, discount_factor, similarity_constraint,
+                 **kwargs):
         """Initializes the class.
 
         Args:
@@ -70,7 +70,8 @@ class LogPRewardWithSimilarityConstraintMolecule(molecules_mdp.Molecule):
             molecule must satisfy.
           **kwargs: The keyword arguments passed to the parent class.
         """
-        super(LogPRewardWithSimilarityConstraintMolecule, self).__init__(**kwargs)
+        super(LogPRewardWithSimilarityConstraintMolecule,
+              self).__init__(**kwargs)
         self._all_molecules = all_molecules
         self._discount_factor = discount_factor
         self._similarity_constraint = similarity_constraint
@@ -84,8 +85,7 @@ class LogPRewardWithSimilarityConstraintMolecule(molecules_mdp.Molecule):
         """
         self._state = random.choice(self._all_molecules)
         self._target_mol_fingerprint = self.get_fingerprint(
-            Chem.MolFromSmiles(self._state)
-        )
+            Chem.MolFromSmiles(self._state))
         if self.record_path:
             self._path = [self._state]
         self._valid_actions = self.get_valid_actions(force_rebuild=True)
@@ -113,9 +113,8 @@ class LogPRewardWithSimilarityConstraintMolecule(molecules_mdp.Molecule):
         """
 
         fingerprint_structure = self.get_fingerprint(molecule)
-        return DataStructs.TanimotoSimilarity(
-            self._target_mol_fingerprint, fingerprint_structure
-        )
+        return DataStructs.TanimotoSimilarity(self._target_mol_fingerprint,
+                                              fingerprint_structure)
 
     def _reward(self):
         """Reward of a state.
@@ -133,19 +132,19 @@ class LogPRewardWithSimilarityConstraintMolecule(molecules_mdp.Molecule):
         """
         molecule = Chem.MolFromSmiles(self._state)
         if molecule is None:
-            raise ValueError("Current state %s is not a valid molecule" % self._state)
+            raise ValueError("Current state %s is not a valid molecule" %
+                             self._state)
         similarity = self.get_similarity(molecule)
         if similarity <= self._similarity_constraint:
             # 40 is an arbitrary number. Suppose we have a molecule that is not
             # similar to the target at all, but has a high logP. The logP improvement
             # can be 20, and the similarity difference can be 0.2. To discourage that
             # molecule, similarity difference is timed by 20 / 0.2 = 100.
-            reward = molecules.penalized_logp(molecule) + 100 * (
-                similarity - self._similarity_constraint
-            )
+            reward = molecules.penalized_logp(
+                molecule) + 100 * (similarity - self._similarity_constraint)
         else:
             reward = molecules.penalized_logp(molecule)
-        return reward * self._discount_factor ** (self.max_steps - self._counter)
+        return reward * self._discount_factor**(self.max_steps - self._counter)
 
 
 def main(argv):
@@ -175,7 +174,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

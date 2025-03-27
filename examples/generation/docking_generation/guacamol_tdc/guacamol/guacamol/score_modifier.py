@@ -138,9 +138,11 @@ class ClippedScoreModifier(ScoreModifier):
     Then the generated values are clipped between low and high scores.
     """
 
-    def __init__(
-        self, upper_x: float, lower_x=0.0, high_score=1.0, low_score=0.0
-    ) -> None:
+    def __init__(self,
+                 upper_x: float,
+                 lower_x=0.0,
+                 high_score=1.0,
+                 low_score=0.0) -> None:
         """
         Args:
             upper_x: x-value from which (or until which if smaller than lower_x) the score is maximal
@@ -171,9 +173,11 @@ class SmoothClippedScoreModifier(ScoreModifier):
     center of the logistic function.
     """
 
-    def __init__(
-        self, upper_x: float, lower_x=0.0, high_score=1.0, low_score=0.0
-    ) -> None:
+    def __init__(self,
+                 upper_x: float,
+                 lower_x=0.0,
+                 high_score=1.0,
+                 low_score=0.0) -> None:
         """
         Args:
             upper_x: x-value from which (or until which if smaller than lower_x) the score approaches high_score
@@ -194,7 +198,8 @@ class SmoothClippedScoreModifier(ScoreModifier):
         self.L = high_score - low_score
 
     def __call__(self, x):
-        return self.low_score + self.L / (1 + np.exp(-self.k * (x - self.middle_x)))
+        return self.low_score + self.L / (1 + np.exp(-self.k *
+                                                     (x - self.middle_x)))
 
 
 class ThresholdedLinearModifier(ScoreModifier):

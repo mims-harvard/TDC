@@ -24,9 +24,11 @@ from pathlib import Path
 
 
 def latest_ckpt(path):
-    return max(
-        [int(p.stem.split("-")[1]) for p in path.iterdir() if p.stem[:4] == "ckpt"]
-    )
+    return max([
+        int(p.stem.split("-")[1])
+        for p in path.iterdir()
+        if p.stem[:4] == "ckpt"
+    ])
 
 
 # basepath = '/Users/odin/sherlock_scratch/moldqn2/target_sas/mol%i_target_%.1f'
@@ -57,7 +59,8 @@ def eval(model_dir, idx):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,
@@ -80,18 +83,16 @@ def eval(model_dir, idx):
             else:
                 head = 0
             valid_actions = list(environment.get_valid_actions())
-            observations = np.vstack(
-                [
-                    np.append(deep_q_networks.get_fingerprint(act, hparams), steps_left)
-                    for act in valid_actions
-                ]
-            )
+            observations = np.vstack([
+                np.append(deep_q_networks.get_fingerprint(act, hparams),
+                          steps_left) for act in valid_actions
+            ])
 
             for epsilon in range(100):
                 epsilon = epsilon / 10000
-                action = valid_actions[
-                    dqn.get_action(observations, head=head, update_epsilon=epsilon)
-                ]
+                action = valid_actions[dqn.get_action(observations,
+                                                      head=head,
+                                                      update_epsilon=epsilon)]
                 result = environment.step(action)
                 print("epsilon", epsilon, result.state)
 
@@ -102,7 +103,6 @@ def eval(model_dir, idx):
 
 
 all_results = []
-
 
 for i in range(len(all_molecules)):
     ckpt, result = eval(path, i)

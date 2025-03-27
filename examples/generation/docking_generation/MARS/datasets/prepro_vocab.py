@@ -10,7 +10,6 @@ from ..common.chem import break_bond, Arm, Skeleton
 lg = RDLogger.logger()
 lg.setLevel(RDLogger.CRITICAL)
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", type=str, default="MARS/data")
@@ -20,7 +19,10 @@ if __name__ == "__main__":
         type=str,
         default="zinc",
     )
-    parser.add_argument("--max_size", type=int, default=10, help="max size of arm")
+    parser.add_argument("--max_size",
+                        type=int,
+                        default=10,
+                        help="max size of arm")
     args = parser.parse_args()
 
     ### load data
@@ -47,7 +49,8 @@ if __name__ == "__main__":
 
                 # functional group check
                 mark = False
-                if not skeleton.mol.GetAtomWithIdx(skeleton.u).GetAtomicNum() == 6:
+                if not skeleton.mol.GetAtomWithIdx(
+                        skeleton.u).GetAtomicNum() == 6:
                     continue
                 if arm.mol.GetNumAtoms() > args.max_size:
                     continue
@@ -58,10 +61,8 @@ if __name__ == "__main__":
                 for bond in arm.mol.GetBonds():
                     if mark:
                         break
-                    if (
-                        bond.GetBondType() == Chem.rdchem.BondType.DOUBLE
-                        or bond.GetBondType() == Chem.rdchem.BondType.TRIPLE
-                    ):
+                    if (bond.GetBondType() == Chem.rdchem.BondType.DOUBLE or
+                            bond.GetBondType() == Chem.rdchem.BondType.TRIPLE):
                         mark = True
                         break
                 if not mark:

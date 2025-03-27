@@ -6,7 +6,9 @@ for i in range(1, 4):
 
     with open(file_1, "r") as fin:
         lines = fin.readlines()
-    smiles2value = {line.split()[0]: float(line.strip().split()[1]) for line in lines}
+    smiles2value = {
+        line.split()[0]: float(line.strip().split()[1]) for line in lines
+    }
     with open(file_2, "r") as fin:
         lines = fin.readlines()
         shuffle(lines)
@@ -15,7 +17,9 @@ for i in range(1, 4):
         if s not in smiles2value:
             smiles2value[s] = v
             break
-    smiles_value_lst = [(smiles, value) for smiles, value in smiles2value.items()]
+    smiles_value_lst = [
+        (smiles, value) for smiles, value in smiles2value.items()
+    ]
     smiles_value_lst.sort(key=lambda x: x[1])
     with open(file_1, "w") as fout:
         for smiles, value in smiles_value_lst:

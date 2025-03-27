@@ -1,4 +1,5 @@
 class RunningReward(object):
+
     def __init__(self, keep_factor: float, initial_value=0) -> None:
         """
         Args:

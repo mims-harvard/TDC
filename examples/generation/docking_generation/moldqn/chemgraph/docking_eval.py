@@ -25,7 +25,6 @@ from tdc import Evaluator
 
 diversity = Evaluator(name="Diversity")
 
-
 import pyscreener
 from tdc import Oracle
 
@@ -33,7 +32,9 @@ oracle2 = Oracle(
     name="Docking_Score",
     software="vina",
     pyscreener_path="./",
-    receptors=["/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"],
+    receptors=[
+        "/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"
+    ],
     center=(9, 22.5, 26),
     size=(15, 15, 15),
     buffer=10,
@@ -82,7 +83,8 @@ def eval(model_file, input_smiles, epsilon=0.1):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,
@@ -107,16 +109,14 @@ def eval(model_file, input_smiles, epsilon=0.1):
             else:
                 head = 0
             valid_actions = list(environment.get_valid_actions())
-            observations = np.vstack(
-                [
-                    np.append(deep_q_networks.get_fingerprint(act, hparams), steps_left)
-                    for act in valid_actions
-                ]
-            )
+            observations = np.vstack([
+                np.append(deep_q_networks.get_fingerprint(act, hparams),
+                          steps_left) for act in valid_actions
+            ])
 
-            action = valid_actions[
-                dqn.get_action(observations, head=head, update_epsilon=epsilon)
-            ]
+            action = valid_actions[dqn.get_action(observations,
+                                                  head=head,
+                                                  update_epsilon=epsilon)]
             result = environment.step(action)
     return result.state
 

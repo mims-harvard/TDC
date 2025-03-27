@@ -17,6 +17,7 @@ from .datasets.datasets import ImitationDataset, GraphClassificationDataset
 
 
 class Sampler:
+
     def __init__(self, config, proposal, estimator):
         self.proposal = proposal
         self.estimator = estimator
@@ -45,32 +46,26 @@ class Sampler:
         self.score_clip = {
             k: v for k, v in zip(config["objectives"], config["score_clip"])
         }
-        self.fps_ref = (
-            [
-                AllChem.GetMorganFingerprintAsBitVect(x, 3, 2048)
-                for x in config["mols_ref"]
-            ]
-            if config["mols_ref"]
-            else None
-        )
+        self.fps_ref = ([
+            AllChem.GetMorganFingerprintAsBitVect(x, 3, 2048)
+            for x in config["mols_ref"]
+        ] if config["mols_ref"] else None)
 
         ### for training editor
         if self.train:
             self.dataset = None
             self.DATASET_MAX_SIZE = config["dataset_size"]
-            self.optimizer = torch.optim.Adam(
-                self.proposal.editor.parameters(), lr=config["lr"]
-            )
+            self.optimizer = torch.optim.Adam(self.proposal.editor.parameters(),
+                                              lr=config["lr"])
 
         ### for training adversarial discriminator
         self.adv = "adv" in config["objectives"]
         if self.adv:
-            self.real_mols, _ = load_mols(
-                config["data_dir"], config["mols_init"], limit=config["mols_limit"]
-            )
+            self.real_mols, _ = load_mols(config["data_dir"],
+                                          config["mols_init"],
+                                          limit=config["mols_limit"])
             self.optimizer_adv = torch.optim.Adam(
-                self.estimator.discriminator.parameters(), lr=config["lr"]
-            )
+                self.estimator.discriminator.parameters(), lr=config["lr"])
 
     def scores_from_dicts(self, dicts):
         """
@@ -120,12 +115,15 @@ class Sampler:
         unique = 1.0 * len(unique) / (len(fps_mols) + 1e-6)
 
         ### novelty and diversity
-        fps_mols = [AllChem.GetMorganFingerprintAsBitVect(x, 3, 2048) for x in fps_mols]
+        fps_mols = [
+            AllChem.GetMorganFingerprintAsBitVect(x, 3, 2048) for x in fps_mols
+        ]
 
         if self.fps_ref:
             n_sim = 0.0
             for i in range(len(fps_mols)):
-                sims = DataStructs.BulkTanimotoSimilarity(fps_mols[i], self.fps_ref)
+                sims = DataStructs.BulkTanimotoSimilarity(
+                    fps_mols[i], self.fps_ref)
                 if max(sims) >= 0.4:
                     n_sim += 1
             novelty = 1.0 - 1.0 * n_sim / (len(fps_mols) + 1e-6)
@@ -164,12 +162,9 @@ class Sampler:
         print_mols(self.run_dir, step, old_mols, old_scores, old_dicts)
 
         ### early stop
-        if (
-            evaluation["prod"] > 0.1
-            and evaluation["prod"] < self.best_eval_res + 0.01
-            and avg_score > 0.1
-            and avg_score < self.best_avg_score + 0.01
-        ):
+        if (evaluation["prod"] > 0.1 and
+                evaluation["prod"] < self.best_eval_res + 0.01 and
+                avg_score > 0.1 and avg_score < self.best_avg_score + 0.01):
             self.patience -= 1
         else:
             self.patience = self.PATIENCE
@@ -220,14 +215,17 @@ class Sampler:
             self.oracle_call += len(new_mols)
             new_scores = self.scores_from_dicts(new_dicts)
 
-            indices = [i for i in range(len(old_mols)) if new_scores[i] > old_scores[i]]
+            indices = [
+                i for i in range(len(old_mols)) if new_scores[i] > old_scores[i]
+            ]
             with open(os.path.join(self.run_dir, "edits.txt"), "a") as f:
                 f.write("edits at step %i\n" % step)
                 f.write("improve\tact\tarm\n")
                 for i, item in enumerate(self.proposal.dataset):
                     _, edit = item
                     improve = new_scores[i] > old_scores[i]
-                    f.write("%i\t%i\t%i\n" % (improve, edit["act"], edit["arm"]))
+                    f.write("%i\t%i\t%i\n" %
+                            (improve, edit["act"], edit["arm"]))
 
             acc_rates = self.acc_rates(new_scores, old_scores, fixings)
             acc_rates = [min(1.0, max(0.0, A)) for A in acc_rates]
@@ -253,11 +251,12 @@ class Sampler:
                 if n_sample > 2 * self.DATASET_MAX_SIZE:
                     indices = [i for i in range(n_sample)]
                     random.shuffle(indices)
-                    indices = indices[: self.DATASET_MAX_SIZE]
+                    indices = indices[:self.DATASET_MAX_SIZE]
                     self.dataset = data.Subset(self.dataset, indices)
                     self.dataset = ImitationDataset.reconstruct(self.dataset)
                 batch_size = int(self.batch_size * 20 / self.last_avg_size)
-                log.info("formed a imitation dataset of size %i" % len(self.dataset))
+                log.info("formed a imitation dataset of size %i" %
+                         len(self.dataset))
                 loader = data.DataLoader(
                     self.dataset,
                     batch_size=batch_size,
@@ -299,7 +298,8 @@ class Sampler:
                 graphs = real_mols + fake_mols
                 labels = [1 for _ in real_mols] + [0 for _ in fake_mols]
                 dataset = GraphClassificationDataset(graphs, labels)
-                log.info("formed an adversarial dataset of size %i" % len(dataset))
+                log.info("formed an adversarial dataset of size %i" %
+                         len(dataset))
                 loader = data.DataLoader(
                     dataset,
                     batch_size=batch_size,
@@ -322,15 +322,16 @@ class Sampler:
                 (smiles, score) for smiles, score in smiles2score.items()
             ]
             smiles_score_lst.sort(key=lambda x: x[1], reverse=True)
-            print("best 5", [float(str(i[1])[:5]) for i in smiles_score_lst[:5]])
-            with open(
-                "result.4.zinc/" + str(self.oracle_call) + ".txt", "w"
-            ) as fout:  #### result
+            print("best 5",
+                  [float(str(i[1])[:5]) for i in smiles_score_lst[:5]])
+            with open("result.4.zinc/" + str(self.oracle_call) + ".txt",
+                      "w") as fout:  #### result
                 for smiles, score in smiles_score_lst[:100]:
                     fout.write(smiles + "\t" + str(score) + "\n")
 
 
 class Sampler_SA(Sampler):
+
     def __init__(self, config, proposal, estimator):
         super().__init__(config, proposal, estimator)
         self.k = 0
@@ -365,12 +366,13 @@ class Sampler_SA(Sampler):
         for i in range(self.num_mols):
             # A = min(1., math.exp(1. * (new_scores[i] - old_scores[i]) / T))
             A = min(1.0, 1.0 * new_scores[i] / max(old_scores[i], 1e-6))
-            A = min(1.0, A ** (1.0 / T))
+            A = min(1.0, A**(1.0 / T))
             acc_rates.append(A)
         return acc_rates
 
 
 class Sampler_MH(Sampler):
+
     def __init__(self, config, proposal, estimator):
         super().__init__(config, proposal, estimator)
         self.power = 30.0
@@ -379,12 +381,13 @@ class Sampler_MH(Sampler):
         acc_rates = []
         for i in range(self.num_mols):
             old_score = max(old_scores[i], 1e-5)
-            A = ((new_scores[i] / old_score) ** self.power) * fixings[i]
+            A = ((new_scores[i] / old_score)**self.power) * fixings[i]
             acc_rates.append(A)
         return acc_rates
 
 
 class Sampler_Recursive(Sampler):
+
     def __init__(self, config, proposal, estimator):
         super().__init__(config, proposal, estimator)
 

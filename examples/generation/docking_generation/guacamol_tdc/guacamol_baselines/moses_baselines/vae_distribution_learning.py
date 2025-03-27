@@ -25,6 +25,7 @@ def get_parser():
 
 
 class VaeGenerator(DistributionMatchingGenerator):
+
     def __init__(self, config):
         model_config = torch.load(config.config_load)
         map_location = "cpu" if config.device == "cpu" else None
@@ -47,7 +48,8 @@ class VaeGenerator(DistributionMatchingGenerator):
         gen, n = [], number_samples
         T = tqdm.tqdm(range(number_samples), desc="Generating mols")
         while n > 0:
-            x = self.model.sample(min(n, self.config.n_batch), self.config.max_len)[-1]
+            x = self.model.sample(min(n, self.config.n_batch),
+                                  self.config.max_len)[-1]
             mols = [self.model_vocab.ids2string(i_x.tolist()) for i_x in x]
             n -= len(mols)
             T.update(len(mols))
@@ -66,9 +68,8 @@ def main(config):
 
     generator = VaeGenerator(config)
 
-    json_file_path = os.path.join(
-        config.output_dir, "distribution_learning_results.json"
-    )
+    json_file_path = os.path.join(config.output_dir,
+                                  "distribution_learning_results.json")
     assess_distribution_learning(
         generator,
         chembl_training_file=config.dist_file,

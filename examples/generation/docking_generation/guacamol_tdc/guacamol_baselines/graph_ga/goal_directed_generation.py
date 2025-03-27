@@ -30,7 +30,8 @@ def read_in_num(filename):
     return int(line)
 
 
-def make_mating_pool(population_mol: List[Mol], population_scores, offspring_size: int):
+def make_mating_pool(population_mol: List[Mol], population_scores,
+                     offspring_size: int):
     """
     Given a population of RDKit Mol and their scores, sample a list of the same size
     with replacement using the population_scores as weights
@@ -61,9 +62,10 @@ def make_mating_pool(population_mol: List[Mol], population_scores, offspring_siz
         ]
     else:
         population_probs = [p / sum_scores for p in population_scores]
-    mating_pool = np.random.choice(
-        population_mol, p=population_probs, size=offspring_size, replace=True
-    )
+    mating_pool = np.random.choice(population_mol,
+                                   p=population_probs,
+                                   size=offspring_size,
+                                   replace=True)
     return mating_pool
 
 
@@ -105,6 +107,7 @@ def sanitize(population_mol):
 
 
 class GB_GA_Generator(GoalDirectedGenerator):
+
     def __init__(
         self,
         smi_file,
@@ -127,8 +130,7 @@ class GB_GA_Generator(GoalDirectedGenerator):
         self.patience = patience
 
         self.docking_num_file = (
-            "/project/molecular_data/graphnn/pyscreener/docking_num.txt"
-        )
+            "/project/molecular_data/graphnn/pyscreener/docking_num.txt")
         self.smiles2score = {}  ### save the result up to now.
         self.oracle_num = 0
         self.population_size = 25
@@ -165,7 +167,8 @@ class GB_GA_Generator(GoalDirectedGenerator):
         #     # if True: ### random start for limit oracle call
         #     # else:
         #         # starting_population = self.top_k(self.all_smiles[:self.population_size*10], scoring_function, self.population_size)
-        starting_population = np.random.choice(self.all_smiles, self.population_size)
+        starting_population = np.random.choice(self.all_smiles,
+                                               self.population_size)
 
         print(
             "---------- before init",
@@ -174,13 +177,13 @@ class GB_GA_Generator(GoalDirectedGenerator):
             self.population_size,
         )
         # select initial population
-        population_smiles = heapq.nlargest(
-            self.population_size, starting_population, key=scoring_function.score
-        )
+        population_smiles = heapq.nlargest(self.population_size,
+                                           starting_population,
+                                           key=scoring_function.score)
         population_mol = [Chem.MolFromSmiles(s) for s in population_smiles]
         population_scores = self.pool(
-            delayed(score_mol)(m, scoring_function.score) for m in population_mol
-        )
+            delayed(score_mol)(m, scoring_function.score)
+            for m in population_mol)
         for smiles, score in zip(population_smiles, population_scores):
             print("===docking score", score)
             self.smiles2score[smiles] = score
@@ -196,9 +199,8 @@ class GB_GA_Generator(GoalDirectedGenerator):
             pickle.dump(
                 self.smiles2score,
                 open(
-                    "/project/molecular_data/graphnn/pyscreener/graph_ga/"
-                    + str(self.oracle_num)
-                    + ".pkl",
+                    "/project/molecular_data/graphnn/pyscreener/graph_ga/" +
+                    str(self.oracle_num) + ".pkl",
                     "wb",
                 ),
             )
@@ -207,14 +209,13 @@ class GB_GA_Generator(GoalDirectedGenerator):
                 exit()
 
             # new_population
-            print(len(population_mol), len(population_scores), self.offspring_size)
-            mating_pool = make_mating_pool(
-                population_mol, population_scores, self.offspring_size
-            )
+            print(len(population_mol), len(population_scores),
+                  self.offspring_size)
+            mating_pool = make_mating_pool(population_mol, population_scores,
+                                           self.offspring_size)
             offspring_mol = self.pool(
                 delayed(reproduce)(mating_pool, self.mutation_rate)
-                for _ in range(self.population_size)
-            )
+                for _ in range(self.population_size))
 
             # add new_population
             population_mol += offspring_mol
@@ -227,13 +228,13 @@ class GB_GA_Generator(GoalDirectedGenerator):
 
             old_scores = population_scores
             population_scores = self.pool(
-                delayed(score_mol)(m, scoring_function.score) for m in population_mol
-            )
+                delayed(score_mol)(m, scoring_function.score)
+                for m in population_mol)
             self.oracle_num += len(population_mol)
             population_tuples = list(zip(population_scores, population_mol))
-            population_tuples = sorted(
-                population_tuples, key=lambda x: x[0], reverse=True
-            )[: self.population_size]
+            population_tuples = sorted(population_tuples,
+                                       key=lambda x: x[0],
+                                       reverse=True)[:self.population_size]
             population_mol = [t[1] for t in population_tuples]
             population_scores = [t[0] for t in population_tuples]
             for mol, score in zip(population_mol, population_scores):
@@ -251,16 +252,14 @@ class GB_GA_Generator(GoalDirectedGenerator):
             else:
                 patience = 0
 
-            print(
-                f"{generation} | "
-                f"max: {np.max(population_scores):.3f} | "
-                f"avg: {np.mean(population_scores):.3f} | "
-                f"min: {np.min(population_scores):.3f} | "
-                f"std: {np.std(population_scores):.3f} | "
-                f"sum: {np.sum(population_scores):.3f} | "
-                f"{gen_time:.2f} sec/gen | "
-                f"{mol_sec:.2f} mol/sec"
-            )
+            print(f"{generation} | "
+                  f"max: {np.max(population_scores):.3f} | "
+                  f"avg: {np.mean(population_scores):.3f} | "
+                  f"min: {np.min(population_scores):.3f} | "
+                  f"std: {np.std(population_scores):.3f} | "
+                  f"sum: {np.sum(population_scores):.3f} | "
+                  f"{gen_time:.2f} sec/gen | "
+                  f"{mol_sec:.2f} mol/sec")
 
         # finally
         return [Chem.MolToSmiles(m) for m in population_mol][:number_molecules]
@@ -277,9 +276,8 @@ def main():
     parser.add_argument("--population_size", type=int, default=population_size)
     parser.add_argument("--offspring_size", type=int, default=offspring_size)
     parser.add_argument("--mutation_rate", type=float, default=0.01)
-    parser.add_argument(
-        "--generations", type=int, default=generations_num
-    )  ## 1k -> 10 limit oracle   50*200 = max_oracle_num=10k
+    parser.add_argument("--generations", type=int, default=generations_num
+                       )  ## 1k -> 10 limit oracle   50*200 = max_oracle_num=10k
     parser.add_argument("--n_jobs", type=int, default=-1)
     # parser.add_argument('--random_start', action='store_true')
     parser.add_argument("--random_start", default=True)
@@ -297,7 +295,8 @@ def main():
         args.output_dir = os.path.dirname(os.path.realpath(__file__))
 
     # save command line args
-    with open(os.path.join(args.output_dir, "goal_directed_params.json"), "w") as jf:
+    with open(os.path.join(args.output_dir, "goal_directed_params.json"),
+              "w") as jf:
         json.dump(vars(args), jf, sort_keys=True, indent=4)
 
     optimiser = GB_GA_Generator(
@@ -312,9 +311,9 @@ def main():
     )
 
     json_file_path = os.path.join(args.output_dir, "goal_directed_results.json")
-    assess_goal_directed_generation(
-        optimiser, json_output_file=json_file_path, benchmark_version=args.suite
-    )
+    assess_goal_directed_generation(optimiser,
+                                    json_output_file=json_file_path,
+                                    benchmark_version=args.suite)
 
 
 if __name__ == "__main__":
