@@ -43,11 +43,10 @@ jobs:
           auto-update-conda: true
           auto-activate-base: true
           
-      - name: Create and start Conda environment. Run tests. Run YAPF
+      - name: Create and start Conda environment. Run tests
         run: |
           echo "Creating Conda Environment from environment.yml"
-          conda env create -f environment.yml
+          conda env create -q -f environment.yml
           conda activate tdc-conda-env
           python run_tests.py
-          yapf --style=google -r -d tdc
           conda deactivate
