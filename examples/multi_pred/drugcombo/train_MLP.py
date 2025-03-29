@@ -32,12 +32,12 @@ def arg_parse():
 
     parser = argparse.ArgumentParser(description="Arguments.")
     parser.add_argument("--device", type=int, help="CPU / GPU device.")
-    parser.add_argument(
-        "--drug_feats", type=str, help="Path to drug features data file."
-    )
-    parser.add_argument(
-        "--data_df", type=str, help="Path to complete data frame for drugcomb"
-    )
+    parser.add_argument("--drug_feats",
+                        type=str,
+                        help="Path to drug features data file.")
+    parser.add_argument("--data_df",
+                        type=str,
+                        help="Path to complete data frame for drugcomb")
     parser.add_argument("--batch_size", type=int, help="Batch size.")
     parser.add_argument("--epochs", type=int, help="Number of epochs")
     parser.add_argument("--cuda", type=bool, help="CUDA")
@@ -68,33 +68,42 @@ def set_up_features(drug_feat_file, data_df):
     drug_features = pd.DataFrame(drug_features).T
     df = pickle.load(open(data_df, "rb"))
 
-    X = df.loc[:, ["Drug1_ID", "Drug1"]].merge(
-        drug_features, left_on="Drug1", right_index=True
-    )
+    X = df.loc[:, ["Drug1_ID", "Drug1"]].merge(drug_features,
+                                               left_on="Drug1",
+                                               right_index=True)
     X = X.drop_duplicates("Drug1_ID").reset_index(drop=True)
-    X = X.loc[:, ["Drug1_ID", 0]].rename(columns={0: "fps", "Drug1_ID": "Drug_ID"})
+    X = X.loc[:, ["Drug1_ID", 0]].rename(columns={
+        0: "fps",
+        "Drug1_ID": "Drug_ID"
+    })
 
-    Y = df.loc[:, ["Drug2_ID", "Drug2"]].merge(
-        drug_features, left_on="Drug2", right_index=True
-    )
+    Y = df.loc[:, ["Drug2_ID", "Drug2"]].merge(drug_features,
+                                               left_on="Drug2",
+                                               right_index=True)
     Y = Y.drop_duplicates("Drug2_ID").reset_index(drop=True)
-    Y = Y.loc[:, ["Drug2_ID", 0]].rename(columns={0: "fps", "Drug2_ID": "Drug_ID"})
+    Y = Y.loc[:, ["Drug2_ID", 0]].rename(columns={
+        0: "fps",
+        "Drug2_ID": "Drug_ID"
+    })
 
     drug_features = pd.concat([X, Y], sort=False).drop_duplicates("Drug_ID")
     drug_features = drug_features.set_index("Drug_ID")
 
     # Create cell line features dataframe
     cell_features = df.loc[:, ["Cell_Line_ID", "CellLine"]].drop_duplicates(
-        "Cell_Line_ID"
-    )
+        "Cell_Line_ID")
     cell_features["CellLine"] = cell_features["CellLine"].apply(
-        lambda x: np.concatenate(x)
-    )
+        lambda x: np.concatenate(x))
     return drug_features, cell_features
 
 
-def train(model, data_loader, loss_fn, batch_size, cuda=True, log=100, lr=0.001):
-
+def train(model,
+          data_loader,
+          loss_fn,
+          batch_size,
+          cuda=True,
+          log=100,
+          lr=0.001):
     """
     Train given pytorch model using the loss function and dataset provided
 
@@ -139,15 +148,13 @@ def train(model, data_loader, loss_fn, batch_size, cuda=True, log=100, lr=0.001)
         if iteration % log == 0 and iteration > 0:
             cur_loss = total_loss.item() / log
             elapsed = time.time() - start_time
-            print(
-                "| {:5d}/{:5d} batches | ms/batch {:5.2f} | "
-                "loss {:8.5f}".format(
-                    iteration,
-                    int(len(data_loader) / batch_size),
-                    elapsed * 1000 / log,
-                    cur_loss,
-                )
-            )
+            print("| {:5d}/{:5d} batches | ms/batch {:5.2f} | "
+                  "loss {:8.5f}".format(
+                      iteration,
+                      int(len(data_loader) / batch_size),
+                      elapsed * 1000 / log,
+                      cur_loss,
+                  ))
 
             total_loss = 0
             start_time = time.time()
@@ -198,7 +205,9 @@ def main():
     loss_fn = nn.L1Loss()
 
     # Set up training and validation dataframes
-    group = tdc.BenchmarkGroup("drugcombo_group", path="data/", file_format="pkl")
+    group = tdc.BenchmarkGroup("drugcombo_group",
+                               path="data/",
+                               file_format="pkl")
 
     from tdc.multi_pred import DrugSyn
 
@@ -207,11 +216,8 @@ def main():
     # Create dataframe for drug features
     # drug to fingerprint mapping
     def get_fp(x):
-        return (
-            list(MACCSkeys.GenMACCSKeys(Chem.MolFromSmiles(x)))
-            if Chem.MolFromSmiles(x) is not None
-            else ""
-        )
+        return (list(MACCSkeys.GenMACCSKeys(Chem.MolFromSmiles(x)))
+                if Chem.MolFromSmiles(x) is not None else "")
 
     df = pickle.load(open("./data/drugcomb.pkl", "rb"))
 
@@ -227,8 +233,7 @@ def main():
     drug_feat_file = "./data/drug_features.pkl"
     data_df = "./data/drugcomb.pkl"
     drug_features, cell_features = set_up_features(
-        drug_feat_file=drug_feat_file, data_df=data_df
-    )
+        drug_feat_file=drug_feat_file, data_df=data_df)
 
     results_all_seeds = {}
 
@@ -236,18 +241,23 @@ def main():
         predictions = {}
         for benchmark in group:
             train, valid = group.get_train_valid_split(
-                seed=seed, benchmark=benchmark["name"]
-            )
+                seed=seed, benchmark=benchmark["name"])
 
             name = benchmark["name"]
             train_df, valid_df, test_df = train, valid, benchmark["test"]
 
             train_ = DrugCombDataset(train_df, drug_features, cell_features)
-            train_loader = DataLoader(train_, batch_size=args.batch_size, shuffle=True)
+            train_loader = DataLoader(train_,
+                                      batch_size=args.batch_size,
+                                      shuffle=True)
             valid_ = DrugCombDataset(valid_df, drug_features, cell_features)
-            valid_loader = DataLoader(valid_, batch_size=args.batch_size, shuffle=True)
+            valid_loader = DataLoader(valid_,
+                                      batch_size=args.batch_size,
+                                      shuffle=True)
             test_ = DrugCombDataset(test_df, drug_features, cell_features)
-            test_loader = DataLoader(test_, batch_size=args.batch_size, shuffle=True)
+            test_loader = DataLoader(test_,
+                                     batch_size=args.batch_size,
+                                     shuffle=True)
 
             num_genes = len(cell_features.loc[0, "CellLine"])
 
@@ -260,7 +270,8 @@ def main():
             try:
                 for epoch in range(1, args.epochs + 1):
                     epoch_start_time = time.time()
-                    train(model, train_loader, loss_fn, args.batch_size, args.cuda)
+                    train(model, train_loader, loss_fn, args.batch_size,
+                          args.cuda)
                     _, val_loss = evaluate(model, valid_loader, loss_fn)
                     if val_loss < best_val_loss:
                         best_val_loss = val_loss
@@ -273,7 +284,8 @@ def main():
 
             print("Best model MAE:", best_val_loss)
 
-            predictions[name], _ = evaluate(best_model, test_loader, loss_fn, args.cuda)
+            predictions[name], _ = evaluate(best_model, test_loader, loss_fn,
+                                            args.cuda)
 
         # Evaluate performance
         out = group.evaluate(predictions)

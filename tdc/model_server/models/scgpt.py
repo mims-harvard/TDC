@@ -20,7 +20,7 @@ class ScGPTConfig(PretrainedConfig):
             pad_token_id=0,
             use_fast_transformer=True,
             input_emb_style="continuous",
-            cell_emb_style="cls",  # output embedding vector with 
+            cell_emb_style="cls",  # output embedding vector with
             norm_scheme="post",
             explicit_zero_prob=False,
             use_flash_attention=True,

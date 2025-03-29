@@ -1366,21 +1366,21 @@ def valsartan_smarts(test_smiles):
 Synthesizability from a full retrosynthetic analysis
 Including:
     1. MIT ASKCOS
-    ASKCOS (https://askcos.mit.edu) is an open-source software 
-    framework that integrates efforts to generalize known chemistry 
-    to new substrates by learning to apply retrosynthetic transformations, 
-    to identify suitable reaction conditions, and to evaluate whether 
-    reactions are likely to be successful. The data-driven models are trained 
+    ASKCOS (https://askcos.mit.edu) is an open-source software
+    framework that integrates efforts to generalize known chemistry
+    to new substrates by learning to apply retrosynthetic transformations,
+    to identify suitable reaction conditions, and to evaluate whether
+    reactions are likely to be successful. The data-driven models are trained
     with USPTO and Reaxys databases.
-    
+
     Reference:
     https://doi.org/10.1021/acs.jcim.0c00174
 
     2. IBM_RXN
-    IBM RXN (https://rxn.res.ibm.com) is an AI platform integarting 
-    forward reaction prediction and retrosynthetic analysis. The 
-    backend of the IBM RXN retrosynthetic analysis is Molecular 
-    Transformer model (see reference). The model was mainly trained 
+    IBM RXN (https://rxn.res.ibm.com) is an AI platform integarting
+    forward reaction prediction and retrosynthetic analysis. The
+    backend of the IBM RXN retrosynthetic analysis is Molecular
+    Transformer model (see reference). The model was mainly trained
     with USPTO, Pistachio databases.
     Reference:
     https://doi.org/10.1021/acscentsci.9b00576

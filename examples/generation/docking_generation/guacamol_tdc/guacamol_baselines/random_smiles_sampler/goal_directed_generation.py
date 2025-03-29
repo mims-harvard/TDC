@@ -11,7 +11,8 @@ if __name__ == "__main__":
     setup_default_logger()
 
     parser = argparse.ArgumentParser(
-        description="Molecule distribution learning benchmark for random smiles sampler",
+        description=
+        "Molecule distribution learning benchmark for random smiles sampler",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--smiles_file", default="data/guacamol_v1_all.smiles")

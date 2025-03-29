@@ -30,9 +30,9 @@ def remove_duplicates(list_with_duplicates):
     return unique_list
 
 
-def get_random_subset(
-    dataset: List[Any], subset_size: int, seed: Optional[int] = None
-) -> List[Any]:
+def get_random_subset(dataset: List[Any],
+                      subset_size: int,
+                      seed: Optional[int] = None) -> List[Any]:
     """
     Get a random subset of some dataset.
 
@@ -48,10 +48,8 @@ def get_random_subset(
         subset of the original dataset as a list
     """
     if len(dataset) < subset_size:
-        raise Exception(
-            f"The dataset to extract a subset from is too small: "
-            f"{len(dataset)} < {subset_size}"
-        )
+        raise Exception(f"The dataset to extract a subset from is too small: "
+                        f"{len(dataset)} < {subset_size}")
 
     # save random number generator state
     rng_state = np.random.get_state()
@@ -78,9 +76,10 @@ def download_if_not_present(filename, uri):
     else:
         with open(filename, "wb") as fd:
             print("Starting {} download from {}...".format(filename, uri))
-            with ProgressBarUpTo(
-                unit="B", unit_scale=True, unit_divisor=1024, miniters=1
-            ) as t:
+            with ProgressBarUpTo(unit="B",
+                                 unit_scale=True,
+                                 unit_divisor=1024,
+                                 miniters=1) as t:
                 urlretrieve(uri, fd.name, reporthook=t.update_to)
             print("Finished {} download.".format(filename))
 

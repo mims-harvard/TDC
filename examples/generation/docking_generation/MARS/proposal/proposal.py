@@ -17,12 +17,12 @@ from ..common.chem import mol_to_dgl, check_validity, Skeleton, break_bond, comb
 
 
 class Proposal(ABC):
+
     def __init__(self, config):
         self.datset = None  # proposal records
         self.max_size = config["max_size"]
-        self.vocab = load_vocab(
-            config["data_dir"], config["vocab"], config["vocab_size"]
-        )
+        self.vocab = load_vocab(config["data_dir"], config["vocab"],
+                                config["vocab_size"])
 
     @abstractmethod
     def get_pred(self, graphs):
@@ -61,11 +61,10 @@ class Proposal(ABC):
         for g in graphs:
             n_edge = g.number_of_edges()
             n_node = g.number_of_nodes()
-            p_del = pred_del[off_edge : off_edge + n_edge][:, 1]  # (n_edge,)
-            p_add = pred_add[off_node : off_node + n_node][:, 1]  # (n_node,)
-            p_arm = pred_arm[
-                off_node : off_node + n_node
-            ].tolist()  # (n_node, vocab_size)
+            p_del = pred_del[off_edge:off_edge + n_edge][:, 1]  # (n_edge,)
+            p_add = pred_add[off_node:off_node + n_node][:, 1]  # (n_node,)
+            p_arm = pred_arm[off_node:off_node +
+                             n_node].tolist()  # (n_node, vocab_size)
             p_del = (p_del / (p_del.sum() + 1e-6)).tolist()
             p_add = (p_add / (p_add.sum() + 1e-6)).tolist()
             prob_del.append(p_del)
@@ -115,9 +114,8 @@ class Proposal(ABC):
 
                 if check_validity(new_mol):
                     if backward:
-                        old_smiles = Chem.MolToSmiles(
-                            old_arm.mol, rootedAtAtom=old_arm.v
-                        )
+                        old_smiles = Chem.MolToSmiles(old_arm.mol,
+                                                      rootedAtAtom=old_arm.v)
                         new_g = mol_to_dgl(new_mol)
                         action_ = 1  # backward: add
                         del_idx_ = None
@@ -133,9 +131,8 @@ class Proposal(ABC):
                 skeleton = Skeleton(mol, u=add_idx, bond_type=new_arm.bond_type)
                 new_mol = combine(skeleton, new_arm)
 
-                if (
-                    check_validity(new_mol) and new_mol.GetNumAtoms() <= 40
-                ):  # limit size
+                if (check_validity(new_mol) and
+                        new_mol.GetNumAtoms() <= 40):  # limit size
                     if backward:
                         new_g = mol_to_dgl(new_mol)
                         u = skeleton.u
@@ -197,12 +194,18 @@ class Proposal(ABC):
                 else:
                     raise NotImplementedError
 
-        edits = {"act": actions, "del": del_idxs, "add": add_idxs, "arm": arm_idxs}
+        edits = {
+            "act": actions,
+            "del": del_idxs,
+            "add": add_idxs,
+            "arm": arm_idxs
+        }
         self.dataset = ImitationDataset(graphs, edits)
         return new_mols, fixings
 
 
 class Proposal_Editor(Proposal):
+
     def __init__(self, config, editor):
         super().__init__(config)
         self.editor = editor
@@ -210,9 +213,9 @@ class Proposal_Editor(Proposal):
 
     def get_pred(self, graphs):
         dataset = GraphDataset(graphs)
-        loader = DataLoader(
-            dataset, batch_size=self.batch_size, collate_fn=GraphDataset.collate_fn
-        )
+        loader = DataLoader(dataset,
+                            batch_size=self.batch_size,
+                            collate_fn=GraphDataset.collate_fn)
 
         pred_act, pred_del, pred_add, pred_arm = [], [], [], []
         for g in loader:
@@ -231,6 +234,7 @@ class Proposal_Editor(Proposal):
 
 
 class Proposal_Random(Proposal):
+
     def __init__(self, config):
         super().__init__(config)
 
@@ -244,6 +248,7 @@ class Proposal_Random(Proposal):
 
 
 class Proposal_Mix(Proposal):
+
     def __init__(self, config, editor):
         super().__init__(config)
         self.proposal_random = Proposal_Random(config)

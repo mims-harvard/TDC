@@ -24,6 +24,7 @@ def get_parser():
 
 
 class OrganGenerator(DistributionMatchingGenerator):
+
     def __init__(self, config):
         model_config = torch.load(config.config_load)
         model_vocab = torch.load(config.vocab_load)
@@ -42,9 +43,8 @@ class OrganGenerator(DistributionMatchingGenerator):
         n = number_samples
         with tqdm.tqdm(total=number_samples, desc="Generating samples") as T:
             while n > 0:
-                current_samples = self.model.sample(
-                    min(n, self.config.n_batch), self.config.max_len
-                )
+                current_samples = self.model.sample(min(n, self.config.n_batch),
+                                                    self.config.max_len)
                 samples.extend(current_samples)
 
                 n -= len(current_samples)
@@ -59,9 +59,8 @@ def main(config):
 
     generator = OrganGenerator(config)
 
-    json_file_path = os.path.join(
-        config.output_dir, "distribution_learning_results.json"
-    )
+    json_file_path = os.path.join(config.output_dir,
+                                  "distribution_learning_results.json")
     assess_distribution_learning(
         generator,
         chembl_training_file=config.dist_file,

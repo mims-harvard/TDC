@@ -12,7 +12,6 @@ from rdkit import RDLogger
 
 RDLogger.DisableLog("rdApp.*")
 
-
 import pyscreener
 from tdc import Oracle
 
@@ -20,7 +19,9 @@ oracle2 = Oracle(
     name="Docking_Score",
     software="vina",
     pyscreener_path="./",
-    receptors=["/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"],
+    receptors=[
+        "/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"
+    ],
     center=(9, 22.5, 26),
     size=(15, 15, 15),
     buffer=10,
@@ -70,9 +71,9 @@ import csv
 from contextlib import contextmanager
 import sys, os
 
-
 # oracle_call = 0
 global oracle_call
+
 
 # block std out
 @contextmanager
@@ -113,16 +114,13 @@ def load_scaffold():
         reader = csv.reader(fp, delimiter=",", quotechar='"')
         data = [Chem.MolFromSmiles(row[0]) for row in reader]
         data = [
-            mol
-            for mol in data
-            if mol.GetRingInfo().NumRings() == 1
-            and (
-                mol.GetRingInfo().IsAtomInRingOfSize(0, 5)
-                or mol.GetRingInfo().IsAtomInRingOfSize(0, 6)
-            )
+            mol for mol in data if mol.GetRingInfo().NumRings() == 1 and
+            (mol.GetRingInfo().IsAtomInRingOfSize(0, 5) or
+             mol.GetRingInfo().IsAtomInRingOfSize(0, 6))
         ]
         for mol in data:
-            Chem.SanitizeMol(mol, sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
+            Chem.SanitizeMol(mol,
+                             sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
         print("num of scaffolds:", len(data))
         return data
 
@@ -140,7 +138,8 @@ def load_conditional(type="low"):
         # print(data[799])
     elif type == "high":
         cwd = os.path.dirname(__file__)
-        path = os.path.join(os.path.dirname(cwd), "dataset", "zinc_plogp_sorted.csv")
+        path = os.path.join(os.path.dirname(cwd), "dataset",
+                            "zinc_plogp_sorted.csv")
         import csv
 
         with open(path, "r") as fp:
@@ -194,14 +193,16 @@ class MoleculeEnv(gym.Env):
         if self.is_conditional:
             self.conditional = random.sample(self.conditional_list, 1)[0]
             self.mol = Chem.RWMol(Chem.MolFromSmiles(self.conditional[0]))
-            Chem.SanitizeMol(self.mol, sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
+            Chem.SanitizeMol(self.mol,
+                             sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
         else:
             self.mol = Chem.RWMol()
         self.smile_list = []
         if data_type == "gdb":
             possible_atoms = ["C", "N", "O", "S", "Cl"]  # gdb 13
         elif data_type == "zinc":
-            possible_atoms = ["C", "N", "O", "S", "P", "F", "I", "Cl", "Br"]  # ZINC
+            possible_atoms = ["C", "N", "O", "S", "P", "F", "I", "Cl",
+                              "Br"]  # ZINC
         if self.has_feature:
             self.possible_formal_charge = np.array([-1, 0, 1])
             self.possible_implicit_valence = np.array([-1, 0, 1, 2, 3, 4])
@@ -231,7 +232,8 @@ class MoleculeEnv(gym.Env):
             #     self.possible_formal_charge) + len(
             #     self.possible_implicit_valence) + len(self.possible_ring_atom) + \
             #       len(self.possible_degree) + len(self.possible_hybridization)
-            self.d_n = len(self.possible_atom_types) + 6  # 6 is the ring feature
+            self.d_n = len(
+                self.possible_atom_types) + 6  # 6 is the ring feature
         else:
             self.d_n = len(self.possible_atom_types)
 
@@ -241,35 +243,34 @@ class MoleculeEnv(gym.Env):
             self.max_atom = 13 + len(possible_atoms)  # gdb 13
         elif data_type == "zinc":
             if self.is_conditional:
-                self.max_atom = 38 + len(possible_atoms) + self.min_action  # ZINC
+                self.max_atom = 38 + len(
+                    possible_atoms) + self.min_action  # ZINC
             else:
-                self.max_atom = 38 + len(possible_atoms)  # ZINC  + self.min_action
+                self.max_atom = 38 + len(
+                    possible_atoms)  # ZINC  + self.min_action
 
         self.logp_ratio = logp_ratio
         self.qed_ratio = qed_ratio
         self.sa_ratio = sa_ratio
         self.reward_step_total = reward_step_total
         self.action_space = gym.spaces.MultiDiscrete(
-            [self.max_atom, self.max_atom, 3, 2]
-        )
+            [self.max_atom, self.max_atom, 3, 2])
         self.observation_space = {}
         self.observation_space["adj"] = gym.Space(
-            shape=[len(possible_bonds), self.max_atom, self.max_atom]
-        )
-        self.observation_space["node"] = gym.Space(shape=[1, self.max_atom, self.d_n])
+            shape=[len(possible_bonds), self.max_atom, self.max_atom])
+        self.observation_space["node"] = gym.Space(
+            shape=[1, self.max_atom, self.d_n])
 
         self.counter = 0
 
         ## load expert data
         cwd = os.path.dirname(__file__)
         if data_type == "gdb":
-            path = os.path.join(
-                os.path.dirname(cwd), "dataset", "gdb13.rand1M.smi.gz"
-            )  # gdb 13
+            path = os.path.join(os.path.dirname(cwd), "dataset",
+                                "gdb13.rand1M.smi.gz")  # gdb 13
         elif data_type == "zinc":
-            path = os.path.join(
-                os.path.dirname(cwd), "dataset", "250k_rndm_zinc_drugs_clean_sorted.smi"
-            )  # ZINC
+            path = os.path.join(os.path.dirname(cwd), "dataset",
+                                "250k_rndm_zinc_drugs_clean_sorted.smi")  # ZINC
         self.dataset = gdb_dataset(path)
 
         ## load scaffold data if necessary
@@ -328,16 +329,11 @@ class MoleculeEnv(gym.Env):
 
         ### calculate intermediate rewards
         if self.check_valency():
-            if (
-                self.mol.GetNumAtoms()
-                + self.mol.GetNumBonds()
-                - self.mol_old.GetNumAtoms()
-                - self.mol_old.GetNumBonds()
-                > 0
-            ):
-                reward_step = (
-                    self.reward_step_total / self.max_atom
-                )  # successfully add node/edge
+            if (self.mol.GetNumAtoms() + self.mol.GetNumBonds() -
+                    self.mol_old.GetNumAtoms() - self.mol_old.GetNumBonds()
+                    > 0):
+                reward_step = (self.reward_step_total / self.max_atom
+                              )  # successfully add node/edge
                 self.smile_list.append(self.get_final_smiles())
             else:
                 reward_step = -self.reward_step_total / self.max_atom  # edge exist
@@ -349,19 +345,16 @@ class MoleculeEnv(gym.Env):
         # todo: add terminal action
 
         if self.is_conditional:
-            terminate_condition = (
-                self.mol.GetNumAtoms()
-                >= self.max_atom - self.possible_atom_types.shape[0] - self.min_action
-                or self.counter >= self.max_action
-                or stop
-            ) and self.counter >= self.min_action
+            terminate_condition = (self.mol.GetNumAtoms() >= self.max_atom -
+                                   self.possible_atom_types.shape[0] -
+                                   self.min_action or
+                                   self.counter >= self.max_action or
+                                   stop) and self.counter >= self.min_action
         else:
-            terminate_condition = (
-                self.mol.GetNumAtoms()
-                >= self.max_atom - self.possible_atom_types.shape[0]
-                or self.counter >= self.max_action
-                or stop
-            ) and self.counter >= self.min_action
+            terminate_condition = (self.mol.GetNumAtoms() >= self.max_atom -
+                                   self.possible_atom_types.shape[0] or
+                                   self.counter >= self.max_action or
+                                   stop) and self.counter >= self.min_action
         if terminate_condition or self.force_final:
             # default reward
             reward_valid = 2
@@ -382,12 +375,11 @@ class MoleculeEnv(gym.Env):
 
                 # mol filters with negative rewards
                 if not steric_strain_filter(
-                    final_mol
-                ):  # passes 3D conversion, no excessive strain
+                        final_mol):  # passes 3D conversion, no excessive strain
                     reward_valid -= 1
                     flag_steric_strain_filter = False
                 if not zinc_molecule_filter(
-                    final_mol
+                        final_mol
                 ):  # does not contain any problematic functional groups
                     reward_valid -= 1
                     flag_zinc_molecule_filter = False
@@ -410,7 +402,8 @@ class MoleculeEnv(gym.Env):
                     reward_sa += (sa + 10) / (10 - 1) * self.sa_ratio
                     # 3. Logp reward. Higher the better
                     # reward_logp += MolLogP(self.mol)/10 * self.logp_ratio
-                    reward_logp += reward_penalized_log_p(final_mol) * self.logp_ratio
+                    reward_logp += reward_penalized_log_p(
+                        final_mol) * self.logp_ratio
                     if self.reward_type == "logppen":
                         reward_final += reward_penalized_log_p(final_mol) / 3
                     elif self.reward_type == "logp_target":
@@ -429,8 +422,7 @@ class MoleculeEnv(gym.Env):
                     elif self.reward_type == "qed_target":
                         # reward_final += reward_target(final_mol,target=self.reward_target,ratio=0.1,val_max=2,val_min=-2,func=qed)
                         reward_final += reward_target_qed(
-                            final_mol, target=self.reward_target
-                        )
+                            final_mol, target=self.reward_target)
                     elif self.reward_type == "mw_target":
                         # reward_final += reward_target(final_mol,target=self.reward_target,ratio=40,val_max=2,val_min=-2,func=rdMolDescriptors.CalcExactMolWt)
                         # reward_final += reward_target_mw(final_mol,target=self.reward_target)
@@ -456,12 +448,12 @@ class MoleculeEnv(gym.Env):
                         oracle_call_cnt += 1
                         if oracle_call_cnt % 100 == 0:
                             smiles_score_lst = [
-                                (smi, value) for smi, value in smiles2docking.items()
+                                (smi, value)
+                                for smi, value in smiles2docking.items()
                             ]
                             smiles_score_lst.sort(key=lambda x: x[1])
-                            with open(
-                                "result/" + str(oracle_call_cnt) + ".txt", "w"
-                            ) as fout:
+                            with open("result/" + str(oracle_call_cnt) + ".txt",
+                                      "w") as fout:
                                 for smi, score in smiles_score_lst[:100]:
                                     fout.write(smi + "\t" + str(score) + "\n")
 
@@ -517,10 +509,12 @@ class MoleculeEnv(gym.Env):
         if self.is_conditional:
             self.conditional = random.sample(self.conditional_list, 1)[0]
             self.mol = Chem.RWMol(Chem.MolFromSmiles(self.conditional[0]))
-            Chem.SanitizeMol(self.mol, sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
+            Chem.SanitizeMol(self.mol,
+                             sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
         elif smile is not None:
             self.mol = Chem.RWMol(Chem.MolFromSmiles(smile))
-            Chem.SanitizeMol(self.mol, sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
+            Chem.SanitizeMol(self.mol,
+                             sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
         else:
             self.mol = Chem.RWMol()
             # self._add_atom(np.random.randint(len(self.possible_atom_types)))  # random add one atom
@@ -556,12 +550,15 @@ class MoleculeEnv(gym.Env):
         # if bond exists between current atom and other atom, modify the bond
         # type to new bond type. Otherwise create bond between current atom and
         # other atom with the new bond type
-        bond = self.mol.GetBondBetweenAtoms(int(action[0, 0]), int(action[0, 1]))
+        bond = self.mol.GetBondBetweenAtoms(int(action[0, 0]), int(action[0,
+                                                                          1]))
         if bond:
             # print('bond exist!')
             return False
         else:
-            self.mol.AddBond(int(action[0, 0]), int(action[0, 1]), order=bond_type)
+            self.mol.AddBond(int(action[0, 0]),
+                             int(action[0, 1]),
+                             order=bond_type)
             # bond = self.mol.GetBondBetweenAtoms(int(action[0, 0]), int(action[0, 1]))
             # bond.SetIntProp('ordering',self.mol.GetNumBonds())
             return True
@@ -573,7 +570,8 @@ class MoleculeEnv(gym.Env):
         number of atoms, d_e is the number of bond types
         :return:
         """
-        assert action.shape == (self.current_atom_idx, len(self.possible_bond_types))
+        assert action.shape == (self.current_atom_idx,
+                                len(self.possible_bond_types))
         other_atom_idx = int(np.argmax(action.sum(axis=1)))  # b/c
         # GetBondBetweenAtoms fails for np.int64
         bond_type_idx = np.argmax(action.sum(axis=0))
@@ -582,11 +580,14 @@ class MoleculeEnv(gym.Env):
         # if bond exists between current atom and other atom, modify the bond
         # type to new bond type. Otherwise create bond between current atom and
         # other atom with the new bond type
-        bond = self.mol.GetBondBetweenAtoms(self.current_atom_idx, other_atom_idx)
+        bond = self.mol.GetBondBetweenAtoms(self.current_atom_idx,
+                                            other_atom_idx)
         if bond:
             bond.SetBondType(bond_type)
         else:
-            self.mol.AddBond(self.current_atom_idx, other_atom_idx, order=bond_type)
+            self.mol.AddBond(self.current_atom_idx,
+                             other_atom_idx,
+                             order=bond_type)
             self.total_bonds += 1
 
     def get_num_atoms(self):
@@ -615,9 +616,8 @@ class MoleculeEnv(gym.Env):
         :return: True if no valency issues, False otherwise
         """
         try:
-            Chem.SanitizeMol(
-                self.mol, sanitizeOps=Chem.SanitizeFlags.SANITIZE_PROPERTIES
-            )
+            Chem.SanitizeMol(self.mol,
+                             sanitizeOps=Chem.SanitizeFlags.SANITIZE_PROPERTIES)
             return True
         except ValueError:
             return False
@@ -654,7 +654,8 @@ class MoleculeEnv(gym.Env):
         except:
             pass
         n = mol.GetNumAtoms()
-        n_shift = len(self.possible_atom_types)  # assume isolated nodes new nodes exist
+        n_shift = len(
+            self.possible_atom_types)  # assume isolated nodes new nodes exist
 
         F = np.zeros((1, self.max_atom, self.d_n))
         for a in mol.GetAtoms():
@@ -679,27 +680,22 @@ class MoleculeEnv(gym.Env):
                 #                               (degree == self.possible_degree),
                 #                               (hybridization ==
                 #                                self.possible_hybridization)]).astype(float)
-                float_array = np.concatenate(
-                    [
-                        (atom_symbol == self.possible_atom_types),
-                        ([not a.IsInRing()]),
-                        ([a.IsInRingSize(3)]),
-                        ([a.IsInRingSize(4)]),
-                        ([a.IsInRingSize(5)]),
-                        ([a.IsInRingSize(6)]),
-                        (
-                            [
-                                a.IsInRing()
-                                and (not a.IsInRingSize(3))
-                                and (not a.IsInRingSize(4))
-                                and (not a.IsInRingSize(5))
-                                and (not a.IsInRingSize(6))
-                            ]
-                        ),
-                    ]
-                ).astype(float)
+                float_array = np.concatenate([
+                    (atom_symbol == self.possible_atom_types),
+                    ([not a.IsInRing()]),
+                    ([a.IsInRingSize(3)]),
+                    ([a.IsInRingSize(4)]),
+                    ([a.IsInRingSize(5)]),
+                    ([a.IsInRingSize(6)]),
+                    ([
+                        a.IsInRing() and (not a.IsInRingSize(3)) and
+                        (not a.IsInRingSize(4)) and (not a.IsInRingSize(5)) and
+                        (not a.IsInRingSize(6))
+                    ]),
+                ]).astype(float)
             else:
-                float_array = (atom_symbol == self.possible_atom_types).astype(float)
+                float_array = (
+                    atom_symbol == self.possible_atom_types).astype(float)
             # assert float_array.sum() == 6   # because there are 6 types of one
             # print(float_array,float_array.sum())
             # hot atom features
@@ -708,14 +704,14 @@ class MoleculeEnv(gym.Env):
         # atom symbol features
         auxiliary_atom_features = np.zeros((n_shift, self.d_n))  # for padding
         temp = np.eye(n_shift)
-        auxiliary_atom_features[: temp.shape[0], : temp.shape[1]] = temp
-        F[0, n : n + n_shift, :] = auxiliary_atom_features
+        auxiliary_atom_features[:temp.shape[0], :temp.shape[1]] = temp
+        F[0, n:n + n_shift, :] = auxiliary_atom_features
         # print('n',n,'n+n_shift',n+n_shift,auxiliary_atom_features.shape)
 
         d_e = len(self.possible_bond_types)
         E = np.zeros((d_e, self.max_atom, self.max_atom))
         for i in range(d_e):
-            E[i, : n + n_shift, : n + n_shift] = np.eye(n + n_shift)
+            E[i, :n + n_shift, :n + n_shift] = np.eye(n + n_shift)
         for b in self.mol.GetBonds():  # self.mol, very important!! no aromatic
             begin_idx = b.GetBeginAtomIdx()
             end_idx = b.GetEndAtomIdx()
@@ -747,7 +743,8 @@ class MoleculeEnv(gym.Env):
         for a in mol.GetAtoms():
             atom_idx = a.GetIdx()
             atom_symbol = a.GetSymbol()
-            float_array = (atom_symbol == self.possible_atom_types).astype(float)
+            float_array = (
+                atom_symbol == self.possible_atom_types).astype(float)
             assert float_array.sum() != 0
             F[0, atom_idx, :] = float_array
 
@@ -777,22 +774,25 @@ class MoleculeEnv(gym.Env):
         batch_size = len(self.scaffold)
         ob["node"] = np.zeros((batch_size, 1, self.max_scaffold, atom_type_num))
         ob["adj"] = np.zeros(
-            (batch_size, bond_type_num, self.max_scaffold, self.max_scaffold)
-        )
+            (batch_size, bond_type_num, self.max_scaffold, self.max_scaffold))
         for idx, mol in enumerate(self.scaffold):
             ob_temp = self.get_observation_mol(mol)
             ob["node"][idx] = ob_temp["node"]
             ob["adj"][idx] = ob_temp["adj"]
         return ob
 
-    def get_expert(
-        self, batch_size, is_final=False, curriculum=0, level_total=6, level=0
-    ):
+    def get_expert(self,
+                   batch_size,
+                   is_final=False,
+                   curriculum=0,
+                   level_total=6,
+                   level=0):
         ob = {}
         atom_type_num = len(self.possible_atom_types)
         bond_type_num = len(self.possible_bond_types)
         ob["node"] = np.zeros((batch_size, 1, self.max_atom, self.d_n))
-        ob["adj"] = np.zeros((batch_size, bond_type_num, self.max_atom, self.max_atom))
+        ob["adj"] = np.zeros(
+            (batch_size, bond_type_num, self.max_atom, self.max_atom))
 
         ac = np.zeros((batch_size, 4))
         ### select molecule
@@ -804,9 +804,8 @@ class MoleculeEnv(gym.Env):
             if curriculum == 1:
                 ratio_start = level / float(level_total)
                 ratio_end = (level + 1) / float(level_total)
-                idx = np.random.randint(
-                    int(ratio_start * dataset_len), int(ratio_end * dataset_len)
-                )
+                idx = np.random.randint(int(ratio_start * dataset_len),
+                                        int(ratio_end * dataset_len))
             else:
                 idx = np.random.randint(0, dataset_len)
             mol = self.dataset[idx]
@@ -814,7 +813,8 @@ class MoleculeEnv(gym.Env):
             # from rdkit.Chem import Draw
             # Draw.MolToFile(mol, 'ob_before'+str(i)+'.png')
             # mol = self.dataset[i] # sanitity check
-            Chem.SanitizeMol(mol, sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
+            Chem.SanitizeMol(mol,
+                             sanitizeOps=Chem.SanitizeFlags.SANITIZE_KEKULIZE)
             graph = mol_to_nx(mol)
             edges = graph.edges()
             # # always involve is_final probability
@@ -832,13 +832,16 @@ class MoleculeEnv(gym.Env):
                     is_final_temp = True
             edges_sub = random.sample(edges, k=edges_sub_len)
             graph_sub = nx.Graph(edges_sub)
-            graph_sub = max(nx.connected_component_subgraphs(graph_sub), key=len)
+            graph_sub = max(nx.connected_component_subgraphs(graph_sub),
+                            key=len)
             if (
-                is_final_temp
+                    is_final_temp
             ):  # when the subgraph the whole molecule, the expert show stop sign
                 node1 = random.randint(0, mol.GetNumAtoms() - 1)
                 while True:
-                    node2 = random.randint(0, mol.GetNumAtoms() + atom_type_num - 1)
+                    node2 = random.randint(
+                        0,
+                        mol.GetNumAtoms() + atom_type_num - 1)
                     if node2 != node1:
                         break
                 edge_type = random.randint(0, bond_type_num - 1)
@@ -847,39 +850,28 @@ class MoleculeEnv(gym.Env):
                 ### random pick an edge from the subgraph, then remove it
                 edge_sample = random.sample(graph_sub.edges(), k=1)
                 graph_sub.remove_edges_from(edge_sample)
-                graph_sub = max(nx.connected_component_subgraphs(graph_sub), key=len)
+                graph_sub = max(nx.connected_component_subgraphs(graph_sub),
+                                key=len)
                 edge_sample = edge_sample[0]  # get value
                 ### get action
-                if (
-                    edge_sample[0] in graph_sub.nodes()
-                    and edge_sample[1] in graph_sub.nodes()
-                ):
+                if (edge_sample[0] in graph_sub.nodes() and
+                        edge_sample[1] in graph_sub.nodes()):
                     node1 = graph_sub.nodes().index(edge_sample[0])
                     node2 = graph_sub.nodes().index(edge_sample[1])
                 elif edge_sample[0] in graph_sub.nodes():
                     node1 = graph_sub.nodes().index(edge_sample[0])
-                    node2 = (
-                        np.argmax(
-                            graph.node[edge_sample[1]]["symbol"]
-                            == self.possible_atom_types
-                        )
-                        + graph_sub.number_of_nodes()
-                    )
+                    node2 = (np.argmax(graph.node[edge_sample[1]]["symbol"] ==
+                                       self.possible_atom_types) +
+                             graph_sub.number_of_nodes())
                 elif edge_sample[1] in graph_sub.nodes():
                     node1 = graph_sub.nodes().index(edge_sample[1])
-                    node2 = (
-                        np.argmax(
-                            graph.node[edge_sample[0]]["symbol"]
-                            == self.possible_atom_types
-                        )
-                        + graph_sub.number_of_nodes()
-                    )
+                    node2 = (np.argmax(graph.node[edge_sample[0]]["symbol"] ==
+                                       self.possible_atom_types) +
+                             graph_sub.number_of_nodes())
                 else:
                     print("Expert policy error!")
-                edge_type = np.argmax(
-                    graph[edge_sample[0]][edge_sample[1]]["bond_type"]
-                    == self.possible_bond_types
-                )
+                edge_type = np.argmax(graph[edge_sample[0]][edge_sample[1]]
+                                      ["bond_type"] == self.possible_bond_types)
                 ac[i, :] = [node1, node2, edge_type, 0]  # don't stop
                 # print('action',[node1,node2,edge_type,0])
             # print('action',ac)
@@ -905,49 +897,46 @@ class MoleculeEnv(gym.Env):
                     cycle_info = nx.cycle_basis(graph_sub, node)
                     cycle_len_info = [len(cycle) for cycle in cycle_info]
                     # print(cycle_len_info)
-                    float_array = np.concatenate(
-                        [
-                            (graph.node[node]["symbol"] == self.possible_atom_types),
-                            ([len(cycle_info) == 0]),
-                            ([3 in cycle_len_info]),
-                            ([4 in cycle_len_info]),
-                            ([5 in cycle_len_info]),
-                            ([6 in cycle_len_info]),
-                            (
-                                [
-                                    len(cycle_info) != 0
-                                    and (not 3 in cycle_len_info)
-                                    and (not 4 in cycle_len_info)
-                                    and (not 5 in cycle_len_info)
-                                    and (not 6 in cycle_len_info)
-                                ]
-                            ),
-                        ]
-                    ).astype(float)
+                    float_array = np.concatenate([
+                        (graph.node[node]["symbol"] == self.possible_atom_types
+                        ),
+                        ([len(cycle_info) == 0]),
+                        ([3 in cycle_len_info]),
+                        ([4 in cycle_len_info]),
+                        ([5 in cycle_len_info]),
+                        ([6 in cycle_len_info]),
+                        ([
+                            len(cycle_info) != 0 and
+                            (not 3 in cycle_len_info) and
+                            (not 4 in cycle_len_info) and
+                            (not 5 in cycle_len_info) and
+                            (not 6 in cycle_len_info)
+                        ]),
+                    ]).astype(float)
                 else:
-                    float_array = (
-                        graph.node[node]["symbol"] == self.possible_atom_types
-                    ).astype(float)
+                    float_array = (graph.node[node]["symbol"] ==
+                                   self.possible_atom_types).astype(float)
 
                 # assert float_array.sum() == 6
                 ob["node"][i, 0, node_id, :] = float_array
                 # print('node',node_id,graph.node[node]['symbol'])
                 # atom = Chem.Atom(graph.node[node]['symbol'])
                 # rw_mol.AddAtom(atom)
-            auxiliary_atom_features = np.zeros((atom_type_num, self.d_n))  # for padding
+            auxiliary_atom_features = np.zeros(
+                (atom_type_num, self.d_n))  # for padding
             temp = np.eye(atom_type_num)
-            auxiliary_atom_features[: temp.shape[0], : temp.shape[1]] = temp
-            ob["node"][i, 0, n : n + atom_type_num, :] = auxiliary_atom_features
+            auxiliary_atom_features[:temp.shape[0], :temp.shape[1]] = temp
+            ob["node"][i, 0, n:n + atom_type_num, :] = auxiliary_atom_features
 
             for j in range(bond_type_num):
-                ob["adj"][i, j, : n + atom_type_num, : n + atom_type_num] = np.eye(
-                    n + atom_type_num
-                )
+                ob["adj"][i, j, :n + atom_type_num, :n +
+                          atom_type_num] = np.eye(n + atom_type_num)
             for edge in graph_sub.edges():
                 begin_idx = graph_sub.nodes().index(edge[0])
                 end_idx = graph_sub.nodes().index(edge[1])
                 bond_type = graph[edge[0]][edge[1]]["bond_type"]
-                float_array = (bond_type == self.possible_bond_types).astype(float)
+                float_array = (
+                    bond_type == self.possible_bond_types).astype(float)
                 assert float_array.sum() != 0
                 ob["adj"][i, :, begin_idx, end_idx] = float_array
                 ob["adj"][i, :, end_idx, begin_idx] = float_array
@@ -1007,9 +996,8 @@ class GraphEnv(gym.Env):
             for i in range(2, 3):
                 for j in range(6, 11):
                     for k in range(20):
-                        self.dataset.append(
-                            caveman_special(i, j, p_edge=0.8)
-                        )  # default 0.8
+                        self.dataset.append(caveman_special(
+                            i, j, p_edge=0.8))  # default 0.8
             self.max_node = 25
             self.max_action = 150
         elif dataset == "grid":
@@ -1030,12 +1018,10 @@ class GraphEnv(gym.Env):
             self.max_action = 150
 
         self.action_space = gym.spaces.MultiDiscrete(
-            [self.max_node, self.max_node, 3, 2]
-        )
+            [self.max_node, self.max_node, 3, 2])
         self.observation_space = {}
         self.observation_space["adj"] = gym.Space(
-            shape=[1, self.max_node, self.max_node]
-        )
+            shape=[1, self.max_node, self.max_node])
         self.observation_space["node"] = gym.Space(shape=[1, self.max_node, 1])
 
         self.level = (
@@ -1084,13 +1070,9 @@ class GraphEnv(gym.Env):
 
         ### calculate intermediate rewards
         # todo: add neccessary rules for the task
-        if (
-            self.graph.number_of_nodes()
-            + self.graph.number_of_edges()
-            - self.graph_old.number_of_nodes()
-            - self.graph_old.number_of_edges()
-            > 0
-        ):
+        if (self.graph.number_of_nodes() + self.graph.number_of_edges() -
+                self.graph_old.number_of_nodes() -
+                self.graph_old.number_of_edges() > 0):
             reward_step = self.reward_step_total / self.max_node
             # successfully added node/edge
         else:
@@ -1099,11 +1081,8 @@ class GraphEnv(gym.Env):
             # already exists
 
         ### calculate and use terminal reward
-        if (
-            self.graph.number_of_nodes() >= self.max_node - 1
-            or self.counter >= self.max_action
-            or stop
-        ):
+        if (self.graph.number_of_nodes() >= self.max_node - 1 or
+                self.counter >= self.max_action or stop):
 
             # property rewards
             ## todo: add property reward
@@ -1164,8 +1143,7 @@ class GraphEnv(gym.Env):
         """
 
         if self.graph.has_edge(int(action[0, 0]), int(action[0, 1])) or int(
-            action[0, 0]
-        ) == int(action[0, 1]):
+                action[0, 0]) == int(action[0, 1]):
             return False
         else:
             self.graph.add_edge(int(action[0, 0]), int(action[0, 1]))
@@ -1224,11 +1202,12 @@ class GraphEnv(gym.Env):
         """
         n = self.graph.number_of_nodes()
         F = np.zeros((1, self.max_node, 1))
-        F[0, : n + 1, 0] = 1
+        F[0, :n + 1, 0] = 1
 
         E = np.zeros((1, self.max_node, self.max_node))
-        E[0, :n, :n] = np.asarray(nx.to_numpy_matrix(self.graph))[np.newaxis, :, :]
-        E[0, : n + 1, : n + 1] += np.eye(n + 1)
+        E[0, :n, :n] = np.asarray(nx.to_numpy_matrix(
+            self.graph))[np.newaxis, :, :]
+        E[0, :n + 1, :n + 1] += np.eye(n + 1)
 
         ob = {}
         if self.is_normalize:
@@ -1237,9 +1216,12 @@ class GraphEnv(gym.Env):
         ob["node"] = F
         return ob
 
-    def get_expert(
-        self, batch_size, is_final=False, curriculum=0, level_total=6, level=0
-    ):
+    def get_expert(self,
+                   batch_size,
+                   is_final=False,
+                   curriculum=0,
+                   level_total=6,
+                   level=0):
         ob = {}
         ob["node"] = np.zeros((batch_size, 1, self.max_node, 1))
         ob["adj"] = np.zeros((batch_size, 1, self.max_node, self.max_node))
@@ -1252,9 +1234,8 @@ class GraphEnv(gym.Env):
             if curriculum == 1:
                 ratio_start = level / float(level_total)
                 ratio_end = (level + 1) / float(level_total)
-                idx = np.random.randint(
-                    int(ratio_start * dataset_len), int(ratio_end * dataset_len)
-                )
+                idx = np.random.randint(int(ratio_start * dataset_len),
+                                        int(ratio_end * dataset_len))
             else:
                 idx = np.random.randint(0, dataset_len)
             graph = self.dataset[idx]
@@ -1266,7 +1247,8 @@ class GraphEnv(gym.Env):
                 edges_sub_len = random.randint(1, len(edges))
             edges_sub = random.sample(edges, k=edges_sub_len)
             graph_sub = nx.Graph(edges_sub)
-            graph_sub = max(nx.connected_component_subgraphs(graph_sub), key=len)
+            graph_sub = max(nx.connected_component_subgraphs(graph_sub),
+                            key=len)
             if is_final:  # when the subgraph the whole graph, the expert show
                 # stop sign
                 node1 = random.randint(0, graph.number_of_nodes() - 1)
@@ -1280,13 +1262,12 @@ class GraphEnv(gym.Env):
                 ### random pick an edge from the subgraph, then remove it
                 edge_sample = random.sample(graph_sub.edges(), k=1)
                 graph_sub.remove_edges_from(edge_sample)
-                graph_sub = max(nx.connected_component_subgraphs(graph_sub), key=len)
+                graph_sub = max(nx.connected_component_subgraphs(graph_sub),
+                                key=len)
                 edge_sample = edge_sample[0]  # get value
                 ### get action
-                if (
-                    edge_sample[0] in graph_sub.nodes()
-                    and edge_sample[1] in graph_sub.nodes()
-                ):
+                if (edge_sample[0] in graph_sub.nodes() and
+                        edge_sample[1] in graph_sub.nodes()):
                     node1 = graph_sub.nodes().index(edge_sample[0])
                     node2 = graph_sub.nodes().index(edge_sample[1])
                 elif edge_sample[0] in graph_sub.nodes():
@@ -1307,15 +1288,16 @@ class GraphEnv(gym.Env):
             ### get observation
             n = graph_sub.number_of_nodes()
             F = np.zeros((1, self.max_node, 1))
-            F[0, : n + 1, 0] = 1
+            F[0, :n + 1, 0] = 1
             if self.is_normalize:
                 ob["adj"][i] = self.normalize_adj(F)
             else:
                 ob["node"][i] = F
             # print(F)
             E = np.zeros((1, self.max_node, self.max_node))
-            E[0, :n, :n] = np.asarray(nx.to_numpy_matrix(graph_sub))[np.newaxis, :, :]
-            E[0, : n + 1, : n + 1] += np.eye(n + 1)
+            E[0, :n, :n] = np.asarray(
+                nx.to_numpy_matrix(graph_sub))[np.newaxis, :, :]
+            E[0, :n + 1, :n + 1] += np.eye(n + 1)
             ob["adj"][i] = E
             # print(E)
 
@@ -1339,7 +1321,10 @@ def zinc_molecule_filter(mol):
 
 
 # TODO(Bowen): check
-def steric_strain_filter(mol, cutoff=0.82, max_attempts_embed=20, max_num_iters=200):
+def steric_strain_filter(mol,
+                         cutoff=0.82,
+                         max_attempts_embed=20,
+                         max_num_iters=200):
     """
     Flags molecules based on a steric energy cutoff after max_num_iters
     iterations of MMFF94 forcefield minimization. Cutoff is based on average
@@ -1465,9 +1450,14 @@ def reward_target(mol, target, ratio, val_max, val_min, func):
     return reward
 
 
-def reward_target_new(
-    mol, func, r_max1=4, r_max2=2.25, r_mid=2, r_min=-2, x_start=500, x_mid=525
-):
+def reward_target_new(mol,
+                      func,
+                      r_max1=4,
+                      r_max2=2.25,
+                      r_mid=2,
+                      r_min=-2,
+                      x_start=500,
+                      x_mid=525):
     x = func(mol)
     return max(
         (r_max1 - r_mid) / (x_start - x_mid) * np.abs(x - x_mid) + r_max1,
@@ -1534,7 +1524,7 @@ def reward_target_num_rings(mol, target):
     :return: float (-inf, 1]
     """
     x = rdMolDescriptors.CalcNumRings(mol)
-    reward = -1 * (x - target) ** 2 + 1
+    reward = -1 * (x - target)**2 + 1
     return reward
 
 
@@ -1542,9 +1532,11 @@ def reward_target_num_rings(mol, target):
 from rdkit import DataStructs
 
 
-def reward_target_molecule_similarity(
-    mol, target, radius=2, nBits=2048, useChirality=True
-):
+def reward_target_molecule_similarity(mol,
+                                      target,
+                                      radius=2,
+                                      nBits=2048,
+                                      useChirality=True):
     """
     Reward for a target molecule similarity, based on tanimoto similarity
     between the ECFP fingerprints of the x molecule and target molecule
@@ -1553,11 +1545,9 @@ def reward_target_molecule_similarity(
     :return: float, [0.0, 1.0]
     """
     x = rdMolDescriptors.GetMorganFingerprintAsBitVect(
-        mol, radius=radius, nBits=nBits, useChirality=useChirality
-    )
+        mol, radius=radius, nBits=nBits, useChirality=useChirality)
     target = rdMolDescriptors.GetMorganFingerprintAsBitVect(
-        target, radius=radius, nBits=nBits, useChirality=useChirality
-    )
+        target, radius=radius, nBits=nBits, useChirality=useChirality)
     return DataStructs.TanimotoSimilarity(x, target)
 
 
@@ -1641,9 +1631,8 @@ def get_normalized_values():
     for i in range(len(smiles)):
         cycle_list = nx.cycle_basis(
             nx.Graph(
-                Chem.rdmolops.GetAdjacencyMatrix(Chem.MolFromSmiles(smiles_rdkit[i]))
-            )
-        )
+                Chem.rdmolops.GetAdjacencyMatrix(
+                    Chem.MolFromSmiles(smiles_rdkit[i]))))
         if len(cycle_list) == 0:
             cycle_length = 0
         else:
@@ -1655,15 +1644,12 @@ def get_normalized_values():
         cycle_scores.append(-cycle_length)
     print(i)
 
-    SA_scores_normalized = (np.array(SA_scores) - np.mean(SA_scores)) / np.std(
-        SA_scores
-    )
-    logP_values_normalized = (np.array(logP_values) - np.mean(logP_values)) / np.std(
-        logP_values
-    )
-    cycle_scores_normalized = (np.array(cycle_scores) - np.mean(cycle_scores)) / np.std(
-        cycle_scores
-    )
+    SA_scores_normalized = (np.array(SA_scores) -
+                            np.mean(SA_scores)) / np.std(SA_scores)
+    logP_values_normalized = (np.array(logP_values) -
+                              np.mean(logP_values)) / np.std(logP_values)
+    cycle_scores_normalized = (np.array(cycle_scores) -
+                               np.mean(cycle_scores)) / np.std(cycle_scores)
 
     return (
         np.mean(SA_scores),
@@ -1687,7 +1673,6 @@ if __name__ == "__main__":
     ## debug
     m_env = MoleculeEnv()
     m_env.init(data_type="zinc", has_feature=True, is_conditional=True)
-
 
 ######### GraphEnv potentially with feature
 # class GraphEnv(gym.Env):

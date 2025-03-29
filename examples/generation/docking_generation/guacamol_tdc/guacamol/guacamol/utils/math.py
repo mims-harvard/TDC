@@ -15,4 +15,4 @@ def geometric_mean(values: List[float]) -> float:
     Computes the geometric mean of a list of values.
     """
     a = np.array(values)
-    return a.prod() ** (1.0 / len(a))
+    return a.prod()**(1.0 / len(a))

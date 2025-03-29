@@ -40,7 +40,9 @@ def read_file(file_name: str) -> List[str]:
         return [s.strip() for s in f]
 
 
-def get_counts(smarts_list, smiles_list, ring=False) -> Tuple[int, Dict[str, int]]:
+def get_counts(smarts_list,
+               smiles_list,
+               ring=False) -> Tuple[int, Dict[str, int]]:
     """
 
     Args:
@@ -66,10 +68,10 @@ def get_counts(smarts_list, smiles_list, ring=False) -> Tuple[int, Dict[str, int
         mol = Chem.MolFromSmiles(smiles)
         Chem.Kekulize(mol)
         for smarts in smarts_list:
-            matches = mol.GetSubstructMatches(Chem.MolFromSmarts(smarts), uniquify=ring)
+            matches = mol.GetSubstructMatches(Chem.MolFromSmarts(smarts),
+                                              uniquify=ring)
             num_bonds = len(
-                matches
-            )  # not the number of bonds, but the number of matches
+                matches)  # not the number of bonds, but the number of matches
             probs[smarts] += num_bonds
             # tot += num_bonds
 
@@ -180,21 +182,18 @@ def get_rxn_smarts_make_rings(probs):
     for key in probs:
         if chembl_problematic_case(key):
             logger.warning(
-                f"Ignoring unsupported key {key} in get_rxn_smarts_make_rings"
-            )
+                f"Ignoring unsupported key {key} in get_rxn_smarts_make_rings")
             continue
 
         tokens = key.split("]")  # ['[#6R', '-[#6R', '-[#6R', '']
 
         smarts = ""
         if "=" in key:
-            smarts += (
-                tokens[0][:-1] + X[tokens[0]] + ";!R:1]"
-            )  # [:-1] slice strips trailing R from smarts
+            smarts += (tokens[0][:-1] + X[tokens[0]] + ";!R:1]"
+                      )  # [:-1] slice strips trailing R from smarts
         else:
-            smarts += (
-                tokens[0][:-1] + ";!R:1]=,"
-            )  # [:-1] slice strips trailing R from smarts
+            smarts += (tokens[0][:-1] + ";!R:1]=,"
+                      )  # [:-1] slice strips trailing R from smarts
 
         smarts += tokens[2][:-1] + ";!R:2]>>"
         smarts += "[*:1]1" + tokens[1] + "][*:2]1"
@@ -230,7 +229,8 @@ def get_rxn_smarts_rings(probs):
     rxn_smarts = []
     for key in probs:
         if chembl_problematic_case(key):
-            logger.warning(f"Ignoring unsupported key {key} in get_rxn_smarts_rings")
+            logger.warning(
+                f"Ignoring unsupported key {key} in get_rxn_smarts_rings")
             continue
 
         tokens = key.split("]")  # ['[#6R', '-[#6R', '-[#6R', '']
@@ -331,7 +331,8 @@ def count_macro_cycles(smiles_list, smarts_list, tot, probs):
         for smarts in smarts_list:
             mol = Chem.MolFromSmiles(smiles)
             Chem.Kekulize(mol)
-            matches = mol.GetSubstructMatches(Chem.MolFromSmarts(smarts), uniquify=True)
+            matches = mol.GetSubstructMatches(Chem.MolFromSmarts(smarts),
+                                              uniquify=True)
             if len(matches) > 0:
                 probs[smarts] += 1
                 tot += 1
@@ -392,7 +393,8 @@ class StatsCalculator:
 
         return get_counts(smarts, self.smiles_list, ring=True)
 
-    def smarts_element_and_element_in_ring_probs(self) -> Tuple[int, Dict[str, int]]:
+    def smarts_element_and_element_in_ring_probs(
+            self) -> Tuple[int, Dict[str, int]]:
         # SMARTS probabilities (elements + elements in ring)
         # smarts = []
         # for element in self.elements:
@@ -400,12 +402,14 @@ class StatsCalculator:
 
         smarts = []
         for element in self.elements:
-            smarts.append("[" + element + "R]")  # elemental abundance wihin a ring
+            smarts.append("[" + element +
+                          "R]")  # elemental abundance wihin a ring
 
         return get_counts(smarts, self.smiles_list)
 
     def smarts_element_and_rings_probs(self) -> Tuple[int, Dict[str, int]]:
-        tot_Ratoms, probs_Ratoms = self.smarts_element_and_element_in_ring_probs()
+        tot_Ratoms, probs_Ratoms = self.smarts_element_and_element_in_ring_probs(
+        )
 
         # TODO: rewrite
         R_elements = []
@@ -418,7 +422,7 @@ class StatsCalculator:
             for e2 in R_elements:
                 for j, e3 in enumerate(R_elements):
                     if (
-                        j >= i
+                            j >= i
                     ):  # makes sure identical reversed smarts patterns aren't generated (C-N-O and O-N-C)
                         sm_s = e1 + "-" + e2 + "-" + e3
                         if sm_s not in smarts:
@@ -444,7 +448,8 @@ class StatsCalculator:
         for bond in self.bonds:
             for element1 in self.elements:
                 for element2 in self.elements:
-                    smarts.append("[" + element1 + "]" + bond + "[" + element2 + ";!R]")
+                    smarts.append("[" + element1 + "]" + bond + "[" + element2 +
+                                  ";!R]")
 
         tot, probs = get_counts(smarts, self.smiles_list)
         return clean_counts(probs)
@@ -504,17 +509,19 @@ def main():
     setup_default_logger()
 
     parser = argparse.ArgumentParser(
-        description="Generate pickle files for the statistics of a training set for MCTS",
+        description=
+        "Generate pickle files for the statistics of a training set for MCTS",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
         "--smiles_file",
         default="data/guacamol_v1_all.smiles",
-        help="Full path to SMILES file from which to generate the distribution statistics",
+        help=
+        "Full path to SMILES file from which to generate the distribution statistics",
     )
-    parser.add_argument(
-        "--output_dir", default=None, help="Output directory for the pickle files"
-    )
+    parser.add_argument("--output_dir",
+                        default=None,
+                        help="Output directory for the pickle files")
     args = parser.parse_args()
 
     if args.output_dir is None:
@@ -531,11 +538,11 @@ def main():
     rxn_smarts_make_rings = stats.rxn_smarts_make_rings()
     p_rings = stats.ring_probs()
 
-    pickle.dump(size_stats, open(os.path.join(args.output_dir, "size_stats.p"), "wb"))
+    pickle.dump(size_stats,
+                open(os.path.join(args.output_dir, "size_stats.p"), "wb"))
     pickle.dump(p_rings, open(os.path.join(args.output_dir, "p_ring.p"), "wb"))
-    pickle.dump(
-        rxn_smarts_rings, open(os.path.join(args.output_dir, "rs_ring.p"), "wb")
-    )
+    pickle.dump(rxn_smarts_rings,
+                open(os.path.join(args.output_dir, "rs_ring.p"), "wb"))
     pickle.dump(
         rxn_smarts_make_rings,
         open(os.path.join(args.output_dir, "rs_make_ring.p"), "wb"),
@@ -547,7 +554,8 @@ def main():
     pickle.dump(p, open(os.path.join(args.output_dir, "p1.p"), "wb"))
     pickle.dump(rxn_smarts, open(os.path.join(args.output_dir, "r_s1.p"), "wb"))
 
-    print(f"Total time: {str(datetime.timedelta(seconds=int(time() - t0)))} secs")
+    print(
+        f"Total time: {str(datetime.timedelta(seconds=int(time() - t0)))} secs")
 
 
 if __name__ == "__main__":

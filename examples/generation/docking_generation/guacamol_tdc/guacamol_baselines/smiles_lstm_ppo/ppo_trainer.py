@@ -22,6 +22,7 @@ logger.addHandler(logging.NullHandler())
 
 @total_ordering
 class OptResult:
+
     def __init__(self, smiles: str, score: float) -> None:
         self.smiles = smiles
         self.score = score
@@ -79,15 +80,15 @@ class PPOTrainer(object):
         self.print_every = 10
         self.entropy_weight = entropy_weight
         self.kl_div_weight = kl_div_weight
-        self.sampler = ActionSampler(
-            max_seq_length=max_seq_length, device=device, max_batch_size=batch_size
-        )
-        self.action_replay = ActionReplay(device=device, max_batch_size=batch_size)
+        self.sampler = ActionSampler(max_seq_length=max_seq_length,
+                                     device=device,
+                                     max_batch_size=batch_size)
+        self.action_replay = ActionReplay(device=device,
+                                          max_batch_size=batch_size)
         self.running_reward = RunningReward(keep_factor=0.99)
         self.normalize_advantages = True
-        self.smiles_history: List[
-            OptResult
-        ] = []  # Necessary because MoleculeGenerator keeps history, may need
+        self.smiles_history: List[OptResult] = [
+        ]  # Necessary because MoleculeGenerator keeps history, may need
         # refactoring later on.
         self.ppo_epochs = self.episode_size // self.batch_size
         self.clip_param = clip_param
@@ -102,7 +103,6 @@ class PPOTrainer(object):
             self.train_ppo_epochs(epoch)
 
     def train_ppo_epochs(self, epoch):
-
         """
         Does one series of ppo updates
         """
@@ -127,9 +127,8 @@ class PPOTrainer(object):
         for indices in sampler:
             rewards_batch = rewards.view(-1, rewards.size(-1))[indices]
             actions_batch = actions.view(-1, actions.size(-1))[indices]
-            old_log_probs_batch = old_log_probs.view(-1, old_log_probs.size(-1))[
-                indices
-            ]
+            old_log_probs_batch = old_log_probs.view(
+                -1, old_log_probs.size(-1))[indices]
             smiles_batch = list(np.array(smiles)[indices])
             advantages_batch = advantages.view(-1, advantages.size(-1))[indices]
 
@@ -138,25 +137,25 @@ class PPOTrainer(object):
                 values_batch,
                 entropies_batch,
                 kl_divs_batch,
-            ) = self.action_replay.replay(
-                model=self.model, prior=self.prior, actions=actions_batch
-            )
+            ) = self.action_replay.replay(model=self.model,
+                                          prior=self.prior,
+                                          actions=actions_batch)
 
             ratio = torch.exp(log_probs_batch - old_log_probs_batch)
             surr1 = ratio * advantages_batch
-            surr2 = (
-                torch.clamp(ratio, 1.0 - self.clip_param, 1.0 + self.clip_param)
-                * advantages_batch
-            )
-            policy_loss = -torch.min(surr1, surr2).mean()  # standard ppo policy loss.
+            surr2 = (torch.clamp(ratio, 1.0 - self.clip_param,
+                                 1.0 + self.clip_param) * advantages_batch)
+            policy_loss = -torch.min(surr1,
+                                     surr2).mean()  # standard ppo policy loss.
 
-            value_loss = self._calculate_value_loss(
-                smiles_batch, values_batch, rewards_batch
-            )
+            value_loss = self._calculate_value_loss(smiles_batch, values_batch,
+                                                    rewards_batch)
 
-            entropy_loss = self._calculate_entropy_loss(smiles_batch, entropies_batch)
+            entropy_loss = self._calculate_entropy_loss(smiles_batch,
+                                                        entropies_batch)
 
-            kl_div_loss = self._calculate_kl_div_loss(smiles_batch, kl_divs_batch)
+            kl_div_loss = self._calculate_kl_div_loss(smiles_batch,
+                                                      kl_divs_batch)
 
             loss = policy_loss + value_loss + entropy_loss + kl_div_loss
 
@@ -181,12 +180,10 @@ class PPOTrainer(object):
 
         self.model.eval()
         with torch.no_grad():
-            actions = self.sampler.sample(
-                model=self.model.smiles_rnn, num_samples=self.episode_size
-            )
+            actions = self.sampler.sample(model=self.model.smiles_rnn,
+                                          num_samples=self.episode_size)
             old_log_probs, old_values, _, _ = self.action_replay.replay(
-                model=self.model, prior=self.prior, actions=actions
-            )
+                model=self.model, prior=self.prior, actions=actions)
 
             smiles = self.sd.matrix_to_smiles(actions)
             scores = self.optimization_objective.score_list(smiles)
@@ -215,15 +212,13 @@ class PPOTrainer(object):
         value_loss_sum = 0
         for i in range(self.batch_size):
             n_characters = len(smiles[i]) + 1
-            value_loss_sum += (
-                (rewards[i, :n_characters] - values[i, :n_characters]).pow(2).sum()
-            )
+            value_loss_sum += ((rewards[i, :n_characters] -
+                                values[i, :n_characters]).pow(2).sum())
             count += n_characters
         value_loss = value_loss_sum / count
         return value_loss
 
     def _calculate_entropy_loss(self, smiles, entropies):
-
         """
         Calculate the entropy contribution to the loss, but take into consideration only the non-padding characters!
         """
@@ -272,10 +267,8 @@ class PPOTrainer(object):
 
         mol_batch = MoleculeBatch(smiles)
 
-        logger.info(
-            f"epoch: {epoch:7d} | "
-            f"current_reward: {self.running_reward.last_added:.3f} | "
-            f"running_reward: {self.running_reward.value:.3f} | "
-            f"valid_ratio: {mol_batch.ratio_valid:.3f} | "
-            f"unique_ratio: {mol_batch.ratio_unique_among_valid:.3f}"
-        )
+        logger.info(f"epoch: {epoch:7d} | "
+                    f"current_reward: {self.running_reward.last_added:.3f} | "
+                    f"running_reward: {self.running_reward.value:.3f} | "
+                    f"valid_ratio: {mol_batch.ratio_valid:.3f} | "
+                    f"unique_ratio: {mol_batch.ratio_unique_among_valid:.3f}")

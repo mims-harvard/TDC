@@ -74,9 +74,9 @@ class CensusResource:
 
     def __init__(self, census_version=None, organism=None):
         """Initialize the Census Resource.
-        
+
         Args:
-            census_version (str): The date of the census data release to use 
+            census_version (str): The date of the census data release to use
             organism (str): string for census data organism to query data for. defaults to human.
         """
         self.census_version = census_version if census_version is not None else self._LATEST_CENSUS
@@ -326,7 +326,7 @@ class CensusResource:
         """Wrapper for cellxgene gget()
             https://chanzuckerberg.github.io/cellxgene-census/notebooks/api_demo/census_gget_demo.html
             Support for AnnData or DataFrame. Params included below
-            
+
             General args:
             - species        Choice of 'homo_sapiens' or 'mus_musculus'. Default: 'homo_sapiens'.
             - gene           Str or list of gene name(s) or Ensembl ID(s), e.g. ['ACE2', 'SLC5A1'] or ['ENSG00000130234', 'ENSG00000100170']. Default: None.

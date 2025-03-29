@@ -25,12 +25,10 @@ class MLP(nn.Module):
         super(MLP, self).__init__()
         self.input = nn.Linear(n_inputs, hparams["mlp_width"])
         self.dropout = nn.Dropout(hparams["mlp_dropout"])
-        self.hiddens = nn.ModuleList(
-            [
-                nn.Linear(hparams["mlp_width"], hparams["mlp_width"])
-                for _ in range(hparams["mlp_depth"] - 2)
-            ]
-        )
+        self.hiddens = nn.ModuleList([
+            nn.Linear(hparams["mlp_width"], hparams["mlp_width"])
+            for _ in range(hparams["mlp_depth"] - 2)
+        ])
         self.output = nn.Linear(hparams["mlp_width"], n_outputs)
         self.n_outputs = n_outputs
 
@@ -47,22 +45,20 @@ class MLP(nn.Module):
 
 
 class CNN(nn.Sequential):
+
     def __init__(self, encoding):
         super(CNN, self).__init__()
         if encoding == "drug":
             in_ch = [63] + [32, 64, 96]
             kernels = [4, 6, 8]
             layer_size = 3
-            self.conv = nn.ModuleList(
-                [
-                    nn.Conv1d(
-                        in_channels=in_ch[i],
-                        out_channels=in_ch[i + 1],
-                        kernel_size=kernels[i],
-                    )
-                    for i in range(layer_size)
-                ]
-            )
+            self.conv = nn.ModuleList([
+                nn.Conv1d(
+                    in_channels=in_ch[i],
+                    out_channels=in_ch[i + 1],
+                    kernel_size=kernels[i],
+                ) for i in range(layer_size)
+            ])
             self.conv = self.conv.double()
             n_size_d = self._get_conv_output((63, 100))
             self.fc1 = nn.Linear(n_size_d, 256)
@@ -70,16 +66,13 @@ class CNN(nn.Sequential):
             in_ch = [26] + [32, 64, 96]
             kernels = [4, 8, 12]
             layer_size = 3
-            self.conv = nn.ModuleList(
-                [
-                    nn.Conv1d(
-                        in_channels=in_ch[i],
-                        out_channels=in_ch[i + 1],
-                        kernel_size=kernels[i],
-                    )
-                    for i in range(layer_size)
-                ]
-            )
+            self.conv = nn.ModuleList([
+                nn.Conv1d(
+                    in_channels=in_ch[i],
+                    out_channels=in_ch[i + 1],
+                    kernel_size=kernels[i],
+                ) for i in range(layer_size)
+            ])
             self.conv = self.conv.double()
             n_size_p = self._get_conv_output((26, 1000))
             self.fc1 = nn.Linear(n_size_p, 256)
@@ -105,6 +98,7 @@ class CNN(nn.Sequential):
 
 
 class DTI_Encoder(nn.Sequential):
+
     def __init__(self):
         super(DTI_Encoder, self).__init__()
         self.input_dim_drug = 256
@@ -117,11 +111,11 @@ class DTI_Encoder(nn.Sequential):
 
         self.hidden_dims = [256, 128]
         layer_size = len(self.hidden_dims) + 1
-        dims = [self.input_dim_drug + self.input_dim_protein] + self.hidden_dims + [128]
+        dims = [self.input_dim_drug + self.input_dim_protein
+               ] + self.hidden_dims + [128]
 
         self.predictor = nn.ModuleList(
-            [nn.Linear(dims[i], dims[i + 1]) for i in range(layer_size)]
-        )
+            [nn.Linear(dims[i], dims[i + 1]) for i in range(layer_size)])
         self.n_outputs = 128
 
     def forward(self, v_D, v_P):

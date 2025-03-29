@@ -1,4 +1,4 @@
-# MolDQN for docking 
+# MolDQN for docking
 
 This package contains libraries and scripts for reproducing the results
 described in Zhou Z, Kearnes S, Li L, Zare RN, Riley P. Optimization of
@@ -20,17 +20,17 @@ not limited to):
 See the paper for additional details.
 
 
-## understand code 
+## understand code
 
 `run_training` in `optimize_docking.py`: `run=1,2,3,`
-`_reward` in `optimize_docking.py`: `reward = self._reward() if self._counter == self.max_steps - 1 else 0.0` in `dqn/molecules.py`: only evaluate reward at the last step. 
+`_reward` in `optimize_docking.py`: `reward = self._reward() if self._counter == self.max_steps - 1 else 0.0` in `dqn/molecules.py`: only evaluate reward at the last step.
 `_episode` in `run_dqn.py`
-`_step` in `run_dqn.py`: (1) environment, valid_action;  (2) reward  
+`_step` in `run_dqn.py`: (1) environment, valid_action;  (2) reward
 
 
 ## setup
 
-```bash 
+```bash
 source activate moldqn
 cd /project/molecular_data/graphnn/mol_dqn_docking/chemgraph
 export PATH=$PATH:/project/molecular_data/graphnn/mol_dqn_docking/package_install/ADFRsuite_x86_64Linux_1.0/bin
@@ -42,12 +42,12 @@ python optimize_docking.py --model_dir="./docking" --hparams="./configs/naive_dq
 ```
 output is `docking_smilesvaluelst_1.pkl`, `docking_smilesvaluelst_2.pkl`, `docking_smilesvaluelst_3.pkl`
 
-on `uranus`, `haum`, `orcus`, `orcus2` are latest version 
+on `uranus`, `haum`, `orcus`, `orcus2` are latest version
 
 ```bash
-python docking_eval.py 
+python docking_eval.py
 
-python result_analysis.py 
+python result_analysis.py
 ```
 
 
@@ -83,7 +83,7 @@ export OUTPUT_DIR="./save"
 python optimize_qed.py --model_dir=${OUTPUT_DIR} --hparams="./configs/naive_dqn.json"
 
 
-python qed_eval.py 
+python qed_eval.py
 ```
 
 #### Bootstrap DQN
@@ -132,4 +132,3 @@ python multi_obj_opt.py --model_dir=${OUTPUT_DIR} --hparams="./configs/multi_obj
 ```
 python target_sas.py --model_dir="${OUTPUT_DIR}" --hparams="./configs/target_sas.json" --start_molecule="CCN1c2ccccc2Cc3c(O)ncnc13" --loss_type="l2" --target_sas=2.5
 ```
-

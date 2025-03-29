@@ -29,6 +29,6 @@ def docking(ligand_pdbqt_file, receptor_pdbqt_file, output_file, center,
 
 docking(ligand_pdbqt_file, receptor_pdbqt_file, output_file, center, box_size)
 """
-Example: 
-    python XXXX.py data/1iep_ligand.pdbqt ./data/1iep_receptor.pdbqt ./data/out 15.190 53.903 16.917 20 20 20 
+Example:
+    python XXXX.py data/1iep_ligand.pdbqt ./data/1iep_receptor.pdbqt ./data/out 15.190 53.903 16.917 20 20 20
 """

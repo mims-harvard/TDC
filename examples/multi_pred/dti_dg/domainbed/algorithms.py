@@ -20,7 +20,8 @@ ALGORITHMS = ["ERM", "IRM", "GroupDRO", "CORAL", "MMD", "MTL", "ANDMask"]
 def get_algorithm_class(algorithm_name):
     """Return the algorithm class with the given name."""
     if algorithm_name not in globals():
-        raise NotImplementedError("Algorithm not found: {}".format(algorithm_name))
+        raise NotImplementedError(
+            "Algorithm not found: {}".format(algorithm_name))
     return globals()[algorithm_name]
 
 
@@ -51,6 +52,7 @@ class Algorithm(torch.nn.Module):
 
 
 class mySequential(nn.Sequential):
+
     def forward(self, *inputs):
         for module in self._modules.values():
             if type(inputs) == tuple:
@@ -66,12 +68,13 @@ class ERM(Algorithm):
     """
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        super(ERM, self).__init__(input_shape, num_classes, num_domains, hparams)
+        super(ERM, self).__init__(input_shape, num_classes, num_domains,
+                                  hparams)
 
         self.featurizer = networks.DTI_Encoder()
         self.classifier = networks.Classifier(
-            self.featurizer.n_outputs, num_classes, self.hparams["nonlinear_classifier"]
-        )
+            self.featurizer.n_outputs, num_classes,
+            self.hparams["nonlinear_classifier"])
 
         self.network = mySequential(self.featurizer, self.classifier)
         self.optimizer = torch.optim.Adam(
@@ -90,21 +93,16 @@ class ERM(Algorithm):
         all_t = torch.cat([t for d, t, y in minibatches])
         all_y = torch.cat([y for d, t, y in minibatches])
 
-        y_pred = self.predict(all_d, all_t).reshape(
-            -1,
-        )
-        y_true = all_y.reshape(
-            -1,
-        )
+        y_pred = self.predict(all_d, all_t).reshape(-1,)
+        y_true = all_y.reshape(-1,)
         loss = self.loss_fct(y_pred, y_true)
 
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
 
-        pcc = self.evaluator(
-            y_true.detach().cpu().numpy(), y_pred.detach().cpu().numpy()
-        )
+        pcc = self.evaluator(y_true.detach().cpu().numpy(),
+                             y_pred.detach().cpu().numpy())
 
         return {"loss": loss.item(), "training_pcc": pcc}
 
@@ -116,7 +114,8 @@ class IRM(ERM):
     """Invariant Risk Minimization"""
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        super(IRM, self).__init__(input_shape, num_classes, num_domains, hparams)
+        super(IRM, self).__init__(input_shape, num_classes, num_domains,
+                                  hparams)
         self.register_buffer("update_count", torch.tensor([0]))
 
     @staticmethod
@@ -125,22 +124,12 @@ class IRM(ERM):
         device = "cuda" if logits[0][0].is_cuda else "cpu"
         scale = torch.tensor(1.0).to(device).requires_grad_()
         loss_1 = loss_fct(
-            logits[::2]
-            * scale.reshape(
-                -1,
-            ),
-            y[::2].reshape(
-                -1,
-            ),
+            logits[::2] * scale.reshape(-1,),
+            y[::2].reshape(-1,),
         )
         loss_2 = loss_fct(
-            logits[1::2]
-            * scale.reshape(
-                -1,
-            ),
-            y[1::2].reshape(
-                -1,
-            ),
+            logits[1::2] * scale.reshape(-1,),
+            y[1::2].reshape(-1,),
         )
         grad_1 = autograd.grad(loss_1, [scale], create_graph=True)[0]
         grad_2 = autograd.grad(loss_2, [scale], create_graph=True)[0]
@@ -150,11 +139,8 @@ class IRM(ERM):
     def update(self, minibatches, unlabeled=None):
 
         device = "cuda" if minibatches[0][0].is_cuda else "cpu"
-        penalty_weight = (
-            self.hparams["irm_lambda"]
-            if self.update_count >= self.hparams["irm_penalty_anneal_iters"]
-            else 1.0
-        )
+        penalty_weight = (self.hparams["irm_lambda"] if self.update_count
+                          >= self.hparams["irm_penalty_anneal_iters"] else 1.0)
         nll = 0.0
         penalty = 0.0
 
@@ -169,37 +155,17 @@ class IRM(ERM):
         y_all = []
 
         for i, (d, t, y) in enumerate(minibatches):
-            logits = all_logits[all_logits_idx : all_logits_idx + d.shape[0]]
+            logits = all_logits[all_logits_idx:all_logits_idx + d.shape[0]]
             all_logits_idx += d.shape[0]
             nll += self.loss_fct(
-                logits.reshape(
-                    -1,
-                ),
-                y.reshape(
-                    -1,
-                ),
+                logits.reshape(-1,),
+                y.reshape(-1,),
             )
             penalty += self._irm_penalty(logits, y)
 
-            pred_all = (
-                pred_all
-                + logits.reshape(
-                    -1,
-                )
-                .detach()
-                .cpu()
-                .numpy()
-                .tolist()
-            )
-            y_all = (
-                y_all
-                + y.reshape(
-                    -1,
-                )
-                .cpu()
-                .numpy()
-                .tolist()
-            )
+            pred_all = (pred_all +
+                        logits.reshape(-1,).detach().cpu().numpy().tolist())
+            y_all = (y_all + y.reshape(-1,).cpu().numpy().tolist())
 
         nll /= len(minibatches)
         penalty /= len(minibatches)
@@ -236,7 +202,8 @@ class GroupDRO(ERM):
     """
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        super(GroupDRO, self).__init__(input_shape, num_classes, num_domains, hparams)
+        super(GroupDRO, self).__init__(input_shape, num_classes, num_domains,
+                                       hparams)
         self.register_buffer("q", torch.Tensor())
 
     def update(self, minibatches, unlabeled=None):
@@ -255,34 +222,14 @@ class GroupDRO(ERM):
             logits = self.predict(d, t)
 
             losses[m] = self.loss_fct(
-                logits.reshape(
-                    -1,
-                ),
-                y.reshape(
-                    -1,
-                ),
+                logits.reshape(-1,),
+                y.reshape(-1,),
             )
             self.q[m] *= (self.hparams["groupdro_eta"] * losses[m].data).exp()
 
-            pred_all = (
-                pred_all
-                + logits.reshape(
-                    -1,
-                )
-                .detach()
-                .cpu()
-                .numpy()
-                .tolist()
-            )
-            y_all = (
-                y_all
-                + y.reshape(
-                    -1,
-                )
-                .cpu()
-                .numpy()
-                .tolist()
-            )
+            pred_all = (pred_all +
+                        logits.reshape(-1,).detach().cpu().numpy().tolist())
+            y_all = (y_all + y.reshape(-1,).cpu().numpy().tolist())
 
         self.q /= self.q.sum()
 
@@ -303,10 +250,10 @@ class AbstractMMD(ERM):
     using MMD (abstract class)
     """
 
-    def __init__(self, input_shape, num_classes, num_domains, hparams, gaussian):
-        super(AbstractMMD, self).__init__(
-            input_shape, num_classes, num_domains, hparams
-        )
+    def __init__(self, input_shape, num_classes, num_domains, hparams,
+                 gaussian):
+        super(AbstractMMD, self).__init__(input_shape, num_classes, num_domains,
+                                          hparams)
         if gaussian:
             self.kernel_type = "gaussian"
         else:
@@ -315,9 +262,10 @@ class AbstractMMD(ERM):
     def my_cdist(self, x1, x2):
         x1_norm = x1.pow(2).sum(dim=-1, keepdim=True)
         x2_norm = x2.pow(2).sum(dim=-1, keepdim=True)
-        res = torch.addmm(
-            x2_norm.transpose(-2, -1), x1, x2.transpose(-2, -1), alpha=-2
-        ).add_(x1_norm)
+        res = torch.addmm(x2_norm.transpose(-2, -1),
+                          x1,
+                          x2.transpose(-2, -1),
+                          alpha=-2).add_(x1_norm)
         return res.clamp_min_(1e-30)
 
     def gaussian_kernel(self, x, y, gamma=[0.001, 0.01, 0.1, 1, 10, 100, 1000]):
@@ -362,35 +310,14 @@ class AbstractMMD(ERM):
 
         for i in range(nmb):
             objective += self.loss_fct(
-                classifs[i].reshape(
-                    -1,
-                ),
-                targets[i].reshape(
-                    -1,
-                ),
+                classifs[i].reshape(-1,),
+                targets[i].reshape(-1,),
             )
 
             pred_all = (
-                pred_all
-                + classifs[i]
-                .reshape(
-                    -1,
-                )
-                .detach()
-                .cpu()
-                .numpy()
-                .tolist()
-            )
-            y_all = (
-                y_all
-                + targets[i]
-                .reshape(
-                    -1,
-                )
-                .cpu()
-                .numpy()
-                .tolist()
-            )
+                pred_all +
+                classifs[i].reshape(-1,).detach().cpu().numpy().tolist())
+            y_all = (y_all + targets[i].reshape(-1,).cpu().numpy().tolist())
 
             for j in range(i + 1, nmb):
                 penalty += self.mmd(features[i], features[j])
@@ -408,7 +335,11 @@ class AbstractMMD(ERM):
 
         pcc = self.evaluator(y_all, pred_all)
 
-        return {"loss": objective.item(), "penalty": penalty, "training_pcc": pcc}
+        return {
+            "loss": objective.item(),
+            "penalty": penalty,
+            "training_pcc": pcc
+        }
 
 
 class MMD(AbstractMMD):
@@ -417,9 +348,11 @@ class MMD(AbstractMMD):
     """
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        super(MMD, self).__init__(
-            input_shape, num_classes, num_domains, hparams, gaussian=True
-        )
+        super(MMD, self).__init__(input_shape,
+                                  num_classes,
+                                  num_domains,
+                                  hparams,
+                                  gaussian=True)
 
 
 class CORAL(AbstractMMD):
@@ -428,9 +361,11 @@ class CORAL(AbstractMMD):
     """
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        super(CORAL, self).__init__(
-            input_shape, num_classes, num_domains, hparams, gaussian=False
-        )
+        super(CORAL, self).__init__(input_shape,
+                                    num_classes,
+                                    num_domains,
+                                    hparams,
+                                    gaussian=False)
 
 
 class MTL(Algorithm):
@@ -441,7 +376,8 @@ class MTL(Algorithm):
     """
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        super(MTL, self).__init__(input_shape, num_classes, num_domains, hparams)
+        super(MTL, self).__init__(input_shape, num_classes, num_domains,
+                                  hparams)
         self.featurizer = networks.DTI_Encoder()
         self.classifier = networks.Classifier(
             self.featurizer.n_outputs * 2,
@@ -449,14 +385,14 @@ class MTL(Algorithm):
             self.hparams["nonlinear_classifier"],
         )
         self.optimizer = torch.optim.Adam(
-            list(self.featurizer.parameters()) + list(self.classifier.parameters()),
+            list(self.featurizer.parameters()) +
+            list(self.classifier.parameters()),
             lr=self.hparams["lr"],
             weight_decay=self.hparams["weight_decay"],
         )
 
         self.register_buffer(
-            "embeddings", torch.zeros(num_domains, self.featurizer.n_outputs)
-        )
+            "embeddings", torch.zeros(num_domains, self.featurizer.n_outputs))
 
         self.ema = self.hparams["mtl_ema"]
         self.loss_fct = torch.nn.MSELoss()
@@ -472,33 +408,13 @@ class MTL(Algorithm):
         for env, (d, t, y) in enumerate(minibatches):
             pred = self.predict(d, t, env)
             loss += self.loss_fct(
-                pred.reshape(
-                    -1,
-                ),
-                y.reshape(
-                    -1,
-                ),
+                pred.reshape(-1,),
+                y.reshape(-1,),
             )
 
-            pred_all = (
-                pred_all
-                + pred.reshape(
-                    -1,
-                )
-                .detach()
-                .cpu()
-                .numpy()
-                .tolist()
-            )
-            y_all = (
-                y_all
-                + y.reshape(
-                    -1,
-                )
-                .cpu()
-                .numpy()
-                .tolist()
-            )
+            pred_all = (pred_all +
+                        pred.reshape(-1,).detach().cpu().numpy().tolist())
+            y_all = (y_all + y.reshape(-1,).cpu().numpy().tolist())
 
         self.optimizer.zero_grad()
         loss.backward()
@@ -512,9 +428,8 @@ class MTL(Algorithm):
         return_embedding = features.mean(0)
 
         if env is not None:
-            return_embedding = (
-                self.ema * return_embedding + (1 - self.ema) * self.embeddings[env]
-            )
+            return_embedding = (self.ema * return_embedding +
+                                (1 - self.ema) * self.embeddings[env])
 
             self.embeddings[env] = return_embedding.clone().detach()
 
@@ -533,7 +448,8 @@ class ANDMask(ERM):
     """
 
     def __init__(self, input_shape, num_classes, num_domains, hparams):
-        super(ANDMask, self).__init__(input_shape, num_classes, num_domains, hparams)
+        super(ANDMask, self).__init__(input_shape, num_classes, num_domains,
+                                      hparams)
 
         self.tau = hparams["tau"]
 
@@ -550,43 +466,23 @@ class ANDMask(ERM):
         pred_all, y_all = [], []
 
         for i, (d, t, y) in enumerate(minibatches):
-            logits = all_logits[all_logits_idx : all_logits_idx + d.shape[0]]
+            logits = all_logits[all_logits_idx:all_logits_idx + d.shape[0]]
             all_logits_idx += d.shape[0]
 
             env_loss = self.loss_fct(
-                logits.reshape(
-                    -1,
-                ),
-                y.reshape(
-                    -1,
-                ),
+                logits.reshape(-1,),
+                y.reshape(-1,),
             )
 
-            pred_all = (
-                pred_all
-                + logits.reshape(
-                    -1,
-                )
-                .detach()
-                .cpu()
-                .numpy()
-                .tolist()
-            )
-            y_all = (
-                y_all
-                + y.reshape(
-                    -1,
-                )
-                .cpu()
-                .numpy()
-                .tolist()
-            )
+            pred_all = (pred_all +
+                        logits.reshape(-1,).detach().cpu().numpy().tolist())
+            y_all = (y_all + y.reshape(-1,).cpu().numpy().tolist())
 
             total_loss += env_loss
 
-            env_grads = autograd.grad(
-                env_loss, self.network.parameters(), retain_graph=True
-            )
+            env_grads = autograd.grad(env_loss,
+                                      self.network.parameters(),
+                                      retain_graph=True)
             for grads, env_grad in zip(param_gradients, env_grads):
                 grads.append(env_grad)
 

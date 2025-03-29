@@ -66,4 +66,5 @@ class MoleculeBatch(object):
             return
 
         self._canonicalize()
-        self._unique_canonical_smiles = remove_duplicates(self._canonical_smiles)
+        self._unique_canonical_smiles = remove_duplicates(
+            self._canonical_smiles)

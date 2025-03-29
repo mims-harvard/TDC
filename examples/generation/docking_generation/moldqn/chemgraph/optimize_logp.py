@@ -38,6 +38,7 @@ FLAGS = flags.FLAGS
 
 
 class Molecule(molecules_mdp.Molecule):
+
     def _reward(self):
         molecule = Chem.MolFromSmiles(self._state)
         if molecule is None:
@@ -65,7 +66,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

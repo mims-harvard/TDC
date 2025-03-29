@@ -11,6 +11,7 @@ from guacamol.goal_directed_generator import GoalDirectedGenerator
 
 
 class PPODirectedGenerator(GoalDirectedGenerator):
+
     def __init__(
         self,
         pretrained_model_path: str,
@@ -46,33 +47,35 @@ class PPODirectedGenerator(GoalDirectedGenerator):
         device = "cuda" if cuda_available else "cpu"
         model_def = Path(self.pretrained_model_path).with_suffix(".json")
 
-        smiles_rnn = load_rnn_model(
-            model_def, self.pretrained_model_path, device, copy_to_cpu=True
-        )
+        smiles_rnn = load_rnn_model(model_def,
+                                    self.pretrained_model_path,
+                                    device,
+                                    copy_to_cpu=True)
         model = SmilesRnnActorCritic(smiles_rnn=smiles_rnn).to(device)
 
-        generator = PPOMoleculeGenerator(
-            model=model, max_seq_length=self.max_seq_len, device=device
-        )
+        generator = PPOMoleculeGenerator(model=model,
+                                         max_seq_length=self.max_seq_len,
+                                         device=device)
 
-        molecules = generator.optimise(
-            objective=scoring_function, start_population=[], **self.model_args
-        )
+        molecules = generator.optimise(objective=scoring_function,
+                                       start_population=[],
+                                       **self.model_args)
 
         # take the molecules seen during the hill-climbing, and also sample from the final model
         samples = [m.smiles for m in molecules]
         if self.sample_final_model_only:
             samples.clear()
-        samples += generator.sample(max(number_molecules, self.number_final_samples))
+        samples += generator.sample(
+            max(number_molecules, self.number_final_samples))
 
         # calculate the scores and return the best ones
         samples = canonicalize_list(samples)
         scores = scoring_function.score_list(samples)
 
         scored_molecules = zip(samples, scores)
-        sorted_scored_molecules = sorted(
-            scored_molecules, key=lambda x: (x[1], hash(x[0])), reverse=True
-        )
+        sorted_scored_molecules = sorted(scored_molecules,
+                                         key=lambda x: (x[1], hash(x[0])),
+                                         reverse=True)
 
         top_scored_molecules = sorted_scored_molecules[:number_molecules]
 

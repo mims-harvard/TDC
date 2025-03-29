@@ -19,12 +19,12 @@ from .rnn_utils import get_tensor_dataset, load_smiles_from_list
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
-
 from tqdm import tqdm
 
 
 @total_ordering
 class OptResult:
+
     def __init__(self, smiles: str, score: float) -> None:
         self.smiles = smiles
         self.score = score
@@ -108,16 +108,16 @@ class SmilesRnnMoleculeGenerator:
         for epoch in tqdm(range(1, 1 + n_epochs)):
 
             t0 = time.time()
-            samples = self.sampler.sample(
-                self.model, mols_to_sample, max_seq_len=self.max_len
-            )
+            samples = self.sampler.sample(self.model,
+                                          mols_to_sample,
+                                          max_seq_len=self.max_len)
             t1 = time.time()
 
             canonicalized_samples = set(
-                canonicalize_list(samples, include_stereocenters=True)
-            )
+                canonicalize_list(samples, include_stereocenters=True))
             payload = list(canonicalized_samples.difference(seen))
-            payload.sort()  # necessary for reproducibility between different runs
+            payload.sort(
+            )  # necessary for reproducibility between different runs
 
             seen.update(canonicalized_samples)
 
@@ -136,7 +136,8 @@ class SmilesRnnMoleculeGenerator:
                     if oracle_num % 50 == 0:
                         pickle.dump(
                             smiles2score,
-                            open(result_folder + str(oracle_num) + ".pkl", "wb"),
+                            open(result_folder + str(oracle_num) + ".pkl",
+                                 "wb"),
                         )
                 else:
                     score = smiles2score[smiles]
@@ -155,11 +156,13 @@ class SmilesRnnMoleculeGenerator:
 
             np.random.shuffle(subset)
 
-            sub_train = subset[0 : int(3 * len(subset) / 4)]
-            sub_test = subset[int(3 * len(subset) / 4) :]
+            sub_train = subset[0:int(3 * len(subset) / 4)]
+            sub_test = subset[int(3 * len(subset) / 4):]
 
-            train_seqs, _ = load_smiles_from_list(sub_train, max_len=self.max_len)
-            valid_seqs, _ = load_smiles_from_list(sub_test, max_len=self.max_len)
+            train_seqs, _ = load_smiles_from_list(sub_train,
+                                                  max_len=self.max_len)
+            valid_seqs, _ = load_smiles_from_list(sub_test,
+                                                  max_len=self.max_len)
 
             train_set = get_tensor_dataset(train_seqs)
             valid_set = get_tensor_dataset(valid_seqs)
@@ -180,16 +183,13 @@ class SmilesRnnMoleculeGenerator:
 
             t3 = time.time()
 
-            logger.info(
-                f"Generation {epoch} --- timings: "
-                f"sample: {(t1 - t0):.3f} s, "
-                f"score: {(t2 - t1):.3f} s, "
-                f"finetune: {(t3 - t2):.3f} s"
-            )
+            logger.info(f"Generation {epoch} --- timings: "
+                        f"sample: {(t1 - t0):.3f} s, "
+                        f"score: {(t2 - t1):.3f} s, "
+                        f"finetune: {(t3 - t2):.3f} s")
 
-            top4 = "\n".join(
-                f"\t{result.score:.3f}: {result.smiles}" for result in results[:4]
-            )
+            top4 = "\n".join(f"\t{result.score:.3f}: {result.smiles}"
+                             for result in results[:4])
             logger.info(f"Top 4:\n{top4}")
 
         return sorted(results, reverse=True)
@@ -200,14 +200,13 @@ class SmilesRnnMoleculeGenerator:
         :return: a list of molecules
         """
 
-        return self.sampler.sample(
-            self.model, num_to_sample=num_mols, max_seq_len=self.max_len
-        )
+        return self.sampler.sample(self.model,
+                                   num_to_sample=num_mols,
+                                   max_seq_len=self.max_len)
 
     # TODO refactor, still has lots of duplication
-    def pretrain_on_initial_population(
-        self, scoring_function, start_population, pretrain_epochs
-    ) -> List[OptResult]:
+    def pretrain_on_initial_population(self, scoring_function, start_population,
+                                       pretrain_epochs) -> List[OptResult]:
         """
         Takes an objective and tries to optimise it
         :param scoring_function: MPO
@@ -219,7 +218,8 @@ class SmilesRnnMoleculeGenerator:
 
         start_population_size = len(start_population)
 
-        training = canonicalize_list(start_population, include_stereocenters=True)
+        training = canonicalize_list(start_population,
+                                     include_stereocenters=True)
 
         if len(training) != start_population_size:
             logger.warning(
@@ -230,17 +230,13 @@ class SmilesRnnMoleculeGenerator:
         if start_population_size == 0:
             return seed
 
-        logger.info(
-            "finetuning with {} molecules for {} epochs".format(
-                start_population_size, pretrain_epochs
-            )
-        )
+        logger.info("finetuning with {} molecules for {} epochs".format(
+            start_population_size, pretrain_epochs))
 
         scores = scoring_function.score_list(training)
         seed.extend(
             OptResult(smiles=smiles, score=score)
-            for smiles, score in zip(training, scores)
-        )
+            for smiles, score in zip(training, scores))
 
         train_seqs, _ = load_smiles_from_list(training, max_len=self.max_len)
         train_set = get_tensor_dataset(train_seqs)

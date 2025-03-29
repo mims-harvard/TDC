@@ -14,9 +14,10 @@ class ActionReplay(object):
     Given some actions sampled from a RNN model, will calculate the log probabilities and entropy.
     """
 
-    def __init__(
-        self, max_batch_size, device, distribution_cls: Type[Distribution] = None
-    ) -> None:
+    def __init__(self,
+                 max_batch_size,
+                 device,
+                 distribution_cls: Type[Distribution] = None) -> None:
         """
         Args:
             max_batch_size: Max. batch size
@@ -26,9 +27,8 @@ class ActionReplay(object):
         self.max_batch_size = max_batch_size
         self.device = device
 
-        self.distribution_cls = (
-            Categorical if distribution_cls is None else distribution_cls
-        )
+        self.distribution_cls = (Categorical if distribution_cls is None else
+                                 distribution_cls)
 
     def replay(
         self,
@@ -54,7 +54,8 @@ class ActionReplay(object):
         num_samples, max_seq_length = actions.size()
 
         # Round up division to get the number of batches that are necessary:
-        number_batches = (num_samples + self.max_batch_size - 1) // self.max_batch_size
+        number_batches = (num_samples + self.max_batch_size -
+                          1) // self.max_batch_size
         remaining_samples = num_samples
 
         log_probs = torch.zeros(num_samples, max_seq_length).to(self.device)
@@ -122,7 +123,8 @@ class ActionReplay(object):
             inp = action
 
             with torch.no_grad():
-                actor_output_prior, _, hidden_prior = prior(inp_prior, hidden_prior)
+                actor_output_prior, _, hidden_prior = prior(
+                    inp_prior, hidden_prior)
                 prob_prior = F.softmax(actor_output_prior, dim=2)
                 inp_prior = action
 

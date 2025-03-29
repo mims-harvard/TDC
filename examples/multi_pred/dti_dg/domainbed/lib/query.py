@@ -1,5 +1,4 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
-
 """Small query library."""
 
 import collections
@@ -30,10 +29,12 @@ def make_selector_fn(selector):
         elif '.' in selector:
             parts = selector.split('.')
             part_selectors = [make_selector_fn(part) for part in parts]
+
             def f(obj):
                 for sel in part_selectors:
                     obj = sel(obj)
                 return obj
+
             return f
         else:
             key = selector.strip()
@@ -43,14 +44,17 @@ def make_selector_fn(selector):
     else:
         raise TypeError
 
+
 def hashable(obj):
     try:
         hash(obj)
         return obj
     except TypeError:
-        return json.dumps({'_':obj}, sort_keys=True)
+        return json.dumps({'_': obj}, sort_keys=True)
+
 
 class Q(object):
+
     def __init__(self, list_):
         super(Q, self).__init__()
         self._list = list_
@@ -173,10 +177,12 @@ class Q(object):
     def sorted(self, key=None):
         if key is None:
             key = lambda x: x
+
         def key2(x):
             x = key(x)
             if isinstance(x, (np.floating, float)) and np.isnan(x):
                 return float('-inf')
             else:
                 return x
+
         return Q(sorted(self._list, key=key2))

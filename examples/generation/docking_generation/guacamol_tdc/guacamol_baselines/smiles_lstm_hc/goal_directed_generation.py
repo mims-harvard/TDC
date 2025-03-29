@@ -18,23 +18,28 @@ if __name__ == "__main__":
         default=None,
         help="Full path to the pre-trained SMILES RNN model",
     )
-    parser.add_argument(
-        "--max_len", default=100, type=int, help="Max length of a SMILES string"
-    )
+    parser.add_argument("--max_len",
+                        default=100,
+                        type=int,
+                        help="Max length of a SMILES string")
     parser.add_argument("--seed", default=42, type=int, help="Random seed")
-    parser.add_argument(
-        "--output_dir", default=None, help="Output directory for results"
-    )
+    parser.add_argument("--output_dir",
+                        default=None,
+                        help="Output directory for results")
     parser.add_argument(
         "--number_repetitions",
         default=1,
         type=int,
         help="Number of re-training runs to average",
     )
-    parser.add_argument(
-        "--keep_top", default=512, type=int, help="Molecules kept each step"
-    )
-    parser.add_argument("--n_epochs", default=20, type=int, help="Epochs to sample")
+    parser.add_argument("--keep_top",
+                        default=512,
+                        type=int,
+                        help="Molecules kept each step")
+    parser.add_argument("--n_epochs",
+                        default=20,
+                        type=int,
+                        help="Epochs to sample")
     parser.add_argument(
         "--mols_to_sample",
         default=1024,
@@ -57,12 +62,14 @@ if __name__ == "__main__":
         "--benchmark_num_samples",
         default=4096,
         type=int,
-        help="Number of molecules to generate from final model for the benchmark",
+        help=
+        "Number of molecules to generate from final model for the benchmark",
     )
     parser.add_argument(
         "--benchmark_trajectory",
         action="store_true",
-        help="Take molecules generated during re-training into account for the benchmark",
+        help=
+        "Take molecules generated during re-training into account for the benchmark",
     )
     parser.add_argument("--smiles_file", default="data/guacamol_v1_all.smiles")
     parser.add_argument("--random_start", action="store_true")
@@ -75,9 +82,8 @@ if __name__ == "__main__":
 
     if args.model_path is None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        args.model_path = os.path.join(
-            dir_path, "pretrained_model", "model_final_0.473.pt"
-        )
+        args.model_path = os.path.join(dir_path, "pretrained_model",
+                                       "model_final_0.473.pt")
 
     optimizer = SmilesRnnDirectedGenerator(
         pretrained_model_path=args.model_path,
@@ -94,6 +100,6 @@ if __name__ == "__main__":
     )
 
     json_file_path = os.path.join(args.output_dir, "goal_directed_results.json")
-    assess_goal_directed_generation(
-        optimizer, json_output_file=json_file_path, benchmark_version=args.suite
-    )
+    assess_goal_directed_generation(optimizer,
+                                    json_output_file=json_file_path,
+                                    benchmark_version=args.suite)

@@ -1,4 +1,4 @@
-"""wrapper for download various dataset 
+"""wrapper for download various dataset
 """
 import requests
 from zipfile import ZipFile

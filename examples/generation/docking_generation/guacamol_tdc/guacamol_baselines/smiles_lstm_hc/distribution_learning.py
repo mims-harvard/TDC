@@ -20,13 +20,13 @@ if __name__ == "__main__":
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--seed", default=42, type=int, help="Random seed")
-    parser.add_argument(
-        "--model_path", default=None, help="Full path to SMILES RNN model"
-    )
+    parser.add_argument("--model_path",
+                        default=None,
+                        help="Full path to SMILES RNN model")
     parser.add_argument("--output_dir", default=None, help="Output directory")
-    parser.add_argument(
-        "--dist_file", default="data/guacamol_v1_all.smiles", help="Distribution file"
-    )
+    parser.add_argument("--dist_file",
+                        default="data/guacamol_v1_all.smiles",
+                        help="Distribution file")
     parser.add_argument("--suite", default="v2")
 
     args = parser.parse_args()
@@ -41,15 +41,15 @@ if __name__ == "__main__":
 
     if args.model_path is None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        args.model_path = os.path.join(
-            dir_path, "pretrained_model", "model_final_0.473.pt"
-        )
+        args.model_path = os.path.join(dir_path, "pretrained_model",
+                                       "model_final_0.473.pt")
 
     model_def = Path(args.model_path).with_suffix(".json")
     model = load_rnn_model(model_def, args.model_path, device, copy_to_cpu=True)
     generator = SmilesRnnGenerator(model=model, device=device)
 
-    json_file_path = os.path.join(args.output_dir, "distribution_learning_results.json")
+    json_file_path = os.path.join(args.output_dir,
+                                  "distribution_learning_results.json")
     assess_distribution_learning(
         generator,
         chembl_training_file=args.dist_file,

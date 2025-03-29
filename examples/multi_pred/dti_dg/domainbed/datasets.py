@@ -169,6 +169,7 @@ from torch.utils import data
 
 
 class dti_tensor_dataset(data.Dataset):
+
     def __init__(self, df):
         self.df = df
 
@@ -187,6 +188,7 @@ class dti_tensor_dataset(data.Dataset):
 
 
 class TdcDtiDg(MultipleDomainDataset):
+
     def __init__(self, root, test_envs, hparams):
         super().__init__()
 
@@ -220,9 +222,13 @@ class TdcDtiDg(MultipleDomainDataset):
         unique_dict_drug = dict(zip(train_val["Drug"].unique(), unique_drug))
         train_val["Drug_Enc"] = [unique_dict_drug[i] for i in train_val["Drug"]]
 
-        unique_target = pd.Series(train_val["Target"].unique()).apply(trans_protein)
-        unique_dict_target = dict(zip(train_val["Target"].unique(), unique_target))
-        train_val["Target_Enc"] = [unique_dict_target[i] for i in train_val["Target"]]
+        unique_target = pd.Series(
+            train_val["Target"].unique()).apply(trans_protein)
+        unique_dict_target = dict(
+            zip(train_val["Target"].unique(), unique_target))
+        train_val["Target_Enc"] = [
+            unique_dict_target[i] for i in train_val["Target"]
+        ]
 
         for i in TRAIN_ENV:
             df_data = train_val[train_val.Year == int(i)]

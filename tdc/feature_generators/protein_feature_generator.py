@@ -80,10 +80,10 @@ class ProteinFeatureGenerator(DataFeatureGenerator):
     def get_protein_sequence(cls, gene_name: str) -> str:
         """
         Retrieves protein sequence for the given gene name.
-        
+
         Args:
             gene_name (str): Gene name.
-            
+
         Returns:
             str: Protein amino acid sequence.
         """
@@ -131,11 +131,11 @@ class ProteinFeatureGenerator(DataFeatureGenerator):
                                 gene_column: str) -> DataFrame:
         """
         Inserts protein sequence for each gene in the given DataFrame.
-        
+
         Args:
             gene_df (pd.DataFrame): Input DataFrame containing gene identifiers.
             gene_column (str): Column name in gene_df that contains gene identifiers.
-            
+
         Returns:
             pd.DataFrame: DataFrame with an additional column for protein sequences.
         """

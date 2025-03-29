@@ -49,7 +49,11 @@ def get_tensor_dataset_on_device(numpy_array, device):
     return dataset
 
 
-def load_model(model_class, model_definition, model_weights, device, copy_to_cpu=True):
+def load_model(model_class,
+               model_definition,
+               model_weights,
+               device,
+               copy_to_cpu=True):
     """
 
     Args:
@@ -80,7 +84,8 @@ def load_model(model_class, model_definition, model_weights, device, copy_to_cpu
 
 
 def load_rnn_model(model_definition, model_weights, device, copy_to_cpu=True):
-    return load_model(SmilesRnn, model_definition, model_weights, device, copy_to_cpu)
+    return load_model(SmilesRnn, model_definition, model_weights, device,
+                      copy_to_cpu)
 
 
 def save_model(model, base_dir, base_name):
@@ -92,9 +97,10 @@ def save_model(model, base_dir, base_name):
         mc.write(json.dumps(model.config))
 
 
-def load_smiles_from_file(
-    smiles_path, rm_invalid=True, rm_duplicates=True, max_len=100
-):
+def load_smiles_from_file(smiles_path,
+                          rm_invalid=True,
+                          rm_duplicates=True,
+                          max_len=100):
     """
     Given a list of SMILES strings, provides a zero padded NumPy array
     with their index representation. Sequences longer than `max_len` are
@@ -110,14 +116,16 @@ def load_smiles_from_file(
         valid_mask: list of len(smiles_list) - a boolean mask vector indicating if each index maps to a valid smiles
     """
     smiles_list = open(smiles_path).readlines()
-    return load_smiles_from_list(
-        smiles_list, rm_invalid=rm_invalid, rm_duplicates=rm_duplicates, max_len=max_len
-    )
+    return load_smiles_from_list(smiles_list,
+                                 rm_invalid=rm_invalid,
+                                 rm_duplicates=rm_duplicates,
+                                 max_len=max_len)
 
 
-def load_smiles_from_list(
-    smiles_list, rm_invalid=True, rm_duplicates=True, max_len=100
-):
+def load_smiles_from_list(smiles_list,
+                          rm_invalid=True,
+                          rm_duplicates=True,
+                          max_len=100):
     """
     Given a list of SMILES strings, provides a zero padded NumPy array
     with their index representation. Sequences longer than `max_len` are

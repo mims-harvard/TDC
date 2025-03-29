@@ -35,7 +35,6 @@ from mol_dqn.chemgraph.mcts import molecules as molecules_mdp
 from mol_dqn.chemgraph.mcts import run_dqn
 from mol_dqn.chemgraph.tensorflow import core
 
-
 flags.DEFINE_float("gamma", 0.999, "discount")
 FLAGS = flags.FLAGS
 
@@ -69,13 +68,13 @@ def penalized_logp(molecule):
 
 
 class Molecule(molecules_mdp.Molecule):
+
     def _reward(self):
         molecule = Chem.MolFromSmiles(self._state)
         if molecule is None:
             return 0.0
-        return penalized_logp(molecule) * FLAGS.gamma ** (
-            self.max_steps - self._counter
-        )
+        return penalized_logp(molecule) * FLAGS.gamma**(self.max_steps -
+                                                        self._counter)
 
 
 def main(argv):
@@ -98,7 +97,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

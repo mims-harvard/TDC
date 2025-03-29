@@ -76,7 +76,7 @@ class DatasetConfig(ConfigBase):
 
 class LoaderConfig(DatasetConfig):
     """Class for representing configs for DataLoader instances
-    
+
     Requires DataLoader parent class to inherit from dictionary
     LoaderConfig allows DataLoader instance variables to be used
     as parameters in feature generation"""

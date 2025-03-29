@@ -45,7 +45,8 @@ def atom_valences(atom_types):
     """
     periodic_table = Chem.GetPeriodicTable()
     return [
-        max(list(periodic_table.GetValenceList(atom_type))) for atom_type in atom_types
+        max(list(periodic_table.GetValenceList(atom_type)))
+        for atom_type in atom_types
     ]
 
 
@@ -58,7 +59,8 @@ def get_scaffold(mol):
     Returns:
       String scaffold SMILES.
     """
-    return Chem.MolToSmiles(MurckoScaffold.GetScaffoldForMol(mol), isomericSmiles=True)
+    return Chem.MolToSmiles(MurckoScaffold.GetScaffoldForMol(mol),
+                            isomericSmiles=True)
 
 
 def contains_scaffold(mol, scaffold):

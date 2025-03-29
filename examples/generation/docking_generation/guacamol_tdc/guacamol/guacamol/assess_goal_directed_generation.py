@@ -69,7 +69,8 @@ def _evaluate_goal_directed_benchmarks(
 
     results = []
     for i, benchmark in enumerate(benchmarks, 1):
-        logger.info(f"Running benchmark {i}/{len(benchmarks)}: {benchmark.name}")
+        logger.info(
+            f"Running benchmark {i}/{len(benchmarks)}: {benchmark.name}")
         result = benchmark.assess_model(goal_directed_molecule_generator)
         logger.info(f'Results for the benchmark "{result.benchmark_name}":')
         logger.info(f"  Score: {result.score:.6f}")

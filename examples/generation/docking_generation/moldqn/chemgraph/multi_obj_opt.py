@@ -50,7 +50,8 @@ class MultiObjectiveRewardMolecule(molecules_mdp.Molecule):
       reward = weight * similarity_score + (1 - weight) *  qed_score
     """
 
-    def __init__(self, target_molecule, similarity_weight, discount_factor, **kwargs):
+    def __init__(self, target_molecule, similarity_weight, discount_factor,
+                 **kwargs):
         """Initializes the class.
 
         Args:
@@ -92,9 +93,8 @@ class MultiObjectiveRewardMolecule(molecules_mdp.Molecule):
             return 0.0
         fingerprint_structure = self.get_fingerprint(structure)
 
-        return DataStructs.TanimotoSimilarity(
-            self._target_mol_fingerprint, fingerprint_structure
-        )
+        return DataStructs.TanimotoSimilarity(self._target_mol_fingerprint,
+                                              fingerprint_structure)
 
     def _reward(self):
         """Calculates the reward of the current state.
@@ -116,9 +116,8 @@ class MultiObjectiveRewardMolecule(molecules_mdp.Molecule):
         # calculate QED
         qed_value = QED.qed(mol)
         reward = similarity_score * self._sim_weight + qed_value * (
-            1 - self._sim_weight
-        )
-        discount = self._discount_factor ** (self.max_steps - self._counter)
+            1 - self._sim_weight)
+        discount = self._discount_factor**(self.max_steps - self._counter)
         return reward * discount
 
 
@@ -145,7 +144,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

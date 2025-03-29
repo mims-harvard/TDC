@@ -6,6 +6,7 @@ from MARS.common.nn import GraphEncoder, MLP
 
 
 class Editor(ABC, nn.Module):
+
     def __init__(self, config):
         super().__init__()
         self.device = config["device"]

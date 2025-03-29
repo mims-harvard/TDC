@@ -8,7 +8,6 @@ from ...common.chem import fingerprints_from_mol
 lg = RDLogger.logger()
 lg.setLevel(RDLogger.CRITICAL)
 
-
 ROOT_DIR = "MARS/estimator/scorer"
 TASKS = ["gsk3b", "jnk3"]
 SPLITS = ["val", "dev"]

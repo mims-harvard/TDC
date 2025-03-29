@@ -12,17 +12,19 @@ logger.addHandler(logging.NullHandler())
 
 
 class PPOMoleculeGenerator:
-    def __init__(self, model: SmilesRnnActorCritic, max_seq_length, device) -> None:
+
+    def __init__(self, model: SmilesRnnActorCritic, max_seq_length,
+                 device) -> None:
         self.model = model
         self.max_seq_length = max_seq_length
         self.device = device
         self.sampler = SmilesRnnSampler(device=device, batch_size=512)
 
-    def optimise(
-        self, objective: ScoringFunction, start_population: list, **kwargs
-    ) -> List[OptResult]:
+    def optimise(self, objective: ScoringFunction, start_population: list,
+                 **kwargs) -> List[OptResult]:
         if start_population:
-            logger.warning("PPO algorithm does not support (yet) a starting population")
+            logger.warning(
+                "PPO algorithm does not support (yet) a starting population")
         num_epochs = kwargs["num_epochs"]
         episode_size = kwargs["optimize_episode_size"]
         batch_size = kwargs["optimize_batch_size"]

@@ -11,7 +11,8 @@ if __name__ == "__main__":
     setup_default_logger()
 
     parser = argparse.ArgumentParser(
-        description="Goal-directed benchmark for best molecules from SMILES file",
+        description=
+        "Goal-directed benchmark for best molecules from SMILES file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--smiles_file", default="data/guacamol_v1_all.smiles")
@@ -26,10 +27,11 @@ if __name__ == "__main__":
 
     smiles_reader = ChemblFileReader(args.smiles_file)
 
-    optimizer = BestFromChemblOptimizer(smiles_reader=smiles_reader, n_jobs=args.n_jobs)
+    optimizer = BestFromChemblOptimizer(smiles_reader=smiles_reader,
+                                        n_jobs=args.n_jobs)
 
     json_file_path = os.path.join(args.output_dir, "goal_directed_results.json")
 
-    assess_goal_directed_generation(
-        optimizer, json_output_file=json_file_path, benchmark_version=args.suite
-    )
+    assess_goal_directed_generation(optimizer,
+                                    json_output_file=json_file_path,
+                                    benchmark_version=args.suite)

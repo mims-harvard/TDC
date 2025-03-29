@@ -56,7 +56,8 @@ def calculateScore(m):
 
     # fragment score
     fp = rdMolDescriptors.GetMorganFingerprint(
-        m, 2  # <- 2 is the *radius* of the circular fingerprint
+        m,
+        2  # <- 2 is the *radius* of the circular fingerprint
     )
     fps = fp.GetNonzeroElements()
     score1 = 0.0
@@ -89,14 +90,8 @@ def calculateScore(m):
     if nMacrocycles > 0:
         macrocyclePenalty = math.log10(2)
 
-    score2 = (
-        0.0
-        - sizePenalty
-        - stereoPenalty
-        - spiroPenalty
-        - bridgePenalty
-        - macrocyclePenalty
-    )
+    score2 = (0.0 - sizePenalty - stereoPenalty - spiroPenalty - bridgePenalty -
+              macrocyclePenalty)
 
     # correction for the fingerprint density
     # not in the original publication, added in version 1.1
@@ -148,8 +143,8 @@ if __name__ == "__main__":
     t4 = time.time()
 
     print(
-        "Reading took %.2f seconds. Calculating took %.2f seconds"
-        % ((t2 - t1), (t4 - t3)),
+        "Reading took %.2f seconds. Calculating took %.2f seconds" %
+        ((t2 - t1), (t4 - t3)),
         file=sys.stderr,
     )
 

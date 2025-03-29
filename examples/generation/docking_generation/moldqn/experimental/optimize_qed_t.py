@@ -39,7 +39,6 @@ from mol_dqn.chemgraph.mcts import deep_q_networks
 from mol_dqn.chemgraph.mcts import molecules as molecules_mdp
 from mol_dqn.chemgraph.tensorflow import core
 
-
 flags.DEFINE_float("gamma", 0.999, "discount")
 FLAGS = flags.FLAGS
 
@@ -55,7 +54,7 @@ class Molecule(molecules_mdp.Molecule):
             qed = QED.qed(molecule)
         except ValueError:
             qed = 0
-        return qed * FLAGS.gamma ** (self.max_steps - self._counter)
+        return qed * FLAGS.gamma**(self.max_steps - self._counter)
 
 
 def run_training(hparams, environment, dqn):
@@ -93,11 +92,11 @@ def run_training(hparams, environment, dqn):
         )
         if hparams.prioritized:
             memory = replay_buffer.PrioritizedReplayBuffer(
-                hparams.replay_buffer_size, hparams.prioritized_alpha
-            )
+                hparams.replay_buffer_size, hparams.prioritized_alpha)
             beta_schedule = schedules.LinearSchedule(
-                hparams.num_episodes, initial_p=hparams.prioritized_beta, final_p=0
-            )
+                hparams.num_episodes,
+                initial_p=hparams.prioritized_beta,
+                final_p=0)
         else:
             memory = replay_buffer.ReplayBuffer(hparams.replay_buffer_size)
             beta_schedule = None
@@ -119,9 +118,9 @@ def run_training(hparams, environment, dqn):
             if (episode + 1) % hparams.update_frequency == 0:
                 sess.run(dqn.update_op)
             if (episode + 1) % hparams.save_frequency == 0:
-                model_saver.save(
-                    sess, os.path.join(FLAGS.model_dir, "ckpt"), global_step=global_step
-                )
+                model_saver.save(sess,
+                                 os.path.join(FLAGS.model_dir, "ckpt"),
+                                 global_step=global_step)
 
 
 def _episode(
@@ -181,8 +180,7 @@ def _episode(
             # Use %s since reward can be a tuple or a float number.
             logging.info("The reward is: %s", str(result.reward))
         if (episode > min(50, hparams.num_episodes / 10)) and (
-            global_step % hparams.learning_frequency == 0
-        ):
+                global_step % hparams.learning_frequency == 0):
             if hparams.prioritized:
                 (
                     state_t,
@@ -192,11 +190,11 @@ def _episode(
                     done_mask,
                     weight,
                     indices,
-                ) = memory.sample(hparams.batch_size, beta=beta_schedule.value(episode))
+                ) = memory.sample(hparams.batch_size,
+                                  beta=beta_schedule.value(episode))
             else:
-                (state_t, _, reward_t, state_tp1, done_mask) = memory.sample(
-                    hparams.batch_size
-                )
+                (state_t, _, reward_t, state_tp1,
+                 done_mask) = memory.sample(hparams.batch_size)
                 weight = np.ones([reward_t.shape[0]])
             # np.atleast_2d cannot be used here because a new dimension will
             # be always added in the front and there is no way of changing this.
@@ -214,7 +212,8 @@ def _episode(
             if hparams.prioritized:
                 memory.update_priorities(
                     indices,
-                    np.abs(np.squeeze(td_error) + hparams.prioritized_epsilon).tolist(),
+                    np.abs(np.squeeze(td_error) +
+                           hparams.prioritized_epsilon).tolist(),
                 )
         global_step += 1
     return global_step
@@ -237,32 +236,23 @@ def _step(environment, dqn, memory, episode, hparams, exploration, head):
     """
     # Compute the encoding for each valid action from the current state.
     valid_actions = list(environment.get_valid_actions())
-    observations = np.vstack(
-        [
-            np.append(
-                deep_q_networks.get_fingerprint(act, hparams),
-                environment.num_steps_taken,
-            )
-            for act in valid_actions
-        ]
-    )
+    observations = np.vstack([
+        np.append(
+            deep_q_networks.get_fingerprint(act, hparams),
+            environment.num_steps_taken,
+        ) for act in valid_actions
+    ])
     # Select the next action to take.
-    action = valid_actions[
-        dqn.get_action(
-            observations, head=head, update_epsilon=exploration.value(episode)
-        )
-    ]
+    action = valid_actions[dqn.get_action(
+        observations, head=head, update_epsilon=exploration.value(episode))]
     result = environment.step(action)
     # Compute the encoding for each valid action from the new state.
-    action_fingerprints = np.vstack(
-        [
-            np.append(
-                deep_q_networks.get_fingerprint(act, hparams),
-                environment.num_steps_taken,
-            )
-            for act in environment.get_valid_actions()
-        ]
-    )
+    action_fingerprints = np.vstack([
+        np.append(
+            deep_q_networks.get_fingerprint(act, hparams),
+            environment.num_steps_taken,
+        ) for act in environment.get_valid_actions()
+    ])
     # we store the fingerprint of the action in obs_t so action
     # does not matter here.
     memory.add(
@@ -296,7 +286,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

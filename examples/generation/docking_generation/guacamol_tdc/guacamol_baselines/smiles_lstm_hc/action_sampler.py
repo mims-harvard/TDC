@@ -37,9 +37,8 @@ class ActionSampler:
         self.max_seq_length = max_seq_length
         self.device = device
 
-        self.distribution_cls = (
-            Categorical if distribution_cls is None else distribution_cls
-        )
+        self.distribution_cls = (Categorical if distribution_cls is None else
+                                 distribution_cls)
 
     def sample(self, model: SmilesRnn, num_samples: int) -> torch.Tensor:
         """
@@ -54,10 +53,12 @@ class ActionSampler:
         """
 
         # Round up division to get the number of batches that are necessary:
-        number_batches = (num_samples + self.max_batch_size - 1) // self.max_batch_size
+        number_batches = (num_samples + self.max_batch_size -
+                          1) // self.max_batch_size
         remaining_samples = num_samples
 
-        actions = torch.LongTensor(num_samples, self.max_seq_length).to(self.device)
+        actions = torch.LongTensor(num_samples,
+                                   self.max_seq_length).to(self.device)
 
         batch_start = 0
 
@@ -65,7 +66,8 @@ class ActionSampler:
             batch_size = min(self.max_batch_size, remaining_samples)
             batch_end = batch_start + batch_size
 
-            actions[batch_start:batch_end, :] = self._sample_batch(model, batch_size)
+            actions[batch_start:batch_end, :] = self._sample_batch(
+                model, batch_size)
 
             batch_start += batch_size
             remaining_samples -= batch_size
@@ -87,9 +89,8 @@ class ActionSampler:
 
         inp = rnn_start_token_vector(batch_size, self.device)
 
-        actions = torch.zeros((batch_size, self.max_seq_length), dtype=torch.long).to(
-            self.device
-        )
+        actions = torch.zeros((batch_size, self.max_seq_length),
+                              dtype=torch.long).to(self.device)
 
         for char in range(self.max_seq_length):
             output, hidden = model(inp, hidden)

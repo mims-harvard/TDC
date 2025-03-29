@@ -21,7 +21,9 @@ oracle2 = Oracle(
     name="Docking_Score",
     software="vina",
     pyscreener_path="./",
-    receptors=["/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"],
+    receptors=[
+        "/project/molecular_data/graphnn/pyscreener/testing_inputs/DRD3.pdb"
+    ],
     center=(9, 22.5, 26),
     size=(15, 15, 15),
     buffer=10,
@@ -30,8 +32,8 @@ oracle2 = Oracle(
     ncpu=8,
 )
 
-
 import random
+
 
 ### get scores
 def get_scores(objective, mols, smiles2score=None):

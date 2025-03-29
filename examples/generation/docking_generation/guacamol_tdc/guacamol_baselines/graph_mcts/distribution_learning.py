@@ -57,6 +57,7 @@ def sample_molecule(mol, smiles, max_atoms, max_children, stats):
 
 
 class GB_MCTS_Sampler(DistributionMatchingGenerator):
+
     def __init__(
         self,
         pickle_directory: str,
@@ -119,12 +120,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--smiles_file",
-        help="Location of the ChEMBL dataset to use for the distribution benchmarks.",
+        help=
+        "Location of the ChEMBL dataset to use for the distribution benchmarks.",
         default="data/guacamol_v1_all.smiles",
     )
     parser.add_argument(
         "--pickle_directory",
-        help="Directory containing pickle files with the distribution statistics",
+        help=
+        "Directory containing pickle files with the distribution statistics",
         default=None,
     )
     parser.add_argument("--seed", type=int, default=0)
@@ -152,8 +155,8 @@ def main():
 
     # save command line args
     with open(
-        os.path.join(args.output_dir, "distribution_learning_params.json"), "w"
-    ) as jf:
+            os.path.join(args.output_dir, "distribution_learning_params.json"),
+            "w") as jf:
         json.dump(vars(args), jf, sort_keys=True, indent=4)
 
     sampler = GB_MCTS_Sampler(
@@ -168,7 +171,8 @@ def main():
         population_size=args.population_size,
     )
 
-    json_file_path = os.path.join(args.output_dir, "distribution_learning_results.json")
+    json_file_path = os.path.join(args.output_dir,
+                                  "distribution_learning_results.json")
     assess_distribution_learning(
         sampler,
         json_output_file=json_file_path,

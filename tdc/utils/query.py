@@ -1,4 +1,4 @@
-"""Utilities functions for query  
+"""Utilities functions for query
 """
 import json
 import os, sys

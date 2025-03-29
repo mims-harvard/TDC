@@ -37,8 +37,8 @@ def uniform_specification(*top_counts: int) -> ScoreContributionSpecification:
 
 
 def compute_global_score(
-    contribution_specification: ScoreContributionSpecification, scores: List[float]
-) -> Tuple[float, Dict[str, float]]:
+        contribution_specification: ScoreContributionSpecification,
+        scores: List[float]) -> Tuple[float, Dict[str, float]]:
     """
     Computes the global score according to the contribution specification.
 

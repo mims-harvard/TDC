@@ -52,16 +52,16 @@ def _assess_distribution_learning(
     Internal equivalent to assess_distribution_learning, but allows for a flexible number of samples.
     To call directly only for testing.
     """
-    logger.info(f"Benchmarking distribution learning, version {benchmark_version}")
+    logger.info(
+        f"Benchmarking distribution learning, version {benchmark_version}")
     benchmarks = distribution_learning_benchmark_suite(
         chembl_file_path=chembl_training_file,
         version_name=benchmark_version,
         number_samples=number_samples,
     )
 
-    results = _evaluate_distribution_learning_benchmarks(
-        model=model, benchmarks=benchmarks
-    )
+    results = _evaluate_distribution_learning_benchmarks(model=model,
+                                                         benchmarks=benchmarks)
 
     benchmark_results: Dict[str, Any] = OrderedDict()
     benchmark_results["guacamol_version"] = guacamol.__version__
@@ -93,7 +93,8 @@ def _evaluate_distribution_learning_benchmarks(
 
     results = []
     for i, benchmark in enumerate(benchmarks, 1):
-        logger.info(f"Running benchmark {i}/{len(benchmarks)}: {benchmark.name}")
+        logger.info(
+            f"Running benchmark {i}/{len(benchmarks)}: {benchmark.name}")
         result = benchmark.assess_model(model)
         logger.info(f'Results for the benchmark "{result.benchmark_name}":')
         logger.info(f"  Score: {result.score:.6f}")

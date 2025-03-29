@@ -19,7 +19,6 @@ parser.add_argument("--num_runs", type=int, default=1)
 parser.add_argument("--run_dir", type=str, default=None)
 parser.add_argument("--mols_ref", type=str, default=None)
 args = parser.parse_args()
-
 """
 evaluate generated molecules (in the format of .tsv)
 
@@ -32,7 +31,9 @@ success standards:
 ### reference molecules
 if args.mols_ref:
     true_mols = load_mols(os.path.join(ROOT_DIR, "data"), args.mols_ref)
-    true_fps = [AllChem.GetMorganFingerprintAsBitVect(x, 3, 2048) for x in true_mols]
+    true_fps = [
+        AllChem.GetMorganFingerprintAsBitVect(x, 3, 2048) for x in true_mols
+    ]
 else:
     true_fps = None
 
@@ -49,7 +50,7 @@ if args.run_dir:
             lines = f.readlines()
             lines = [line.strip().split("\t") for line in lines]
             titles = lines[1]
-            mol_lines += lines[-args.num_mols :]
+            mol_lines += lines[-args.num_mols:]
 else:
     lines = [line.strip().split("\t") for line in sys.stdin]
     titles = lines[0]
@@ -85,7 +86,9 @@ for line in mol_lines:  # lines[0] for table titles
 
 success = 1.0 * len(pred_mols) / len(mol_lines)
 print("success: %.4f (%i)" % (success, len(mol_lines)))
-pred_fps = [AllChem.GetMorganFingerprintAsBitVect(x, 3, 2048) for x in pred_mols]
+pred_fps = [
+    AllChem.GetMorganFingerprintAsBitVect(x, 3, 2048) for x in pred_mols
+]
 
 ### novelty
 if true_fps:

@@ -19,7 +19,6 @@ from .datasets.utils import load_mols
 lg = RDLogger.logger()
 lg.setLevel(RDLogger.CRITICAL)
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--device", type=str, default="cpu")
@@ -41,15 +40,18 @@ if __name__ == "__main__":
     parser.add_argument("--num_runs", type=int, default=1)
     parser.add_argument("--log_every", type=int, default=1)
 
-    parser.add_argument(
-        "--sampler", type=str, default="sa", help="mcmc sampling algorithm"
-    )
-    parser.add_argument(
-        "--proposal", type=str, default="mix", help="how to pose proposals"
-    )
-    parser.add_argument(
-        "--rand_ratio", type=float, default=0.1, help="random ratio in mix proposal"
-    )
+    parser.add_argument("--sampler",
+                        type=str,
+                        default="sa",
+                        help="mcmc sampling algorithm")
+    parser.add_argument("--proposal",
+                        type=str,
+                        default="mix",
+                        help="how to pose proposals")
+    parser.add_argument("--rand_ratio",
+                        type=float,
+                        default=0.1,
+                        help="random ratio in mix proposal")
     # parser.add_argument('--objectives', type=str,   default='gsk3b,jnk3,qed,sa,div')
     parser.add_argument("--objectives", type=str, default="docking")
     parser.add_argument("--score_wght", type=str, default="  1.0")
@@ -82,12 +84,11 @@ if __name__ == "__main__":
     config["run_dir"] = os.path.join(config["root_dir"], config["run_dir"])
     config["data_dir"] = os.path.join(config["root_dir"], config["data_dir"])
     os.makedirs(config["run_dir"], exist_ok=config["run_exist"])
-    log.basicConfig(
-        format="%(asctime)s: %(message)s", datefmt="%m/%d %I:%M:%S %p", level=log.INFO
-    )
+    log.basicConfig(format="%(asctime)s: %(message)s",
+                    datefmt="%m/%d %I:%M:%S %p",
+                    level=log.INFO)
     log.getLogger().addHandler(
-        log.FileHandler(os.path.join(config["run_dir"], "log.txt"), mode="w")
-    )
+        log.FileHandler(os.path.join(config["run_dir"], "log.txt"), mode="w"))
     log.info(str(config))
 
     # random.seed(0)
@@ -98,11 +99,8 @@ if __name__ == "__main__":
     ### estimator
     if config["mols_ref"]:
         config["mols_ref"] = load_mols(config["data_dir"], config["mols_ref"])
-    discriminator = (
-        Discriminator(config).to(config["device"])
-        if "adv" in config["objectives"]
-        else None
-    )
+    discriminator = (Discriminator(config).to(config["device"])
+                     if "adv" in config["objectives"] else None)
     estimator = Estimator(config, discriminator)
 
     for run in range(config["num_runs"]):
@@ -110,18 +108,13 @@ if __name__ == "__main__":
         log.info("Run %02d: ======================" % run)
 
         ### proposal
-        editor = (
-            BasicEditor(config).to(config["device"])
-            if not config["proposal"] == "random"
-            else None
-        )
+        editor = (BasicEditor(config).to(config["device"])
+                  if not config["proposal"] == "random" else None)
         if config["editor_dir"] is not None:  # load pre-trained editor
-            path = os.path.join(
-                config["root_dir"], config["editor_dir"], "model_best.pt"
-            )
+            path = os.path.join(config["root_dir"], config["editor_dir"],
+                                "model_best.pt")
             editor.load_state_dict(
-                torch.load(path, map_location=torch.device(config["device"]))
-            )
+                torch.load(path, map_location=torch.device(config["device"])))
             print("successfully loaded editor model from %s" % path)
         if config["proposal"] == "random":
             proposal = Proposal_Random(config)
@@ -146,8 +139,10 @@ if __name__ == "__main__":
         if config["mols_init"]:
             mols = load_mols(config["data_dir"], config["mols_init"])
             mols = random.choices(mols, k=config["num_mols"])
-            mols_init = mols[: config["num_mols"]]
+            mols_init = mols[:config["num_mols"]]
         else:
-            mols_init = [Chem.MolFromSmiles("CC") for _ in range(config["num_mols"])]
+            mols_init = [
+                Chem.MolFromSmiles("CC") for _ in range(config["num_mols"])
+            ]
 
         sampler.sample(run_dir, mols_init)

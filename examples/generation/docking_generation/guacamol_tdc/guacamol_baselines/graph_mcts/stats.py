@@ -47,12 +47,11 @@ def get_stats_from_pickle(dir_path: str) -> Stats:
     """
 
     average_size, size_std_dev = pickle.load(
-        open(os.path.join(dir_path, "size_stats.p"), "rb")
-    )
+        open(os.path.join(dir_path, "size_stats.p"), "rb"))
     rxn_smarts_make_ring = pickle.load(
-        open(os.path.join(dir_path, "rs_make_ring.p"), "rb")
-    )
-    rxn_smarts_ring_list = pickle.load(open(os.path.join(dir_path, "rs_ring.p"), "rb"))
+        open(os.path.join(dir_path, "rs_make_ring.p"), "rb"))
+    rxn_smarts_ring_list = pickle.load(
+        open(os.path.join(dir_path, "rs_ring.p"), "rb"))
 
     rxn_smarts_list = pickle.load(open(os.path.join(dir_path, "r_s1.p"), "rb"))
     p = pickle.load(open(os.path.join(dir_path, "p1.p"), "rb"))

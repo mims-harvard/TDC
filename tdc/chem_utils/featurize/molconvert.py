@@ -140,7 +140,7 @@ def smiles2maccs(s):
   ECFP2 ---- 1
   ECFP4 ---- 2
   ECFP6 ---- 3
-  xxxxxxxxx  ------  https://github.com/rdkit/benchmarking_platform/blob/master/scoring/fingerprint_lib.py 
+  xxxxxxxxx  ------  https://github.com/rdkit/benchmarking_platform/blob/master/scoring/fingerprint_lib.py
 
 """
 

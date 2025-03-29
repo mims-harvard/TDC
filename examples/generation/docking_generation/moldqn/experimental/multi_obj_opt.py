@@ -59,12 +59,13 @@ flags.DEFINE_string(
     "/namespace/gas/primary/zzp/dqn/r=3/exp2_bs_dqn",
     "The directory to save data to.",
 )
-flags.DEFINE_string(
-    "target_molecule", "C1CCC2CCCCC2C1", "The SMILES string of the target molecule."
-)
-flags.DEFINE_string("start_molecule", None, "The SMILES string of the start molecule.")
+flags.DEFINE_string("target_molecule", "C1CCC2CCCCC2C1",
+                    "The SMILES string of the target molecule.")
+flags.DEFINE_string("start_molecule", None,
+                    "The SMILES string of the start molecule.")
 flags.DEFINE_string("hparams", None, "Filename for serialized HParams.")
-flags.DEFINE_boolean("multi_objective", True, "Whether to run multi objective DQN.")
+flags.DEFINE_boolean("multi_objective", True,
+                     "Whether to run multi objective DQN.")
 flags.DEFINE_integer("num_episodes", 2000, "num episodes")
 flags.DEFINE_float("gamma", 0.999, "discount")
 
@@ -96,7 +97,7 @@ class TargetWeightMolecule(molecules_mdp.Molecule):
         molecule = Chem.MolFromSmiles(self._state)
         if molecule is None:
             return -self.target_weight**2
-        return -((Descriptors.MolWt(molecule) - self.target_weight) ** 2)
+        return -((Descriptors.MolWt(molecule) - self.target_weight)**2)
 
 
 class MultiObjectiveRewardMolecule(molecules_mdp.Molecule):
@@ -146,9 +147,8 @@ class MultiObjectiveRewardMolecule(molecules_mdp.Molecule):
             return 0.0
         fingerprint_structure = self.get_fingerprint(structure)
 
-        return DataStructs.TanimotoSimilarity(
-            self._target_mol_fingerprint, fingerprint_structure
-        )
+        return DataStructs.TanimotoSimilarity(self._target_mol_fingerprint,
+                                              fingerprint_structure)
 
     def _reward(self):
         """Calculates the reward of the current state.
@@ -172,9 +172,9 @@ class MultiObjectiveRewardMolecule(molecules_mdp.Molecule):
             similarity_score = 0.0
         # calculate QED
         qed_value = QED.qed(mol)
-        return similarity_score * FLAGS.gamma ** (
-            self.max_steps - self._counter
-        ), qed_value * FLAGS.gamma ** (self.max_steps - self._counter)
+        return similarity_score * FLAGS.gamma**(
+            self.max_steps - self._counter), qed_value * FLAGS.gamma**(
+                self.max_steps - self._counter)
 
 
 # TODO(zzp): use the tf.estimator interface.
@@ -213,11 +213,11 @@ def run_training(hparams, environment, dqn):
         )
         if hparams.prioritized:
             memory = replay_buffer.PrioritizedReplayBuffer(
-                hparams.replay_buffer_size, hparams.prioritized_alpha
-            )
+                hparams.replay_buffer_size, hparams.prioritized_alpha)
             beta_schedule = schedules.LinearSchedule(
-                hparams.num_episodes, initial_p=hparams.prioritized_beta, final_p=0
-            )
+                hparams.num_episodes,
+                initial_p=hparams.prioritized_beta,
+                final_p=0)
         else:
             memory = replay_buffer.ReplayBuffer(hparams.replay_buffer_size)
             beta_schedule = None
@@ -227,7 +227,8 @@ def run_training(hparams, environment, dqn):
         for episode in range(FLAGS.num_episodes * 6):
             sim_weight = random.random()
             dqn.objective_weight = np.array([[sim_weight], [1 - sim_weight]])
-            logging.info("Episode %i, ObjWeight %s", episode, str(dqn.objective_weight))
+            logging.info("Episode %i, ObjWeight %s", episode,
+                         str(dqn.objective_weight))
             global_step = _episode(
                 environment=environment,
                 dqn=dqn,
@@ -242,9 +243,9 @@ def run_training(hparams, environment, dqn):
             if (episode + 1) % hparams.update_frequency == 0:
                 sess.run(dqn.update_op)
             if (episode + 1) % hparams.save_frequency == 0:
-                model_saver.save(
-                    sess, os.path.join(FLAGS.model_dir, "ckpt"), global_step=global_step
-                )
+                model_saver.save(sess,
+                                 os.path.join(FLAGS.model_dir, "ckpt"),
+                                 global_step=global_step)
 
 
 def _episode(
@@ -304,8 +305,7 @@ def _episode(
             # Use %s since reward can be a tuple or a float number.
             logging.info("The reward is: %s", str(result.reward))
         if (episode > min(50, hparams.num_episodes / 10)) and (
-            global_step % hparams.learning_frequency == 0
-        ):
+                global_step % hparams.learning_frequency == 0):
             if hparams.prioritized:
                 (
                     state_t,
@@ -315,11 +315,11 @@ def _episode(
                     done_mask,
                     weight,
                     indices,
-                ) = memory.sample(hparams.batch_size, beta=beta_schedule.value(episode))
+                ) = memory.sample(hparams.batch_size,
+                                  beta=beta_schedule.value(episode))
             else:
-                (state_t, _, reward_t, state_tp1, done_mask) = memory.sample(
-                    hparams.batch_size
-                )
+                (state_t, _, reward_t, state_tp1,
+                 done_mask) = memory.sample(hparams.batch_size)
                 weight = np.ones([reward_t.shape[0]])
             # np.atleast_2d cannot be used here because a new dimension will
             # be always added in the front and there is no way of changing this.
@@ -337,7 +337,8 @@ def _episode(
             if hparams.prioritized:
                 memory.update_priorities(
                     indices,
-                    np.abs(np.squeeze(td_error) + hparams.prioritized_epsilon).tolist(),
+                    np.abs(np.squeeze(td_error) +
+                           hparams.prioritized_epsilon).tolist(),
                 )
         global_step += 1
     return global_step
@@ -361,28 +362,22 @@ def _step(environment, dqn, memory, episode, hparams, exploration, head):
     # Compute the encoding for each valid action from the current state.
     steps_left = hparams.max_steps_per_episode - environment.num_steps_taken
     valid_actions = list(environment.get_valid_actions())
-    observations = np.vstack(
-        [
-            np.append(deep_q_networks.get_fingerprint(act, hparams), steps_left)
-            for act in valid_actions
-        ]
-    )
-    action = valid_actions[
-        dqn.get_action(
-            observations, head=head, update_epsilon=exploration.value(episode)
-        )
-    ]
+    observations = np.vstack([
+        np.append(deep_q_networks.get_fingerprint(act, hparams), steps_left)
+        for act in valid_actions
+    ])
+    action = valid_actions[dqn.get_action(
+        observations, head=head, update_epsilon=exploration.value(episode))]
     result = environment.step(action)
-    action_fingerprints = np.vstack(
-        [
-            np.append(deep_q_networks.get_fingerprint(act, hparams), steps_left)
-            for act in environment.get_valid_actions()
-        ]
-    )
+    action_fingerprints = np.vstack([
+        np.append(deep_q_networks.get_fingerprint(act, hparams), steps_left)
+        for act in environment.get_valid_actions()
+    ])
     # we store the fingerprint of the action in obs_t so action
     # does not matter here.
     memory.add(
-        obs_t=np.append(deep_q_networks.get_fingerprint(action, hparams), steps_left),
+        obs_t=np.append(deep_q_networks.get_fingerprint(action, hparams),
+                        steps_left),
         action=0,
         reward=result.reward,
         obs_tp1=action_fingerprints,
@@ -404,12 +399,10 @@ def run_dqn(multi_objective=False):
         hparams = deep_q_networks.get_hparams()
     logging.info(
         "HParams:\n%s",
-        "\n".join(
-            [
-                "\t%s: %s" % (key, value)
-                for key, value in sorted(hparams.values().items())
-            ]
-        ),
+        "\n".join([
+            "\t%s: %s" % (key, value)
+            for key, value in sorted(hparams.values().items())
+        ]),
     )
 
     # TODO(zzp): merge single objective DQN to multi objective DQN.
@@ -428,7 +421,8 @@ def run_dqn(multi_objective=False):
         dqn = deep_q_networks.MultiObjectiveDeepQNetwork(
             objective_weight=np.array([[0.5], [0.5]]),
             input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-            q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+            q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                                   hparams=hparams),
             optimizer=hparams.optimizer,
             grad_clipping=hparams.grad_clipping,
             num_bootstrap_heads=hparams.num_bootstrap_heads,
@@ -449,7 +443,8 @@ def run_dqn(multi_objective=False):
 
         dqn = deep_q_networks.DeepQNetwork(
             input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-            q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+            q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                                   hparams=hparams),
             optimizer=hparams.optimizer,
             grad_clipping=hparams.grad_clipping,
             num_bootstrap_heads=hparams.num_bootstrap_heads,

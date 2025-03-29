@@ -7,6 +7,7 @@ from ..common.nn import GraphEncoder, MLP
 
 
 class Discriminator(nn.Module):
+
     def __init__(self, config):
         super().__init__()
         self.device = config["device"]

@@ -3,9 +3,9 @@ import torch.nn as nn
 
 
 class SmilesRnn(nn.Module):
-    def __init__(
-        self, input_size, hidden_size, output_size, n_layers, rnn_dropout
-    ) -> None:
+
+    def __init__(self, input_size, hidden_size, output_size, n_layers,
+                 rnn_dropout) -> None:
         """
             Basic RNN language model for SMILES
 
@@ -50,7 +50,7 @@ class SmilesRnn(nn.Module):
                 nn.init.constant_(param, 0)
                 # LSTM remember gate bias should be initialised to 1
                 # https://github.com/pytorch/pytorch/issues/750
-                r_gate = param[int(0.25 * len(param)) : int(0.5 * len(param))]
+                r_gate = param[int(0.25 * len(param)):int(0.5 * len(param))]
                 nn.init.constant_(r_gate, 1)
 
     def forward(self, x, hidden):

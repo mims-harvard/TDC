@@ -1,4 +1,4 @@
-# GCPN docking for TDC leaderboard 
+# GCPN docking for TDC leaderboard
 
 
 ## conda
@@ -35,7 +35,7 @@ There are 4 important files:
 - The molecule environment code is in `gym-molecule/gym_molecule/envs/molecule.py`.
 - RL related code is in `rl-baselines/baselines/ppo1` folder: `gcn_policy.py` is the GCN policy network; `pposgd_simple_gcn.py` is the PPO algorithm specifically tuned for GCN policy.
 
-## Run docking 
+## Run docking
 
 ```bash
 source activate gcpn
@@ -50,7 +50,7 @@ export PATH=$PATH:/project/molecular_data/graphnn/mol_dqn_docking/package_instal
 
 export PATH=$PATH:/project/molecular_data/graphnn/mol_dqn_docking/package_install/autodock_vina_1_1_2_linux_x86/bin
 
-python run_molecule.py 
+python run_molecule.py
 ```
 
 ## Run
@@ -70,9 +70,3 @@ tensorboard --logdir runs
 ```
 
 All the generated molecules along the training process are stored in the `molecule_gen` folder, each run configuration is stored in a different csv file. Molecules are stored using SMILES strings, along with the desired properties scores.
-
-
-
-
-
-

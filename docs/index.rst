@@ -66,7 +66,7 @@
    :alt: Twitter
 
 
-`Website <https://tdcommons.ai>`_ \| `GitHub <https://github.com/mims-harvard/TDC>`_ \| `NeurIPS 2021 Paper <https://openreview.net/pdf?id=8nvgnORnoWr>`_  \| `Long Paper <https://arxiv.org/abs/2102.09548>`_  \| `Slack <https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw>`_  \| `TDC Mailing List <https://groups.io/g/tdc>`_  
+`Website <https://tdcommons.ai>`_ \| `GitHub <https://github.com/mims-harvard/TDC>`_ \| `NeurIPS 2021 Paper <https://openreview.net/pdf?id=8nvgnORnoWr>`_  \| `Long Paper <https://arxiv.org/abs/2102.09548>`_  \| `Slack <https://join.slack.com/t/pytdc/shared_invite/zt-t59hu2x1-akJ72p2f4fgEBS0LrCFHEw>`_  \| `TDC Mailing List <https://groups.io/g/tdc>`_
 
 
 -----
@@ -80,7 +80,7 @@
 
 
 .. note::
-   See the `TDC website <https://tdcommons.ai/>`_ to learn about machine learning for drug development and discovery and get more information on datasets, tasks, leaderboards, data functions, and other features available in Therapeutics Data Commons. 
+   See the `TDC website <https://tdcommons.ai/>`_ to learn about machine learning for drug development and discovery and get more information on datasets, tasks, leaderboards, data functions, and other features available in Therapeutics Data Commons.
 
 ----
 
@@ -90,7 +90,7 @@ Cite our `NeurIPS 2021 Datasets and Benchmarks Paper: <https://openreview.net/pd
 
    @article{Huang2021tdc,
     title={Therapeutics Data Commons: Machine Learning Datasets and Tasks for Drug Discovery and Development},
-    author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley, 
+    author={Huang, Kexin and Fu, Tianfan and Gao, Wenhao and Zhao, Yue and Roohani, Yusuf and Leskovec, Jure and Coley,
             Connor W and Xiao, Cao and Sun, Jimeng and Zitnik, Marinka},
     journal={Proceedings of Neural Information Processing Systems, NeurIPS Datasets and Benchmarks},
     year={2021}

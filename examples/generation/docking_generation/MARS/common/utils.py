@@ -6,6 +6,7 @@ from .chem import standardize_smiles
 
 
 class Recorder:
+
     def __init__(self, metrics):
         self.metrics = metrics
         self.metric2sum = {}
@@ -60,7 +61,7 @@ def print_mols(run_dir, step, mols, scores, dicts):
 def subsample(cnts, r=1e-5, k=0.7):
     summ = sum(cnts)
     freq = [1.0 * c / summ for c in cnts]
-    cnts = [min((r / f) ** k, 1.0) * c for c, f in zip(cnts, freq)]
+    cnts = [min((r / f)**k, 1.0) * c for c, f in zip(cnts, freq)]
     return cnts
 
 

@@ -35,7 +35,6 @@ from mol_dqn.chemgraph.mcts import molecules as molecules_mdp
 from mol_dqn.chemgraph.mcts import run_dqn
 from mol_dqn.chemgraph.tensorflow import core
 
-
 flags.DEFINE_float("target_logp", 5.25, "The target logP value")
 flags.DEFINE_float("gamma", 0.999, "discount")
 FLAGS = flags.FLAGS
@@ -83,9 +82,9 @@ class Molecule(molecules_mdp.Molecule):
         pen_logp = log_p - sas_score + cycle_score
         if lower <= pen_logp <= upper:
             return 1
-        return -min(abs(lower - pen_logp), abs(upper - pen_logp)) * FLAGS.gamma ** (
-            self.max_steps - self._counter
-        )
+        return -min(abs(lower - pen_logp),
+                    abs(upper - pen_logp)) * FLAGS.gamma**(self.max_steps -
+                                                           self._counter)
 
 
 def main(argv):
@@ -108,7 +107,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,

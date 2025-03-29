@@ -7,6 +7,7 @@ print(sascorer.__file__)
 
 
 class TestCase(unittest.TestCase):
+
     def test1(self):
         with open("data/zim.100.txt") as f:
             testData = [x.strip().split("\t") for x in f]

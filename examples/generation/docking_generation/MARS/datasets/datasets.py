@@ -4,6 +4,7 @@ from torch.utils import data
 
 
 class GraphDataset(data.Dataset):
+
     def __init__(self, graphs):
         self.graphs = graphs
 
@@ -20,6 +21,7 @@ class GraphDataset(data.Dataset):
 
 
 class GraphClassificationDataset(GraphDataset):
+
     def __init__(self, graphs, labels):
         """
         @params:
@@ -43,6 +45,7 @@ class GraphClassificationDataset(GraphDataset):
 
 
 class ImitationDataset(GraphDataset):
+
     def __init__(self, graphs, edits):
         """
         @params:
@@ -73,9 +76,8 @@ class ImitationDataset(GraphDataset):
 
     @staticmethod
     def reconstruct(dataset):
-        graphs, edits = ImitationDataset.collate_fn(
-            [item for item in dataset], tensorize=False
-        )
+        graphs, edits = ImitationDataset.collate_fn([item for item in dataset],
+                                                    tensorize=False)
         return ImitationDataset(graphs, edits)
 
     @staticmethod

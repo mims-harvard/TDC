@@ -16,9 +16,14 @@ logger.addHandler(logging.NullHandler())
 
 
 class SmilesRnnTrainer:
-    def __init__(
-        self, model, criteria, optimizer, device, log_dir=None, clip_gradients=True
-    ) -> None:
+
+    def __init__(self,
+                 model,
+                 criteria,
+                 optimizer,
+                 device,
+                 log_dir=None,
+                 clip_gradients=True) -> None:
         self.model = model.to(device)
         self.criteria = [c.to(device) for c in criteria]
         self.optimizer = optimizer
@@ -148,7 +153,8 @@ class _ModelTrainingRound:
 
     def run(self):
         if self.has_run:
-            raise Exception("_ModelTrainingRound.train() can be called only once.")
+            raise Exception(
+                "_ModelTrainingRound.train() can be called only once.")
 
         try:
             for epoch_index in range(1, self.n_epochs + 1):
@@ -187,9 +193,9 @@ class _ModelTrainingRound:
 
         # report training progress?
         if batch_index > 0 and batch_index % self.print_every == 0:
-            self._report_training_progress(
-                batch_index, epoch_index, epoch_start=train_t0
-            )
+            self._report_training_progress(batch_index,
+                                           epoch_index,
+                                           epoch_start=train_t0)
 
         # report validation progress?
         if batch_index >= 0 and batch_index % self.valid_every == 0:
@@ -209,8 +215,7 @@ class _ModelTrainingRound:
             f"epoch|batch : {epoch_index}|{batch_index} ({self._get_overall_progress():.1f}%) | "
             f"molecules: {self.n_molecules_so_far} | "
             f"mols/sec: {mols_sec:.2f} | "
-            f"train_loss: {avg_train_loss:.4f}"
-        )
+            f"train_loss: {avg_train_loss:.4f}")
         self.model_trainer.train_extra_log(self.n_molecules_so_far)
 
         self._check_early_stopping_train_loss(avg_train_loss)
@@ -233,9 +238,8 @@ class _ModelTrainingRound:
         # save model?
         if self.model_trainer.log_dir:
             if avg_valid_loss <= min(self.all_valid_losses):
-                self._save_current_model(
-                    self.model_trainer.log_dir, epoch_index, avg_valid_loss
-                )
+                self._save_current_model(self.model_trainer.log_dir,
+                                         epoch_index, avg_valid_loss)
 
     def _validate_current_model(self):
         """
@@ -250,9 +254,8 @@ class _ModelTrainingRound:
             num_workers=self.num_workers,
             pin_memory=True,
         )
-        avg_valid_loss = self.model_trainer.validate(
-            test_loader, self.n_molecules_so_far
-        )
+        avg_valid_loss = self.model_trainer.validate(test_loader,
+                                                     self.n_molecules_so_far)
         self.all_valid_losses += [avg_valid_loss]
         return avg_valid_loss
 
@@ -265,8 +268,7 @@ class _ModelTrainingRound:
             f"elapsed: {time_since(self.start_time)} | "
             f"epoch: {epoch_index}/{self.n_epochs} ({self._get_overall_progress():.1f}%) | "
             f"molecules: {self.n_molecules_so_far} | "
-            f"valid_loss: {avg_valid_loss:.4f}"
-        )
+            f"valid_loss: {avg_valid_loss:.4f}")
         self.model_trainer.valid_extra_log(self.n_molecules_so_far)
         logger.info("")
 
@@ -279,12 +281,10 @@ class _ModelTrainingRound:
         Run validation for the final model and save it.
         """
         valid_loss = self._validate_current_model()
-        logger.info(
-            "VALID | FINAL_MODEL | "
-            f"elapsed: {time_since(self.start_time)} | "
-            f"molecules: {self.n_molecules_so_far} | "
-            f"valid_loss: {valid_loss:.4f}"
-        )
+        logger.info("VALID | FINAL_MODEL | "
+                    f"elapsed: {time_since(self.start_time)} | "
+                    f"molecules: {self.n_molecules_so_far} | "
+                    f"valid_loss: {valid_loss:.4f}")
 
         if self.model_trainer.log_dir:
             self._save_model(self.model_trainer.log_dir, "final", valid_loss)

@@ -28,7 +28,6 @@ import functools
 import json
 import os
 
-
 from absl import app
 from absl import flags
 
@@ -41,7 +40,6 @@ from dqn import deep_q_networks
 from dqn import molecules as molecules_mdp
 from dqn import run_dqn
 from dqn.tensorflow_core import core
-
 
 FLAGS = flags.FLAGS
 
@@ -74,7 +72,8 @@ class QEDRewardMolecule(molecules_mdp.Molecule):
         if molecule is None:
             return 0.0
         qed = QED.qed(molecule)
-        return qed * self.discount_factor ** (self.max_steps - self.num_steps_taken)
+        return qed * self.discount_factor**(self.max_steps -
+                                            self.num_steps_taken)
 
 
 def main(argv):
@@ -98,7 +97,8 @@ def main(argv):
 
     dqn = deep_q_networks.DeepQNetwork(
         input_shape=(hparams.batch_size, hparams.fingerprint_length + 1),
-        q_fn=functools.partial(deep_q_networks.multi_layer_model, hparams=hparams),
+        q_fn=functools.partial(deep_q_networks.multi_layer_model,
+                               hparams=hparams),
         optimizer=hparams.optimizer,
         grad_clipping=hparams.grad_clipping,
         num_bootstrap_heads=hparams.num_bootstrap_heads,
