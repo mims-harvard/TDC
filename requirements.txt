@@ -12,7 +12,7 @@ scikit-learn>=1.2.2
 seaborn>=0.12.2,<1.0.0
 tqdm>=4.65.0,<5.0.0
 transformers>=4.43.0,<4.51.0
-cellxgene-census==1.15.0
+cellxgene-census>=1.15.0, <2.0.0
 gget>=0.28.4,<1.0.0
 pydantic>=2.6.3,<3.0.0
 rdkit>=2023.9.5,<2024.3.1
