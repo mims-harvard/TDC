@@ -1,1 +1,5 @@
 pytest==8.3.2
+
+mygene==3.2.2
+scvi-tools==1.2.0
+dgl==1.1.3
