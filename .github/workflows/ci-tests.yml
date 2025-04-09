@@ -6,9 +6,6 @@ name: Run Python Tests
 
 on:
   push:
-    branches:
-      - main
-      - '*'
   pull_request:
     branches: ["main"]
   workflow_dispatch:
@@ -38,8 +35,8 @@ jobs:
           sudo apt-get install git-lfs
           git lfs install
 
-      - name: Setup environment & install dependencies
+      - name: Install package & dependencies
         run: pip install . -U -r requires_test.txt
 
-      - name: Create and start Conda environment. Run tests
+      - name: Run tests
         run: python run_tests.py
