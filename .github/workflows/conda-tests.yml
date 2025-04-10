@@ -48,5 +48,5 @@ jobs:
           echo "Creating Conda Environment from environment.yml"
           conda env create -q -f environment.yml
           conda activate tdc-conda-env
-          pytest tests/ -v --disable-warnings
+          pytest tests/ -v --disable-warnings --color=yes
           conda deactivate
