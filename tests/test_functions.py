@@ -8,11 +8,8 @@ import sys
 
 import unittest
 import shutil
-
-# temporary solution for relative imports in case TDC is not installed
-# if TDC is installed, no need to use the following line
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+from tdc import Evaluator
+from tdc.single_pred import TestSinglePred
 
 
 class TestFunctions(unittest.TestCase):
@@ -22,26 +19,18 @@ class TestFunctions(unittest.TestCase):
         pass
 
     def test_Evaluator(self):
-        from tdc import Evaluator
-
         evaluator = Evaluator(name="ROC-AUC")
         print(evaluator([0, 1], [0.5, 0.6]))
 
     def test_binarize(self):
-        from tdc.single_pred import TestSinglePred
-
         data = TestSinglePred(name="Test_Single_Pred")
         data.binarize(threshold=-5, order="descending")
 
     def test_convert_to_log(self):
-        from tdc.single_pred import TestSinglePred
-
         data = TestSinglePred(name="Test_Single_Pred")
         data.convert_to_log()
 
     def test_print_stats(self):
-        from tdc.single_pred import TestSinglePred
-
         data = TestSinglePred(name="Test_Single_Pred")
         data.print_stats()
 

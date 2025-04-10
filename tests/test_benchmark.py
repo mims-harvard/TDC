@@ -1,13 +1,15 @@
 import unittest
 import shutil
 import numpy as np
-import random
-import sys
-import os
 
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from tdc.benchmark_group import admet_group, scdti_group, counterfactual_group, geneperturb_group
+from tdc.benchmark_group.protein_peptide_group import ProteinPeptideGroup
+from tdc.multi_pred.proteinpeptide import ProteinPeptide
+from sklearn.model_selection import train_test_split
+from tdc.multi_pred.perturboutcome import PerturbOutcome
+from tdc.dataset_configs.config_map import scperturb_datasets, scperturb_gene_datasets
+from tdc.benchmark_group.tcrepitope_group import TCREpitopeGroup
+from tdc.resource.dataloader import DataLoader
 
 
 def is_classification(values):
@@ -96,9 +98,6 @@ class TestBenchmarkGroup(unittest.TestCase):
         "counterfactual test is taking up too much memory"
     )  #FIXME: please run if making changes to counterfactual benchmark or core code.
     def test_counterfactual(self):
-        from tdc.multi_pred.perturboutcome import PerturbOutcome
-        from tdc.dataset_configs.config_map import scperturb_datasets, scperturb_gene_datasets
-
         test_data = PerturbOutcome("scperturb_drug_AissaBenevolenskaya2021")
         print("got test data")
         group = counterfactual_group.CounterfactualGroup()  # is drug
@@ -149,9 +148,6 @@ class TestBenchmarkGroup(unittest.TestCase):
     @unittest.skip(
         "mygene dependency removal")  #FIXME: separate into conda-only tests
     def test_proteinpeptide(self):
-        from tdc.benchmark_group.protein_peptide_group import ProteinPeptideGroup
-        from tdc.multi_pred.proteinpeptide import ProteinPeptide
-        from sklearn.model_selection import train_test_split
         group = ProteinPeptideGroup()
         test = group.get_test()
         assert test is not None and len(test) > 0
@@ -176,14 +172,8 @@ class TestBenchmarkGroup(unittest.TestCase):
         assert res[-1] == 1 and res[-2] == 1, res
 
     def test_tcrepitope(self):
-        from tdc.benchmark_group.tcrepitope_group import TCREpitopeGroup
-        from tdc.resource.dataloader import DataLoader
         data = DataLoader("tchard")
         tst = data.get_split()["test"]
         group = TCREpitopeGroup()
         res = group.evaluate(tst)
         assert res == 1
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 
 import unittest
 import shutil
 import numpy as np
 
-# temporary solution for relative imports in case TDC is not installed
-# if TDC is installed, no need to use the following line
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 # TODO: add verification for the generation other than simple integration
 
 from tdc.resource import cellxgene_census
 from tdc.model_server.tokenizers.geneformer import GeneformerTokenizer
+from tdc.model_server.tokenizers.scgpt import scGPTTokenizer
+import torch
+from tdc.multi_pred.perturboutcome import PerturbOutcome
+from tdc.multi_pred.anndata_dataset import DataLoader
+from tdc import tdc_hf_interface
 
 
 def quant_layers(model):
@@ -32,10 +32,6 @@ class TestModelServer(unittest.TestCase):
         self.resource = cellxgene_census.CensusResource()
 
     def testscGPT(self):
-        from tdc.multi_pred.anndata_dataset import DataLoader
-        from tdc import tdc_hf_interface
-        from tdc.model_server.tokenizers.scgpt import scGPTTokenizer
-        import torch
         adata = DataLoader("cellxgene_sample_small",
                            "./data",
                            dataset_names=["cellxgene_sample_small"],
@@ -56,7 +52,6 @@ class TestModelServer(unittest.TestCase):
         print(f"scgpt ran successfully. here is an output {first_embed}")
 
     def testGeneformerPerturb(self):
-        from tdc.multi_pred.perturboutcome import PerturbOutcome
         dataset = "scperturb_drug_AissaBenevolenskaya2021"
         data = PerturbOutcome(dataset)
         adata = data.adata
@@ -102,7 +97,6 @@ class TestModelServer(unittest.TestCase):
         assert num_gene_out_in_batch == mdim, f"FAILURE: out length {num_gene_out_in_batch} doesn't match gene length {mdim}"
 
     def testGeneformerTokenizer(self):
-
         adata = self.resource.get_anndata(
             var_value_filter=
             "feature_id in ['ENSG00000161798', 'ENSG00000188229']",
@@ -189,9 +183,6 @@ class TestModelServer(unittest.TestCase):
             .format(out[0]))
 
     def testscVI(self):
-        from tdc.multi_pred.anndata_dataset import DataLoader
-        from tdc import tdc_hf_interface
-
         adata = DataLoader("scvi_test_dataset",
                            "./data",
                            dataset_names=["scvi_test_dataset"],

@@ -4,15 +4,10 @@ from __future__ import division
 from __future__ import print_function
 
 import os
-import sys
 
 import unittest
 import shutil
-
 import pandas as pd
-
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 from tdc.feature_generators.data_feature_generator import DataFeatureGenerator
 from tdc.feature_generators.protein_feature_generator import ProteinFeatureGenerator
@@ -154,7 +149,3 @@ class TestProteinDataUtil(unittest.TestCase):
             shutil.rmtree(os.path.join(os.getcwd(), "data"))
         if os.path.exists(os.path.join(os.getcwd(), "oracle")):
             shutil.rmtree(os.path.join(os.getcwd(), "oracle"))
-
-
-if __name__ == "__main__":
-    unittest.main()
