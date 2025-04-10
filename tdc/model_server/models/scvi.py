@@ -1,4 +1,11 @@
 import torch.nn as nn
+import scvi as scvi_package
+import os
+import torch
+import numpy as np
+
+from tdc.model_server.model_loaders import scvi_loader
+from tdc.multi_pred.anndata_dataset import DataLoader
 
 
 class scVI(nn.Module):
@@ -29,12 +36,6 @@ class scVI(nn.Module):
         return vae_q.get_latent_representation()
 
     def load(self):
-        import scvi as scvi_package
-        import os
-
-        from tdc.multi_pred.anndata_dataset import DataLoader
-        from model_server.model_loaders import scvi_loader
-
         if not os.path.isdir("scvi_model"):
             loader = scvi_loader.scVILoader()
             loader.load("2024-07-01")
@@ -59,8 +60,6 @@ class scVI(nn.Module):
         return self.model
 
     def prepare_data(self, adata):
-        import numpy as np
-
         assert True in np.isin(adata.var.index, self.var_names)
 
         adata.obs["batch"] = "unassigned"
@@ -72,9 +71,6 @@ class scVI(nn.Module):
         For more information visit:
         https://huggingface.co/datasets/scvi-tools/DATASET-FOR-UNIT-TESTING-1/tree/main
         '''
-        import torch
-        import numpy as np
-
         metadata = torch.load("scvi_model/model.pt",
                               map_location=torch.device('cpu'))
 
