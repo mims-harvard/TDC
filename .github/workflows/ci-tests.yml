@@ -1,0 +1,42 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
+
+name: Run Python Tests
+
+on:
+  push:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  pytester:
+    runs-on: ${{ matrix.os }}
+    strategy:
+        fail-fast: false
+        matrix:
+            os: ["ubuntu-22.04"]  # todo: add `, "macOS-14", "windows-2022"`
+            python-version: ["3.9", "3.10", "3.11"]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python version
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install git-lfs
+        run: |
+          sudo apt-get install git-lfs
+          git lfs install
+
+      - name: Install package & dependencies
+        run: pip install . -U -r requires_test.txt
+
+      - name: Run tests
+        run: python run_tests.py
