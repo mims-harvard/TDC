@@ -1,13 +1,15 @@
 import os
 import sys
 
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 import unittest
 import shutil
 
 from pandas import DataFrame
 from tdc.resource import cellxgene_census
+
+from tdc.resource.pharmone import PharmoneMap
+from tdc.resource.pinnacle import PINNACLE
+from tdc.resource import PrimeKG
 
 
 class TestResources(unittest.TestCase):
@@ -64,7 +66,6 @@ class TestPrimeKG(unittest.TestCase):
         pass
 
     def test_node_retrieval(self):
-        from tdc.resource import PrimeKG
         data = PrimeKG(path='./data')
         drug_feature = data.get_features(feature_type='drug')
         data.to_nx()
@@ -79,7 +80,6 @@ class TestPINNACLE(unittest.TestCase):
         pass
 
     def test_mg_ppi_load(self):
-        from tdc.resource.pinnacle import PINNACLE
         pinnacle = PINNACLE()
         assert isinstance(pinnacle.get_ppi(), DataFrame)
         assert isinstance(pinnacle.get_mg(), DataFrame)
@@ -90,7 +90,6 @@ class TestPINNACLE(unittest.TestCase):
         assert len(embeds) > 0, "PINNACLE embeds is empty"
 
     def test_embeddings(self):
-        from tdc.resource.pinnacle import PINNACLE
         pinnacle = PINNACLE()
         embeds = pinnacle.get_embeds()
         assert isinstance(embeds, DataFrame)
@@ -112,7 +111,6 @@ class TestPINNACLE(unittest.TestCase):
             len(cells), num_cells)
 
     def test_exp_data(self):
-        from tdc.resource.pinnacle import PINNACLE
         pinnacle = PINNACLE()
         exp_data = pinnacle.get_exp_data()
         assert isinstance(exp_data, DataFrame)
@@ -133,8 +131,6 @@ class TestPharmoneMap(unittest.TestCase):
         pass
 
     def test_get_data(self):
-        from tdc.resource.pharmone import PharmoneMap
-
         resource = PharmoneMap()
         data = resource.get_data()
         assert isinstance(data, DataFrame), type(data)
@@ -148,7 +144,3 @@ class TestPharmoneMap(unittest.TestCase):
             shutil.rmtree(os.path.join(os.getcwd(), "data"))
         except:
             pass
-
-
-if __name__ == "__main__":
-    unittest.main()

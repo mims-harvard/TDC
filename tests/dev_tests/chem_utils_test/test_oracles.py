@@ -4,15 +4,12 @@ from __future__ import division
 from __future__ import print_function
 
 import os
-import sys
 
 import unittest
 import shutil
 
-# temporary solution for relative imports in case TDC is not installed
-# if TDC is installed, no need to use the following line
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
+from tdc import Evaluator
+from tdc import Oracle
 
 
 class TestOracle(unittest.TestCase):
@@ -22,8 +19,6 @@ class TestOracle(unittest.TestCase):
         pass
 
     def test_Oracle(self):
-        from tdc import Oracle
-
         oracle = Oracle(name="SA")
         x = oracle([
             "CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1",
@@ -35,8 +30,6 @@ class TestOracle(unittest.TestCase):
         x = oracle(["CC(=O)OC1=CC=CC=C1C(=O)O", "C1=CC=C(C=C1)C=O"])
 
     def test_distribution(self):
-        from tdc import Evaluator
-
         evaluator = Evaluator(name="Diversity")
         x = evaluator([
             "CC(C)(C)[C@H]1CCc2c(sc(NC(=O)COc3ccc(Cl)cc3)c2C(N)=O)C1",

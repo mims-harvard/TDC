@@ -4,15 +4,14 @@ from __future__ import division
 from __future__ import print_function
 
 import os
-import sys
 
 import unittest
 import shutil
 
-# temporary solution for relative imports in case TDC is not installed
-# if TDC is installed, no need to use the following line
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
+from tdc.multi_pred import DrugSyn
+from tdc.multi_pred import DTI
+## requires RDKit
+from tdc.single_pred import ADME
 
 
 class TestFunctions(unittest.TestCase):
@@ -22,20 +21,16 @@ class TestFunctions(unittest.TestCase):
         pass
 
     def test_random_split(self):
-        from tdc.single_pred import ADME
 
         data = ADME(name="Caco2_Wang")
-        split = data.get_split(method="random")
+        data.get_split(method="random")
 
     def test_scaffold_split(self):
-        ## requires RDKit
-        from tdc.single_pred import ADME
 
         data = ADME(name="Caco2_Wang")
-        split = data.get_split(method="scaffold")
+        data.get_split(method="scaffold")
 
     def test_cold_start_split(self):
-        from tdc.multi_pred import DTI
 
         data = DTI(name="DAVIS")
         split = data.get_split(method="cold_split", column_name="Drug")
@@ -68,16 +63,12 @@ class TestFunctions(unittest.TestCase):
             self.assertEqual(0, len(valid_entity.intersection(test_entity)))
 
     def test_combination_split(self):
-        from tdc.multi_pred import DrugSyn
-
         data = DrugSyn(name="DrugComb")
-        split = data.get_split(method="combination")
+        data.get_split(method="combination")
 
     def test_time_split(self):
-        from tdc.multi_pred import DTI
-
         data = DTI(name="BindingDB_Patent")
-        split = data.get_split(method="time", time_column="Year")
+        data.get_split(method="time", time_column="Year")
 
     def test_tearDown(self):
         print(os.getcwd())

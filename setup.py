@@ -32,7 +32,7 @@ setup(
     url="https://github.com/mims-harvard/TDC",
     author="PyTDC Team",
     author_email="amva13@alum.mit.edu",
-    packages=find_packages(exclude=["test"]),
+    packages=find_packages(),
     zip_safe=False,
     include_package_data=True,
     install_requires=requirements,

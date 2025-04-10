@@ -36,7 +36,8 @@ Before making a pull request to TDC repository, run the following commands to pa
 ```bash
 conda activate tdc_env
 cd TDC
-pytest tdc/test/
+pip install -e .
+pytest tests/
 ```
 
 
