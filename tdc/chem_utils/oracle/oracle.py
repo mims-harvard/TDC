@@ -658,9 +658,8 @@ def SA(s):
 
 
 def load_gsk3b_model():
-    gsk3_model_path = "oracle/gsk3b.pkl"
-    if SKLEARN_VERSION >= version.parse("0.24.0"):
-        gsk3_model_path = "oracle/gsk3b_current.pkl"
+    # gsk3_model_path = "oracle/gsk3b.pkl"  # this was for `sklearn<=0.24`
+    gsk3_model_path = "oracle/gsk3b_current.pkl"
     return load_pickled_model(gsk3_model_path)
 
 
