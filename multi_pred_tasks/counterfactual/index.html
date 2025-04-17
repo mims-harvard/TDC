@@ -284,7 +284,7 @@
 	
 
 <p class="is-size-6">  <strong> Definition: </strong> 
-We define a task for predicting responses in gene expression of single cells to chemical and genetic perturbations, aiming to measure model generalization across cell lines and perturbation types. Understanding cellular responses to genetic perturbation is central to numerous biomedical applications, from identifying genetic interactions involved in cancer to developing methods for regenerative medicine. Furthermore, counterfactual prediction of drug-based perturbations at single-cell resolution enables cell-type specific drugs and treatments, facilitating precision medicine. The predictive, non-generative task is then formalized as a function of a cell, with corresponding attributes such as cell line, disease, and tissue, and a perturbation, such as a drug type or a CRISPR-based perturbation, which outputs a count for gene expression of the cell after the input perturbation.
+We define a task for predicting responses in gene expression of single cells to chemical and genetic perturbations, aiming to measure model generalization across cell lines and perturbation types. Understanding cellular responses to genetic perturbation is central to numerous biomedical applications, from identifying genetic interactions involved in cancer to developing methods for regenerative medicine \cite{gears}. Furthermore, counterfactual prediction of drug-based perturbations at single-cell resolution enables cell-type specific drugs and treatments, facilitating precision medicine \cite{chemcpa}. The predictive, non-generative task is then formalized as a function of a cell, with corresponding attributes such as cell line, disease, and tissue, and a perturbation, such as a drug type or a CRISPR-based perturbation, which outputs a count for gene expression of the cell after the input perturbation.
 <p class="is-size-6"> <strong> Impact: </strong>  
 Machine learning has significantly advanced the ability to predict how single cells respond to various chemical and genetic perturbations. This capability is crucial for understanding cellular behaviors and developing new therapeutic strategies. Machine learning models have revolutionized the prediction of gene expression responses in single cells to chemical and genetic perturbations by enhancing predictive accuracy, handling dose dependencies, managing complex perturbations, and optimizing experimental designs. These advancements enable more efficient and accurate exploration of cellular responses, facilitating drug discovery and the development of personalized medicine.
 </p>
@@ -296,8 +296,10 @@ We measure model generalization across seen and unseen perturbations and across 
 <p class="is-size-6"> <strong> Product: </strong>  Drug Repurposing, Predicting Adverse Drug Reactions, Biopharmaceuticals</p>
 
 <p class="is-size-6"> <strong> Pipeline: </strong>  Target discovery, Phenotypic Screening. </p>
-  
-<h3 id="scperturb">scPerturb</h3>
+
+&lt;/div&gt;
+
+### scPerturb 
 
 <p class="is-size-6">  <strong> Dataset Description: </strong> The scPerturb dataset is a comprehensive collection of single-cell perturbation data, harmonized to facilitate the development and benchmarking of computational methods in systems biology. It includes various types of molecular readouts, such as transcriptomics, proteomics, and epigenomics. scPerturb is a harmonized dataset that compiles single-cell perturbation-response data. This dataset is designed to support the development and validation of computational tools by providing a consistent and comprehensive resource. The data includes responses to various genetic and chemical perturbations, which are crucial for understanding cellular mechanisms and developing therapeutic strategies. Data from different sources are uniformly pre-processed to ensure consistency. Rigorous quality control measures are applied to maintain high data quality. Features across different datasets are standardized for easy comparison and integration. 
 
@@ -307,10 +309,12 @@ We measure model generalization across seen and unseen perturbations and across 
 
 <p class="is-size-6">  <strong> Dataset Split: </strong> <span class="tag is-info is-light">Random Split, Seen-unseen splits across cell line and perturbation</span> </p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tdc.multi_pred.perturboutcome</span> <span class="kn">import</span> <span class="n">PerturbOutcome</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">PerturbOutcome</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">'scperturb_drug_SrivatsanTrapnell2020_sciplex2'</span><span class="p">)</span>
-<span class="n">split</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get_split</span><span class="p">()</span>
-</code></pre></div></div>
+``` python
+from tdc.multi_pred.perturboutcome import PerturbOutcome
+test_loader = PerturbOutcome(
+    name="scperturb_drug_SrivatsanTrapnell2020_sciplex2")
+testdf = test_loader.get_data()
+```
 
 <p class="is-size-6">  <strong> References: </strong>  </p>
 
