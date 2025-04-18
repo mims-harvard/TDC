@@ -24,9 +24,9 @@ Researchers across disciplines can use TDC for numerous applications. AI-solvabl
 
 TDC is an open-science initiative. We welcome [contributions from the community.](CONTRIBUTE.md)
 
-## Key (Py)TDC Presentations and Publications
+## Key TDC Presentations and Publications
 
-[1] Velez-Arce, Huang, Li, Lin, et al., Signals in the Cells: Multimodal and Contextualized Machine Learning Foundations for Therapeutics, NeurIPS AIDrugX, 2024 [**\[Paper\]**](https://openreview.net/pdf?id=kL8dlYp6IM) [**\[Slides\]**](https://neurips.cc/media/neurips-2024/Slides/102832.pdf) [**\[Webpage\]**](https://tdcommons.ai/pytdc)
+[1] Velez-Arce, Huang, Li, Lin, et al., Signals in the Cells: Multimodal and Contextualized Machine Learning Foundations for Therapeutics, NeurIPS AIDrugX, 2024 [**\[Paper\]**](https://openreview.net/pdf?id=kL8dlYp6IM) [**\[Slides\]**](https://neurips.cc/media/neurips-2024/Slides/102832.pdf)
 
 [2] Huang, Fu, Gao, et al., Artificial Intelligence Foundation for Therapeutic Science, Nature Chemical Biology, 2022 [**\[Paper\]**](https://www.nature.com/articles/s41589-022-01131-2)
 
