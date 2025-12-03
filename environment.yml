@@ -41,6 +41,7 @@ dependencies:
     - torchvision==0.16.1
     - transformers==4.43.4
     - yapf==0.40.2
+    - six==1.17.0
 
 variables:
   KMP_DUPLICATE_LIB_OK: "TRUE"

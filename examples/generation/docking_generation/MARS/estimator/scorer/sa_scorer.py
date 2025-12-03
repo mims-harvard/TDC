@@ -24,7 +24,7 @@ import pickle
 
 from rdkit import Chem
 from rdkit.Chem import rdMolDescriptors
-from rdkit.six import iteritems
+from six import iteritems
 
 _fscores = None
 

@@ -21,7 +21,7 @@ try:
 
     rdBase.DisableLog("rdApp.error")
     from rdkit.Chem import rdMolDescriptors
-    from rdkit.six import iteritems
+    from six import iteritems
 except:
     raise ImportError(
         "Please install rdkit by 'conda install -c conda-forge rdkit'! ")

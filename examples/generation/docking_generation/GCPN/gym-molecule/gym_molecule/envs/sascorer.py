@@ -19,8 +19,8 @@ from __future__ import print_function
 
 from rdkit import Chem
 from rdkit.Chem import rdMolDescriptors
-from rdkit.six.moves import cPickle
-from rdkit.six import iteritems
+from six.moves import cPickle
+from six import iteritems
 
 import math
 from collections import defaultdict
