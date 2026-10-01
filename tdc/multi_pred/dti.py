@@ -31,7 +31,11 @@ class DTI(bi_pred_dataset.DataLoader):
 
     """
 
-    def __init__(self, name, path="./data", label_name=None, print_stats=False):
+    def __init__(self,
+                 name,
+                 path="./data",
+                 label_name=None,
+                 print_stats=False):
         """Create Drug-Target Interaction Prediction dataloader object"""
         super().__init__(name,
                          path,
@@ -56,26 +60,26 @@ class DTI(bi_pred_dataset.DataLoader):
             )
 
         if mode == "max_affinity":
-            df_ = self.get_data()
             if self.log_flag:
                 print_sys(
                     "The scale is converted to log scale, so we will take the maximum!"
                 )
-                df = (df_.groupby(["Drug_ID", "Drug", "Target_ID",
-                                   "Target"]).Y.agg(max).reset_index())
+                y_agg = "max"
             else:
                 print_sys(
                     "The scale is in original affinity scale, so we will take the minimum!"
                 )
-                df = (df_.groupby(["Drug_ID", "Drug", "Target_ID",
-                                   "Target"]).Y.agg(min).reset_index())
-
+                y_agg = "min"
         elif mode == "mean":
-            import numpy as np
+            y_agg = "mean"
 
-            df_ = self.get_data()
-            df = (df_.groupby(["Drug_ID", "Drug", "Target_ID",
-                               "Target"]).Y.agg(np.mean).reset_index())
+        # Group by the drug-target pair rather than by auxiliary IDs: rows
+        # with a missing Drug_ID or Target_ID are still valid pairs, but
+        # pandas groupby drops NaN group keys by default.
+        agg_map = {"Drug_ID": "first", "Target_ID": "first", "Y": y_agg}
+        df = self.get_data().groupby(["Drug", "Target"],
+                                     as_index=False).agg(agg_map)
+        df = df[["Drug_ID", "Drug", "Target_ID", "Target", "Y"]]
 
         self.entity1_idx = df.Drug_ID.values
         self.entity2_idx = df.Target_ID.values

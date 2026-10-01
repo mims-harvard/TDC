@@ -120,8 +120,9 @@ class TestDataloader(unittest.TestCase):
         assert isinstance(
             splits["train"]["tchard_pep_cdr3b_only_neg_assays"][0],
             pd.DataFrame)
-        assert isinstance(splits["test"]["tchard_pep_cdr3b_only_neg_assays"][2],
-                          pd.DataFrame)
+        assert isinstance(
+            splits["test"]["tchard_pep_cdr3b_only_neg_assays"][2],
+            pd.DataFrame)
         assert not splits["dev"]
 
     def test_mpc(self):
@@ -135,6 +136,40 @@ class TestDataloader(unittest.TestCase):
         Xs_test = Xs_split["test"]
         y_train_pIC50 = Xs_train["Y"]
         y_test_pIC50 = Xs_test["Y"]
+
+    def test_harmonize_affinities_nan_ids(self):
+        import numpy as np
+        from tdc.multi_pred import DTI
+
+        data = object.__new__(DTI)
+        data.entity1_name = "Drug"
+        data.entity2_name = "Target"
+        data.entity1_idx = np.array(["d1", "d1", "d2"])
+        data.entity1 = np.array(["CC", "CC", "CO"])
+        data.entity2_idx = np.array(["t1", np.nan, "t2"])
+        data.entity2 = np.array(["SEQ1", "SEQ2", "SEQ3"])
+        data.y = np.array([1.0, 2.0, 3.0])
+        data.aux_column = None
+        data.aux_column_val = None
+        data.augment_df = False
+        data.log_flag = True
+
+        # The row with a missing Target_ID must not be dropped
+        out = data.harmonize_affinities(mode="max_affinity")
+        self.assertEqual(len(out), 3)
+        self.assertEqual(set(map(tuple, out[["Drug", "Target"]].values)),
+                         {("CC", "SEQ1"), ("CC", "SEQ2"), ("CO", "SEQ3")})
+
+        # Duplicate (drug, target) pairs still collapse, and NaN ids survive
+        data.entity1_idx = np.array(["d1", "d1", "d1", "d1"])
+        data.entity1 = np.array(["CC", "CC", "CC", "CC"])
+        data.entity2_idx = np.array(["t1", "t1", np.nan, np.nan])
+        data.entity2 = np.array(["SEQ1", "SEQ1", "SEQ2", "SEQ2"])
+        data.y = np.array([1.0, 3.0, 2.0, 4.0])
+        out = data.harmonize_affinities(mode="max_affinity")
+        self.assertEqual(len(out), 2)
+        self.assertEqual(out.loc[out["Target"] == "SEQ1", "Y"].iloc[0], 3.0)
+        self.assertEqual(out.loc[out["Target"] == "SEQ2", "Y"].iloc[0], 4.0)
 
     def tearDown(self):
         try:
