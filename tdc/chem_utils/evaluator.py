@@ -374,7 +374,10 @@ def kl_divergence(generated_smiles_lst, training_smiles_lst):
 
 
 def fcd_distance_tf(generated_smiles_lst, training_smiles_lst):
-    """Evaluate FCD distance between generated smiles set and training smiles set using tensorflow.
+    """Evaluate FCD score between generated smiles set and training smiles set using tensorflow.
+
+    Returns the FCD score exp(-0.2 * FCD), where FCD is the raw Frechet
+    distance. Higher is better.
 
     Args:
       generated_smiles_lst: list (of SMILES string), which are generated.
@@ -418,7 +421,10 @@ def fcd_distance_tf(generated_smiles_lst, training_smiles_lst):
 
 
 def fcd_distance_torch(generated_smiles_lst, training_smiles_lst):
-    """Evaluate FCD distance between generated smiles set and training smiles set using PyTorch.
+    """Evaluate FCD score between generated smiles set and training smiles set using PyTorch.
+
+    Returns the FCD score exp(-0.2 * FCD), where FCD is the raw Frechet
+    distance. Higher is better.
 
     Args:
       generated_smiles_lst: list (of SMILES string), which are generated.
@@ -432,11 +438,18 @@ def fcd_distance_torch(generated_smiles_lst, training_smiles_lst):
 
     fcd = FCD(device="cpu", n_jobs=8)
     fcd_distance = fcd(generated_smiles_lst, training_smiles_lst)
+    # fcd_torch returns the raw Frechet distance; apply the same
+    # exp(-0.2 * FCD) transform as the tensorflow backend so the two
+    # backends return comparable FCD scores
+    fcd_distance = np.exp(-0.2 * fcd_distance)
     return fcd_distance
 
 
 def fcd_distance(generated_smiles_lst, training_smiles_lst):
-    """Evaluate FCD distance between generated smiles set and training smiles set.
+    """Evaluate FCD score between generated smiles set and training smiles set.
+
+    Returns the FCD score exp(-0.2 * FCD), where FCD is the raw Frechet
+    distance. Higher is better.
 
     Args:
       generated_smiles_lst: list (of SMILES string), which are generated.
