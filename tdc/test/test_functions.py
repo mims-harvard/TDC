@@ -56,3 +56,35 @@ class TestFunctions(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestLabelUtils(unittest.TestCase):
+    """Unit conversions in tdc.utils.label (#392)."""
+
+    def test_p_to_nm(self):
+        import numpy as np
+
+        from tdc.utils.label import convert_y_unit
+
+        # p=9 corresponds to ~1 nM; p=6 to ~1000 nM
+        out = convert_y_unit(np.array([9.0, 6.0]), "p", "nM")
+        self.assertTrue(np.allclose(out, [1.0, 1000.0], atol=0.2))
+
+    def test_nm_to_p_roundtrip(self):
+        import numpy as np
+
+        from tdc.utils.label import convert_y_unit
+
+        y = np.array([1.0, 10.0, 1000.0])
+        p = convert_y_unit(y, "nM", "p")
+        back = convert_y_unit(p, "p", "nM")
+        self.assertTrue(np.allclose(back, y, rtol=1e-3))
+
+    def test_convert_back_log_helper(self):
+        import numpy as np
+
+        from tdc.utils.label import convert_back_log, convert_to_log
+
+        y = np.array([5.0, 50.0, 500.0])
+        self.assertTrue(
+            np.allclose(convert_back_log(convert_to_log(y)), y, rtol=1e-3))
